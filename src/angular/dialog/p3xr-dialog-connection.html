@@ -1,0 +1,70 @@
+<md-dialog aria-label="" style="min-width: 320px;">
+    <form novalidate name="p3xrConnectionForm" ng-submit="submit()">
+        <md-toolbar md-theme="{{ $root.p3xr.state.themeLayout }}" class="md-hue-2">
+            <div class="md-toolbar-tools" >
+                <h2 flex md-truncate>{{  options.type === 'new' ? $root.p3xr.strings.label.connectiondAdd : $root.p3xr.strings.label.connectiondEdit }}</h2>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon>close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content md-theme="{{ $root.p3xr.state.theme }}">
+                <md-content layout-padding>
+
+                    <md-input-container class="md-block" >
+                        <label>{{ $root.p3xr.strings.form.connection.label.name }}</label>
+                        <input required name="name" ng-model="model.name">
+                        <div ng-messages="p3xrConnectionForm.name.$error">
+                            <div ng-message="required">{{ $root.p3xr.strings.form.error.required }}</div>
+                        </div>
+                    </md-input-container>
+
+
+                    <md-input-container class="md-block" >
+                        <label>{{ $root.p3xr.strings.form.connection.label.host }}</label>
+                        <input name="host" ng-model="model.host">
+                    </md-input-container>
+
+
+                    <md-input-container class="md-block" >
+                        <label>{{ $root.p3xr.strings.form.connection.label.port }}</label>
+                        <input name="port" type="number" min="1" max="65535" ng-model="model.port">
+                        <div ng-messages="p3xrConnectionForm.port.$error">
+                            <div ng-message-exp="['min', 'max']">
+                                {{ $root.p3xr.strings.form.error.port }}
+                            </div>
+                        </div>
+                    </md-input-container>
+
+
+                    <md-input-container class="md-block" >
+                        <label>{{ $root.p3xr.strings.form.connection.label.password }}</label>
+                        <input name="password" ng-model="model.password">
+                    </md-input-container>
+
+
+                </md-content>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="column" layout-gt-xs="row" layout-align-gt-xs="end end" layout-align="end end">
+
+            <span md-theme="{{ $root.p3xr.state.themeCommon }}">
+                <md-button class="md-raised md-primary" ng-click="testConnection()">
+                    <i class="fas fa-plug"></i>
+                    {{ $root.p3xr.strings.intention.testConnection }}
+                </md-button>
+            </span>
+
+            <md-button class="md-raised md-accent" ng-click="cancel()">
+                <md-icon>close</md-icon>
+                {{ $root.p3xr.strings.intention.cancel }}
+            </md-button>
+
+            <md-button class="md-raised md-primary" type="submit">
+                <md-icon>{{ options.type === 'new' ? 'add' : 'save' }}</md-icon>
+                {{ options.type === 'new' ? $root.p3xr.strings.intention.add : $root.p3xr.strings.intention.save }}
+            </md-button>
+
+        </md-dialog-actions>
+    </form>
+</md-dialog>

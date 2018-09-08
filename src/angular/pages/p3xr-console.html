@@ -1,0 +1,13 @@
+<md-toolbar class="md-accent" md-theme="{{ $root.p3xr.state.themeLayout}}" id="p3xr-console-header">
+    <div class="md-toolbar-tools">
+        <h2 flex md-truncate>{{  $root.p3xr.strings.label.console }}</h2>
+
+        <p3xr-button p3xr-label="$root.p3xr.strings.intention.clear" p3xr-md-icon="clear" ng-click="$ctrl.clearConsole()"></p3xr-button>
+    </div>
+
+</md-toolbar>
+<md-content md-theme="{{ $root.p3xr.state.theme}}" layout-padding id="p3xr-console-content">
+    <div id="p3xr-console-content-output">
+    </div>
+    <input id="p3xr-console-input" ng-keydown="$ctrl.action($event)" ng-model="$ctrl.inputValue"/>
+</md-content>

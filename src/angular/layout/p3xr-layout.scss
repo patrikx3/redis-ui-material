@@ -1,0 +1,33 @@
+@import '~angular-material/modules/scss/angular-material.layout-attributes';
+
+$height: 64px;
+
+.p3xr-layout-content {
+  margin-bottom: $height;
+  margin-top: $height;
+  padding: 5px;
+  position: absolute;
+  left: 0px;
+  right: 0px;
+}
+
+.p3xr-layout-header-container {
+  top: 0px;
+
+}
+
+.p3xr-layout-footer-container {
+  bottom: 0px;
+}
+
+.p3xr-layout-header-container, .p3xr-layout-footer-container {
+  position: fixed;
+  z-index: 1;
+  left: 0px;
+  width: 100%;
+  .md-toolbar-tools {
+    height: $height !important;
+    min-height: $height !important;
+    max-height: $height !important;
+  }
+}

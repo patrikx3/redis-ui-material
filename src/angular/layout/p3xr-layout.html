@@ -1,0 +1,69 @@
+<div class="p3xr-layout-header-container">
+    <md-toolbar>
+        <span class="md-toolbar-tools">
+
+            <p3xr-button ui-sref="main" p3xr-label="$root.p3xr.strings.title.name" p3xr-fa-icon="fas fa-database"></p3xr-button>
+
+            <span flex></span>
+
+            <div>
+                <p3xr-button ng-if="$root.p3xr.state.connection && !$ctrl.isMain()" ui-sref="main" p3xr-label="$root.p3xr.strings.intention.main" p3xr-md-icon="home"></p3xr-button>
+
+                <p3xr-button ng-if="$root.p3xr.state.connection && $ctrl.isMain()" ui-sref="console" p3xr-label="$root.p3xr.strings.intention.console" p3xr-md-icon="video_label"></p3xr-button>
+
+                <p3xr-button ng-if="$root.hasConnected()" ui-sref="overview" p3xr-label="$root.p3xr.strings.intention.overview" p3xr-md-icon="info"></p3xr-button>
+
+                <p3xr-button ui-sref="settings" p3xr-label="$root.p3xr.strings.intention.settings" p3xr-md-icon="settings"></p3xr-button>
+
+            </div>
+        </div>
+    </md-toolbar>
+</div>
+
+
+<div class="p3xr-layout-footer-container">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <md-menu ng-if="$root.p3xr.state.connections.list.length > 0">
+
+                <p3xr-button ng-click="$mdMenu.open($event)" p3xr-label="$ctrl.connectionName" p3xr-md-icon="power" p3xr-tooltip-direction="top"></p3xr-button>
+
+                <md-menu-content>
+                    <md-menu-item ng-repeat="connection in $root.p3xr.state.connections.list"  ng-class="{'p3xr-md-menu-item-selected': $root.p3xr.state.connection.id  === connection.id}">
+                        <md-button ng-click="$ctrl.connect(connection)">
+                            {{ connection.name }}
+                        </md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+
+            <span ng-if="$root.p3xr.state.connection">
+                <p3xr-button ng-click="$ctrl.disconnect()" p3xr-label="$root.p3xr.strings.intention.disconnect" p3xr-fa-icon="fa fa-power-off" p3xr-tooltip-direction="top"></p3xr-button>
+            </span>
+
+            <span flex></span>
+            <md-menu>
+                <p3xr-button ng-click="$mdMenu.open($event)" p3xr-label="$root.p3xr.strings.intention.theme" p3xr-md-icon="color_lens" p3xr-tooltip-direction="top"></p3xr-button>
+                <md-menu-content>
+                    <md-menu-item ng-repeat="(key, value) in $root.p3xr.theme" ng-class="{'p3xr-md-menu-item-selected': $ctrl.themeSelectedKey === key}">
+                        <md-button ng-click="$ctrl.setTheme(key)">
+                            {{ $root.p3xr.strings.label.theme[key] }}
+                        </md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+            <p3xr-button ng-click="$ctrl.openLink.github()" p3xr-label="$root.p3xr.strings.intention.github" p3xr-fa-icon="fab fa-github" p3xr-tooltip-direction="top"></p3xr-button>
+
+        </div>
+    </md-toolbar>
+</div>
+
+<div flex layout="row" >
+    <div flex class="p3xr-layout-content">
+        <ui-view></ui-view>
+    </div>
+</div>
+
+
+
+

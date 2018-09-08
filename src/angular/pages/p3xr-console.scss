@@ -1,0 +1,28 @@
+p3xr-console {
+  #p3xr-console-content {
+
+    font-family: monospace, monospace !important;
+
+    $minWidthCalc: 20px;
+
+    text-align: center;
+    #p3xr-console-content-output {
+      pre {
+        font-family: monospace, monospace !important;
+      }
+      min-width: calc(100% - #{$minWidthCalc});
+      text-align: left;
+      .p3xr-console-content-output-item:before {
+        content: "> ";
+        opacity: 0.5;
+      }
+    }
+    input {
+      min-width: calc(100% - 40px);
+      position: fixed;
+      bottom: 75px;
+      left: 10px;
+      right: 10px;
+    }
+  }
+}

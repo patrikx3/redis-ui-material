@@ -1,0 +1,44 @@
+<md-toolbar class="md-accent" md-theme="{{ $root.p3xr.state.themeLayout}}" id="p3xr-main-header">
+    <div class="md-toolbar-tools">
+        <h2 flex md-truncate>{{ $root.p3xr.strings.intention.main }}</h2>
+        <span ng-if="$root.p3xr.state.connection !== undefined">
+            <span hide-xs>{{ $root.p3xr.strings.form.main.label.database }}:</span>
+            <md-input-container>
+                <md-tooltip ng-if="$root.$mdMedia('xs')" md-direction="bottom">{{ $root.p3xr.strings.form.main.label.database }}</md-tooltip>
+                <md-select ng-model="$ctrl.currentDatabase"
+                            aria-label="{{ $root.p3xr.strings.form.main.label.database }}" class="md-accent">
+                    <md-option ng-repeat="dbIndex in $root.p3xr.state.databaseIndexes" ng-value="dbIndex"
+                               ng-click="$ctrl.selectDatabase(dbIndex)">
+                      {{ dbIndex }}
+                    </md-option>
+                  </md-select>
+              </md-input-container>
+
+
+            <p3xr-button p3xr-label="$root.p3xr.strings.intention.refresh" p3xr-md-icon="refresh"
+                         ng-click="$ctrl.refreshRedis()"></p3xr-button>
+        </span>
+    </div>
+</md-toolbar>
+<md-content md-theme="{{ $root.p3xr.state.theme}}" layout-padding id="p3xr-main-content">
+
+    <div class="md-title"
+         ng-if="$root.p3xr.state.connections.list.length > 0 && $root.p3xr.state.connection === undefined">
+        {{ $root.p3xr.strings.title.main }}
+
+    </div>
+
+    <div ng-if="$root.p3xr.state.connections.list.length === 0">
+        <md-button ui-sref="settings" md-no-ink
+                   style="display: inline-block;  word-wrap: break-word;  white-space: normal;">
+            {{ $root.p3xr.strings.intention.noConnections }}
+        </md-button>
+    </div>
+
+    <div ng-if="$root.p3xr.state.connection !== undefined">
+
+    </div>
+
+</md-content>
+
+

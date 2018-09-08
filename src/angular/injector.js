@@ -1,0 +1,15 @@
+//injector-angular-start
+require('./dialog/p3xr-dialog-connection.js');
+require('./factory/p3xr-common.js');
+require('./factory/p3xr-socket.js');
+require('./layout/p3xr-layout.js');
+require('./pages/p3xr-console.js');
+require('./pages/p3xr-main.js');
+require('./pages/p3xr-overview.js');
+require('./pages/p3xr-settings.js');
+require('./provider/p3xr-theme.js');
+require('./provider/theme-generator/p3xr-theme-dark.js');
+require('./provider/theme-generator/p3xr-theme-light.js');
+require('./ui/p3xr-accordion.js');
+require('./ui/p3xr-button.js');
+//injector-angular-end
