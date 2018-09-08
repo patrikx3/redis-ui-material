@@ -7,9 +7,7 @@ module.exports = (grunt) => {
     const gruntUtil = builder.utils;
     const loader = new builder.loader(grunt);
     loader.js({
-        replacer: {
-          build: false,
-        },
+
         jit: {
             injector: 'grunt-injector',
         },
