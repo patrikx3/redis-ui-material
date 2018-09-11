@@ -2,6 +2,13 @@
     <div class="md-toolbar-tools">
         <h2 flex md-truncate>{{ $root.p3xr.strings.intention.main }}</h2>
         <span ng-if="$root.p3xr.state.connection !== undefined">
+
+                <md-button class="md-icon-button md-primary" aria-label="{{ $root.p3xr.strings.intention.save }}" ng-click="$ctrl.save()">
+                <md-icon>save</md-icon>
+                <md-tooltip md-direction="bottom">{{ $root.p3xr.strings.intention.save }}</md-tooltip>
+            </md-button>
+
+
             <md-input-container>
                 <md-tooltip md-direction="bottom">{{ $root.p3xr.strings.form.main.label.database }}</md-tooltip>
                 <md-select ng-model="$ctrl.currentDatabase"
@@ -53,7 +60,7 @@
         <div id="p3xr-main-treecontrol-container" hide-xs>
             <p3xr-main-tree p3xr-resize="$ctrl.resize()"></p3xr-main-tree>
         </div>
-        <div hide-xs id="p3xr-main-content-container" layout-padding>
+        <div hide-xs id="p3xr-main-content-container" >
             <ui-view>
             </ui-view>
         </div>
@@ -62,7 +69,7 @@
             <div flex-gt-xs="33" flex id="p3xr-main-treecontrol-container-directive-small">
                 <p3xr-main-tree  p3xr-resize="$ctrl.resize()"></p3xr-main-tree>
             </div>
-            <div flex-gt-xs="67" flex layout-padding>
+            <div flex-gt-xs="67" flex >
                 <ui-view >
                 </ui-view>
             </div>

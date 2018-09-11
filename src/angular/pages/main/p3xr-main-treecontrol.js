@@ -4,9 +4,9 @@ p3xr.ng.component('p3xrMainTree', {
     
           <treecontrol ng-if="$ctrl.keysTree.length > 0" class="{{ $ctrl.getTreeTheme() }} p3xr-main-tree"
                          tree-model="$ctrl.keysTree" options="$ctrl.keysTreeOptions"
-                         on-selection="$ctrl.selectTreeNode(node)">
+                         on-selection="$ctrl.selectTreeNode(node, selected, $parentNode, $index, $first, $middle, $last, $odd, $even, $path)"  on-node-toggle="$ctrl.showToggle(node, expanded, $parentNode, $index, $first, $middle, $last, $odd, $even, $path)">
 
-                <label class="p3xr-main-tree-node" ng-mouseover="node.show = true" ng-mouseleave="node.show = false">
+                <label class="p3xr-main-tree-node" ng-mouseover="node.show = true" ng-mouseleave="node.show = false" title="{{node.key}}">
                     {{node.label}} <span class="p3xr-main-tree-node-count" ng-if="node.type === 'folder'">({{node.childCount}})</span>
                     
                     <span ng-show="node.type === 'folder' && node.show">
@@ -22,7 +22,7 @@ p3xr.ng.component('p3xrMainTree', {
     bindings: {
         p3xrResize: '&',
     },
-    controller: function(p3xrCommon, p3xrRedisParser, p3xrSocket, $rootScope, $timeout) {
+    controller: function(p3xrCommon, p3xrRedisParser, p3xrSocket, $rootScope, $timeout,  $state) {
 
         this.$onInit = () => {
             this.p3xrResize()
@@ -38,9 +38,20 @@ p3xr.ng.component('p3xrMainTree', {
                         keys: p3xr.state.keys
                     })
                     keys = p3xr.state.keys
-                    console.warn(keysTreeRendered)
                 }
                 return keysTreeRendered
+            }
+        })
+
+        let expandedNodes = []
+        Object.defineProperty(this, 'expandedNodes', {
+            get: () => {
+                console.warn(expandedNodes)
+                return expandedNodes
+            },
+            set: (value) =>  {
+                console.warn(expandedNodes)
+                expandedNodes = value
             }
         })
 
@@ -54,11 +65,30 @@ p3xr.ng.component('p3xrMainTree', {
         this.keysTreeOptions = {
             nodeChildren: "children",
             dirSelectable: false,
-            multiSelection: false
+            multiSelection: false,
+            /*
+             injectClasses: {
+              ul: "a1",
+              li: "a2",
+              liSelected: "a7",
+              iExpanded: "a3",
+              iCollapsed: "a4",
+              iLeaf: "a5",
+              label: "a6",
+              labelSelected: "a8"
+            }
+             */
         };
 
-        this.selectTreeNode = (node) => {
-            //console.log(node.key)
+        this.selectTreeNode = function(node, selected, $parentNode, $index, $first, $middle, $last, $odd, $even, $path)  {
+           // console.warn('selectTreeNode', arguments)
+            $state.go('main.key', {
+                key: node.key
+            })
+        }
+
+        this.showToggle = function(node, expanded, $parentNode, $index, $first, $middle, $last, $odd, $even, $path)  {
+            console.warn('showToggle', arguments, $path())
             p3xrCommon.toast({
                 message: 'key ' + node.key
             })

@@ -7,7 +7,7 @@
             <span flex></span>
 
             <div>
-                <p3xr-button ng-if="$root.p3xr.state.connection && !$ctrl.isMain()" ui-sref="main" p3xr-label="$root.p3xr.strings.intention.main" p3xr-md-icon="home"></p3xr-button>
+                <p3xr-button ng-if="$root.p3xr.state.connection && !$ctrl.isMain()" ui-sref="main.statistics" p3xr-label="$root.p3xr.strings.intention.main" p3xr-md-icon="home"></p3xr-button>
 
                 <p3xr-button ng-if="$root.p3xr.state.connection && $ctrl.isMain()" ui-sref="console" p3xr-label="$root.p3xr.strings.intention.console" p3xr-md-icon="video_label"></p3xr-button>
 

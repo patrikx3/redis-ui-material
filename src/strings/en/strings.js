@@ -2,6 +2,19 @@ const strings = {
     title: {
         name: 'P3X Redis UI',
         main: 'You may choose a REDIS connection to connect from the left bottom menu.',
+        statistics: 'Statistics',
+        connectinRedis: 'Connecting to Redis ...',
+/*
+        server: 'Server',
+        clients: 'Clients',
+        memory: 'Memory',
+        persistence: 'Persistance',
+        stats: 'Statastics',
+        replication: 'Replication',
+        cpu: 'CPU',
+        cluster: 'Cluster',
+        keyspace: 'Keyspace',
+*/
    },
     confirm: {
         title: 'Confirm',
@@ -57,6 +70,7 @@ const strings = {
         saved: 'Updated',
         cancelled: 'Cancelled',
         deleted: 'Deleted',
+        savedRedisDb: 'The Db is saved',
         redisDisconnected: (opts) => {
             return `The current connection had an error: ${opts.error.message}`
         },
@@ -71,6 +85,7 @@ const strings = {
     code: {
         'delete-connection': 'This connection was deleted, so you are disconnected to this Redis instance.',
         'save-connection': 'This connection was changed, so you are disconnected to this Redis instance. You may re-connect.',
+        'readonly-connections': 'Connections add/save/delete are readonly only!',
     },
     form: {
         error: {

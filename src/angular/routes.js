@@ -24,9 +24,14 @@ const routes = ($stateProvider, $urlRouterProvider) => {
         template: '<p3xr-console></p3xr-console>'
     })
 
-    $stateProvider.state('main.info', {
-        url: '/info',
-        template: '<p3xr-main-info></p3xr-main-info>',
+    $stateProvider.state('main.statistics', {
+        url: '/statistics',
+        template: '<p3xr-main-statistics></p3xr-main-statistics>',
+    });
+
+    $stateProvider.state('main.key', {
+        url: '/key/:key',
+        template: '<p3xr-main-key></p3xr-main-key>',
     });
 
 }

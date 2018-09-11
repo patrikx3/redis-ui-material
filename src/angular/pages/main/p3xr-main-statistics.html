@@ -1,0 +1,30 @@
+<md-tabs md-dynamic-height md-border-bottom>
+    <md-tab label="DB">
+        <md-content >
+
+            <md-tabs md-dynamic-height md-border-bottom class="md-primary">
+                <md-tab label="{{ key }}"  ng-repeat="(key, value) in $root.p3xr.state.info.keyspaceDatabases">
+                    <md-content>
+                        <md-list flex ng-repeat="(itemKey, itemValue) in $root.p3xr.state.info.keyspace['db' + key ]">
+                            <md-list-item>
+                                <p><strong>{{ $ctrl.generateKey(itemKey) }}</strong></p>
+                                {{ itemValue }}
+                            </md-list-item>
+                        </md-list>
+                    </md-content>
+                </md-tab>
+
+            </md-tabs>
+        </md-content>
+    </md-tab>
+    <md-tab label="{{ $ctrl.generateKey(key) }}" ng-repeat="(key, value) in $root.p3xr.state.info" ng-if="key !== 'keyspace' &&  key !== 'keyspaceDatabases'">
+        <md-content>
+            <md-list flex >
+                <md-list-item ng-repeat="(itemKey, itemValue) in value">
+                    <p><strong>{{ $ctrl.generateKey(itemKey) }}</strong></p>
+                    {{ itemValue }}
+                </md-list-item>
+            </md-list>
+        </md-content>
+    </md-tab>
+</md-tabs>

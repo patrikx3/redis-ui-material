@@ -15,6 +15,9 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog) {
                 error = dataOrError.error
             }
             console.error(error)
+            if (error.hasOwnProperty('code') && p3xr.strings.code.hasOwnProperty(error.code)) {
+                error.message = p3xr.strings.code[error.code]
+            }
             $mdToast.show(
                 $mdToast.simple()
                     .textContent(error.hasOwnProperty('message') ? error.message : error)

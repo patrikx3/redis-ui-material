@@ -17,7 +17,7 @@ p3xr.ng.factory('p3xrRedisParser', function () {
             const obj = {}
             for(let row of rows) {
                 const rowLine = row.split(fieldDivider)
-                obj[rowLine[0]] = rowLine[1]
+                obj[rowLine[0]] = rowLine[1].trim()
             }
             return obj
         }
@@ -37,8 +37,8 @@ p3xr.ng.factory('p3xrRedisParser', function () {
                 } else if (line.length > 2) {
                     const lineArray = line.split(':')
                     currentSectionObj[lineArray[0]] = lineArray[1].includes(',') ? selfMain.array({
-                        line: lineArray[1]
-                    }) : lineArray[1]
+                        line: lineArray[1].trim()
+                    }) : lineArray[1].trim()
                 }
             }
             if (section !== undefined) {
@@ -56,11 +56,11 @@ p3xr.ng.factory('p3xrRedisParser', function () {
         }
 
 
-        const moment = require('moment')
+       // const moment = require('moment')
 
         this.keysToTreeControl =  (options) => {
 
-            const start = Date.now()
+         //   const start = Date.now()
 
             const { keys } = options
             let { divider } = options

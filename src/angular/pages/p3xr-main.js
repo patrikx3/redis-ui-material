@@ -34,10 +34,10 @@ p3xr.ng.component('p3xrMain', {
                 $treeControl.css('height', containerPosition.height + 'px')
                 $treeControl.css('max-height', containerPosition.height + 'px')
                 $treeControl.css('width', '33%')
-                $treeControl.css('max-width', '320px')
+//                $treeControl.css('max-width', '320px')
 
                 const $content = $('#p3xr-main-content-container');
-                $content.css('padding-left', ($treeControl.width() + 32) + 'px')
+                $content.css('padding-left', ($treeControl.width() + 0) + 'px')
             }
 
         }, p3xr.settings.debounce)
@@ -55,7 +55,7 @@ p3xr.ng.component('p3xrMain', {
 
             $window.on('resize', resize)
 
-            $state.go('main.info')
+            $state.go('main.statistics')
 
         }
 
@@ -77,7 +77,7 @@ p3xr.ng.component('p3xrMain', {
                 }
                 if (firsGetCurrentDatabase) {
                     firsGetCurrentDatabase = false;
-                    if (currentDatabase != 0) {
+                    if (currentDatabase !== 0) {
                         this.selectDatabase(currentDatabase)
                     }
                 }
@@ -136,6 +136,25 @@ p3xr.ng.component('p3xrMain', {
                 $rootScope.p3xr.state.info = p3xrRedisParser.info(response.info)
                 $rootScope.p3xr.state.keys = response.keys
                 $rootScope.$digest()
+
+                $state.go('main.statistics')
+            } catch(e) {
+                p3xrCommon.generalHandleError(e)
+            }
+        }
+
+
+        this.save = async () => {
+            try {
+                const response = await p3xrSocket.request({
+                    action: 'save',
+
+                })
+                $rootScope.p3xr.state.info = p3xrRedisParser.info(response.info)
+                $rootScope.$digest()
+                p3xrCommon.toast({
+                    message: p3xr.strings.status.savedRedisDb
+                })
             } catch(e) {
                 p3xrCommon.generalHandleError(e)
             }

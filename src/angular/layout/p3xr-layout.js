@@ -23,6 +23,9 @@ p3xr.ng.component('p3xrLayout', {
         this.connect = async (connection) => {
             connection = angular.copy(connection)
             try {
+                p3xr.ui.overlay.show({
+                    message: p3xr.strings.title.connectinRedis
+                })
                 const response = await p3xrSocket.request({
                     action: 'connection-connect',
                     payload: {
@@ -45,6 +48,8 @@ p3xr.ng.component('p3xrLayout', {
             } catch(error) {
                 $rootScope.p3xr.state.connection = undefined
                 p3xrCommon.generalHandleError(error)
+            } finally {
+                p3xr.ui.overlay.hide()
             }
 
            // $rootScope.$digest()
@@ -82,7 +87,7 @@ p3xr.ng.component('p3xrLayout', {
         })
 
         this.isMain = () => {
-            return $state.current.name === 'main'
+            return $state.current.name.startsWith('main')
         }
     }
 })
