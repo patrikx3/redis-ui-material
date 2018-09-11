@@ -77,6 +77,11 @@ p3xr.ng.factory('p3xrSocket', function ($rootScope, p3xrCommon, $state) {
         $rootScope.$digest();
     })
 
+    ioClient.on('configuration', (data) => {
+        $rootScope.p3xr.state.cfg = data;
+        $rootScope.$digest();
+    })
+
     ioClient.on('error', p3xrCommon.generalHandleError)
 
     const request = (options) => {

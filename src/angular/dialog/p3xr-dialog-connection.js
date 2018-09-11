@@ -13,6 +13,7 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
 
                         if (options.model !== undefined) {
                             $scope.model = options.model
+                            $scope.model.password = options.model.id
                         } else {
                             $scope.model = {
                                 name: undefined,

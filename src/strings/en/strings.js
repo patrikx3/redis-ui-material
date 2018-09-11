@@ -25,6 +25,7 @@ const strings = {
         }
     },
     intention: {
+        view: 'View',
         statistics: 'Statistics',
         refresh: 'Refresh',
         clear: 'Clear',
@@ -50,10 +51,12 @@ const strings = {
         testConnection: 'Test connection',
     },
     label: {
+        passwordSecure: 'The password might will be empty, but still it will show characters, this is a security feature.',
         welcomeConsole: 'Welcome to the Redis Console',
         console: 'Console',
         connectiondAdd: 'Add connection',
         connectiondEdit: 'Edit connection',
+        connectiondView: 'View connection',
         connections: 'Connections',
         theme: {
             light: 'Light',

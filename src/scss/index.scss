@@ -29,6 +29,10 @@ input:-webkit-autofill {
   background-color: rgba(128, 128, 128, 0.5) !important;
 }
 
+.p3xr-md-input-container-no-bottom {
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
 
 @import '../injector';
 

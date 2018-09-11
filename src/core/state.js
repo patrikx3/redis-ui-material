@@ -6,7 +6,8 @@ p3xr.state = {
     connections: [],
     redisConnections: {},
     keys: [],
-    redisTreeDivider: ':'
+    redisTreeDivider: ':',
+    cfg: undefined
 }
 
 Object.defineProperty(p3xr.state, 'themeLayout', {

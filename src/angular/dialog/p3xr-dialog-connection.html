@@ -2,7 +2,7 @@
     <form novalidate name="p3xrConnectionForm" ng-submit="submit()">
         <md-toolbar md-theme="{{ $root.p3xr.state.themeLayout }}" class="md-hue-2">
             <div class="md-toolbar-tools" >
-                <h2 flex md-truncate>{{  options.type === 'new' ? $root.p3xr.strings.label.connectiondAdd : $root.p3xr.strings.label.connectiondEdit }}</h2>
+                <h2 flex md-truncate>{{  $root.p3xr.state.cfg.readonlyConnections ? $root.p3xr.strings.label.connectiondView : options.type === 'new' ? $root.p3xr.strings.label.connectiondAdd : $root.p3xr.strings.label.connectiondEdit }}</h2>
                 <md-button class="md-icon-button" ng-click="cancel()">
                     <md-icon>close</md-icon>
                 </md-button>
@@ -13,7 +13,7 @@
 
                     <md-input-container class="md-block" >
                         <label>{{ $root.p3xr.strings.form.connection.label.name }}</label>
-                        <input required name="name" ng-model="model.name">
+                        <input required name="name" ng-model="model.name" ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
                         <div ng-messages="p3xrConnectionForm.name.$error">
                             <div ng-message="required">{{ $root.p3xr.strings.form.error.required }}</div>
                         </div>
@@ -22,13 +22,13 @@
 
                     <md-input-container class="md-block" >
                         <label>{{ $root.p3xr.strings.form.connection.label.host }}</label>
-                        <input name="host" ng-model="model.host">
+                        <input name="host" ng-model="model.host" ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
                     </md-input-container>
 
 
                     <md-input-container class="md-block" >
                         <label>{{ $root.p3xr.strings.form.connection.label.port }}</label>
-                        <input name="port" type="number" min="1" max="65535" ng-model="model.port">
+                        <input name="port" type="number" min="1" max="65535" ng-model="model.port" ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
                         <div ng-messages="p3xrConnectionForm.port.$error">
                             <div ng-message-exp="['min', 'max']">
                                 {{ $root.p3xr.strings.form.error.port }}
@@ -37,10 +37,13 @@
                     </md-input-container>
 
 
-                    <md-input-container class="md-block" >
+                    <md-input-container class="md-block p3xr-md-input-container-no-bottom" >
                         <label>{{ $root.p3xr.strings.form.connection.label.password }}</label>
-                        <input name="password" type="password" ng-model="model.password">
+                        <input name="password" type="password" ng-model="model.password" ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
                     </md-input-container>
+                    <div style="opacity: 0.25; padding-top: 5px;">
+                        {{ $root.p3xr.strings.label.passwordSecure }}
+                    </div>
 
 
                 </md-content>
@@ -60,7 +63,7 @@
                 {{ $root.p3xr.strings.intention.cancel }}
             </md-button>
 
-            <md-button class="md-raised md-primary" type="submit">
+            <md-button class="md-raised md-primary" type="submit" ng-if="!$root.p3xr.state.cfg.readonlyConnections">
                 <md-icon>{{ options.type === 'new' ? 'add' : 'save' }}</md-icon>
                 {{ options.type === 'new' ? $root.p3xr.strings.intention.add : $root.p3xr.strings.intention.save }}
             </md-button>
