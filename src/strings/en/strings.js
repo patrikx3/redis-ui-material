@@ -2,12 +2,17 @@ const strings = {
     title: {
         name: 'P3X Redis UI',
         main: 'You may choose a REDIS connection to connect from the left bottom menu.',
-        confirm: {
-            deleteConnection: 'Confirm',
-            deleteConnectionText: 'Are you sure to delete this Redis connection?'
-        },
+   },
+    confirm: {
+        title: 'Confirm',
+        deleteConnection: 'Confirm',
+        deleteConnectionText: 'Are you sure to delete this Redis connection?',
+        deleteAllKeys: (opts) => {
+            return  `Delete this tree and all it\'s keys (${opts.key})?`
+        }
     },
     intention: {
+        statistics: 'Statistics',
         refresh: 'Refresh',
         clear: 'Clear',
         main: 'Home',
@@ -28,6 +33,7 @@ const strings = {
         edit: 'Edit',
         save: 'Save',
         'delete': 'Remove',
+        'sure' : 'Sure',
         testConnection: 'Test connection',
     },
     label: {
@@ -45,6 +51,7 @@ const strings = {
         }
     },
     status: {
+        noRedisKeys: 'There are no keys in this database.',
         redisConnected: 'Redis connected successful',
         added: 'Added',
         saved: 'Updated',
@@ -52,6 +59,13 @@ const strings = {
         deleted: 'Deleted',
         redisDisconnected: (opts) => {
             return `The current connection had an error: ${opts.error.message}`
+        },
+        dbChanged: (opts) => {
+            return `The db index set to ${opts.db}. `
+        },
+        treeDeleted: (opts) => {
+            return `The tree key was deleted (${opts.key}).`
+
         }
     },
     code: {
@@ -90,7 +104,7 @@ const strings = {
 
             }
         }
-    }
+    },
 }
 
 

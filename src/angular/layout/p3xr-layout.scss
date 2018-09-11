@@ -11,18 +11,26 @@ $height: 64px;
   right: 0px;
 }
 
-.p3xr-layout-header-container {
+#p3xr-layout-header-container {
   top: 0px;
 
 }
 
-.p3xr-layout-footer-container {
+#p3xr-layout-footer-container {
   bottom: 0px;
 }
 
-.p3xr-layout-header-container, .p3xr-layout-footer-container {
+#p3xr-layout-header-version {
   position: fixed;
-  z-index: 1;
+  z-index: 6;
+  top: 42px;
+  left: 128px;
+  font-size: 75%;
+}
+
+#p3xr-layout-header-container, #p3xr-layout-footer-container {
+  position: fixed;
+  z-index: 5;
   left: 0px;
   width: 100%;
   .md-toolbar-tools {

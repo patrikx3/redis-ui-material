@@ -1,0 +1,19 @@
+p3xr-main {
+
+  #p3xr-main-treecontrol-container {
+    position: fixed;
+    overflow: auto;
+  }
+
+  #p3xr-main-treecontrol-container-directive-small {
+    max-height: 320px;
+    overflow: auto;
+  }
+
+  .p3xr-main-treecontrol-folder-delete-icon {
+    transform: scale(0.75);
+  }
+
+
+
+}

@@ -2,33 +2,46 @@
     <div class="md-toolbar-tools">
         <h2 flex md-truncate>{{ $root.p3xr.strings.intention.main }}</h2>
         <span ng-if="$root.p3xr.state.connection !== undefined">
-            <span hide-xs>{{ $root.p3xr.strings.form.main.label.database }}:</span>
             <md-input-container>
-                <md-tooltip ng-if="$root.$mdMedia('xs')" md-direction="bottom">{{ $root.p3xr.strings.form.main.label.database }}</md-tooltip>
+                <md-tooltip md-direction="bottom">{{ $root.p3xr.strings.form.main.label.database }}</md-tooltip>
                 <md-select ng-model="$ctrl.currentDatabase"
                             aria-label="{{ $root.p3xr.strings.form.main.label.database }}" class="md-accent">
                     <md-option ng-repeat="dbIndex in $root.p3xr.state.databaseIndexes" ng-value="dbIndex"
                                ng-click="$ctrl.selectDatabase(dbIndex)">
-                      {{ dbIndex }}
+                        <span ng-if="$root.p3xr.state.info.keyspaceDatabases[dbIndex]">
+                            <md-icon>radio_button_checked</md-icon>
+                        </span>
+                        <span ng-if="!$root.p3xr.state.info.keyspaceDatabases[dbIndex]">
+                            <md-icon>radio_button_unchecked</md-icon>
+                        </span>
+                        {{ dbIndex }}
                     </md-option>
-                  </md-select>
-              </md-input-container>
+                </md-select>
+            </md-input-container>
 
 
-            <p3xr-button p3xr-label="$root.p3xr.strings.intention.refresh" p3xr-md-icon="refresh"
-                         ng-click="$ctrl.refreshRedis()"></p3xr-button>
+            <md-button class="md-icon-button md-primary" aria-label="{{ $root.p3xr.strings.intention.statistics }}" ng-click="$ctrl.statistics()">
+                <md-icon>show_chart</md-icon>
+                <md-tooltip md-direction="bottom">{{ $root.p3xr.strings.intention.statistics }}</md-tooltip>
+            </md-button>
+
+            <md-button class="md-icon-button md-primary" aria-label="{{ $root.p3xr.strings.intention.refresh }}" ng-click="$ctrl.refresh()">
+                <md-icon>refresh</md-icon>
+                <md-tooltip md-direction="bottom">{{ $root.p3xr.strings.intention.refresh }}</md-tooltip>
+            </md-button>
+
         </span>
     </div>
 </md-toolbar>
-<md-content md-theme="{{ $root.p3xr.state.theme}}" layout-padding id="p3xr-main-content">
+<md-content md-theme="{{ $root.p3xr.state.theme}}" id="p3xr-main-content">
 
-    <div class="md-title"
+    <div class="md-title" layout-padding
          ng-if="$root.p3xr.state.connections.list.length > 0 && $root.p3xr.state.connection === undefined">
         {{ $root.p3xr.strings.title.main }}
 
     </div>
 
-    <div ng-if="$root.p3xr.state.connections.list.length === 0">
+    <div ng-if="$root.p3xr.state.connections.list.length === 0" layout-padding>
         <md-button ui-sref="settings" md-no-ink
                    style="display: inline-block;  word-wrap: break-word;  white-space: normal;">
             {{ $root.p3xr.strings.intention.noConnections }}
@@ -36,6 +49,29 @@
     </div>
 
     <div ng-if="$root.p3xr.state.connection !== undefined">
+
+        <div id="p3xr-main-treecontrol-container" hide-xs>
+            <p3xr-main-tree p3xr-resize="$ctrl.resize()"></p3xr-main-tree>
+        </div>
+        <div hide-xs id="p3xr-main-content-container" layout-padding>
+            <ui-view>
+            </ui-view>
+        </div>
+
+        <div layout-gt-xs="row" layout="column" ng-if="$root.$mdMedia('xs')">
+            <div flex-gt-xs="33" flex id="p3xr-main-treecontrol-container-directive-small">
+                <p3xr-main-tree  p3xr-resize="$ctrl.resize()"></p3xr-main-tree>
+            </div>
+            <div flex-gt-xs="67" flex layout-padding>
+                <ui-view >
+                </ui-view>
+            </div>
+        </div>
+
+        <div class="md-title" ng-if="$ctrl.keysTree.length === 0" layout-padding>
+            {{ $root.p3xr.strings.status.noRedisKeys}}
+        </div>
+
 
     </div>
 

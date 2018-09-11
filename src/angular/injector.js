@@ -1,8 +1,11 @@
 //injector-angular-start
 require('./dialog/p3xr-dialog-connection.js');
 require('./factory/p3xr-common.js');
+require('./factory/p3xr-redis-parser.js');
 require('./factory/p3xr-socket.js');
 require('./layout/p3xr-layout.js');
+require('./pages/main/p3xr-main-info.js');
+require('./pages/main/p3xr-main-treecontrol.js');
 require('./pages/p3xr-console.js');
 require('./pages/p3xr-main.js');
 require('./pages/p3xr-overview.js');

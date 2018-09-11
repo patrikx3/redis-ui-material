@@ -1,3 +1,17 @@
+// angular
+global.angular = require('angular');
+
+require('angular-aria');
+require('angular-messages');
+require('angular-animate');
+require('angular-cookies');
+
+require('@uirouter/angularjs')
+require('angular-material');1
+
+require('angular-tree-control')
+require('angular-tree-control/context-menu')
+
 p3xr.ng =  angular.module('p3x-redis-ui', [
     'ngCookies',
     'ngAnimate',
@@ -5,6 +19,7 @@ p3xr.ng =  angular.module('p3x-redis-ui', [
     'ngMessages',
     'ngMaterial',
     'ui.router',
+    'treeControl',
 ] );
 
 
@@ -12,7 +27,7 @@ p3xr.ng =  angular.module('p3x-redis-ui', [
 require('./injector')
 
 
-p3xr.ng.config(($qProvider, $locationProvider, $stateProvider, p3xrThemeProvider) => {
+p3xr.ng.config(($qProvider, $locationProvider, $urlRouterProvider, $stateProvider, p3xrThemeProvider) => {
 
     $qProvider.errorOnUnhandledRejections(false);
     $locationProvider.html5Mode(true);
@@ -20,6 +35,8 @@ p3xr.ng.config(($qProvider, $locationProvider, $stateProvider, p3xrThemeProvider
 //  $httpProvider.interceptors.push('ngivrHttpInterceptor');
     p3xrThemeProvider.start();
     const routes = require('./routes')
+
+    $urlRouterProvider.otherwise('/main');
 
     routes($stateProvider);
 

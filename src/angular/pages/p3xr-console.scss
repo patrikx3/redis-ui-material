@@ -9,6 +9,7 @@ p3xr-console {
     #p3xr-console-content-output {
       pre {
         font-family: monospace, monospace !important;
+        white-space: pre-wrap;
       }
       min-width: calc(100% - #{$minWidthCalc});
       text-align: left;

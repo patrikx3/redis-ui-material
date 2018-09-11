@@ -1,6 +1,6 @@
 p3xr.ng.component('p3xrLayout', {
     template: require('./p3xr-layout.html'),
-    controller: function (p3xrTheme, $rootScope, p3xrSocket, p3xrCommon, $state) {
+    controller: function (p3xrTheme, $rootScope, p3xrSocket, p3xrCommon, $state, p3xrRedisParser) {
         this.setTheme = (theme) => {
             p3xrTheme.setTheme(p3xrTheme.generateThemeName(theme))
         }
@@ -32,19 +32,22 @@ p3xr.ng.component('p3xrLayout', {
 
                 let dbIndex = 0
                 const databaseIndexes = []
-                console.warn(response)
+                //console.warn(response)
                 while(dbIndex < response.databases) {
                     databaseIndexes.push(dbIndex++)
                 }
                 $rootScope.p3xr.state.databaseIndexes = databaseIndexes
-
                 $rootScope.p3xr.state.connection = connection
+
+                $rootScope.p3xr.state.info = p3xrRedisParser.info(response.info)
+                $rootScope.p3xr.state.keys = response.keys
+
             } catch(error) {
                 $rootScope.p3xr.state.connection = undefined
                 p3xrCommon.generalHandleError(error)
             }
 
-            $rootScope.$digest()
+           // $rootScope.$digest()
         }
 
 
@@ -63,7 +66,7 @@ p3xr.ng.component('p3xrLayout', {
                 p3xrCommon.generalHandleError(error)
             }
             $state.go('main')
-            $rootScope.$digest()
+           // $rootScope.$digest()
         }
 
         Object.defineProperty(this, 'connectionName', {

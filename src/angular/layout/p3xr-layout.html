@@ -1,4 +1,4 @@
-<div class="p3xr-layout-header-container">
+<div id="p3xr-layout-header-container">
     <md-toolbar>
         <span class="md-toolbar-tools">
 
@@ -20,8 +20,9 @@
     </md-toolbar>
 </div>
 
+<div id="p3xr-layout-header-version" md-colors="{ color: 'background' }" hide-xs>v{{ $root.p3xr.pkg.version }}</div>
 
-<div class="p3xr-layout-footer-container">
+<div id="p3xr-layout-footer-container">
     <md-toolbar>
         <div class="md-toolbar-tools">
             <md-menu ng-if="$root.p3xr.state.connections.list.length > 0">

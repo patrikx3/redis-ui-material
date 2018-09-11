@@ -4,7 +4,9 @@ p3xr.state = {
     currentDatabase: undefined,
     databaseIndexes: [0],
     connections: [],
-    redisConnections: {}
+    redisConnections: {},
+    keys: [],
+    redisTreeDivider: ':'
 }
 
 Object.defineProperty(p3xr.state, 'themeLayout', {

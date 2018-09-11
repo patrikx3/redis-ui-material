@@ -1,4 +1,4 @@
-const routes = ($stateProvider) => {
+const routes = ($stateProvider, $urlRouterProvider) => {
 
     $stateProvider.state({
         name: 'settings',
@@ -8,7 +8,7 @@ const routes = ($stateProvider) => {
 
     $stateProvider.state({
         name: 'main',
-        url: '/',
+        url: '/main',
         template: '<p3xr-main></p3xr-main>'
     })
 
@@ -23,6 +23,12 @@ const routes = ($stateProvider) => {
         url: '/console',
         template: '<p3xr-console></p3xr-console>'
     })
+
+    $stateProvider.state('main.info', {
+        url: '/info',
+        template: '<p3xr-main-info></p3xr-main-info>',
+    });
+
 }
 
 module.exports = routes

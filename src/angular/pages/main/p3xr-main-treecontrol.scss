@@ -1,0 +1,24 @@
+p3xr-main {
+
+
+  treecontrol {
+    ul {
+      overflow: visible !important; /*# STEP1  #### Override overflow attribute like uncledb said */
+    }
+  }
+
+  treecontrol > ul > li {
+    padding-left: 0;
+  }
+
+  .p3xr-main-tree {
+    .p3xr-main-tree-node {
+      line-height: 24px !important;
+      white-space: nowrap;  /*# STEP-2   #Set nowrap for node labels ###### THIS DID THE TRICK FOR ME ########*/
+      .p3xr-main-tree-node-count {
+        opacity: 0.5;
+      }
+    }
+  }
+
+}

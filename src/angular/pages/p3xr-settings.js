@@ -11,16 +11,11 @@ p3xr.ng.component('p3xrSettings', {
         this.deleteConnection = async (options) => {
             const { model, ev } = options;
 
-            const confirm = $mdDialog.confirm()
-                .title(p3xr.strings.title.confirm.deleteConnection)
-                .textContent(p3xr.strings.title.confirm.deleteConnectionText)
-                .targetEvent(ev)
-                .ok(p3xr.strings.intention.delete)
-                .cancel(p3xr.strings.intention.cancel);
-
-
             try {
-                await $mdDialog.show(confirm);
+                await p3xrCommon.confirm({
+                    event: ev,
+                    message: p3xr.strings.confirm.deleteConnectionText
+                });
                 const response = await p3xrSocket.request({
                     action: 'connection-delete',
                     payload: {

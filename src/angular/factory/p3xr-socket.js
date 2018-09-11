@@ -67,7 +67,7 @@ p3xr.ng.factory('p3xrSocket', function ($rootScope, p3xrCommon, $state) {
                 p3xrCommon.generalHandleError(e)
             }
 
-            $rootScope.$digest();
+            //$rootScope.$digest();
         }
     })
 
