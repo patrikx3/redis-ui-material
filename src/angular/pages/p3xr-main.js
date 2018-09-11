@@ -137,7 +137,6 @@ p3xr.ng.component('p3xrMain', {
                 $rootScope.p3xr.state.keys = response.keys
                 $rootScope.$digest()
 
-                $state.go('main.statistics')
             } catch(e) {
                 p3xrCommon.generalHandleError(e)
             }
@@ -160,6 +159,20 @@ p3xr.ng.component('p3xrMain', {
             }
         }
 
+        this.statistics = async () => {
+            try {
+                const response = await p3xrSocket.request({
+                    action: 'refresh',
+
+                })
+                $rootScope.p3xr.state.info = p3xrRedisParser.info(response.info)
+                $rootScope.p3xr.state.keys = response.keys
+                $rootScope.$digest()
+            } catch(e) {
+                p3xrCommon.generalHandleError(e)
+            }
+            $state.go('main.statistics')
+        }
 
         /*
 redis version = server - redis_version
