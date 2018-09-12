@@ -1,3 +1,10 @@
+# This is a development package
+
+For the full-blown package, please follow:    
+https://github.com/patrikx3/redis-ui
+https://www.npmjs.com/package/p3x-redis-ui  
+https://pages.corifeus.com/redis-ui  
+
 [//]: #@corifeus-header
 
  [![Build Status](https://travis-ci.org/patrikx3/redis-ui-material.svg?branch=master)](https://travis-ci.org/patrikx3/redis-ui-material) 
@@ -38,8 +45,6 @@ https://nodejs.org/en/download/package-manager/
                         
 [//]: #@corifeus-header:end
 
-Please this is for a development package, for the full-blown package, please follow:  
-https://pages.corifeus.com/redis-ui/
 
 The is the `p3x-redis-ui-material` web gui, that uses the `p3x-redis-ui-server`.   
 
