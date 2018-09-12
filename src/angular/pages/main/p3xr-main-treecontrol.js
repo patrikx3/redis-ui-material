@@ -8,7 +8,7 @@ p3xr.ng.component('p3xrMainTree', {
 
                 <label class="p3xr-main-tree-node" ng-mouseover="node.show = true" ng-mouseleave="node.show = false" title="{{$root.p3xr.ui.htmlEncode(node.key)}}">
                 
-                    {{ node.redisType }}
+                    <!-- {{ node.redisType }} -->
                     {{node.label}} <span class="p3xr-main-tree-node-count" ng-if="node.type === 'folder'">({{node.childCount}})</span>
                     
                     <span ng-show="node.type === 'folder' && node.show">
