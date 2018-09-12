@@ -24,6 +24,7 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $rootScope, p3xrRed
                     .position(p3xr.settings.toast.position)
                     .theme(p3xr.state.themeLayout)
                     .hideDelay(p3xr.settings.toast.timeout)
+                    .capsule(true)
             );
             return false
         }
@@ -37,6 +38,7 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $rootScope, p3xrRed
                 .position(p3xr.settings.toast.position)
                 .theme(p3xr.state.themeLayout)
                 .hideDelay(p3xr.settings.toast.timeout)
+                .capsule(true)
         );
     }
 

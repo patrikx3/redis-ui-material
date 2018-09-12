@@ -6,9 +6,16 @@ p3xr.ng.component('p3xrMainTree', {
                          tree-model="$ctrl.keysTree" options="$ctrl.keysTreeOptions"
                          on-selection="$ctrl.selectTreeNode(node, selected, $parentNode, $index, $first, $middle, $last, $odd, $even, $path)"  on-node-toggle="$ctrl.showToggle(node, expanded, $parentNode, $index, $first, $middle, $last, $odd, $even, $path)">
 
-                <label class="p3xr-main-tree-node" ng-mouseover="node.show = true" ng-mouseleave="node.show = false" title="{{$root.p3xr.ui.htmlEncode(node.key)}}">
+                <label class="p3xr-main-tree-node" ng-mouseover="node.show = true" ng-mouseleave="node.show = false" title="{{ $ctrl.extractNodeTooltip(node) }}">
                 
                     <!-- {{ node.redisType }} -->
+                    <span ng-switch="" on="node.redisType">
+                         <i ng-switch-when="hash" class="fas fa-hashtag" aria-hidden="true"></i>
+                         <i ng-switch-when="list" class="fas fa-list" aria-hidden="true"></i>
+                         <i ng-switch-when="set" class="fas fa-table"" aria-hidden="true"></i>
+                         <i ng-switch-when="string" class="fas fa-chess-board" aria-hidden="true"></i>
+                         <i ng-switch-when="zset" class="fas fa-chart-bar" aria-hidden="true"></i>                      
+                     </span>
                     {{node.label}} <span class="p3xr-main-tree-node-count" ng-if="node.type === 'folder'">({{node.childCount}})</span>
                     
                     <span ng-show="node.type === 'folder' && node.show">
@@ -89,11 +96,14 @@ p3xr.ng.component('p3xrMainTree', {
             })
         }
 
+
         this.showToggle = function(node, expanded, $parentNode, $index, $first, $middle, $last, $odd, $even, $path)  {
-            console.warn('showToggle', arguments, $path())
+          //  console.warn('showToggle', arguments, $path())
+            /*
             p3xrCommon.toast({
                 message: 'key ' + node.key
             })
+            */
         }
 
         this.deleteTree = async(options) => {
@@ -132,6 +142,13 @@ p3xr.ng.component('p3xrMainTree', {
             } catch(e) {
                 p3xrCommon.generalHandleError(e)
             }
+        }
+
+        this.extractNodeTooltip = (node) => {
+            if (node.type !== 'folder') {
+                return p3xr.ui.htmlEncode(node.redisType + ' - ' + node.key)
+            }
+            return p3xr.ui.htmlEncode(node.key)
         }
 
     }

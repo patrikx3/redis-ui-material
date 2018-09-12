@@ -1,19 +1,16 @@
 <div id="p3xr-layout-header-container">
     <md-toolbar>
-        <span class="md-toolbar-tools">
+        <div class="md-toolbar-tools">
 
             <p3xr-button ui-sref="main" p3xr-label="$root.p3xr.strings.title.name" p3xr-fa-icon="fas fa-database"></p3xr-button>
 
             <span flex></span>
 
-            <div>
-                <p3xr-button ui-sref="settings" p3xr-label="$root.p3xr.strings.intention.settings" p3xr-md-icon="settings"></p3xr-button>
+            <p3xr-button ui-sref="settings" p3xr-label="$root.p3xr.strings.intention.settings" p3xr-md-icon="settings"></p3xr-button>
 
-                <p3xr-button ng-if="$root.hasConnected()" ui-sref="overview" p3xr-label="$root.p3xr.strings.intention.overview" p3xr-md-icon="info"></p3xr-button>
+            <p3xr-button ng-if="$root.hasConnected()" ui-sref="overview" p3xr-label="$root.p3xr.strings.intention.overview" p3xr-md-icon="info"></p3xr-button>
 
-                <p3xr-button ng-if="$root.p3xr.state.connection" ui-sref="main.statistics" p3xr-label="$root.p3xr.strings.intention.main" p3xr-md-icon="home"></p3xr-button>
-
-            </div>
+            <p3xr-button ng-if="$root.p3xr.state.connection" ui-sref="main.statistics" p3xr-label="$root.p3xr.strings.intention.main" p3xr-md-icon="home"></p3xr-button>
         </div>
     </md-toolbar>
 </div>

@@ -1,0 +1,10 @@
+p3xr-main-key {
+  .p3x-main-key-type-string-value {
+    font-family: "Courier New", Courier, monospace;
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    overflow: auto;
+    max-height: 320px;
+    max-width: 320px;
+  }
+}

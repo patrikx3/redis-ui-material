@@ -25,6 +25,7 @@ const strings = {
         }
     },
     intention: {
+        close: 'Close',
         commands: 'Commands',
         view: 'View',
         statistics: 'Statistics',

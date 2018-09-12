@@ -176,11 +176,15 @@ p3xr.ng.component('p3xrConsole', {
                 fullscreen: true,
                 template: `
 <md-dialog aria-label="{{ $root.p3xr.strings.intention.commands }}" layout-fill>
-  <md-toolbar>
+  <md-toolbar md-theme="{{$root.p3xr.state.themeLayout}}">
       <div class="md-toolbar-tools">
         <md-icon>keyboard</md-icon>
+        &nbsp;
         {{ $root.p3xr.strings.intention.commands }}
         <span flex></span>
+         <md-button class="md-icon-button" ng-click="ok()" aria-label="{{ $root.p3xr.strings.intention.close }}">
+           <md-icon>close</md-icon>
+      </md-button>
       </div>
     </md-toolbar>
     
@@ -192,9 +196,9 @@ p3xr.ng.component('p3xrConsole', {
 
     <md-dialog-actions layout="row">
       <span flex></span>
-      <md-button ng-click="ok()"  aria-label="ok">
-        <md-icon>done</md-icon>
-        OK
+      <md-button ng-click="ok()"  class="md-raised md-primary" aria-label="{{ $root.p3xr.strings.intention.close }}">
+        <md-icon>close</md-icon>
+        {{ $root.p3xr.strings.intention.close }}
       </md-button>
     </md-dialog-actions>
   </form>

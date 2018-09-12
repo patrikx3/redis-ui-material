@@ -7,6 +7,14 @@ dom.getPosition = function getPosition(el) {
     let leftPos = 0;
     let topPos = 0;
 
+    if (el === undefined) {
+        return {
+            left: 0,
+            top: 0,
+            width: 0,
+            height: 0,
+        }
+    }
     const style = el.currentStyle || window.getComputedStyle(el);
     const width = el.offsetWidth // or use style.width
     const marginSide = parseFloat(style.marginLeft) + parseFloat(style.marginRight)

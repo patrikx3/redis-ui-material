@@ -1,5 +1,23 @@
-<md-content layout-padding>
-    <div class="md-title p3xr-typography-ellipsis" title="{{ $root.p3xr.ui.htmlEncode($ctrl.$stateParams.key) }}">
-        {{ $ctrl.$stateParams.key }}
-    </div>
-</md-content>
+<md-toolbar>
+    <span class="md-toolbar-tools">
+        <span class="p3xr-typography-ellipsis" title="{{$root.p3xr.ui.htmlEncode($ctrl.$stateParams.key)}}">{{ $ctrl.$stateParams.key }}</span>
+        <span flex></span>
+    </span>
+</md-toolbar>
+<span ng-switch="" on="$root.p3xr.state.keysType[$ctrl.$stateParams.key]">
+    <span ng-switch-when="string">
+        <pre class="p3x-main-key-type-string-value">{{ $ctrl.value }}</pre>
+    </span>
+    <span ng-switch-when="hash">
+        hash
+    </span>
+    <span ng-switch-when="list">
+        list
+    </span>
+    <span ng-switch-when="set">
+        set
+    </span>
+    <span ng-switch-when="zset">
+        sorted set
+    </span>
+ </span>
