@@ -7,9 +7,20 @@ dom.getPosition = function getPosition(el) {
     let leftPos = 0;
     let topPos = 0;
 
+    const style = el.currentStyle || window.getComputedStyle(el);
+    const width = el.offsetWidth // or use style.width
+    const marginSide = parseFloat(style.marginLeft) + parseFloat(style.marginRight)
+    const paddingSide = parseFloat(style.paddingLeft) + parseFloat(style.paddingRight)
+    const borderSide = parseFloat(style.borderLeftWidth) + parseFloat(style.borderRightWidth)
+
+    const height = el.offsetHeight // or use style.width
+    const marginHorizontal = parseFloat(style.marginTop) + parseFloat(style.marginBottom)
+    const paddingHorizontal = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom)
+    const borderHorizontal = parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth)
+
     const result = {
-        width: el.offsetWidth,
-        height: el.offsetHeight
+        width: width + marginSide + paddingSide + borderSide,
+        height: height + marginHorizontal + paddingHorizontal + borderHorizontal
     }
 
     while (el) {

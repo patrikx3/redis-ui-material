@@ -6,7 +6,7 @@
 
                 <div class="md-list-item-text" layout="column">
                     <h3>{{ connectionValue.connection.name }}</h3>
-                    <h4>{{ connectionValue.connection.name }}:{{ connectionValue.connection.port }}</h4>
+                    <h4>{{ connectionValue.connection.host }}:{{ connectionValue.connection.port }}</h4>
                     <p>{{ $root.p3xr.strings.page.overview.connectedCount({ length: connectionValue.clients.length }) }}</p>
                 </div>
                 <md-divider ng-if="!$last"></md-divider>

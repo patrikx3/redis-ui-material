@@ -34,5 +34,11 @@ input:-webkit-autofill {
   padding-bottom: 0px;
 }
 
+.p3xr-typography-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 @import '../injector';
 

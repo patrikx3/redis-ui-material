@@ -17,7 +17,7 @@ p3xr.ng.component('p3xrMain', {
             for(let item of [$header, $footer, $consoleHeader]) {
                 minus += item.outerHeight()
             }
-            const windowHeight = $window.height()
+            const windowHeight = $window.outerHeight()
             //console.log(windowHeight, minus)
 
             const outputPositionMinus = 28
@@ -36,8 +36,12 @@ p3xr.ng.component('p3xrMain', {
                 $treeControl.css('width', '33%')
 //                $treeControl.css('max-width', '320px')
 
+                const treeControlPosition = p3xr.dom.getPosition($treeControl[0])
                 const $content = $('#p3xr-main-content-container');
-                $content.css('padding-left', ($treeControl.width() + 0) + 'px')
+                $content.css('top', containerPosition.top + 'px')
+                $content.css('left', (containerPosition.left +  treeControlPosition.width ) + 'px')
+                $content.css('width', (containerPosition.width - treeControlPosition.width ) + 'px')
+                $content.css('height', containerPosition.height + 'px')
             }
 
         }, p3xr.settings.debounce)
@@ -127,21 +131,6 @@ p3xr.ng.component('p3xrMain', {
             }
         }
 
-        this.refresh = async () => {
-            try {
-                const response = await p3xrSocket.request({
-                    action: 'refresh',
-
-                })
-                $rootScope.p3xr.state.info = p3xrRedisParser.info(response.info)
-                $rootScope.p3xr.state.keys = response.keys
-                $rootScope.$digest()
-
-            } catch(e) {
-                p3xrCommon.generalHandleError(e)
-            }
-        }
-
 
         this.save = async () => {
             try {
@@ -152,7 +141,7 @@ p3xr.ng.component('p3xrMain', {
                 $rootScope.p3xr.state.info = p3xrRedisParser.info(response.info)
                 $rootScope.$digest()
                 p3xrCommon.toast({
-                    message: p3xr.strings.status.savedRedisDb
+                    message: p3xr.strings.status.savedRedis
                 })
             } catch(e) {
                 p3xrCommon.generalHandleError(e)
@@ -163,38 +152,52 @@ p3xr.ng.component('p3xrMain', {
             try {
                 const response = await p3xrSocket.request({
                     action: 'refresh',
-
                 })
-                $rootScope.p3xr.state.info = p3xrRedisParser.info(response.info)
-                $rootScope.p3xr.state.keys = response.keys
-                $rootScope.$digest()
+                p3xrCommon.loadRedisInfoResponse({
+                    response: response
+                })
             } catch(e) {
                 p3xrCommon.generalHandleError(e)
             }
             $state.go('main.statistics')
         }
 
-        /*
-redis version = server - redis_version
-keys =  keyspace - dbIndex -> keys
-memory used -> memory - used_memory_human
-uptime -> server - uptime_in_days
-last save - save
-<?php
-        if (isset($info[$i]['Persistence']['rdb_last_save_time'])) {
-           if((time() - $info[$i]['Persistence']['rdb_last_save_time'] ) >= 0) {
-              echo format_time(time() - $info[$i]['Persistence']['rdb_last_save_time']) . " ago";
-           } else {
-              echo format_time(-(time() - $info[$i]['Persistence']['rdb_last_save_time'])) . "in the future";
-           }
-        } else {
-           echo 'never';
+        this.refresh = async () => {
+            try {
+                const response = await p3xrSocket.request({
+                    action: 'refresh',
+
+                })
+                p3xrCommon.loadRedisInfoResponse({
+                    response: response
+                })
+
+            } catch(e) {
+                p3xrCommon.generalHandleError(e)
+            }
         }
-    ?>
+
+        /*
+ redis version = server - redis_version
+ keys =  keyspace - dbIndex -> keys
+ memory used -> memory - used_memory_human
+ uptime -> server - uptime_in_days
+ last save - save
+ <?php
+         if (isset($info[$i]['Persistence']['rdb_last_save_time'])) {
+            if((time() - $info[$i]['Persistence']['rdb_last_save_time'] ) >= 0) {
+               echo format_time(time() - $info[$i]['Persistence']['rdb_last_save_time']) . " ago";
+            } else {
+               echo format_time(-(time() - $info[$i]['Persistence']['rdb_last_save_time'])) . "in the future";
+            }
+         } else {
+            echo 'never';
+         }
+     ?>
 
 
 
-         */
+          */
     }
 })
 

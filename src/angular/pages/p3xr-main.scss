@@ -14,6 +14,10 @@ p3xr-main {
     transform: scale(0.75);
   }
 
+  #p3xr-main-content-container {
+    position: fixed;
+    overflow: auto;
+  }
 
 
 }

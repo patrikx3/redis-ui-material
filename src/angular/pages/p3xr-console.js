@@ -3,7 +3,7 @@ let actionHistoryPosition = -1
 
 p3xr.ng.component('p3xrConsole', {
     template: require('./p3xr-console.html'),
-    controller: function(p3xrCommon, p3xrSocket, $state, $rootScope, p3xrRedisParser) {
+    controller: function(p3xrCommon, p3xrSocket, $state, $rootScope, p3xrRedisParser, $mdDialog) {
         // .p3xr-layout-footer-container
         // .p3xr-layout-header-container
         // #p3xr-console-header
@@ -106,7 +106,7 @@ p3xr.ng.component('p3xrConsole', {
         }
 
         this.action =  ($event) => {
-            //console.warn($event.keyCode)
+            console.warn($event.keyCode)
             switch($event.keyCode) {
                 // enter
                 case 13:
@@ -140,6 +140,11 @@ p3xr.ng.component('p3xrConsole', {
                     }
                     this.inputValue = actionHistory[actionHistoryPosition]
                     break;
+
+                case 9:
+                    $event.stopPropagation();
+                    $event.preventDefault();
+                    break;
                 default:
                     actionHistoryPosition = -1
                     break;
@@ -150,6 +155,54 @@ p3xr.ng.component('p3xrConsole', {
             $output.empty()
             $output.append('<div class="p3xr-console-content-output-item">' + $rootScope.p3xr.strings.label.welcomeConsole + '</div>')
             $input.focus()
+        }
+
+        this.commands = () => {
+            $mdDialog.show({
+                controller: function ($scope, $mdDialog ) {
+
+                    $scope.ok = function () {
+                        $mdDialog.hide();
+                    };
+
+                    $scope.$watch(function () {
+                        const height = $('#p3xr-console-commands').parent().height();
+                        return height;
+                    }, (newValue, oldValue) => {
+                        $scope.height = newValue;
+                    })
+
+                },
+                fullscreen: true,
+                template: `
+<md-dialog aria-label="{{ $root.p3xr.strings.intention.commands }}" layout-fill>
+  <md-toolbar>
+      <div class="md-toolbar-tools">
+        <md-icon>keyboard</md-icon>
+        {{ $root.p3xr.strings.intention.commands }}
+        <span flex></span>
+      </div>
+    </md-toolbar>
+    
+    <md-dialog-content flex>
+      <div id="p3xr-console-commands">
+        <iframe seamless="seamless" src="https://redis.io/commands" frameborder="0" style="width: 100%; height: {{ height - 15 }}px;"></iframe>      
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="ok()"  aria-label="ok">
+        <md-icon>done</md-icon>
+        OK
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>          
+          `,
+
+            });
+
         }
     }
 })

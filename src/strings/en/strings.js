@@ -25,6 +25,7 @@ const strings = {
         }
     },
     intention: {
+        commands: 'Commands',
         view: 'View',
         statistics: 'Statistics',
         refresh: 'Refresh',
@@ -73,7 +74,7 @@ const strings = {
         saved: 'Updated',
         cancelled: 'Cancelled',
         deleted: 'Deleted',
-        savedRedisDb: 'The Db is saved',
+        savedRedis: 'Redis data is saved',
         redisDisconnected: (opts) => {
             return `The current connection had an error: ${opts.error.message}`
         },

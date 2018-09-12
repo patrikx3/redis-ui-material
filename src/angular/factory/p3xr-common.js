@@ -1,4 +1,4 @@
-p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog) {
+p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $rootScope, p3xrRedisParser) {
 
     const generalHandleError = (dataOrError) => {
         if (dataOrError === undefined) {
@@ -51,9 +51,20 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog) {
         return $mdDialog.show(confirm)
     }
 
+    const loadRedisInfoResponse = (options) => {
+        const { response } = options
+
+        $rootScope.p3xr.state.info = p3xrRedisParser.info(response.info)
+        $rootScope.p3xr.state.keys = response.keys
+        $rootScope.p3xr.state.keysType = response.keysType
+        $rootScope.$digest()
+
+    }
+
     return {
         generalHandleError: generalHandleError,
         toast: toast,
         confirm: confirm,
+        loadRedisInfoResponse: loadRedisInfoResponse
     };
 });

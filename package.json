@@ -1,6 +1,6 @@
 {
     "name": "p3x-redis-ui-material",
-    "version": "2018.9.12-3",
+    "version": "2018.9.12-4",
     "description": "💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via https.",
     "corifeus": {
         "icon": "fas fa-database",
@@ -73,7 +73,8 @@
         "moment": "^2.22.2",
         "socket.io-client": "^2.1.1",
         "typeface-roboto": "0.0.54",
-        "angular-tree-control": "^0.2.30"
+        "angular-tree-control": "^0.2.30",
+        "js-htmlencode": "^0.3.0"
     },
     "engines": {
         "node": ">=8.11.4"

@@ -42,8 +42,9 @@ p3xr.ng.component('p3xrLayout', {
                 $rootScope.p3xr.state.databaseIndexes = databaseIndexes
                 $rootScope.p3xr.state.connection = connection
 
-                $rootScope.p3xr.state.info = p3xrRedisParser.info(response.info)
-                $rootScope.p3xr.state.keys = response.keys
+                p3xrCommon.loadRedisInfoResponse({
+                    response: response
+                })
 
             } catch(error) {
                 $rootScope.p3xr.state.connection = undefined

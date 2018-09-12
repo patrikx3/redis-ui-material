@@ -90,6 +90,7 @@ p3xr.ng.factory('p3xrRedisParser', function () {
                         //console.warn(splitKey.length - 1 === level)t
                         foundNode = Object.assign(defaultFoundNode, {
                             type: 'element',
+                            redisType: p3xr.state.keysType[defaultFoundNode.key]
                         })
                     } else {
                         foundNode = Object.assign(defaultFoundNode, {

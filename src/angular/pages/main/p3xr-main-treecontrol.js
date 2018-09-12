@@ -6,7 +6,9 @@ p3xr.ng.component('p3xrMainTree', {
                          tree-model="$ctrl.keysTree" options="$ctrl.keysTreeOptions"
                          on-selection="$ctrl.selectTreeNode(node, selected, $parentNode, $index, $first, $middle, $last, $odd, $even, $path)"  on-node-toggle="$ctrl.showToggle(node, expanded, $parentNode, $index, $first, $middle, $last, $odd, $even, $path)">
 
-                <label class="p3xr-main-tree-node" ng-mouseover="node.show = true" ng-mouseleave="node.show = false" title="{{node.key}}">
+                <label class="p3xr-main-tree-node" ng-mouseover="node.show = true" ng-mouseleave="node.show = false" title="{{$root.p3xr.ui.htmlEncode(node.key)}}">
+                
+                    {{ node.redisType }}
                     {{node.label}} <span class="p3xr-main-tree-node-count" ng-if="node.type === 'folder'">({{node.childCount}})</span>
                     
                     <span ng-show="node.type === 'folder' && node.show">

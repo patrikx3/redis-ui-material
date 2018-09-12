@@ -29,9 +29,9 @@ p3xr.theme = {
 }
 
 p3xr.ui = {
-    overlay: undefined
+    overlay: undefined,
+    htmlEncode: require('js-htmlencode').htmlEncode
 }
-
 
 require('./core/strings')
 require('./core/settings')

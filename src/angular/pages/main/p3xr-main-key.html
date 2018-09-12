@@ -1,3 +1,5 @@
-<div class="md-headline">
-    {{ $ctrl.$stateParams.key }}
-</div>
+<md-content layout-padding>
+    <div class="md-title p3xr-typography-ellipsis" title="{{ $root.p3xr.ui.htmlEncode($ctrl.$stateParams.key) }}">
+        {{ $ctrl.$stateParams.key }}
+    </div>
+</md-content>

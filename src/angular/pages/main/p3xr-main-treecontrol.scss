@@ -5,6 +5,10 @@ p3xr-main {
     ul {
       overflow: visible !important; /*# STEP1  #### Override overflow attribute like uncledb said */
     }
+    .tree-leaf-head  {
+      display: none !important;
+      background-image: none;
+    }
   }
 
   treecontrol > ul > li {
