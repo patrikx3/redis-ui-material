@@ -118,7 +118,7 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                     clickOutsideToClose: true,
                    // fullscreen: true // Only for -xs, -sm breakpoints.
                 })
-                console.warn(result)
+               // console.warn(result)
             } catch(error) {
                 p3xrCommon.generalHandleError(error)
             }

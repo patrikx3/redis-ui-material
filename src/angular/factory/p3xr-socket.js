@@ -22,9 +22,35 @@ p3xr.ng.factory('p3xrSocket', function ($rootScope, p3xrCommon, $state) {
 
     })
 
-    ioClient.on('disconnect', async function () {
+    ioClient.on('disconnect', function () {
+
         location.reload()
     })
+
+
+    let connectErrorWas = false
+    const socketError = async function (error) {
+        if (!connectErrorWas) {
+            connectErrorWas = true;
+            try {
+                p3xrCommon.generalHandleError(error)
+                $state.go('socketio-error', {
+                    error: error
+                })
+                await p3xrCommon.confirm({
+                    disableCancel: false,
+                    message: p3xr.strings.confirm.socketioConnectError
+                })
+                location.reload()
+            } catch(e) {
+                p3xrCommon.generalHandleError(e)
+            }
+        }
+    }
+
+    ioClient.on('error', socketError)
+
+    ioClient.on('connect_error', socketError)
 
     ioClient.on('connections', (data) => {
         //console.log(data)

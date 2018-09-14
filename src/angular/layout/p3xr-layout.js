@@ -1,6 +1,6 @@
 p3xr.ng.component('p3xrLayout', {
     template: require('./p3xr-layout.html'),
-    controller: function (p3xrTheme, $rootScope, p3xrSocket, p3xrCommon, $state, p3xrRedisParser) {
+    controller: function (p3xrTheme, $rootScope, p3xrSocket, p3xrCommon, $state, $cookies) {
         this.setTheme = (theme) => {
             p3xrTheme.setTheme(p3xrTheme.generateThemeName(theme))
         }
@@ -26,13 +26,14 @@ p3xr.ng.component('p3xrLayout', {
                 p3xr.ui.overlay.show({
                     message: p3xr.strings.title.connectinRedis
                 })
+                const db = $cookies.get(p3xr.settings.connection.getCookieNameCurrentDatabase(connection.id))
                 const response = await p3xrSocket.request({
                     action: 'connection-connect',
                     payload: {
                         connection: connection,
+                        db: db
                     },
                 })
-
                 let dbIndex = 0
                 const databaseIndexes = []
                 //console.warn(response)
@@ -90,6 +91,8 @@ p3xr.ng.component('p3xrLayout', {
         this.isMain = () => {
             return $state.current.name.startsWith('main')
         }
+
+
     }
 })
 

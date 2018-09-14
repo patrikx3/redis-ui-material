@@ -32,6 +32,17 @@ const routes = ($stateProvider, $urlRouterProvider) => {
     $stateProvider.state('main.key', {
         url: '/key/:key',
         template: '<p3xr-main-key></p3xr-main-key>',
+        params : {
+            resize: null,
+        }
+    });
+
+    $stateProvider.state('socketio-error', {
+        url: '/socketio-error',
+        template: '<p3xr-error></p3xr-error>',
+        params: {
+            error: null
+        }
     });
 
 }

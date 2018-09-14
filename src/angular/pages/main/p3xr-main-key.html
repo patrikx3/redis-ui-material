@@ -1,23 +1,77 @@
+<!--
 <md-toolbar>
     <span class="md-toolbar-tools">
         <span class="p3xr-typography-ellipsis" title="{{$root.p3xr.ui.htmlEncode($ctrl.$stateParams.key)}}">{{ $ctrl.$stateParams.key }}</span>
         <span flex></span>
     </span>
 </md-toolbar>
-<span ng-switch="" on="$root.p3xr.state.keysType[$ctrl.$stateParams.key]">
+-->
+
+<md-list flex>
+
+    <md-list-item>
+        <p>{{ $root.p3xr.strings.page.key.label.key }}:</p>
+        {{ $ctrl.$stateParams.key }}
+    </md-list-item>
+
+    <md-divider></md-divider>
+
+    <md-list-item>
+        <p title="{{ $root.p3xr.strings.page.key.label.ttlTitle  }}"><span class="p3xr-main-key-label-key-title">{{ $root.p3xr.strings.page.key.label.ttl }}</span>:</p>
+        <span ng-if="$ctrl.response.ttl == -1">
+            {{ $root.p3xr.strings.page.key.label.ttlNotExpire }}
+        </span>
+        <span ng-if="$ctrl.response.ttl != -1">
+            {{ $ctrl.response.ttl }}
+        </span>
+    </md-list-item>
+
+    <md-divider></md-divider>
+
+    <md-list-item>
+        <p>{{ $root.p3xr.strings.page.key.label.encoding }}:</p>
+        {{ $ctrl.response.encoding }}
+    </md-list-item>
+
+    <md-divider></md-divider>
+
+    <md-list-item>
+        <p>{{ $root.p3xr.strings.page.key.label.length }}:</p>
+        {{ $root.p3xr.state.keysInfo[$ctrl.$stateParams.key].length }}
+        &nbsp;
+        <span ng-if="$root.p3xr.state.keysInfo[$ctrl.$stateParams.key].type === 'string'">
+            {{ $root.p3xr.strings.page.key.label.lengthString }}
+        </span>
+        <span ng-if="$root.p3xr.state.keysInfo[$ctrl.$stateParams.key].type !== 'string'">
+            {{ $root.p3xr.strings.page.key.label.lengthItem }}
+        </span>
+    </md-list-item>
+
+</md-list>
+
+
+<md-divider></md-divider>
+
+
+<span ng-switch="" on="$root.p3xr.state.keysInfo[$ctrl.$stateParams.key].type">
     <span ng-switch-when="string">
-        <pre class="p3x-main-key-type-string-value">{{ $ctrl.value }}</pre>
+        <pre class="p3x-main-key-type-string-value">{{ $ctrl.response.value }}</pre>
     </span>
     <span ng-switch-when="hash">
-        hash
+
+        <pre class="p3x-main-key-type-string-value">{{ $ctrl.response.value }}</pre>
     </span>
     <span ng-switch-when="list">
-        list
+
+        <pre class="p3x-main-key-type-string-value">{{ $ctrl.response.value }}</pre>
     </span>
     <span ng-switch-when="set">
-        set
+
+       <pre class="p3x-main-key-type-string-value">{{ $ctrl.response.value }}</pre>
     </span>
     <span ng-switch-when="zset">
-        sorted set
+
+       <pre class="p3x-main-key-type-string-value">{{ $ctrl.response.value }}</pre>
+       <pre class="p3x-main-key-type-string-value">{{ $ctrl.response.sortedScores }}</pre>
     </span>
  </span>

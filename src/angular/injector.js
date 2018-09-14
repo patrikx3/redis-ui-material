@@ -1,13 +1,16 @@
 //injector-angular-start
 require('./dialog/p3xr-dialog-connection.js');
+require('./dialog/p3xr-dialog-treecontrol-settings.js');
 require('./factory/p3xr-common.js');
 require('./factory/p3xr-redis-parser.js');
 require('./factory/p3xr-socket.js');
 require('./layout/p3xr-layout.js');
 require('./pages/main/p3xr-main-key.js');
 require('./pages/main/p3xr-main-statistics.js');
+require('./pages/main/p3xr-main-treecontrol-controls.js');
 require('./pages/main/p3xr-main-treecontrol.js');
 require('./pages/p3xr-console.js');
+require('./pages/p3xr-error.js');
 require('./pages/p3xr-main.js');
 require('./pages/p3xr-overview.js');
 require('./pages/p3xr-settings.js');

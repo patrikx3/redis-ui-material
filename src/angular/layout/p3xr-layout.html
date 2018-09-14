@@ -2,11 +2,12 @@
     <md-toolbar>
         <div class="md-toolbar-tools">
 
-            <p3xr-button ui-sref="main" p3xr-label="$root.p3xr.strings.title.name" p3xr-fa-icon="fas fa-database"></p3xr-button>
+            <p3xr-button ng-if="!$root.p3xr.state.failed" ui-sref="main" p3xr-label="$root.p3xr.strings.title.name" p3xr-fa-icon="fas fa-database"></p3xr-button>
+            <p3xr-button ng-if="$root.p3xr.state.failed" ng-click="$root.locationReload()" p3xr-label="$root.p3xr.strings.title.name" p3xr-fa-icon="fas fa-redo"></p3xr-button>
 
             <span flex></span>
 
-            <p3xr-button ui-sref="settings" p3xr-label="$root.p3xr.strings.intention.settings" p3xr-md-icon="settings"></p3xr-button>
+            <p3xr-button ng-if="!$root.p3xr.state.failed"  ui-sref="settings" p3xr-label="$root.p3xr.strings.intention.settings" p3xr-md-icon="settings"></p3xr-button>
 
             <p3xr-button ng-if="$root.hasConnected()" ui-sref="overview" p3xr-label="$root.p3xr.strings.intention.overview" p3xr-md-icon="info"></p3xr-button>
 

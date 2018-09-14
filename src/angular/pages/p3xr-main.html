@@ -33,7 +33,7 @@
             </md-button>
 
             <md-button class="md-icon-button md-primary" aria-label="{{ $root.p3xr.strings.intention.console }}" ui-sref="console">
-                <i class="fas fa-terminal"></i>
+                    <md-icon>keyboard</md-icon>
                 <md-tooltip md-direction="bottom">{{ $root.p3xr.strings.intention.console }}</md-tooltip>
             </md-button>
 
@@ -62,21 +62,18 @@
 
     <div ng-if="$root.p3xr.state.connection !== undefined">
 
-        <div id="p3xr-main-treecontrol-container" hide-xs>
-            <p3xr-main-tree p3xr-resize="$ctrl.resize()"></p3xr-main-tree>
-        </div>
-        <div hide-xs id="p3xr-main-content-container" >
-            <ui-view>
+        <p3xr-undefined hide-xs>
+            <p3xr-main-treecontrol-controls id="p3xr-main-treecontrol-controls-container"  ></p3xr-main-treecontrol-controls>
+            <p3xr-main-tree id="p3xr-main-treecontrol-container"  p3xr-resize="$ctrl.resize()"></p3xr-main-tree>
+            <ui-view  id="p3xr-main-content-container">
             </ui-view>
-        </div>
+        </p3xr-undefined>
 
-        <div layout-gt-xs="row" layout="column" ng-if="$root.$mdMedia('xs')">
-            <div flex-gt-xs="33" flex id="p3xr-main-treecontrol-container-directive-small">
-                <p3xr-main-tree  p3xr-resize="$ctrl.resize()"></p3xr-main-tree>
-            </div>
-            <div flex-gt-xs="67" flex >
-                <ui-view >
-                </ui-view>
+        <div layout="column" ng-if="$root.$mdMedia('xs')">
+            <p3xr-main-treecontrol-controls flex></p3xr-main-treecontrol-controls>
+            <p3xr-main-tree flex id="p3xr-main-treecontrol-container-directive-small" p3xr-resize="$ctrl.resize()"></p3xr-main-tree>
+            <ui-view flex>
+            </ui-view>
             </div>
         </div>
 

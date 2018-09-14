@@ -1,10 +1,19 @@
 p3xr-main-key {
   .p3x-main-key-type-string-value {
-    font-family: "Courier New", Courier, monospace;
-    white-space: pre-wrap;       /* Since CSS 2.1 */
-    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    font-family: monospace;
+    font-size: 18px;
+    line-height: 20px;
     overflow: auto;
-    max-height: 320px;
-    max-width: 320px;
+    max-height: 600px;
+   // white-space: pre-wrap;
+   // word-wrap: break-word;
+    width: 100%;
+  }
+
+  .p3xr-main-key-label-key-title {
+    border-bottom-style: dotted;
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(128, 128, 128, 0.5);
+    cursor: pointer;
   }
 }

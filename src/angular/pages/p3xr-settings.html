@@ -41,4 +41,29 @@
     </p3xr-accordion-content>
 </p3xr-accordion>
 
+<br/>
+
+<p3xr-accordion p3xr-title="$root.p3xr.strings.form.treeSettings.label.formName" p3xr-accordion-key="tree-settings">
+    <p3xr-accordion-actions>
+        <p3xr-button ng-click="$ctrl.openTreeSettingDialog({ $event: $event})" p3xr-label="$root.p3xr.strings.intention.edit" p3xr-md-icon="edit"></p3xr-button>
+    </p3xr-accordion-actions>
+    <p3xr-accordion-content>
+
+        <md-list>
+            <md-list-item>
+                <div layout="row" flex>
+                    <div flex>
+                        {{ $root.p3xr.strings.form.treeSettings.field.treeSeparator}}
+                    </div>
+                    <div>
+                        {{ $root.p3xr.settings.redisTreeDivider}}
+                    </div>
+                </div>
+            </md-list-item>
+        </md-list>
+
+    </p3xr-accordion-content>
+</p3xr-accordion>
+
+
 

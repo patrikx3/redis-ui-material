@@ -1,0 +1,39 @@
+<md-dialog aria-label="" style="min-width: 320px;">
+    <form novalidate name="p3xrDialogTreecontrolSettingsForm" ng-submit="submit()">
+        <md-toolbar md-theme="{{ $root.p3xr.state.themeLayout }}" class="md-hue-2">
+            <div class="md-toolbar-tools" >
+                <h2 flex md-truncate>{{$root.p3xr.strings.form.treeSettings.label.formName}}</h2>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon>close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content md-theme="{{ $root.p3xr.state.theme }}">
+            <md-content layout-padding>
+
+                <md-input-container class="md-block" >
+                    <label>{{ $root.p3xr.strings.form.treeSettings.field.treeSeparator }}</label>
+                    <input required name="treeSeparator" ng-model="model.treeSeparator">
+                    <div ng-messages="p3xrDialogTreecontrolSettingsForm.treeSeparator.$error">
+                        <div ng-message="required">{{ $root.p3xr.strings.form.error.required }}</div>
+                    </div>
+                </md-input-container>
+
+            </md-content>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row" layout-align="end end" md-theme="{{ $root.p3xr.state.theme }}">
+
+            <md-button class="md-raised md-accent" ng-click="cancel()">
+                <md-icon>close</md-icon>
+                {{ $root.p3xr.strings.intention.cancel }}
+            </md-button>
+
+            <md-button class="md-raised md-primary" type="submit" ng-if="!$root.p3xr.state.cfg.readonlyConnections">
+                <md-icon>save</md-icon>
+                {{ $root.p3xr.strings.intention.save }}
+            </md-button>
+
+        </md-dialog-actions>
+    </form>
+</md-dialog>

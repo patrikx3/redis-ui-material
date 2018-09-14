@@ -65,10 +65,11 @@ p3xr.ng.factory('p3xrRedisParser', function () {
             const { keys } = options
             let { divider } = options
             if (divider === undefined) {
-                divider = p3xr.state.redisTreeDivider
+                divider = p3xr.settings.redisTreeDivider
             }
 //console.warn(keys)
             const mainNodes = []
+
             const recursiveNodes = (splitKey, level = 0, nodes = mainNodes) => {
                 let foundNode = false
                 if (level + 1 < splitKey.length) {
@@ -90,7 +91,7 @@ p3xr.ng.factory('p3xrRedisParser', function () {
                         //console.warn(splitKey.length - 1 === level)t
                         foundNode = Object.assign(defaultFoundNode, {
                             type: 'element',
-                            redisType: p3xr.state.keysType[defaultFoundNode.key]
+                            keysInfo: p3xr.state.keysInfo[defaultFoundNode.key]
                         })
                     } else {
                         foundNode = Object.assign(defaultFoundNode, {

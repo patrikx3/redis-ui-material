@@ -56,9 +56,7 @@ p3xr.ng.provider('p3xrTheme', function p3xrThemeProvider($mdThemingProvider,  ) 
                 //console.warn(`theme registered: ${$mdTheming.registered(theme)}`);
                 $mdThemingProvider.setDefaultTheme(themeName);
                 $rootScope.p3xr.state.theme = themeName;
-                const expiry = new Date();
-                expiry.setFullYear(expiry.getFullYear() + 1)
-                $cookies.put(themeCookieName, themeName, {expires: expiry});
+                $cookies.put(themeCookieName, themeName, {  expires: p3xr.settings.cookieExpiry,});
 
             }
 

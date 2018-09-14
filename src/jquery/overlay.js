@@ -1,3 +1,4 @@
+let counter = 0
 p3xr.ui.overlay = new function() {
     const template = (options = {}) => {
 
@@ -14,6 +15,7 @@ p3xr.ui.overlay = new function() {
     }
 
     this.show = (options = {}) => {
+        this.hide()
         //console.warn('p3xr.ui.overlay show')
         $body.append(template(options))
     }

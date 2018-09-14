@@ -1,11 +1,16 @@
 p3xr.ng.component('p3xrSettings', {
     template: require('./p3xr-settings.html'),
-    controller: function(p3xrCommon, p3xrDialogConnection, $mdDialog, p3xrSocket) {
+    controller: function(p3xrCommon, p3xrDialogConnection, $mdDialog, p3xrSocket, p3xrDialogTreecontrolSettings) {
 
         this.connectionForm = (options) => {
 
             p3xrDialogConnection.show(options)
 
+        }
+
+        this.openTreeSettingDialog = (opts) => {
+            p3xrDialogTreecontrolSettings.show(opts);
+            //console.warn($rootScope.p3xr.state.redisTreeDivider)
         }
 
         this.deleteConnection = async (options) => {

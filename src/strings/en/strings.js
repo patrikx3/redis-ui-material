@@ -4,6 +4,7 @@ const strings = {
         main: 'You may choose a REDIS connection to connect from the left bottom menu.',
         statistics: 'Statistics',
         connectinRedis: 'Connecting to Redis ...',
+        socketioConnectError: 'Socket.IO Error'
 /*
         server: 'Server',
         clients: 'Clients',
@@ -22,9 +23,11 @@ const strings = {
         deleteConnectionText: 'Are you sure to delete this Redis connection?',
         deleteAllKeys: (opts) => {
             return  `Delete this tree and all it\'s keys (${opts.key})?`
-        }
+        },
+        socketioConnectError: 'Socket.IO cannot connect to the server, you can reload and you might to resolve the connection error by yourself, the client does not know to solve it by itself.'
     },
     intention: {
+        reload: 'Reload',
         close: 'Close',
         commands: 'Commands',
         view: 'View',
@@ -51,6 +54,7 @@ const strings = {
         'delete': 'Remove',
         'sure' : 'Sure',
         testConnection: 'Test connection',
+        getKey: 'Loading Redis key and associated data ...'
     },
     label: {
         passwordSecure: 'The password might will be empty, but still it will show characters, this is a security feature.',
@@ -69,8 +73,10 @@ const strings = {
         }
     },
     status: {
+        treeExpandAll: 'Expand all tree leafs, this has a cost, might take time ...',
         noRedisKeys: 'There are no keys in this database.',
         redisConnected: 'Redis connected successful',
+        reloadingDataInfo: 'Reloading Redis data info',
         added: 'Added',
         saved: 'Updated',
         cancelled: 'Cancelled',
@@ -106,6 +112,14 @@ const strings = {
                 password: 'Password',
             },
         },
+        treeSettings: {
+            label: {
+              formName: 'Tree settings',
+            },
+            field: {
+              treeSeparator: 'Tree separator',
+            }
+        },
         main: {
             label: {
                 database: 'DB',
@@ -123,6 +137,24 @@ const strings = {
                 return `${opt.length} clients`
 
             }
+        },
+        key: {
+            label: {
+                key: 'Key',
+                encoding: 'Encoding',
+                length: 'Size',
+                ttl: 'TTL',
+                ttlTitle: 'Time To Live',
+                type: 'Type',
+                ttlNotExpire: 'does not expire',
+                lengthString: 'characters',
+                lengthItem: 'items',
+            }
+        },
+        treeControls: {
+            settings: 'Tree settings',
+            expandAll: 'Expand all',
+            collapseAll: 'Collapse all',
         }
     },
 }

@@ -2,13 +2,14 @@ p3xr.state = {
     theme: undefined,
     connection: undefined,
     currentDatabase: undefined,
+    redisChanged: false,
     databaseIndexes: [0],
     connections: [],
     redisConnections: {},
     keys: [],
-    redisTreeDivider: ':',
     cfg: undefined,
-    keysType: undefined,
+    keysInfo: undefined,
+    failed: false,
 }
 
 Object.defineProperty(p3xr.state, 'themeLayout', {

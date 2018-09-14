@@ -42,7 +42,7 @@ p3xr.ng.config(($qProvider, $locationProvider, $urlRouterProvider, $stateProvide
 
 })
 
-p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout) => {
+p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $cookies, p3xrRedisParser) => {
     $rootScope.p3xr = p3xr;
     $rootScope.$mdMedia = $mdMedia;
 
@@ -53,13 +53,65 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout) => {
         return true;
     }
 
+    $rootScope.locationReload = () => {
+        $state.go('main')
+        location.reload()
+    }
+
+    const treeDividerDefault = ':'
+    let treeDivider
+    Object.defineProperty($rootScope.p3xr.settings, 'redisTreeDivider', {
+        get: () => {
+            treeDivider = $cookies.get(p3xr.settings.tree.cookieName)
+            if (treeDivider === undefined) {
+                treeDivider = treeDividerDefault
+            }
+            return treeDivider
+        },
+        set: (value) => {
+            treeDivider = value
+            treeDivider = $cookies.put(p3xr.settings.tree.cookieName, value, {
+                expires: p3xr.settings.cookieExpiry,
+            })
+        }
+    })
+
+    $rootScope.keysTreeRendered = []
+
+    let expandedNodes = []
+    Object.defineProperty($rootScope, 'expandedNodes', {
+        get: () => {
+            //console.warn('expandedNodes get', expandedNodes)
+            return expandedNodes
+        },
+        set: (value) =>  {
+            //console.warn('expandedNodes set', expandedNodes)
+            expandedNodes = value
+        }
+    })
+
+    let keys
+    Object.defineProperty($rootScope, 'keysTree', {
+        get: () => {
+            if (JSON.stringify(keys) !== JSON.stringify(p3xr.state.keys) ) {
+                $rootScope.keysTreeRendered =  p3xrRedisParser.keysToTreeControl({
+                    keys: p3xr.state.keys
+                })
+                keys = p3xr.state.keys
+            }
+            return $rootScope.keysTreeRendered
+        },
+        set: (value) => {
+            keys = value
+        }
+    })
+
+
+
 
     //console.warn('p3xrTheme', p3xrTheme)
-
     p3xrTheme.start()
     console.info('P3X Redis UI ran')
-
-
 })
 
 angular.element(document).ready(() => {

@@ -1,0 +1,15 @@
+<md-toolbar class="md-accent" md-theme="{{ $root.p3xr.state.themeLayout}}" >
+    <div class="md-toolbar-tools">
+        <h2 flex md-truncate>{{  $root.p3xr.strings.title.socketioConnectError }}</h2>
+    </div>
+</md-toolbar>
+<md-content md-theme="{{ $root.p3xr.state.theme}}" layout-padding>
+    <p3xr-button ng-click="$root.locationReload()" p3xr-label="$root.p3xr.strings.intention.reload" p3xr-fa-icon="fas fa-redo"></p3xr-button>
+    <br/>
+    <br/>
+    {{ $ctrl.$stateParams.error.message }}
+
+</md-content>
+
+
+

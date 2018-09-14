@@ -92,6 +92,7 @@ p3xr.ng.component('p3xrConsole', {
                 $output.append(`<pre>${result}</pre>`)
                 if (response.hasOwnProperty('database')) {
                     $rootScope.p3xr.state.currentDatabase = response.database
+                    $rootScope.p3xr.state.redisChanged = true
                 }
             } catch(e) {
                 $output.append(`<pre>${e.message}</pre>`)
@@ -106,7 +107,7 @@ p3xr.ng.component('p3xrConsole', {
         }
 
         this.action =  ($event) => {
-            console.warn($event.keyCode)
+            //console.warn($event.keyCode)
             switch($event.keyCode) {
                 // enter
                 case 13:

@@ -24,7 +24,7 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $rootScope, p3xrRed
                     .position(p3xr.settings.toast.position)
                     .theme(p3xr.state.themeLayout)
                     .hideDelay(p3xr.settings.toast.timeout)
-                    .capsule(true)
+                  //  .capsule(true)
             );
             return false
         }
@@ -38,7 +38,7 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $rootScope, p3xrRed
                 .position(p3xr.settings.toast.position)
                 .theme(p3xr.state.themeLayout)
                 .hideDelay(p3xr.settings.toast.timeout)
-                .capsule(true)
+            //    .capsule(true)
         );
     }
 
@@ -48,7 +48,10 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $rootScope, p3xrRed
             .textContent(options.message)
             .targetEvent(options.event)
             .ok(p3xr.strings.intention.sure)
-            .cancel(p3xr.strings.intention.cancel);
+
+        if (!options.hasOwnProperty('disableCancel')) {
+            confirm.cancel(p3xr.strings.intention.cancel);
+        }
 
         return $mdDialog.show(confirm)
     }
@@ -58,7 +61,7 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $rootScope, p3xrRed
 
         $rootScope.p3xr.state.info = p3xrRedisParser.info(response.info)
         $rootScope.p3xr.state.keys = response.keys
-        $rootScope.p3xr.state.keysType = response.keysType
+        $rootScope.p3xr.state.keysInfo = response.keysInfo
         $rootScope.$digest()
 
     }

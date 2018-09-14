@@ -11,4 +11,13 @@ p3xr.settings = {
     },
     debounce: 250,
     cookieExpiry: cookieExpiry,
+    connection: {
+        cookieNameCurrentDatabase: 'p3xr-main-current-database',
+        getCookieNameCurrentDatabase: (id) => {
+            return p3xr.settings.connection.cookieNameCurrentDatabase + '-' + id
+        }
+    },
+    tree: {
+        cookieName: 'p3xr-main-treecontrol-divider'
+    }
 }

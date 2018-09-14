@@ -1,8 +1,7 @@
 p3xr.ng.component('p3xrMain', {
     template: require('./p3xr-main.html'),
-    controller: function($cookies, p3xrSocket, p3xrCommon, p3xrRedisParser, $rootScope, $state) {
+    controller: function($cookies, p3xrSocket, p3xrCommon, p3xrRedisParser, $rootScope, $state, $timeout) {
 
-        const cookieNameCurrentDatabase = 'p3xr-main-current-database'
 
         let $container
         let $header;
@@ -29,9 +28,10 @@ p3xr.ng.component('p3xrMain', {
 
             const $treeControl = $('#p3xr-main-treecontrol-container')
             if ($treeControl) {
-                $treeControl.css('top', containerPosition.top + 'px')
+                const treeTop = 48
+                $treeControl.css('top', (containerPosition.top + treeTop) + 'px')
                 $treeControl.css('left', containerPosition.left + 'px');
-                $treeControl.css('height', containerPosition.height + 'px')
+                $treeControl.css('height', (containerPosition.height - treeTop) + 'px')
                 $treeControl.css('max-height', containerPosition.height + 'px')
                 $treeControl.css('width', '33%')
 //                $treeControl.css('max-width', '320px')
@@ -42,6 +42,10 @@ p3xr.ng.component('p3xrMain', {
                 $content.css('left', (containerPosition.left +  treeControlPosition.width ) + 'px')
                 $content.css('width', (containerPosition.width - treeControlPosition.width ) + 'px')
                 $content.css('height', containerPosition.height + 'px')
+
+                const $treeControlControls = $('#p3xr-main-treecontrol-controls-container')
+                $treeControlControls.height(treeTop)
+                $treeControlControls.width(treeControlPosition.width)
             }
 
         }, p3xr.settings.debounce)
@@ -61,29 +65,26 @@ p3xr.ng.component('p3xrMain', {
 
             $state.go('main.statistics')
 
+            if (p3xr.state.redisChanged) {
+                p3xr.state.redistChanged = true;
+                this.refresh()
+            }
         }
 
         this.$onDestroy = function () {
             $window.off('resize', resize)
         };
 
-        let firsGetCurrentDatabase = true
         let selectedDatabase = 0
         let currentDatabase
         Object.defineProperty(this, 'currentDatabase', {
             get: () => {
                 let currentDatabase =  p3xr.state.currentDatabase
                 if (currentDatabase === undefined) {
-                    currentDatabase = $cookies.get(cookieNameCurrentDatabase + '-' + p3xr.state.connection.id)
+                    currentDatabase = $cookies.get(p3xr.settings.connection.getCookieNameCurrentDatabase(p3xr.state.connection.id))
                 }
                 if (currentDatabase === undefined) {
                     currentDatabase = 0;
-                }
-                if (firsGetCurrentDatabase) {
-                    firsGetCurrentDatabase = false;
-                    if (currentDatabase !== 0) {
-                        this.selectDatabase(currentDatabase)
-                    }
                 }
                 return currentDatabase;
             },
@@ -104,7 +105,7 @@ p3xr.ng.component('p3xrMain', {
                     }
                 }
 
-                $cookies.put(cookieNameCurrentDatabase + '-' + p3xr.state.connection.id, String(value), {
+                $cookies.put(p3xr.settings.connection.getCookieNameCurrentDatabase(p3xr.state.connection.id), String(value), {
                     expires: p3xr.settings.cookieExpiry,
                 })
             }
@@ -125,9 +126,14 @@ p3xr.ng.component('p3xrMain', {
                         db: selectDbIndex
                     })
                 })
-                this.refresh()
+                await this.refresh()
+
+                $state.go('main.statistics')
+
             } catch(e) {
                 p3xrCommon.generalHandleError(e)
+            } finally {
+                resize()
             }
         }
 
@@ -150,20 +156,18 @@ p3xr.ng.component('p3xrMain', {
 
         this.statistics = async () => {
             try {
-                const response = await p3xrSocket.request({
-                    action: 'refresh',
-                })
-                p3xrCommon.loadRedisInfoResponse({
-                    response: response
-                })
+               await this.refresh()
+                $state.go('main.statistics')
             } catch(e) {
                 p3xrCommon.generalHandleError(e)
             }
-            $state.go('main.statistics')
         }
 
         this.refresh = async () => {
             try {
+                p3xr.ui.overlay.show({
+                    message: p3xr.strings.status.reloadingDataInfo
+                })
                 const response = await p3xrSocket.request({
                     action: 'refresh',
 
@@ -174,6 +178,10 @@ p3xr.ng.component('p3xrMain', {
 
             } catch(e) {
                 p3xrCommon.generalHandleError(e)
+            } finally {
+                $timeout(() => {
+                    p3xr.ui.overlay.hide()
+                }, p3xr.settings.debounce)
             }
         }
 
