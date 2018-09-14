@@ -76,6 +76,25 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
         }
     })
 
+    let pagingCount
+    Object.defineProperty($rootScope.p3xr.settings, 'pagingCount', {
+        get: () => {
+            pagingCount = $cookies.get(p3xr.settings.paging.cookieName)
+            if (pagingCount === undefined) {
+                pagingCount = p3xr.settings.paging.default
+            } else {
+                pagingCount = parseInt(pagingCount)
+            }
+            return pagingCount
+        },
+        set: (value) => {
+            pagingCount = value
+            pagingCount = $cookies.put(p3xr.settings.paging.cookieName, value, {
+                expires: p3xr.settings.cookieExpiry,
+            })
+        }
+    })
+
     $rootScope.keysTreeRendered = []
 
     let expandedNodes = []

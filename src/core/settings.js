@@ -19,5 +19,9 @@ p3xr.settings = {
     },
     tree: {
         cookieName: 'p3xr-main-treecontrol-divider'
-    }
+    },
+    paging: {
+        default: 250,
+        cookieName: 'p3xr-main-treecontrol-page-size'
+    },
 }
