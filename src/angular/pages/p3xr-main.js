@@ -126,9 +126,7 @@ p3xr.ng.component('p3xrMain', {
                         db: selectDbIndex
                     })
                 })
-                await this.refresh()
-
-                $state.go('main.statistics')
+                await this.statistics()
 
             } catch(e) {
                 p3xrCommon.generalHandleError(e)
