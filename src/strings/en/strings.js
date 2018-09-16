@@ -5,24 +5,24 @@ const strings = {
         statistics: 'Statistics',
         connectinRedis: 'Connecting to Redis ...',
         socketioConnectError: 'Socket.IO Error'
-/*
-        server: 'Server',
-        clients: 'Clients',
-        memory: 'Memory',
-        persistence: 'Persistance',
-        stats: 'Statastics',
-        replication: 'Replication',
-        cpu: 'CPU',
-        cluster: 'Cluster',
-        keyspace: 'Keyspace',
-*/
-   },
+        /*
+                server: 'Server',
+                clients: 'Clients',
+                memory: 'Memory',
+                persistence: 'Persistance',
+                stats: 'Statastics',
+                replication: 'Replication',
+                cpu: 'CPU',
+                cluster: 'Cluster',
+                keyspace: 'Keyspace',
+        */
+    },
     confirm: {
         title: 'Confirm',
         deleteConnection: 'Confirm',
         deleteConnectionText: 'Are you sure to delete this Redis connection?',
         deleteAllKeys: (opts) => {
-            return  `Delete this tree and all it\'s keys (${opts.key})?`
+            return `Delete this tree and all it\'s keys (${opts.key})?`
         },
         socketioConnectError: 'Socket.IO cannot connect to the server, you can reload and you might to resolve the connection error by yourself, the client does not know to solve it by itself.'
     },
@@ -52,18 +52,24 @@ const strings = {
         edit: 'Edit',
         save: 'Save',
         'delete': 'Remove',
-        'sure' : 'Sure',
+        'sure': 'Sure',
         testConnection: 'Test connection',
         getKey: 'Loading Redis key and associated data ...'
     },
     label: {
         passwordSecure: 'The password might will be empty, but still it will show characters, this is a security feature.',
+        treeSeparatorEmpty: 'If the tree separator is empty, the tree wil have no nested nodes, just a pure list',
+        treeSeparatorEmptyNote: 'No nested nodes, just a pure list',
         welcomeConsole: 'Welcome to the Redis Console',
         console: 'Console',
         connectiondAdd: 'Add connection',
         connectiondEdit: 'Edit connection',
         connectiondView: 'View connection',
         connections: 'Connections',
+        keysSort: {
+            on: 'Key sorting on',
+            off: 'Key sorting off'
+        },
         theme: {
             light: 'Light',
             dark: 'Dark',
@@ -73,6 +79,16 @@ const strings = {
         }
     },
     status: {
+        keyCount: (opts) => {
+            if (opts.keyCount === 0) {
+                return 'No key'
+            } else if (opts.keyCount === 1) {
+                return '1 key'
+            } else {
+                return `${opts.keyCount} keys`
+            }
+
+        },
         treeExpandAll: 'Expand all tree leafs, this has a cost, might take time ...',
         noRedisKeys: 'There are no keys in this database.',
         redisConnected: 'Redis connected successful',
@@ -114,10 +130,18 @@ const strings = {
         },
         treeSettings: {
             label: {
-              formName: 'Tree settings',
+                formName: 'Tree settings',
+                checkboxClient: 'Client mode',
+                checkboxServer: 'Server mode',
             },
             field: {
-              treeSeparator: 'Tree separator',
+                treeSeparator: 'Tree separator',
+                page: 'Paging count',
+                keysSort: 'Sort the keys',
+                searchMode: 'Search mode',
+            },
+            error: {
+                page: 'The page count must be an integer between 10 - 500'
             }
         },
         main: {
@@ -149,14 +173,33 @@ const strings = {
                 ttlNotExpire: 'does not expire',
                 lengthString: 'characters',
                 lengthItem: 'items',
+                actions: 'Actions',
             }
         },
         treeControls: {
             settings: 'Tree settings',
             expandAll: 'Expand all',
             collapseAll: 'Collapse all',
+            search: {
+                placeholderClient: 'Search client side',
+                placeholderServer: 'Search server side',
+
+                info: 'The client side search means, that it matches the text in the search input. The server side search means, that is it like search in the keys patterns as *{search-text}*'
+            },
+            pager: {
+                next: 'Next',
+                prev: 'Previous',
+                first: 'First',
+                last: 'Last'
+            }
         }
     },
+    time: {
+        days: 'days',
+        hours: 'hours',
+        minutes: 'minutes',
+        seconds: 'seconds',
+    }
 }
 
 

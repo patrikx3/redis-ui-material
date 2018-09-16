@@ -1,4 +1,4 @@
-p3xr.ng.factory('p3xrRedisParser', function () {
+p3xr.ng.factory('p3xrRedisParser', function ($rootScope) {
 
     return new function() {
 
@@ -70,6 +70,8 @@ p3xr.ng.factory('p3xrRedisParser', function () {
 //console.warn(keys)
             const mainNodes = []
 
+            $rootScope.expandedNodes = []
+
             const recursiveNodes = (splitKey, level = 0, nodes = mainNodes) => {
                 let foundNode = false
                 if (level + 1 < splitKey.length) {
@@ -101,14 +103,26 @@ p3xr.ng.factory('p3xrRedisParser', function () {
                     nodes.push(foundNode)
                 }
 
+                for(let saveExpandedNode of $rootScope.savedExpandedNodes) {
+                    if (saveExpandedNode.key === foundNode.key) {
+                        $rootScope.expandedNodes.push(foundNode)
+                    }
+                }
+
                 if (level + 1 < splitKey.length) {
                     recursiveNodes(splitKey, level + 1, foundNode.children)
                 }
             }
 
             for(let key of keys)  {
-                const splitKey = key.split(divider)
-                recursiveNodes(splitKey)
+                let splitkey;
+                if (divider === ''){
+                    splitkey = [key]
+
+                } else {
+                    splitkey = key.split(divider)
+                }
+                recursiveNodes(splitkey)
             }
 
             const generatedKeys = {}
@@ -138,6 +152,8 @@ p3xr.ng.factory('p3xrRedisParser', function () {
             }
 
             //console.warn('key calculate', (Date.now() - start), 'ms' )
+
+            $rootScope.savedExpandedNodes = []
             return mainNodes
         }
 

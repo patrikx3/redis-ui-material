@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 
 const fileAsset = `[name].[hash].[ext]`;
 const minimize = process.argv.includes('--production');
@@ -66,14 +66,14 @@ if (minimize) {
     const bannerText = require('corifeus-builder').utils.license();
 
     minimizer = [
-        new UglifyJsPlugin({
+        new TerserPlugin({
             sourceMap: true,
             parallel: true,
             cache: true,
             extractComments: {
                 condition: /^\**!|@preserve|@license|@cc_on/,
 
-                file: function (fileName) {
+                filename: function (fileName) {
                     return `${fileName}.LICENSE.txt`;
                 },
                 banner: function (webpackBanner) {
@@ -83,7 +83,7 @@ For more information about all licenses, please see ${webpackBanner}
 `;
                 }
             },
-            uglifyOptions: {
+            terserOptions: {
                 compress: {
                     warnings: false
                 },

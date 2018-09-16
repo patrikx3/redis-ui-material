@@ -60,7 +60,12 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $rootScope, p3xrRed
         const { response } = options
 
         $rootScope.p3xr.state.info = p3xrRedisParser.info(response.info)
-        $rootScope.p3xr.state.keys = response.keys
+
+        if ($rootScope.p3xr.settings.sort) {
+            $rootScope.p3xr.state.keysRaw = response.keys.sort()
+        } else {
+            $rootScope.p3xr.state.keysRaw = response.keys
+        }
         $rootScope.p3xr.state.keysInfo = response.keysInfo
         $rootScope.$digest()
 

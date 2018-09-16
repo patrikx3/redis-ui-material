@@ -10,6 +10,7 @@ p3xr.settings = {
         position: 'bottom right',
     },
     debounce: 250,
+    debounceSearch: 1000,
     cookieExpiry: cookieExpiry,
     connection: {
         cookieNameCurrentDatabase: 'p3xr-main-current-database',
@@ -18,10 +19,23 @@ p3xr.settings = {
         }
     },
     tree: {
-        cookieName: 'p3xr-main-treecontrol-divider'
+        cookieName: 'p3xr-main-treecontrol-divider',
+        defaultDivider: ':',
     },
+    redisTreeDivider: ':',
     paging: {
-        default: 250,
+        default: 100,
         cookieName: 'p3xr-main-treecontrol-page-size'
     },
+    pageCount: 100,
+    keySortInfo: {
+        default: false,
+        cookieName: 'p3xr-main-treecontrol-key-sort',
+    },
+    keysSort: false,
+    searchClientSide: true,
+    searchInfoClientSide: {
+        default: true,
+        cookieName: 'p3xr-main-treecontrol-search-client-mode'
+    }
 }

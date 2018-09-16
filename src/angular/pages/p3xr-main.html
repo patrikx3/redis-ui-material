@@ -65,8 +65,10 @@
         <p3xr-undefined hide-xs>
             <p3xr-main-treecontrol-controls id="p3xr-main-treecontrol-controls-container"  ></p3xr-main-treecontrol-controls>
             <p3xr-main-tree id="p3xr-main-treecontrol-container"  p3xr-resize="$ctrl.resize()"></p3xr-main-tree>
-            <ui-view  id="p3xr-main-content-container">
-            </ui-view>
+            <div id="p3xr-main-content-container">
+                <ui-view>
+                </ui-view>
+            </div>
         </p3xr-undefined>
 
         <div layout="column" ng-if="$root.$mdMedia('xs')">

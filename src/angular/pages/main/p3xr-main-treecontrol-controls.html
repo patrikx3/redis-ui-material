@@ -1,9 +1,46 @@
-<md-button class="md-fab md-mini md-primary" aria-label="" ng-click="$ctrl.treeExpandAll()">
-    <md-tooltip>{{ $root.p3xr.strings.page.treeControls.expandAll}}</md-tooltip>
-    <md-icon>keyboard_arrow_down</md-icon>
-</md-button>
+<div style="float: left;">
+    <md-button class="md-icon-button md-primary" aria-label="" ng-click="$ctrl.treeExpandAll()">
+        <md-tooltip>{{ $root.p3xr.strings.page.treeControls.expandAll}}</md-tooltip>
+        <md-icon>keyboard_arrow_down</md-icon>
+    </md-button>
 
-<md-button class="md-fab md-mini" aria-label="" ng-click="$ctrl.treeCollapseAll()">
-    <md-tooltip>{{ $root.p3xr.strings.page.treeControls.collapseAll}}</md-tooltip>
-    <md-icon>keyboard_arrow_up</md-icon>
-</md-button>
+    <md-button class="md-icon-button" aria-label="" ng-click="$ctrl.treeCollapseAll()">
+        <md-tooltip>{{ $root.p3xr.strings.page.treeControls.collapseAll}}</md-tooltip>
+        <md-icon>keyboard_arrow_up</md-icon>
+    </md-button>
+</div>
+
+<span ng-if="$root.p3xr.state.pages > 1">
+    <md-tooltip>{{ $root.p3xr.strings.status.keyCount({keyCount: $root.p3xr.state.keysRaw.length }) }}</md-tooltip>
+    <md-button class="md-icon-button md-primary" aria-label="" ng-click="$ctrl.page({ page: 'first' })">
+        <md-tooltip>{{ $root.p3xr.strings.page.treeControls.pager.first}}</md-tooltip>
+        <md-icon>skip_previous</md-icon>
+    </md-button>
+    <md-button class="md-icon-button" aria-label="" ng-click="$ctrl.page({ page: 'prev' })">
+        <md-tooltip>{{ $root.p3xr.strings.page.treeControls.pager.prev}}</md-tooltip>
+        <md-icon>keyboard_arrow_left</md-icon>
+    </md-button>
+
+    <input type="number" style="width: 48px" step="1" min="1" ng-maxlength="$root.p3xr.state.pages" ng-change="$ctrl.pageChange()" ng-model="$root.p3xr.state.page" /> / {{ $root.p3xr.state.pages }}
+
+    <md-button class="md-icon-button" aria-label="" ng-click="$ctrl.page({ page: 'next' })">
+        <md-tooltip>{{ $root.p3xr.strings.page.treeControls.pager.next}}</md-tooltip>
+        <md-icon>keyboard_arrow_right</md-icon>
+    </md-button>
+    <md-button class="md-icon-button md-primary" aria-label="" ng-click="$ctrl.page({ page: 'last' })">
+        <md-tooltip>{{ $root.p3xr.strings.page.treeControls.pager.last}}</md-tooltip>
+        <md-icon>skip_next</md-icon>
+    </md-button>
+</span>
+
+<div style="float: right;">
+    <md-button class="md-icon-button" aria-label="" ng-click="$ctrl.openTreeSettingDialog({ $event: $event})">
+        <md-tooltip>{{ $root.p3xr.strings.form.treeSettings.label.formName}}</md-tooltip>
+        <md-icon>settings</md-icon>
+    </md-button>
+</div>
+
+<div class="p3xr-main-treecontrol-controls-search">
+    <input placeholder="{{ $root.p3xr.state.searchClientSide ? $root.p3xr.strings.page.treeControls.search.placeholderClient : $root.p3xr.strings.page.treeControls.search.placeholderServer }}"  ng-model="$root.p3xr.state.search" ng-model-options="{debounce : $root.p3xrs.settings.debounceSearch}" ng-change="$ctrl.onSearchChange()"/>
+    <md-tooltip>{{ $root.p3xr.strings.page.treeControls.search.info }}</md-tooltip>
+</div>

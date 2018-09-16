@@ -56,10 +56,56 @@
                         {{ $root.p3xr.strings.form.treeSettings.field.treeSeparator}}
                     </div>
                     <div>
+                        <span ng-if="$root.p3xr.settings.redisTreeDivider.length > 0">
                         {{ $root.p3xr.settings.redisTreeDivider}}
+                        </span>
+                        <span ng-if="$root.p3xr.settings.redisTreeDivider.length < 1 || $root.p3xr.settings.redisTreeDivider === undefined || $root.p3xr.settings.redisTreeDivider === ''">
+                            {{ $root.p3xr.strings.label.treeSeparatorEmptyNote}}
+                        </span>
                     </div>
                 </div>
             </md-list-item>
+
+            <md-divider></md-divider>
+
+            <md-list-item>
+                <div layout="row" flex>
+                    <div flex>
+                        {{ $root.p3xr.strings.form.treeSettings.field.page}}
+                    </div>
+                    <div>
+                        {{ $root.p3xr.settings.pageCount}}
+                    </div>
+                </div>
+            </md-list-item>
+
+            <md-divider></md-divider>
+
+            <md-list-item>
+                <div layout="row" flex>
+                    <div flex>
+                        {{ $root.p3xr.strings.form.treeSettings.field.keysSort}}
+                    </div>
+                    <div>
+                        {{ $root.p3xr.settings.keysSort ? $root.p3xr.strings.label.keysSort.on :  $root.p3xr.strings.label.keysSort.off  }}
+                    </div>
+                </div>
+            </md-list-item>
+
+
+            <md-divider></md-divider>
+
+            <md-list-item>
+                <div layout="row" flex>
+                    <div flex>
+                        {{ $root.p3xr.strings.form.treeSettings.field.searchMode}}
+                    </div>
+                    <div>
+                        {{ $root.p3xr.settings.searchClientSide ? $root.p3xr.strings.form.treeSettings.label.checkboxClient :  $root.p3xr.strings.form.treeSettings.label.checkboxServer }}
+                    </div>
+                </div>
+            </md-list-item>
+
         </md-list>
 
     </p3xr-accordion-content>

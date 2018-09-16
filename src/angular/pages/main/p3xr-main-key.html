@@ -10,6 +10,12 @@
 <md-list flex>
 
     <md-list-item>
+
+    </md-list-item>
+
+    <md-divider></md-divider>
+
+    <md-list-item>
         <p>{{ $root.p3xr.strings.page.key.label.key }}:</p>
         {{ $ctrl.$stateParams.key }}
     </md-list-item>
@@ -22,6 +28,9 @@
             {{ $root.p3xr.strings.page.key.label.ttlNotExpire }}
         </span>
         <span ng-if="$ctrl.response.ttl != -1">
+            <span style="opacity: 0.5">
+                ({{ $ctrl.ttlParsed }})
+            </span>
             {{ $ctrl.response.ttl }}
         </span>
     </md-list-item>
@@ -37,10 +46,14 @@
 
     <md-list-item>
         <p>{{ $root.p3xr.strings.page.key.label.length }}:</p>
+        <span ng-if="$root.p3xr.state.keysInfo[$ctrl.$stateParams.key].type === 'string'" style="opacity: 0.5">
+                {{ $ctrl.charactersPrettyBytes($root.p3xr.state.keysInfo[$ctrl.$stateParams.key].length) }}
+            &nbsp;
+        </span>
         {{ $root.p3xr.state.keysInfo[$ctrl.$stateParams.key].length }}
         &nbsp;
         <span ng-if="$root.p3xr.state.keysInfo[$ctrl.$stateParams.key].type === 'string'">
-            {{ $root.p3xr.strings.page.key.label.lengthString }}
+                {{ $root.p3xr.strings.page.key.label.lengthString }}
         </span>
         <span ng-if="$root.p3xr.state.keysInfo[$ctrl.$stateParams.key].type !== 'string'">
             {{ $root.p3xr.strings.page.key.label.lengthItem }}
@@ -54,24 +67,10 @@
 
 
 <span ng-switch="" on="$root.p3xr.state.keysInfo[$ctrl.$stateParams.key].type">
-    <span ng-switch-when="string">
-        <pre class="p3x-main-key-type-string-value">{{ $ctrl.response.value }}</pre>
-    </span>
-    <span ng-switch-when="hash">
-
-        <pre class="p3x-main-key-type-string-value">{{ $ctrl.response.value }}</pre>
-    </span>
-    <span ng-switch-when="list">
-
-        <pre class="p3x-main-key-type-string-value">{{ $ctrl.response.value }}</pre>
-    </span>
-    <span ng-switch-when="set">
-
-       <pre class="p3x-main-key-type-string-value">{{ $ctrl.response.value }}</pre>
-    </span>
-    <span ng-switch-when="zset">
-
-       <pre class="p3x-main-key-type-string-value">{{ $ctrl.response.value }}</pre>
-       <pre class="p3x-main-key-type-string-value">{{ $ctrl.response.sortedScores }}</pre>
+    <p3xr-main-key-string ng-switch-when="string" p3xr-value="$ctrl.response.value" p3xr-key="$ctrl.$stateParams.key"></p3xr-main-key-string>
+    <p3xr-main-key-hash ng-switch-when="hash" p3xr-value="$ctrl.response.value" p3xr-key="$ctrl.$stateParams.key"></p3xr-main-key-hash>
+    <p3xr-main-key-list ng-switch-when="list" p3xr-value="$ctrl.response.value" p3xr-key="$ctrl.$stateParams.key"></p3xr-main-key-list>
+    <p3xr-main-key-set ng-switch-when="set" p3xr-value="$ctrl.response.value" p3xr-key="$ctrl.$stateParams.key"></p3xr-main-key-set>
+    <p3xr-main-key-zset ng-switch-when="zset" p3xr-value="$ctrl.response.value" p3xr-key="$ctrl.$stateParams.key" p3xr-sorted-core="$ctrl.response.sortedScores"></p3xr-main-key-zset>
     </span>
  </span>

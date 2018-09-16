@@ -12,7 +12,7 @@ require('angular-material');1
 require('angular-tree-control')
 require('angular-tree-control/context-menu')
 
-p3xr.ng =  angular.module('p3x-redis-ui', [
+p3xr.ng =  angular.module('p3xr-redis-ui', [
     'ngCookies',
     'ngAnimate',
     'ngAria',
@@ -43,6 +43,7 @@ p3xr.ng.config(($qProvider, $locationProvider, $urlRouterProvider, $stateProvide
 })
 
 p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $cookies, p3xrRedisParser) => {
+
     $rootScope.p3xr = p3xr;
     $rootScope.$mdMedia = $mdMedia;
 
@@ -58,13 +59,13 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
         location.reload()
     }
 
-    const treeDividerDefault = ':'
+
     let treeDivider
     Object.defineProperty($rootScope.p3xr.settings, 'redisTreeDivider', {
         get: () => {
             treeDivider = $cookies.get(p3xr.settings.tree.cookieName)
             if (treeDivider === undefined) {
-                treeDivider = treeDividerDefault
+                treeDivider = p3xr.settings.tree.defaultDivider
             }
             return treeDivider
         },
@@ -76,26 +77,67 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
         }
     })
 
-    let pagingCount
-    Object.defineProperty($rootScope.p3xr.settings, 'pagingCount', {
+    let keysSort
+    Object.defineProperty($rootScope.p3xr.settings, 'keysSort', {
         get: () => {
-            pagingCount = $cookies.get(p3xr.settings.paging.cookieName)
-            if (pagingCount === undefined) {
-                pagingCount = p3xr.settings.paging.default
-            } else {
-                pagingCount = parseInt(pagingCount)
+            keysSort = $cookies.get(p3xr.settings.keySortInfo.cookieName)
+            if (keysSort === undefined) {
+                keysSort = p3xr.settings.keySortInfo.default
+            } else if (keysSort === 'true') {
+                keysSort = true
+            } else if (keysSort === 'false') {
+                keysSort = false
             }
-            return pagingCount
+            return keysSort
         },
         set: (value) => {
-            pagingCount = value
-            pagingCount = $cookies.put(p3xr.settings.paging.cookieName, value, {
+            keysSort = value
+            keysSort = $cookies.put(p3xr.settings.keySortInfo.cookieName, value, {
+                expires: p3xr.settings.cookieExpiry,
+            })
+        }
+    })
+
+
+    let searchClientSide
+    Object.defineProperty($rootScope.p3xr.settings, 'searchClientSide', {
+        get: () => {
+            searchClientSide = $cookies.get(p3xr.settings.searchInfoClientSide.cookieName)
+            if (searchClientSide === undefined) {
+                searchClientSide = p3xr.settings.searchInfoClientSide.default
+            } else if (searchClientSide === 'true') {
+                searchClientSide = true
+            } else if (searchClientSide === 'false') {
+                searchClientSide = false
+            }
+            return searchClientSide
+        },
+        set: (value) => {
+            searchClientSide = value
+            searchClientSide = $cookies.put(p3xr.settings.searchInfoClientSide.cookieName, value, {
                 expires: p3xr.settings.cookieExpiry,
             })
         }
     })
 
     $rootScope.keysTreeRendered = []
+    let keysTree
+    Object.defineProperty($rootScope, 'keysTree', {
+        get: () => {
+            if (JSON.stringify(keysTree) !== JSON.stringify(p3xr.state.keys) || $rootScope.p3xr.state.redisChanged === true ) {
+                $rootScope.p3xr.state.redisChanged = false
+                $rootScope.keysTreeRendered =  p3xrRedisParser.keysToTreeControl({
+                    keys: p3xr.state.keys,
+                })
+                keysTree = p3xr.state.keys
+            }
+            return $rootScope.keysTreeRendered
+        },
+        set: (value) => {
+            keysTree = value
+        }
+    })
+
 
     let expandedNodes = []
     Object.defineProperty($rootScope, 'expandedNodes', {
@@ -108,25 +150,56 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
             expandedNodes = value
         }
     })
+    $rootScope.savedExpandedNodes = []
 
-    let keys
-    Object.defineProperty($rootScope, 'keysTree', {
+    let page = 1
+    Object.defineProperty($rootScope.p3xr.state, 'page', {
         get: () => {
-            if (JSON.stringify(keys) !== JSON.stringify(p3xr.state.keys) ) {
-                $rootScope.keysTreeRendered =  p3xrRedisParser.keysToTreeControl({
-                    keys: p3xr.state.keys
-                })
-                keys = p3xr.state.keys
-            }
-            return $rootScope.keysTreeRendered
+            return page
         },
         set: (value) => {
-            keys = value
+            page = parseInt(value)
         }
     })
 
+    Object.defineProperty($rootScope.p3xr.state, 'keys', {
+        get: () => {
+            if ($rootScope.p3xr.state.keysRaw.length <= $rootScope.p3xr.settings.pageCount) {
+                return $rootScope.p3xr.state.keysRaw
+            } else {
+                //console.log('new scope change',  ($rootScope.p3xr.state.page -1) * $rootScope.p3xr.settings.pageCount, $rootScope.p3xr.settings.pageCount)
+                const start = ($rootScope.p3xr.state.page -1) * $rootScope.p3xr.settings.pageCount
+                const keys = $rootScope.p3xr.state.keysRaw.slice(start, start + $rootScope.p3xr.settings.pageCount)
+                return keys
+            }
+        }
+    })
 
+    Object.defineProperty($rootScope.p3xr.state, 'pages', {
+        get: () => {
+            const pages = Math.ceil($rootScope.p3xr.state.keysRaw.length / $rootScope.p3xr.settings.pageCount)
+            return pages
+        }
+    })
 
+    let pageCount
+    Object.defineProperty($rootScope.p3xr.settings, 'pageCount', {
+        get: () => {
+            pageCount = $cookies.get(p3xr.settings.paging.cookieName)
+            if (pageCount === undefined) {
+                pageCount = p3xr.settings.paging.default
+            } else {
+                pageCount = parseInt(pageCount)
+            }
+            return pageCount
+        },
+        set: (value) => {
+            pageCount = value
+            pageCount = $cookies.put(p3xr.settings.paging.cookieName, value, {
+                expires: p3xr.settings.cookieExpiry,
+            })
+        }
+    })
 
     //console.warn('p3xrTheme', p3xrTheme)
     p3xrTheme.start()
@@ -134,6 +207,6 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
 })
 
 angular.element(document).ready(() => {
-    const bootstrapElement = document.getElementById('p3x-redis-ui-bootstrap');
-    angular.bootstrap(bootstrapElement, ['p3x-redis-ui']);
+    const bootstrapElement = document.getElementById('p3xr-redis-ui-bootstrap');
+    angular.bootstrap(bootstrapElement, ['p3xr-redis-ui']);
 })

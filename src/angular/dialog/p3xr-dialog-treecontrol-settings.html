@@ -11,13 +11,46 @@
         <md-dialog-content md-theme="{{ $root.p3xr.state.theme }}">
             <md-content layout-padding>
 
-                <md-input-container class="md-block" >
+                <md-input-container class="md-block p3xr-md-input-container-no-bottom" >
                     <label>{{ $root.p3xr.strings.form.treeSettings.field.treeSeparator }}</label>
-                    <input required name="treeSeparator" ng-model="model.treeSeparator">
+                    <input  name="treeSeparator" ng-model="model.treeSeparator">
+                    <!--
                     <div ng-messages="p3xrDialogTreecontrolSettingsForm.treeSeparator.$error">
                         <div ng-message="required">{{ $root.p3xr.strings.form.error.required }}</div>
                     </div>
+                    -->
                 </md-input-container>
+                <div style="opacity: 0.25; padding-top: 5px;">
+                    {{ $root.p3xr.strings.label.treeSeparatorEmpty }}
+                </div>
+
+
+                <md-input-container class="md-block" >
+                    <label>{{ $root.p3xr.strings.form.treeSettings.field.page }}</label>
+                    <input type="number" required min="10" max="500" name="pageCount" step="1" pattern="\d*" ng-model="model.pageCount">
+                    <div ng-messages="p3xrDialogTreecontrolSettingsForm.pageCount.$error">
+                        <div ng-message-exp="['required', 'min', 'max', 'pattern']">
+                            {{ $root.p3xr.strings.form.treeSettings.error.page }}
+                        </div>
+                    </div>
+                </md-input-container>
+
+
+                <md-input-container class="md-block" >
+                    <md-checkbox ng-model="model.keysSort" name="keysSort" aria-label="">
+                        {{ model.keysSort ? $root.p3xr.strings.label.keysSort.on :  $root.p3xr.strings.label.keysSort.off  }}
+                    </md-checkbox>
+                </md-input-container>
+
+
+                <md-input-container class="md-block p3xr-md-input-container-no-bottom" >
+                    <md-checkbox ng-model="model.searchClientSide" name="searchClientSide" aria-label="">
+                        {{ model.searchClientSide  ? $root.p3xr.strings.form.treeSettings.label.checkboxClient :  $root.p3xr.strings.form.treeSettings.label.checkboxServer }}
+                    </md-checkbox>
+                </md-input-container>
+                <div style="opacity: 0.25; padding-top: 5px;">
+                    {{ $root.p3xr.strings.page.treeControls.search.info }}
+                </div>
 
             </md-content>
         </md-dialog-content>

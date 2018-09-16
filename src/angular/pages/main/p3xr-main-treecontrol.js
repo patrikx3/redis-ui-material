@@ -17,7 +17,7 @@ p3xr.ng.component('p3xrMainTree', {
                          <i ng-switch-when="zset" class="fas fa-chart-line" aria-hidden="true"></i>                      
                      </span>
                     {{node.label}} 
-                        <span class="p3xr-main-tree-node-count" ng-if="node.type === 'folder'">({{node.childCount}})</span>
+                        <span class="p3xr-main-tree-node-count" ng-if="node.type === 'folder'">{{$root.p3xr.settings.redisTreeDivider}}* ({{node.childCount}})</span>
                         <span class="p3xr-main-tree-node-count" ng-if="node.type !== 'folder' && node.keysInfo.type !== 'string'">({{node.keysInfo.length}})</span>
                     <span ng-show="node.type === 'folder' && node.show">
                         <span>
@@ -90,6 +90,8 @@ p3xr.ng.component('p3xrMainTree', {
                 // event.preventDefault()
                 event.stopPropagation();
 
+                const expandedNodes = angular.copy($rootScope.expandedNodes);
+
                 await p3xrCommon.confirm({
                     event: event,
                     message: p3xr.strings.confirm.deleteAllKeys({
@@ -107,9 +109,8 @@ p3xr.ng.component('p3xrMainTree', {
                 })
 
                 $timeout(() => {
-                    $rootScope.$apply(() => {
-                        $rootScope.p3xr.state.keys = response.keys
-                    })
+                    $rootScope.savedExpandedNodes = expandedNodes
+                    p3xrCommon.loadRedisInfoResponse({ response: response})
                 })
 
                 p3xrCommon.toast({

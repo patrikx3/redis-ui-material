@@ -10,6 +10,9 @@ p3xr.state = {
     cfg: undefined,
     keysInfo: undefined,
     failed: false,
+    keysRaw: [],
+    search: undefined,
+
 }
 
 Object.defineProperty(p3xr.state, 'themeLayout', {

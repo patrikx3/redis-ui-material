@@ -11,6 +11,9 @@ p3xr.ng.factory('p3xrDialogTreecontrolSettings', function (p3xrCommon, $mdDialog
 
                         $scope.model = {
                             treeSeparator: $rootScope.p3xr.settings.redisTreeDivider,
+                            pageCount: $rootScope.p3xr.settings.pageCount,
+                            keysSort:  $rootScope.p3xr.settings.keysSort,
+                            searchClientSide: $rootScope.p3xr.settings.searchClientSide,
                         }
 
                         // Promise reject
@@ -53,7 +56,10 @@ p3xr.ng.factory('p3xrDialogTreecontrolSettings', function (p3xrCommon, $mdDialog
                             try {
 
                                 $rootScope.p3xr.settings.redisTreeDivider = $scope.model.treeSeparator
-                                $rootScope.keysTree = []
+                                $rootScope.p3xr.settings.pageCount = $scope.model.pageCount
+                                $rootScope.p3xr.settings.keysSort = $scope.model.keysSort
+                                $rootScope.p3xr.settings.searchClientSide = $scope.model.searchClientSide
+                                $rootScope.p3xr.state.redisChanged = true;
                                 $timeout(() => {
                                     $rootScope.$digest()
                                 })

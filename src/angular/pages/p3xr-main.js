@@ -28,13 +28,15 @@ p3xr.ng.component('p3xrMain', {
 
             const $treeControl = $('#p3xr-main-treecontrol-container')
             if ($treeControl) {
-                const treeTop = 48
-                $treeControl.css('top', (containerPosition.top + treeTop) + 'px')
+                const $treeControlControls = $('#p3xr-main-treecontrol-controls-container')
+                const treeControlControlsPosition = p3xr.dom.getPosition($treeControlControls[0])
+
+                $treeControl.css('top', (containerPosition.top + treeControlControlsPosition.height) + 'px')
                 $treeControl.css('left', containerPosition.left + 'px');
-                $treeControl.css('height', (containerPosition.height - treeTop) + 'px')
+                $treeControl.css('height', (containerPosition.height - treeControlControlsPosition.height) + 'px')
                 $treeControl.css('max-height', containerPosition.height + 'px')
                 $treeControl.css('width', '33%')
-//                $treeControl.css('max-width', '320px')
+                $treeControl.css('min-width', '320px')
 
                 const treeControlPosition = p3xr.dom.getPosition($treeControl[0])
                 const $content = $('#p3xr-main-content-container');
@@ -43,8 +45,6 @@ p3xr.ng.component('p3xrMain', {
                 $content.css('width', (containerPosition.width - treeControlPosition.width ) + 'px')
                 $content.css('height', containerPosition.height + 'px')
 
-                const $treeControlControls = $('#p3xr-main-treecontrol-controls-container')
-                $treeControlControls.height(treeTop)
                 $treeControlControls.width(treeControlPosition.width)
             }
 
@@ -66,14 +66,14 @@ p3xr.ng.component('p3xrMain', {
             $state.go('main.statistics')
 
             if (p3xr.state.redisChanged) {
-                p3xr.state.redistChanged = true;
+                p3xr.state.redisChanged = false;
                 this.refresh()
             }
         }
 
         this.$onDestroy = function () {
             $window.off('resize', resize)
-        };
+        };     $rootScope.p3xr.state.page = 1;
 
         let selectedDatabase = 0
         let currentDatabase
@@ -115,6 +115,7 @@ p3xr.ng.component('p3xrMain', {
 
             this.currentDatabase = selectDbIndex
             try {
+                $rootScope.p3xr.state.page = 1;
                 const response = await p3xrSocket.request({
                     action: 'console',
                     payload: {
