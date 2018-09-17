@@ -1,6 +1,6 @@
 <md-dialog aria-label="" style="min-width: 320px;">
     <form novalidate name="p3xrConnectionForm" ng-submit="submit()">
-        <md-toolbar md-theme="{{ $root.p3xr.state.themeLayout }}" class="md-hue-2">
+        <md-toolbar md-theme="{{ $root.p3xr.state.themeLayout }}" class="md-hue-3">
             <div class="md-toolbar-tools" >
                 <h2 flex md-truncate>{{  $root.p3xr.state.cfg.readonlyConnections ? $root.p3xr.strings.label.connectiondView : options.type === 'new' ? $root.p3xr.strings.label.connectiondAdd : $root.p3xr.strings.label.connectiondEdit }}</h2>
                 <md-button class="md-icon-button" ng-click="cancel()">
