@@ -21,6 +21,15 @@ p3xr.ng.provider('p3xrTheme', function p3xrThemeProvider($mdThemingProvider,  ) 
 
     const themeIsGenerated = {};
 
+    const themeType = {
+        dark: [
+            'p3xrThemeDark'
+        ],
+        light: [
+            'p3xrThemeLight'
+        ]
+    }
+
     // this is the service eg: ngivrTheme
     this.$get = ['$mdTheming', '$rootScope' , '$cookies', function p3xxThemeFactory($mdTheming, $rootScope, $cookies ) {
 
@@ -58,6 +67,13 @@ p3xr.ng.provider('p3xrTheme', function p3xrThemeProvider($mdThemingProvider,  ) 
                 $rootScope.p3xr.state.theme = themeName;
                 $cookies.put(themeCookieName, themeName, {  expires: p3xr.settings.cookieExpiry,});
 
+                $body.removeClass('p3xr-theme-light')
+                $body.removeClass('p3xr-theme-dark')
+                if (themeType.dark.includes(themeName)) {
+                    $body.addClass('p3xr-theme-dark')
+                } else {
+                    $body.addClass('p3xr-theme-light')
+                }
             }
 
             this.getCurrentThemeName = () => {

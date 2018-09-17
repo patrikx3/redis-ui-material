@@ -32,7 +32,7 @@ p3xr.ng.component('p3xrMainTree', {
     bindings: {
         p3xrResize: '&',
     },
-    controller: function(p3xrCommon, p3xrRedisParser, p3xrSocket, $rootScope, $timeout,  $state) {
+    controller: function(p3xrCommon, p3xrRedisParser, p3xrSocket, $rootScope, $timeout,  $state, $scope, $mdDialog) {
 
         this.$onInit = () => {
             this.p3xrResize()
@@ -84,6 +84,86 @@ p3xr.ng.component('p3xrMainTree', {
             */
         }
 
+        this.delete = async(options) => {
+            try {
+
+                await p3xrCommon.confirm({
+                    message: p3xr.strings.confirm.deleteKey
+                })
+
+                const expandedNodes = angular.copy($rootScope.expandedNodes);
+
+                const response = await p3xrSocket.request({
+                    action: 'delete',
+                    payload: {
+                        key: options.key
+                    }
+                })
+
+                $timeout(() => {
+                    $rootScope.savedExpandedNodes = expandedNodes
+                    p3xrCommon.loadRedisInfoResponse({ response: response})
+                })
+
+                $state.go('main.statistics')
+
+                p3xrCommon.toast({
+                    message: p3xr.strings.status.deletedKey({
+                        key: options.key
+                    })
+                })
+            } catch(e) {
+                p3xrCommon.generalHandleError(e)
+            }
+
+        }
+
+
+        this.rename = async(options) => {
+            try {
+                const confirm = $mdDialog.prompt()
+                    .title(p3xr.strings.confirm.rename.title)
+                    .textContent(p3xr.strings.confirm.rename.textContent)
+                    .placeholder(p3xr.strings.confirm.rename.placeholder)
+                    .ariaLabel(p3xr.strings.confirm.rename.placeholder)
+                    .initialValue(options.key)
+                    .targetEvent(options.$event)
+                    .required(true)
+                    .ok(p3xr.strings.intention.rename)
+                    .cancel(p3xr.strings.intention.cancel);
+
+                const confirmResponse = await $mdDialog.show(confirm)
+
+                const expandedNodes = angular.copy($rootScope.expandedNodes);
+
+                const response = await p3xrSocket.request({
+                    action: 'rename',
+                    payload: {
+                        key: options.key,
+                        keyNew: confirmResponse,
+                    }
+                })
+
+                $timeout(() => {
+                    $rootScope.savedExpandedNodes = expandedNodes
+                    p3xrCommon.loadRedisInfoResponse({ response: response})
+                    $state.go('main.key', {
+                        key: confirmResponse,
+                        resize:  this.p3xrResize,
+                    })
+                })
+
+
+
+                p3xrCommon.toast({
+                    message: p3xr.strings.status.renamedKey
+                })
+            } catch(e) {
+                p3xrCommon.generalHandleError(e)
+            }
+
+        }
+
         this.deleteTree = async(options) => {
             try {
                 const { event, node} = options
@@ -129,6 +209,17 @@ p3xr.ng.component('p3xrMainTree', {
             }
             return p3xr.ui.htmlEncode(node.key)
         }
+
+
+        $scope.$on('p3xr-key-delete', (event, arg) => {
+            this.delete(arg)
+        });
+
+        $scope.$on('p3xr-key-rename', (event, arg) => {
+            this.rename(arg)
+        });
+
+
 
     }
 })

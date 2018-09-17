@@ -1,6 +1,8 @@
-
 p3xr.ng.component('p3xrMainTreecontrolControls', {
     template: require('./p3xr-main-treecontrol-controls.html'),
+    bindings: {
+        p3xrMainRef: '<'
+    },
     controller: function($cookies, $rootScope, p3xrCommon, $timeout, p3xrDialogTreecontrolSettings) {
 
         this.treeExpandAll = () => {
@@ -74,13 +76,26 @@ p3xr.ng.component('p3xrMainTreecontrolControls', {
         }
 
         this.openTreeSettingDialog = (opts) => {
+            opts.p3xrMainRef = this.p3xrMainRef
             p3xrDialogTreecontrolSettings.show(opts);
             //console.warn($rootScope.p3xr.state.redisTreeDivider)
         }
 
-        this.onSearchChange = () => {
+        const debounce = require('lodash/debounce')
+        const debouncedOnSearchChange = debounce(() => {
+            if ($rootScope.p3xr.settings.searchClientSide) {
+                // $rootScope.p3xr.settings.searchClientSide
+                // $rootScope.p3xr.settings.searchStartsWith
 
-        }
+                $rootScope.p3xr.state.redisChanged = true
+            } else {
+
+                this.p3xrMainRef.refresh()
+            }
+
+        }, p3xr.settings.debounceSearch )
+
+        this.onSearchChange = debouncedOnSearchChange
     }
 })
 

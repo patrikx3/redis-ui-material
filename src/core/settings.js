@@ -37,5 +37,10 @@ p3xr.settings = {
     searchInfoClientSide: {
         default: true,
         cookieName: 'p3xr-main-treecontrol-search-client-mode'
-    }
+    },
+    searchStartsWith: false,
+    searchInfoStartsWith: {
+        default: false,
+        cookieName: 'p3xr-main-treecontrol-search-starts-with'
+    },
 }

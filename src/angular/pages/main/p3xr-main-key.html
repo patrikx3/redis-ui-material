@@ -7,17 +7,68 @@
 </md-toolbar>
 -->
 
-<md-list flex>
+<md-list flex md-theme="{{ $root.p3xr.state.theme}}">
 
     <md-list-item>
+        <md-button class="md-button md-raised md-accent" ng-click="$ctrl.refresh()">
+            <md-icon>refresh</md-icon>
+            {{ $root.p3xr.strings.intention.reloadKey }}
+        </md-button>
 
+        <md-button class="md-button md-raised md-warn" ng-click="$ctrl.delete()">
+            <md-icon>delete</md-icon>
+            {{ $root.p3xr.strings.intention.delete }}
+        </md-button>
+
+        <md-button class="md-button md-raised md-primary" ng-click="$ctrl.rename({ $event: $event})">
+            <md-icon>fingerprint</md-icon>
+            {{ $root.p3xr.strings.intention.rename }}
+        </md-button>
+
+        <md-button class="md-button md-raised md-primary" ng-click="$ctrl.setTtl({ $event: $event})">
+            <md-tooltip>{{ $root.p3xr.strings.label.ttlTitle  }}</md-tooltip>
+            <md-icon>timer</md-icon>
+            {{ $root.p3xr.strings.intention.ttl }}
+        </md-button>
     </md-list-item>
 
     <md-divider></md-divider>
 
     <md-list-item>
-        <p>{{ $root.p3xr.strings.page.key.label.key }}:</p>
-        {{ $ctrl.$stateParams.key }}
+        <p>{{ $root.p3xr.strings.page.key.label.key }}:&nbsp;</p>
+        <span class="p3xr-typography-ellipsis" title="{{ $root.p3xr.ui.htmlEncode($ctrl.$stateParams.key) }}">{{ $ctrl.$stateParams.key }}</span>
+    </md-list-item>
+
+    <md-divider></md-divider>
+
+    <md-list-item>
+        <p>{{ $root.p3xr.strings.page.key.label.type }}:</p>
+        {{ $root.p3xr.state.keysInfo[$ctrl.$stateParams.key].type }}
+    </md-list-item>
+
+    <md-divider></md-divider>
+
+    <md-list-item>
+        <p>{{ $root.p3xr.strings.page.key.label.encoding }}:</p>
+        {{ $ctrl.response.encoding }}
+    </md-list-item>
+
+    <md-divider></md-divider>
+
+    <md-list-item>
+        <p>{{ $root.p3xr.strings.page.key.label.length }}:</p>
+            <span ng-if="$root.p3xr.state.keysInfo[$ctrl.$stateParams.key].type === 'string'" style="opacity: 0.5">
+                {{ $ctrl.charactersPrettyBytes($root.p3xr.state.keysInfo[$ctrl.$stateParams.key].length) }}
+            &nbsp;
+        </span>
+        {{ $root.p3xr.state.keysInfo[$ctrl.$stateParams.key].length }}
+        &nbsp;
+        <span ng-if="$root.p3xr.state.keysInfo[$ctrl.$stateParams.key].type === 'string'">
+                {{ $root.p3xr.strings.page.key.label.lengthString }}
+        </span>
+        <span ng-if="$root.p3xr.state.keysInfo[$ctrl.$stateParams.key].type !== 'string'">
+            {{ $root.p3xr.strings.page.key.label.lengthItem }}
+        </span>
     </md-list-item>
 
     <md-divider></md-divider>
@@ -35,30 +86,6 @@
         </span>
     </md-list-item>
 
-    <md-divider></md-divider>
-
-    <md-list-item>
-        <p>{{ $root.p3xr.strings.page.key.label.encoding }}:</p>
-        {{ $ctrl.response.encoding }}
-    </md-list-item>
-
-    <md-divider></md-divider>
-
-    <md-list-item>
-        <p>{{ $root.p3xr.strings.page.key.label.length }}:</p>
-        <span ng-if="$root.p3xr.state.keysInfo[$ctrl.$stateParams.key].type === 'string'" style="opacity: 0.5">
-                {{ $ctrl.charactersPrettyBytes($root.p3xr.state.keysInfo[$ctrl.$stateParams.key].length) }}
-            &nbsp;
-        </span>
-        {{ $root.p3xr.state.keysInfo[$ctrl.$stateParams.key].length }}
-        &nbsp;
-        <span ng-if="$root.p3xr.state.keysInfo[$ctrl.$stateParams.key].type === 'string'">
-                {{ $root.p3xr.strings.page.key.label.lengthString }}
-        </span>
-        <span ng-if="$root.p3xr.state.keysInfo[$ctrl.$stateParams.key].type !== 'string'">
-            {{ $root.p3xr.strings.page.key.label.lengthItem }}
-        </span>
-    </md-list-item>
 
 </md-list>
 

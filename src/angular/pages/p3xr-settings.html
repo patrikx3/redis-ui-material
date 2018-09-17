@@ -101,7 +101,19 @@
                         {{ $root.p3xr.strings.form.treeSettings.field.searchMode}}
                     </div>
                     <div>
-                        {{ $root.p3xr.settings.searchClientSide ? $root.p3xr.strings.form.treeSettings.label.checkboxClient :  $root.p3xr.strings.form.treeSettings.label.checkboxServer }}
+                        {{ $root.p3xr.settings.searchClientSide ? $root.p3xr.strings.form.treeSettings.label.searchModeClient :  $root.p3xr.strings.form.treeSettings.label.searchModeServer }}
+                    </div>
+                </div>
+            </md-list-item>
+            <md-divider></md-divider>
+
+            <md-list-item>
+                <div layout="row" flex>
+                    <div flex>
+                        {{ $root.p3xr.strings.form.treeSettings.field.searchModeStartsWith}}
+                    </div>
+                    <div>
+                        {{ $root.p3xr.settings.searchStartsWith ? $root.p3xr.strings.form.treeSettings.label.searchModeStartsWith :  $root.p3xr.strings.form.treeSettings.label.searchModeIncludes }}
                     </div>
                 </div>
             </md-list-item>

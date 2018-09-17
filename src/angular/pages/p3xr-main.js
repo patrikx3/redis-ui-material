@@ -1,6 +1,6 @@
 p3xr.ng.component('p3xrMain', {
     template: require('./p3xr-main.html'),
-    controller: function($cookies, p3xrSocket, p3xrCommon, p3xrRedisParser, $rootScope, $state, $timeout) {
+    controller: function($cookies, p3xrSocket, p3xrCommon, p3xrRedisParser, $rootScope, $state, $timeout, $scope) {
 
 
         let $container
@@ -12,6 +12,7 @@ p3xr.ng.component('p3xrMain', {
         const debounce = require('lodash/debounce')
 
         const resize = debounce(() => {
+            console.warn('who is resizing non stop')
             let minus = 0
             for(let item of [$header, $footer, $consoleHeader]) {
                 minus += item.outerHeight()
@@ -73,7 +74,9 @@ p3xr.ng.component('p3xrMain', {
 
         this.$onDestroy = function () {
             $window.off('resize', resize)
-        };     $rootScope.p3xr.state.page = 1;
+        };
+
+        $rootScope.p3xr.state.page = 1;
 
         let selectedDatabase = 0
         let currentDatabase
@@ -162,18 +165,37 @@ p3xr.ng.component('p3xrMain', {
             }
         }
 
-        this.refresh = async () => {
+        this.refresh = async (options = {}) => {
+            let { withoutParent } = options
+            if (withoutParent === undefined) {
+                withoutParent = false
+            }
+
             try {
                 p3xr.ui.overlay.show({
                     message: p3xr.strings.status.reloadingDataInfo
                 })
+                const payload = {}
+
+                if (!$rootScope.p3xr.settings.searchClientSide && typeof ($rootScope.p3xr.state.search) === 'string' && $rootScope.p3xr.state.search.length > 0) {
+                    if ($rootScope.p3xr.settings.searchStartsWith) {
+                        payload.match = $rootScope.p3xr.state.search + '*';
+                    } else {
+                        payload.match = '*' + $rootScope.p3xr.state.search + '*';
+                    }
+                }
+
                 const response = await p3xrSocket.request({
                     action: 'refresh',
-
+                    payload: payload
                 })
                 p3xrCommon.loadRedisInfoResponse({
                     response: response
                 })
+
+                if (!withoutParent) {
+                    $rootScope.$broadcast('p3x-refresh');
+                }
 
             } catch(e) {
                 p3xrCommon.generalHandleError(e)
@@ -183,6 +205,14 @@ p3xr.ng.component('p3xrMain', {
                 }, p3xr.settings.debounce)
             }
         }
+
+        $scope.$on('p3x-refresh', () => {
+            this.refresh({
+                withoutParent: true
+            })
+        })
+
+
 
         /*
  redis version = server - redis_version

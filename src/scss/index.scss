@@ -40,5 +40,29 @@ input:-webkit-autofill {
   text-overflow: ellipsis;
 }
 
+.p3xr-input {
+  padding: 3px;
+  border-style: solid;
+  border-width: 2px
+}
+
+.p3xr-theme-light {
+  .p3xr-input {
+    border-color: rgba(128, 128, 128, 0.5);
+  }
+}
+
+.p3xr-theme-dark {
+  ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .p3xr-input {
+    background-color: gray;
+    color: white;
+    border-color: rgba(200, 200, 200, 0.5);
+  }
+}
+
 @import '../injector';
 

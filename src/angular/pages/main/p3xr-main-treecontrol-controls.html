@@ -21,7 +21,7 @@
         <md-icon>keyboard_arrow_left</md-icon>
     </md-button>
 
-    <input type="number" style="width: 48px" step="1" min="1" ng-maxlength="$root.p3xr.state.pages" ng-change="$ctrl.pageChange()" ng-model="$root.p3xr.state.page" /> / {{ $root.p3xr.state.pages }}
+    <input class="p3xr-input" type="number" style="width: 48px" step="1" min="1" ng-maxlength="$root.p3xr.state.pages" ng-change="$ctrl.pageChange()" ng-model="$root.p3xr.state.page" /> / {{ $root.p3xr.state.pages }}
 
     <md-button class="md-icon-button" aria-label="" ng-click="$ctrl.page({ page: 'next' })">
         <md-tooltip>{{ $root.p3xr.strings.page.treeControls.pager.next}}</md-tooltip>
@@ -41,6 +41,10 @@
 </div>
 
 <div class="p3xr-main-treecontrol-controls-search">
-    <input placeholder="{{ $root.p3xr.state.searchClientSide ? $root.p3xr.strings.page.treeControls.search.placeholderClient : $root.p3xr.strings.page.treeControls.search.placeholderServer }}"  ng-model="$root.p3xr.state.search" ng-model-options="{debounce : $root.p3xrs.settings.debounceSearch}" ng-change="$ctrl.onSearchChange()"/>
+    <input class="p3xr-input" placeholder="{{ $root.p3xr.settings.searchClientSide ? $root.p3xr.strings.page.treeControls.search.placeholderClient : $root.p3xr.strings.page.treeControls.search.placeholderServer }}"  ng-model="$root.p3xr.state.search" ng-model-options="{debounce : $root.p3xrs.settings.debounceSearch}" ng-change="$ctrl.onSearchChange()"/>
     <md-tooltip>{{ $root.p3xr.strings.page.treeControls.search.info }}</md-tooltip>
+    <md-button ng-if="$root.p3xr.state.search.length > 0" class="md-icon-button md-primary" aria-label="" ng-click="$root.p3xr.state.search = ''; $ctrl.onSearchChange()">
+        <md-tooltip>{{ $root.p3xr.strings.page.treeControls.search.clear}}</md-tooltip>
+        <md-icon>clear</md-icon>
+    </md-button>
 </div>

@@ -7,4 +7,10 @@ p3xr-main-key {
     border-bottom-color: rgba(128, 128, 128, 0.5);
     cursor: pointer;
   }
+
+  md-list-item {
+    p {
+      font-weight: bold;
+    }
+  }
 }

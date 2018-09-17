@@ -14,6 +14,7 @@ p3xr.ng.factory('p3xrDialogTreecontrolSettings', function (p3xrCommon, $mdDialog
                             pageCount: $rootScope.p3xr.settings.pageCount,
                             keysSort:  $rootScope.p3xr.settings.keysSort,
                             searchClientSide: $rootScope.p3xr.settings.searchClientSide,
+                            searchStartsWith: $rootScope.p3xr.settings.searchStartsWith,
                         }
 
                         // Promise reject
@@ -59,10 +60,16 @@ p3xr.ng.factory('p3xrDialogTreecontrolSettings', function (p3xrCommon, $mdDialog
                                 $rootScope.p3xr.settings.pageCount = $scope.model.pageCount
                                 $rootScope.p3xr.settings.keysSort = $scope.model.keysSort
                                 $rootScope.p3xr.settings.searchClientSide = $scope.model.searchClientSide
+                                $rootScope.p3xr.settings.searchStartsWith = $scope.model.searchStartsWith
                                 $rootScope.p3xr.state.redisChanged = true;
                                 $timeout(() => {
                                     $rootScope.$digest()
                                 })
+
+                                if ( !$rootScope.p3xr.settings.searchClientSide ) {
+                                    options.p3xrMainRef.refresh()
+                                }
+
                                 //$scope.options.type = 'edit';
                                 $mdDialog.cancel();
 
@@ -77,7 +84,7 @@ p3xr.ng.factory('p3xrDialogTreecontrolSettings', function (p3xrCommon, $mdDialog
                     parent: angular.element(document.body),
                     targetEvent: options.$event,
                     clickOutsideToClose: true,
-                    // fullscreen: true // Only for -xs, -sm breakpoints.
+                    fullscreen: true // Only for -xs, -sm breakpoints.
                 })
                // console.warn(result)
             } catch(error) {

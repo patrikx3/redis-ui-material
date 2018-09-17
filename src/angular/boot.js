@@ -120,6 +120,29 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
         }
     })
 
+
+
+    let searchStartsWith
+    Object.defineProperty($rootScope.p3xr.settings, 'searchStartsWith', {
+        get: () => {
+            searchStartsWith = $cookies.get(p3xr.settings.searchInfoStartsWith.cookieName)
+            if (searchStartsWith === undefined) {
+                searchStartsWith = p3xr.settings.searchInfoStartsWith.default
+            } else if (searchStartsWith === 'true') {
+                searchStartsWith = true
+            } else if (searchStartsWith === 'false') {
+                searchStartsWith = false
+            }
+            return searchStartsWith
+        },
+        set: (value) => {
+            searchStartsWith = value
+            searchStartsWith = $cookies.put(p3xr.settings.searchInfoStartsWith.cookieName, value, {
+                expires: p3xr.settings.cookieExpiry,
+            })
+        }
+    })
+
     $rootScope.keysTreeRendered = []
     let keysTree
     Object.defineProperty($rootScope, 'keysTree', {
@@ -164,12 +187,27 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
 
     Object.defineProperty($rootScope.p3xr.state, 'keys', {
         get: () => {
-            if ($rootScope.p3xr.state.keysRaw.length <= $rootScope.p3xr.settings.pageCount) {
-                return $rootScope.p3xr.state.keysRaw
+            let keysRaw = $rootScope.p3xr.state.keysRaw.slice()
+            if ($rootScope.p3xr.settings.searchClientSide && typeof ($rootScope.p3xr.state.search) === 'string' && $rootScope.p3xr.state.search.length > 0) {
+                //console.log($rootScope.p3xr.settings.searchStartsWith)
+                if ($rootScope.p3xr.settings.searchStartsWith) {
+                    //console.log('startswith')
+                    keysRaw = keysRaw.filter(keyRaw => {
+                        return keyRaw.startsWith($rootScope.p3xr.state.search)
+                    })
+                 } else {
+                    //console.log('includes')
+                    keysRaw = keysRaw.filter(keyRaw => {
+                        return keyRaw.includes($rootScope.p3xr.state.search)
+                    })
+                }
+            }
+            if (keysRaw <= $rootScope.p3xr.settings.pageCount) {
+                return keysRaw
             } else {
                 //console.log('new scope change',  ($rootScope.p3xr.state.page -1) * $rootScope.p3xr.settings.pageCount, $rootScope.p3xr.settings.pageCount)
                 const start = ($rootScope.p3xr.state.page -1) * $rootScope.p3xr.settings.pageCount
-                const keys = $rootScope.p3xr.state.keysRaw.slice(start, start + $rootScope.p3xr.settings.pageCount)
+                const keys = keysRaw.slice(start, start + $rootScope.p3xr.settings.pageCount)
                 return keys
             }
         }

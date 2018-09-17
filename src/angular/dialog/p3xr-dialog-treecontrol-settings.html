@@ -37,20 +37,29 @@
 
 
                 <md-input-container class="md-block" >
-                    <md-checkbox ng-model="model.keysSort" name="keysSort" aria-label="">
+                    <md-switch ng-model="model.keysSort"  name="keysSort"  aria-label="">
                         {{ model.keysSort ? $root.p3xr.strings.label.keysSort.on :  $root.p3xr.strings.label.keysSort.off  }}
-                    </md-checkbox>
+                    </md-switch>
+
                 </md-input-container>
 
 
                 <md-input-container class="md-block p3xr-md-input-container-no-bottom" >
-                    <md-checkbox ng-model="model.searchClientSide" name="searchClientSide" aria-label="">
-                        {{ model.searchClientSide  ? $root.p3xr.strings.form.treeSettings.label.checkboxClient :  $root.p3xr.strings.form.treeSettings.label.checkboxServer }}
-                    </md-checkbox>
+                    <md-switch ng-model="model.searchClientSide"  name="searchClientSide"  aria-label="">
+                        {{ model.searchClientSide  ? $root.p3xr.strings.form.treeSettings.label.searchModeClient :  $root.p3xr.strings.form.treeSettings.label.searchModeServer }}
+                    </md-switch>
                 </md-input-container>
                 <div style="opacity: 0.25; padding-top: 5px;">
                     {{ $root.p3xr.strings.page.treeControls.search.info }}
                 </div>
+
+
+                <md-input-container class="md-block " >
+                    <md-switch ng-model="model.searchStartsWith"  name="searchStartsWith"  aria-label="">
+                        {{ model.searchStartsWith  ? $root.p3xr.strings.form.treeSettings.label.searchModeStartsWith :  $root.p3xr.strings.form.treeSettings.label.searchModeIncludes }}
+                    </md-switch>
+                </md-input-container>
+
 
             </md-content>
         </md-dialog-content>

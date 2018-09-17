@@ -11,7 +11,7 @@ p3xr.state = {
     keysInfo: undefined,
     failed: false,
     keysRaw: [],
-    search: undefined,
+    search: '',
 
 }
 

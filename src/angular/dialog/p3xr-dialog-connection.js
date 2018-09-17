@@ -116,7 +116,7 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                     parent: angular.element(document.body),
                     targetEvent: options.$event,
                     clickOutsideToClose: true,
-                   // fullscreen: true // Only for -xs, -sm breakpoints.
+                    fullscreen: true // Only for -xs, -sm breakpoints.
                 })
                // console.warn(result)
             } catch(error) {
