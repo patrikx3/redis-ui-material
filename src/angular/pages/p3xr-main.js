@@ -12,7 +12,7 @@ p3xr.ng.component('p3xrMain', {
         const debounce = require('lodash/debounce')
 
         const resize = debounce(() => {
-            console.warn('who is resizing non stop')
+            //console.warn('who is resizing non stop')
             let minus = 0
             for(let item of [$header, $footer, $consoleHeader]) {
                 minus += item.outerHeight()

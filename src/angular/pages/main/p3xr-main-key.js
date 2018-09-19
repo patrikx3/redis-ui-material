@@ -71,7 +71,6 @@ p3xr.ng.component('p3xrMainKey', {
                 p3xrCommon.generalHandleError(e)
             } finally {
                 if (!withoutParent) {
-                    console.log('infinite loop')
                     $stateParams.resize()
                 }
                 $timeout(() => {
@@ -122,7 +121,7 @@ p3xr.ng.component('p3xrMainKey', {
 
                 const confirmResponse = await $mdDialog.show(confirm)
 
-                if (confirmResponse.trim() === '') {
+                if (confirmResponse === undefined || confirmResponse.trim() === '') {
 
                     const response = await p3xrSocket.request({
                         action: 'persist',

@@ -1,1 +1,41 @@
-<div class="p3xr-main-key-type-string-value">{{ $ctrl.p3xrValue }}</div>
+<div style="text-align: right;">
+    <span ng-if="!$ctrl.editable">
+        <md-button class="md-button md-raised md-primary" ng-click="$ctrl.jsonViewer()" ng-if="$ctrl.isJson && !$ctrl.showJson">
+            <md-icon>table_chart</md-icon>
+            {{ $root.p3xr.strings.intention.jsonViewShow }}
+        </md-button>
+
+        <md-button class="md-button md-raised md-accent" ng-click="$ctrl.jsonViewer()" ng-if="$ctrl.showJson">
+            <md-icon>table_chart</md-icon>
+            {{ $root.p3xr.strings.intention.jsonViewHide }}
+        </md-button>
+
+        <md-button class="md-button md-raised md-accent" ng-click="$ctrl.edit()" ng-if="!$ctrl.showJson">
+            <md-icon>edit</md-icon>
+            {{ $root.p3xr.strings.intention.edit }}
+        </md-button>
+    </span>
+
+    <span ng-if="$ctrl.editable">
+        <md-button class="md-button md-raised md-warn" ng-click="$ctrl.cancelEdit()">
+            <md-icon>cancel</md-icon>
+            {{ $root.p3xr.strings.intention.cancel }}
+        </md-button>
+
+        <md-button class="md-button md-raised md-primary" ng-click="$ctrl.save()">
+            <md-icon>save</md-icon>
+            {{ $root.p3xr.strings.intention.save }}
+        </md-button>
+    </span>
+
+</div>
+
+
+<json-tree object="$ctrl.p3xrValueObject" root-name="$root.p3xr.strings.label.tree" ng-if="!$ctrl.editable && $ctrl.showJson"></json-tree>
+
+<div class="p3xr-main-key-type-string-value" ng-click="$ctrl.edit()" ng-if="!$ctrl.editable && !$ctrl.showJson">{{ $ctrl.p3xrValue }}</div>
+
+<md-input-container class="md-block" ng-if="$ctrl.editable">
+    <label>{{ $root.p3xr.strings.label.edit }}</label>
+    <textarea ng-model="$ctrl.p3xrValue" rows="5"></textarea>
+</md-input-container>

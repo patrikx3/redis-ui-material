@@ -8,4 +8,30 @@ p3xr-main-key-string {
     width: 100%;
     height: 100%;
   }
+
+  textarea {
+    width: 100%;
+  }
+
+  json-tree {
+    margin: 5px;
+  }
+}
+
+body.p3xr-theme-light {
+  p3xr-main-key-string {
+    json-tree .key {
+      color: black;
+      font-weight: bold;
+    }
+  }
+}
+
+body.p3xr-theme-dark {
+  p3xr-main-key-string {
+    json-tree .key {
+      color: rgba(255, 255, 255, 0.6);
+      font-weight: bold;
+    }
+  }
 }

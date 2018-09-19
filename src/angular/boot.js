@@ -7,10 +7,12 @@ require('angular-animate');
 require('angular-cookies');
 
 require('@uirouter/angularjs')
-require('angular-material');1
+require('angular-material');
 
 require('angular-tree-control')
 require('angular-tree-control/context-menu')
+
+require('angular-json-tree')
 
 p3xr.ng =  angular.module('p3xr-redis-ui', [
     'ngCookies',
@@ -20,6 +22,7 @@ p3xr.ng =  angular.module('p3xr-redis-ui', [
     'ngMaterial',
     'ui.router',
     'treeControl',
+    'angular-json-tree',
 ] );
 
 

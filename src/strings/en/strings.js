@@ -71,7 +71,9 @@ const strings = {
         remove: 'Remove',
         'sure': 'Sure',
         testConnection: 'Test connection',
-        getKey: 'Loading Redis key and associated data ...'
+        getKey: 'Loading Redis key and associated data ...',
+        jsonViewShow: 'Display JSON tree',
+        jsonViewHide: 'Hide JSON tree',
     },
     label: {
         ttlTitle: 'Set the TTL in seconds',
@@ -94,7 +96,9 @@ const strings = {
         },
         connected: (opts) => {
             return `Connected: ${opts.name}`
-        }
+        },
+        tree: 'Tree',
+
     },
     status: {
         keyIsNotExisting: 'This key could have been deleted or expired.',
