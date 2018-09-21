@@ -20,6 +20,14 @@ p3xr.ng.component('p3xrLayout', {
             }
         })
 
+        this.$onInit = () => {
+            const connection = $cookies.getObject(p3xr.settings.connectInfo.cookieName)
+            if (connection !== undefined) {
+                this.connect(connection)
+            }
+        }
+
+
         this.connect = async (connection) => {
             connection = angular.copy(connection)
             try {
@@ -47,7 +55,12 @@ p3xr.ng.component('p3xrLayout', {
                     response: response
                 })
 
+                $cookies.putObject(p3xr.settings.connectInfo.cookieName, connection, {
+                    expires: p3xr.settings.cookieExpiry
+                })
+
             } catch(error) {
+                $cookies.remove(p3xr.settings.connectInfo.cookieName)
                 $rootScope.p3xr.state.connection = undefined
                 p3xrCommon.generalHandleError(error)
             } finally {
@@ -72,6 +85,7 @@ p3xr.ng.component('p3xrLayout', {
             } catch(error) {
                 p3xrCommon.generalHandleError(error)
             }
+            $cookies.remove(p3xr.settings.connectInfo.cookieName)
             $state.go('main')
            // $rootScope.$digest()
         }

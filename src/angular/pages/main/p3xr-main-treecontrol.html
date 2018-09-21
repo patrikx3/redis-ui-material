@@ -1,0 +1,33 @@
+<treecontrol ng-if="$root.keysTree.length > 0" class="{{ $ctrl.getTreeTheme() }} p3xr-main-tree"
+             tree-model="$root.keysTree" options="$ctrl.keysTreeOptions" expanded-nodes="$root.expandedNodes"
+             on-selection="$ctrl.selectTreeNode(node, selected, $parentNode, $index, $first, $middle, $last, $odd, $even, $path)"
+             on-node-toggle="$ctrl.showToggle(node, expanded, $parentNode, $index, $first, $middle, $last, $odd, $even, $path)">
+    <md-tooltip md-direction="top">{{ $ctrl.extractNodeTooltip(node) }}</md-tooltip>
+    <label class="p3xr-main-tree-node" ng-mouseover="node.show = true" ng-mouseleave="node.show = false">
+
+        <!-- {{ node.keysInfo }} -->
+        <span ng-switch="node.keysInfo.type">
+            <i ng-switch-when="hash" class="fas fa-hashtag" aria-hidden="true"></i>
+            <i ng-switch-when="list" class="fas fa-list" aria-hidden="true"></i>
+            <i ng-switch-when="set" class="fas fa-list-ol" aria-hidden="true"></i>
+            <i ng-switch-when="string" class="fas fa-ellipsis-h" aria-hidden="true"></i>
+            <i ng-switch-when="zset" class="fas fa-chart-line" aria-hidden="true"></i>
+        </span>
+        {{node.label}}
+        <span class="p3xr-main-tree-node-count" ng-if="node.type === 'folder'">{{$root.p3xr.settings.redisTreeDivider}}* ({{node.childCount}})</span>
+        <span class="p3xr-main-tree-node-count" ng-if="node.type !== 'folder' && node.keysInfo.type !== 'string'">({{node.keysInfo.length}})</span>
+        <span ng-show="node.type === 'folder' && node.show">
+                        <span>
+                            <md-tooltip>{{ $root.p3xr.strings.confirm.deleteAllKeys({key: node.key}) }}</md-tooltip>
+                            <md-icon ng-click="$ctrl.deleteTree({event: $event, node: node})"
+                                     class="md-warn p3xr-main-treecontrol-folder-icon">close</md-icon>
+                        </span>
+                        <span>
+                            <md-tooltip>{{ $root.p3xr.strings.intention.addKey }}</md-tooltip>
+                            <md-icon ng-click="$ctrl.addKey({event: $event, node: node})"
+                                     md-theme="{{ $root.p3xr.state.themeCommon }}"
+                                     class="md-primary p3xr-main-treecontrol-folder-icon">add</md-icon>
+                        </span>
+                    </span>
+    </label>
+</treecontrol>

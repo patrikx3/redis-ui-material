@@ -17,12 +17,15 @@ p3xr.ng.component('p3xrMainKey', {
             }
 
             try {
+
+                // it can throw an error, when we switch the database
+
                 p3xr.ui.overlay.show({
                     message: p3xr.strings.intention.getKey
                 })
                 const type = p3xr.state.keysInfo[$stateParams.key].type
                 const response = await p3xrSocket.request({
-                    action: 'get-key',
+                    action: 'key-get',
                     payload: {
                         key: $stateParams.key,
                         type: type,
@@ -32,6 +35,7 @@ p3xr.ng.component('p3xrMainKey', {
                     p3xrCommon.toast({
                         message: p3xr.strings.status.keyIsNotExisting
                     })
+                    $rootScope.$broadcast('p3x-refresh')
                     $state.go('main.statistics')
                     return;
                 }
@@ -162,6 +166,12 @@ p3xr.ng.component('p3xrMainKey', {
 
 //        const refreshDebounced = debounce(this.refresh, 1000)
         $scope.$on('p3x-refresh', () => {
+            this.refresh({
+                withoutParent: true
+            })
+        })
+
+        $scope.$on('p3x-refresh-key', () => {
             this.refresh({
                 withoutParent: true
             })

@@ -40,6 +40,8 @@ const strings = {
         },
     },
     intention: {
+        addKey: `Add to this key`,
+        addKeyRoot: 'Add a root key',
         reloadKey: 'Reload key',
         reload: 'Reload',
         close: 'Close',
@@ -73,9 +75,10 @@ const strings = {
         testConnection: 'Test connection',
         getKey: 'Loading Redis key and associated data ...',
         jsonViewShow: 'Display JSON tree',
-        jsonViewHide: 'Hide JSON tree',
+
     },
     label: {
+        jsonViewNotParsable: 'This value is not JSON parsable  ',
         ttlTitle: 'Set the TTL in seconds',
         passwordSecure: 'The password might will be empty, but still it will show characters, this is a security feature.',
         treeSeparatorEmpty: 'If the tree separator is empty, the tree wil have no nested nodes, just a pure list',
@@ -137,7 +140,8 @@ const strings = {
         renamedKey: 'This key has been renamed',
         ttlChanged: 'This key\'s TTL has been changed',
         notInteger: 'This input is not an integer',
-        persisted: 'This key is persisted forever'
+        persisted: 'This key is persisted forever',
+        set: 'The key is set/added'
     },
     code: {
         'delete-connection': 'This connection was deleted, so you are disconnected to this Redis instance.',
@@ -178,6 +182,25 @@ const strings = {
             },
 
         },
+        key: {
+            label: {
+                formName: 'Add new Redis key'
+            },
+            field: {
+                key: 'Key',
+                type: 'Type',
+                index: 'Index',
+                hashKey: 'Hash key',
+                score: 'Score',
+                value: 'Value',
+            },
+            error: {
+                key: 'The key is, at least, one character',
+                hashKey: 'The hash table key is at least one character',
+                score: 'The sorted set score is required',
+                value: 'The value is required',
+            }
+        },
         main: {
             label: {
                 database: 'DB',
@@ -208,6 +231,13 @@ const strings = {
                 lengthString: 'characters',
                 lengthItem: 'items',
                 actions: 'Actions',
+            },
+            list: {
+                table: {
+                    index: 'Index',
+                    value: 'Value',
+                    action: 'Action',
+                }
             }
         },
         treeControls: {
@@ -219,6 +249,7 @@ const strings = {
                 placeholderClient: 'Search client side',
                 placeholderServer: 'Search server side',
                 info: 'The client side search means, that it matches the text in the search input. The server side search means, that is it like search in the keys patterns as *{search-text}*. For large search sets, it is better to use server side searching. For smaller search sets, it is better to use client side search mode.',
+                infoDetails: 'To find out how the search works, please check out the settings'
             },
             pager: {
                 next: 'Next',
@@ -233,6 +264,13 @@ const strings = {
         hours: 'hours',
         minutes: 'minutes',
         seconds: 'seconds',
+    },
+    redisTypes: {
+        string: 'String',
+        list: 'List',
+        hash: 'Hash table',
+        set: 'Set',
+        zset: 'Sorted set - zset'
     }
 }
 

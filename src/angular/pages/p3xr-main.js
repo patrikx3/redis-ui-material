@@ -1,6 +1,6 @@
 p3xr.ng.component('p3xrMain', {
     template: require('./p3xr-main.html'),
-    controller: function($cookies, p3xrSocket, p3xrCommon, p3xrRedisParser, $rootScope, $state, $timeout, $scope) {
+    controller: function($cookies, p3xrSocket, p3xrCommon, p3xrRedisParser, $rootScope, $state, $timeout, $scope, p3xrDialogKeyNew) {
 
 
         let $container
@@ -213,6 +213,18 @@ p3xr.ng.component('p3xrMain', {
         })
 
 
+        this.addKey = (options) => {
+            const { event, node} = options
+            // event.preventDefault()
+            event.stopPropagation();
+
+            $rootScope.$broadcast('p3xr-key-new', {
+                event: event,
+                node: node,
+            });
+
+
+        }
 
         /*
  redis version = server - redis_version

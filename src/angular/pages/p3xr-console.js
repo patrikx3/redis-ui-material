@@ -70,13 +70,6 @@ p3xr.ng.component('p3xrConsole', {
                 $output.append(`<div class="p3xr-console-content-output-item">${enter}</div>`)
                 this.inputValue = ''
 
-                const response = await p3xrSocket.request({
-                    action: 'console',
-                    payload: {
-                        command: enter
-                    }
-                })
-                //console.warn(typeof response.result, response.result, response.generatedCommand)
 
                 const actionHistoryIndexOf = actionHistory.indexOf(response.generatedCommand)
                 if (actionHistoryIndexOf > -1) {
@@ -87,6 +80,14 @@ p3xr.ng.component('p3xrConsole', {
                     actionHistory = actionHistory.slice(0, 20)
                 }
                 actionHistoryPosition = -1
+
+                const response = await p3xrSocket.request({
+                    action: 'console',
+                    payload: {
+                        command: enter
+                    }
+                })
+                //console.warn(typeof response.result, response.result, response.generatedCommand)
 
                 const result = p3xrRedisParser.console.parse(response.result)
                 $output.append(`<pre>${result}</pre>`)
@@ -202,7 +203,6 @@ p3xr.ng.component('p3xrConsole', {
         {{ $root.p3xr.strings.intention.close }}
       </md-button>
     </md-dialog-actions>
-  </form>
 </md-dialog>          
           `,
 

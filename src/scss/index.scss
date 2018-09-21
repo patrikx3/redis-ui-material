@@ -1,6 +1,5 @@
 @import '~material-design-icons-iconfont/dist/material-design-icons.css';
 @import '~angular-material/angular-material.css';
-
 @import '~angular-tree-control/css/tree-control.css';
 @import '~angular-json-tree/dist/angular-json-tree.css';
 
@@ -51,6 +50,18 @@ input:-webkit-autofill {
   .p3xr-input {
     border-color: rgba(128, 128, 128, 0.5);
   }
+
+  json-tree .key {
+    color: black;
+    font-weight: bold;
+  }
+}
+
+.p3xr-theme-dark {
+  json-tree .key {
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: bold;
+  }
 }
 
 .p3xr-theme-dark {
@@ -63,6 +74,15 @@ input:-webkit-autofill {
     color: white;
     border-color: rgba(200, 200, 200, 0.5);
   }
+}
+
+.p3xr-pre {
+  font-family: monospace;
+  font-size: 18px;
+  line-height: 20px;
+  white-space: pre;
+  // white-space: pre-wrap;
+  // word-wrap: break-word;
 }
 
 @import '../injector';

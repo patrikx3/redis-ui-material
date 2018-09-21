@@ -42,9 +42,14 @@
 
 <div class="p3xr-main-treecontrol-controls-search">
     <input class="p3xr-input" placeholder="{{ $root.p3xr.settings.searchClientSide ? $root.p3xr.strings.page.treeControls.search.placeholderClient : $root.p3xr.strings.page.treeControls.search.placeholderServer }}"  ng-model="$root.p3xr.state.search" ng-model-options="{debounce : $root.p3xrs.settings.debounceSearch}" ng-change="$ctrl.onSearchChange()"/>
-    <md-tooltip>{{ $root.p3xr.strings.page.treeControls.search.info }}</md-tooltip>
+    <md-tooltip md-direction="top">{{ $root.p3xr.strings.page.treeControls.search.infoDetails }}</md-tooltip>
     <md-button ng-if="$root.p3xr.state.search.length > 0" class="md-icon-button md-primary" aria-label="" ng-click="$root.p3xr.state.search = ''; $ctrl.onSearchChange()">
         <md-tooltip>{{ $root.p3xr.strings.page.treeControls.search.clear}}</md-tooltip>
         <md-icon>clear</md-icon>
     </md-button>
+
+    <span>
+        <md-tooltip>{{ $root.p3xr.strings.intention.addKeyRoot }}</md-tooltip>
+        <md-icon ng-click="$ctrl.p3xrMainRef.addKey({event: $event})" md-theme="{{ $root.p3xr.state.themeCommon }}" class="md-primary">add</md-icon>
+    </span>
 </div>

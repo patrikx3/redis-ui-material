@@ -1,0 +1,92 @@
+<md-dialog aria-label="{{$root.p3xr.strings.form.key.label.formName}}" style="min-width: 320px; ">
+    <form novalidate name="p3xrKeyNewForm" ng-submit="submit()">
+        <md-toolbar md-theme="{{ $root.p3xr.state.themeLayout }}" class="md-hue-3">
+            <div class="md-toolbar-tools" >
+                <h2 flex md-truncate>{{$root.p3xr.strings.form.key.label.formName}}</h2>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon>close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content md-theme="{{ $root.p3xr.state.theme }}">
+            <md-content layout-padding>
+                <md-input-container class="md-block">
+                    <label>{{ $root.p3xr.strings.form.key.field.key }}</label>
+                    <input required minlength="1" ng-model="model.key" name="key">
+                    <div ng-messages="p3xrKeyNewForm.key.$error">
+                        <div ng-message-exp="['required', 'minlength']">
+                            {{ $root.p3xr.strings.form.key.error.key }}
+                        </div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>{{ $root.p3xr.strings.form.key.field.type }}</label>
+                    <md-select ng-model="model.type" name="type">
+                        <md-option ng-repeat="type in types" ng-value="type">
+                            {{ $root.p3xr.strings.redisTypes[type] }}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+
+                <span ng-switch="model.type">
+                    <span ng-switch-when="list">
+                        <md-input-container class="md-block">
+                            <label>{{ $root.p3xr.strings.form.key.field.index }}</label>
+                             <input type="number" step="1" ng-model="model.index" name="index">
+                        </md-input-container>
+                    </span>
+                    <span ng-switch-when="hash">
+                        <md-input-container class="md-block">
+                            <label>{{ $root.p3xr.strings.form.key.field.hashKey }}</label>
+                            <input required minlength="1" ng-model="model.hashKey" name="hashKey">
+                            <div ng-messages="p3xrKeyNewForm.hashKey.$error">
+                                <div ng-message-exp="['required', 'minlength']">
+                                    {{ $root.p3xr.strings.form.key.error.hashKey }}
+                                </div>
+                            </div>
+                        </md-input-container>
+                    </span>
+                    <span ng-switch-when="zset">
+                        <md-input-container class="md-block">
+                            <label>{{ $root.p3xr.strings.form.key.field.score }}</label>
+                             <input type="number" required ng-model="model.score" name="score">
+                            <div ng-messages="p3xrKeyNewForm.score.$error">
+                                <div ng-message-exp="['required']">
+                                    {{ $root.p3xr.strings.form.key.error.score }}
+                                </div>
+                            </div>
+                        </md-input-container>
+                    </span>
+                </span>
+
+
+                <md-input-container class="md-block">
+                    <label>{{ $root.p3xr.strings.form.key.field.value }}</label>
+                    <textarea ng-model="model.value" required name="value"></textarea>
+                    <div ng-messages="p3xrKeyNewForm.value.$error">
+                        <div ng-message-exp="['required']">
+                            {{ $root.p3xr.strings.form.key.error.value }}
+                        </div>
+                    </div>
+                </md-input-container>
+
+
+            </md-content>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row" layout-align="end end" md-theme="{{ $root.p3xr.state.theme }}">
+
+            <md-button class="md-raised md-accent" ng-click="cancel()">
+                <md-icon>close</md-icon>
+                {{ $root.p3xr.strings.intention.cancel }}
+            </md-button>
+
+            <md-button class="md-raised md-primary" type="submit">
+                <md-icon>add</md-icon>
+                {{ $root.p3xr.strings.intention.add }}
+            </md-button>
+
+        </md-dialog-actions>
+    </form>
+</md-dialog>

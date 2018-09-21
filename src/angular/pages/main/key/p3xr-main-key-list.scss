@@ -1,0 +1,41 @@
+p3xr-main-key-list {
+  table.p3xr-main-key-list-table {
+    table-layout:fixed;
+    max-width:100%;
+    width: 100%;
+    border-collapse: collapse;
+    td {
+      vertical-align: top;
+    }
+    thead {
+      tr {
+        td:first-child {
+          text-align: center;
+        }
+        td {
+          padding: 5px;
+        }
+        td:last-child {
+          white-space: nowrap;
+        }
+      }
+    }
+    tbody {
+      tr {
+        td:first-child {
+          text-align: right;
+          white-space: nowrap;
+        }
+        td {
+
+        }
+        td:last-child {
+          text-align: right;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+
+}
+

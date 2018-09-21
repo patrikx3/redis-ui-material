@@ -4,7 +4,7 @@ p3xr.ng.component('p3xrMainKeyString', {
         p3xrValue: '=',
         p3xrKey: '<'
     },
-    controller: function(p3xrSocket, p3xrCommon, $rootScope, $scope) {
+    controller: function(p3xrSocket, p3xrCommon, $rootScope, p3xrDialogJsonView) {
 
 
         this.editable = false;
@@ -24,7 +24,7 @@ p3xr.ng.component('p3xrMainKeyString', {
         this.save = async () => {
             try {
                 const response = await p3xrSocket.request({
-                    action: 'set-key',
+                    action: 'key-set',
                     payload: {
                         type: $rootScope.p3xr.state.keysInfo[this.p3xrKey].type,
                         value: this.p3xrValue,
@@ -37,29 +37,12 @@ p3xr.ng.component('p3xrMainKeyString', {
             }
         }
 
-        let lastResult
-        Object.defineProperty(this, 'isJson', {
-            get: () => {
-                try {
-                    const obj = JSON.parse(this.p3xrValue)
-                    if (lastResult !== true) {
-                        this.p3xrValueObject = obj
-                    }
-                    lastResult = true
-                    return true
-                } catch(e) {
-                    if (lastResult !== false) {
-                        this.p3xrValueObject = undefined
-                    }
-                    lastResult = false
-                    return false
-                }
-            }
-        })
-
-        this.showJson = false;
-        this.jsonViewer = () => {
-            this.showJson = !this.showJson
+        this.jsonViewer = (options) => {
+            p3xrDialogJsonView.show({
+                event: options.$event,
+                value: this.p3xrValue
+            })
+//            this.showJson = !this.showJson
         }
 
     }

@@ -1,1 +1,67 @@
-<div class="p3xr-main-key-type-string-value">{{ $ctrl.p3xrValue }}</div>
+<table style="" class="p3xr-main-key-list-table">
+    <thead>
+    <tr md-colors="{ background: 'primary-300' }">
+        <td>
+            {{ $root.p3xr.strings.page.key.list.table.index }}
+        </td>
+
+        <td>
+            {{ $root.p3xr.strings.page.key.list.table.value }}
+        </td>
+        <td>
+
+        </td>
+    </tr>
+    </thead>
+
+    <tbody>
+        <tr ng-repeat="value in $ctrl.p3xrValue track by $index" style="{{ $ctrl.setTableStyles({ $odd: $odd }) }}" >
+            <td class="p3xr-main-key-list-view-cell-first-child"  style="max-width: 10%">
+                {{ $index }}
+                &nbsp;
+            </td>
+            <td style="max-width: 90%;">
+                <div style="overflow:auto; max-width: 100%; max-height: 200px;">{{ value }}</div>
+            </td>
+            <td class="p3xr-main-key-list-view-cell-last-child"  style="max-width: 10%">
+
+                <md-button class="md-icon-button md-primary" ng-click="$ctrl.showJson({ value: value})">
+                    <md-icon>table_chart</md-icon>
+                </md-button>
+
+                <md-button class="md-icon-button md-warn" ng-click="$ctrl.deleteListElement({ index: $index})">
+                    <md-icon>delete</md-icon>
+                </md-button>
+
+            </td>
+
+            <!-- editing -->
+<!--
+            <td ng-if="$ctrl.editingValue[$index] === true">
+                <md-input-container class="md-block">
+                    <label>{{ $root.p3xr.strings.page.key.list.table.index }}</label>
+                    <textarea ng-model="$ctrl.model[$index].index"></textarea>
+                </md-input-container>
+
+            </td>
+            <td ng-if="$ctrl.editingValue[$index] === true">
+                <md-input-container class="md-block">
+                    <label>{{ $root.p3xr.strings.page.key.list.table.value    }}</label>
+                    <textarea ng-model="$ctrl.model[$index].value"></textarea>
+                </md-input-container>
+            </td>
+            <td ng-if="$ctrl.editingValue[$index] === true">
+                <md-button class="md-icon-button md-primary" ng-click="$ctrl.cancelEditValue({$index: $index})">
+                    <md-icon>cancel</md-icon>
+                </md-button>
+                <md-button class="md-icon-button md-accent" ng-click="$ctrl.saveEditValue({$index: $index})">
+                    <md-icon>save</md-icon>
+                </md-button>
+            </td>
+-->
+
+
+        </tr>
+    </tbody>
+</table>
+

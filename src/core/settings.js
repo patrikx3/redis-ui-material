@@ -43,4 +43,7 @@ p3xr.settings = {
         default: false,
         cookieName: 'p3xr-main-treecontrol-search-starts-with'
     },
+    connectInfo: {
+        cookieName: 'p3xr-layout-connect',
+    }
 }

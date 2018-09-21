@@ -1,0 +1,31 @@
+<md-dialog aria-label="{{ $root.p3xr.strings.intention.jsonViewShow }}" >
+    <md-toolbar md-theme="{{$root.p3xr.state.themeLayout}}">
+        <div class="md-toolbar-tools">
+            <md-icon>table_chart</md-icon>
+            &nbsp;
+            {{ $root.p3xr.strings.intention.jsonViewShow }}
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="ok()" aria-label="{{ $root.p3xr.strings.intention.close }}">
+                <md-icon>close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-dialog-content flex>
+        <md-content layout-padding>
+            <json-tree object="obj" root-name="$root.p3xr.strings.label.tree" ng-if="isJson"></json-tree>
+            <div ng-if="!isJson">
+                {{ $root.p3xr.strings.label.jsonViewNotParsable}}
+            </div>
+        </md-content>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+        <span flex></span>
+        <md-button ng-click="ok()"  class="md-raised md-primary" aria-label="{{ $root.p3xr.strings.intention.close }}">
+            <md-icon>close</md-icon>
+            {{ $root.p3xr.strings.intention.close }}
+        </md-button>
+    </md-dialog-actions>
+    </form>
+</md-dialog>

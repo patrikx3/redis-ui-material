@@ -1,45 +1,15 @@
 p3xr.ng.component('p3xrMainTree', {
-    template: `
-
-    
-          <treecontrol ng-if="$root.keysTree.length > 0" class="{{ $ctrl.getTreeTheme() }} p3xr-main-tree"
-                         tree-model="$root.keysTree" options="$ctrl.keysTreeOptions" expanded-nodes="$root.expandedNodes"
-                         on-selection="$ctrl.selectTreeNode(node, selected, $parentNode, $index, $first, $middle, $last, $odd, $even, $path)"  on-node-toggle="$ctrl.showToggle(node, expanded, $parentNode, $index, $first, $middle, $last, $odd, $even, $path)">
-
-                <label class="p3xr-main-tree-node" ng-mouseover="node.show = true" ng-mouseleave="node.show = false" title="{{ $ctrl.extractNodeTooltip(node) }}">
-                
-                    <!-- {{ node.keysInfo }} -->
-                    <span ng-switch="" on="node.keysInfo.type">
-                         <i ng-switch-when="hash" class="fas fa-hashtag" aria-hidden="true"></i>
-                         <i ng-switch-when="list" class="fas fa-list" aria-hidden="true"></i>
-                         <i ng-switch-when="set" class="fas fa-list-ol"" aria-hidden="true"></i>
-                         <i ng-switch-when="string" class="fas fa-ellipsis-h" aria-hidden="true"></i>
-                         <i ng-switch-when="zset" class="fas fa-chart-line" aria-hidden="true"></i>                      
-                     </span>
-                    {{node.label}} 
-                        <span class="p3xr-main-tree-node-count" ng-if="node.type === 'folder'">{{$root.p3xr.settings.redisTreeDivider}}* ({{node.childCount}})</span>
-                        <span class="p3xr-main-tree-node-count" ng-if="node.type !== 'folder' && node.keysInfo.type !== 'string'">({{node.keysInfo.length}})</span>
-                    <span ng-show="node.type === 'folder' && node.show">
-                        <span>
-                            <md-tooltip>{{ $root.p3xr.strings.confirm.deleteAllKeys({key: node.key}) }}</md-tooltip>
-                            <md-icon ng-click="$ctrl.deleteTree({event: $event, node: node})" class="md-warn p3xr-main-treecontrol-folder-delete-icon">close</md-icon>                        
-                        </span>
-                    </span>
-                </label>
-            </treecontrol>
-    
-`,
+    template: require('./p3xr-main-treecontrol.html'),
     bindings: {
         p3xrResize: '&',
+        p3xrMainRef: '<'
     },
-    controller: function(p3xrCommon, p3xrRedisParser, p3xrSocket, $rootScope, $timeout,  $state, $scope, $mdDialog) {
+    controller: function(p3xrCommon, p3xrRedisParser, p3xrSocket, $rootScope, $timeout,  $state, $scope, $mdDialog, p3xrDialogKeyNew) {
 
         this.$onInit = () => {
             this.p3xrResize()
 
         }
-
-
 
         this.getTreeTheme = () => {
             if (p3xr.state.theme.toLowerCase().includes('light'))  {
@@ -181,7 +151,7 @@ p3xr.ng.component('p3xrMainTree', {
 
 
                 const response = await p3xrSocket.request({
-                    action: 'del-tree',
+                    action: 'key-del-tree',
                     payload: {
                         key: node.key,
                         redisTreeDivider: p3xr.settings.redisTreeDivider
@@ -211,6 +181,34 @@ p3xr.ng.component('p3xrMainTree', {
         }
 
 
+        this.addKey = async (options) => {
+            const { event, node} = options
+            event.stopPropagation();
+
+            const expandedNodes = angular.copy($rootScope.expandedNodes);
+
+            try {
+                const response = await p3xrDialogKeyNew.show({
+                    $event: event,
+                    node: node,
+                })
+
+                $timeout(() => {
+                    $rootScope.savedExpandedNodes = expandedNodes
+                    p3xrCommon.loadRedisInfoResponse({ response: response})
+
+                    $state.go('main.key', {
+                        key: response.key,
+                        resize:  this.p3xrResize,
+                    })
+                })
+            } catch(e) {
+                p3xrCommon.generalHandleError(e)
+            }
+        }
+
+
+
         $scope.$on('p3xr-key-delete', (event, arg) => {
             this.delete(arg)
         });
@@ -219,6 +217,10 @@ p3xr.ng.component('p3xrMainTree', {
             this.rename(arg)
         });
 
+
+        $scope.$on('p3xr-key-new', (event, arg) => {
+            this.addKey(arg)
+        });
 
 
     }
