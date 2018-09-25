@@ -1,48 +1,36 @@
-<table style="" class="p3xr-main-key-list-table">
-    <thead>
-    <tr>
-        <td>
-            {{ $root.p3xr.strings.page.key.list.table.index }}
-        </td>
+<div layout-gt-xs="row" layout="column" layout-align="start center" md-colors="{ background: 'primary-300' }">
+    <div flex="5">
+        &nbsp;
+        {{ $root.p3xr.strings.page.key.list.table.index }}
+    </div>
+    <div flex>
+        {{ $root.p3xr.strings.page.key.list.table.value }}
+    </div>
+    <div flex="5" style="text-align: right">
+        <md-button class="md-icon-button " ng-click="$ctrl.appendValue({ $event: $event})">
+            <md-icon>add</md-icon>
+        </md-button>
+    </div>
+</div>
 
-        <td>
-            {{ $root.p3xr.strings.page.key.list.table.value }}
-        </td>
-        <td style="text-align: right">
-            <md-button class="md-icon-button md-accent" ng-click="$ctrl.appendValue({ $event: $event})">
-                <md-icon>add</md-icon>
-            </md-button>
-        </td>
-    </tr>
-    </thead>
+<div layout-gt-xs="row" layout="column" layout-align="start start" ng-repeat="value in $ctrl.p3xrValue track by $index" style="{{ $ctrl.setTableStyles({ $odd: $odd }) }}">
+    <div flex="5">
+        &nbsp;
+        {{ $index }}
+    </div>
+    <div flex style="overflow: auto;align-items: flex-start; max-height: 200px;">{{ value }}</div>
+    <div flex="5" style="text-align: right; ">
+        <md-button class="md-icon-button md-primary" ng-click="$ctrl.showJson({ value: value})">
+            <md-icon>table_chart</md-icon>
+        </md-button>
 
-    <tbody>
-        <tr ng-repeat="value in $ctrl.p3xrValue track by $index" style="{{ $ctrl.setTableStyles({ $odd: $odd }) }}" >
+        <md-button class="md-icon-button md-warn" ng-click="$ctrl.deleteListElement({ index: $index, $event: $event})">
+            <md-icon>delete</md-icon>
+        </md-button>
 
-            <td class="p3xr-main-key-list-view-cell-first-child"  style="max-width: 10%">
-                {{ $index }}
-                &nbsp;
-            </td>
-            <td style="max-width: 90%;">
-                <div style="overflow:auto; max-width: 100%; max-height: 200px;">{{ value }}</div>
-            </td>
-            <td class="p3xr-main-key-list-view-cell-last-child"  style="max-width: 10%">
-
-                <md-button class="md-icon-button md-primary" ng-click="$ctrl.showJson({ value: value})">
-                    <md-icon>table_chart</md-icon>
-                </md-button>
-
-                <md-button class="md-icon-button md-warn" ng-click="$ctrl.deleteListElement({ index: $index, $event: $event})">
-                    <md-icon>delete</md-icon>
-                </md-button>
-
-                <md-button class="md-icon-button md-accent" ng-click="$ctrl.editValue({ index: $index, value: value, $event: $event})">
-                    <md-icon>edit</md-icon>
-                </md-button>
-
-            </td>
-
-        </tr>
-    </tbody>
-</table>
+        <md-button class="md-icon-button md-accent" ng-click="$ctrl.editValue({ index: $index, value: value, $event: $event})">
+            <md-icon>edit</md-icon>
+        </md-button>
+    </div>
+</div>
 

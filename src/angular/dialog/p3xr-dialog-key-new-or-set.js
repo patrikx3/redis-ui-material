@@ -78,6 +78,7 @@ p3xr.ng.factory('p3xrDialogKeyNewOrSet', function (p3xrCommon, $mdDialog, p3xrSo
                                         payload: {
                                             type: options.type,
                                             originalValue: options.hasOwnProperty('model') ? options.model.value : undefined,
+                                            originalHashKey: options.hasOwnProperty('model') ? options.model.hashKey : undefined,
                                             model: angular.copy($scope.model)
                                         },
                                     })

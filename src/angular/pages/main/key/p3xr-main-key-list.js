@@ -74,14 +74,7 @@ p3xr.ng.component('p3xrMainKeyList', {
         }
 
         this.setTableStyles = (options) => {
-            const { $odd } = options
-            if (!$odd) {
-                return '';
-            }
-            let style = '';
-            const bg = $mdColors.getThemeColor(`${p3xr.state.themeLayout}-background-500-0.1`)
-            style += `background-color: ${bg};`
-            return style;
+            return p3xrCommon.setTableZebraStyles(options)
          }
     }
 })

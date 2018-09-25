@@ -20,6 +20,7 @@ const strings = {
     confirm: {
         title: 'Confirm',
         deleteListItem: 'Are you sure to delete this list item?',
+        deleteHashKey: 'Are you sure to delete this hash key item?',
         deleteConnection: 'Confirm',
         deleteConnectionText: 'Are you sure to delete this Redis connection?',
         deleteAllKeys: (opts) => {
@@ -243,7 +244,12 @@ const strings = {
                 table: {
                     index: 'Index',
                     value: 'Value',
-                    action: 'Action',
+                }
+            },
+            hash: {
+                table: {
+                    hashkey: 'Hashkey',
+                    value: 'Value',
                 }
             }
         },

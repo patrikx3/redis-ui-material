@@ -1,4 +1,4 @@
-p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $rootScope, p3xrRedisParser) {
+p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootScope, p3xrRedisParser) {
 
     const generalHandleError = (dataOrError) => {
         if (dataOrError === undefined) {
@@ -71,10 +71,22 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $rootScope, p3xrRed
 
     }
 
+    const setTableZebraStyles = (options) => {
+        const { $odd } = options
+        if (!$odd) {
+            return '';
+        }
+        let style = '';
+        const bg = $mdColors.getThemeColor(`${p3xr.state.themeLayout}-background-500-0.1`)
+        style += `background-color: ${bg};`
+        return style;
+    }
+
     return {
         generalHandleError: generalHandleError,
         toast: toast,
         confirm: confirm,
-        loadRedisInfoResponse: loadRedisInfoResponse
+        loadRedisInfoResponse: loadRedisInfoResponse,
+        setTableZebraStyles: setTableZebraStyles,
     };
 });
