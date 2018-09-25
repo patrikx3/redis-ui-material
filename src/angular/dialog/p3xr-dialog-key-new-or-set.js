@@ -1,4 +1,4 @@
-p3xr.ng.factory('p3xrDialogKeyNew', function (p3xrCommon, $mdDialog, p3xrSocket) {
+p3xr.ng.factory('p3xrDialogKeyNewOrSet', function (p3xrCommon, $mdDialog, p3xrSocket) {
 
     return new function () {
 
@@ -19,6 +19,7 @@ p3xr.ng.factory('p3xrDialogKeyNew', function (p3xrCommon, $mdDialog, p3xrSocket)
                                 'zset',
                             ]
 
+
                             $scope.model = {
                                 type: 'string',
                                 key: options.node !== undefined ? options.node.key : '',
@@ -27,7 +28,12 @@ p3xr.ng.factory('p3xrDialogKeyNew', function (p3xrCommon, $mdDialog, p3xrSocket)
                                 hashKey: undefined,
                                 index: undefined,
                             }
+                            $scope.options = options;
 
+                            if (options.hasOwnProperty('model')) {
+                                Object.assign($scope.model, options.model)
+                            }
+                            //console.warn($scope.model)
 
                             // Promise reject
                             $scope.cancel = function () {
@@ -68,8 +74,10 @@ p3xr.ng.factory('p3xrDialogKeyNew', function (p3xrCommon, $mdDialog, p3xrSocket)
                                 }
                                 try {
                                     const response = await p3xrSocket.request({
-                                        action: 'key-new',
+                                        action: 'key-new-or-set',
                                         payload: {
+                                            type: options.type,
+                                            originalValue: options.hasOwnProperty('model') ? options.model.value : undefined,
                                             model: angular.copy($scope.model)
                                         },
                                     })
@@ -89,7 +97,7 @@ p3xr.ng.factory('p3xrDialogKeyNew', function (p3xrCommon, $mdDialog, p3xrSocket)
                             }
 
                         },
-                        template: require('./p3xr-dialog-key-new.html'),
+                        template: require('./p3xr-dialog-key-new-or-set.html'),
                         parent: angular.element(document.body),
                         targetEvent: options.$event,
                         clickOutsideToClose: true,

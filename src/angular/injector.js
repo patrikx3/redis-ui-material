@@ -1,7 +1,7 @@
 //injector-angular-start
 require('./dialog/p3xr-dialog-connection.js');
 require('./dialog/p3xr-dialog-json-view.js');
-require('./dialog/p3xr-dialog-key-new.js');
+require('./dialog/p3xr-dialog-key-new-or-set.js');
 require('./dialog/p3xr-dialog-treecontrol-settings.js');
 require('./factory/p3xr-common.js');
 require('./factory/p3xr-redis-parser.js');

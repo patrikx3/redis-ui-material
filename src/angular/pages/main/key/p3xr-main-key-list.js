@@ -4,54 +4,55 @@ p3xr.ng.component('p3xrMainKeyList', {
         p3xrValue: '=',
         p3xrKey: '<'
     },
-    controller: function($mdColors, p3xrCommon, p3xrSocket, $rootScope, p3xrDialogJsonView) {
+    controller: function($mdColors, p3xrCommon, p3xrSocket, $rootScope, p3xrDialogJsonView, p3xrDialogKeyNewOrSet) {
 
-        this.editingValue = {
-
-        }
-
-        this.model = {
-
-        }
-
-        this.editValue = (options) => {
-            const { $index, value } = options
-            this.editingValue[$index] = true
-            this.model[$index] = {
-                index: $index,
-                value: value
-            }
-        }
-
-        this.cancelEditValue = (options) => {
-            const { $index } = options
-            this.editingValue[$index] = false
-        }
-
-
-
-        this.saveEditValue = async (options) => {
+        this.appendValue = async (options) => {
 
             try {
-                const { $index } = options
-                const model = this.model[$index]
-                const response = await p3xrSocket.request({
-                    action: 'key-list-set',
-                    payload: {
-                        key: this.p3xrKey,
-                        model: model,
+                const { index, value } = options
+                await p3xrDialogKeyNewOrSet.show({
+                    type: 'append',
+                    $event: options.$event,
+                    model: {
+                        type: 'list',
+                        key: this.p3xrKey
                     }
                 })
                 $rootScope.$broadcast('p3x-refresh-key');
-                this.editingValue[$index] = false
             } catch(e) {
                 p3xrCommon.generalHandleError(e)
             }
-
         }
+
+
+
+        this.editValue = async (options) => {
+
+            try {
+                const { index, value } = options
+                await p3xrDialogKeyNewOrSet.show({
+                    type: 'edit',
+                    $event: options.$event,
+                    model: {
+                        type: 'list',
+                        value: value,
+                        index: options.index,
+                        key: this.p3xrKey
+                    }
+                })
+                $rootScope.$broadcast('p3x-refresh-key');
+            } catch(e) {
+                p3xrCommon.generalHandleError(e)
+            }
+        }
+
 
         this.deleteListElement = async (options) => {
             try {
+                await p3xrCommon.confirm({
+                    event: options.$event,
+                    message: p3xr.strings.confirm.deleteListItem,
+                })
                 const response = await p3xrSocket.request({
                     action: 'key-list-delete-index',
                     payload: {

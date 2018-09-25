@@ -9,10 +9,13 @@ p3xr-main-key-list {
     }
     thead {
       tr {
+        font-weight: bold;
+        border-bottom: 1px solid rgba(128,128,128, 0.5);
         td:first-child {
           text-align: center;
         }
         td {
+          vertical-align: middle !important;
           padding: 5px;
         }
         td:last-child {

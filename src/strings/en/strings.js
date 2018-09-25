@@ -19,6 +19,7 @@ const strings = {
     },
     confirm: {
         title: 'Confirm',
+        deleteListItem: 'Are you sure to delete this list item?',
         deleteConnection: 'Confirm',
         deleteConnectionText: 'Are you sure to delete this Redis connection?',
         deleteAllKeys: (opts) => {
@@ -84,6 +85,7 @@ const strings = {
         treeSeparatorEmpty: 'If the tree separator is empty, the tree wil have no nested nodes, just a pure list',
         treeSeparatorEmptyNote: 'No nested nodes, just a pure list',
         welcomeConsole: 'Welcome to the Redis Console',
+        redisListIndexInfo: 'Empty to append, -1 to prepend or save it to the position shown.',
         console: 'Console',
         connectiondAdd: 'Add connection',
         connectiondEdit: 'Edit connection',
@@ -147,6 +149,7 @@ const strings = {
         'delete-connection': 'This connection was deleted, so you are disconnected to this Redis instance.',
         'save-connection': 'This connection was changed, so you are disconnected to this Redis instance. You may re-connect.',
         'readonly-connections': 'Connections add/save/delete are readonly only!',
+        'list-out-of-bounds': 'This list index is out of bounds',
     },
     form: {
         error: {
@@ -184,7 +187,11 @@ const strings = {
         },
         key: {
             label: {
-                formName: 'Add new Redis key'
+                formName: {
+                    add: 'Add new Redis key',
+                    edit: 'Edit Redis key',
+                    append: 'Add to existing Redis key',
+                }
             },
             field: {
                 key: 'Key',

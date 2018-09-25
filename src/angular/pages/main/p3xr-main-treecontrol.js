@@ -4,7 +4,7 @@ p3xr.ng.component('p3xrMainTree', {
         p3xrResize: '&',
         p3xrMainRef: '<'
     },
-    controller: function(p3xrCommon, p3xrRedisParser, p3xrSocket, $rootScope, $timeout,  $state, $scope, $mdDialog, p3xrDialogKeyNew) {
+    controller: function(p3xrCommon, p3xrRedisParser, p3xrSocket, $rootScope, $timeout,  $state, $scope, $mdDialog, p3xrDialogKeyNewOrSet) {
 
         this.$onInit = () => {
             this.p3xrResize()
@@ -188,7 +188,7 @@ p3xr.ng.component('p3xrMainTree', {
             const expandedNodes = angular.copy($rootScope.expandedNodes);
 
             try {
-                const response = await p3xrDialogKeyNew.show({
+                const response = await p3xrDialogKeyNewOrSet.show({
                     $event: event,
                     node: node,
                 })

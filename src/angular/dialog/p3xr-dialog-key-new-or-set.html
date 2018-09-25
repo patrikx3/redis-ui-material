@@ -2,7 +2,9 @@
     <form novalidate name="p3xrKeyNewForm" ng-submit="submit()">
         <md-toolbar md-theme="{{ $root.p3xr.state.themeLayout }}" class="md-hue-3">
             <div class="md-toolbar-tools" >
-                <h2 flex md-truncate>{{$root.p3xr.strings.form.key.label.formName}}</h2>
+                <h2 flex md-truncate>
+                    {{ options.type === 'edit' ? $root.p3xr.strings.form.key.label.formName.edit  : ( options.type === 'append' ? $root.p3xr.strings.form.key.label.formName.append : $root.p3xr.strings.form.key.label.formName.add ) }}
+                </h2>
                 <md-button class="md-icon-button" ng-click="cancel()">
                     <md-icon>close</md-icon>
                 </md-button>
@@ -12,7 +14,7 @@
             <md-content layout-padding>
                 <md-input-container class="md-block">
                     <label>{{ $root.p3xr.strings.form.key.field.key }}</label>
-                    <input required minlength="1" ng-model="model.key" name="key">
+                    <input required minlength="1" ng-model="model.key" name="key" ng-disabled="options.type != 'add'">
                     <div ng-messages="p3xrKeyNewForm.key.$error">
                         <div ng-message-exp="['required', 'minlength']">
                             {{ $root.p3xr.strings.form.key.error.key }}
@@ -22,7 +24,7 @@
 
                 <md-input-container class="md-block">
                     <label>{{ $root.p3xr.strings.form.key.field.type }}</label>
-                    <md-select ng-model="model.type" name="type">
+                    <md-select ng-model="model.type" name="type" ng-disabled="options.type !== 'add'">
                         <md-option ng-repeat="type in types" ng-value="type">
                             {{ $root.p3xr.strings.redisTypes[type] }}
                         </md-option>
@@ -31,10 +33,13 @@
 
                 <span ng-switch="model.type">
                     <span ng-switch-when="list">
-                        <md-input-container class="md-block">
+                        <md-input-container class="md-block p3xr-md-input-container-no-bottom">
                             <label>{{ $root.p3xr.strings.form.key.field.index }}</label>
                              <input type="number" step="1" ng-model="model.index" name="index">
                         </md-input-container>
+                         <div class="p3xr-md-input-container-bottom-info">
+                            {{ $root.p3xr.strings.label.redisListIndexInfo }}
+                        </div>
                     </span>
                     <span ng-switch-when="hash">
                         <md-input-container class="md-block">
@@ -83,8 +88,8 @@
             </md-button>
 
             <md-button class="md-raised md-primary" type="submit">
-                <md-icon>add</md-icon>
-                {{ $root.p3xr.strings.intention.add }}
+                <md-icon>{{ options.type === 'edit' ? 'edit' : 'add'}}</md-icon>
+                {{ options.type === 'edit' ? $root.p3xr.strings.intention.save  : $root.p3xr.strings.intention.add }}
             </md-button>
 
         </md-dialog-actions>
