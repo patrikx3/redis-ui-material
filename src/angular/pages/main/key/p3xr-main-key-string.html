@@ -27,7 +27,7 @@
 
 
 
-<div class="p3xr-pre" ng-click="$ctrl.edit()" ng-if="!$ctrl.editable">{{ $ctrl.p3xrValue }}</div>
+<div class="p3xr-pre" style="max-width: 100%; overflow: auto;" ng-click="$ctrl.edit()" ng-if="!$ctrl.editable">{{ $ctrl.p3xrValue }}</div>
 
 <md-input-container class="md-block" ng-if="$ctrl.editable">
     <label>{{ $root.p3xr.strings.label.edit }}</label>

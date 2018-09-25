@@ -191,6 +191,7 @@ p3xr.ng.component('p3xrMainTree', {
                 const response = await p3xrDialogKeyNewOrSet.show({
                     $event: event,
                     node: node,
+                    type: 'add',
                 })
 
                 $timeout(() => {

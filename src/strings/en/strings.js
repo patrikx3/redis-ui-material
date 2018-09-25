@@ -21,6 +21,7 @@ const strings = {
         title: 'Confirm',
         deleteListItem: 'Are you sure to delete this list item?',
         deleteHashKey: 'Are you sure to delete this hash key item?',
+        deleteSetMember: 'Are you sure to delete this set item?',
         deleteConnection: 'Confirm',
         deleteConnectionText: 'Are you sure to delete this Redis connection?',
         deleteAllKeys: (opts) => {
@@ -250,6 +251,11 @@ const strings = {
                 table: {
                     hashkey: 'Hashkey',
                     value: 'Value',
+                }
+            },
+            set: {
+                table: {
+                    value: 'Member'
                 }
             }
         },

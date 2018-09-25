@@ -14,7 +14,7 @@
             <md-content layout-padding>
                 <md-input-container class="md-block">
                     <label>{{ $root.p3xr.strings.form.key.field.key }}</label>
-                    <input required minlength="1" ng-model="model.key" name="key" ng-disabled="options.type != 'add'">
+                    <input required minlength="1" ng-model="model.key" name="key" ng-disabled="options.type !== 'add'">
                     <div ng-messages="p3xrKeyNewForm.key.$error">
                         <div ng-message-exp="['required', 'minlength']">
                             {{ $root.p3xr.strings.form.key.error.key }}

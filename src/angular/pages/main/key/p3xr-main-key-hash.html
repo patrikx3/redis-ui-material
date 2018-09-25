@@ -8,27 +8,31 @@
     </div>
     <div flex="5" style="text-align: right">
         <md-button class="md-icon-button " ng-click="$ctrl.addHash({ $event: $event})">
+            <md-tooltip>{{ $root.p3xr.strings.intention.add }}</md-tooltip>
             <md-icon>add</md-icon>
         </md-button>
     </div>
 </div>
 
-<div layout-gt-xs="row" layout="column" layout-align="start start" ng-repeat="(key, value) in $ctrl.p3xrValue track by $index" style="{{ $ctrl.setTableStyles({ $odd: $odd }) }}">
+<div layout-gt-xs="row" layout="column" layout-align="start start" ng-repeat="(key, value) in $ctrl.p3xrValue" style="{{ $ctrl.setTableStyles({ $odd: $odd }) }}">
     <div flex="15">
         &nbsp;
         {{ key }}
     </div>
-    <div flex style="overflow: auto;align-items: flex-start; max-height: 200px;">{{ value }}</div>
+    <div flex class="p3xr-pre" style="overflow: auto;align-items: flex-start; max-height: 200px;">{{ value }}</div>
     <div flex="5" style="text-align: right; ">
         <md-button class="md-icon-button md-primary" ng-click="$ctrl.showJson({ value: value})">
+            <md-tooltip>{{ $root.p3xr.strings.intention.jsonViewShow }}</md-tooltip>
             <md-icon>table_chart</md-icon>
         </md-button>
 
         <md-button class="md-icon-button md-warn" ng-click="$ctrl.deleteHashKey({ hashKey: key, $event: $event})">
+            <md-tooltip>{{ $root.p3xr.strings.intention.delete }}</md-tooltip>
             <md-icon>delete</md-icon>
         </md-button>
 
         <md-button class="md-icon-button md-accent" ng-click="$ctrl.editValue({ hashKey: key, value: value, $event: $event})">
+            <md-tooltip>{{ $root.p3xr.strings.intention.edit }}</md-tooltip>
             <md-icon>edit</md-icon>
         </md-button>
     </div>

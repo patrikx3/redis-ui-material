@@ -1,6 +1,6 @@
 p3xr.ng.component('p3xrMain', {
     template: require('./p3xr-main.html'),
-    controller: function($cookies, p3xrSocket, p3xrCommon, p3xrRedisParser, $rootScope, $state, $timeout, $scope, p3xrDialogKeyNewOrSet) {
+    controller: function($cookies, p3xrSocket, p3xrCommon, p3xrRedisParser, $rootScope, $state, $timeout, $scope, $mdMedia) {
 
 
         let $container
@@ -10,6 +10,16 @@ p3xr.ng.component('p3xrMain', {
         let scrollers
 
         const debounce = require('lodash/debounce')
+
+
+        let screenSizeIsSmall = false
+        $scope.$watch(function() { return $mdMedia('xs'); }, function(isScreenSizeIsSmall) {
+            if (!isScreenSizeIsSmall && screenSizeIsSmall === true) {
+                $timeout(resize, 2 * p3xr.settings.debounce)
+                //console.warn('aha!')
+            }
+            screenSizeIsSmall = isScreenSizeIsSmall;
+        });
 
         const resize = debounce(() => {
             //console.warn('who is resizing non stop')
