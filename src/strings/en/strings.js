@@ -21,7 +21,8 @@ const strings = {
         title: 'Confirm',
         deleteListItem: 'Are you sure to delete this list item?',
         deleteHashKey: 'Are you sure to delete this hash key item?',
-        deleteSetMember: 'Are you sure to delete this set item?',
+        deleteSetMember: 'Are you sure to delete this set member?',
+        deleteZSetMember: 'Are you sure to delete this sorted set member?',
         deleteConnection: 'Confirm',
         deleteConnectionText: 'Are you sure to delete this Redis connection?',
         deleteAllKeys: (opts) => {
@@ -257,7 +258,14 @@ const strings = {
                 table: {
                     value: 'Member'
                 }
+            },
+            zset: {
+                table: {
+                    value: 'Member',
+                    score: 'Score',
+                }
             }
+
         },
         treeControls: {
             settings: 'Tree settings',
