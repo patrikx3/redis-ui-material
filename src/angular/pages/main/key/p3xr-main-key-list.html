@@ -1,7 +1,7 @@
 <div layout-gt-xs="row" layout="column" layout-align="start center" md-colors="{ background: 'primary-300' }">
-    <div flex="5">
-        &nbsp;
+    <div flex="5" style="text-align: right">
         {{ $root.p3xr.strings.page.key.list.table.index }}
+        &nbsp;
     </div>
     <div flex>
         {{ $root.p3xr.strings.page.key.list.table.value }}
@@ -15,11 +15,12 @@
 </div>
 
 <div layout-gt-xs="row" layout="column" layout-align="start start" ng-repeat="value in $ctrl.p3xrValue track by $index" style="{{ $ctrl.setTableStyles({ $odd: $odd }) }}">
-    <div flex="5">
-        &nbsp;
+    <div flex="5"  ng-click="$ctrl.editValue({ index: $index, value: value, $event: $event})" style="text-align: right">
+
         {{ $index }}
+        &nbsp;
     </div>
-    <div flex class="p3xr-pre" style="overflow: auto;align-items: flex-start; max-height: 200px;">{{ value }}</div>
+    <div flex class="p3xr-pre" style="overflow: auto;align-items: flex-start; max-height: 200px;"  ng-click="$ctrl.editValue({ index: $index, value: value, $event: $event})">{{ value }}</div>
     <div flex="5" style="text-align: right; ">
         <md-button class="md-icon-button md-primary" ng-click="$ctrl.showJson({ value: value})">
             <md-tooltip>{{ $root.p3xr.strings.intention.jsonViewShow }}</md-tooltip>

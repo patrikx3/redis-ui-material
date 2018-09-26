@@ -2,7 +2,7 @@
     <md-toolbar>
         <div class="md-toolbar-tools">
 
-            <p3xr-button ng-if="!$root.p3xr.state.failed" ui-sref="main" p3xr-label="$root.p3xr.strings.title.name" p3xr-fa-icon="fas fa-database"></p3xr-button>
+            <p3xr-button ng-if="!$root.p3xr.state.failed" ui-sref="main.statistics" p3xr-label="$root.p3xr.strings.title.name" p3xr-fa-icon="fas fa-database"></p3xr-button>
             <p3xr-button ng-if="$root.p3xr.state.failed" ng-click="$root.locationReload()" p3xr-label="$root.p3xr.strings.title.name" p3xr-fa-icon="fas fa-redo"></p3xr-button>
 
             <span flex></span>
