@@ -3,6 +3,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const fileAsset = `[name].[hash].[ext]`;
 const minimize = process.argv.includes('--production');
@@ -115,6 +116,12 @@ For more information about all licenses, please see ${webpackBanner}
             filename: 'sourcemaps/[file].map',
             append: '\n//# sourceMappingURL=./[url]'
         })
+    )
+
+    plugins.push(
+        new CopyWebpackPlugin([
+            'src/public'
+        ])
     )
 
 

@@ -1,25 +1,29 @@
 <div>
     <md-button class="md-button md-raised md-primary" ng-click="$ctrl.jsonViewer({ $event: $event})">
         <md-icon>table_chart</md-icon>
-        {{ $root.p3xr.strings.intention.jsonViewShow }}
+        <span hide-sm>{{ $root.p3xr.strings.intention.jsonViewShow }}</span>
+        <md-tooltip ng-if="$root.$mdMedia('sm')" md-direction="bottom">{{ $root.p3xr.strings.intention.jsonViewShow }}</md-tooltip>
     </md-button>
 
     <span ng-if="!$ctrl.editable">
         <md-button class="md-button md-raised md-accent" ng-click="$ctrl.edit()">
             <md-icon>edit</md-icon>
-            {{ $root.p3xr.strings.intention.edit }}
+             <span hide-sm>{{ $root.p3xr.strings.intention.edit }}</span>
+            <md-tooltip ng-if="$root.$mdMedia('sm')" md-direction="bottom">{{ $root.p3xr.strings.intention.edit }}</md-tooltip>
         </md-button>
     </span>
 
     <span ng-if="$ctrl.editable">
         <md-button class="md-button md-raised md-warn" ng-click="$ctrl.cancelEdit()">
             <md-icon>cancel</md-icon>
-            {{ $root.p3xr.strings.intention.cancel }}
+             <span hide-sm>{{ $root.p3xr.strings.intention.cancel }}</span>
+            <md-tooltip ng-if="$root.$mdMedia('sm')" md-direction="bottom">{{ $root.p3xr.strings.intention.cancel }}</md-tooltip>
         </md-button>
 
         <md-button class="md-button md-raised md-accent" ng-click="$ctrl.save()">
             <md-icon>save</md-icon>
-            {{ $root.p3xr.strings.intention.save }}
+             <span hide-sm>{{ $root.p3xr.strings.intention.save }}</span>
+            <md-tooltip ng-if="$root.$mdMedia('sm')" md-direction="bottom">{{ $root.p3xr.strings.intention.save }}</md-tooltip>
         </md-button>
     </span>
 
