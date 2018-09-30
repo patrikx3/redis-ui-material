@@ -13,27 +13,27 @@
         <md-button class="md-button md-raised md-primary" ng-click="$ctrl.refresh()">
             <md-icon>refresh</md-icon>
 
-            <span hide-sm>{{ $root.p3xr.strings.intention.reloadKey }}</span>
+            <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.reloadKey }}</span>
             <md-tooltip ng-if="$root.$mdMedia('sm')" md-direction="bottom">{{ $root.p3xr.strings.intention.reloadKey }}</md-tooltip>
         </md-button>
 
         <md-button class="md-button md-raised md-warn" ng-click="$ctrl.delete()">
             <md-icon>delete</md-icon>
-            <span hide-sm>{{ $root.p3xr.strings.intention.delete }}</span>
-            <md-tooltip ng-if="$root.$mdMedia('sm')" md-direction="bottom">{{ $root.p3xr.strings.intention.delete }}</md-tooltip>
+            <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.delete }}</span>
+            <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{ $root.p3xr.strings.intention.delete }}</md-tooltip>
         </md-button>
 
         <md-button class="md-button md-raised md-accent" ng-click="$ctrl.rename({ $event: $event})">
             <md-icon>fingerprint</md-icon>
-            <span hide-sm>{{ $root.p3xr.strings.intention.rename }}</span>
-            <md-tooltip ng-if="$root.$mdMedia('sm')" md-direction="bottom">{{ $root.p3xr.strings.intention.rename }}</md-tooltip>
+            <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.rename }}</span>
+            <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{ $root.p3xr.strings.intention.rename }}</md-tooltip>
         </md-button>
 
         <md-button class="md-button md-raised md-accent" ng-click="$ctrl.setTtl({ $event: $event})">
             <md-tooltip>{{ $root.p3xr.strings.label.ttlTitle  }}</md-tooltip>
             <md-icon>timer</md-icon>
-            <span hide-sm>{{ $root.p3xr.strings.intention.ttl }}</span>
-            <md-tooltip ng-if="$root.$mdMedia('sm')" md-direction="bottom">{{ $root.p3xr.strings.intention.ttl }}</md-tooltip>
+            <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.ttl }}</span>
+            <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{ $root.p3xr.strings.intention.ttl }}</md-tooltip>
         </md-button>
     </md-list-item>
 
