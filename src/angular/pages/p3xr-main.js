@@ -13,9 +13,13 @@ p3xr.ng.component('p3xrMain', {
 
 
         let screenSizeIsSmall = false
+        let $timeoutResize
         $scope.$watch(function() { return $mdMedia('xs'); }, function(isScreenSizeIsSmall) {
             if (!isScreenSizeIsSmall && screenSizeIsSmall === true) {
-                $timeout(resize, 2 * p3xr.settings.debounce)
+                if ($timeoutResize !== undefined) {
+                    $timeout.cancel($timeoutResize)
+                }
+                $timeoutResize = $timeout(resize, 4 * p3xr.settings.debounce)
                 //console.warn('aha!')
             }
             screenSizeIsSmall = isScreenSizeIsSmall;
@@ -30,7 +34,7 @@ p3xr.ng.component('p3xrMain', {
             const windowHeight = $window.outerHeight()
             //console.log(windowHeight, minus)
 
-            const outputPositionMinus = 28
+            const outputPositionMinus = 10
             const outputHeight = Math.max(windowHeight - minus- outputPositionMinus, 100)
             $container.height(outputHeight)
             $container.css('max-height', `${outputHeight}px`)
