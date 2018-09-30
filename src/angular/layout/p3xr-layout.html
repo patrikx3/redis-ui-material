@@ -49,7 +49,28 @@
                     </md-menu-item>
                 </md-menu-content>
             </md-menu>
-            <p3xr-button ng-click="$ctrl.openLink.github()" p3xr-label="$root.p3xr.strings.intention.github" p3xr-fa-icon="fab fa-github" p3xr-tooltip-direction="top"></p3xr-button>
+
+            <md-menu>
+            <p3xr-button ng-click="$mdMenu.open($event)" p3xr-label="$root.p3xr.strings.intention.github" p3xr-fa-icon="fab fa-github" p3xr-tooltip-direction="top"></p3xr-button>
+
+                <md-menu-content>
+                    <md-menu-item>
+                        <md-button ng-click="$ctrl.openLink.github()">
+                            {{ $root.p3xr.strings.intention.githubRepo }}
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button ng-click="$ctrl.openLink.githubTodo()">
+                            {{ $root.p3xr.strings.intention.githubTodo }}
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button ng-click="$ctrl.openLink.githubChangelog()">
+                            {{ $root.p3xr.strings.intention.githubChangelog }}
+                        </md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
 
         </div>
     </md-toolbar>

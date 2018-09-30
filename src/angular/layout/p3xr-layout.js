@@ -7,8 +7,15 @@ p3xr.ng.component('p3xrLayout', {
 
         this.openLink = {
             github: () => {
-                window.open(`https://github.com/patrikx3/${p3xr.pkg.corifeus.reponame}`, `github-patrikx3-${p3xr.pkg.corifeus.reponame}`)
-            }
+                window.open(`https://github.com/patrikx3/redis-ui`, `github-patrikx3-${p3xr.pkg.corifeus.reponame}`)
+            },
+            githubTodo: () => {
+                window.open(`https://github.com/patrikx3/redis-ui/blob/master/todo.md`, `github-patrikx3-${p3xr.pkg.corifeus.reponame}-todo`)
+            },
+            githubChangelog: () => {
+                window.open(`https://github.com/patrikx3/redis-ui/blob/master/changelog.md`, `github-patrikx3-${p3xr.pkg.corifeus.reponame}-changelog`)
+            },
+
         }
 
         Object.defineProperty(this, 'themeSelectedKey', {
