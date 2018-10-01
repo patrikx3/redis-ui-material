@@ -61,7 +61,7 @@ const strings = {
         github: 'GitHub',
         githubRepo: 'Repository',
         githubTodo: 'To do',
-        githubChangelog: 'Changelog ',
+        githubChangelog: 'Change log ',
         settings: 'Settings',
         connect: 'Connect',
         disconnect: 'Disconnect',
