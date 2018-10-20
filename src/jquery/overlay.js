@@ -4,7 +4,7 @@ p3xr.ui.overlay = new function() {
 
         return `
 <div id="p3xr-overlay">
-    <div>
+    <div id="p3xr-overlay-info">
         <i class="fas fa-cog fa-spin fa-4x"></i>
         ${options.hasOwnProperty('message') ? "<br/><br/>" : ''}
         ${options.hasOwnProperty('message') ? options.message : ''}
