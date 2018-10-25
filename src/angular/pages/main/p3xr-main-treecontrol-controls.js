@@ -7,6 +7,7 @@ p3xr.ng.component('p3xrMainTreecontrolControls', {
 
         this.treeExpandAll = () => {
             try {
+
                 p3xr.ui.overlay.show({
                     message: p3xr.strings.status.treeExpandAll
                 })
@@ -27,9 +28,12 @@ p3xr.ng.component('p3xrMainTreecontrolControls', {
             } catch(e) {
                 p3xrCommon.generalHandleError(e)
             } finally {
+                p3xr.ui.overlay.hide()
+                /*
                 $timeout(() => {
                     p3xr.ui.overlay.hide()
                 }, p3xr.settings.debounce)
+                */
             }
         }
 

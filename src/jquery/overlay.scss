@@ -17,8 +17,11 @@
   align-items: center;
   align-content: center;
   justify-content: center;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 99999;
+  color: rgba(128, 128, 128, 0.5);
 
   #p3xr-overlay-info {
-    color: rgba(128, 128, 128, 0.5);
+
   }
 }
