@@ -71,6 +71,12 @@ p3xr.ng.component('p3xrConsole', {
                 this.inputValue = ''
 
 
+                const response = await p3xrSocket.request({
+                    action: 'console',
+                    payload: {
+                        command: enter
+                    }
+                })
                 const actionHistoryIndexOf = actionHistory.indexOf(response.generatedCommand)
                 if (actionHistoryIndexOf > -1) {
                     actionHistory.splice(actionHistoryIndexOf, 1)
@@ -81,12 +87,6 @@ p3xr.ng.component('p3xrConsole', {
                 }
                 actionHistoryPosition = -1
 
-                const response = await p3xrSocket.request({
-                    action: 'console',
-                    payload: {
-                        command: enter
-                    }
-                })
                 //console.warn(typeof response.result, response.result, response.generatedCommand)
 
                 const result = p3xrRedisParser.console.parse(response.result)
