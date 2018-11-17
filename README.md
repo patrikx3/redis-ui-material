@@ -13,7 +13,7 @@ https://pages.corifeus.com/redis-ui
   
  
 ---
-# 💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via https. v2018.11.8-0  
+# 💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via https. v2018.11.17-3  
 
 This is an open-source project. Star this repository, if you like it, or even donate! Thank you so much! :)
 
@@ -25,12 +25,12 @@ All my domains (patrikx3.com and corifeus.com) could have errors, since I am dev
 
 ### Node Version Requirement 
 ``` 
->=8.11.4 
+>=10.13.0 
 ```  
    
 ### Built on Node 
 ``` 
-v11.0.0
+v10.13.0
 ```   
    
 The ```async``` and ```await``` keywords are required.
@@ -64,11 +64,15 @@ grunt watch:js
 grunt watch:sass
 ```
 
+## Console popup completions
+https://github.com/NodeRedis/redis-commands
+
+
 [//]: #@corifeus-footer
 
 ---
 
-[**P3X-REDIS-UI-MATERIAL**](https://pages.corifeus.com/redis-ui-material) Build v2018.11.8-0 
+[**P3X-REDIS-UI-MATERIAL**](https://pages.corifeus.com/redis-ui-material) Build v2018.11.17-3 
 
 [![Like Corifeus @ Facebook](https://img.shields.io/badge/LIKE-Corifeus-3b5998.svg)](https://www.facebook.com/corifeus.software) [![Donate for Corifeus / P3X](https://img.shields.io/badge/Donate-Corifeus-003087.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QZVM4V6HVZJW6)  [![Contact Corifeus / P3X](https://img.shields.io/badge/Contact-P3X-ff9900.svg)](https://www.patrikx3.com/en/front/contact) 
 
