@@ -9,7 +9,7 @@ p3xr.ng.factory('p3xrSocket', function ($rootScope, p3xrCommon, $state) {
     }
 
     const ioClient = io.connect(p3xr.api.host, ioOptions);
-
+//console.warn(p3xr.api.host, ioOptions)
     let reconnect = false;
     ioClient.on('connect', async function () {
         if (reconnect) {
