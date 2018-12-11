@@ -172,8 +172,8 @@ p3xr.ng.component('p3xrMain', {
 
         this.statistics = async () => {
             try {
-               await this.refresh()
                 $state.go('main.statistics')
+                await this.refresh()
             } catch(e) {
                 p3xrCommon.generalHandleError(e)
             }

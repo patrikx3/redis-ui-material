@@ -165,7 +165,8 @@ module.exports = {
                             loader: 'css-loader',
                             options: {
                                 sourceMap: true,
-                                minimize: minimize === true
+                                // v2 throws error minimze
+                                //minimize: minimize === true
 
                             }
                         }
@@ -211,7 +212,8 @@ module.exports = {
                         {
                             loader: 'css-loader',
                             options: {
-                                minimize: minimize,
+                                // in v2 it throws an error
+                                //minimize: minimize,
                                 sourceMap: true
                             },
                         }]

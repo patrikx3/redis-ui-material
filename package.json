@@ -1,6 +1,6 @@
 {
     "name": "p3x-redis-ui-material",
-    "version": "2018.12.9-5",
+    "version": "2018.12.11-0",
     "description": "💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via https.",
     "corifeus": {
         "icon": "fas fa-database",
@@ -55,7 +55,7 @@
         "concurrently": "^4.1.0",
         "copy-webpack-plugin": "^4.6.0",
         "corifeus-builder": "^2018.12.9-7",
-        "css-loader": "^1.0.1",
+        "css-loader": "^2.0.0",
         "extract-text-webpack-plugin": "^4.0.0-beta.0",
         "file-loader": "^2.0.0",
         "grunt-injector": "^1.1.0",
@@ -70,7 +70,7 @@
         "optimize-css-assets-webpack-plugin": "^5.0.1",
         "parse-ms": "^2.0.0",
         "pretty-bytes": "^5.1.0",
-        "raw-loader": "^0.5.1",
+        "raw-loader": "^1.0.0",
         "sass-loader": "^7.1.0",
         "socket.io-client": "^2.2.0",
         "style-loader": "^0.23.1",
