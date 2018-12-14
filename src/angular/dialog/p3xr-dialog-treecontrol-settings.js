@@ -73,7 +73,7 @@ p3xr.ng.factory('p3xrDialogTreecontrolSettings', function (p3xrCommon, $mdDialog
 
                                 //$scope.options.type = 'edit';
                                 $mdDialog.cancel();
-
+                                $rootScope.$broadcast('p3x-refresh');
                             } catch(e) {
                                 p3xrCommon.generalHandleError(e)
                             }

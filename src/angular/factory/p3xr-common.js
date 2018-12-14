@@ -43,7 +43,14 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootSco
     }
 
     const confirm = (options) => {
-        const confirm = $mdDialog.confirm()
+        let confirm
+        if (!options.hasOwnProperty('disableCancel')) {
+            confirm = $mdDialog.confirm()
+        }  else {
+            confirm = $mdDialog.alert()
+        }
+
+        confirm
             .title(p3xr.strings.confirm.title)
             .textContent(options.message)
             .targetEvent(options.event)
@@ -61,11 +68,14 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootSco
 
         $rootScope.p3xr.state.info = p3xrRedisParser.info(response.info)
 
-        if ($rootScope.p3xr.settings.sort) {
+        $rootScope.p3xr.state.keysRaw = response.keys
+
+        if ($rootScope.p3xr.settings.keysSort) {
             $rootScope.p3xr.state.keysRaw = response.keys.sort()
         } else {
             $rootScope.p3xr.state.keysRaw = response.keys
         }
+
         $rootScope.p3xr.state.keysInfo = response.keysInfo
         $rootScope.$digest()
 

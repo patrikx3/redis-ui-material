@@ -62,7 +62,8 @@ p3xr.ng.factory('p3xrRedisParser', function ($rootScope) {
 
          //   const start = Date.now()
 
-            const { keys } = options
+            let { keys } = options
+
             let { divider } = options
             if (divider === undefined) {
                 divider = p3xr.settings.redisTreeDivider
