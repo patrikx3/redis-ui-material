@@ -186,11 +186,9 @@ p3xr.ng.component('p3xrMain', {
             }
 
             try {
-                /*
                 p3xr.ui.overlay.show({
                     message: p3xr.strings.status.reloadingDataInfo
                 })
-                */
                 const payload = {}
 
                 if (!$rootScope.p3xr.settings.searchClientSide && typeof ($rootScope.p3xr.state.search) === 'string' && $rootScope.p3xr.state.search.length > 0) {
@@ -216,6 +214,7 @@ p3xr.ng.component('p3xrMain', {
             } catch(e) {
                 p3xrCommon.generalHandleError(e)
             } finally {
+                p3xr.ui.overlay.hide()
                 /*
                 $timeout(() => {
                     p3xr.ui.overlay.hide()

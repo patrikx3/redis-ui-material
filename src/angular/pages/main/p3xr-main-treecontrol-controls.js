@@ -42,6 +42,8 @@ p3xr.ng.component('p3xrMainTreecontrolControls', {
         }
 
         this.page = (options) => {
+
+
             const { page } = options
            ///console.log(page )
             switch(page) {

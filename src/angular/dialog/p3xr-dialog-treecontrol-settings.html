@@ -25,7 +25,7 @@
                 </div>
 
 
-                <md-input-container class="md-block" >
+                <md-input-container class="md-block p3xr-md-input-container-no-bottom" >
                     <label>{{ $root.p3xr.strings.form.treeSettings.field.page }}</label>
                     <input type="number" required min="10" max="500" name="pageCount" step="1" pattern="\d*" ng-model="model.pageCount">
                     <div ng-messages="p3xrDialogTreecontrolSettingsForm.pageCount.$error">
@@ -34,7 +34,9 @@
                         </div>
                     </div>
                 </md-input-container>
-
+                <div class="p3xr-md-input-container-bottom-info">
+                    {{ $root.p3xr.strings.label.treeSettingsPageCount }}
+                </div>
 
                 <md-input-container class="md-block" >
                     <md-switch ng-model="model.keysSort"  name="keysSort"  aria-label="">

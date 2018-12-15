@@ -24,10 +24,10 @@ p3xr.settings = {
     },
     redisTreeDivider: ':',
     paging: {
-        default: 100,
+        default: 50,
         cookieName: 'p3xr-main-treecontrol-page-size'
     },
-    pageCount: 100,
+    pageCount: 50,
     keySortInfo: {
         default: false,
         cookieName: 'p3xr-main-treecontrol-key-sort',

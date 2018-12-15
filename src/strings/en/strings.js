@@ -82,7 +82,6 @@ const strings = {
         testConnection: 'Test connection',
         getKey: 'Loading Redis key and associated data ...',
         jsonViewShow: 'Display JSON tree',
-
     },
     label: {
         jsonViewNotParsable: 'This value is not JSON parsable  ',
@@ -101,6 +100,7 @@ const strings = {
             on: 'Key sorting on',
             off: 'Key sorting off'
         },
+        treeSettingsPageCount: 'If the paging is over 100 / page and you do not use smart tree divider, it could cause a performance penalty, because of the nature of AngularJs. But! If you use trees (with tree divider), then you can have bigger page / element and the browser will not freeze for a few seconds.',
         theme: {
             light: 'Light',
             dark: 'Dark',
