@@ -147,7 +147,7 @@ p3xr.ng.component('p3xrMain', {
         }
 
 
-        this.resize = resize
+        this.resize = rawResize
 
         this.$onInit = () => {
             $container = $('#p3xr-main-content')
