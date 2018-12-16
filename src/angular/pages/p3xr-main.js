@@ -147,7 +147,7 @@ p3xr.ng.component('p3xrMain', {
         }
 
 
-        this.resize = rawResize
+        this.resize =  debounce(rawResize, p3xr.settings.debounce)
 
         this.$onInit = () => {
             $container = $('#p3xr-main-content')
@@ -234,7 +234,7 @@ p3xr.ng.component('p3xrMain', {
             } catch(e) {
                 p3xrCommon.generalHandleError(e)
             } finally {
-                rawResize()
+                this.resize()
             }
         }
 
