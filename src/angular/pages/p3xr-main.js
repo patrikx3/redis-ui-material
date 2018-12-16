@@ -82,10 +82,10 @@ p3xr.ng.component('p3xrMain', {
 
                 $treeControlControls.width(treeControlPosition.width)
             } else {
-                $resizer = undefined
+                destroyResizer()
             }
-
         };
+
         const resize = debounce(() => {
             resizeLeft = undefined
             rawResize()
@@ -134,6 +134,19 @@ p3xr.ng.component('p3xrMain', {
             document.addEventListener("click", documentClick);
         }
 
+
+        const destroyResizer = () => {
+            if ($resizer !== undefined) {
+                $resizer.off('mouseover', resizerMouseover)
+                $resizer.off('mouseout', resizeMouseout )
+                $resizer.off('click', resizeClick)
+                document.removeEventListener("mousemove", documentMousemove);
+                document.removeEventListener("click", documentClick);
+                $resizer = undefined
+            }
+        }
+
+
         this.resize = resize
 
         this.$onInit = () => {
@@ -159,6 +172,7 @@ p3xr.ng.component('p3xrMain', {
 
         this.$onDestroy = function () {
             $window.off('resize', resize)
+            destroyResizer();
         };
 
         $rootScope.p3xr.state.page = 1;
