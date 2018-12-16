@@ -84,6 +84,9 @@ const strings = {
         jsonViewShow: 'Display JSON tree',
     },
     label: {
+        resizerInfo: (options) => {
+            return `This resizer is not draggable, but instead you just click to resize and click again to stop resizing. The minimum width is ${options.width}px`
+        },
         jsonViewNotParsable: 'This value is not JSON parsable  ',
         ttlTitle: 'Set the TTL in seconds',
         passwordSecure: 'The password might will be empty, but still it will show characters, this is a security feature.',

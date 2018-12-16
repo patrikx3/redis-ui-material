@@ -22,3 +22,10 @@ p3xr-main {
 
 
 }
+
+#p3xr-main-content-sizer {
+  position: fixed;
+  display: block;
+  cursor: ew-resize;
+  z-index: 10;
+}

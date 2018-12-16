@@ -2,6 +2,7 @@ const cookieExpiry = new Date()
 cookieExpiry.setFullYear(cookieExpiry.getFullYear() + 5)
 
 p3xr.settings = {
+    resizeMinWidth: 300,
     socket: {
       timeout: 3000,
     },
