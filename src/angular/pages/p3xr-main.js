@@ -71,7 +71,7 @@ p3xr.ng.component('p3xrMain', {
                 if (resizeLeft !== undefined) {
                     $treeControl.css('width', (resizeLeft - containerPosition.left) + 'px')
                 } else {
-                    $treeControl.css('width', '33%')
+                    $treeControl.css('width', resizeMinWidth + 'px')
                 }
                 $treeControl.css('min-width', resizeMinWidth +'px')
 
