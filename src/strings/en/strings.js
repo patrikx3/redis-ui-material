@@ -107,6 +107,7 @@ const strings = {
         theme: {
             light: 'Light',
             dark: 'Dark',
+            enterprise: 'Enterprise',
         },
         connected: (opts) => {
             return `Connected: ${opts.name}`

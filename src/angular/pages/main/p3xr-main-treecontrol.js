@@ -4,7 +4,7 @@ p3xr.ng.component('p3xrMainTree', {
         p3xrResize: '&',
         p3xrMainRef: '<'
     },
-    controller: function(p3xrCommon, p3xrRedisParser, p3xrSocket, $rootScope, $timeout,  $state, $scope, $mdDialog, p3xrDialogKeyNewOrSet) {
+    controller: function(p3xrCommon, p3xrRedisParser, p3xrSocket, $rootScope, $timeout,  $state, $scope, $mdDialog, p3xrDialogKeyNewOrSet, p3xrTheme) {
 
         this.$onInit = () => {
             this.p3xrResize()
@@ -12,7 +12,7 @@ p3xr.ng.component('p3xrMainTree', {
         }
 
         this.getTreeTheme = () => {
-            if (p3xr.state.theme.toLowerCase().includes('light'))  {
+            if (!p3xrTheme.isDark())  {
                 return 'tree-classic'
             }
             return 'tree-dark'

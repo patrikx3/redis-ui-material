@@ -23,10 +23,11 @@ p3xr.ng.provider('p3xrTheme', function p3xrThemeProvider($mdThemingProvider,  ) 
 
     const themeType = {
         dark: [
-            'p3xrThemeDark'
+            'p3xrThemeDark',
         ],
         light: [
-            'p3xrThemeLight'
+            'p3xrThemeLight',
+            'p3xrThemeEnterprise',
         ]
     }
 
@@ -38,6 +39,10 @@ p3xr.ng.provider('p3xrTheme', function p3xrThemeProvider($mdThemingProvider,  ) 
         return new function p3xrTheme() {
 
             const self = this;
+
+            this.isDark = () => {
+                return themeType.dark.includes(this.getCurrentThemeName())
+            }
 
             this.start = () => {
 //        console.log(selfProvider);
