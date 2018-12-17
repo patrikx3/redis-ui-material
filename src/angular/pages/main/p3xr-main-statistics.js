@@ -31,9 +31,11 @@ p3xr.ng.component('p3xrMainStatistics', {
 
         $scope.$on('p3x-refresh-statistics-tabs', () => {
             $timeout(() => {
-                this.info = {};
+                this.info.hack = {
+                    hack: 'hacking'
+                }
                 $timeout(() => {
-                    this.info = p3xr.state.info
+                    delete this.info.hack;
                 })
             })
         })

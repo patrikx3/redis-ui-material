@@ -133,7 +133,9 @@ p3xr.ng.component('p3xrMain', {
                 resizeClicked = false
             }
             if (resizeClicked === false) {
-                rawResize();
+                rawResize({
+                    redrawTabs: true
+                });
             }
             event.stopPropagation();
             $scope.$digest();
@@ -146,10 +148,7 @@ p3xr.ng.component('p3xrMain', {
                 } else {
                     $resizer.css('left', event.clientX + 'px')
                     resizeLeft = event.clientX;
-                    rawResize({
-                        redrawTabs: true
-                    });
-
+                    rawResize();
                 }
             }
         }
