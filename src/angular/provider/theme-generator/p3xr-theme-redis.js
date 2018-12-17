@@ -26,7 +26,7 @@ p3xr.theme.redis = function ($mdThemingProvider, p3xrThemeNameGenerator) {
         .accentPalette('grey', {
             default: '600'
         })
-        .warnPalette('red')
+        .warnPalette('amber')
 //        .backgroundPalette('blue-grey')
     ;
 
