@@ -129,8 +129,10 @@ p3xr.ng.component('p3xrMain', {
             }
             if (event.type === 'mousedown') {
                 resizeClicked = true
+                $body.addClass('p3xr-not-selectable')
             } else if (event.type === 'mouseup') {
                 resizeClicked = false
+                $body.removeClass('p3xr-not-selectable')
             }
             if (resizeClicked === false) {
                 rawResize({
