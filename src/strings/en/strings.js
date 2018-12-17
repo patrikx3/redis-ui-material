@@ -85,7 +85,7 @@ const strings = {
     },
     label: {
         resizerInfo: (options) => {
-            return `This resizer is not draggable, but instead you just click to resize and click again to stop resizing. The minimum width is ${options.width}px`
+            return `Left or right panel minimum width is ${options.width}px`
         },
         jsonViewNotParsable: 'This value is not JSON parsable  ',
         ttlTitle: 'Set the TTL in seconds',

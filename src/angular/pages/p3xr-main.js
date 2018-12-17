@@ -9,8 +9,21 @@ p3xr.ng.component('p3xrMain', {
         let $consoleHeader
         let scrollers
         let $resizer
+        let resizerMouseoverOn = false;
+        let resizeClicked = false;
+        let resizeLeft = undefined
 
-        $scope.resizerColor = 'accent';
+        Object.defineProperty($scope, 'resizerColor', {
+            get: () => {
+                if (resizeClicked || resizerMouseoverOn) {
+                    return 'accent-400';
+                }
+                return 'accent'
+            },
+            set: (val) => {
+                // unused
+            }
+        })
 
         const resizeMinWidth = p3xr.settings.resizeMinWidth;
 
@@ -92,22 +105,28 @@ p3xr.ng.component('p3xrMain', {
         }, p3xr.settings.debounce)
 
         const resizerMouseover = () => {
-            $scope.resizerColor = 'accent-400';
+            resizerMouseoverOn = true;
             $scope.$digest();
         }
         const resizeMouseout = () => {
-            $scope.resizerColor = 'accent';
+            resizerMouseoverOn = false;
             $scope.$digest();
         }
-        let resizeClicked = false;
         const resizeClick = (event) => {
-            resizeClicked = !resizeClicked
+            if (event.type === 'mousedown' && event.target.id !== 'p3xr-main-content-sizer') {
+                return
+            }
+            if (event.type === 'mousedown') {
+                resizeClicked = true
+            } else if (event.type === 'mouseup') {
+                resizeClicked = false
+            }
             if (resizeClicked === false) {
                 rawResize();
             }
             event.stopPropagation();
+            $scope.$digest();
         }
-        let resizeLeft = undefined
         const documentMousemove = (event) => {
             if (resizeClicked) {
                 const containerPosition = p3xr.dom.getPosition($container[0])
@@ -129,9 +148,11 @@ p3xr.ng.component('p3xrMain', {
             $resizer = $('#p3xr-main-content-sizer');
             $resizer.on('mouseover', resizerMouseover)
             $resizer.on('mouseout', resizeMouseout )
-            $resizer.on('click', resizeClick)
+//            $resizer.on('click', resizeClick)
             document.addEventListener("mousemove", documentMousemove);
-            document.addEventListener("click", documentClick);
+            document.addEventListener("mousedown", resizeClick);
+            document.addEventListener("mouseup", resizeClick);
+//            document.addEventListener("click", documentClick);
         }
 
 
@@ -139,9 +160,9 @@ p3xr.ng.component('p3xrMain', {
             if ($resizer !== undefined) {
                 $resizer.off('mouseover', resizerMouseover)
                 $resizer.off('mouseout', resizeMouseout )
-                $resizer.off('click', resizeClick)
+                document.removeEventListener("mousedown", resizeClick);
+                document.removeEventListener("mouseup", resizeClick);
                 document.removeEventListener("mousemove", documentMousemove);
-                document.removeEventListener("click", documentClick);
                 $resizer = undefined
             }
         }
