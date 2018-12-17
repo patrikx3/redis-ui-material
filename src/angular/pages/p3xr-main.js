@@ -42,8 +42,16 @@ p3xr.ng.component('p3xrMain', {
             screenSizeIsSmall = isScreenSizeIsSmall;
         });
 
-        const rawResize = (options) => {
+        const debouncedTabs = debounce(() => {
+            $rootScope.$broadcast('p3x-refresh-statistics-tabs')
+        }, p3xr.settings.debounce)
+
+        const rawResize = (options = {}) => {
             //console.warn('who is resizing non stop')
+            let { redrawTabs } = options
+            if (redrawTabs === undefined) {
+                redrawTabs = false;
+            }
             let minus = 0
             for(let item of [$header, $footer, $consoleHeader]) {
                 minus += item.outerHeight()
@@ -97,6 +105,9 @@ p3xr.ng.component('p3xrMain', {
             } else {
                 destroyResizer()
             }
+            if (redrawTabs) {
+                debouncedTabs()
+            }
         };
 
         const resize = debounce(() => {
@@ -135,13 +146,11 @@ p3xr.ng.component('p3xrMain', {
                 } else {
                     $resizer.css('left', event.clientX + 'px')
                     resizeLeft = event.clientX;
-                    rawResize();
+                    rawResize({
+                        redrawTabs: true
+                    });
+
                 }
-            }
-        }
-        const documentClick = (event) => {
-            if (resizeClicked) {
-                resizeClick(event);
             }
         }
         const decorateResizer = () => {
@@ -255,7 +264,7 @@ p3xr.ng.component('p3xrMain', {
             } catch(e) {
                 p3xrCommon.generalHandleError(e)
             } finally {
-                this.resize()
+               // this.resize()
             }
         }
 

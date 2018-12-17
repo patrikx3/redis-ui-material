@@ -17,7 +17,7 @@
             </md-tabs>
         </md-content>
     </md-tab>
-    <md-tab label="{{ $ctrl.generateKey(key) }}" ng-repeat="(key, value) in $root.p3xr.state.info" ng-if="key !== 'keyspace' &&  key !== 'keyspaceDatabases'">
+    <md-tab label="{{ $ctrl.generateKey(key) }}" ng-repeat="(key, value) in $ctrl.info" ng-if="key !== 'keyspace' &&  key !== 'keyspaceDatabases'">
         <md-content>
             <md-list flex >
                 <md-list-item ng-repeat="(itemKey, itemValue) in value">
