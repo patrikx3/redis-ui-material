@@ -20,8 +20,8 @@ p3xr.theme.enterprise = function ($mdThemingProvider, p3xrThemeNameGenerator) {
     ;
 
     $mdThemingProvider.theme(`p3xrThemeEnterprise`)
-        .primaryPalette('blue')
-        .accentPalette('indigo')
+        .primaryPalette('indigo')
+        .accentPalette('blue')
         .warnPalette('red')
 //        .backgroundPalette('grey')
     ;
