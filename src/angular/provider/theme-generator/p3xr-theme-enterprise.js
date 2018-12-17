@@ -14,7 +14,9 @@ p3xr.theme.enterprise = function ($mdThemingProvider, p3xrThemeNameGenerator) {
             'hue-3': '900',
         })
         .warnPalette('red')
-//        .backgroundPalette('grey')
+        .backgroundPalette('grey', {
+            default: '400'
+        })
     ;
 
     $mdThemingProvider.theme(`p3xrThemeEnterprise`)
