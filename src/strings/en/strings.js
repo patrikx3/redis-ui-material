@@ -108,6 +108,7 @@ const strings = {
             light: 'Light',
             dark: 'Dark',
             enterprise: 'Enterprise',
+            redis: 'Redis',
         },
         connected: (opts) => {
             return `Connected: ${opts.name}`

@@ -25,6 +25,7 @@ require('./provider/p3xr-theme.js');
 require('./provider/theme-generator/p3xr-theme-dark.js');
 require('./provider/theme-generator/p3xr-theme-enterprise.js');
 require('./provider/theme-generator/p3xr-theme-light.js');
+require('./provider/theme-generator/p3xr-theme-redis.js');
 require('./ui/p3xr-accordion.js');
 require('./ui/p3xr-button.js');
 //injector-angular-end

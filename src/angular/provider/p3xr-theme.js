@@ -28,6 +28,7 @@ p3xr.ng.provider('p3xrTheme', function p3xrThemeProvider($mdThemingProvider,  ) 
         light: [
             'p3xrThemeLight',
             'p3xrThemeEnterprise',
+            'p3xrThemeRedis',
         ]
     }
 
