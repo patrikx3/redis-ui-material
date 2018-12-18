@@ -1,6 +1,6 @@
 {
     "name": "p3x-redis-ui-material",
-    "version": "2018.12.18-14",
+    "version": "2018.12.18-16",
     "description": "💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via https.",
     "corifeus": {
         "icon": "fas fa-database",
