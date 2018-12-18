@@ -85,15 +85,18 @@ p3xr.ng.component('p3xrMain', {
 
                 const treeControlPosition = p3xr.dom.getPosition($treeControl[0])
 
+
                 if ($resizer === undefined) {
                     decorateResizer();
                 }
                 const resizerWidth = 10;
-                $resizer.css('top', containerPosition.top + 'px')
-                $resizer.css('height', containerPosition.height + 'px')
-                $resizer.css('left', (containerPosition.left +  treeControlPosition.width) + 'px')
-                $resizer.css('width', (resizerWidth) + 'px')
 
+                if ($resizer !== undefined) {
+                    $resizer.style.top =  containerPosition.top + 'px'
+                    $resizer.style.height = containerPosition.height + 'px'
+                    $resizer.style.left = (containerPosition.left +  treeControlPosition.width) + 'px'
+                    $resizer.style.width = (resizerWidth) + 'px'
+                }
 
                 const $content = $('#p3xr-main-content-container');
                 $content.css('top', containerPosition.top + 'px')
@@ -102,6 +105,8 @@ p3xr.ng.component('p3xrMain', {
                 $content.css('width', (containerPosition.width - treeControlPosition.width- resizerWidth ) + 'px')
 
                 $treeControlControls.width(treeControlPosition.width)
+
+
             } else {
                 destroyResizer()
             }
@@ -148,16 +153,20 @@ p3xr.ng.component('p3xrMain', {
                 if (event.clientX < containerPosition.left + resizeMinWidth || event.clientX > window.innerWidth - resizeMinWidth ) {
                     console.warn('not allowed to resize with too small position')
                 } else {
-                    $resizer.css('left', event.clientX + 'px')
+                    $resizer.style.left =  event.clientX + 'px'
                     resizeLeft = event.clientX;
                     rawResize();
                 }
             }
         }
         const decorateResizer = () => {
-            $resizer = $('#p3xr-main-content-sizer');
-            $resizer.on('mouseover', resizerMouseover)
-            $resizer.on('mouseout', resizeMouseout )
+            $resizer = document.getElementById('p3xr-main-content-sizer');
+            if ($resizer === null ) {
+                $resizer = undefined
+                return;
+            }
+            $resizer.addEventListener('mouseover', resizerMouseover)
+            $resizer.addEventListener('mouseout', resizeMouseout )
 //            $resizer.on('click', resizeClick)
             document.addEventListener("mousemove", documentMousemove);
             document.addEventListener("mousedown", resizeClick);
@@ -168,8 +177,8 @@ p3xr.ng.component('p3xrMain', {
 
         const destroyResizer = () => {
             if ($resizer !== undefined) {
-                $resizer.off('mouseover', resizerMouseover)
-                $resizer.off('mouseout', resizeMouseout )
+                $resizer.removeEventListener('mouseover', resizerMouseover)
+                $resizer.removeEventListener('mouseout', resizeMouseout )
                 document.removeEventListener("mousedown", resizeClick);
                 document.removeEventListener("mouseup", resizeClick);
                 document.removeEventListener("mousemove", documentMousemove);
@@ -336,6 +345,7 @@ p3xr.ng.component('p3xrMain', {
                     p3xr.ui.overlay.hide()
                 }, p3xr.settings.debounce)
                 */
+                this.resize()
             }
         }
 

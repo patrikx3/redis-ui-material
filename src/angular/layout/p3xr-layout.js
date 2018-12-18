@@ -93,7 +93,7 @@ p3xr.ng.component('p3xrLayout', {
                 p3xrCommon.generalHandleError(error)
             }
             $cookies.remove(p3xr.settings.connectInfo.cookieName)
-            $state.go('main')
+            $state.go('main/statistics')
            // $rootScope.$digest()
         }
 
