@@ -90,8 +90,8 @@ p3xr.ng.component('p3xrMain', {
                     decorateResizer();
                 }
                 const resizerWidth = 10;
-//console.warn('$resizer', $resizer)
                 if ($resizer !== undefined) {
+                    $resizer = document.getElementById('p3xr-main-content-sizer')
                     $resizer.style.top =  containerPosition.top + 'px'
                     $resizer.style.height = containerPosition.height + 'px'
                     $resizer.style.left = (containerPosition.left +  treeControlPosition.width) + 'px'
@@ -105,8 +105,6 @@ p3xr.ng.component('p3xrMain', {
                 $content.css('width', (containerPosition.width - treeControlPosition.width- resizerWidth ) + 'px')
 
                 $treeControlControls.width(treeControlPosition.width)
-
-
             } else {
                 destroyResizer()
             }
@@ -345,7 +343,7 @@ p3xr.ng.component('p3xrMain', {
                     p3xr.ui.overlay.hide()
                 }, p3xr.settings.debounce)
                 */
-                this.resize()
+
             }
         }
 
