@@ -91,11 +91,19 @@ p3xr.ng.component('p3xrMain', {
                 }
                 const resizerWidth = 10;
                 if ($resizer !== undefined) {
+//                    $resizer.removeEventListener('mouseover', resizerMouseover)
+//                    $resizer.removeEventListener('mouseout', resizeMouseout )
                     $resizer = document.getElementById('p3xr-main-content-sizer')
-                    $resizer.style.top =  containerPosition.top + 'px'
-                    $resizer.style.height = containerPosition.height + 'px'
-                    $resizer.style.left = (containerPosition.left +  treeControlPosition.width) + 'px'
-                    $resizer.style.width = (resizerWidth) + 'px'
+
+                    if ($resizer !== null) {
+                        $resizer.addEventListener('mouseover', resizerMouseover)
+                        $resizer.addEventListener('mouseout', resizeMouseout )
+                        $resizer.style.top =  containerPosition.top + 'px'
+                        $resizer.style.height = containerPosition.height + 'px'
+                        $resizer.style.left = (containerPosition.left +  treeControlPosition.width) + 'px'
+                        $resizer.style.width = (resizerWidth) + 'px'
+                    }
+
                 }
 
                 const $content = $('#p3xr-main-content-container');
@@ -174,14 +182,14 @@ p3xr.ng.component('p3xrMain', {
 
 
         const destroyResizer = () => {
-            if ($resizer !== undefined) {
+            if ($resizer !== undefined && $resizer !== null) {
                 $resizer.removeEventListener('mouseover', resizerMouseover)
                 $resizer.removeEventListener('mouseout', resizeMouseout )
-                document.removeEventListener("mousedown", resizeClick);
-                document.removeEventListener("mouseup", resizeClick);
-                document.removeEventListener("mousemove", documentMousemove);
                 $resizer = undefined
             }
+            document.removeEventListener("mousedown", resizeClick);
+            document.removeEventListener("mouseup", resizeClick);
+            document.removeEventListener("mousemove", documentMousemove);
         }
 
 
