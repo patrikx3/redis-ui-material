@@ -13,7 +13,7 @@ p3xr.theme.redis = function ($mdThemingProvider, p3xrThemeNameGenerator) {
         .warnPalette('red')
         .backgroundPalette('red', {
             'default': '100',
-            'hue-1': 'A100',
+            'hue-1': '100',
             'hue-2': '700',
             'hue-3': '900',
         })
