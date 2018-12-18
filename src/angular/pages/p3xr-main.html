@@ -1,6 +1,6 @@
 <md-toolbar class="md-accent" md-theme="{{ $root.p3xr.state.themeLayout}}" id="p3xr-main-header">
     <div class="md-toolbar-tools">
-        <h2 flex md-truncate>{{ $root.p3xr.strings.intention.main }}</h2>
+        <h2 flex md-truncate hide-xs>{{ $root.p3xr.strings.intention.main }}</h2>
         <span ng-if="$root.p3xr.state.connection !== undefined">
 
                 <md-button class="md-icon-button md-primary" aria-label="{{ $root.p3xr.strings.intention.save }}" ng-click="$ctrl.save()">
