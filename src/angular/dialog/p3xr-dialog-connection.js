@@ -26,9 +26,11 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
 
                         // Promise reject
                         $scope.cancel = function () {
+                            /*
                             p3xrCommon.toast({
                                 message: p3xr.strings.status.cancelled
                             })
+                            */
                             $mdDialog.cancel();
                         };
 

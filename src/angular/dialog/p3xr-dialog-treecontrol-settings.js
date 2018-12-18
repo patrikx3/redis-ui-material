@@ -19,9 +19,11 @@ p3xr.ng.factory('p3xrDialogTreecontrolSettings', function (p3xrCommon, $mdDialog
 
                         // Promise reject
                         $scope.cancel = function () {
+                            /*
                             p3xrCommon.toast({
                                 message: p3xr.strings.status.cancelled
                             })
+                            */
                             $mdDialog.cancel();
                         };
 
