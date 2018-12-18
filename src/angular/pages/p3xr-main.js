@@ -90,7 +90,7 @@ p3xr.ng.component('p3xrMain', {
                     decorateResizer();
                 }
                 const resizerWidth = 10;
-
+console.warn('$resizer', $resizer)
                 if ($resizer !== undefined) {
                     $resizer.style.top =  containerPosition.top + 'px'
                     $resizer.style.height = containerPosition.height + 'px'
