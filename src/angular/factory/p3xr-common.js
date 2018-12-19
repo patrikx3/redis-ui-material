@@ -1,4 +1,4 @@
-p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootScope, p3xrRedisParser) {
+p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootScope, p3xrRedisParser, $timeout) {
 
     const generalHandleError = (dataOrError) => {
         if (dataOrError === undefined) {
@@ -71,13 +71,16 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootSco
         $rootScope.p3xr.state.keysRaw = response.keys
 
         if ($rootScope.p3xr.settings.keysSort) {
-            $rootScope.p3xr.state.keysRaw = response.keys.sort()
+            $rootScope.p3xr.state.keysRaw = response.keys.sort(p3xr.sort.naturalCompareDocument())
         } else {
             $rootScope.p3xr.state.keysRaw = response.keys
         }
 
         $rootScope.p3xr.state.keysInfo = response.keysInfo
-        $rootScope.$digest()
+
+        $timeout(() => {
+            $rootScope.$digest()
+        })
 
     }
 

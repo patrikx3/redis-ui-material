@@ -188,29 +188,30 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
         }
     })
 
+    let globalKeysRaw = [];
     Object.defineProperty($rootScope.p3xr.state, 'keys', {
         get: () => {
-            let keysRaw = $rootScope.p3xr.state.keysRaw.slice()
+            globalKeysRaw = $rootScope.p3xr.state.keysRaw.slice()
             if ($rootScope.p3xr.settings.searchClientSide && typeof ($rootScope.p3xr.state.search) === 'string' && $rootScope.p3xr.state.search.length > 0) {
                 //console.log($rootScope.p3xr.settings.searchStartsWith)
                 if ($rootScope.p3xr.settings.searchStartsWith) {
                     //console.log('startswith')
-                    keysRaw = keysRaw.filter(keyRaw => {
+                    globalKeysRaw = globalKeysRaw.filter(keyRaw => {
                         return keyRaw.startsWith($rootScope.p3xr.state.search)
                     })
                  } else {
                     //console.log('includes')
-                    keysRaw = keysRaw.filter(keyRaw => {
+                    globalKeysRaw = globalKeysRaw.filter(keyRaw => {
                         return keyRaw.includes($rootScope.p3xr.state.search)
                     })
                 }
             }
-            if (keysRaw <= $rootScope.p3xr.settings.pageCount) {
-                return keysRaw
+            if (globalKeysRaw <= $rootScope.p3xr.settings.pageCount) {
+                return globalKeysRaw
             } else {
                 //console.log('new scope change',  ($rootScope.p3xr.state.page -1) * $rootScope.p3xr.settings.pageCount, $rootScope.p3xr.settings.pageCount)
                 const start = ($rootScope.p3xr.state.page -1) * $rootScope.p3xr.settings.pageCount
-                const keys = keysRaw.slice(start, start + $rootScope.p3xr.settings.pageCount)
+                const keys = globalKeysRaw.slice(start, start + $rootScope.p3xr.settings.pageCount)
                 return keys
             }
         }
@@ -218,8 +219,9 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
 
     Object.defineProperty($rootScope.p3xr.state, 'pages', {
         get: () => {
-            const pages = Math.ceil($rootScope.p3xr.state.keysRaw.length / $rootScope.p3xr.settings.pageCount)
-            return pages
+            return Math.ceil(globalKeysRaw.length / $rootScope.p3xr.settings.pageCount)
+            //const pages = Math.ceil($rootScope.p3xr.state.keysRaw.length / $rootScope.p3xr.settings.pageCount)
+            //return pages
         }
     })
 

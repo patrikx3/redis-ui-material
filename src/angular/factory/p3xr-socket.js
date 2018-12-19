@@ -132,11 +132,15 @@ p3xr.ng.factory('p3xrSocket', function ($rootScope, p3xrCommon, $state) {
                     }
                     $rootScope.$digest()
                 }
+
                 timeout = setTimeout(() => {
                     ioClient.off(responseEvent, response)
-                    reject(new Error(`socket.io request timeout ${p3xr.settings.socket.timeout}ms`));
+                    reject(new Error(p3xr.strings.label.socketIoTimeout({
+                        timeout: p3xr.settings.socket.timeout
+                    })));
                     $rootScope.$digest()
                 }, p3xr.settings.socket.timeout)
+
                 ioClient.on(responseEvent, response)
                 ioClient.emit('p3xr-request', options)
             })

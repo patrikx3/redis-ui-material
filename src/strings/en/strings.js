@@ -84,6 +84,10 @@ const strings = {
         jsonViewShow: 'Display JSON tree',
     },
     label: {
+        treeKeyStore: `The sorting (natural compare) is executed on the client aka the browser, which means it has a penalty for big large sets, like over 10k keys, it might add a little time to the page rendering. There is no key sorting in Redis, only like this.`,
+        socketIoTimeout: (options) => {
+          return `The Socket.IO timed out for this request (max ${options.timeout/1000} seconds) ...`;
+        },
         resizerInfo: (options) => {
             return `Left or right panel minimum width is ${options.width}px`
         },
@@ -103,7 +107,7 @@ const strings = {
             on: 'Key sorting on',
             off: 'Key sorting off'
         },
-        treeSettingsPageCount: 'If the paging is over 100 / page and you do not use smart tree divider, it could cause a performance penalty, because of the nature of AngularJs. But! If you use trees (with tree divider), then you can have bigger page / element and the browser will not freeze for a few seconds.',
+        treeSettingsPageCount: 'If the paging is over 100 / page and you do not use smart tree divider, it could cause a performance penalty, because of the nature of AngularJs. But! If you use trees (with tree divider), then you can have bigger page / element and the browser will not freeze for a little time.',
         theme: {
             light: 'Light',
             dark: 'Dark',

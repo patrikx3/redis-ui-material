@@ -38,13 +38,15 @@
                     {{ $root.p3xr.strings.label.treeSettingsPageCount }}
                 </div>
 
-                <md-input-container class="md-block" >
+                <md-input-container class="md-block p3xr-md-input-container-no-bottom" >
                     <md-switch ng-model="model.keysSort"  name="keysSort"  aria-label="">
                         {{ model.keysSort ? $root.p3xr.strings.label.keysSort.on :  $root.p3xr.strings.label.keysSort.off  }}
                     </md-switch>
 
                 </md-input-container>
-
+                <div class="p3xr-md-input-container-bottom-info">
+                    {{ $root.p3xr.strings.label.treeKeyStore }}
+                </div>
 
                 <md-input-container class="md-block p3xr-md-input-container-no-bottom" >
                     <md-switch ng-model="model.searchClientSide"  name="searchClientSide"  aria-label="">

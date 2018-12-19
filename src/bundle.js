@@ -40,6 +40,7 @@ require('./core/next-id')
 require('./core/api')
 require('./core/state')
 require('./core/dom')
+require('./core/sort')
 
 require('./jquery/overlay')
 

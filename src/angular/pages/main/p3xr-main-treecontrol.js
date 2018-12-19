@@ -4,7 +4,7 @@ p3xr.ng.component('p3xrMainTree', {
         p3xrResize: '&',
         p3xrMainRef: '<'
     },
-    controller: function(p3xrCommon, p3xrRedisParser, p3xrSocket, $rootScope, $timeout,  $state, $scope, $mdDialog, p3xrDialogKeyNewOrSet, p3xrTheme) {
+    controller: function(p3xrCommon, p3xrRedisParser, p3xrSocket, $rootScope, $timeout,  $state, $scope, $mdDialog, p3xrDialogKeyNewOrSet, p3xrTheme, $stateParams) {
 
         this.$onInit = () => {
             this.p3xrResize()
@@ -161,6 +161,10 @@ p3xr.ng.component('p3xrMainTree', {
                 $timeout(() => {
                     $rootScope.savedExpandedNodes = expandedNodes
                     p3xrCommon.loadRedisInfoResponse({ response: response})
+
+                    if ($stateParams.key.startsWith(node.key + p3xr.settings.redisTreeDivider)) {
+                        $state.go('main.statistics')
+                    }
                 })
 
                 p3xrCommon.toast({
@@ -175,6 +179,9 @@ p3xr.ng.component('p3xrMainTree', {
 
         this.extractNodeTooltip = (node) => {
             if (node.type !== 'folder') {
+                if (node.keysInfo === undefined) {
+                    return '';
+                }
                 return p3xr.ui.htmlEncode(node.keysInfo.type + ' - ' + node.key)
             }
             return p3xr.ui.htmlEncode(node.key)
