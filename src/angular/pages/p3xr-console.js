@@ -10,7 +10,7 @@ p3xr.ng.component('p3xrConsole', {
         // #p3xr-console-input
         // $window.height()
 
-        const redisCommands = require('redis-commands');
+        const redisCommands = p3xr.state.commands
 
         let $container
         let $header;
@@ -120,18 +120,21 @@ p3xr.ng.component('p3xrConsole', {
 
         }
 
-        let lastTabInput = undefined
-        let lastTabInputIndex = -1  ;
-        let autoComplete = [];
-        let wasLastTab = false
+        let lastTabInput
+        let lastTabInputIndex
+        let autoComplete
+        let wasLastTab
+        const clearTabAutocomplete = () => {
+            lastTabInput = undefined
+            lastTabInputIndex = -1  ;
+            autoComplete = [];
+            wasLastTab = false
+        }
         this.action =  ($event) => {
             //console.warn($event.keyCode)
             if ($event.keyCode !== 9 && event.shiftKey !== true) {
                 //console.warn('clear settings')
-                lastTabInput = undefined;
-                lastTabInputIndex = -1;
-                autoComplete = [];
-                wasLastTab = false;
+                clearTabAutocomplete()
             }
             switch($event.keyCode) {
                 // enter
@@ -177,9 +180,9 @@ p3xr.ng.component('p3xrConsole', {
                         lastTabInput = tab
                         lastTabInputIndex = -1
                         if (lastTabInput === '') {
-                            autoComplete = redisCommands.list
+                            autoComplete = redisCommands
                         } else {
-                            autoComplete = redisCommands.list.filter(filter => filter.startsWith(lastTabInput))
+                            autoComplete = redisCommands.filter(filter => filter.startsWith(lastTabInput))
                         }
                     }
 
@@ -198,8 +201,6 @@ p3xr.ng.component('p3xrConsole', {
                     //console.warn('after event.keyCode, event.shiftKey', event.keyCode, event.shiftKey, lastTabInputIndex)
 
                     this.inputValue = autoComplete[lastTabInputIndex]
-
-
 
                     $event.stopPropagation();
                     $event.preventDefault();

@@ -12,7 +12,7 @@ p3xr.state = {
     failed: false,
     keysRaw: [],
     search: '',
-
+    commands: [],
 }
 
 Object.defineProperty(p3xr.state, 'themeLayout', {

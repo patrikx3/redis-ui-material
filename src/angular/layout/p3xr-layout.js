@@ -55,6 +55,13 @@ p3xr.ng.component('p3xrLayout', {
                 while(dbIndex < response.databases) {
                     databaseIndexes.push(dbIndex++)
                 }
+
+                p3xr.state.commands = []
+                Object.keys(response.commands).forEach(key => {
+                    p3xr.state.commands.push(response.commands[key][0])
+                })
+                p3xr.state.commands.sort()
+
                 $rootScope.p3xr.state.databaseIndexes = databaseIndexes
                 $rootScope.p3xr.state.connection = connection
 
