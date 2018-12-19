@@ -121,7 +121,7 @@ p3xr.ng.component('p3xrConsole', {
         }
 
         let lastTabInput = undefined
-        let lastTabInputIndex = 0;
+        let lastTabInputIndex = -1  ;
         let autoComplete = [];
         let wasLastTab = false
         this.action =  ($event) => {
@@ -129,7 +129,7 @@ p3xr.ng.component('p3xrConsole', {
             if ($event.keyCode !== 9 && event.shiftKey !== true) {
                 //console.warn('clear settings')
                 lastTabInput = undefined;
-                lastTabInputIndex = 0;
+                lastTabInputIndex = -1;
                 autoComplete = [];
                 wasLastTab = false;
             }
@@ -175,15 +175,13 @@ p3xr.ng.component('p3xrConsole', {
                     if (!wasLastTab) {
                         const tab = String(this.inputValue).trim()
                         lastTabInput = tab
-                        lastTabInputIndex = 0
+                        lastTabInputIndex = -1
                         if (lastTabInput === '') {
                             autoComplete = redisCommands.list
                         } else {
                             autoComplete = redisCommands.list.filter(filter => filter.startsWith(lastTabInput))
                         }
                     }
-
-                    this.inputValue = autoComplete[lastTabInputIndex]
 
                     //console.warn('before event.keyCode, event.shiftKey', event.keyCode, event.shiftKey, lastTabInputIndex)
                     if (event.shiftKey === true) {
@@ -198,6 +196,9 @@ p3xr.ng.component('p3xrConsole', {
                         lastTabInputIndex = autoComplete.length - 1;
                     }
                     //console.warn('after event.keyCode, event.shiftKey', event.keyCode, event.shiftKey, lastTabInputIndex)
+
+                    this.inputValue = autoComplete[lastTabInputIndex]
+
 
 
                     $event.stopPropagation();
