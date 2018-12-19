@@ -130,6 +130,14 @@ p3xr.ng.component('p3xrConsole', {
             autoComplete = [];
             wasLastTab = false
         }
+
+        const focusInput = () => {
+            $timeout(() => {
+                const value = $input.val();
+                $input.val('').focus().val(value);
+            })
+        }
+
         this.action =  ($event) => {
             //console.warn($event.keyCode)
             if ($event.keyCode !== 9 && event.shiftKey !== true) {
@@ -155,6 +163,7 @@ p3xr.ng.component('p3xrConsole', {
                         actionHistoryPosition = actionHistory.length -1
                     }
                     this.inputValue = actionHistory[actionHistoryPosition]
+                    focusInput()
                   break;
 
                 // keydown 40
@@ -168,6 +177,7 @@ p3xr.ng.component('p3xrConsole', {
                         actionHistoryPosition = 0
                     }
                     this.inputValue = actionHistory[actionHistoryPosition]
+                    focusInput()
                     break;
 
                 case 9:
