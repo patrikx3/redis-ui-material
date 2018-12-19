@@ -84,6 +84,7 @@ const strings = {
         jsonViewShow: 'Display JSON tree',
     },
     label: {
+        redisCommandNotFound: 'No Redis command match found ...',
         treeKeyStore: `The sorting (natural compare) is executed on the client aka the browser, which means it has a penalty for big large sets, like over 10k keys, it might add a little time to the page rendering. There is no key sorting in Redis, only like this.`,
         socketIoTimeout: (options) => {
           return `The Socket.IO timed out for this request (max ${options.timeout/1000} seconds) ...`;
@@ -97,6 +98,8 @@ const strings = {
         treeSeparatorEmpty: 'If the tree separator is empty, the tree wil have no nested nodes, just a pure list',
         treeSeparatorEmptyNote: 'No nested nodes, just a pure list',
         welcomeConsole: 'Welcome to the Redis Console',
+        welcomeConsoleInfo: 'TAB or SHIFT + TAB completion like bash is enabled',
+        welcomeConsoleInfo2: 'Cursor UP or DOWN history is enabled',
         redisListIndexInfo: 'Empty to append, -1 to prepend or save it to the position shown.',
         console: 'Console',
         connectiondAdd: 'Add connection',
