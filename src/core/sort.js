@@ -1,7 +1,7 @@
 p3xr.sort = {
     naturalCompareDocument: () => {
         return (a, b) => {
-            const regexTemplate = /(\d+((,|\,)\d)?)|(\D+)/g;
+            const regexTemplate = /(\d+)|(\D+)/g;
             const ax = [], bx = [];
 
             a.replace(regexTemplate, function (_, $1, $2) {
