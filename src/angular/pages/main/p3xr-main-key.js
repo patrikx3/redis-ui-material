@@ -16,6 +16,7 @@ p3xr.ng.component('p3xrMainKey', {
                 withoutParent = false
             }
 
+            let hadError = undefined
             try {
 
                 // it can throw an error, when we switch the database
@@ -63,12 +64,15 @@ p3xr.ng.component('p3xrMainKey', {
 
                 this.response = response
             } catch(e) {
+                hadError = e
                 p3xrCommon.generalHandleError(e)
             } finally {
-                if (!withoutParent && $stateParams.resize !== null) {
+                p3xr.ui.overlay.hide()
+                if (hadError !== undefined) {
+                    $state.go('main.statistics');
+                } else if (!withoutParent && $stateParams.resize !== null) {
                     $stateParams.resize()
                 }
-                p3xr.ui.overlay.hide()
                 /*
                 $timeout(() => {
                     p3xr.ui.overlay.hide()
