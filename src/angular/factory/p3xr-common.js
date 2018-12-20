@@ -81,26 +81,11 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootSco
         $rootScope.p3xr.state.keysInfo = response.keysInfo
 
         $timeout(() => {
-
-            if ($rootScope.p3xr.state.keysRaw.length > p3xr.settings.maxLightKeysCount ) {
-                debouncedTooManyKeys()
-            }
-
+            $rootScope.p3xr.state.reducedFunctions = $rootScope.p3xr.state.keysRaw.length > p3xr.settings.maxLightKeysCount
             $rootScope.$digest()
         })
 
     }
-
-    const debouncedTooManyKeys = debounce(() => {
-        confirm({
-            disableCancel: true,
-            message: p3xr.strings.label.tooManyKeys({
-                count: $rootScope.p3xr.state.keysRaw.length,
-                maxLightKeysCount: p3xr.settings.maxLightKeysCount,
-
-            })
-        })
-    }, 3000)
 
     const setTableZebraStyles = (options) => {
         const { $odd } = options

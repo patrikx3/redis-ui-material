@@ -39,3 +39,21 @@ $height: 64px;
     max-height: $height !important;
   }
 }
+
+#p3xr-layout-reduced {
+  position: fixed;
+  z-index: 11;
+  max-width: 310px;
+  width: 310px;
+  text-align: center;
+  padding-left: 5px;
+  padding-right: 5px;
+  height: $height / 2;
+  bottom: $height;
+  font-weight: bold;
+  text-transform: uppercase;
+  line-height: $height / 2;
+  border-style: solid;
+  border-width: 5px;
+  cursor: pointer;
+}

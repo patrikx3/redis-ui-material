@@ -11,8 +11,17 @@
         <md-dialog-content md-theme="{{ $root.p3xr.state.theme }}">
             <md-content layout-padding>
 
-                {{ $root.p3xr.strings.form.treeSettings.keyCount() }}
-                <br/>
+
+                <div ng-if="$root.p3xr.state.reducedFunctions">
+                    <div>
+                        {{ $root.p3xr.strings.form.treeSettings.keyCount() }}
+                    </div>
+                    <br/>
+                    <div>
+                        {{ $root.p3xr.strings.label.tooManyKeys({ count: $root.p3xr.state.keysRaw.length, maxLightKeysCount: $root.p3xr.settings.maxLightKeysCount}) }}
+                    </div>
+                    <br/>
+                </div>
 
                 <md-input-container class="md-block p3xr-md-input-container-no-bottom" >
                     <label>{{ $root.p3xr.strings.form.treeSettings.field.treeSeparator }}</label>
@@ -27,7 +36,6 @@
                     {{ $root.p3xr.strings.label.treeSeparatorEmpty }}
                 </div>
 
-
                 <md-input-container class="md-block p3xr-md-input-container-no-bottom" >
                     <label>{{ $root.p3xr.strings.form.treeSettings.field.page }}</label>
                     <input type="number" required min="10" max="500" name="pageCount" step="1" pattern="\d*" ng-model="model.pageCount">
@@ -41,24 +49,29 @@
                     {{ $root.p3xr.strings.label.treeSettingsPageCount }}
                 </div>
 
-                <md-input-container class="md-block p3xr-md-input-container-no-bottom" >
-                    <md-switch ng-model="model.keysSort"  name="keysSort"  aria-label="">
-                        {{ model.keysSort ? $root.p3xr.strings.label.keysSort.on :  $root.p3xr.strings.label.keysSort.off  }}
-                    </md-switch>
+                <span ng-if="!$root.p3xr.state.reducedFunctions">
 
-                </md-input-container>
-                <div class="p3xr-md-input-container-bottom-info">
-                    {{ $root.p3xr.strings.label.treeKeyStore }}
-                </div>
+                    <md-input-container class="md-block p3xr-md-input-container-no-bottom" >
+                        <md-switch ng-model="model.keysSort"  name="keysSort"  aria-label="">
+                            {{ model.keysSort ? $root.p3xr.strings.label.keysSort.on :  $root.p3xr.strings.label.keysSort.off  }}
+                        </md-switch>
 
-                <md-input-container class="md-block p3xr-md-input-container-no-bottom" >
-                    <md-switch ng-model="model.searchClientSide"  name="searchClientSide"  aria-label="">
-                        {{ model.searchClientSide  ? $root.p3xr.strings.form.treeSettings.label.searchModeClient :  $root.p3xr.strings.form.treeSettings.label.searchModeServer }}
-                    </md-switch>
-                </md-input-container>
-                <div class="p3xr-md-input-container-bottom-info">
-                    {{ $root.p3xr.strings.page.treeControls.search.info }}
-                </div>
+                    </md-input-container>
+                    <div class="p3xr-md-input-container-bottom-info">
+                        {{ $root.p3xr.strings.label.treeKeyStore }}
+                    </div>
+
+                    <md-input-container class="md-block p3xr-md-input-container-no-bottom" >
+                        <md-switch ng-model="model.searchClientSide"  name="searchClientSide"  aria-label="">
+                            {{ model.searchClientSide  ? $root.p3xr.strings.form.treeSettings.label.searchModeClient :  $root.p3xr.strings.form.treeSettings.label.searchModeServer }}
+                        </md-switch>
+                    </md-input-container>
+                    <div class="p3xr-md-input-container-bottom-info">
+                        {{ $root.p3xr.strings.page.treeControls.search.info }}
+                    </div>
+
+                </span>
+
 
 
                 <md-input-container class="md-block " >

@@ -27,13 +27,34 @@ p3xr.ng.component('p3xrLayout', {
             }
         })
 
+        let $warning
+        const resize = () => {
+            $warning.css('left', ((document.documentElement.clientWidth / 2) - ($warning.outerWidth() / 2)) + 'px')
+        }
+
+        this.reducedFunctionalty = () => {
+            p3xrCommon.confirm({
+                disableCancel: true,
+                message: p3xr.strings.label.tooManyKeys({
+                    count: $rootScope.p3xr.state.keysRaw.length,
+                    maxLightKeysCount: p3xr.settings.maxLightKeysCount,
+                })
+            })
+        }
+
         this.$onInit = () => {
+            $warning= $('#p3xr-layout-reduced')
+            resize()
+            $window.on('resize', resize)
             const connection = $cookies.getObject(p3xr.settings.connectInfo.cookieName)
             if (connection !== undefined) {
                 this.connect(connection)
             }
         }
 
+        this.$onDestroy = function () {
+            $window.off('resize', resize)
+        };
 
         this.connect = async (connection) => {
             connection = angular.copy(connection)
