@@ -11,6 +11,9 @@
         <md-dialog-content md-theme="{{ $root.p3xr.state.theme }}">
             <md-content layout-padding>
 
+                {{ $root.p3xr.strings.form.treeSettings.keyCount() }}
+                <br/>
+
                 <md-input-container class="md-block p3xr-md-input-container-no-bottom" >
                     <label>{{ $root.p3xr.strings.form.treeSettings.field.treeSeparator }}</label>
                     <input  name="treeSeparator" ng-model="model.treeSeparator">

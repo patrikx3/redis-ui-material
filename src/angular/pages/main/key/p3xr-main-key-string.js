@@ -2,7 +2,8 @@ p3xr.ng.component('p3xrMainKeyString', {
     template: require('./p3xr-main-key-string.html'),
     bindings: {
         p3xrValue: '=',
-        p3xrKey: '<'
+        p3xrKey: '<',
+        p3xrResponse: '<',
     },
     controller: function(p3xrSocket, p3xrCommon, $rootScope, p3xrDialogJsonView) {
 
@@ -26,7 +27,7 @@ p3xr.ng.component('p3xrMainKeyString', {
                 const response = await p3xrSocket.request({
                     action: 'key-set',
                     payload: {
-                        type: $rootScope.p3xr.state.keysInfo[this.p3xrKey].type,
+                        type: this.p3xrResponse.type,
                         value: this.p3xrValue,
                         key: this.p3xrKey,
                     }

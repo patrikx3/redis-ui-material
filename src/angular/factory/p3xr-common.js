@@ -1,4 +1,6 @@
-p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootScope, p3xrRedisParser, $timeout) {
+p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootScope, p3xrRedisParser, $timeout, ) {
+
+    const debounce = require('lodash/debounce')
 
     const generalHandleError = (dataOrError) => {
         if (dataOrError === undefined) {
@@ -37,7 +39,7 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootSco
                 .textContent(options.message)
                 .position(p3xr.settings.toast.position)
                 .theme(p3xr.state.themeLayout)
-                .hideDelay(p3xr.settings.toast.timeout)
+                .hideDelay(options.hideDelay || p3xr.settings.toast.timeout)
             //    .capsule(true)
         );
     }
@@ -51,7 +53,7 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootSco
         }
 
         confirm
-            .title(p3xr.strings.confirm.title)
+            .title(options.hasOwnProperty('disableCancel') ? p3xr.strings.confirm.alert : p3xr.strings.confirm.title)
             .textContent(options.message)
             .targetEvent(options.event)
             .ok(p3xr.strings.intention.sure)
@@ -70,7 +72,7 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootSco
 
         $rootScope.p3xr.state.keysRaw = response.keys
 
-        if ($rootScope.p3xr.settings.keysSort) {
+        if ($rootScope.p3xr.settings.keysSort && $rootScope.p3xr.state.keysRaw.length <= p3xr.settings.maxLightKeysCount) {
             $rootScope.p3xr.state.keysRaw = response.keys.sort(p3xr.sort.naturalCompareDocument())
         } else {
             $rootScope.p3xr.state.keysRaw = response.keys
@@ -79,10 +81,26 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootSco
         $rootScope.p3xr.state.keysInfo = response.keysInfo
 
         $timeout(() => {
+
+            if ($rootScope.p3xr.state.keysRaw.length > p3xr.settings.maxLightKeysCount ) {
+                debouncedTooManyKeys()
+            }
+
             $rootScope.$digest()
         })
 
     }
+
+    const debouncedTooManyKeys = debounce(() => {
+        confirm({
+            disableCancel: true,
+            message: p3xr.strings.label.tooManyKeys({
+                count: $rootScope.p3xr.state.keysRaw.length,
+                maxLightKeysCount: p3xr.settings.maxLightKeysCount,
+
+            })
+        })
+    }, 3000)
 
     const setTableZebraStyles = (options) => {
         const { $odd } = options

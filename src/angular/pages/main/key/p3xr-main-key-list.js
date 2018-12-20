@@ -2,7 +2,8 @@ p3xr.ng.component('p3xrMainKeyList', {
     template: require('./p3xr-main-key-list.html'),
     bindings: {
         p3xrValue: '=',
-        p3xrKey: '<'
+        p3xrKey: '<',
+        p3xrResponse: '<',
     },
     controller: function($mdColors, p3xrCommon, p3xrSocket, $rootScope, p3xrDialogJsonView, p3xrDialogKeyNewOrSet) {
 

@@ -113,6 +113,9 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
             } else if (searchClientSide === 'false') {
                 searchClientSide = false
             }
+            if (p3xr.state.keysRaw.length > p3xr.settings.maxLightKeysCount) {
+                searchClientSide = false
+            }
             return searchClientSide
         },
         set: (value) => {

@@ -178,7 +178,7 @@ p3xr.ng.component('p3xrMainTree', {
         }
 
         this.extractNodeTooltip = (node) => {
-            if (node.type !== 'folder') {
+            if (node.type !== 'folder' && node.keysInfo !== undefined) {
                 if (node.keysInfo === undefined) {
                     return '';
                 }

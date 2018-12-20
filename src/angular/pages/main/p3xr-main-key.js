@@ -23,14 +23,15 @@ p3xr.ng.component('p3xrMainKey', {
                 p3xr.ui.overlay.show({
                     message: p3xr.strings.intention.getKey
                 })
-                const type = p3xr.state.keysInfo[$stateParams.key].type
+                //const type = p3xr.state.keysInfo[$stateParams.key].type
                 const response = await p3xrSocket.request({
                     action: 'key-get',
                     payload: {
                         key: $stateParams.key,
-                        type: type,
+                        //type: type,
                     }
                 })
+                const type = response.type
                 if (response.ttl === -2) {
                     p3xrCommon.toast({
                         message: p3xr.strings.status.keyIsNotExisting
@@ -58,7 +59,8 @@ p3xr.ng.component('p3xrMainKey', {
                 switch(type) {
                     case 'string':
                        // console.warn(response)
-                        p3xr.state.keysInfo[$stateParams.key].length = response.value.length
+                        //p3xr.state.keysInfo[$stateParams.key].length = response.value.length
+                        response.length = response.value.length
                         break;
                 }
 

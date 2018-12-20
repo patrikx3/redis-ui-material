@@ -19,6 +19,7 @@ const strings = {
     },
     confirm: {
         title: 'Confirm',
+        alert: 'Alert',
         deleteListItem: 'Are you sure to delete this list item?',
         deleteHashKey: 'Are you sure to delete this hash key item?',
         deleteSetMember: 'Are you sure to delete this set member?',
@@ -84,6 +85,9 @@ const strings = {
         jsonViewShow: 'Display JSON tree',
     },
     label: {
+        tooManyKeys: (opts) => {
+          return `For the full maximum functions allowed keys total is ${opts.maxLightKeysCount}. This database has over the allowed keys in total ${opts.count}. The sorting and the additional tree information is disabled. The searching is happening only on the server instead the client search.`;
+        },
         redisCommandNotFound: 'No Redis command match found ...',
         treeKeyStore: `The sorting (natural compare) is executed on the client aka the browser, which means it has a penalty for big large sets, like over 10k keys, it might add a little time to the page rendering. There is no key sorting in Redis, only like this.`,
         socketIoTimeout: (options) => {
@@ -184,6 +188,9 @@ const strings = {
             },
         },
         treeSettings: {
+            keyCount: () => {
+              return `Number of keys: ${p3xr.state.keysRaw.length}`
+            },
             label: {
                 formName: 'Tree settings',
                 searchModeClient: 'Client search mode',
@@ -290,7 +297,7 @@ const strings = {
                 clear: 'Clear current search to set empty',
                 placeholderClient: 'Search client side',
                 placeholderServer: 'Search server side',
-                info: 'The client side search means, that it matches the text in the search input. The server side search means, that is it like search in the keys patterns as *{search-text}*. For large search sets, it is better to use server side searching. For smaller search sets, it is better to use client side search mode.',
+                info: 'The client side search means, that it matches the text in the search input. The server side search means, that is it like search in the keys patterns as *{search-text}*. For large search sets, it is better to use server side searching. For smaller search sets, it is better to use client side search mode.' + ` If the keys count is over ${p3xr.settings.maxLightKeysCount}, you can only search on server side.`,
                 infoDetails: 'To find out how the search works, please check out the settings'
             },
             pager: {

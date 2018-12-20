@@ -2,6 +2,8 @@ const cookieExpiry = new Date()
 cookieExpiry.setFullYear(cookieExpiry.getFullYear() + 5)
 
 p3xr.settings = {
+    maxLightKeysCount: 110000,
+//    maxLightKeysCount: 1,
     resizeMinWidth: 320,
     socket: {
       timeout: 300000,
@@ -11,7 +13,7 @@ p3xr.settings = {
         position: 'bottom right',
     },
     debounce: 250,
-    debounceSearch: 1000,
+    debounceSearch: 2000,
     cookieExpiry: cookieExpiry,
     connection: {
         cookieNameCurrentDatabase: 'p3xr-main-current-database',
@@ -34,9 +36,9 @@ p3xr.settings = {
         cookieName: 'p3xr-main-treecontrol-key-sort',
     },
     keysSort: false,
-    searchClientSide: true,
+    searchClientSide: false,
     searchInfoClientSide: {
-        default: true,
+        default: false,
         cookieName: 'p3xr-main-treecontrol-search-client-mode'
     },
     searchStartsWith: false,

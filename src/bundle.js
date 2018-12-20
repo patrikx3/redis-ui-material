@@ -33,8 +33,8 @@ p3xr.ui = {
     htmlEncode: require('js-htmlencode').htmlEncode
 }
 
-require('./core/strings')
 require('./core/settings')
+require('./core/strings')
 require('./core/random')
 require('./core/next-id')
 require('./core/api')
