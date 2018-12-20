@@ -192,7 +192,7 @@ p3xr.ng.component('p3xrConsole', {
                         if (lastTabInput === '') {
                             autoComplete = redisCommands
                         } else {
-                            autoComplete = redisCommands.filter(filter => filter.startsWith(lastTabInput))
+                            autoComplete = redisCommands.filter(filter => filter.startsWith(lastTabInput.toLowerCase()))
                         }
                     }
 
