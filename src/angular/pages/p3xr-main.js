@@ -140,8 +140,10 @@ p3xr.ng.component('p3xrMain', {
             }
             if (event.type === 'mousedown') {
                 resizeClicked = true
+                document.documentElement.style.cursor = `ew-resize`
                 $body.addClass('p3xr-not-selectable')
             } else if (event.type === 'mouseup') {
+                document.documentElement.style.cursor = `auto`
                 resizeClicked = false
                 $body.removeClass('p3xr-not-selectable')
             }
@@ -158,7 +160,9 @@ p3xr.ng.component('p3xrMain', {
                 const containerPosition = p3xr.dom.getPosition($container[0])
                 if (event.clientX < containerPosition.left + resizeMinWidth || event.clientX > window.innerWidth - resizeMinWidth ) {
                    // console.warn('not allowed to resize with too small position')
+                    document.documentElement.style.cursor = 'not-allowed'
                 } else {
+                    document.documentElement.style.cursor = 'ew-resize'
                     $resizer.style.left =  event.clientX + 'px'
                     resizeLeft = event.clientX;
                     rawResize();
