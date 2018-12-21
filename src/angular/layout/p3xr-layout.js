@@ -57,6 +57,8 @@ p3xr.ng.component('p3xrLayout', {
         };
 
         this.connect = async (connection) => {
+            p3xr.state.search = '';
+
             connection = angular.copy(connection)
             try {
                 p3xr.ui.overlay.show({

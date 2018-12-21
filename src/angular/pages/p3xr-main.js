@@ -157,7 +157,7 @@ p3xr.ng.component('p3xrMain', {
             if (resizeClicked) {
                 const containerPosition = p3xr.dom.getPosition($container[0])
                 if (event.clientX < containerPosition.left + resizeMinWidth || event.clientX > window.innerWidth - resizeMinWidth ) {
-                    console.warn('not allowed to resize with too small position')
+                   // console.warn('not allowed to resize with too small position')
                 } else {
                     $resizer.style.left =  event.clientX + 'px'
                     resizeLeft = event.clientX;
