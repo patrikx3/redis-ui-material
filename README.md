@@ -13,7 +13,7 @@ https://pages.corifeus.com/redis-ui
   
  
 ---
-# 💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via https. v2018.12.21-5  
+# 💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via https. v2018.12.21-6  
 
 This is an open-source project. Star this repository, if you like it, or even donate! Thank you so much! :)
 
@@ -52,32 +52,25 @@ It is based on Socket.IO and AngularJs Material, uses themes light/dark schema a
 
 
 # For development standalone
-I just spawn 3 terminals.
+
+Make sure that the server app is running at for development standalone:  
+https://github.com/patrikx3/redis-ui-server
+
+Then:  
 ```bash
-# terminal 1
-npm run run-webpack
-
-# terminal 2
-grunt watch:js
-
-# terminal 3
-grunt watch:sass
+npm install
+npm run dev
 ```
 
-## Or you can use a combined concurrently development run
-```bash
-npm run run
-```
-
-## Console popup completions
-https://github.com/NodeRedis/redis-commands
+The frontend is available @  
+http://localhost:8080
 
 
 [//]: #@corifeus-footer
 
 ---
 
-[**P3X-REDIS-UI-MATERIAL**](https://pages.corifeus.com/redis-ui-material) Build v2018.12.21-5 
+[**P3X-REDIS-UI-MATERIAL**](https://pages.corifeus.com/redis-ui-material) Build v2018.12.21-6 
 
 [![Like Corifeus @ Facebook](https://img.shields.io/badge/LIKE-Corifeus-3b5998.svg)](https://www.facebook.com/corifeus.software) [![Donate for Corifeus / P3X](https://img.shields.io/badge/Donate-Corifeus-003087.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QZVM4V6HVZJW6)  [![Contact Corifeus / P3X](https://img.shields.io/badge/Contact-P3X-ff9900.svg)](https://www.patrikx3.com/en/front/contact) 
 
