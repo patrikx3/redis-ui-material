@@ -2,6 +2,14 @@
 @import '~angular-material/angular-material.css';
 @import '~angular-tree-control/css/tree-control.css';
 @import '~angular-json-tree/dist/angular-json-tree.css';
+@import 'vars';
+
+md-toolbar, .md-toolbar-tools {
+  height: $toolbar-height !important;
+  min-height: $toolbar-height !important;
+  max-height: $toolbar-height !important;
+}
+
 
 #p3xr-redis-ui-bootstrap {
   height: 100vh;

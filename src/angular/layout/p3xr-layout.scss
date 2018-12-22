@@ -1,10 +1,10 @@
-@import '~angular-material/modules/scss/angular-material.layout-attributes';
+@import '../../scss/vars';
 
-$height: 48px;
+
 
 .p3xr-layout-content {
-  margin-bottom: $height;
-  margin-top: $height;
+  margin-bottom: $toolbar-height;
+  margin-top: $toolbar-height;
   padding: 5px;
   position: absolute;
   left: 0px;
@@ -34,9 +34,9 @@ $height: 48px;
   left: 0px;
   width: 100%;
   md-toolbar, .md-toolbar-tools {
-    height: $height !important;
-    min-height: $height !important;
-    max-height: $height !important;
+    height: $toolbar-height !important;
+    min-height: $toolbar-height !important;
+    max-height: $toolbar-height !important;
   }
 }
 
@@ -48,11 +48,11 @@ $height: 48px;
   text-align: center;
   padding-left: 5px;
   padding-right: 5px;
-  height: $height / 2;
-  bottom: $height + 5px;
+  height: $toolbar-height / 2;
+  bottom: $toolbar-height + 5px;
   font-weight: bold;
   text-transform: uppercase;
-  line-height: $height / 2;
+  line-height: $toolbar-height / 2;
   border-style: solid;
   border-width: 5px;
   cursor: pointer;
