@@ -295,6 +295,7 @@ const strings = {
             expandAll: 'Expand all',
             collapseAll: 'Collapse all',
             search: {
+                search: 'Search in the keys',
                 clear: 'Clear current search to set empty',
                 placeholderClient: 'Search client side',
                 placeholderServer: 'Search server side',

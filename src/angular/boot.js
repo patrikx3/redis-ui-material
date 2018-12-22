@@ -149,25 +149,6 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
         }
     })
 
-    $rootScope.keysTreeRendered = []
-    let keysTree
-    Object.defineProperty($rootScope, 'keysTree', {
-        get: () => {
-            if (JSON.stringify(keysTree) !== JSON.stringify(p3xr.state.keys) || $rootScope.p3xr.state.redisChanged === true ) {
-                $rootScope.p3xr.state.redisChanged = false
-                $rootScope.keysTreeRendered =  p3xrRedisParser.keysToTreeControl({
-                    keys: p3xr.state.keys,
-                })
-                keysTree = p3xr.state.keys
-            }
-            return $rootScope.keysTreeRendered
-        },
-        set: (value) => {
-            keysTree = value
-        }
-    })
-
-
     let expandedNodes = []
     Object.defineProperty($rootScope, 'expandedNodes', {
         get: () => {
@@ -191,9 +172,32 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
         }
     })
 
+
+
+    $rootScope.keysTreeRendered = []
+    let keysTree
+    Object.defineProperty($rootScope, 'keysTree', {
+        get: () => {
+            //const startNow = Date.now()
+            if (JSON.stringify(keysTree) !== JSON.stringify(p3xr.state.keys) || $rootScope.p3xr.state.redisChanged === true ) {
+                $rootScope.p3xr.state.redisChanged = false
+                $rootScope.keysTreeRendered =  p3xrRedisParser.keysToTreeControl({
+                    keys: p3xr.state.keys,
+                })
+                keysTree = p3xr.state.keys
+            }
+            //console.warn('parse tree', ((Date.now() - startNow)) / 1000)
+            return $rootScope.keysTreeRendered
+        },
+        set: (value) => {
+            keysTree = value
+        }
+    })
+
     let globalKeysRaw = [];
     Object.defineProperty($rootScope.p3xr.state, 'keys', {
         get: () => {
+            //const startNow = Date.now()
             globalKeysRaw = $rootScope.p3xr.state.keysRaw.slice()
             if ($rootScope.p3xr.settings.searchClientSide && typeof ($rootScope.p3xr.state.search) === 'string' && $rootScope.p3xr.state.search.length > 0) {
                 //console.log($rootScope.p3xr.settings.searchStartsWith)
@@ -215,6 +219,7 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
                 //console.log('new scope change',  ($rootScope.p3xr.state.page -1) * $rootScope.p3xr.settings.pageCount, $rootScope.p3xr.settings.pageCount)
                 const start = ($rootScope.p3xr.state.page -1) * $rootScope.p3xr.settings.pageCount
                 const keys = globalKeysRaw.slice(start, start + $rootScope.p3xr.settings.pageCount)
+                //console.warn('parse keys', ((Date.now() - startNow)) / 1000)
                 return keys
             }
         }

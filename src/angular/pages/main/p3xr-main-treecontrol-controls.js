@@ -87,8 +87,14 @@ p3xr.ng.component('p3xrMainTreecontrolControls', {
             //console.warn($rootScope.p3xr.state.redisTreeDivider)
         }
 
-        const debounce = require('lodash/debounce')
-        const debouncedOnSearchChange = debounce(() => {
+        this.search = ''
+
+        this.$onInit = () => {
+            this.search = $rootScope.p3xr.state.search
+        }
+
+        this.onSearchChange = () => {
+            $rootScope.p3xr.state.search = this.search
             if ($rootScope.p3xr.settings.searchClientSide) {
                 // $rootScope.p3xr.settings.searchClientSide
                 // $rootScope.p3xr.settings.searchStartsWith
@@ -99,9 +105,7 @@ p3xr.ng.component('p3xrMainTreecontrolControls', {
                 this.p3xrMainRef.refresh()
             }
 
-        }, p3xr.settings.debounceSearch )
-
-        this.onSearchChange = debouncedOnSearchChange
+        }
     }
 })
 
