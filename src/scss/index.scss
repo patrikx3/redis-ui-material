@@ -26,7 +26,7 @@ input:-webkit-autofill {
 }
 
 .p3xr-md-menu-item-selected {
-  background-color: rgba(128, 128, 128, 0.5) !important;
+  background-color: rgba(0, 0, 0, 0.1) !important;
 }
 
 .p3xr-md-input-container-no-bottom {
@@ -87,6 +87,16 @@ input:-webkit-autofill {
   white-space: pre;
   // white-space: pre-wrap;
   // word-wrap: break-word;
+}
+
+
+.p3xr-not-selectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 @import '../injector';

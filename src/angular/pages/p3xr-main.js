@@ -89,7 +89,7 @@ p3xr.ng.component('p3xrMain', {
                 if ($resizer === undefined) {
                     decorateResizer();
                 }
-                const resizerWidth = 10;
+                const resizerWidth = 5;
                 if ($resizer !== undefined) {
 //                    $resizer.removeEventListener('mouseover', resizerMouseover)
 //                    $resizer.removeEventListener('mouseout', resizeMouseout )

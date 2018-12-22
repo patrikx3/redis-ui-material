@@ -1,6 +1,6 @@
 @import '~angular-material/modules/scss/angular-material.layout-attributes';
 
-$height: 64px;
+$height: 48px;
 
 .p3xr-layout-content {
   margin-bottom: $height;
@@ -23,7 +23,7 @@ $height: 64px;
 #p3xr-layout-header-version {
   position: fixed;
   z-index: 6;
-  top: 42px;
+  top: 32px;
   left: 128px;
   font-size: 75%;
 }
@@ -33,7 +33,7 @@ $height: 64px;
   z-index: 5;
   left: 0px;
   width: 100%;
-  .md-toolbar-tools {
+  md-toolbar, .md-toolbar-tools {
     height: $height !important;
     min-height: $height !important;
     max-height: $height !important;
