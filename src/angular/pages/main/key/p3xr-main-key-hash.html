@@ -3,7 +3,7 @@
         &nbsp;
         {{ $root.p3xr.strings.page.key.hash.table.hashkey }}
     </div>
-    <div flex>
+    <div flex="80">
         {{ $root.p3xr.strings.page.key.hash.table.value }}
     </div>
     <div flex="5" style="text-align: right">
@@ -19,7 +19,7 @@
         &nbsp;
         {{ key }}
     </div>
-    <div flex class="p3xr-pre" style="overflow: auto;align-items: flex-start; max-height: 200px;"  ng-click="$ctrl.editValue({ hashKey: key, value: value, $event: $event})">{{ value }}</div>
+    <div flex="80" class="p3xr-pre" style="overflow: auto;align-items: flex-start; max-height: 200px;"  ng-click="$ctrl.editValue({ hashKey: key, value: value, $event: $event})">{{ value }}</div>
     <div flex="5" style="text-align: right; ">
         <md-button class="md-icon-button md-accent" ng-click="$ctrl.showJson({ value: value})">
             <md-tooltip>{{ $root.p3xr.strings.intention.jsonViewShow }}</md-tooltip>

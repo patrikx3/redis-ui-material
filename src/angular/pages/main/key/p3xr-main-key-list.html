@@ -3,7 +3,7 @@
         {{ $root.p3xr.strings.page.key.list.table.index }}
         &nbsp;
     </div>
-    <div flex>
+    <div flex="90">
         {{ $root.p3xr.strings.page.key.list.table.value }}
     </div>
     <div flex="5" style="text-align: right">
@@ -20,7 +20,7 @@
         {{ $index }}
         &nbsp;
     </div>
-    <div flex class="p3xr-pre" style="overflow: auto;align-items: flex-start; max-height: 200px;"  ng-click="$ctrl.editValue({ index: $index, value: value, $event: $event})">{{ value }}</div>
+    <div flex="90" class="p3xr-pre" style="overflow: auto;align-items: flex-start; max-height: 200px;"  ng-click="$ctrl.editValue({ index: $index, value: value, $event: $event})">{{ value }}</div>
     <div flex="5" style="text-align: right; ">
         <md-button class="md-icon-button md-accent" ng-click="$ctrl.showJson({ value: value})">
             <md-tooltip>{{ $root.p3xr.strings.intention.jsonViewShow }}</md-tooltip>

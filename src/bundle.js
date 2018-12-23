@@ -33,6 +33,7 @@ p3xr.ui = {
     htmlEncode: require('js-htmlencode').htmlEncode
 }
 
+require('./core/corifeus-renderer')
 require('./core/settings')
 require('./core/strings')
 require('./core/random')
