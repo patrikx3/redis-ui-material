@@ -1,12 +1,12 @@
 <div layout-gt-xs="row" layout="column" layout-align="start center" md-colors="{ background: 'primary-300' }">
-    <div flex="5" style="text-align: right">
+    <div flex="20" style="text-align: right">
         {{ $root.p3xr.strings.page.key.list.table.index }}
         &nbsp;
     </div>
-    <div flex="90">
+    <div flex="60">
         {{ $root.p3xr.strings.page.key.list.table.value }}
     </div>
-    <div flex="5" style="text-align: right">
+    <div flex="20" style="text-align: right">
         <md-button class="md-icon-button " ng-click="$ctrl.appendValue({ $event: $event})">
             <md-tooltip>{{ $root.p3xr.strings.intention.add }}</md-tooltip>
             <md-icon>add</md-icon>
@@ -15,13 +15,13 @@
 </div>
 
 <div layout-gt-xs="row" layout="column" layout-align="start start" ng-repeat="value in $ctrl.p3xrValue track by $index" style="{{ $ctrl.setTableStyles({ $odd: $odd }) }}">
-    <div flex="5"  ng-click="$ctrl.editValue({ index: $index, value: value, $event: $event})" style="text-align: right">
+    <div flex="20"  ng-click="$ctrl.editValue({ index: $index, value: value, $event: $event})" style="text-align: right">
 
         {{ $index }}
         &nbsp;
     </div>
-    <div flex="90" class="p3xr-pre" style="overflow: auto;align-items: flex-start; max-height: 200px;"  ng-click="$ctrl.editValue({ index: $index, value: value, $event: $event})">{{ value }}</div>
-    <div flex="5" style="text-align: right; ">
+    <div flex="60" class="p3xr-pre" style="overflow: auto;align-items: flex-start; max-height: 200px;"  ng-click="$ctrl.editValue({ index: $index, value: value, $event: $event})">{{ value }}</div>
+    <div flex="20" style="text-align: right; ">
         <md-button class="md-icon-button md-accent" ng-click="$ctrl.showJson({ value: value})">
             <md-tooltip>{{ $root.p3xr.strings.intention.jsonViewShow }}</md-tooltip>
             <md-icon>table_chart</md-icon>

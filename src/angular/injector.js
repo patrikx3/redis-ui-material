@@ -23,6 +23,7 @@ require('./pages/p3xr-overview.js');
 require('./pages/p3xr-settings.js');
 require('./provider/p3xr-theme.js');
 require('./provider/theme-generator/p3xr-theme-dark.js');
+require('./provider/theme-generator/p3xr-theme-darko-bluo.js');
 require('./provider/theme-generator/p3xr-theme-enterprise.js');
 require('./provider/theme-generator/p3xr-theme-light.js');
 require('./provider/theme-generator/p3xr-theme-redis.js');
