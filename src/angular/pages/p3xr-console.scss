@@ -1,3 +1,6 @@
+@import '../../scss/vars';
+@import '~angular-material/modules/scss/angular-material.layout-attributes.scss';
+
 p3xr-console {
   #p3xr-console-content {
 
@@ -19,11 +22,11 @@ p3xr-console {
       }
     }
     input {
-      min-width: calc(100% - 40px);
+      min-width: calc(100% - 18px);
       position: fixed;
-      bottom: 75px;
-      left: 10px;
-      right: 10px;
+      bottom: $toolbar-height + $layout-gutter-width / 2;
+      left: 4px;
+      right: 0px;
     }
   }
 }
