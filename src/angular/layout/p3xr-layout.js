@@ -112,6 +112,7 @@ p3xr.ng.component('p3xrLayout', {
         this.disconnect = async () => {
 
             try {
+                $cookies.remove(p3xr.settings.connectInfo.cookieName)
                 await p3xrSocket.request({
                     action: 'connection-disconnect',
                     payload: {
@@ -119,11 +120,12 @@ p3xr.ng.component('p3xrLayout', {
                     },
                 })
                 $rootScope.p3xr.state.connection = undefined
+
             } catch(error) {
                 p3xrCommon.generalHandleError(error)
+            } finally {
+                $state.go('main')
             }
-            $cookies.remove(p3xr.settings.connectInfo.cookieName)
-            $state.go('main/statistics')
            // $rootScope.$digest()
         }
 
