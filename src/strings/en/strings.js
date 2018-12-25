@@ -1,7 +1,7 @@
 const strings = {
     title: {
         name: 'P3X Redis UI',
-        main: 'You may choose a REDIS connection to connect from the left bottom menu.',
+        main: 'You may choose a Redis connection to connect from the left bottom menu.',
         statistics: 'Statistics',
         connectinRedis: 'Connecting to Redis ...',
         socketioConnectError: 'Socket.IO Error'
@@ -87,7 +87,7 @@ const strings = {
     label: {
         reducedFunction: `Reduced functionality`,
         tooManyKeys: (opts) => {
-          return `For the full You may choose a Redis connection to  functions allowed keys total is ${opts.maxLightKeysCount}. This database has over the allowed keys in total ${opts.count}. The key sorting and the additional fancy tree information is disabled. The searching is happening only on the server instead the client search.`;
+          return `For the full maximum functions allowed keys total is ${opts.maxLightKeysCount}. This database has over the allowed keys in total ${opts.count}. The key sorting and the additional fancy tree information is disabled. The searching is happening only on the server instead the client search.`;
         },
         redisCommandNotFound: 'No Redis command match found ...',
         treeKeyStore: `The sorting (natural compare) is executed on the client aka the browser, which means it has a penalty for big large sets, like over 10k keys, it might add a little time to the page rendering. There is no key sorting in Redis, only like this.`,
