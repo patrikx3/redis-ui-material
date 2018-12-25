@@ -1,16 +1,67 @@
 //const debounce = require('lodash/debounce')
-
+const parseMs = require('parse-ms')
 p3xr.ng.component('p3xrMainKey', {
     template: require('./p3xr-main-key.html'),
     bindings: {
         p3xrResize: '&',
     },
-    controller: function(p3xrCommon, p3xrRedisParser, p3xrSocket, $rootScope, $stateParams, $timeout, $scope, $mdDialog, $state) {
+    controller: function(p3xrCommon, p3xrRedisParser, p3xrSocket, $rootScope, $stateParams, $timeout, $scope, $mdDialog, $state, $interval) {
 
         this.$stateParams = $stateParams;
 
-        const loadKey = async(options = {}) => {
 
+        let wasExpiring = false
+        const checkTtl = () => {
+
+            if (this.response.ttl < -1 || (wasExpiring && this.response.ttl < 1)) {
+                p3xrCommon.toast({
+                    message: p3xr.strings.status.keyIsNotExisting
+                })
+                $interval.cancel(interval)
+                p3xr.state.redisChanged = true
+                $state.go('main.statistics')
+//                $rootScope.$broadcast('p3x-refresh')
+                return false
+            }
+            return true
+
+        }
+
+        let interval
+        const loadTtl = () => {
+            if (this.response.ttl > -1) {
+               const actualTtl = () => {
+                   if (checkTtl()) {
+                       const parsedTtl = parseMs(this.response.ttl * 1000)
+                       // console.log(parsedTtl)
+                       let parsedTtlString = ''
+
+                       let hadValue = false
+                       for(let timeType of ['days', 'hours', 'minutes', 'seconds']) {
+                           if (parsedTtl[timeType] > 0 || hadValue) {
+                               hadValue = true
+                               parsedTtlString +=  ' ' + parsedTtl[timeType] + ' ' + p3xr.strings.time[timeType]
+                           }
+                       }
+                       this.ttlParsed = parsedTtlString.trim()
+                   } else {
+                       $interval.cancel(interval)
+                   }
+               }
+                actualTtl()
+
+                if (!$rootScope.p3xr.state.reducedFunctions) {
+                    interval= $interval(() => {
+                        this.response.ttl = this.response.ttl - 1
+                        actualTtl()
+                    }, 1000)
+                }
+            }
+
+        }
+
+        const loadKey = async(options = {}) => {
+            $interval.cancel(interval)
             let { withoutParent } = options
             if (withoutParent === undefined) {
                 withoutParent = false
@@ -31,31 +82,13 @@ p3xr.ng.component('p3xrMainKey', {
                         //type: type,
                     }
                 })
+                this.response = response
+
                 const type = response.type
                 if (response.ttl === -2) {
-                    p3xrCommon.toast({
-                        message: p3xr.strings.status.keyIsNotExisting
-                    })
-                    $rootScope.$broadcast('p3x-refresh')
-                    $state.go('main.statistics')
+                    checkTtl()
                     return;
                 }
-                if (response.ttl > 0) {
-                    const parsedTtl = require('parse-ms')(response.ttl * 1000)
-                   // console.log(parsedTtl)
-                    let parsedTtlString = ''
-
-                    let hadValue = false
-                    for(let timeType of ['days', 'hours', 'minutes', 'seconds']) {
-                        if (parsedTtl[timeType] > 0 || hadValue) {
-                            hadValue = true
-                            parsedTtlString +=  ' ' + parsedTtl[timeType] + ' ' + p3xr.strings.time[timeType]
-                        }
-                    }
-                    this.ttlParsed = parsedTtlString.trim()
-                }
-
-
                 switch(type) {
                     case 'string':
                        // console.warn(response)
@@ -64,7 +97,12 @@ p3xr.ng.component('p3xrMainKey', {
                         break;
                 }
 
-                this.response = response
+                if (response.ttl > -1) {
+                    wasExpiring = true
+                }
+                loadTtl()
+
+
             } catch(e) {
                 hadError = e
                 p3xrCommon.generalHandleError(e)
@@ -84,6 +122,11 @@ p3xr.ng.component('p3xrMainKey', {
         }
 
         this.$onInit = () => loadKey()
+
+        this.$onDestroy = function () {
+            $interval.cancel(interval)
+        };
+
 
         this.charactersPrettyBytes = (length) => {
             if (length < 1024 || length === undefined) {
