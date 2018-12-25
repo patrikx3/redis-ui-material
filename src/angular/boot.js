@@ -252,6 +252,7 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
         }
     })
 
+
     //console.warn('p3xrTheme', p3xrTheme)
     p3xrTheme.start()
     console.info('P3X Redis UI ran')

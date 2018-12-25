@@ -59,9 +59,12 @@ input:-webkit-autofill {
 }
 
 .p3xr-theme-light {
+
+  /*
   .p3xr-input {
     border-color: rgba(128, 128, 128, 0.5);
   }
+  */
 
   json-tree .key {
     color: black;
@@ -81,11 +84,13 @@ input:-webkit-autofill {
     color: rgba(255, 255, 255, 0.75);
   }
 
+  /*
   .p3xr-input {
     background-color: gray;
     color: white;
     border-color: rgba(200, 200, 200, 0.5);
   }
+  */
 }
 
 .p3xr-pre {

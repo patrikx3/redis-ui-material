@@ -62,6 +62,8 @@ p3xr.ng.component('p3xrConsole', {
            $window.off('resize', resize)
         };
 
+
+
         this.inputValue = ''
 
         this.actionEnter = async() => {

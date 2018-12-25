@@ -59,8 +59,14 @@ p3xr.ng.component('p3xrLayout', {
         this.connect = async (connection) => {
             p3xr.state.search = '';
 
+
             connection = angular.copy(connection)
             try {
+                const originalStateArr = location.pathname.split('/')
+                originalStateArr.shift()
+                const originalState = originalStateArr.join('.')
+                //console.warn(originalState)
+
                 p3xr.ui.overlay.show({
                     message: p3xr.strings.title.connectinRedis
                 })
@@ -96,6 +102,9 @@ p3xr.ng.component('p3xrLayout', {
                     expires: p3xr.settings.cookieExpiry
                 })
 
+                if (!originalState.startsWith('main') ) {
+                    $state.go(originalState)
+                }
             } catch(error) {
                 $cookies.remove(p3xr.settings.connectInfo.cookieName)
                 $rootScope.p3xr.state.connection = undefined
@@ -103,7 +112,6 @@ p3xr.ng.component('p3xrLayout', {
             } finally {
                 p3xr.ui.overlay.hide()
             }
-
            // $rootScope.$digest()
         }
 

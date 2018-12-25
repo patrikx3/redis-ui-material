@@ -45,7 +45,7 @@
 -->
 
 <div class="p3xr-main-treecontrol-controls-search">
-    <input class="p3xr-input" placeholder="{{ $root.p3xr.settings.searchClientSide ? $root.p3xr.strings.page.treeControls.search.placeholderClient : $root.p3xr.strings.page.treeControls.search.placeholderServer }}"  ng-model="$ctrl.search"/ ng-class="{ 'withSearch': $ctrl.search.length > 0, 'withoutSearch': $ctrl.search.length  === 0}">
+    <p3xr-input placeholder="{{ $root.p3xr.settings.searchClientSide ? $root.p3xr.strings.page.treeControls.search.placeholderClient : $root.p3xr.strings.page.treeControls.search.placeholderServer }}"  ng-model="$ctrl.search" ng-class="{ 'withSearch': $ctrl.search.length > 0, 'withoutSearch': $ctrl.search.length  === 0}"></p3xr-input>
     <md-tooltip md-direction="top">{{ $root.p3xr.strings.page.treeControls.search.infoDetails }}</md-tooltip>
 
     <span ng-if="$ctrl.search.length > 0" >

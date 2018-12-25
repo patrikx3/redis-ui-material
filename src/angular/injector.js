@@ -29,4 +29,5 @@ require('./provider/theme-generator/p3xr-theme-light.js');
 require('./provider/theme-generator/p3xr-theme-redis.js');
 require('./ui/p3xr-accordion.js');
 require('./ui/p3xr-button.js');
+require('./ui/p3xr-input.js');
 //injector-angular-end
