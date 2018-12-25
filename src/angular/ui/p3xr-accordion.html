@@ -1,4 +1,4 @@
-<md-toolbar class="md-accent" md-theme="{{ $root.p3xr.state.themeLayout}}" md-whiteframe="{{ $ctrl.extended ? -1 : 2 }}">
+<md-toolbar class="md-accent" md-theme="{{ $root.p3xr.state.themeLayout}}" md-whiteframe="{{ $ctrl.extended ? -1 : 1 }}">
     <div class="md-toolbar-tools">
         <h2 flex md-truncate>{{  $ctrl.p3xrTitle }}</h2>
 
@@ -12,7 +12,7 @@
         </span>
     </div>
 </md-toolbar>
-<md-content ng-if="$ctrl.extended" md-theme="{{ $root.p3xr.state.theme}}" ng-transclude="content" md-whiteframe="3">
+<md-content ng-if="$ctrl.extended" md-theme="{{ $root.p3xr.state.theme}}" ng-transclude="content" md-whiteframe="2">
 </md-content>
 
 
