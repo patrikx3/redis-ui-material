@@ -102,6 +102,7 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
     })
 
 
+    /*
     let searchClientSide
     Object.defineProperty($rootScope.p3xr.settings, 'searchClientSide', {
         get: () => {
@@ -115,6 +116,7 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
             }
             if (p3xr.state.keysRaw.length > p3xr.settings.maxLightKeysCount) {
                 searchClientSide = false
+                $rootScope.p3xr.settings.searchClientSide = false
             }
             return searchClientSide
         },
@@ -125,7 +127,7 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
             })
         }
     })
-
+    */
 
 
     let searchStartsWith

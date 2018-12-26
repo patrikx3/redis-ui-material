@@ -332,7 +332,7 @@ p3xr.ng.component('p3xrMain', {
                         payload.match = '*' + $rootScope.p3xr.state.search + '*';
                     }
                 }
-
+//console.warn('match', payload.match, 'search', $rootScope.p3xr.state.search)
                 const response = await p3xrSocket.request({
                     action: 'refresh',
                     payload: payload
