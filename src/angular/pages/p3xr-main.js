@@ -337,6 +337,7 @@ p3xr.ng.component('p3xrMain', {
                     action: 'refresh',
                     payload: payload
                 })
+                p3xr.state.dbsize = response.dbsize
                 p3xrCommon.loadRedisInfoResponse({
                     response: response
                 })

@@ -61,16 +61,19 @@
                         {{ $root.p3xr.strings.label.treeKeyStore }}
                     </div>
 
-                    <!--
                     <md-input-container class="md-block p3xr-md-input-container-no-bottom" >
-                        <md-switch ng-model="model.searchClientSide"  name="searchClientSide"  aria-label="">
+                        <md-switch ng-model="model.searchClientSide"  name="searchClientSide"  aria-label="" ng-disabled="$root.p3xr.state.dbsize > $root.p3xr.settings.maxLightKeysCount ">
                             {{ model.searchClientSide  ? $root.p3xr.strings.form.treeSettings.label.searchModeClient :  $root.p3xr.strings.form.treeSettings.label.searchModeServer }}
                         </md-switch>
                     </md-input-container>
                     <div class="p3xr-md-input-container-bottom-info">
                         {{ $root.p3xr.strings.page.treeControls.search.info }}
+
+                        <div ng-if="$root.p3xr.state.dbsize > $root.p3xr.settings.maxLightKeysCount ">
+                            <br/>
+                            {{ $root.p3xr.strings.page.treeControls.search.largeSetInfo }}
+                        </div>
                     </div>
-                    -->
 
                 </span>
 

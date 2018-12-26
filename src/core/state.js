@@ -13,7 +13,8 @@ p3xr.state = {
     keysRaw: [],
     search: '',
     commands: [],
-    reducedFunctions: false
+    reducedFunctions: false,
+    dbsize: undefined,
 }
 
 Object.defineProperty(p3xr.state, 'themeLayout', {

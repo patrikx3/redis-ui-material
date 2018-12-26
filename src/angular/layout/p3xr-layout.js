@@ -78,6 +78,8 @@ p3xr.ng.component('p3xrLayout', {
                         db: db
                     },
                 })
+                p3xr.state.dbsize = response.dbsize
+
                 let dbIndex = 0
                 const databaseIndexes = []
                 //console.warn(response)

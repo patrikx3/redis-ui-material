@@ -61,7 +61,7 @@ p3xr.ng.factory('p3xrDialogTreecontrolSettings', function (p3xrCommon, $mdDialog
                                 $rootScope.p3xr.settings.redisTreeDivider = $scope.model.treeSeparator
                                 $rootScope.p3xr.settings.pageCount = $scope.model.pageCount
                                 $rootScope.p3xr.settings.keysSort = $scope.model.keysSort
-                                //$rootScope.p3xr.settings.searchClientSide = $scope.model.searchClientSide
+                                $rootScope.p3xr.settings.searchClientSide = $scope.model.searchClientSide
                                 $rootScope.p3xr.settings.searchStartsWith = $scope.model.searchStartsWith
                                 $rootScope.p3xr.state.page = 1
                                 $rootScope.p3xr.state.redisChanged = true;
