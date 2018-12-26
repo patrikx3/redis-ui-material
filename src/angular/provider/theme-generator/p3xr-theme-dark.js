@@ -8,7 +8,7 @@ p3xr.theme.dark = function ($mdThemingProvider) {
             'hue-3': '900',
         })
         .accentPalette('grey')
-        .warnPalette('blue-grey')
+        .warnPalette('grey')
         .backgroundPalette('grey', {
             'default': 'A700',
             'hue-1': '800',

@@ -13,12 +13,12 @@ p3xr.theme.darkoBluo = function ($mdThemingProvider) {
             'hue-2': '700',
             'hue-3': '900',
         })
-        .warnPalette('blue-grey')
+        .warnPalette('indigo')
         .backgroundPalette('grey', {
             'default': '900',
-            'hue-1': '800',
-            'hue-2': '700',
-            'hue-3': '900',
+            'hue-1': '900',
+            'hue-2': '500',
+            'hue-3': '100',
         })
     ;
     $mdThemingProvider.theme(`p3xrThemeDarkoBluoLayout`).dark()

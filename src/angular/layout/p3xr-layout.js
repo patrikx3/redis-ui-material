@@ -18,11 +18,12 @@ p3xr.ng.component('p3xrLayout', {
 
         }
 
+        const camelCase = require('lodash/camelCase')
         Object.defineProperty(this, 'themeSelectedKey', {
             get: () => {
                 let key = p3xr.state.theme
                 key = key.slice('p3xrTheme'.length)
-                key = key.toLowerCase()
+                key = camelCase(key)
                 return key
             }
         })

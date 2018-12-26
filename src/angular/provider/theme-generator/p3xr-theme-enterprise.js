@@ -13,7 +13,7 @@ p3xr.theme.enterprise = function ($mdThemingProvider, p3xrThemeNameGenerator) {
             'hue-2': '700',
             'hue-3': '900',
         })
-        .warnPalette('red')
+        .warnPalette('grey')
         .backgroundPalette('grey', {
             default: '400'
         })
