@@ -1,6 +1,6 @@
 p3xr.ng.directive('p3xrInput', function(p3xrTheme) {
     return {
-        template: `<input md-whiteframe="{{ focused ? 1 : -1}}" ng-focus="focused=true" ng-blur="focused=false" class="p3xr-input" md-theme="{{ $root.p3xr.state.themeLayout }}" md-colors="{background: inputBackground(), 'border-color': inputBorderColor()}"/>`,
+        template: `<input ng-focus="focused=true" ng-blur="focused=false" class="p3xr-input" md-theme="{{ $root.p3xr.state.themeLayout }}" md-colors="{background: inputBackground(), 'border-color': inputBorderColor()}"/>`,
         replace: true,
         link: function(scope) {
 

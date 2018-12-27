@@ -34,7 +34,7 @@ p3xr.ng.component('p3xrConsole', {
             const windowHeight = $window.height()
             //console.log(windowHeight, minus)
 
-            const outputHeight = Math.max(windowHeight - minus - 32 , 0)
+            const outputHeight = Math.max(windowHeight - minus - 36 , 0)
             $container.height(outputHeight)
             $container.css('max-height', `${outputHeight}px`)
 

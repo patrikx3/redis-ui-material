@@ -13,7 +13,7 @@ https://pages.corifeus.com/redis-ui
   
  
 ---
-# 💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via https. v2018.12.26-6  
+# 💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via https. v2018.12.27-0  
 
 This is an open-source project. Star this repository, if you like it, or even donate! Thank you so much! :)
 
@@ -30,7 +30,7 @@ All my domains (patrikx3.com and corifeus.com) could have errors, since I am dev
    
 ### Built on Node 
 ``` 
-v11.5.0
+v11.6.0
 ```   
    
 The ```async``` and ```await``` keywords are required.
@@ -70,7 +70,7 @@ http://localhost:8080
 
 ---
 
-[**P3X-REDIS-UI-MATERIAL**](https://pages.corifeus.com/redis-ui-material) Build v2018.12.26-6 
+[**P3X-REDIS-UI-MATERIAL**](https://pages.corifeus.com/redis-ui-material) Build v2018.12.27-0 
 
 [![Like Corifeus @ Facebook](https://img.shields.io/badge/LIKE-Corifeus-3b5998.svg)](https://www.facebook.com/corifeus.software) [![Donate for Corifeus / P3X](https://img.shields.io/badge/Donate-Corifeus-003087.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QZVM4V6HVZJW6)  [![Contact Corifeus / P3X](https://img.shields.io/badge/Contact-P3X-ff9900.svg)](https://www.patrikx3.com/en/front/contact) 
 
