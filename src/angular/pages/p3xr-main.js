@@ -207,7 +207,7 @@ p3xr.ng.component('p3xrMain', {
 
             resize()
 
-            $window.on('resize', resize)
+            $window.on('resize', rawResize)
 
             if ($state.current.url === '/main') {
                 $state.go('main.statistics')
@@ -220,7 +220,7 @@ p3xr.ng.component('p3xrMain', {
         }
 
         this.$onDestroy = function () {
-            $window.off('resize', resize)
+            $window.off('resize', rawResize)
             destroyResizer();
         };
 

@@ -107,6 +107,8 @@ p3xr.ng.component('p3xrLayout', {
 
                 if (!originalState.startsWith('main') ) {
                     $state.go(originalState)
+                } else {
+                    $state.go('main.statistics')
                 }
             } catch(error) {
                 $cookies.remove(p3xr.settings.connectInfo.cookieName)
