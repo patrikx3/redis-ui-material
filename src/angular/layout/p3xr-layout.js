@@ -107,7 +107,7 @@ p3xr.ng.component('p3xrLayout', {
 
                 if (!originalState.startsWith('main') ) {
                     $state.go(originalState)
-                } else {
+                } else if (originalState === 'main') {
                     $state.go('main.statistics')
                 }
             } catch(error) {
