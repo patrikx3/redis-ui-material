@@ -65,7 +65,10 @@ p3xr.ng.component('p3xrLayout', {
             try {
                 const originalStateArr = location.pathname.split('/')
                 originalStateArr.shift()
-                const originalState = originalStateArr.join('.')
+                let originalState = originalStateArr.join('.')
+                if (originalState === '') {
+                    originalState = 'main'
+                }
                 //console.warn(originalState)
 
                 p3xr.ui.overlay.show({
@@ -104,7 +107,6 @@ p3xr.ng.component('p3xrLayout', {
                 $cookies.putObject(p3xr.settings.connectInfo.cookieName, connection, {
                     expires: p3xr.settings.cookieExpiry
                 })
-
                 if (!originalState.startsWith('main') ) {
                     $state.go(originalState)
                 } else if (originalState === 'main') {
