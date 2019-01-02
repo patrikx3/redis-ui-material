@@ -22,7 +22,7 @@ p3xr.theme.dark = function ($mdThemingProvider) {
     $mdThemingProvider.theme(`p3xrThemeDark`)
         .primaryPalette('blue-grey')
         .accentPalette('teal')
-        .warnPalette('red')
+        .warnPalette('orange')
         .backgroundPalette('grey')
     ;
     $mdThemingProvider.theme(`p3xrThemeDark`).dark()

@@ -32,7 +32,7 @@ p3xr.theme.darkoBluo = function ($mdThemingProvider) {
             'hue-3': '900',
         })
         .accentPalette('blue')
-        .warnPalette('red')
+        .warnPalette('orange')
         .backgroundPalette('grey')
     ;
     $mdThemingProvider.theme(`p3xrThemeDarkoBluo`).dark()
