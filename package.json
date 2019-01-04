@@ -1,6 +1,6 @@
 {
     "name": "p3x-redis-ui-material",
-    "version": "2019.1.2-0",
+    "version": "2019.1.4-3",
     "description": "💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via http and socket.io",
     "corifeus": {
         "icon": "fas fa-database",
@@ -48,13 +48,13 @@
         "angular-aria": "^1.7.5",
         "angular-cookies": "^1.7.5",
         "angular-json-tree": "^1.0.1",
-        "angular-material": "^1.1.11",
+        "angular-material": "^1.1.12",
         "angular-messages": "^1.7.5",
         "angular-tree-control": "^0.2.30",
         "clean-webpack-plugin": "^1.0.0",
         "concurrently": "^4.1.0",
         "copy-webpack-plugin": "^4.6.0",
-        "corifeus-builder": "^2019.1.1-1",
+        "corifeus-builder": "^2019.1.4-8",
         "css-loader": "^2.1.0",
         "extract-text-webpack-plugin": "^4.0.0-beta.0",
         "file-loader": "^3.0.1",
@@ -77,7 +77,7 @@
         "terser-webpack-plugin": "^1.2.1",
         "typeface-roboto": "0.0.54",
         "webpack": "^4.28.3",
-        "webpack-cli": "^3.1.2",
+        "webpack-cli": "^3.2.0",
         "webpack-dev-server": "^3.1.14"
     },
     "engines": {
