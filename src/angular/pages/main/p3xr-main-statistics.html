@@ -1,6 +1,6 @@
 <md-tabs md-dynamic-height md-border-bottom>
-    <md-tab label="DB">
-        <md-content >
+    <md-tab label="DB" ng-if="$ctrl.hasDatabases">
+        <md-content>
 
             <md-tabs md-dynamic-height md-border-bottom class="md-primary">
                 <md-tab label="{{ key }}"  ng-repeat="(key, value) in $root.p3xr.state.info.keyspaceDatabases">

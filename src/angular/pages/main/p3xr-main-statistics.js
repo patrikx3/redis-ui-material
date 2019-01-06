@@ -12,6 +12,8 @@ p3xr.ng.component('p3xrMainStatistics', {
         this.$onInit = () => {
             this.info = p3xr.state.info;
 
+
+
             if (p3xr.state.redisChanged ) {
                 p3xr.state.redisChanged = false
                 $rootScope.$broadcast('p3x-refresh')
@@ -39,6 +41,7 @@ p3xr.ng.component('p3xrMainStatistics', {
                 this.info.hack = {
                     hack: 'hacking'
                 }
+                this.hasDatabases = Object.keys($rootScope.p3xr.state.info.keyspaceDatabases).length > 0
                 $timeout(() => {
                     delete this.info.hack;
                 })
