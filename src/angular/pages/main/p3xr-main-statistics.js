@@ -20,6 +20,8 @@ p3xr.ng.component('p3xrMainStatistics', {
             }
         }
 
+        this.hasDatabases = Object.keys($rootScope.p3xr.state.info.keyspaceDatabases).length > 0
+
         this.generateKey = (key) => {
             const keyElem = key.split('_').map((instance, index) => {
                 if (replace.hasOwnProperty(instance)) {
@@ -44,6 +46,7 @@ p3xr.ng.component('p3xrMainStatistics', {
                 this.hasDatabases = Object.keys($rootScope.p3xr.state.info.keyspaceDatabases).length > 0
                 $timeout(() => {
                     delete this.info.hack;
+                    $rootScope.$digest();
                 })
             })
         })
