@@ -20,28 +20,26 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootSco
             if (error.hasOwnProperty('code') && p3xr.strings.code.hasOwnProperty(error.code)) {
                 error.message = p3xr.strings.code[error.code]
             }
-            $mdToast.show(
-                $mdToast.simple()
-                    .textContent(error.hasOwnProperty('message') ? error.message : error)
-                    .position(p3xr.settings.toast.position)
-                    .theme(p3xr.state.themeLayout)
-                    .hideDelay(p3xr.settings.toast.timeout)
-                  //  .capsule(true)
-            );
+
+            toast(error.hasOwnProperty('message') ? error.message : error)
             return false
         }
         return true
     }
 
     const toast = (options) => {
-        $mdToast.show(
-            $mdToast.simple()
-                .textContent(options.message)
-                .position(p3xr.settings.toast.position)
-                .theme(p3xr.state.themeLayout)
-                .hideDelay(options.hideDelay || p3xr.settings.toast.timeout)
-            //    .capsule(true)
-        );
+        if (typeof options === 'string') {
+            options = {
+                message: options
+            }
+        }
+        const template = '<md-toast class="md-toast p3xr-toast-default">' + options.message + '</md-toast>'
+
+        $mdToast.show({
+            template: template,
+            hideDelay: options.hideDelay || p3xr.settings.toast.timeout,
+            position: p3xr.settings.toast.position,
+        });
     }
 
     const confirm = (options) => {
