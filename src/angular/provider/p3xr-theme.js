@@ -85,7 +85,7 @@ p3xr.ng.provider('p3xrTheme', function p3xrThemeProvider($mdThemingProvider,  ) 
                 $('#p3xr-theme-styles').remove()
 
                 const darkColor = p3xr.state.themeCommon + '-background';
-                console.warn(darkColor)
+                //console.warn(darkColor)
                 const styles = `
 .p3xr-toast-default .md-toast-content {
     background-color: ${this.isDark() ? $mdColors.getThemeColor(darkColor) : 'auto'} !important;
