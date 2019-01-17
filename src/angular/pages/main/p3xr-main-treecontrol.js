@@ -162,7 +162,7 @@ p3xr.ng.component('p3xrMainTree', {
                     $rootScope.savedExpandedNodes = expandedNodes
                     p3xrCommon.loadRedisInfoResponse({ response: response})
 
-                    if ($stateParams.key.startsWith(node.key + p3xr.settings.redisTreeDivider)) {
+                    if ($stateParams.key !== undefined && $stateParams.key.startsWith(node.key + p3xr.settings.redisTreeDivider)) {
                         $state.go('main.statistics')
                     }
                 })

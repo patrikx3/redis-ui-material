@@ -2,6 +2,7 @@
 global.angular = require('angular');
 
 require('angular-aria');
+require('angular-sanitize')
 require('angular-messages');
 require('angular-animate');
 require('angular-cookies');
@@ -18,6 +19,7 @@ p3xr.ng =  angular.module('p3xr-redis-ui', [
     'ngCookies',
     'ngAnimate',
     'ngAria',
+    'ngSanitize',
     'ngMessages',
     'ngMaterial',
     'ui.router',

@@ -21,7 +21,10 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootSco
                 error.message = p3xr.strings.code[error.code]
             }
 
-            toast(error.hasOwnProperty('message') ? error.message : error)
+            result.alert({
+                title: p3xr.strings.title.error,
+                message: '<pre>' + (error.hasOwnProperty('message') ? error.message : error) + '</pre>',
+            })
             return false
         }
         return true
@@ -43,18 +46,22 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootSco
     }
 
     const confirm = (options) => {
-        let confirm
+        let confirm, title, okButton
         if (!options.hasOwnProperty('disableCancel')) {
             confirm = $mdDialog.confirm()
-        }  else {
+            title = p3xr.strings.confirm.title
+            okButton = p3xr.strings.intention.sure
+        } else {
             confirm = $mdDialog.alert()
+            title = p3xr.strings.confirm.info
+            okButton = p3xr.strings.intention.ok
         }
 
         confirm
-            .title(options.hasOwnProperty('disableCancel') ? p3xr.strings.confirm.alert : p3xr.strings.confirm.title)
-            .textContent(options.message)
+            .title(title)
+            .htmlContent(options.message)
             .targetEvent(options.event)
-            .ok(p3xr.strings.intention.sure)
+            .ok(okButton)
 
         if (!options.hasOwnProperty('disableCancel')) {
             confirm.cancel(p3xr.strings.intention.cancel);
@@ -96,11 +103,23 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootSco
         return style;
     }
 
-    return {
+    const result = {
         generalHandleError: generalHandleError,
         toast: toast,
+        alert: (opts) => {
+            if (typeof opts === 'string') {
+                opts = {
+                    message: opts
+                }
+            }
+            opts.disableCancel = true
+
+            return confirm(opts)
+        },
         confirm: confirm,
         loadRedisInfoResponse: loadRedisInfoResponse,
         setTableZebraStyles: setTableZebraStyles,
-    };
+    }
+
+    return result;
 });

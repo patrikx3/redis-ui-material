@@ -3,6 +3,7 @@ const strings = {
         name: 'P3X Redis UI',
         main: 'You may choose a Redis connection to connect from the left bottom menu.',
         statistics: 'Statistics',
+        error: 'Error',
         connectinRedis: 'Connecting to Redis ...',
         socketioConnectError: 'Socket.IO Error'
         /*
@@ -20,6 +21,7 @@ const strings = {
     confirm: {
         title: 'Confirm',
         alert: 'Alert',
+        info: 'Info',
         deleteListItem: 'Are you sure to delete this list item?',
         deleteHashKey: 'Are you sure to delete this hash key item?',
         deleteSetMember: 'Are you sure to delete this set member?',
@@ -45,6 +47,7 @@ const strings = {
         },
     },
     intention: {
+        ok: 'OK',
         addKey: `Add to this key`,
         addKeyRoot: 'Add a root key',
         reloadKey: 'Reload key',
