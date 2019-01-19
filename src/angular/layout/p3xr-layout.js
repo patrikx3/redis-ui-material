@@ -107,6 +107,7 @@ p3xr.ng.component('p3xrLayout', {
                 $cookies.putObject(p3xr.settings.connectInfo.cookieName, connection, {
                     expires: p3xr.settings.cookieExpiry
                 })
+
                 if (!originalState.startsWith('main') ) {
                     $state.go(originalState)
                 } else if (originalState === 'main') {

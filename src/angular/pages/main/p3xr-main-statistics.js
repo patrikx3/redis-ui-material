@@ -10,8 +10,6 @@ p3xr.ng.component('p3xrMainStatistics', {
         }
 
         this.$onInit = () => {
-            this.info = p3xr.state.info;
-
 
 
             if (p3xr.state.redisChanged ) {
@@ -38,14 +36,15 @@ p3xr.ng.component('p3xrMainStatistics', {
             return keyElem.join(' ')
         }
 
+
         $scope.$on('p3x-refresh-statistics-tabs', () => {
             $timeout(() => {
-                this.info.hack = {
+                p3xr.state.info.hack = {
                     hack: 'hacking'
                 }
                 this.hasDatabases = Object.keys($rootScope.p3xr.state.info.keyspaceDatabases).length > 0
                 $timeout(() => {
-                    delete this.info.hack;
+                    delete p3xr.state.info.hack;
                     $rootScope.$digest();
                 })
             })
