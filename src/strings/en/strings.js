@@ -316,6 +316,8 @@ const strings = {
         }
     },
     time: {
+        INFO: "IF YOU ADD A NEW LOCALE, WE HAVE TO IMPLEMENT MOMENTJS AS WELL",
+        years: 'years',
         days: 'days',
         hours: 'hours',
         minutes: 'minutes',

@@ -1,5 +1,6 @@
-//const debounce = require('lodash/debounce')
-const parseMs = require('parse-ms')
+const moment = require("moment-timezone");
+const momentDurationFormatSetup = require("moment-duration-format");
+
 p3xr.ng.component('p3xrMainKey', {
     template: require('./p3xr-main-key.html'),
     bindings: {
@@ -32,18 +33,7 @@ p3xr.ng.component('p3xrMainKey', {
             if (this.response.ttl > -1) {
                const actualTtl = () => {
                    if (checkTtl()) {
-                       const parsedTtl = parseMs(this.response.ttl * 1000)
-                       // console.log(parsedTtl)
-                       let parsedTtlString = ''
-
-                       let hadValue = false
-                       for(let timeType of ['days', 'hours', 'minutes', 'seconds']) {
-                           if (parsedTtl[timeType] > 0 || hadValue) {
-                               hadValue = true
-                               parsedTtlString +=  ' ' + parsedTtl[timeType] + ' ' + p3xr.strings.time[timeType]
-                           }
-                       }
-                       this.ttlParsed = parsedTtlString.trim()
+                       this.ttlParsed = moment.duration(this.response.ttl, "seconds").format('Y [year], M [month], w [week], d [day], hh:mm:ss');
                    } else {
                        $interval.cancel(interval)
                    }
