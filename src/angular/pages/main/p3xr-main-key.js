@@ -33,7 +33,7 @@ p3xr.ng.component('p3xrMainKey', {
             if (this.response.ttl > -1) {
                const actualTtl = () => {
                    if (checkTtl()) {
-                       this.ttlParsed = moment.duration(this.response.ttl, "seconds").format('Y [year], M [month], w [week], d [day], hh:mm:ss');
+                       this.ttlParsed = moment.duration(this.response.ttl, "seconds").format('Y [year], M [month], d [day], hh:mm:ss');
                    } else {
                        $interval.cancel(interval)
                    }
