@@ -46,7 +46,12 @@ const strings = {
 
         },
     },
+    language: {
+      en: '英语 / English',
+      zn: '中文 / Chinese'
+    },
     intention: {
+        language: '语言 / Language',
         ok: '确定',
         addKey: `加入此键`,
         addKeyRoot: '加入一个根键',
@@ -95,7 +100,7 @@ const strings = {
         redisCommandNotFound: '找不到匹配的Redis命令...',
         treeKeyStore: `该排序(自然排序)运行在客户端的浏览器上, 意味着针对大型集合(例如超过1W个键),渲染的时长开销需要增加.Redis中没有键排序, 就像这样。`,
         socketIoTimeout: (options) => {
-          return `Socket.IO 请求超时,请求时最长(最大 ${options.timeout/1000}秒) ...`;
+            return `Socket.IO 请求超时,请求时最长(最大 ${options.timeout/1000}秒) ...`;
         },
         resizerInfo: (options) => {
             return `面板(左/右)的最小宽度是 ${options.width}像素`
@@ -194,7 +199,7 @@ const strings = {
         },
         treeSettings: {
             keyCount: () => {
-              return `键数: ${p3xr.state.keysRaw.length}`
+                return `键数: ${p3xr.state.keysRaw.length}`
             },
             label: {
                 formName: '树设置',
@@ -316,12 +321,12 @@ const strings = {
         }
     },
     time: {
-        INFO: "如果你加入一个新的区域,我们同样要用MomentJS实现它",
-        years: '年',
+        years: '年份',
+        months: '个月',
         days: '天',
-        hours: '时',
-        minutes: '分',
-        seconds: '秒',
+        year: '年',
+        month: '月',
+        day: '天',
     },
     redisTypes: {
         string: '字符串',

@@ -46,7 +46,12 @@ const strings = {
 
         },
     },
+    language: {
+        en: 'English',
+        zn: 'Chinese / 中文'
+    },
     intention: {
+        language: 'Language',
         ok: 'OK',
         addKey: `Add to this key`,
         addKeyRoot: 'Add a root key',
@@ -316,12 +321,12 @@ const strings = {
         }
     },
     time: {
-        INFO: "IF YOU ADD A NEW LOCALE, WE HAVE TO IMPLEMENT MOMENTJS AS WELL",
         years: 'years',
+        months: 'months',
         days: 'days',
-        hours: 'hours',
-        minutes: 'minutes',
-        seconds: 'seconds',
+        year: 'year',
+        month: 'month',
+        day: 'day',
     },
     redisTypes: {
         string: 'String',

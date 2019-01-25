@@ -6,7 +6,7 @@ p3xr.settings = {
 //    maxLightKeysCount: 1,
     resizeMinWidth: 320,
     socket: {
-      timeout: 300000,
+        timeout: 300000,
     },
     toast: {
         timeout: 3000,
@@ -30,6 +30,13 @@ p3xr.settings = {
         default: 50,
         cookieName: 'p3xr-main-treecontrol-page-size'
     },
+    language: {
+        defaultLanguage: 'en',
+        current: undefined,
+        cookieName: 'p3xr-language',
+        translation: {
+        }
+    },
     pageCount: 50,
     keySortInfo: {
         default: false,
@@ -50,3 +57,4 @@ p3xr.settings = {
         cookieName: 'p3xr-layout-connect',
     }
 }
+

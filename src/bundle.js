@@ -45,4 +45,8 @@ require('./core/sort')
 
 require('./jquery/overlay')
 
+
+p3xr.settings.language.translation['en'] = require('./strings/en/strings')
+p3xr.settings.language.translation['zn'] = require('./strings/zn/strings')
+
 require('./angular/boot');

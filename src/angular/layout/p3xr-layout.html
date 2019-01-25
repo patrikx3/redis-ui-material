@@ -39,6 +39,18 @@
             </span>
 
             <span flex></span>
+
+            <md-menu ng-if="$ctrl.showLanguageSelector">
+                <p3xr-button ng-click="$mdMenu.open($event)" p3xr-label="$root.p3xr.strings.intention.language" p3xr-md-icon="language" p3xr-tooltip-direction="top"></p3xr-button>
+                <md-menu-content>
+                    <md-menu-item ng-repeat="(key, value) in $root.p3xr.strings.language" ng-class="{'p3xr-md-menu-item-selected': $root.p3xr.settings.language.current === key}">
+                        <md-button ng-click="$ctrl.setLanguage(key)">
+                            {{ $root.p3xr.strings.language[key] }}
+                        </md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+
             <md-menu>
                 <p3xr-button ng-click="$mdMenu.open($event)" p3xr-label="$root.p3xr.strings.intention.theme" p3xr-md-icon="color_lens" p3xr-tooltip-direction="top"></p3xr-button>
                 <md-menu-content>
@@ -51,7 +63,7 @@
             </md-menu>
 
             <md-menu>
-            <p3xr-button ng-click="$mdMenu.open($event)" p3xr-label="$root.p3xr.strings.intention.github" p3xr-fa-icon="fab fa-github" p3xr-tooltip-direction="top"></p3xr-button>
+               <p3xr-button ng-click="$mdMenu.open($event)" p3xr-label="$root.p3xr.strings.intention.github" p3xr-fa-icon="fab fa-github" p3xr-tooltip-direction="top"></p3xr-button>
 
                 <md-menu-content>
                     <md-menu-item>

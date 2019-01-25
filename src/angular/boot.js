@@ -82,6 +82,32 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
         }
     })
 
+    let language
+    Object.defineProperty($rootScope.p3xr.settings.language, 'current', {
+        get: () => {
+            language = $cookies.get(p3xr.settings.language.cookieName)
+            if (language === undefined) {
+                language = p3xr.settings.language.defaultLanguage
+            }
+            return language
+        },
+        set: (value) => {
+            console.warn('p3xr-language set incoming' , value)
+            if (value === undefined) {
+                value = p3xr.settings.language.defaultLanguage
+            }
+            console.warn('p3xr-language set actual' , value)
+            language = value
+            $rootScope.p3xr.strings = p3xr.settings.language.translation[value]
+            console.warn('p3xr-language set strings' , $rootScope.p3xr.strings)
+
+            language = $cookies.put(p3xr.settings.language.cookieName, value, {
+                expires: p3xr.settings.cookieExpiry,
+            })
+        }
+    })
+    $rootScope.p3xr.settings.language.current = $cookies.get(p3xr.settings.language.cookieName)
+
     let keysSort
     Object.defineProperty($rootScope.p3xr.settings, 'keysSort', {
         get: () => {

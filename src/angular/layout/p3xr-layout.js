@@ -1,6 +1,6 @@
 p3xr.ng.component('p3xrLayout', {
     template: require('./p3xr-layout.html'),
-    controller: function (p3xrTheme, $rootScope, p3xrSocket, p3xrCommon, $state, $cookies) {
+    controller: function (p3xrTheme, $rootScope, p3xrSocket, p3xrCommon, $state, $cookies, $timeout) {
         this.setTheme = (theme) => {
             p3xrTheme.setTheme(p3xrTheme.generateThemeName(theme))
         }
@@ -51,6 +51,12 @@ p3xr.ng.component('p3xrLayout', {
             if (connection !== undefined) {
                 this.connect(connection)
             }
+
+            global.p3xrSetLanguage = (key) => {
+                this.setLanguage(key)
+                $rootScope.$digest()
+            }
+
         }
 
         this.$onDestroy = function () {
@@ -159,6 +165,12 @@ p3xr.ng.component('p3xrLayout', {
 
         this.isMain = () => {
             return $state.current.name.startsWith('main')
+        }
+
+        this.showLanguageSelector = !global.hasOwnProperty('process')
+        this.setLanguage = (key) => {
+            $rootScope.p3xr.settings.language.current = key
+            console.warn($rootScope)
         }
 
 

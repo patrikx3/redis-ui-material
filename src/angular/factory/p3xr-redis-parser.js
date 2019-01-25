@@ -56,7 +56,6 @@ p3xr.ng.factory('p3xrRedisParser', function ($rootScope) {
         }
 
 
-       // const moment = require('moment')
 
         this.keysToTreeControl =  (options) => {
 
