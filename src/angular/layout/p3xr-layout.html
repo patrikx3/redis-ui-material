@@ -35,14 +35,23 @@
             </md-menu>
 
             <span ng-if="$root.p3xr.state.connection">
-                <p3xr-button ng-click="$ctrl.disconnect()" p3xr-label="$root.p3xr.strings.intention.disconnect" p3xr-fa-icon="fa fa-power-off" p3xr-tooltip-direction="top"></p3xr-button>
+                <md-button ng-click="$ctrl.disconnect()">
+                    <i class="fa fa-power-off"></i>
+                    <span hide-xs hide-sm>{{ $root.p3xr.strings.intention.disconnect }}</span>
+                    <md-tooltip ng-if="$root.$mdMedia('xs') || $root.$mdMedia('sm')" md-direction="top">{{ $root.p3xr.strings.intention.disconnect }}</md-tooltip>
+                </md-button>
             </span>
 
             <span flex></span>
 
 
             <md-menu ng-if="$ctrl.showLanguageSelector === true">
-                <p3xr-button ng-click="$mdMenu.open($event)" p3xr-label="$root.p3xr.strings.intention.language" p3xr-md-icon="language" p3xr-tooltip-direction="top"></p3xr-button>
+               <md-button ng-click="$mdMenu.open($event)">
+                    <md-icon>language</md-icon>
+                    <span hide-xs hide-sm>{{ $root.p3xr.strings.intention.language }}</span>
+                    <md-tooltip ng-if="$root.$mdMedia('xs') || $root.$mdMedia('sm')" md-direction="top">{{ $root.p3xr.strings.intention.language }}</md-tooltip>
+                </md-button>
+
                 <md-menu-content>
                     <md-menu-item ng-repeat="(key, value) in $root.p3xr.strings.language" ng-class="{'p3xr-md-menu-item-selected': $root.p3xr.settings.language.current === key}">
                         <md-button ng-click="$ctrl.setLanguage(key)">
@@ -53,7 +62,12 @@
             </md-menu>
 
             <md-menu>
-                <p3xr-button ng-click="$mdMenu.open($event)" p3xr-label="$root.p3xr.strings.intention.theme" p3xr-md-icon="color_lens" p3xr-tooltip-direction="top"></p3xr-button>
+                <md-button ng-click="$mdMenu.open($event)">
+                    <md-icon>color_lens</md-icon>
+                    <span hide-xs hide-sm>{{ $root.p3xr.strings.intention.theme }}</span>
+                    <md-tooltip ng-if="$root.$mdMedia('xs') || $root.$mdMedia('sm')" md-direction="top">{{ $root.p3xr.strings.intention.theme }}</md-tooltip>
+                </md-button>
+
                 <md-menu-content>
                     <md-menu-item ng-repeat="(key, value) in $root.p3xr.theme" ng-class="{'p3xr-md-menu-item-selected': $ctrl.themeSelectedKey === key}">
                         <md-button ng-click="$ctrl.setTheme(key)">
@@ -64,7 +78,12 @@
             </md-menu>
 
             <md-menu>
-               <p3xr-button ng-click="$mdMenu.open($event)" p3xr-label="$root.p3xr.strings.intention.github" p3xr-fa-icon="fab fa-github" p3xr-tooltip-direction="top"></p3xr-button>
+
+                <md-button ng-click="$mdMenu.open($event)">
+                    <i class="fab fa-github"></i>
+                    <span hide-xs hide-sm>{{ $root.p3xr.strings.intention.github }}</span>
+                    <md-tooltip ng-if="$root.$mdMedia('xs') || $root.$mdMedia('sm')" md-direction="top">{{ $root.p3xr.strings.intention.github }}</md-tooltip>
+                </md-button>
 
                 <md-menu-content>
                     <md-menu-item>
