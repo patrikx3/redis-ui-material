@@ -53,6 +53,7 @@ p3xr.ng.component('p3xrLayout', {
             }
 
             global.p3xrSetLanguage = (key) => {
+                this.showLanguageSelector = false
                 this.setLanguage(key)
                 $rootScope.$digest()
             }
@@ -170,7 +171,7 @@ p3xr.ng.component('p3xrLayout', {
         this.showLanguageSelector = !global.hasOwnProperty('process')
         this.setLanguage = (key) => {
             $rootScope.p3xr.settings.language.current = key
-            console.warn($rootScope)
+            //console.warn($rootScope)
         }
 
 
