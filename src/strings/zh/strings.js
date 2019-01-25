@@ -1,0 +1,336 @@
+const strings = {
+    title: {
+        name: 'P3X Redis UI',
+        main: '您可以从左下方菜单中选择要连接的Redis进行连接访问',
+        statistics: 'Statistics',
+        error: '错误',
+        connectinRedis: '连接到Redis ...',
+        socketioConnectError: 'Socket.IO 错误'
+        /*
+                server: 'Server',
+                clients: 'Clients',
+                memory: 'Memory',
+                persistence: 'Persistance',
+                stats: 'Statastics',
+                replication: 'Replication',
+                cpu: 'CPU',
+                cluster: 'Cluster',
+                keyspace: 'Keyspace',
+        */
+    },
+    confirm: {
+        title: '确认',
+        alert: '警告',
+        info: '信息',
+        deleteListItem: '您确定要删除该列表项吗？',
+        deleteHashKey: '您确定要删除该哈希键项吗？',
+        deleteSetMember: '您确定要删除该集合成员？',
+        deleteZSetMember: '您确定要删除该有序集合成员？',
+        deleteConnection: '确认',
+        deleteConnectionText: '您确定要删除此Redis连接吗？',
+        deleteAllKeys: (opts) => {
+            return `删除此树及其所有键 (${opts.key})?`
+        },
+        socketioConnectError: 'Socket.IO 不能连接到该服务, 您可以重新加载及尝试自己解决该错误, 客户端自身无法解决该错误',
+        deleteKey: '您确定要删除这个键吗？',
+        rename: {
+            title: '您确定要重命名该键名么?',
+            textContent: '如果您点击重命名按钮，它将永久重命名此键。',
+            placeholder: '该Redis键(必须存在)',
+
+        },
+        ttl: {
+            title: '您要改变该键的TTL吗？',
+            textContent: '如果您点击更改TTL按钮, 会改变该键的生存时间,设置为空则有效期永久',
+            placeholder: 'Redis键的TTL（整数或空）',
+
+        },
+    },
+    intention: {
+        ok: '确定',
+        addKey: `加入此键`,
+        addKeyRoot: '加入一个根键',
+        reloadKey: '重载键',
+        reload: '重载',
+        close: '关闭',
+        commands: '命令',
+        view: '视图',
+        statistics: '统计',
+        refresh: '刷新',
+        clear: '清除',
+        rename: '重命名',
+        main: '官网',
+        cancel: '取消',
+        theme: '主题',
+        github: 'GitHub',
+        githubRepo: '仓库',
+        githubTodo: '待办',
+        githubChangelog: '更新日志',
+        settings: '设置',
+        connect: '连接',
+        disconnect: '断开',
+        overview: '概览',
+        console: '控制台',
+        noConnections: '没有任何连接，请在设置菜单中添加一个连接。',
+        noConnectionsInSettings: '没有连接，您可以在上面添加一个新的连接。',
+        connectionAdd: '新连接',
+        extend: '拓展',
+        collapse: '折叠',
+        add: '添加',
+        edit: '编辑',
+        save: '保存',
+        ttl: '设置 TTL',
+        'delete': '删除',
+        remove: '删除',
+        'sure': '确定',
+        testConnection: '测试连接',
+        getKey: '加载Redis键及相关数据...',
+        jsonViewShow: '显示 JSON 树',
+    },
+    label: {
+        reducedFunction: `功能限制`,
+        tooManyKeys: (opts) => {
+            return `对于最大函数允许的键个数为 ${opts.maxLightKeysCount}. 该数据库允许共超过的键总数为 ${opts.count}.但键的排序及范式树等相关信息会被禁用。搜索仅在服务器上进行，而不是客户端搜索。`;
+        },
+        redisCommandNotFound: '找不到匹配的Redis命令...',
+        treeKeyStore: `该排序(自然排序)运行在客户端的浏览器上, 意味着针对大型集合(例如超过1W个键),渲染的时长开销需要增加.Redis中没有键排序, 就像这样。`,
+        socketIoTimeout: (options) => {
+          return `Socket.IO 请求超时,请求时最长(最大 ${options.timeout/1000}秒) ...`;
+        },
+        resizerInfo: (options) => {
+            return `面板(左/右)的最小宽度是 ${options.width}像素`
+        },
+        jsonViewNotParsable: '该值JSON无法解析',
+        ttlTitle: '设置TTL时间(秒)',
+        passwordSecure: '密码可能为空，但仍会显示字符，这是一项安全功能。',
+        treeSeparatorEmpty: '如果树分隔符为空，则树将没有嵌套节点，只有纯列表',
+        treeSeparatorEmptyNote: '没有嵌套节点，只是一个纯列表',
+        welcomeConsole: '欢迎来到Redis控制台',
+        welcomeConsoleInfo: '启用类似Bash命令补全功能,按TAB 或 SHIFT + TAB 补全',
+        welcomeConsoleInfo2: 'Cursor UP or DOWN history is enabled',
+        redisListIndexInfo: 'Empty to append, -1 to prepend or save it to the position shown.',
+        console: 'Console',
+        connectiondAdd: '添加连接',
+        connectiondEdit: '编辑连接',
+        connectiondView: '查看连接',
+        connections: '连接',
+        keysSort: {
+            on: '开启键排序',
+            off: '关闭键排序'
+        },
+        treeSettingsPageCount: '由于AngularJS的渲染特性,如果你的分页超过(100/页)且不使用智能树分割,会导致性能下降,但如果你启用了,不仅可以获得更多的数据展示,且不会卡顿一段时间',
+        theme: {
+            light: '亮色',
+            dark: '暗色',
+            darkoBluo: 'Darko bluo',
+            enterprise: '企业风',
+            redis: 'Redis风格',
+        },
+        connected: (opts) => {
+            return `已连接: ${opts.name}`
+        },
+        tree: '树',
+
+    },
+    status: {
+        keyIsNotExisting: '此键可能已被删除或过期。',
+        keyCount: (opts) => {
+            if (opts.keyCount === 0) {
+                return '没有任何键'
+            } else if (opts.keyCount === 1) {
+                return '1 个键'
+            } else {
+                return `${opts.keyCount} 键`
+            }
+
+        },
+        treeExpandAll: '展开所有树,该操作的代价就是有点费时...',
+        noRedisKeys: '此数据库中没有任何键。',
+        redisConnected: 'Redis 连接成功',
+        reloadingDataInfo: '重新加载Redis数据信息',
+        added: '已添加',
+        saved: '已更新',
+        cancelled: '已取消',
+        deleted: '已删除',
+        savedRedis: 'Redis数据已保存',
+        redisDisconnected: (opts) => {
+            return `该连接有一个错误: ${opts.error.message}`
+        },
+        dbChanged: (opts) => {
+            return `db索引设置为 ${opts.db}. `
+        },
+        treeDeleted: (opts) => {
+            return `该树已删除 (${opts.key}).`
+
+        },
+        deletedKey: (opts) => {
+            return `该键已删除 (${opts.key}).`
+        },
+        renamedKey: '该键已重命名',
+        ttlChanged: '该键TTL已被更改',
+        notInteger: '输入值不是一个整数',
+        persisted: '永久键',
+        set: '键已设置/添加'
+    },
+    code: {
+        'delete-connection': '此连接已删除，因此您与此Redis实例断开连接。',
+        'save-connection': '此连接已更改，因此您与此Redis实例断开连接。 你可以重新连接。',
+        'readonly-connections': '连接(添加/保存/删除)只是只读！',
+        'list-out-of-bounds': '此列表索引超出范围',
+    },
+    form: {
+        error: {
+            required: '必填',
+            port: '端口号范围是 1-65535',
+            invalid: '值无效,请重新输入'
+        },
+        connection: {
+            label: {
+                name: '连接名字',
+                host: '主机名',
+                port: '端口',
+                password: '密码',
+            },
+        },
+        treeSettings: {
+            keyCount: () => {
+              return `键数: ${p3xr.state.keysRaw.length}`
+            },
+            label: {
+                formName: '树设置',
+                searchModeClient: '客户端搜索模式',
+                searchModeServer: '服务端搜索模式',
+                searchModeStartsWith: '以模式启动搜索',
+                searchModeIncludes: '搜索包括模式',
+            },
+            field: {
+                treeSeparator: '树分隔符',
+                page: '分页数',
+                keysSort: '对键进行排序',
+                searchMode: '搜索模式',
+                searchModeStartsWith: '搜索以 / 开头'
+            },
+            error: {
+                page: '页数必须是10  -  500之间的整数'
+            },
+
+        },
+        key: {
+            label: {
+                formName: {
+                    add: '添加新的Redis键',
+                    edit: '编辑 Redis key',
+                    append: '添加到现有的Redis键',
+                }
+            },
+            field: {
+                key: '键',
+                type: '类型',
+                index: '索引',
+                hashKey: '哈希键',
+                score: '分数',
+                value: '值',
+            },
+            error: {
+                key: '键至少存在一个字符',
+                hashKey: '哈希表键至少是一个字符',
+                score: '排序的集合分数是必需的',
+                value: '该值是必填的',
+            }
+        },
+        main: {
+            label: {
+                database: 'DB',
+            }
+        }
+    },
+    page: {
+        overview: {
+            noConnected: '没有任何连接到Redis',
+            overviewClients: '按客户端连接计数展示所有连接',
+            connectedCount: (opt) => {
+                if (opt.length === 1) {
+                    return '1 客户端'
+                }
+                return `${opt.length} 客户端`
+
+            }
+        },
+        key: {
+            label: {
+                key: '键',
+                encoding: '编码',
+                length: '大小',
+                ttl: 'TTL',
+                ttlTitle: '生存时间',
+                type: '类型',
+                ttlNotExpire: '不会过期',
+                lengthString: '字符',
+                lengthItem: '项数',
+                actions: '操作',
+            },
+            list: {
+                table: {
+                    index: '索引',
+                    value: '值',
+                }
+            },
+            hash: {
+                table: {
+                    hashkey: '哈希',
+                    value: '值',
+                }
+            },
+            set: {
+                table: {
+                    value: '成员'
+                }
+            },
+            zset: {
+                table: {
+                    value: '成员',
+                    score: '分数',
+                }
+            }
+
+        },
+        treeControls: {
+            settings: '树设置',
+            expandAll: '展开所有',
+            collapseAll: '折叠所有',
+            search: {
+                search: '在键中搜索',
+                clear: '清空当前搜索结果',
+                placeholderClient: '客户端搜索',
+                placeholderServer: '服务端搜索',
+                info: `客户端搜索是匹配输入的文本,服务端搜索则遵循*{search-text}*模式搜索.对于大量数据的搜索最好在服务端进行搜索,而较小数据量可以考虑客户端搜索。如果键数超过  ${p3xr.settings.maxLightKeysCount}个的则只能在服务端搜索`,
+                largeSetInfo: '在大型集合中，禁用客户端搜索。 所以现在只能进行服务器端搜索。',
+                infoDetails: '要了解搜索的工作原理，请查看设置'
+            },
+            pager: {
+                next: '下一页',
+                prev: '上一页',
+                first: '首页',
+                last: '末页'
+            }
+        }
+    },
+    time: {
+        INFO: "如果你加入一个新的区域,我们同样要用MomentJS实现它",
+        years: '年',
+        days: '天',
+        hours: '时',
+        minutes: '分',
+        seconds: '秒',
+    },
+    redisTypes: {
+        string: '字符串',
+        list: '列表',
+        hash: '哈希表',
+        set: '集合',
+        zset: '有序集合 - zset'
+    }
+}
+
+
+module.exports = strings;
