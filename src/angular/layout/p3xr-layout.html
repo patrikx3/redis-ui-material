@@ -40,7 +40,8 @@
 
             <span flex></span>
 
-            <md-menu ng-if="$ctrl.showLanguageSelector">
+
+            <md-menu ng-if="$ctrl.showLanguageSelector === true">
                 <p3xr-button ng-click="$mdMenu.open($event)" p3xr-label="$root.p3xr.strings.intention.language" p3xr-md-icon="language" p3xr-tooltip-direction="top"></p3xr-button>
                 <md-menu-content>
                     <md-menu-item ng-repeat="(key, value) in $root.p3xr.strings.language" ng-class="{'p3xr-md-menu-item-selected': $root.p3xr.settings.language.current === key}">

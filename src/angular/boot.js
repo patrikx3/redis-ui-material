@@ -92,14 +92,14 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
             return language
         },
         set: (value) => {
-            console.warn('p3xr-language set incoming' , value)
+            //console.warn('p3xr-language set incoming' , value)
             if (value === undefined) {
                 value = p3xr.settings.language.defaultLanguage
             }
-            console.warn('p3xr-language set actual' , value)
+            //console.warn('p3xr-language set actual' , value)
             language = value
             $rootScope.p3xr.strings = p3xr.settings.language.translation[value]
-            console.warn('p3xr-language set strings' , $rootScope.p3xr.strings)
+            //console.warn('p3xr-language set strings' , $rootScope.p3xr.strings)
 
             language = $cookies.put(p3xr.settings.language.cookieName, value, {
                 expires: p3xr.settings.cookieExpiry,

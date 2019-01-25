@@ -43,6 +43,7 @@ p3xr.ng.component('p3xrLayout', {
             })
         }
 
+        this.showLanguageSelector = false
         this.$onInit = () => {
             $warning= $('#p3xr-layout-reduced')
             resize()
@@ -51,14 +52,18 @@ p3xr.ng.component('p3xrLayout', {
             if (connection !== undefined) {
                 this.connect(connection)
             }
-
-            global.p3xrSetLanguage = (key) => {
-                this.showLanguageSelector = false
-                this.setLanguage(key)
-                $rootScope.$digest()
-            }
-
+            this.showLanguageSelector = !(/electron/i.test(navigator.userAgent))
+            $timeout(() => {
+                global.p3xrSetLanguage = (key) => {
+                    $rootScope.$apply(() => {
+                        this.showLanguageSelector = false
+                        this.setLanguage(key)
+                    })
+                }
+            }, 3000)
         }
+
+
 
         this.$onDestroy = function () {
             $window.off('resize', resize)
@@ -168,7 +173,7 @@ p3xr.ng.component('p3xrLayout', {
             return $state.current.name.startsWith('main')
         }
 
-        this.showLanguageSelector = !global.hasOwnProperty('process')
+
         this.setLanguage = (key) => {
             $rootScope.p3xr.settings.language.current = key
             //console.warn($rootScope)
