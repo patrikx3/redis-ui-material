@@ -5,18 +5,17 @@ const strings = {
         statistics: 'Statistics',
         error: 'Error',
         connectinRedis: 'Connecting to Redis ...',
-        socketioConnectError: 'Socket.IO Error'
-        /*
-                server: 'Server',
-                clients: 'Clients',
-                memory: 'Memory',
-                persistence: 'Persistance',
-                stats: 'Statastics',
-                replication: 'Replication',
-                cpu: 'CPU',
-                cluster: 'Cluster',
-                keyspace: 'Keyspace',
-        */
+        socketioConnectError: 'Socket.IO Error',
+
+        db: 'DB',
+        server: 'Server',
+        clients: 'Clients',
+        memory: 'Memory',
+        persistence: 'Persistance',
+        stats: 'Statistics',
+        replication: 'Replication',
+        cpu: 'CPU',
+        cluster: 'Cluster',
     },
     confirm: {
         title: 'Confirm',
@@ -47,10 +46,14 @@ const strings = {
         },
     },
     language: {
+        // When you translate the english name, keep the Language in English
+        // eg. Inglés / English
         en: 'English',
         zn: 'Chinese / 中文'
     },
     intention: {
+        // When you translate the language, keep the Language in English
+        // eg. Idioma / Language
         language: 'Language',
         ok: 'OK',
         addKey: `Add to this key`,

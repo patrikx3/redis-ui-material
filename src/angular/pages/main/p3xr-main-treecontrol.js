@@ -182,7 +182,7 @@ p3xr.ng.component('p3xrMainTree', {
                 if (node.keysInfo === undefined) {
                     return '';
                 }
-                return p3xr.ui.htmlEncode(node.keysInfo.type + ' - ' + node.key)
+                return p3xr.ui.htmlEncode(p3xr.strings.redisTypes[node.keysInfo.type ]+ ' - ' + node.key)
             }
             return p3xr.ui.htmlEncode(node.key)
         }

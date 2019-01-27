@@ -5,18 +5,18 @@ const strings = {
         statistics: 'Statistics',
         error: '错误',
         connectinRedis: '连接到Redis ...',
-        socketioConnectError: 'Socket.IO 错误'
-        /*
-                server: 'Server',
-                clients: 'Clients',
-                memory: 'Memory',
-                persistence: 'Persistance',
-                stats: 'Statastics',
-                replication: 'Replication',
-                cpu: 'CPU',
-                cluster: 'Cluster',
-                keyspace: 'Keyspace',
-        */
+        socketioConnectError: 'Socket.IO 错误',
+
+        db: 'DB',
+        server: '服务器',
+        clients: '客户端',
+        memory: '记忆',
+        persistence: '坚持',
+        stats: '统计',
+        replication: '复制',
+        cpu: '中央处理器',
+        cluster: '簇',
+
     },
     confirm: {
         title: '确认',

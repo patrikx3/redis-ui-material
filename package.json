@@ -1,13 +1,13 @@
 {
     "name": "p3x-redis-ui-material",
-    "version": "2019.1.25-4",
+    "version": "2019.1.27-0",
     "description": "💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via http and socket.io",
     "corifeus": {
         "icon": "fas fa-database",
         "code": "Fireball",
         "opencollective": false,
         "build": true,
-        "nodejs": "v11.7.0",
+        "nodejs": "v11.8.0",
         "reponame": "redis-ui-material",
         "publish": true,
         "prefix": "p3x-",

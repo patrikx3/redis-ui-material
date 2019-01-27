@@ -21,6 +21,9 @@ p3xr.ng.component('p3xrMainStatistics', {
         this.hasDatabases = Object.keys($rootScope.p3xr.state.info.keyspaceDatabases).length > 0
 
         this.generateKey = (key) => {
+            if (p3xr.strings.title.hasOwnProperty(key)) {
+                return p3xr.strings.title[key]
+            }
             const keyElem = key.split('_').map((instance, index) => {
                 if (replace.hasOwnProperty(instance)) {
                     instance = replace[instance]
