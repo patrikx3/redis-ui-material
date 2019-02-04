@@ -9,13 +9,13 @@ https://pages.corifeus.com/redis-ui
 
  
 
-[![Like Corifeus @ Facebook](https://img.shields.io/badge/LIKE-Corifeus-3b5998.svg)](https://www.facebook.com/corifeus.software) [![Donate for Corifeus / P3X](https://img.shields.io/badge/Donate-Corifeus-003087.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QZVM4V6HVZJW6)  [![Contact Corifeus / P3X](https://img.shields.io/badge/Contact-P3X-ff9900.svg)](https://www.patrikx3.com/en/front/contact) [![Build Status](https://api.travis-ci.com/patrikx3/redis-ui-material.svg?branch=master)](https://travis-ci.com/patrikx3/redis-ui-material) 
+[![Like Corifeus @ Facebook](https://img.shields.io/badge/LIKE-Corifeus-3b5998.svg)](https://www.facebook.com/corifeus.software) [![Donate for Corifeus / P3X](https://img.shields.io/badge/Donate-Corifeus-003087.svg)](https://paypal.me/patrikx3)  [![Contact Corifeus / P3X](https://img.shields.io/badge/Contact-P3X-ff9900.svg)](https://www.patrikx3.com/en/front/contact) [![Build Status](https://api.travis-ci.com/patrikx3/redis-ui-material.svg?branch=master)](https://travis-ci.com/patrikx3/redis-ui-material) 
 [![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m780749701-41bcade28c1ea8154eda7cca.svg)](https://uptimerobot.patrikx3.com/)
 
   
  
 ---
-# 💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via http and socket.io v2019.1.29-2  
+# 💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via http and socket.io v2019.2.4-2  
 
   
 🙏 This is an open-source project. Star this repository, if you like it, or even donate to maintain the servers and the development. Thank you so much!
@@ -34,7 +34,7 @@ All my domains ([patrikx3.com](https://patrikx3.com) and [corifeus.com](https://
    
 ### Built on Node 
 ``` 
-v11.8.0
+v11.9.0
 ```   
    
 The ```async``` and ```await``` keywords are required.
@@ -74,7 +74,7 @@ http://localhost:8080
 
 ---
 
-[**P3X-REDIS-UI-MATERIAL**](https://pages.corifeus.com/redis-ui-material) Build v2019.1.29-2 
+[**P3X-REDIS-UI-MATERIAL**](https://pages.corifeus.com/redis-ui-material) Build v2019.2.4-2 
 
 [![Like Corifeus @ Facebook](https://img.shields.io/badge/LIKE-Corifeus-3b5998.svg)](https://www.facebook.com/corifeus.software) [![Donate for Corifeus / P3X](https://img.shields.io/badge/Donate-Corifeus-003087.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QZVM4V6HVZJW6)  [![Contact Corifeus / P3X](https://img.shields.io/badge/Contact-P3X-ff9900.svg)](https://www.patrikx3.com/en/front/contact) 
 
