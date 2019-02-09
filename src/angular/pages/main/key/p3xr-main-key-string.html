@@ -14,17 +14,18 @@
     </span>
 
     <span ng-if="$ctrl.editable">
+        <md-button class="md-button md-raised md-primary" ng-click="$ctrl.save()">
+            <md-icon>save</md-icon>
+             <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.save }}</span>
+            <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{ $root.p3xr.strings.intention.save }}</md-tooltip>
+        </md-button>
+
         <md-button class="md-button md-raised md-warn" ng-click="$ctrl.cancelEdit()">
             <md-icon>cancel</md-icon>
              <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.cancel }}</span>
             <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{ $root.p3xr.strings.intention.cancel }}</md-tooltip>
         </md-button>
 
-        <md-button class="md-button md-raised md-primary" ng-click="$ctrl.save()">
-            <md-icon>save</md-icon>
-             <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.save }}</span>
-            <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{ $root.p3xr.strings.intention.save }}</md-tooltip>
-        </md-button>
     </span>
 
 </div>
