@@ -33,6 +33,7 @@ p3xr.ng.component('p3xrMainKeyString', {
                     }
                 })
                 this.editable = false
+                $rootScope.$broadcast('p3x-refresh-key');
             } catch(e) {
                 p3xrCommon.generalHandleError(e)
             }
