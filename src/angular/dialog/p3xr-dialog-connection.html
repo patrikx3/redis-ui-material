@@ -60,17 +60,18 @@
                     {{ $root.p3xr.strings.intention.testConnection }}
                 </md-button>
             </span>
+            <md-button class="md-raised md-primary" type="submit" ng-if="!$root.p3xr.state.cfg.readonlyConnections">
+                <md-icon>{{ options.type === 'new' ? 'add' : 'save' }}</md-icon>
+                {{ options.type === 'new' ? $root.p3xr.strings.intention.add : $root.p3xr.strings.intention.save }}
+            </md-button>
+
 
             <md-button class="md-raised md-accent" ng-click="cancel()">
                 <md-icon>cancel</md-icon>
                 {{ $root.p3xr.strings.intention.cancel }}
             </md-button>
 
-            <md-button class="md-raised md-primary" type="submit" ng-if="!$root.p3xr.state.cfg.readonlyConnections">
-                <md-icon>{{ options.type === 'new' ? 'add' : 'save' }}</md-icon>
-                {{ options.type === 'new' ? $root.p3xr.strings.intention.add : $root.p3xr.strings.intention.save }}
-            </md-button>
 
-        </md-dialog-actions>
+            </md-dialog-actions>
     </form>
 </md-dialog>
