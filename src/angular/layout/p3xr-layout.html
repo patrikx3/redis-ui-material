@@ -64,8 +64,8 @@
             <md-menu>
                 <md-button ng-click="$mdMenu.open($event)">
                     <md-icon>color_lens</md-icon>
-                    <span hide-xs hide-sm>{{ $root.p3xr.strings.intention.theme }}</span>
-                    <md-tooltip ng-if="$root.$mdMedia('xs') || $root.$mdMedia('sm')" md-direction="top">{{ $root.p3xr.strings.intention.theme }}</md-tooltip>
+                    <span hide-xs>{{ $root.p3xr.strings.intention.theme }}</span>
+                    <md-tooltip ng-if="$root.$mdMedia('xs')" md-direction="top">{{ $root.p3xr.strings.intention.theme }}</md-tooltip>
                 </md-button>
 
                 <md-menu-content>
@@ -77,7 +77,7 @@
                 </md-menu-content>
             </md-menu>
 
-            <md-menu>
+            <md-menu ng-if="!$root.isElectron === true">
 
                 <md-button ng-click="$mdMenu.open($event)">
                     <i class="fab fa-github"></i>
