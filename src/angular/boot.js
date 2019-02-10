@@ -51,6 +51,7 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
 
     $rootScope.p3xr = p3xr;
     $rootScope.$mdMedia = $mdMedia;
+    $rootScope.isElectron = (/electron/i.test(navigator.userAgent))
 
     $rootScope.hasConnected = () => {
         if (Object.keys(p3xr.state.redisConnections).length === 0) {

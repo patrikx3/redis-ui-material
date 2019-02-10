@@ -2,18 +2,24 @@
 
 
 
-.p3xr-layout-content {
-  margin-bottom: $toolbar-height;
-  margin-top: $toolbar-height;
-  padding: 5px;
+.p3xr-layout-content, .p3xr-layout-content-electron {
   position: absolute;
   left: 0px;
   right: 0px;
+  padding: 5px;
+  margin-bottom: $toolbar-height;
+}
+
+.p3xr-layout-content-electron {
+
+}
+
+.p3xr-layout-content {
+  margin-top: $toolbar-height;
 }
 
 #p3xr-layout-header-container {
   top: 0px;
-
 }
 
 #p3xr-layout-footer-container {

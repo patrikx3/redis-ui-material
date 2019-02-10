@@ -43,7 +43,6 @@ p3xr.ng.component('p3xrLayout', {
             })
         }
 
-        this.showLanguageSelector = false
         this.$onInit = () => {
             $warning= $('#p3xr-layout-reduced')
             resize()
@@ -52,12 +51,17 @@ p3xr.ng.component('p3xrLayout', {
             if (connection !== undefined) {
                 this.connect(connection)
             }
-            this.showLanguageSelector = !(/electron/i.test(navigator.userAgent))
             $timeout(() => {
                 global.p3xrSetLanguage = (key) => {
                     $rootScope.$apply(() => {
-                        this.showLanguageSelector = false
+                        $rootScope.isElectron = true
                         this.setLanguage(key)
+                    })
+                }
+                global.p3xrSetMenu = (menu) => {
+                    $rootScope.$apply(() => {
+                        $rootScope.isElectron = true
+                        $state.go(menu)
                     })
                 }
             }, 3000)

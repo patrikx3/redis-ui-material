@@ -1,4 +1,4 @@
-<div id="p3xr-layout-header-container">
+<div id="p3xr-layout-header-container" ng-if="$root.isElectron === false">
     <md-toolbar md-whiteframe="3">
         <div class="md-toolbar-tools">
 
@@ -16,7 +16,7 @@
     </md-toolbar>
 </div>
 
-<div id="p3xr-layout-header-version" md-colors="{ color: 'background-A100' }" hide-xs>v{{ $root.p3xr.pkg.version }}</div>
+<div id="p3xr-layout-header-version" md-colors="{ color: 'background-A100' }" hide-xs  ng-if="$root.isElectron === false">v{{ $root.p3xr.pkg.version }}</div>
 
 <div id="p3xr-layout-footer-container">
     <md-toolbar >
@@ -45,7 +45,7 @@
             <span flex></span>
 
 
-            <md-menu ng-if="$ctrl.showLanguageSelector === true">
+            <md-menu ng-if="!$root.isElectron === true">
                <md-button ng-click="$mdMenu.open($event)">
                     <md-icon>language</md-icon>
                     <span hide-xs hide-sm>{{ $root.p3xr.strings.intention.language }}</span>
@@ -109,7 +109,7 @@
 </div>
 
 <div flex layout="row" >
-    <div flex class="p3xr-layout-content">
+    <div flex ng-class="{'p3xr-layout-content': !$root.isElectron, 'p3xr-layout-content-electron': $root.isElectron }">
         <ui-view></ui-view>
     </div>
 </div>

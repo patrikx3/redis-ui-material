@@ -52,7 +52,14 @@ p3xr.ng.component('p3xrMain', {
                 redrawTabs = false;
             }
             let minus = 0
-            for(let item of [$header, $footer, $consoleHeader]) {
+
+            let $components
+            if ($rootScope.isElectron) {
+                $components = [$footer, $consoleHeader]
+            } else {
+                $components = [$header, $footer, $consoleHeader]
+            }
+            for(let item of $components) {
                 minus += item.outerHeight()
             }
             const windowHeight = $window.outerHeight()
