@@ -52,7 +52,7 @@
             {{ $root.p3xr.strings.page.key.label.ttlNotExpire }}
         </span>
         <span ng-if="$ctrl.response.ttl != -1">
-            <span style="opacity: 0.5">
+            <span style="opacity: 0.5"  ng-click="$ctrl.setTtl({ $event: $event})">
                 ({{ $ctrl.ttlParsed }})
             </span>
             {{ $ctrl.response.ttl }}

@@ -2,6 +2,10 @@
 @import '~angular-material/modules/scss/angular-material.layout-attributes.scss';
 
 p3xr-console {
+  .p3xr-console-electron {
+    margin: $layout-padding;
+  }
+
   #p3xr-console-content {
 
     font-family: monospace, monospace !important;

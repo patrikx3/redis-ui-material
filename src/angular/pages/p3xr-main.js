@@ -65,7 +65,7 @@ p3xr.ng.component('p3xrMain', {
             const windowHeight = $window.outerHeight()
             //console.log(windowHeight, minus)
 
-            const outputPositionMinus = 10
+            const outputPositionMinus = $rootScope.isElectron ? 0 : 10
             const outputHeight = Math.max(windowHeight - minus- outputPositionMinus, 100)
             $container.height(outputHeight)
             $container.css('max-height', `${outputHeight}px`)

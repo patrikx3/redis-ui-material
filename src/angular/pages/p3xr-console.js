@@ -28,13 +28,21 @@ p3xr.ng.component('p3xrConsole', {
 
         const resize = debounce(() => {
             let minus = 0
-            for(let item of [$header, $footer, $consoleHeader, $input]) {
+            let $components
+            if ($rootScope.isElectron) {
+                $components = [$footer, $consoleHeader]
+            } else {
+                $components = [$header, $footer, $consoleHeader]
+            }
+            for(let item of $components) {
                 minus += item.outerHeight()
             }
             const windowHeight = $window.height()
             //console.log(windowHeight, minus)
 
-            const outputHeight = Math.max(windowHeight - minus - 36 , 0)
+            const adjustments = 66
+
+            const outputHeight = Math.max(windowHeight - minus - adjustments , 0)
             $container.height(outputHeight)
             $container.css('max-height', `${outputHeight}px`)
 

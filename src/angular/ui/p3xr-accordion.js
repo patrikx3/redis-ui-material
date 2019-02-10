@@ -14,10 +14,10 @@ p3xr.ng.component('p3xrAccordion', {
             return $transclude.isSlotFilled(slot);
         };
 
+
         this.$onInit = function() {
             //console.log(this.p3xrAccordionKey)
             if (this.p3xrAccordionKey === undefined || this.p3xrAccordionKey === '') {
-                console.log('wrong')
                 this.p3xAccordionKey = ++accordionKey;
             }
             const cookieName = `p3xr-accordion-extended-${this.p3xrAccordionKey}`
