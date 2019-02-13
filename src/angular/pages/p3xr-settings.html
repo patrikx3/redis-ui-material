@@ -1,3 +1,5 @@
+<div ng-if="$root.isElectron" class="p3x-margin-height"></div>
+
 <p3xr-accordion p3xr-title="$root.p3xr.strings.label.connections" p3xr-accordion-key="settings">
     <p3xr-accordion-actions ng-if="!$root.p3xr.state.cfg.readonlyConnections">
         <p3xr-button ng-click="$ctrl.connectionForm({ type: 'new'})" p3xr-label="$root.p3xr.strings.intention.connectionAdd" p3xr-md-icon="add_box"></p3xr-button>
@@ -15,6 +17,13 @@
                     <p>{{connection.host}}:{{connection.port}}</p>
                 </div>
 
+
+                <md-button class="md-warn md-raised" ng-click="$ctrl.deleteConnection({ model: connection, ev: $event})" ng-if="!$root.p3xr.state.cfg.readonlyConnections">
+                    <md-icon>delete_forever</md-icon>
+                    <span hide-xs>{{ $root.p3xr.strings.intention.delete }}</span>
+                    <md-tooltip ng-if="$root.$mdMedia('xs')">{{ $root.p3xr.strings.intention.delete }}</md-tooltip>
+                </md-button>
+
                 <md-button class="md-primary md-raised" ng-click="$ctrl.connectionForm({ type: 'edit', model: connection})" ng-if="!$root.p3xr.state.cfg.readonlyConnections">
                     <md-icon>edit</md-icon>
                     <span hide-xs>{{ $root.p3xr.strings.intention.edit }}</span>
@@ -25,13 +34,6 @@
                     <md-icon>mode_comment</md-icon>
                     <span hide-xs>{{ $root.p3xr.strings.intention.view }}</span>
                     <md-tooltip ng-if="$root.$mdMedia('xs')">{{ $root.p3xr.strings.intention.view }}</md-tooltip>
-                </md-button>
-
-
-                <md-button class="md-warn md-raised" ng-click="$ctrl.deleteConnection({ model: connection, ev: $event})" ng-if="!$root.p3xr.state.cfg.readonlyConnections">
-                    <md-icon>delete_forever</md-icon>
-                    <span hide-xs>{{ $root.p3xr.strings.intention.delete }}</span>
-                    <md-tooltip ng-if="$root.$mdMedia('xs')">{{ $root.p3xr.strings.intention.delete }}</md-tooltip>
                 </md-button>
 
                 <md-divider ng-if="!$last"></md-divider>

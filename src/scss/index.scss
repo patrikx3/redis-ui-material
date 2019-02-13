@@ -112,5 +112,9 @@ input:-webkit-autofill {
   user-select: none;
 }
 
+.p3x-margin-height {
+  margin-bottom: $layout-padding;
+}
+
 @import '../injector';
 

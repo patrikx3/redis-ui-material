@@ -62,6 +62,7 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootSco
             .htmlContent(options.message)
             .targetEvent(options.event)
             .ok(okButton)
+            .multiple(true)
 
         if (!options.hasOwnProperty('disableCancel')) {
             confirm.cancel(p3xr.strings.intention.cancel);

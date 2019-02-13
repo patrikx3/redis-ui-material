@@ -32,9 +32,11 @@ p3xr.ng.component('p3xrSettings', {
                 });
             } catch(error) {
                 if (error === undefined) {
+                    /*
                     p3xrCommon.toast({
                         message: p3xr.strings.status.cancelled
                     });
+                    */
                     return;
                 }
                 p3xrCommon.generalHandleError(error)
