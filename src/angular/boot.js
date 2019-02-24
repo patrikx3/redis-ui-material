@@ -32,8 +32,9 @@ p3xr.ng =  angular.module('p3xr-redis-ui', [
 require('./injector')
 
 
-p3xr.ng.config(($qProvider, $locationProvider, $urlRouterProvider, $stateProvider, p3xrThemeProvider) => {
+p3xr.ng.config(($qProvider, $locationProvider, $urlRouterProvider, $stateProvider, p3xrThemeProvider, $mdAriaProvider) => {
 
+    $mdAriaProvider.disableWarnings();
     $qProvider.errorOnUnhandledRejections(false);
     $locationProvider.html5Mode(true);
 //  $urlRouterProvider.otherwise('/');

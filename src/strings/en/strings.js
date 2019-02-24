@@ -33,7 +33,7 @@ const strings = {
         socketioConnectError: 'Socket.IO cannot connect to the server, you can reload and you might to resolve the connection error by yourself, the client does not know to solve it by itself.',
         deleteKey: 'Are you sure to delete this key?',
         rename: {
-            title: 'Are you to rename this key?',
+            title: 'Are you sure to rename this key?',
             textContent: 'If you click the rename button, it will rename this key forever.',
             placeholder: 'The Redis key (required)',
 
