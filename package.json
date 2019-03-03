@@ -1,13 +1,13 @@
 {
     "name": "p3x-redis-ui-material",
-    "version": "2019.2.24-3",
+    "version": "2019.3.3-2",
     "description": "💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via http and socket.io",
     "corifeus": {
         "icon": "fas fa-database",
         "code": "Fireball",
         "opencollective": false,
         "build": true,
-        "nodejs": "v11.10.0",
+        "nodejs": "v11.10.1",
         "reponame": "redis-ui-material",
         "publish": true,
         "prefix": "p3x-",
@@ -55,7 +55,7 @@
         "clean-webpack-plugin": "^1.0.1",
         "concurrently": "^4.1.0",
         "copy-webpack-plugin": "^5.0.0",
-        "corifeus-builder": "^2019.2.24-3",
+        "corifeus-builder": "^2019.3.3-2",
         "css-loader": "^2.1.0",
         "extract-text-webpack-plugin": "^4.0.0-beta.0",
         "file-loader": "^3.0.1",
@@ -73,11 +73,11 @@
         "sass-loader": "^7.1.0",
         "socket.io-client": "^2.2.0",
         "style-loader": "^0.23.1",
-        "terser-webpack-plugin": "^1.2.2",
+        "terser-webpack-plugin": "^1.2.3",
         "typeface-roboto": "0.0.54",
-        "webpack": "^4.29.5",
+        "webpack": "^4.29.6",
         "webpack-cli": "^3.2.3",
-        "webpack-dev-server": "^3.2.0"
+        "webpack-dev-server": "^3.2.1"
     },
     "engines": {
         "node": ">=10.13.0"
