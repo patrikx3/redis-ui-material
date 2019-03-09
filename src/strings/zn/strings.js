@@ -4,7 +4,7 @@ const strings = {
         main: '您可以从左下方菜单中选择要连接的Redis进行连接访问',
         statistics: 'Statistics',
         error: '错误',
-        connectinRedis: '连接到Redis ...',
+        connectingRedis: '连接到Redis ...',
         socketioConnectError: 'Socket.IO 错误',
 
         db: 'DB',

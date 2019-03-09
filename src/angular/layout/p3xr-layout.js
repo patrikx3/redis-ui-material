@@ -88,7 +88,7 @@ p3xr.ng.component('p3xrLayout', {
                 //console.warn(originalState)
 
                 p3xr.ui.overlay.show({
-                    message: p3xr.strings.title.connectinRedis
+                    message: p3xr.strings.title.connectingRedis
                 })
                 const db = $cookies.get(p3xr.settings.connection.getCookieNameCurrentDatabase(connection.id))
                 const response = await p3xrSocket.request({
@@ -98,6 +98,7 @@ p3xr.ng.component('p3xrLayout', {
                         db: db
                     },
                 })
+                $rootScope.p3xr.state.page = 1
                 p3xr.state.dbsize = response.dbsize
 
                 let dbIndex = 0

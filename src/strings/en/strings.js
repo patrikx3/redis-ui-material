@@ -4,7 +4,7 @@ const strings = {
         main: 'You may choose a Redis connection to connect from the left bottom menu.',
         statistics: 'Statistics',
         error: 'Error',
-        connectinRedis: 'Connecting to Redis ...',
+        connectingRedis: 'Connecting to Redis ...',
         socketioConnectError: 'Socket.IO Error',
 
         db: 'DB',

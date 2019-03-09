@@ -47,9 +47,7 @@ if (minimize) {
     const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
     plugins.unshift(
-        new CleanWebpackPlugin([targetFolder], {
-            root: basePath + '/' + targetPath
-        })
+        new CleanWebpackPlugin()
     )
 
     plugins.push(
