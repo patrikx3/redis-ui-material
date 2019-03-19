@@ -47,7 +47,7 @@
 
 
                     <md-input-container class="md-block" >
-                        <md-switch ng-model="model.awsElastiCache"  name="awsElastiCache"  aria-label="">
+                        <md-switch ng-model="model.awsElastiCache"  name="awsElastiCache"  aria-label="" ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
                             {{ model.awsElastiCache ? $root.p3xr.strings.label.awsElastiCache.on :  $root.p3xr.strings.label.awsElastiCache.off  }}
                         </md-switch>
 
