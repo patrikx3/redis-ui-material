@@ -46,6 +46,14 @@
                     </div>
 
 
+                    <md-input-container class="md-block" >
+                        <md-switch ng-model="model.awsElastiCache"  name="awsElastiCache"  aria-label="">
+                            {{ model.awsElastiCache ? $root.p3xr.strings.label.awsElastiCache.on :  $root.p3xr.strings.label.awsElastiCache.off  }}
+                        </md-switch>
+
+                    </md-input-container>
+
+
                 </md-content>
         </md-dialog-content>
 

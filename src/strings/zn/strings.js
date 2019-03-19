@@ -123,6 +123,10 @@ const strings = {
             on: '开启键排序',
             off: '关闭键排序'
         },
+        awsElastiCache: {
+            on: 'AWS ElastiCache on',
+            off: 'AWS ElastiCache off',
+        },
         treeSettingsPageCount: '由于AngularJS的渲染特性,如果你的分页超过(100/页)且不使用智能树分割,会导致性能下降,但如果你启用了,不仅可以获得更多的数据展示,且不会卡顿一段时间',
         theme: {
             light: '浅棕',

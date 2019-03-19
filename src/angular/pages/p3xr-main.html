@@ -7,13 +7,13 @@
         </h2>
         <span ng-if="$root.p3xr.state.connection !== undefined">
 
-                <md-button class="md-icon-button md-primary" aria-label="{{ $root.p3xr.strings.intention.save }}" ng-click="$ctrl.save()">
+            <md-button class="md-icon-button md-primary" aria-label="{{ $root.p3xr.strings.intention.save }}" ng-click="$ctrl.save()" ng-if="$root.p3xr.state.connection.awsElastiCache !== true">
                 <md-icon>save</md-icon>
                 <md-tooltip md-direction="bottom">{{ $root.p3xr.strings.intention.save }}</md-tooltip>
             </md-button>
 
 
-            <md-input-container>
+            <md-input-container ng-if="$root.p3xr.state.connection.awsElastiCache !== true">
                 <md-tooltip md-direction="bottom">{{ $root.p3xr.strings.form.main.label.database }}</md-tooltip>
                 <md-select ng-model="$ctrl.currentDatabase"
                             aria-label="{{ $root.p3xr.strings.form.main.label.database }}" class="md-accent">

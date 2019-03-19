@@ -126,6 +126,10 @@ const strings = {
             on: 'Key sorting on',
             off: 'Key sorting off'
         },
+        awsElastiCache: {
+            on: 'AWS ElastiCache on',
+            off: 'AWS ElastiCache off',
+        },
         treeSettingsPageCount: 'If the paging is over 100 / page and you do not use smart tree divider, it could cause a performance penalty, because of the nature of AngularJs. But! If you use trees (with tree divider), then you can have bigger page / element and the browser will not freeze for a little time.',
         theme: {
             light: 'Light',
