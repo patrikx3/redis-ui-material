@@ -15,10 +15,10 @@
     </md-button>
 
     <md-button class="md-button md-raised md-primary" ng-click="$ctrl.setTtl({ $event: $event})">
-        <md-tooltip>{{ $root.p3xr.strings.label.ttlTitle  }}</md-tooltip>
         <md-icon>timer</md-icon>
         <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.ttl }}</span>
         <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{ $root.p3xr.strings.intention.ttl }}</md-tooltip>
+        <md-tooltip ng-if="$root.$mdMedia('gt-sm')">{{ $root.p3xr.strings.label.ttlTitle  }}</md-tooltip>
     </md-button>
 
     <md-button class="md-button md-raised md-primary" ng-click="$ctrl.rename({ $event: $event})">

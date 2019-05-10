@@ -18,12 +18,12 @@
         <span class="p3xr-main-tree-node-count" ng-if="node.type !== 'folder' && node.keysInfo.type !== 'string' && node.keysInfo !== undefined">({{node.keysInfo.length}})</span>
         <span ng-show="node.type === 'folder' && node.show">
                         <span>
-                            <md-tooltip>{{ $root.p3xr.strings.confirm.deleteAllKeys({key: node.key}) }}</md-tooltip>
+                            <md-tooltip md-direction="right">{{ $root.p3xr.strings.confirm.deleteAllKeys({key: node.key}) }}</md-tooltip>
                             <md-icon ng-click="$ctrl.deleteTree({event: $event, node: node})"
                                      class="md-warn p3xr-main-treecontrol-folder-icon">close</md-icon>
                         </span>
                         <span>
-                            <md-tooltip>{{ $root.p3xr.strings.intention.addKey }}</md-tooltip>
+                            <md-tooltip md-direction="right">{{ $root.p3xr.strings.intention.addKey }}</md-tooltip>
                             <md-icon ng-click="$ctrl.addKey({event: $event, node: node})"
                                      md-theme="{{ $root.p3xr.state.themeCommon }}"
                                      class="md-primary p3xr-main-treecontrol-folder-icon">add</md-icon>
