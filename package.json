@@ -1,6 +1,6 @@
 {
     "name": "p3x-redis-ui-material",
-    "version": "2019.4.107",
+    "version": "2019.4.108",
     "description": "💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via http and socket.io",
     "corifeus": {
         "icon": "fas fa-database",
@@ -41,7 +41,6 @@
     "author": "Patrik Laszlo <alabard@gmail.com>",
     "license": "MIT",
     "devDependencies": {
-        "angular-sanitize": "^1.7.8",
         "@fortawesome/fontawesome-free": "^5.8.2",
         "@uirouter/angularjs": "^1.0.22",
         "angular": "^1.7.8",
@@ -51,6 +50,7 @@
         "angular-json-tree": "^1.1.0",
         "angular-material": "^1.1.18",
         "angular-messages": "^1.7.8",
+        "angular-sanitize": "^1.7.8",
         "angular-tree-control": "^0.2.30",
         "clean-webpack-plugin": "^2.0.2",
         "concurrently": "^4.1.0",

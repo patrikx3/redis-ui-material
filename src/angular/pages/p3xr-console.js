@@ -1,6 +1,8 @@
 let actionHistory = []
 let actionHistoryPosition = -1
 
+const htmlEncode = require('js-htmlencode').htmlEncode;
+
 p3xr.ng.component('p3xrConsole', {
     template: require('./p3xr-console.html'),
     controller: function(p3xrCommon, p3xrSocket, $state, $rootScope, p3xrRedisParser, $mdDialog, $timeout) {
@@ -94,7 +96,8 @@ p3xr.ng.component('p3xrConsole', {
                 })
                 //console.warn(typeof response.result, response.result, response.generatedCommand)
 
-                const result = p3xrRedisParser.console.parse(response.result)
+                const result = htmlEncode(p3xrRedisParser.console.parse(response.result))
+                console.log(result)
                 $output.append(`<pre>${result}</pre>`)
                 if (response.hasOwnProperty('database')) {
                     $rootScope.p3xr.state.currentDatabase = response.database
