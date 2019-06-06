@@ -97,7 +97,7 @@ p3xr.ng.component('p3xrConsole', {
                 //console.warn(typeof response.result, response.result, response.generatedCommand)
 
                 const result = htmlEncode(p3xrRedisParser.console.parse(response.result))
-                console.log(result)
+                //console.log(result)
                 $output.append(`<pre>${result}</pre>`)
                 if (response.hasOwnProperty('database')) {
                     $rootScope.p3xr.state.currentDatabase = response.database
