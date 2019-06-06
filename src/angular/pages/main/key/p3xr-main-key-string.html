@@ -34,7 +34,12 @@
 
 <div class="p3xr-pre" style="max-width: 100%; overflow: auto;" ng-click="$ctrl.edit()" ng-if="!$ctrl.editable">{{ $ctrl.p3xrValue }}</div>
 
-<md-input-container class="md-block" ng-if="$ctrl.editable">
-    <label>{{ $root.p3xr.strings.label.edit }}</label>
-    <textarea ng-model="$ctrl.p3xrValue"></textarea>
-</md-input-container>
+<div ng-if="$ctrl.editable">
+    <md-switch ng-model="$ctrl.validateJson" class="md-accent" style="float: right;">
+        {{ $root.p3xr.strings.label.validateJson }}
+    </md-switch>
+    <md-input-container class="md-block">
+        <label>{{ $root.p3xr.strings.label.edit }}</label>
+        <textarea ng-model="$ctrl.p3xrValue"></textarea>
+    </md-input-container>
+</div>

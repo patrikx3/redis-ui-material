@@ -20,6 +20,8 @@ p3xr.ng.factory('p3xrDialogKeyNewOrSet', function (p3xrCommon, $mdDialog, p3xrSo
                             ]
 
 
+                            $scope.validateJson = false;
+
                             $scope.model = {
                                 type: 'string',
                                 key: options.node !== undefined ? options.node.key : '',

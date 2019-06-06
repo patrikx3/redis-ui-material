@@ -93,6 +93,7 @@ const strings = {
         jsonViewShow: '显示 JSON 树',
     },
     label: {
+        validateJson: '验证JSON',
         reducedFunction: `功能限制`,
         tooManyKeys: (opts) => {
             return `对于最大函数允许的键个数为 ${opts.maxLightKeysCount}. 该数据库允许共超过的键总数为 ${opts.count}.但键的排序及范式树等相关信息会被禁用。搜索仅在服务器上进行，而不是客户端搜索。`;

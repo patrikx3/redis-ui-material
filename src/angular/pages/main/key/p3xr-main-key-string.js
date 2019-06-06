@@ -21,9 +21,21 @@ p3xr.ng.component('p3xrMainKeyString', {
         }
 
 
+        this.validateJson = false
 
         this.save = async () => {
             try {
+                if (this.validateJson === true) {
+                    try {
+                        JSON.parse(this.p3xrValue)
+                    } catch(e) {
+                        p3xrCommon.toast({
+                            message: p3xr.strings.label.jsonViewNotParsable
+                        })
+                        return;
+                    }
+                }
+
                 const response = await p3xrSocket.request({
                     action: 'key-set',
                     payload: {

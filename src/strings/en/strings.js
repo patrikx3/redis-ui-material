@@ -96,6 +96,7 @@ const strings = {
         jsonViewShow: 'Display JSON tree',
     },
     label: {
+        validateJson: 'Validate JSON',
         reducedFunction: `Reduced functionality`,
         tooManyKeys: (opts) => {
           return `For the full maximum functions allowed keys total is ${opts.maxLightKeysCount} count. This database has over the allowed keys in total ${opts.count}. The key sorting and the additional fancy tree information is disabled. The searching is happening only on the server instead the client search.`;

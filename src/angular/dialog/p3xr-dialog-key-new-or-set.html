@@ -66,12 +66,21 @@
                 </span>
 
 
+                <md-switch ng-model="validateJson" class="md-accent" style="margin-top: 0px;">
+                    {{ $root.p3xr.strings.label.validateJson }}
+                </md-switch>
+
                 <md-input-container class="md-block">
                     <label>{{ $root.p3xr.strings.form.key.field.value }}</label>
-                    <textarea ng-model="model.value" required name="value"></textarea>
+                    <textarea ng-model="model.value" required p3x-validate-json p3x-validate-json-required="validateJson" name="value"></textarea>
                     <div ng-messages="p3xrKeyNewForm.value.$error">
                         <div ng-message-exp="['required']">
                             {{ $root.p3xr.strings.form.key.error.value }}
+                        </div>
+                    </div>
+                    <div ng-messages="p3xrKeyNewForm.value.$error">
+                        <div ng-message-exp="['p3xValidateJson']">
+                            {{ $root.p3xr.strings.label.jsonViewNotParsable }}
                         </div>
                     </div>
                 </md-input-container>
