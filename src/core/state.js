@@ -15,6 +15,7 @@ p3xr.state = {
     commands: [],
     reducedFunctions: false,
     dbsize: undefined,
+    monitor: false,
 }
 
 Object.defineProperty(p3xr.state, 'themeLayout', {

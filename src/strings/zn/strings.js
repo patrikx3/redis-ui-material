@@ -51,6 +51,7 @@ const strings = {
       zn: '中文 / Chinese'
     },
     intention: {
+        pubsubMonitor: 'PubSub监视器',
         language: '语言 / Language',
         ok: '确定',
         addKey: `加入此键`,

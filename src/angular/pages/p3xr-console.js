@@ -51,6 +51,17 @@ p3xr.ng.component('p3xrConsole', {
         }, p3xr.settings.debounce)
 
 
+        const onPubSubMessage = (data) => {
+            //console.warn('pub-sub', data)
+            if (p3xr.state.monitor === false) {
+                return
+            }
+            let message = htmlEncode(data.message)
+            $output.append(`<strong>PubSub channel:</strong> ${data.channel}`)
+            $output.append(`<pre>${message}</pre><br/>`)
+            scrollers.scrollTop = scrollers.scrollHeight;
+        }
+
         this.$onInit = () => {
 
             $container = $('#p3xr-console-content')
@@ -66,10 +77,15 @@ p3xr.ng.component('p3xrConsole', {
             $window.on('resize', resize)
             resize()
             this.clearConsole()
+
+
+            p3xrSocket.ioClient.on('pubsub-message', onPubSubMessage )
+
         }
 
         this.$onDestroy = function () {
            $window.off('resize', resize)
+            p3xrSocket.ioClient.removeListener('pubsub-message', onPubSubMessage )
         };
 
 

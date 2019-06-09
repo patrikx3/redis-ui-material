@@ -52,6 +52,7 @@ const strings = {
         zn: 'Chinese / 中文'
     },
     intention: {
+        pubsubMonitor: 'PubSub Monitor',
         // When you translate the language, keep the Language in English
         // eg. Idioma / Language
         language: 'Language',
