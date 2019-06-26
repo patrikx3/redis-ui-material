@@ -97,6 +97,7 @@ const strings = {
         jsonViewShow: 'Display JSON tree',
     },
     label: {
+        addNode: 'Add node',
         validateJson: 'Validate JSON',
         reducedFunction: `Reduced functionality`,
         tooManyKeys: (opts) => {
@@ -132,6 +133,10 @@ const strings = {
             on: 'AWS ElastiCache on',
             off: 'AWS ElastiCache off',
         },
+        cluster: {
+            on: 'Cluster on' ,
+            off: 'Cluster off' ,
+        },
         treeSettingsPageCount: 'If the paging is over 100 / page and you do not use smart tree divider, it could cause a performance penalty, because of the nature of AngularJs. But! If you use trees (with tree divider), then you can have bigger page / element and the browser will not freeze for a little time.',
         theme: {
             light: 'Light',
@@ -147,6 +152,7 @@ const strings = {
 
     },
     status: {
+        nodeRemoved: 'Node removed',
         keyIsNotExisting: 'This key could have been deleted or expired.',
         keyCount: (opts) => {
             if (opts.keyCount === 0) {

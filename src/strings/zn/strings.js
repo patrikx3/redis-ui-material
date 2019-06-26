@@ -94,6 +94,7 @@ const strings = {
         jsonViewShow: '显示 JSON 树',
     },
     label: {
+        addNode: '添加节点',
         validateJson: '验证JSON',
         reducedFunction: `功能限制`,
         tooManyKeys: (opts) => {
@@ -129,6 +130,10 @@ const strings = {
             on: 'AWS ElastiCache on',
             off: 'AWS ElastiCache off',
         },
+        cluster: {
+            on: '群集' ,
+            off: '集群关闭' ,
+        },
         treeSettingsPageCount: '由于AngularJS的渲染特性,如果你的分页超过(100/页)且不使用智能树分割,会导致性能下降,但如果你启用了,不仅可以获得更多的数据展示,且不会卡顿一段时间',
         theme: {
             light: '浅棕',
@@ -144,6 +149,7 @@ const strings = {
 
     },
     status: {
+        nodeRemoved: '节点已删除',
         keyIsNotExisting: '此键可能已被删除或过期。',
         keyCount: (opts) => {
             if (opts.keyCount === 0) {

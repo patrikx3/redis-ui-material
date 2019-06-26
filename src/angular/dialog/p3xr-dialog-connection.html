@@ -45,12 +45,68 @@
                         {{ $root.p3xr.strings.label.passwordSecure }}
                     </div>
 
+                    <md-input-container style="margin: 0px" >
+                        <md-switch ng-model="model.cluster"  name="cluster"  aria-label="" ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
+                            {{ model.cluster ? $root.p3xr.strings.label.cluster.on :  $root.p3xr.strings.label.cluster.off  }}
+                        </md-switch>
+                    </md-input-container>
 
-                    <md-input-container class="md-block" >
+                    <md-button class="md-primary md-raised" ng-if="model.cluster === true" ng-click="addNode()">
+                        {{ $root.p3xr.strings.label.addNode }}
+                    </md-button>
+
+                    <div ng-if="model.cluster === true">
+
+
+                        <div ng-repeat="node in model.nodes">
+                            <fieldset>
+                                <legend>Node {{$index + 1}}</legend>
+                                <div style="float: right;">
+                                    <md-button class="md-fab md-warn md-mini" ng-click="removeNode($index)">
+                                        <md-icon>delete</md-icon>
+                                    </md-button>
+                                </div>
+                                <md-input-container class="md-block" >
+                                    <label>{{ $root.p3xr.strings.form.connection.label.host }}</label>
+                                    <input name="host{{$index}}" ng-model="node.host" ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
+                                </md-input-container>
+
+
+                                <md-input-container class="md-block" >
+                                    <label>{{ $root.p3xr.strings.form.connection.label.port }}</label>
+                                    <input required name="port{{$index}}" type="number" min="1" max="65535" ng-model="node.port" ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
+                                    <div ng-messages="p3xrConnectionForm['port' +  $index].$error">
+                                        <div ng-message-exp="['min', 'max']">
+                                            {{ $root.p3xr.strings.form.error.port }}
+                                        </div>
+                                        <div ng-message="required">{{ $root.p3xr.strings.form.error.required }}</div>
+                                    </div>
+                                </md-input-container>
+
+
+                                <md-input-container class="md-block p3xr-md-input-container-no-bottom" >
+                                    <label>{{ $root.p3xr.strings.form.connection.label.password }}</label>
+                                    <input name="password{{$index}}" type="password" ng-model="node.password" ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
+                                </md-input-container>
+
+                                <!--
+                                <div class="p3xr-md-input-container-bottom-info">
+                                    {{ $root.p3xr.strings.label.passwordSecure }}
+                                </div>
+                                -->
+
+                            </fieldset>
+                            <div ng-if="$last !== true" style="margin-bottom: 16px;">
+                                &nbsp;
+                            </div>
+                            <div style="clear: both;"></div>
+                        </div>
+                    </div>
+
+                    <md-input-container class="md-block"  style="margin: 0px">
                         <md-switch ng-model="model.awsElastiCache"  name="awsElastiCache"  aria-label="" ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
                             {{ model.awsElastiCache ? $root.p3xr.strings.label.awsElastiCache.on :  $root.p3xr.strings.label.awsElastiCache.off  }}
                         </md-switch>
-
                     </md-input-container>
 
 
