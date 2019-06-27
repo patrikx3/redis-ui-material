@@ -8,6 +8,7 @@ p3xr.state = {
     redisConnections: {},
     keys: [],
     cfg: undefined,
+    version: undefined,
     keysInfo: undefined,
     failed: false,
     keysRaw: [],

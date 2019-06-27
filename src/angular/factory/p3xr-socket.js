@@ -99,12 +99,17 @@ p3xr.ng.factory('p3xrSocket', function ($rootScope, p3xrCommon, $state) {
 
     ioClient.on('redis-status', (data) => {
         $rootScope.p3xr.state.redisConnections = data.redisConnections
-        //console.warn(data.redisConnections)
+
         $rootScope.$digest();
     })
 
     ioClient.on('configuration', (data) => {
         $rootScope.p3xr.state.cfg = data;
+        if (p3xr.state.cfg.snapshot === true) {
+            p3xr.state.version = 'SNAPSHOT'
+        } else {
+            p3xr.state.version = 'v' + p3xr.pkg.version
+        }
         $rootScope.$digest();
     })
 

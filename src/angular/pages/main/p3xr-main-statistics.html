@@ -1,5 +1,6 @@
+
 <md-tabs md-dynamic-height md-border-bottom>
-    <md-tab label="{{ $root.p3xr.strings.title.db}}" ng-if="$ctrl.hasDatabases">
+    <md-tab label="{{ $root.p3xr.strings.title.db}}" ng-if="$ctrl.hasDatabases && $root.p3xr.state.connection.cluster !== true">
         <md-content>
 
             <md-tabs md-dynamic-height md-border-bottom class="md-primary">

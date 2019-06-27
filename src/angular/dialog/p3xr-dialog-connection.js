@@ -31,6 +31,10 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                             $scope.model.nodes = []
                         }
 
+                        for(let node of $scope.model.nodes) {
+                            node.password = node.id
+                        }
+
                         // Promise reject
                         $scope.cancel = function () {
                             /*
@@ -69,6 +73,7 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                                 host: undefined,
                                 port: undefined,
                                 password: undefined,
+                                id: p3xr.nextId(),
                             })
                         }
 
@@ -121,10 +126,16 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                                 if (node.host === undefined) {
                                     $scope.model.host = 'localhost'
                                 }
+                                if (node.id === undefined) {
+                                    node.id = p3xr.nextId()
+                                }
                             }
 
 
                             try {
+
+
+
                                 const response = await p3xrSocket.request({
                                     action: 'connection-save',
                                     payload: {

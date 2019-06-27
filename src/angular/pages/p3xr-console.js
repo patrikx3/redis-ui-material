@@ -56,7 +56,7 @@ p3xr.ng.component('p3xrConsole', {
             if (p3xr.state.monitor === false) {
                 return
             }
-            let message = htmlEncode(data.message)
+            let message = htmlEncode(String(data.message))
             $output.append(`<strong>PubSub channel:</strong> ${data.channel}`)
             $output.append(`<pre>${message}</pre><br/>`)
             scrollers.scrollTop = scrollers.scrollHeight;
@@ -112,7 +112,7 @@ p3xr.ng.component('p3xrConsole', {
                 })
                 //console.warn(typeof response.result, response.result, response.generatedCommand)
 
-                const result = htmlEncode(p3xrRedisParser.console.parse(response.result))
+                const result = htmlEncode(String(p3xrRedisParser.console.parse(response.result)))
                 //console.log(result)
                 $output.append(`<pre>${result}</pre>`)
                 if (response.hasOwnProperty('database')) {
@@ -120,6 +120,7 @@ p3xr.ng.component('p3xrConsole', {
                     $rootScope.p3xr.state.redisChanged = true
                 }
             } catch(e) {
+                console.error(e)
                 $output.append(`<pre>${e.message}</pre>`)
 
             } finally {

@@ -63,7 +63,7 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
 
     $rootScope.locationReload = () => {
         $state.go('main')
-        location.reload()
+       // location.reload()
     }
 
 
