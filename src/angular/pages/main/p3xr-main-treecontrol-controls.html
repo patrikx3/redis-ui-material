@@ -37,7 +37,9 @@
         <md-icon>skip_next</md-icon>
     </md-button>
 </span>
-
+<span ng-if="$root.p3xr.state.pages < 2" style="opacity: 0.5; float: right; line-height: 26px;">
+    {{ $root.p3xr.strings.status.keyCount({keyCount: $root.p3xr.state.keysRaw.length }) }}&nbsp;
+</span>
 <!--
 <div style="float: right;">
 
