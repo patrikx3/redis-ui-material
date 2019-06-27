@@ -45,15 +45,27 @@
                         {{ $root.p3xr.strings.label.passwordSecure }}
                     </div>
 
+
+                    <md-input-container style="margin: 0px">
+                        <md-switch ng-model="model.awsElastiCache"  name="awsElastiCache"  aria-label="" ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
+                            {{ model.awsElastiCache ? $root.p3xr.strings.label.awsElastiCache.on :  $root.p3xr.strings.label.awsElastiCache.off  }}
+                        </md-switch>
+                    </md-input-container>
+
+
                     <md-input-container style="margin: 0px" >
                         <md-switch ng-model="model.cluster"  name="cluster"  aria-label="" ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
                             {{ model.cluster ? $root.p3xr.strings.label.cluster.on :  $root.p3xr.strings.label.cluster.off  }}
                         </md-switch>
                     </md-input-container>
 
-                    <md-button class="md-primary md-raised" ng-if="model.cluster === true" ng-click="addNode()">
+                    <span ng-if="model.cluster === true" ng-click="addNode()">
+                        <md-button class="md-fab md-primary md-mini">
+
+                            <md-icon>add</md-icon>
+                        </md-button>
                         {{ $root.p3xr.strings.label.addNode }}
-                    </md-button>
+                    </span>
 
                     <div ng-if="model.cluster === true">
 
@@ -62,8 +74,13 @@
                             <fieldset>
                                 <legend>Node {{$index + 1}}</legend>
                                 <div style="float: right;">
-                                    <md-button class="md-fab md-warn md-mini" ng-click="removeNode($index)">
+                                    <md-button class="md-fab md-warn md-mini" ng-click="removeNode($event, $index)">
+                                        <md-tooltip>{{ $root.p3xr.strings.confirm.deleteConnectionText }}</md-tooltip>
                                         <md-icon>delete</md-icon>
+                                    </md-button>
+                                    <md-button class="md-fab md-primary md-mini" ng-click="addNode($index)">
+                                        <md-tooltip>{{ $root.p3xr.strings.label.addNode }}</md-tooltip>
+                                        <md-icon>add</md-icon>
                                     </md-button>
                                 </div>
                                 <md-input-container class="md-block" >
@@ -100,12 +117,6 @@
                             <div style="clear: both;"></div>
                         </div>
                     </div>
-
-                    <md-input-container class="md-block"  style="margin: 0px">
-                        <md-switch ng-model="model.awsElastiCache"  name="awsElastiCache"  aria-label="" ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
-                            {{ model.awsElastiCache ? $root.p3xr.strings.label.awsElastiCache.on :  $root.p3xr.strings.label.awsElastiCache.off  }}
-                        </md-switch>
-                    </md-input-container>
 
 
                 </md-content>

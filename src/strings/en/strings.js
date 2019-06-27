@@ -27,6 +27,7 @@ const strings = {
         deleteZSetMember: 'Are you sure to delete this sorted set member?',
         deleteConnection: 'Confirm',
         deleteConnectionText: 'Are you sure to delete this Redis connection?',
+        deleteNode: 'Are you sure to delete this Redis node?',
         deleteAllKeys: (opts) => {
             return `Delete this tree and all it\'s keys (${opts.key})?`
         },

@@ -68,20 +68,43 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                             return true
                         }
 
-                        $scope.addNode = () => {
-                            $scope.model.nodes.push({
+                        $scope.addNode = (index) => {
+                            const newNode = {
                                 host: undefined,
                                 port: undefined,
                                 password: undefined,
                                 id: p3xr.nextId(),
-                            })
+                            }
+                            if (index === undefined) {
+                                $scope.model.nodes.push(newNode)
+                            } else {
+                                $scope.model.nodes.splice(index + 1, 0, newNode)
+                            }
                         }
 
-                        $scope.removeNode = (index) => {
-                            $scope.model.nodes.splice(index, 1)
-                            p3xrCommon.toast({
-                                message: p3xr.strings.status.nodeRemoved
-                            })
+                        $scope.removeNode = async(ev, index) => {
+                            try {
+                                await p3xrCommon.confirm({
+                                    event: ev,
+                                    message: p3xr.strings.confirm.deleteConnectionText
+                                });
+
+                                $scope.model.nodes.splice(index, 1)
+                                p3xrCommon.toast({
+                                    message: p3xr.strings.status.nodeRemoved
+                                })
+
+                            } catch(e) {
+                                if (error === undefined) {
+                                    /*
+                                    p3xrCommon.toast({
+                                        message: p3xr.strings.status.cancelled
+                                    });
+                                    */
+                                    return;
+                                }
+                                p3xrCommon.generalHandleError(e)
+                            }
                         }
 
                         $scope.testConnection = async() => {
@@ -124,7 +147,7 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                             }
                             for(let node of $scope.model.nodes) {
                                 if (node.host === undefined) {
-                                    $scope.model.host = 'localhost'
+                                    node.host = 'localhost'
                                 }
                                 if (node.id === undefined) {
                                     node.id = p3xr.nextId()

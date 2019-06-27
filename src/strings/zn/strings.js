@@ -28,6 +28,7 @@ const strings = {
         deleteZSetMember: '您确定要删除该有序集合成员？',
         deleteConnection: '确认',
         deleteConnectionText: '您确定要删除此Redis连接吗？',
+        deleteNode: '您确定要删除此Redis节点吗？',
         deleteAllKeys: (opts) => {
             return `删除此树及其所有键 (${opts.key})?`
         },
