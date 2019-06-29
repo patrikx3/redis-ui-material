@@ -20,6 +20,8 @@ p3xr.ng.component('p3xrMainStatistics', {
 
         this.hasDatabases = Object.keys($rootScope.p3xr.state.info.keyspaceDatabases).length > 0
 
+        //console.warn(p3xr.state.info)
+
         this.generateKey = (key) => {
             if (p3xr.strings.title.hasOwnProperty(key)) {
                 return p3xr.strings.title[key]
