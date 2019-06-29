@@ -13,7 +13,7 @@
             </md-button>
 
 
-            <md-input-container ng-if="$root.p3xr.state.connection.awsElastiCache !== true">
+            <md-input-container ng-if="$root.p3xr.state.connection.awsElastiCache !== true && $root.p3xr.state.connection.cluster !== true">
                 <md-tooltip md-direction="bottom">{{ $root.p3xr.strings.form.main.label.database }}</md-tooltip>
                 <md-select ng-model="$ctrl.currentDatabase"
                             aria-label="{{ $root.p3xr.strings.form.main.label.database }}" class="md-accent">
