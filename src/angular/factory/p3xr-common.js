@@ -75,7 +75,6 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootSco
         const {response} = options
 
         $rootScope.p3xr.state.info = p3xrRedisParser.info(response.info)
-        $rootScope.p3xr.state.infoObject = response.infoObject
 
         $rootScope.p3xr.state.keysRaw = response.keys
 
