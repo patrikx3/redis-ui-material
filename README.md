@@ -59,6 +59,9 @@ It is based on Socket.IO and AngularJs Material, uses themes light/dark schema a
 
 # For development standalone
 
+For file names do not use camelCase, but use kebab-case. Folder should be named as kebab-case as well. As you can see, all code filenames are using it like that, please do not change that.
+Please apply the `.editorconfig` settings in your IDE.
+
 Make sure that the server app is running at for development standalone:  
 https://github.com/patrikx3/redis-ui-server
 
