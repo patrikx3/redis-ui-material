@@ -3,7 +3,7 @@ p3xr.ng.factory('p3xrDialogTreecontrolSettings', function (p3xrCommon, $mdDialog
 
     return new function () {
 
-        this.show = async(options) => {
+        this.show = async (options) => {
 
             try {
                 await $mdDialog.show({
@@ -12,7 +12,7 @@ p3xr.ng.factory('p3xrDialogTreecontrolSettings', function (p3xrCommon, $mdDialog
                         $scope.model = {
                             treeSeparator: $rootScope.p3xr.settings.redisTreeDivider,
                             pageCount: $rootScope.p3xr.settings.pageCount,
-                            keysSort:  $rootScope.p3xr.settings.keysSort,
+                            keysSort: $rootScope.p3xr.settings.keysSort,
                             searchClientSide: $rootScope.p3xr.settings.searchClientSide,
                             searchStartsWith: $rootScope.p3xr.settings.searchStartsWith,
                         }
@@ -81,7 +81,7 @@ p3xr.ng.factory('p3xrDialogTreecontrolSettings', function (p3xrCommon, $mdDialog
                                 //$scope.options.type = 'edit';
                                 $mdDialog.cancel();
                                 $rootScope.$broadcast('p3x-refresh');
-                            } catch(e) {
+                            } catch (e) {
                                 p3xrCommon.generalHandleError(e)
                             }
 
@@ -94,8 +94,8 @@ p3xr.ng.factory('p3xrDialogTreecontrolSettings', function (p3xrCommon, $mdDialog
                     clickOutsideToClose: true,
                     fullscreen: true // Only for -xs, -sm breakpoints.
                 })
-               // console.warn(result)
-            } catch(error) {
+                // console.warn(result)
+            } catch (error) {
                 p3xrCommon.generalHandleError(error)
             }
         }

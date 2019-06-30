@@ -14,20 +14,25 @@
     </div>
 </div>
 
-<div layout-gt-xs="row" layout="column" layout-align="start start" ng-repeat="value in $ctrl.generatedValue" style="{{ $ctrl.setTableStyles({ $odd: $odd }) }}">
-    <div flex="20"  style="text-align: right" ng-click="$ctrl.editValue({ score: value[0], member: value[1], $event: $event})">
+<div layout-gt-xs="row" layout="column" layout-align="start start" ng-repeat="value in $ctrl.generatedValue"
+     style="{{ $ctrl.setTableStyles({ $odd: $odd }) }}">
+    <div flex="20" style="text-align: right"
+         ng-click="$ctrl.editValue({ score: value[0], member: value[1], $event: $event})">
 
         {{ value[0] }}
         &nbsp;
     </div>
-    <div flex="60" class="p3xr-pre" style="overflow: auto;align-items: flex-start; max-height: 200px;"  ng-click="$ctrl.editValue({ score: value[0], member: value[1], $event: $event})">{{ value[1] }}</div>
+    <div flex="60" class="p3xr-pre" style="overflow: auto;align-items: flex-start; max-height: 200px;"
+         ng-click="$ctrl.editValue({ score: value[0], member: value[1], $event: $event})">{{ value[1] }}
+    </div>
     <div flex="20" style="text-align: right; ">
         <md-button class="md-icon-button md-accent" ng-click="$ctrl.showJson({ value:  value[1]})">
             <md-tooltip>{{ $root.p3xr.strings.intention.jsonViewShow }}</md-tooltip>
             <md-icon>table_chart</md-icon>
         </md-button>
 
-        <md-button class="md-icon-button md-primary" ng-click="$ctrl.editValue({ score: value[0], member: value[1], $event: $event})">
+        <md-button class="md-icon-button md-primary"
+                   ng-click="$ctrl.editValue({ score: value[0], member: value[1], $event: $event})">
             <md-tooltip>{{ $root.p3xr.strings.intention.edit }}</md-tooltip>
             <md-icon>edit</md-icon>
         </md-button>

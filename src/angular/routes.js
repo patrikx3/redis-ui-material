@@ -32,7 +32,7 @@ const routes = ($stateProvider, $urlRouterProvider) => {
     $stateProvider.state('main.key', {
         url: '/key/:key',
         template: '<p3xr-main-key></p3xr-main-key>',
-        params : {
+        params: {
             resize: null,
         }
     });

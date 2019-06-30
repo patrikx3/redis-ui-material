@@ -5,12 +5,12 @@ p3xr.ng.component('p3xrMainKeyZset', {
         p3xrKey: '<',
         p3xrResponse: '<',
     },
-    controller: function($scope, p3xrCommon, p3xrSocket, p3xrDialogJsonView, p3xrDialogKeyNewOrSet, $rootScope) {
-        const generateHashFromRedisSortedSet = (value, ) => {
+    controller: function ($scope, p3xrCommon, p3xrSocket, p3xrDialogJsonView, p3xrDialogKeyNewOrSet, $rootScope) {
+        const generateHashFromRedisSortedSet = (value,) => {
 
             const generatedValue = [];
             let savedValue = undefined;
-            for(let item of value) {
+            for (let item of value) {
                 if (savedValue === undefined) {
                     savedValue = item;
                 } else {
@@ -35,7 +35,7 @@ p3xr.ng.component('p3xrMainKeyZset', {
 
 
         this.showJson = (options) => {
-            const { value } = options;
+            const {value} = options;
             p3xrDialogJsonView.show({
                 value: value
             })
@@ -45,7 +45,7 @@ p3xr.ng.component('p3xrMainKeyZset', {
             return p3xrCommon.setTableZebraStyles(options)
         }
 
-        this.addZSet = async(options) => {
+        this.addZSet = async (options) => {
             try {
                 await p3xrDialogKeyNewOrSet.show({
                     type: 'append',
@@ -56,7 +56,7 @@ p3xr.ng.component('p3xrMainKeyZset', {
                     }
                 })
                 $rootScope.$broadcast('p3x-refresh-key');
-            } catch(e) {
+            } catch (e) {
                 p3xrCommon.generalHandleError(e)
             }
         }
@@ -76,14 +76,14 @@ p3xr.ng.component('p3xrMainKeyZset', {
                     }
                 })
                 $rootScope.$broadcast('p3x-refresh-key');
-            } catch(e) {
+            } catch (e) {
                 p3xrCommon.generalHandleError(e)
             }
         }
 
         this.editValue = async (options) => {
             try {
-                const { member } = options
+                const {member} = options
                 await p3xrDialogKeyNewOrSet.show({
                     type: 'edit',
                     $event: options.$event,
@@ -95,11 +95,10 @@ p3xr.ng.component('p3xrMainKeyZset', {
                     }
                 })
                 $rootScope.$broadcast('p3x-refresh-key');
-            } catch(e) {
+            } catch (e) {
                 p3xrCommon.generalHandleError(e)
             }
         }
-
 
 
     }

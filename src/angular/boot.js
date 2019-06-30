@@ -15,7 +15,7 @@ require('angular-tree-control/context-menu')
 
 require('angular-json-tree')
 
-p3xr.ng =  angular.module('p3xr-redis-ui', [
+p3xr.ng = angular.module('p3xr-redis-ui', [
     'ngCookies',
     'ngAnimate',
     'ngAria',
@@ -25,8 +25,7 @@ p3xr.ng =  angular.module('p3xr-redis-ui', [
     'ui.router',
     'treeControl',
     'angular-json-tree',
-] );
-
+]);
 
 
 require('./injector')
@@ -62,8 +61,8 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
     }
 
     $rootScope.locationReload = () => {
-       // $state.go('main')
-       // location.reload()
+        // $state.go('main')
+        // location.reload()
         location.href = '/'
     }
 
@@ -185,7 +184,7 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
             //console.warn('expandedNodes get', expandedNodes)
             return expandedNodes
         },
-        set: (value) =>  {
+        set: (value) => {
             //console.warn('expandedNodes set', expandedNodes)
             expandedNodes = value
         }
@@ -203,15 +202,14 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
     })
 
 
-
     $rootScope.keysTreeRendered = []
     let keysTree
     Object.defineProperty($rootScope, 'keysTree', {
         get: () => {
             //const startNow = Date.now()
-            if (JSON.stringify(keysTree) !== JSON.stringify(p3xr.state.keys) || $rootScope.p3xr.state.redisChanged === true ) {
+            if (JSON.stringify(keysTree) !== JSON.stringify(p3xr.state.keys) || $rootScope.p3xr.state.redisChanged === true) {
                 $rootScope.p3xr.state.redisChanged = false
-                $rootScope.keysTreeRendered =  p3xrRedisParser.keysToTreeControl({
+                $rootScope.keysTreeRendered = p3xrRedisParser.keysToTreeControl({
                     keys: p3xr.state.keys,
                 })
                 keysTree = p3xr.state.keys
@@ -236,7 +234,7 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
                     globalKeysRaw = globalKeysRaw.filter(keyRaw => {
                         return keyRaw.startsWith($rootScope.p3xr.state.search)
                     })
-                 } else {
+                } else {
                     //console.log('includes')
                     globalKeysRaw = globalKeysRaw.filter(keyRaw => {
                         return keyRaw.includes($rootScope.p3xr.state.search)
@@ -247,7 +245,7 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
                 return globalKeysRaw
             } else {
                 //console.log('new scope change',  ($rootScope.p3xr.state.page -1) * $rootScope.p3xr.settings.pageCount, $rootScope.p3xr.settings.pageCount)
-                const start = ($rootScope.p3xr.state.page -1) * $rootScope.p3xr.settings.pageCount
+                const start = ($rootScope.p3xr.state.page - 1) * $rootScope.p3xr.settings.pageCount
                 const keys = globalKeysRaw.slice(start, start + $rootScope.p3xr.settings.pageCount)
                 //console.warn('parse keys', ((Date.now() - startNow)) / 1000)
                 return keys

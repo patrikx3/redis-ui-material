@@ -1,14 +1,17 @@
 <div ng-class="{ 'p3xr-accordion-electron': $root.isElectron }">
-    <md-toolbar class="md-accent" md-theme="{{ $root.p3xr.state.themeLayout}}" md-whiteframe="{{ $ctrl.extended ? -1 : 1 }}">
+    <md-toolbar class="md-accent" md-theme="{{ $root.p3xr.state.themeLayout}}"
+                md-whiteframe="{{ $ctrl.extended ? -1 : 1 }}">
         <div class="md-toolbar-tools">
-            <h2 flex md-truncate>{{  $ctrl.p3xrTitle }}</h2>
+            <h2 flex md-truncate>{{ $ctrl.p3xrTitle }}</h2>
 
 
             <span ng-if="$ctrl.transcludePresent('actions')" ng-transclude="actions"></span>
 
             <md-button class="md-icon-button" ng-click="$ctrl.extended = !$ctrl.extended">
                 <md-icon>{{ !$ctrl.extended ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</md-icon>
-                <md-tooltip>{{ !$ctrl.extended  ? $root.p3xr.strings.intention.extend : $root.p3xr.strings.intention.collapse}}</md-tooltip>
+                <md-tooltip>{{ !$ctrl.extended ? $root.p3xr.strings.intention.extend :
+                    $root.p3xr.strings.intention.collapse}}
+                </md-tooltip>
             </md-button>
             </span>
         </div>

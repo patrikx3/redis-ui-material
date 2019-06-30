@@ -18,7 +18,7 @@ p3xr.ng.directive('p3xValidateJson', function () {
                     try {
                         JSON.parse(globalValue)
                         ngModel.$setValidity('p3xValidateJson', true);
-                    } catch(e) {
+                    } catch (e) {
                         ngModel.$setValidity('p3xValidateJson', false);
                     }
                 }
@@ -34,7 +34,7 @@ p3xr.ng.directive('p3xValidateJson', function () {
                     JSON.parse(modelValue)
                     ngModel.$setValidity('p3xValidateJson', true);
                     return true
-                } catch(e) {
+                } catch (e) {
                     ngModel.$setValidity('p3xValidateJson', false);
                     return false
                 }

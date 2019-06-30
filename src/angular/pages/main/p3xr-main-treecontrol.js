@@ -4,7 +4,7 @@ p3xr.ng.component('p3xrMainTree', {
         p3xrResize: '&',
         p3xrMainRef: '<'
     },
-    controller: function(p3xrCommon, p3xrRedisParser, p3xrSocket, $rootScope, $timeout,  $state, $scope, $mdDialog, p3xrDialogKeyNewOrSet, p3xrTheme, $stateParams) {
+    controller: function (p3xrCommon, p3xrRedisParser, p3xrSocket, $rootScope, $timeout, $state, $scope, $mdDialog, p3xrDialogKeyNewOrSet, p3xrTheme, $stateParams) {
 
         this.$onInit = () => {
             this.p3xrResize()
@@ -12,7 +12,7 @@ p3xr.ng.component('p3xrMainTree', {
         }
 
         this.getTreeTheme = () => {
-            if (!p3xrTheme.isDark())  {
+            if (!p3xrTheme.isDark()) {
                 return 'tree-classic'
             }
             return 'tree-dark'
@@ -36,17 +36,17 @@ p3xr.ng.component('p3xrMainTree', {
              */
         };
 
-        this.selectTreeNode = function(node, selected, $parentNode, $index, $first, $middle, $last, $odd, $even, $path)  {
+        this.selectTreeNode = function (node, selected, $parentNode, $index, $first, $middle, $last, $odd, $even, $path) {
             //console.warn('selectTreeNode', arguments)
             $state.go('main.key', {
                 key: node.key,
-                resize:  this.p3xrResize,
+                resize: this.p3xrResize,
             })
         }
 
 
-        this.showToggle = function(node, expanded, $parentNode, $index, $first, $middle, $last, $odd, $even, $path)  {
-          //  console.warn('showToggle', arguments, $path())
+        this.showToggle = function (node, expanded, $parentNode, $index, $first, $middle, $last, $odd, $even, $path) {
+            //  console.warn('showToggle', arguments, $path())
             /*
             p3xrCommon.toast({
                 message: 'key ' + node.key
@@ -54,7 +54,7 @@ p3xr.ng.component('p3xrMainTree', {
             */
         }
 
-        this.delete = async(options) => {
+        this.delete = async (options) => {
             try {
 
                 await p3xrCommon.confirm({
@@ -72,7 +72,7 @@ p3xr.ng.component('p3xrMainTree', {
 
                 $timeout(() => {
                     $rootScope.savedExpandedNodes = expandedNodes
-                    p3xrCommon.loadRedisInfoResponse({ response: response})
+                    p3xrCommon.loadRedisInfoResponse({response: response})
                 })
 
                 $state.go('main.statistics')
@@ -82,14 +82,14 @@ p3xr.ng.component('p3xrMainTree', {
                         key: options.key
                     })
                 })
-            } catch(e) {
+            } catch (e) {
                 p3xrCommon.generalHandleError(e)
             }
 
         }
 
 
-        this.rename = async(options) => {
+        this.rename = async (options) => {
             try {
                 const confirm = $mdDialog.prompt()
                     .title(p3xr.strings.confirm.rename.title)
@@ -116,27 +116,26 @@ p3xr.ng.component('p3xrMainTree', {
 
                 $timeout(() => {
                     $rootScope.savedExpandedNodes = expandedNodes
-                    p3xrCommon.loadRedisInfoResponse({ response: response})
+                    p3xrCommon.loadRedisInfoResponse({response: response})
                     $state.go('main.key', {
                         key: confirmResponse,
-                        resize:  this.p3xrResize,
+                        resize: this.p3xrResize,
                     })
                 })
-
 
 
                 p3xrCommon.toast({
                     message: p3xr.strings.status.renamedKey
                 })
-            } catch(e) {
+            } catch (e) {
                 p3xrCommon.generalHandleError(e)
             }
 
         }
 
-        this.deleteTree = async(options) => {
+        this.deleteTree = async (options) => {
             try {
-                const { event, node} = options
+                const {event, node} = options
                 // event.preventDefault()
                 event.stopPropagation();
 
@@ -160,7 +159,7 @@ p3xr.ng.component('p3xrMainTree', {
 
                 $timeout(() => {
                     $rootScope.savedExpandedNodes = expandedNodes
-                    p3xrCommon.loadRedisInfoResponse({ response: response})
+                    p3xrCommon.loadRedisInfoResponse({response: response})
 
                     if ($stateParams.key !== undefined && $stateParams.key.startsWith(node.key + p3xr.settings.redisTreeDivider)) {
                         $state.go('main.statistics')
@@ -172,7 +171,7 @@ p3xr.ng.component('p3xrMainTree', {
                         key: node.key
                     })
                 })
-            } catch(e) {
+            } catch (e) {
                 p3xrCommon.generalHandleError(e)
             }
         }
@@ -182,14 +181,14 @@ p3xr.ng.component('p3xrMainTree', {
                 if (node.keysInfo === undefined) {
                     return '';
                 }
-                return p3xr.ui.htmlEncode(p3xr.strings.redisTypes[node.keysInfo.type ]+ ' - ' + node.key)
+                return p3xr.ui.htmlEncode(p3xr.strings.redisTypes[node.keysInfo.type] + ' - ' + node.key)
             }
             return p3xr.ui.htmlEncode(node.key)
         }
 
 
         this.addKey = async (options) => {
-            const { event, node} = options
+            const {event, node} = options
             event.stopPropagation();
 
             const expandedNodes = angular.copy($rootScope.expandedNodes);
@@ -203,18 +202,17 @@ p3xr.ng.component('p3xrMainTree', {
 
                 $timeout(() => {
                     $rootScope.savedExpandedNodes = expandedNodes
-                    p3xrCommon.loadRedisInfoResponse({ response: response})
+                    p3xrCommon.loadRedisInfoResponse({response: response})
 
                     $state.go('main.key', {
                         key: response.key,
-                        resize:  this.p3xrResize,
+                        resize: this.p3xrResize,
                     })
                 })
-            } catch(e) {
+            } catch (e) {
                 p3xrCommon.generalHandleError(e)
             }
         }
-
 
 
         $scope.$on('p3xr-key-delete', (event, arg) => {

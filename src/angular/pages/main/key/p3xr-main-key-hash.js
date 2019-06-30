@@ -5,7 +5,7 @@ p3xr.ng.component('p3xrMainKeyHash', {
         p3xrKey: '<',
         p3xrResponse: '<',
     },
-    controller: function(p3xrCommon, p3xrSocket, p3xrDialogJsonView, p3xrDialogKeyNewOrSet, $rootScope) {
+    controller: function (p3xrCommon, p3xrSocket, p3xrDialogJsonView, p3xrDialogKeyNewOrSet, $rootScope) {
 
         this.addHash = async (options) => {
 
@@ -19,7 +19,7 @@ p3xr.ng.component('p3xrMainKeyHash', {
                     }
                 })
                 $rootScope.$broadcast('p3x-refresh-key');
-            } catch(e) {
+            } catch (e) {
                 p3xrCommon.generalHandleError(e)
             }
         }
@@ -38,14 +38,14 @@ p3xr.ng.component('p3xrMainKeyHash', {
                     }
                 })
                 $rootScope.$broadcast('p3x-refresh-key');
-            } catch(e) {
+            } catch (e) {
                 p3xrCommon.generalHandleError(e)
             }
         }
 
         this.editValue = async (options) => {
             try {
-                const { hashKey, value } = options
+                const {hashKey, value} = options
                 await p3xrDialogKeyNewOrSet.show({
                     type: 'edit',
                     $event: options.$event,
@@ -57,14 +57,14 @@ p3xr.ng.component('p3xrMainKeyHash', {
                     }
                 })
                 $rootScope.$broadcast('p3x-refresh-key');
-            } catch(e) {
+            } catch (e) {
                 p3xrCommon.generalHandleError(e)
             }
         }
 
 
         this.showJson = (options) => {
-            const { value } = options;
+            const {value} = options;
             p3xrDialogJsonView.show({
                 value: value
             })

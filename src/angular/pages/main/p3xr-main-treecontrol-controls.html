@@ -26,7 +26,8 @@
         <md-icon>keyboard_arrow_left</md-icon>
     </md-button>
 
-    <p3xr-input type="number" style="width: 48px" step="1" min="1" ng-maxlength="$root.p3xr.state.pages" ng-change="$ctrl.pageChange()" ng-model="$root.p3xr.state.page"></p3xr-input> / {{ $root.p3xr.state.pages }}
+    <p3xr-input type="number" style="width: 48px" step="1" min="1" ng-maxlength="$root.p3xr.state.pages"
+                ng-change="$ctrl.pageChange()" ng-model="$root.p3xr.state.page"></p3xr-input> / {{ $root.p3xr.state.pages }}
 
     <md-button class="md-icon-button" aria-label="" ng-click="$ctrl.page({ page: 'next' })">
         <md-tooltip>{{ $root.p3xr.strings.page.treeControls.pager.next}}</md-tooltip>
@@ -47,7 +48,11 @@
 -->
 
 <div class="p3xr-main-treecontrol-controls-search">
-    <p3xr-input placeholder="{{ $root.p3xr.settings.searchClientSide ? $root.p3xr.strings.page.treeControls.search.placeholderClient : $root.p3xr.strings.page.treeControls.search.placeholderServer }}"  ng-model="$ctrl.search" ng-class="{ 'withSearch': $ctrl.search.length > 0, 'withoutSearch': $ctrl.search.length  === 0}" ng-enter="$ctrl.onSearchChange()"></p3xr-input>
+    <p3xr-input
+        placeholder="{{ $root.p3xr.settings.searchClientSide ? $root.p3xr.strings.page.treeControls.search.placeholderClient : $root.p3xr.strings.page.treeControls.search.placeholderServer }}"
+        ng-model="$ctrl.search"
+        ng-class="{ 'withSearch': $ctrl.search.length > 0, 'withoutSearch': $ctrl.search.length  === 0}"
+        ng-enter="$ctrl.onSearchChange()"></p3xr-input>
     <md-tooltip md-direction="top">{{ $root.p3xr.strings.page.treeControls.search.infoDetails }}</md-tooltip>
 
     <md-button class="md-icon-button md-primary" aria-label="" ng-click="$ctrl.onSearchChange()">
@@ -55,7 +60,7 @@
         <md-icon>search</md-icon>
     </md-button>
 
-    <span ng-if="$ctrl.search.length > 0" >
+    <span ng-if="$ctrl.search.length > 0">
 
         <md-button class="md-icon-button md-primary" aria-label="" ng-click="$ctrl.search = ''; $ctrl.onSearchChange()">
             <md-tooltip>{{ $root.p3xr.strings.page.treeControls.search.clear}}</md-tooltip>
@@ -65,6 +70,7 @@
 
     <span>
         <md-tooltip>{{ $root.p3xr.strings.intention.addKeyRoot }}</md-tooltip>
-        <md-icon ng-click="$ctrl.p3xrMainRef.addKey({event: $event})" md-theme="{{ $root.p3xr.state.themeCommon }}" class="md-primary">add</md-icon>
+        <md-icon ng-click="$ctrl.p3xrMainRef.addKey({event: $event})" md-theme="{{ $root.p3xr.state.themeCommon }}"
+                 class="md-primary">add</md-icon>
     </span>
 </div>

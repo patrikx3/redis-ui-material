@@ -5,12 +5,12 @@ p3xr.ng.component('p3xrMainKeyList', {
         p3xrKey: '<',
         p3xrResponse: '<',
     },
-    controller: function($mdColors, p3xrCommon, p3xrSocket, $rootScope, p3xrDialogJsonView, p3xrDialogKeyNewOrSet) {
+    controller: function ($mdColors, p3xrCommon, p3xrSocket, $rootScope, p3xrDialogJsonView, p3xrDialogKeyNewOrSet) {
 
         this.appendValue = async (options) => {
 
             try {
-                const { index, value } = options
+                const {index, value} = options
                 await p3xrDialogKeyNewOrSet.show({
                     type: 'append',
                     $event: options.$event,
@@ -20,17 +20,16 @@ p3xr.ng.component('p3xrMainKeyList', {
                     }
                 })
                 $rootScope.$broadcast('p3x-refresh-key');
-            } catch(e) {
+            } catch (e) {
                 p3xrCommon.generalHandleError(e)
             }
         }
 
 
-
         this.editValue = async (options) => {
 
             try {
-                const { index, value } = options
+                const {index, value} = options
                 await p3xrDialogKeyNewOrSet.show({
                     type: 'edit',
                     $event: options.$event,
@@ -42,7 +41,7 @@ p3xr.ng.component('p3xrMainKeyList', {
                     }
                 })
                 $rootScope.$broadcast('p3x-refresh-key');
-            } catch(e) {
+            } catch (e) {
                 p3xrCommon.generalHandleError(e)
             }
         }
@@ -62,13 +61,13 @@ p3xr.ng.component('p3xrMainKeyList', {
                     }
                 })
                 $rootScope.$broadcast('p3x-refresh-key');
-            } catch(e) {
+            } catch (e) {
                 p3xrCommon.generalHandleError(e)
             }
         }
 
         this.showJson = (options) => {
-            const { value } = options;
+            const {value} = options;
             p3xrDialogJsonView.show({
                 value: value
             })
@@ -76,7 +75,7 @@ p3xr.ng.component('p3xrMainKeyList', {
 
         this.setTableStyles = (options) => {
             return p3xrCommon.setTableZebraStyles(options)
-         }
+        }
     }
 })
 

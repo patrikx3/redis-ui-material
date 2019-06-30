@@ -3,7 +3,7 @@ p3xr.ng.component('p3xrMainTreecontrolControls', {
     bindings: {
         p3xrMainRef: '<'
     },
-    controller: function($cookies, $rootScope, p3xrCommon, $timeout, p3xrDialogTreecontrolSettings) {
+    controller: function ($cookies, $rootScope, p3xrCommon, $timeout, p3xrDialogTreecontrolSettings) {
 
         this.treeExpandAll = () => {
             try {
@@ -15,17 +15,17 @@ p3xr.ng.component('p3xrMainTreecontrolControls', {
                 const recursiveFolders = (node, level = 0) => {
                     if (node.type === 'folder') {
                         expandedNodes.push(node)
-                        for(let childNode of node.children) {
+                        for (let childNode of node.children) {
                             recursiveFolders(childNode, level++)
                         }
                     }
                 }
-                for(let node of $rootScope.keysTreeRendered) {
+                for (let node of $rootScope.keysTreeRendered) {
                     recursiveFolders(node)
                 }
                 $rootScope.expandedNodes = expandedNodes
 
-            } catch(e) {
+            } catch (e) {
                 p3xrCommon.generalHandleError(e)
             } finally {
                 p3xr.ui.overlay.hide()
@@ -44,9 +44,9 @@ p3xr.ng.component('p3xrMainTreecontrolControls', {
         this.page = (options) => {
 
 
-            const { page } = options
-           ///console.log(page )
-            switch(page) {
+            const {page} = options
+            ///console.log(page )
+            switch (page) {
                 case 'prev':
                     if ($rootScope.p3xr.state.page - 1 >= 1) {
                         $rootScope.p3xr.state.page = $rootScope.p3xr.state.page - 1

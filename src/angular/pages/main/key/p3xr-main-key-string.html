@@ -2,7 +2,9 @@
     <md-button class="md-button md-raised md-accent" ng-click="$ctrl.jsonViewer({ $event: $event})">
         <md-icon>table_chart</md-icon>
         <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.jsonViewShow }}</span>
-        <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{ $root.p3xr.strings.intention.jsonViewShow }}</md-tooltip>
+        <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{
+            $root.p3xr.strings.intention.jsonViewShow }}
+        </md-tooltip>
     </md-button>
 
     <span ng-if="!$ctrl.editable">
@@ -31,8 +33,9 @@
 </div>
 
 
-
-<div class="p3xr-pre" style="max-width: 100%; overflow: auto;" ng-click="$ctrl.edit()" ng-if="!$ctrl.editable">{{ $ctrl.p3xrValue }}</div>
+<div class="p3xr-pre" style="max-width: 100%; overflow: auto;" ng-click="$ctrl.edit()" ng-if="!$ctrl.editable">{{
+    $ctrl.p3xrValue }}
+</div>
 
 <div ng-if="$ctrl.editable">
     <md-switch ng-model="$ctrl.validateJson" class="md-accent" style="float: right;">

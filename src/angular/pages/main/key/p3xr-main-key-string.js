@@ -5,7 +5,7 @@ p3xr.ng.component('p3xrMainKeyString', {
         p3xrKey: '<',
         p3xrResponse: '<',
     },
-    controller: function(p3xrSocket, p3xrCommon, $rootScope, p3xrDialogJsonView) {
+    controller: function (p3xrSocket, p3xrCommon, $rootScope, p3xrDialogJsonView) {
 
 
         this.editable = false;
@@ -28,7 +28,7 @@ p3xr.ng.component('p3xrMainKeyString', {
                 if (this.validateJson === true) {
                     try {
                         JSON.parse(this.p3xrValue)
-                    } catch(e) {
+                    } catch (e) {
                         p3xrCommon.toast({
                             message: p3xr.strings.label.jsonViewNotParsable
                         })
@@ -46,7 +46,7 @@ p3xr.ng.component('p3xrMainKeyString', {
                 })
                 this.editable = false
                 $rootScope.$broadcast('p3x-refresh-key');
-            } catch(e) {
+            } catch (e) {
                 p3xrCommon.generalHandleError(e)
             }
         }

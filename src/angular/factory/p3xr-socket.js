@@ -42,7 +42,7 @@ p3xr.ng.factory('p3xrSocket', function ($rootScope, p3xrCommon, $state) {
                     message: p3xr.strings.confirm.socketioConnectError
                 })
                 location.reload()
-            } catch(e) {
+            } catch (e) {
                 p3xrCommon.generalHandleError(e)
             }
         }
@@ -62,7 +62,7 @@ p3xr.ng.factory('p3xrSocket', function ($rootScope, p3xrCommon, $state) {
         $rootScope.$digest()
     })
 
-    ioClient.on('redis-disconnected', async(data) => {
+    ioClient.on('redis-disconnected', async (data) => {
         if ($rootScope.p3xr.state.connection !== undefined && $rootScope.p3xr.state.connection.id === data.connectionId) {
             $rootScope.p3xr.state.connection = undefined;
 
@@ -89,7 +89,7 @@ p3xr.ng.factory('p3xrSocket', function ($rootScope, p3xrCommon, $state) {
                     action: 'trigger-redis-disconnect',
                     enableResponse: false,
                 })
-            } catch(e) {
+            } catch (e) {
                 p3xrCommon.generalHandleError(e)
             }
 
@@ -116,7 +116,7 @@ p3xr.ng.factory('p3xrSocket', function ($rootScope, p3xrCommon, $state) {
     ioClient.on('error', p3xrCommon.generalHandleError)
 
     const request = (options) => {
-        let { enableResponse } = options
+        let {enableResponse} = options
         if (enableResponse !== false) {
             enableResponse = true
         }

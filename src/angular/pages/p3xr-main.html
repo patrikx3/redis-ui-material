@@ -7,16 +7,18 @@
         </h2>
         <span ng-if="$root.p3xr.state.connection !== undefined">
 
-            <md-button class="md-icon-button md-primary" aria-label="{{ $root.p3xr.strings.intention.save }}" ng-click="$ctrl.save()" ng-if="$root.p3xr.state.connection.awsElastiCache !== true">
+            <md-button class="md-icon-button md-primary" aria-label="{{ $root.p3xr.strings.intention.save }}"
+                       ng-click="$ctrl.save()" ng-if="$root.p3xr.state.connection.awsElastiCache !== true">
                 <md-icon>save</md-icon>
                 <md-tooltip md-direction="bottom">{{ $root.p3xr.strings.intention.save }}</md-tooltip>
             </md-button>
 
 
-            <md-input-container ng-if="$root.p3xr.state.connection.awsElastiCache !== true && $root.p3xr.state.connection.cluster !== true">
+            <md-input-container
+                ng-if="$root.p3xr.state.connection.awsElastiCache !== true && $root.p3xr.state.connection.cluster !== true">
                 <md-tooltip md-direction="bottom">{{ $root.p3xr.strings.form.main.label.database }}</md-tooltip>
                 <md-select ng-model="$ctrl.currentDatabase"
-                            aria-label="{{ $root.p3xr.strings.form.main.label.database }}" class="md-accent">
+                           aria-label="{{ $root.p3xr.strings.form.main.label.database }}" class="md-accent">
                     <md-option ng-repeat="dbIndex in $root.p3xr.state.databaseIndexes" ng-value="dbIndex"
                                ng-click="$ctrl.selectDatabase(dbIndex)">
                         <span ng-if="$root.p3xr.state.info.keyspaceDatabases[dbIndex]">
@@ -31,17 +33,20 @@
             </md-input-container>
 
 
-            <md-button class="md-icon-button md-primary" aria-label="{{ $root.p3xr.strings.intention.statistics }}" ng-click="$ctrl.statistics()">
+            <md-button class="md-icon-button md-primary" aria-label="{{ $root.p3xr.strings.intention.statistics }}"
+                       ng-click="$ctrl.statistics()">
                 <md-icon>show_chart</md-icon>
                 <md-tooltip md-direction="bottom">{{ $root.p3xr.strings.intention.statistics }}</md-tooltip>
             </md-button>
 
-            <md-button class="md-icon-button md-primary" aria-label="{{ $root.p3xr.strings.intention.console }}" ui-sref="console">
+            <md-button class="md-icon-button md-primary" aria-label="{{ $root.p3xr.strings.intention.console }}"
+                       ui-sref="console">
                     <md-icon>keyboard</md-icon>
                 <md-tooltip md-direction="bottom">{{ $root.p3xr.strings.intention.console }}</md-tooltip>
             </md-button>
 
-            <md-button class="md-icon-button md-primary" aria-label="{{ $root.p3xr.strings.intention.refresh }}" ng-click="$ctrl.refresh()">
+            <md-button class="md-icon-button md-primary" aria-label="{{ $root.p3xr.strings.intention.refresh }}"
+                       ng-click="$ctrl.refresh()">
                 <md-icon>refresh</md-icon>
                 <md-tooltip md-direction="bottom">{{ $root.p3xr.strings.intention.refresh }}</md-tooltip>
             </md-button>
@@ -70,10 +75,15 @@
     <div ng-if="$root.p3xr.state.connection !== undefined">
 
         <p3xr-undefined hide-xs>
-            <p3xr-main-treecontrol-controls id="p3xr-main-treecontrol-controls-container" p3xr-main-ref="$ctrl"  ></p3xr-main-treecontrol-controls>
-            <p3xr-main-tree id="p3xr-main-treecontrol-container"  p3xr-resize="$ctrl.resize()" p3xr-main-ref="$ctrl"></p3xr-main-tree>
-            <div id="p3xr-main-content-sizer" md-colors="{ background: resizerColor }" md-theme="{{ $root.p3xr.state.themeLayout}}">
-                <md-tooltip md-direction="top">{{ $root.p3xr.strings.label.resizerInfo({ width: $root.p3xr.settings.resizeMinWidth}) }}</md-tooltip>
+            <p3xr-main-treecontrol-controls id="p3xr-main-treecontrol-controls-container"
+                                            p3xr-main-ref="$ctrl"></p3xr-main-treecontrol-controls>
+            <p3xr-main-tree id="p3xr-main-treecontrol-container" p3xr-resize="$ctrl.resize()"
+                            p3xr-main-ref="$ctrl"></p3xr-main-tree>
+            <div id="p3xr-main-content-sizer" md-colors="{ background: resizerColor }"
+                 md-theme="{{ $root.p3xr.state.themeLayout}}">
+                <md-tooltip md-direction="top">{{ $root.p3xr.strings.label.resizerInfo({ width:
+                    $root.p3xr.settings.resizeMinWidth}) }}
+                </md-tooltip>
             </div>
             <div id="p3xr-main-content-container">
                 <ui-view>
@@ -82,13 +92,13 @@
         </p3xr-undefined>
 
         <div layout="column" ng-if="$root.$mdMedia('xs')">
-            <p3xr-main-treecontrol-controls  p3xr-main-ref="$ctrl" flex></p3xr-main-treecontrol-controls>
-            <p3xr-main-tree flex id="p3xr-main-treecontrol-container-directive-small" p3xr-resize="$ctrl.resize()" p3xr-main-ref="$ctrl"></p3xr-main-tree>
+            <p3xr-main-treecontrol-controls p3xr-main-ref="$ctrl" flex></p3xr-main-treecontrol-controls>
+            <p3xr-main-tree flex id="p3xr-main-treecontrol-container-directive-small" p3xr-resize="$ctrl.resize()"
+                            p3xr-main-ref="$ctrl"></p3xr-main-tree>
             <ui-view flex>
             </ui-view>
-            </div>
         </div>
-
+    </div>
 
 
     </div>

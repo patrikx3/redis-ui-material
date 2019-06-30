@@ -102,12 +102,12 @@ const strings = {
         validateJson: 'Validate JSON',
         reducedFunction: `Reduced functionality`,
         tooManyKeys: (opts) => {
-          return `For the full maximum functions allowed keys total is ${opts.maxLightKeysCount} count. This database has over the allowed keys in total ${opts.count}. The key sorting and the additional fancy tree information is disabled. The searching is happening only on the server instead the client search.`;
+            return `For the full maximum functions allowed keys total is ${opts.maxLightKeysCount} count. This database has over the allowed keys in total ${opts.count}. The key sorting and the additional fancy tree information is disabled. The searching is happening only on the server instead the client search.`;
         },
         redisCommandNotFound: 'No Redis command match found ...',
         treeKeyStore: `The sorting (natural compare) is executed on the client aka the browser, which means it has a penalty for big large sets, like over 10k keys, it might add a little time to the page rendering. There is no key sorting in Redis, only like this.`,
         socketIoTimeout: (options) => {
-          return `The Socket.IO timed out for this request (max ${options.timeout/1000} seconds) ...`;
+            return `The Socket.IO timed out for this request (max ${options.timeout / 1000} seconds) ...`;
         },
         resizerInfo: (options) => {
             return `Left or right panel minimum width is ${options.width}px`
@@ -135,8 +135,8 @@ const strings = {
             off: 'AWS ElastiCache off',
         },
         cluster: {
-            on: 'Cluster on' ,
-            off: 'Cluster off' ,
+            on: 'Cluster on',
+            off: 'Cluster off',
         },
         treeSettingsPageCount: 'If the paging is over 100 / page and you do not use smart tree divider, it could cause a performance penalty, because of the nature of AngularJs. But! If you use trees (with tree divider), then you can have bigger page / element and the browser will not freeze for a little time.',
         theme: {
@@ -215,7 +215,7 @@ const strings = {
         },
         treeSettings: {
             keyCount: () => {
-              return `Number of keys: ${p3xr.state.keysRaw.length}`
+                return `Number of keys: ${p3xr.state.keysRaw.length}`
             },
             label: {
                 formName: 'Tree settings',

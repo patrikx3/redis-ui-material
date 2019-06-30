@@ -34,8 +34,7 @@ p3xr.settings = {
         defaultLanguage: 'en',
         current: undefined,
         cookieName: 'p3xr-language',
-        translation: {
-        }
+        translation: {}
     },
     pageCount: 50,
     keySortInfo: {

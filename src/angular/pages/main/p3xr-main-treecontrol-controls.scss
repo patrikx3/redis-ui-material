@@ -18,9 +18,11 @@ p3xr-main-treecontrol-controls {
         clear: both;
         text-align: left;
         padding: 5px;
+
         input.withSearch {
             width: calc(100% - 100px) !important;
         }
+
         input.withoutSearch {
             width: calc(100% - 80px) !important;
         }

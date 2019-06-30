@@ -1,5 +1,5 @@
 let counter = 0
-p3xr.ui.overlay = new function() {
+p3xr.ui.overlay = new function () {
     const template = (options = {}) => {
 
         return `

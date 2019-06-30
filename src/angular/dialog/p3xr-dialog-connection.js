@@ -3,7 +3,7 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
 
     return new function () {
 
-        this.show = async(options) => {
+        this.show = async (options) => {
 
             try {
                 const result = await $mdDialog.show({
@@ -31,7 +31,7 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                             $scope.model.nodes = []
                         }
 
-                        for(let node of $scope.model.nodes) {
+                        for (let node of $scope.model.nodes) {
                             node.password = node.id
                         }
 
@@ -82,7 +82,7 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                             }
                         }
 
-                        $scope.removeNode = async(ev, index) => {
+                        $scope.removeNode = async (ev, index) => {
                             try {
                                 await p3xrCommon.confirm({
                                     event: ev,
@@ -94,7 +94,7 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                                     message: p3xr.strings.status.nodeRemoved
                                 })
 
-                            } catch(e) {
+                            } catch (e) {
                                 if (error === undefined) {
                                     /*
                                     p3xrCommon.toast({
@@ -107,7 +107,7 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                             }
                         }
 
-                        $scope.testConnection = async() => {
+                        $scope.testConnection = async () => {
                             $scope.p3xrConnectionForm.$setSubmitted();
 
                             if (!handleInvalidForm()) {
@@ -125,7 +125,7 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                                 p3xrCommon.toast({
                                     message: p3xr.strings.status.redisConnected
                                 })
-                            } catch(e) {
+                            } catch (e) {
                                 p3xrCommon.generalHandleError(e)
                             }
 
@@ -145,7 +145,7 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                             if (options.type === 'new') {
                                 $scope.model.id = p3xr.nextId()
                             }
-                            for(let node of $scope.model.nodes) {
+                            for (let node of $scope.model.nodes) {
                                 if (node.host === undefined) {
                                     node.host = 'localhost'
                                 }
@@ -158,7 +158,6 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                             try {
 
 
-
                                 const response = await p3xrSocket.request({
                                     action: 'connection-save',
                                     payload: {
@@ -166,12 +165,12 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                                     },
                                 })
                                 p3xrCommon.toast({
-                                    message: $scope.options.type  === 'new' ? p3xr.strings.status.added : p3xr.strings.status.saved
+                                    message: $scope.options.type === 'new' ? p3xr.strings.status.added : p3xr.strings.status.saved
                                 })
                                 //$scope.options.type = 'edit';
                                 $mdDialog.cancel();
 
-                            } catch(e) {
+                            } catch (e) {
                                 p3xrCommon.generalHandleError(e)
                             }
 
@@ -184,8 +183,8 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                     clickOutsideToClose: true,
                     fullscreen: true // Only for -xs, -sm breakpoints.
                 })
-               // console.warn(result)
-            } catch(error) {
+                // console.warn(result)
+            } catch (error) {
                 p3xrCommon.generalHandleError(error)
             }
         }

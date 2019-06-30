@@ -44,7 +44,7 @@ p3xr.ng.component('p3xrLayout', {
         }
 
         this.$onInit = () => {
-            $warning= $('#p3xr-layout-reduced')
+            $warning = $('#p3xr-layout-reduced')
             resize()
             $window.on('resize', resize)
             const connection = $cookies.getObject(p3xr.settings.connectInfo.cookieName)
@@ -66,7 +66,6 @@ p3xr.ng.component('p3xrLayout', {
                 }
             }, 3000)
         }
-
 
 
         this.$onDestroy = function () {
@@ -104,7 +103,7 @@ p3xr.ng.component('p3xrLayout', {
                 let dbIndex = 0
                 const databaseIndexes = []
                 //console.warn(response)
-                while(dbIndex < response.databases) {
+                while (dbIndex < response.databases) {
                     databaseIndexes.push(dbIndex++)
                 }
 
@@ -125,21 +124,20 @@ p3xr.ng.component('p3xrLayout', {
                     expires: p3xr.settings.cookieExpiry
                 })
 
-                if (!originalState.startsWith('main') ) {
+                if (!originalState.startsWith('main')) {
                     $state.go(originalState)
                 } else if (originalState === 'main') {
                     $state.go('main.statistics')
                 }
-            } catch(error) {
+            } catch (error) {
                 $cookies.remove(p3xr.settings.connectInfo.cookieName)
                 $rootScope.p3xr.state.connection = undefined
                 p3xrCommon.generalHandleError(error)
             } finally {
                 p3xr.ui.overlay.hide()
             }
-           // $rootScope.$digest()
+            // $rootScope.$digest()
         }
-
 
 
         this.disconnect = async () => {
@@ -154,12 +152,12 @@ p3xr.ng.component('p3xrLayout', {
                 })
                 $rootScope.p3xr.state.connection = undefined
 
-            } catch(error) {
+            } catch (error) {
                 p3xrCommon.generalHandleError(error)
             } finally {
                 $state.go('main')
             }
-           // $rootScope.$digest()
+            // $rootScope.$digest()
         }
 
         Object.defineProperty(this, 'connectionName', {

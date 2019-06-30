@@ -48,8 +48,8 @@ const strings = {
         },
     },
     language: {
-      en: '英语 / English',
-      zn: '中文 / Chinese'
+        en: '英语 / English',
+        zn: '中文 / Chinese'
     },
     intention: {
         pubsubMonitor: 'PubSub监视器',
@@ -104,7 +104,7 @@ const strings = {
         redisCommandNotFound: '找不到匹配的Redis命令...',
         treeKeyStore: `该排序(自然排序)运行在客户端的浏览器上, 意味着针对大型集合(例如超过1W个键),渲染的时长开销需要增加.Redis中没有键排序, 就像这样。`,
         socketIoTimeout: (options) => {
-            return `Socket.IO 请求超时,请求时最长(最大 ${options.timeout/1000}秒) ...`;
+            return `Socket.IO 请求超时,请求时最长(最大 ${options.timeout / 1000}秒) ...`;
         },
         resizerInfo: (options) => {
             return `面板(左/右)的最小宽度是 ${options.width}像素`
@@ -132,8 +132,8 @@ const strings = {
             off: 'AWS ElastiCache off',
         },
         cluster: {
-            on: '群集' ,
-            off: '集群关闭' ,
+            on: '群集',
+            off: '集群关闭',
         },
         treeSettingsPageCount: '由于AngularJS的渲染特性,如果你的分页超过(100/页)且不使用智能树分割,会导致性能下降,但如果你启用了,不仅可以获得更多的数据展示,且不会卡顿一段时间',
         theme: {

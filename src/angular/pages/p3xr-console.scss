@@ -2,35 +2,39 @@
 @import '~angular-material/modules/scss/angular-material.layout-attributes.scss';
 
 p3xr-console {
-  .p3xr-console-electron {
-    margin: $layout-padding;
-  }
+    .p3xr-console-electron {
+        margin: $layout-padding;
+    }
 
-  #p3xr-console-content {
+    #p3xr-console-content {
 
-    font-family: monospace, monospace !important;
-
-    $minWidthCalc: 20px;
-
-    text-align: center;
-    #p3xr-console-content-output {
-      pre {
         font-family: monospace, monospace !important;
-        white-space: pre-wrap;
-      }
-      min-width: calc(100% - #{$minWidthCalc});
-      text-align: left;
-      .p3xr-console-content-output-item:before {
-        content: "> ";
-        opacity: 0.5;
-      }
+
+        $minWidthCalc: 20px;
+
+        text-align: center;
+
+        #p3xr-console-content-output {
+            pre {
+                font-family: monospace, monospace !important;
+                white-space: pre-wrap;
+            }
+
+            min-width: calc(100% - #{$minWidthCalc});
+            text-align: left;
+
+            .p3xr-console-content-output-item:before {
+                content: "> ";
+                opacity: 0.5;
+            }
+        }
+
+        input {
+            min-width: calc(100% - 18px);
+            position: fixed;
+            bottom: $toolbar-height + $layout-gutter-width / 2;
+            left: 3px;
+            right: 0px;
+        }
     }
-    input {
-      min-width: calc(100% - 18px);
-      position: fixed;
-      bottom: $toolbar-height + $layout-gutter-width / 2;
-      left: 3px;
-      right: 0px;
-    }
-  }
 }

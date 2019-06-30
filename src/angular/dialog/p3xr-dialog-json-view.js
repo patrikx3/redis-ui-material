@@ -3,7 +3,7 @@ p3xr.ng.factory('p3xrDialogJsonView', function (p3xrCommon, $mdDialog) {
 
     return new function () {
 
-        this.show = async(options) => {
+        this.show = async (options) => {
 
             try {
                 const result = await $mdDialog.show({
@@ -19,7 +19,7 @@ p3xr.ng.factory('p3xrDialogJsonView', function (p3xrCommon, $mdDialog) {
                                     }
                                     lastResult = true
                                     return true
-                                } catch(e) {
+                                } catch (e) {
                                     if (lastResult !== false) {
                                         $scope.obj = undefined
                                     }
@@ -54,7 +54,7 @@ p3xr.ng.factory('p3xrDialogJsonView', function (p3xrCommon, $mdDialog) {
                     fullscreen: true // Only for -xs, -sm breakpoints.
                 })
                 // console.warn(result)
-            } catch(error) {
+            } catch (error) {
                 p3xrCommon.generalHandleError(error)
             }
         }

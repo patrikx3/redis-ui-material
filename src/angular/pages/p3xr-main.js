@@ -1,6 +1,6 @@
 p3xr.ng.component('p3xrMain', {
     template: require('./p3xr-main.html'),
-    controller: function($cookies, p3xrSocket, p3xrCommon, p3xrRedisParser, $rootScope, $state, $timeout, $scope, $mdMedia) {
+    controller: function ($cookies, p3xrSocket, p3xrCommon, p3xrRedisParser, $rootScope, $state, $timeout, $scope, $mdMedia) {
 
         let $container
         let $header;
@@ -30,7 +30,9 @@ p3xr.ng.component('p3xrMain', {
 
         let screenSizeIsSmall = false
         let $timeoutResize
-        $scope.$watch(function() { return $mdMedia('xs'); }, function(isScreenSizeIsSmall) {
+        $scope.$watch(function () {
+            return $mdMedia('xs');
+        }, function (isScreenSizeIsSmall) {
             if (!isScreenSizeIsSmall && screenSizeIsSmall === true) {
                 if ($timeoutResize !== undefined) {
                     $timeout.cancel($timeoutResize)
@@ -47,7 +49,7 @@ p3xr.ng.component('p3xrMain', {
 
         const rawResize = (options = {}) => {
             //console.warn('who is resizing non stop')
-            let { redrawTabs } = options
+            let {redrawTabs} = options
             if (redrawTabs === undefined) {
                 redrawTabs = false;
             }
@@ -59,14 +61,14 @@ p3xr.ng.component('p3xrMain', {
             } else {
                 $components = [$header, $footer, $consoleHeader]
             }
-            for(let item of $components) {
+            for (let item of $components) {
                 minus += item.outerHeight()
             }
             const windowHeight = $window.outerHeight()
             //console.log(windowHeight, minus)
 
             const outputPositionMinus = $rootScope.isElectron ? 0 : 10
-            const outputHeight = Math.max(windowHeight - minus- outputPositionMinus, 100)
+            const outputHeight = Math.max(windowHeight - minus - outputPositionMinus, 100)
             $container.height(outputHeight)
             $container.css('max-height', `${outputHeight}px`)
 
@@ -87,7 +89,7 @@ p3xr.ng.component('p3xrMain', {
                 } else {
                     $treeControl.css('width', resizeMinWidth + 'px')
                 }
-                $treeControl.css('min-width', resizeMinWidth +'px')
+                $treeControl.css('min-width', resizeMinWidth + 'px')
 
                 const treeControlPosition = p3xr.dom.getPosition($treeControl[0])
 
@@ -103,10 +105,10 @@ p3xr.ng.component('p3xrMain', {
 
                     if ($resizer !== null) {
                         $resizer.addEventListener('mouseover', resizerMouseover)
-                        $resizer.addEventListener('mouseout', resizeMouseout )
-                        $resizer.style.top =  containerPosition.top + 'px'
+                        $resizer.addEventListener('mouseout', resizeMouseout)
+                        $resizer.style.top = containerPosition.top + 'px'
                         $resizer.style.height = containerPosition.height + 'px'
-                        $resizer.style.left = (containerPosition.left +  treeControlPosition.width) + 'px'
+                        $resizer.style.left = (containerPosition.left + treeControlPosition.width) + 'px'
                         $resizer.style.width = (resizerWidth) + 'px'
                     }
 
@@ -115,8 +117,8 @@ p3xr.ng.component('p3xrMain', {
                 const $content = $('#p3xr-main-content-container');
                 $content.css('top', containerPosition.top + 'px')
                 $content.css('height', containerPosition.height + 'px')
-                $content.css('left', (containerPosition.left +  treeControlPosition.width + resizerWidth ) + 'px')
-                $content.css('width', (containerPosition.width - treeControlPosition.width- resizerWidth ) + 'px')
+                $content.css('left', (containerPosition.left + treeControlPosition.width + resizerWidth) + 'px')
+                $content.css('width', (containerPosition.width - treeControlPosition.width - resizerWidth) + 'px')
 
                 $treeControlControls.width(treeControlPosition.width)
             } else {
@@ -164,12 +166,12 @@ p3xr.ng.component('p3xrMain', {
         const documentMousemove = (event) => {
             if (resizeClicked) {
                 const containerPosition = p3xr.dom.getPosition($container[0])
-                if (event.clientX < containerPosition.left + resizeMinWidth || event.clientX > window.innerWidth - resizeMinWidth ) {
-                   // console.warn('not allowed to resize with too small position')
+                if (event.clientX < containerPosition.left + resizeMinWidth || event.clientX > window.innerWidth - resizeMinWidth) {
+                    // console.warn('not allowed to resize with too small position')
                     document.documentElement.style.cursor = 'not-allowed'
                 } else {
                     document.documentElement.style.cursor = 'ew-resize'
-                    $resizer.style.left =  event.clientX + 'px'
+                    $resizer.style.left = event.clientX + 'px'
                     resizeLeft = event.clientX;
                     rawResize();
                 }
@@ -177,12 +179,12 @@ p3xr.ng.component('p3xrMain', {
         }
         const decorateResizer = () => {
             $resizer = document.getElementById('p3xr-main-content-sizer');
-            if ($resizer === null ) {
+            if ($resizer === null) {
                 $resizer = undefined
                 return;
             }
             $resizer.addEventListener('mouseover', resizerMouseover)
-            $resizer.addEventListener('mouseout', resizeMouseout )
+            $resizer.addEventListener('mouseout', resizeMouseout)
 //            $resizer.on('click', resizeClick)
             document.addEventListener("mousemove", documentMousemove);
             document.addEventListener("mousedown", resizeClick);
@@ -194,7 +196,7 @@ p3xr.ng.component('p3xrMain', {
         const destroyResizer = () => {
             if ($resizer !== undefined && $resizer !== null) {
                 $resizer.removeEventListener('mouseover', resizerMouseover)
-                $resizer.removeEventListener('mouseout', resizeMouseout )
+                $resizer.removeEventListener('mouseout', resizeMouseout)
                 $resizer = undefined
             }
             document.removeEventListener("mousedown", resizeClick);
@@ -203,7 +205,7 @@ p3xr.ng.component('p3xrMain', {
         }
 
 
-        this.resize =  debounce(rawResize, p3xr.settings.debounce)
+        this.resize = debounce(rawResize, p3xr.settings.debounce)
 
         this.$onInit = () => {
             $container = $('#p3xr-main-content')
@@ -237,7 +239,7 @@ p3xr.ng.component('p3xrMain', {
         let currentDatabase
         Object.defineProperty(this, 'currentDatabase', {
             get: () => {
-                let currentDatabase =  p3xr.state.currentDatabase
+                let currentDatabase = p3xr.state.currentDatabase
                 if (currentDatabase === undefined) {
                     currentDatabase = $cookies.get(p3xr.settings.connection.getCookieNameCurrentDatabase(p3xr.state.connection.id))
                 }
@@ -246,7 +248,7 @@ p3xr.ng.component('p3xrMain', {
                 }
                 return currentDatabase;
             },
-            set: async(value) => {
+            set: async (value) => {
                 currentDatabase = value
                 if (selectedDatabase !== currentDatabase) {
                     selectedDatabase = value
@@ -258,7 +260,7 @@ p3xr.ng.component('p3xrMain', {
                                 command: `select ${selectedDatabase}`
                             }
                         })
-                    } catch(e) {
+                    } catch (e) {
                         p3xrCommon.generalHandleError(e)
                     }
                 }
@@ -269,7 +271,7 @@ p3xr.ng.component('p3xrMain', {
             }
         })
 
-        this.selectDatabase = async(selectDbIndex) => {
+        this.selectDatabase = async (selectDbIndex) => {
 
             this.currentDatabase = selectDbIndex
             try {
@@ -287,10 +289,10 @@ p3xr.ng.component('p3xrMain', {
                 })
                 await this.statistics()
 
-            } catch(e) {
+            } catch (e) {
                 p3xrCommon.generalHandleError(e)
             } finally {
-               // this.resize()
+                // this.resize()
             }
         }
 
@@ -306,7 +308,7 @@ p3xr.ng.component('p3xrMain', {
                 p3xrCommon.toast({
                     message: p3xr.strings.status.savedRedis
                 })
-            } catch(e) {
+            } catch (e) {
                 p3xrCommon.generalHandleError(e)
             }
         }
@@ -315,13 +317,13 @@ p3xr.ng.component('p3xrMain', {
             try {
                 $state.go('main.statistics')
                 await this.refresh()
-            } catch(e) {
+            } catch (e) {
                 p3xrCommon.generalHandleError(e)
             }
         }
 
         this.refresh = async (options = {}) => {
-            let { withoutParent } = options
+            let {withoutParent} = options
             if (withoutParent === undefined) {
                 withoutParent = false
             }
@@ -353,7 +355,7 @@ p3xr.ng.component('p3xrMain', {
                     $rootScope.$broadcast('p3x-refresh');
                 }
 
-            } catch(e) {
+            } catch (e) {
                 p3xrCommon.generalHandleError(e)
             } finally {
                 p3xr.ui.overlay.hide()
@@ -374,7 +376,7 @@ p3xr.ng.component('p3xrMain', {
 
 
         this.addKey = (options) => {
-            const { event, node} = options
+            const {event, node} = options
             // event.preventDefault()
             event.stopPropagation();
 

@@ -15,7 +15,8 @@
         </span>
         {{node.label}}
         <span class="p3xr-main-tree-node-count" ng-if="node.type === 'folder'">{{$root.p3xr.settings.redisTreeDivider}}* ({{node.childCount}})</span>
-        <span class="p3xr-main-tree-node-count" ng-if="node.type !== 'folder' && node.keysInfo.type !== 'string' && node.keysInfo !== undefined">({{node.keysInfo.length}})</span>
+        <span class="p3xr-main-tree-node-count"
+              ng-if="node.type !== 'folder' && node.keysInfo.type !== 'string' && node.keysInfo !== undefined">({{node.keysInfo.length}})</span>
         <span ng-show="node.type === 'folder' && node.show">
                         <span>
                             <md-tooltip md-direction="right">{{ $root.p3xr.strings.confirm.deleteAllKeys({key: node.key}) }}</md-tooltip>

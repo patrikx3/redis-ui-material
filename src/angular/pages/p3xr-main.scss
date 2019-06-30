@@ -1,32 +1,32 @@
 p3xr-main {
 
-  #p3xr-main-treecontrol-container {
-    position: fixed;
-    overflow: auto;
-  }
+    #p3xr-main-treecontrol-container {
+        position: fixed;
+        overflow: auto;
+    }
 
-  #p3xr-main-treecontrol-container-directive-small {
-    max-height: 220px;
-    overflow: auto;
-  }
+    #p3xr-main-treecontrol-container-directive-small {
+        max-height: 220px;
+        overflow: auto;
+    }
 
-  .p3xr-main-treecontrol-folder-icon {
-    transform: scale(0.75);
-  }
+    .p3xr-main-treecontrol-folder-icon {
+        transform: scale(0.75);
+    }
 
-  #p3xr-main-content-container {
-    position: fixed;
-    overflow: auto;
-    display: block;
-  }
+    #p3xr-main-content-container {
+        position: fixed;
+        overflow: auto;
+        display: block;
+    }
 
 
 }
 
 #p3xr-main-content-sizer {
-  position: fixed;
-  display: block;
-  cursor: ew-resize;
-  z-index: 10;
+    position: fixed;
+    display: block;
+    cursor: ew-resize;
+    z-index: 10;
 
 }

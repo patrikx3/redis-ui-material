@@ -1,12 +1,12 @@
 p3xr.ng.factory('p3xrRedisParser', function ($rootScope) {
 
-    return new function() {
+    return new function () {
 
         const selfMain = this;
 
         this.array = (options) => {
-            const { line } = options
-            let { divider, fieldDivider } = options
+            const {line} = options
+            let {divider, fieldDivider} = options
             if (divider === undefined) {
                 divider = ','
             }
@@ -15,7 +15,7 @@ p3xr.ng.factory('p3xrRedisParser', function ($rootScope) {
             }
             const rows = line.split(divider)
             const obj = {}
-            for(let row of rows) {
+            for (let row of rows) {
                 const rowLine = row.split(fieldDivider)
                 obj[rowLine[0]] = rowLine[1].trim()
             }
@@ -27,7 +27,7 @@ p3xr.ng.factory('p3xrRedisParser', function ($rootScope) {
             const obj = {}
             let section
             let currentSectionObj
-            for(let line of lines) {
+            for (let line of lines) {
                 if (line.startsWith('#')) {
                     if (section !== undefined) {
                         obj[section] = currentSectionObj
@@ -56,14 +56,13 @@ p3xr.ng.factory('p3xrRedisParser', function ($rootScope) {
         }
 
 
+        this.keysToTreeControl = (options) => {
 
-        this.keysToTreeControl =  (options) => {
+            //   const start = Date.now()
 
-         //   const start = Date.now()
+            let {keys} = options
 
-            let { keys } = options
-
-            let { divider } = options
+            let {divider} = options
             if (divider === undefined) {
                 divider = p3xr.settings.redisTreeDivider
             }
@@ -75,7 +74,7 @@ p3xr.ng.factory('p3xrRedisParser', function ($rootScope) {
             const recursiveNodes = (splitKey, level = 0, nodes = mainNodes) => {
                 let foundNode = false
                 if (level + 1 < splitKey.length) {
-                    for(let nodeIndex in nodes) {
+                    for (let nodeIndex in nodes) {
                         const node = nodes[nodeIndex]
                         if (node.label === splitKey[level] && node.type === 'folder') {
                             foundNode = node
@@ -103,7 +102,7 @@ p3xr.ng.factory('p3xrRedisParser', function ($rootScope) {
                     nodes.push(foundNode)
                 }
 
-                for(let saveExpandedNode of $rootScope.savedExpandedNodes) {
+                for (let saveExpandedNode of $rootScope.savedExpandedNodes) {
                     if (saveExpandedNode.key === foundNode.key) {
                         $rootScope.expandedNodes.push(foundNode)
                     }
@@ -114,9 +113,9 @@ p3xr.ng.factory('p3xrRedisParser', function ($rootScope) {
                 }
             }
 
-            for(let key of keys)  {
+            for (let key of keys) {
                 let splitkey;
-                if (divider === ''){
+                if (divider === '') {
                     splitkey = [key]
 
                 } else {
@@ -129,25 +128,25 @@ p3xr.ng.factory('p3xrRedisParser', function ($rootScope) {
             const recursiveKeyCount = (node) => {
                 generatedKeys[node.key] = node.children.length;
 
-                for(let child of node.children) {
+                for (let child of node.children) {
                     recursiveKeyCount(child)
                 }
             }
-            for(let node of mainNodes)  {
+            for (let node of mainNodes) {
                 recursiveKeyCount(node)
             }
 
             const recursiveCounterKeys = (node) => {
-                for(let generatedKey of Object.keys(generatedKeys)) {
-                    if (generatedKey.startsWith(`${node.key}:`) || generatedKey === node.key ) {
+                for (let generatedKey of Object.keys(generatedKeys)) {
+                    if (generatedKey.startsWith(`${node.key}:`) || generatedKey === node.key) {
                         node.childCount += generatedKeys[generatedKey]
                     }
                 }
-                for(let child of node.children) {
+                for (let child of node.children) {
                     recursiveCounterKeys(child)
                 }
             }
-            for(let node of mainNodes)  {
+            for (let node of mainNodes) {
                 recursiveCounterKeys(node)
             }
 
@@ -158,7 +157,7 @@ p3xr.ng.factory('p3xrRedisParser', function ($rootScope) {
         }
 
 
-        this.console = new function() {
+        this.console = new function () {
 
             const selfConsole = this;
 

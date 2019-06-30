@@ -1,9 +1,11 @@
 <md-dialog aria-label="{{$root.p3xr.strings.form.key.label.formName}}" style="min-width: 320px; ">
     <form novalidate name="p3xrKeyNewForm" ng-submit="submit()">
         <md-toolbar md-theme="{{ $root.p3xr.state.themeLayout }}" class="md-hue-3">
-            <div class="md-toolbar-tools" >
+            <div class="md-toolbar-tools">
                 <h2 flex md-truncate>
-                    {{ options.type === 'edit' ? $root.p3xr.strings.form.key.label.formName.edit  : ( options.type === 'append' ? $root.p3xr.strings.form.key.label.formName.append : $root.p3xr.strings.form.key.label.formName.add ) }}
+                    {{ options.type === 'edit' ? $root.p3xr.strings.form.key.label.formName.edit : ( options.type ===
+                    'append' ? $root.p3xr.strings.form.key.label.formName.append :
+                    $root.p3xr.strings.form.key.label.formName.add ) }}
                 </h2>
                 <md-button class="md-icon-button" ng-click="cancel()">
                     <md-icon>close</md-icon>
@@ -72,7 +74,8 @@
 
                 <md-input-container class="md-block">
                     <label>{{ $root.p3xr.strings.form.key.field.value }}</label>
-                    <textarea ng-model="model.value" required p3x-validate-json p3x-validate-json-required="validateJson" name="value"></textarea>
+                    <textarea ng-model="model.value" required p3x-validate-json
+                              p3x-validate-json-required="validateJson" name="value"></textarea>
                     <div ng-messages="p3xrKeyNewForm.value.$error">
                         <div ng-message-exp="['required']">
                             {{ $root.p3xr.strings.form.key.error.value }}
@@ -93,7 +96,7 @@
 
             <md-button class="md-raised md-primary" type="submit">
                 <md-icon>{{ options.type === 'edit' ? 'edit' : 'add'}}</md-icon>
-                {{ options.type === 'edit' ? $root.p3xr.strings.intention.save  : $root.p3xr.strings.intention.add }}
+                {{ options.type === 'edit' ? $root.p3xr.strings.intention.save : $root.p3xr.strings.intention.add }}
             </md-button>
 
             <md-button class="md-raised md-accent" ng-click="cancel()">

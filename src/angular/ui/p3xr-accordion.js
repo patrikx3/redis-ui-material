@@ -15,7 +15,7 @@ p3xr.ng.component('p3xrAccordion', {
         };
 
 
-        this.$onInit = function() {
+        this.$onInit = function () {
             //console.log(this.p3xrAccordionKey)
             if (this.p3xrAccordionKey === undefined || this.p3xrAccordionKey === '') {
                 this.p3xAccordionKey = ++accordionKey;

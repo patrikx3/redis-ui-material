@@ -6,7 +6,7 @@ p3xr.ng.component('p3xrMainKey', {
     bindings: {
         p3xrResize: '&',
     },
-    controller: function(p3xrCommon, p3xrRedisParser, p3xrSocket, $rootScope, $stateParams, $timeout, $scope, $mdDialog, $state, $interval) {
+    controller: function (p3xrCommon, p3xrRedisParser, p3xrSocket, $rootScope, $stateParams, $timeout, $scope, $mdDialog, $state, $interval) {
 
         this.$stateParams = $stateParams;
 
@@ -31,51 +31,51 @@ p3xr.ng.component('p3xrMainKey', {
         let interval
         const loadTtl = () => {
             if (this.response.ttl > -1) {
-               const actualTtl = () => {
-                   if (checkTtl()) {
+                const actualTtl = () => {
+                    if (checkTtl()) {
 
-                       //this.ttlParsed = moment.duration(this.response.ttl, "seconds").format('Y [year], M [month], d [day], hh:mm:ss');
+                        //this.ttlParsed = moment.duration(this.response.ttl, "seconds").format('Y [year], M [month], d [day], hh:mm:ss');
 
-                       let years, months, days, hours, mins, seconds
-                       let diff
+                        let years, months, days, hours, mins, seconds
+                        let diff
 
-                       diff = this.response.ttl * 1000;
-                       years = Math.floor((diff) / (1000 * 60 * 60 * 24 * 365));
-                       diff = ((diff) % (1000 * 60 * 60 * 24 * 365));
-                       months = Math.floor((diff) / (1000 * 60 * 60 * 24 * 30));
-                       diff = ((diff) % (1000 * 60 * 60 * 24 * 30));
-                       days = Math.floor((diff) / (1000 * 60 * 60 * 24));
-                       diff = ((diff) % (1000 * 60 * 60 * 24));
-                       hours = Math.floor((diff) / (1000 * 60 * 60));
-                       diff = ((diff) % (1000 * 60 * 60));
-                       mins = Math.floor((diff) / (1000 * 60));
-                       diff = ((diff) / (1000 * 60));
-                       seconds = Math.round((diff - mins) * 0.6 * 100 );
+                        diff = this.response.ttl * 1000;
+                        years = Math.floor((diff) / (1000 * 60 * 60 * 24 * 365));
+                        diff = ((diff) % (1000 * 60 * 60 * 24 * 365));
+                        months = Math.floor((diff) / (1000 * 60 * 60 * 24 * 30));
+                        diff = ((diff) % (1000 * 60 * 60 * 24 * 30));
+                        days = Math.floor((diff) / (1000 * 60 * 60 * 24));
+                        diff = ((diff) % (1000 * 60 * 60 * 24));
+                        hours = Math.floor((diff) / (1000 * 60 * 60));
+                        diff = ((diff) % (1000 * 60 * 60));
+                        mins = Math.floor((diff) / (1000 * 60));
+                        diff = ((diff) / (1000 * 60));
+                        seconds = Math.round((diff - mins) * 0.6 * 100);
 
-                       let duration = '';
-                       if (years > 0) {
-                           duration += years + ' ' + (years === 1 ? $rootScope.p3xr.strings.time.year : $rootScope.p3xr.strings.time.years)
-                           duration += ', '
-                       }
-                       if (months > 0) {
-                           duration += months + ' ' + (months === 1 ? $rootScope.p3xr.strings.time.month : $rootScope.p3xr.strings.time.months)
-                           duration += ', '
-                       }
-                       if (days > 0) {
-                           duration += days + ' ' + (days === 1 ? $rootScope.p3xr.strings.time.day : $rootScope.p3xr.strings.time.days)
-                           duration += ', '
-                       }
-                       duration += `${hours < 10 ? '0' + hours : hours}:${mins < 10 ? '0' + mins : mins}:${seconds < 10 ? '0' + seconds : seconds}`;
+                        let duration = '';
+                        if (years > 0) {
+                            duration += years + ' ' + (years === 1 ? $rootScope.p3xr.strings.time.year : $rootScope.p3xr.strings.time.years)
+                            duration += ', '
+                        }
+                        if (months > 0) {
+                            duration += months + ' ' + (months === 1 ? $rootScope.p3xr.strings.time.month : $rootScope.p3xr.strings.time.months)
+                            duration += ', '
+                        }
+                        if (days > 0) {
+                            duration += days + ' ' + (days === 1 ? $rootScope.p3xr.strings.time.day : $rootScope.p3xr.strings.time.days)
+                            duration += ', '
+                        }
+                        duration += `${hours < 10 ? '0' + hours : hours}:${mins < 10 ? '0' + mins : mins}:${seconds < 10 ? '0' + seconds : seconds}`;
 
-                       this.ttlParsed = ' ' + duration
-                   } else {
-                       $interval.cancel(interval)
-                   }
-               }
+                        this.ttlParsed = ' ' + duration
+                    } else {
+                        $interval.cancel(interval)
+                    }
+                }
                 actualTtl()
 
                 if (!$rootScope.p3xr.state.reducedFunctions) {
-                    interval= $interval(() => {
+                    interval = $interval(() => {
                         this.response.ttl = this.response.ttl - 1
                         actualTtl()
                     }, 1000)
@@ -84,9 +84,9 @@ p3xr.ng.component('p3xrMainKey', {
 
         }
 
-        const loadKey = async(options = {}) => {
+        const loadKey = async (options = {}) => {
             $interval.cancel(interval)
-            let { withoutParent } = options
+            let {withoutParent} = options
             if (withoutParent === undefined) {
                 withoutParent = false
             }
@@ -113,9 +113,9 @@ p3xr.ng.component('p3xrMainKey', {
                     checkTtl()
                     return;
                 }
-                switch(type) {
+                switch (type) {
                     case 'string':
-                       // console.warn(response)
+                        // console.warn(response)
                         //p3xr.state.keysInfo[$stateParams.key].length = response.value.length
                         response.length = response.value.length
                         break;
@@ -127,7 +127,7 @@ p3xr.ng.component('p3xrMainKey', {
                 loadTtl()
 
 
-            } catch(e) {
+            } catch (e) {
                 hadError = e
                 p3xrCommon.generalHandleError(e)
             } finally {
@@ -171,7 +171,7 @@ p3xr.ng.component('p3xrMainKey', {
             });
         }
 
-        this.delete = async() => {
+        this.delete = async () => {
             $rootScope.$broadcast('p3xr-key-delete', {
                 key: $stateParams.key
             });
@@ -226,7 +226,7 @@ p3xr.ng.component('p3xrMainKey', {
                     })
                 }
 
-            } catch(e) {
+            } catch (e) {
                 p3xrCommon.generalHandleError(e)
             }
         }

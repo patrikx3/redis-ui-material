@@ -1,4 +1,4 @@
-p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootScope, p3xrRedisParser, $timeout, ) {
+p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootScope, p3xrRedisParser, $timeout,) {
 
     const debounce = require('lodash/debounce')
 
@@ -6,7 +6,7 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootSco
         if (dataOrError === undefined) {
             return;
         }
-        if (! (dataOrError instanceof Error || dataOrError instanceof Object)) {
+        if (!(dataOrError instanceof Error || dataOrError instanceof Object)) {
             dataOrError = new Error(dataOrError)
         }
         if (dataOrError instanceof Error || dataOrError.status === 'error') {
@@ -72,7 +72,7 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootSco
     }
 
     const loadRedisInfoResponse = (options) => {
-        const { response } = options
+        const {response} = options
 
         $rootScope.p3xr.state.info = p3xrRedisParser.info(response.info)
 
@@ -94,7 +94,7 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootSco
     }
 
     const setTableZebraStyles = (options) => {
-        const { $odd } = options
+        const {$odd} = options
         if (!$odd) {
             return '';
         }

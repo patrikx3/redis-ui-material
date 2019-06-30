@@ -1,7 +1,7 @@
 <div ng-class="{ 'p3xr-console-electron': $root.isElectron }">
     <md-toolbar class="md-accent" md-theme="{{ $root.p3xr.state.themeLayout}}" id="p3xr-console-header">
         <div class="md-toolbar-tools">
-            <h2 flex md-truncate>{{  $root.p3xr.strings.label.console }}</h2>
+            <h2 flex md-truncate>{{ $root.p3xr.strings.label.console }}</h2>
 
             <span>
                 <md-tooltip ng-if="$root.$mdMedia('xs')" md-direction="bottom">{{ $root.p3xr.strings.intention.pubsubMonitor }}</md-tooltip>
@@ -10,9 +10,11 @@
                 </md-checkbox>
             </span>
 
-            <p3xr-button p3xr-label="$root.p3xr.strings.intention.commands" p3xr-md-icon="menu" ng-click="$ctrl.commands()"></p3xr-button>
+            <p3xr-button p3xr-label="$root.p3xr.strings.intention.commands" p3xr-md-icon="menu"
+                         ng-click="$ctrl.commands()"></p3xr-button>
 
-            <p3xr-button p3xr-label="$root.p3xr.strings.intention.clear" p3xr-md-icon="clear" ng-click="$ctrl.clearConsole()"></p3xr-button>
+            <p3xr-button p3xr-label="$root.p3xr.strings.intention.clear" p3xr-md-icon="clear"
+                         ng-click="$ctrl.clearConsole()"></p3xr-button>
         </div>
 
     </md-toolbar>

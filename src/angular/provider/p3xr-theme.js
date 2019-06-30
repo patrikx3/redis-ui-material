@@ -1,4 +1,4 @@
-p3xr.ng.provider('p3xrTheme', function p3xrThemeProvider($mdThemingProvider,  ) {
+p3xr.ng.provider('p3xrTheme', function p3xrThemeProvider($mdThemingProvider,) {
     const selfProvider = this;
 
     $mdThemingProvider.generateThemesOnDemand(true);
@@ -34,7 +34,7 @@ p3xr.ng.provider('p3xrTheme', function p3xrThemeProvider($mdThemingProvider,  ) 
     }
 
     // this is the service eg: ngivrTheme
-    this.$get = ['$mdTheming', '$rootScope' , '$cookies', '$mdColors', function p3xThemeFactory($mdTheming, $rootScope, $cookies, $mdColors ) {
+    this.$get = ['$mdTheming', '$rootScope', '$cookies', '$mdColors', function p3xThemeFactory($mdTheming, $rootScope, $cookies, $mdColors) {
 
         // let's assume that the UnicornLauncher constructor was also changed to
         // accept and use the useTinfoilShielding argument
@@ -72,7 +72,7 @@ p3xr.ng.provider('p3xrTheme', function p3xrThemeProvider($mdThemingProvider,  ) 
                 //console.warn(`theme registered: ${$mdTheming.registered(theme)}`);
                 $mdThemingProvider.setDefaultTheme(themeName);
                 $rootScope.p3xr.state.theme = themeName;
-                $cookies.put(themeCookieName, themeName, {  expires: p3xr.settings.cookieExpiry,});
+                $cookies.put(themeCookieName, themeName, {expires: p3xr.settings.cookieExpiry,});
 
                 $body.removeClass('p3xr-theme-light')
                 $body.removeClass('p3xr-theme-dark')

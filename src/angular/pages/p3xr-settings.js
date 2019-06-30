@@ -1,6 +1,6 @@
 p3xr.ng.component('p3xrSettings', {
     template: require('./p3xr-settings.html'),
-    controller: function(p3xrCommon, p3xrDialogConnection, $mdDialog, p3xrSocket, p3xrDialogTreecontrolSettings) {
+    controller: function (p3xrCommon, p3xrDialogConnection, $mdDialog, p3xrSocket, p3xrDialogTreecontrolSettings) {
 
         this.connectionForm = (options) => {
 
@@ -14,7 +14,7 @@ p3xr.ng.component('p3xrSettings', {
         }
 
         this.deleteConnection = async (options) => {
-            const { model, ev } = options;
+            const {model, ev} = options;
 
             try {
                 await p3xrCommon.confirm({
@@ -30,7 +30,7 @@ p3xr.ng.component('p3xrSettings', {
                 p3xrCommon.toast({
                     message: p3xr.strings.status.deleted
                 });
-            } catch(error) {
+            } catch (error) {
                 if (error === undefined) {
                     /*
                     p3xrCommon.toast({

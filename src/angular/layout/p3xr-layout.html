@@ -2,31 +2,40 @@
     <md-toolbar md-whiteframe="3">
         <div class="md-toolbar-tools">
 
-            <p3xr-button ng-if="!$root.p3xr.state.failed" ui-sref="main.statistics" p3xr-label="$root.p3xr.strings.title.name" p3xr-fa-icon="fas fa-database"></p3xr-button>
-            <p3xr-button ng-if="$root.p3xr.state.failed" ng-click="$root.locationReload()" p3xr-label="$root.p3xr.strings.title.name" p3xr-fa-icon="fas fa-redo"></p3xr-button>
+            <p3xr-button ng-if="!$root.p3xr.state.failed" ui-sref="main.statistics"
+                         p3xr-label="$root.p3xr.strings.title.name" p3xr-fa-icon="fas fa-database"></p3xr-button>
+            <p3xr-button ng-if="$root.p3xr.state.failed" ng-click="$root.locationReload()"
+                         p3xr-label="$root.p3xr.strings.title.name" p3xr-fa-icon="fas fa-redo"></p3xr-button>
 
             <span flex></span>
 
-            <p3xr-button ng-if="!$root.p3xr.state.failed"  ui-sref="settings" p3xr-label="$root.p3xr.strings.intention.settings" p3xr-md-icon="settings"></p3xr-button>
+            <p3xr-button ng-if="!$root.p3xr.state.failed" ui-sref="settings"
+                         p3xr-label="$root.p3xr.strings.intention.settings" p3xr-md-icon="settings"></p3xr-button>
 
-            <p3xr-button ng-if="$root.hasConnected()" ui-sref="overview" p3xr-label="$root.p3xr.strings.intention.overview" p3xr-md-icon="info"></p3xr-button>
+            <p3xr-button ng-if="$root.hasConnected()" ui-sref="overview"
+                         p3xr-label="$root.p3xr.strings.intention.overview" p3xr-md-icon="info"></p3xr-button>
 
-            <p3xr-button ng-if="$root.p3xr.state.connection" ui-sref="main.statistics" p3xr-label="$root.p3xr.strings.intention.main" p3xr-md-icon="home"></p3xr-button>
+            <p3xr-button ng-if="$root.p3xr.state.connection" ui-sref="main.statistics"
+                         p3xr-label="$root.p3xr.strings.intention.main" p3xr-md-icon="home"></p3xr-button>
         </div>
     </md-toolbar>
 </div>
 
-<div id="p3xr-layout-header-version" md-colors="{ color: 'background-A100' }" hide-xs  ng-if="$root.isElectron === false">{{ $root.p3xr.state.version }}</div>
+<div id="p3xr-layout-header-version" md-colors="{ color: 'background-A100' }" hide-xs
+     ng-if="$root.isElectron === false">{{ $root.p3xr.state.version }}
+</div>
 
 <div id="p3xr-layout-footer-container">
-    <md-toolbar >
+    <md-toolbar>
         <div class="md-toolbar-tools">
             <md-menu ng-if="$root.p3xr.state.connections.list.length > 0">
 
-                <p3xr-button ng-click="$mdMenu.open($event)" p3xr-label="$ctrl.connectionName" p3xr-md-icon="power" p3xr-tooltip-direction="top"></p3xr-button>
+                <p3xr-button ng-click="$mdMenu.open($event)" p3xr-label="$ctrl.connectionName" p3xr-md-icon="power"
+                             p3xr-tooltip-direction="top"></p3xr-button>
 
                 <md-menu-content>
-                    <md-menu-item ng-repeat="connection in $root.p3xr.state.connections.list"  ng-class="{'p3xr-md-menu-item-selected': $root.p3xr.state.connection.id  === connection.id}">
+                    <md-menu-item ng-repeat="connection in $root.p3xr.state.connections.list"
+                                  ng-class="{'p3xr-md-menu-item-selected': $root.p3xr.state.connection.id  === connection.id}">
                         <md-button ng-click="$ctrl.connect(connection)">
                             {{ connection.name }}
                         </md-button>
@@ -38,7 +47,9 @@
                 <md-button ng-click="$ctrl.disconnect()">
                     <i class="fa fa-power-off"></i>
                     <span hide-xs hide-sm>{{ $root.p3xr.strings.intention.disconnect }}</span>
-                    <md-tooltip ng-if="$root.$mdMedia('xs') || $root.$mdMedia('sm')" md-direction="top">{{ $root.p3xr.strings.intention.disconnect }}</md-tooltip>
+                    <md-tooltip ng-if="$root.$mdMedia('xs') || $root.$mdMedia('sm')" md-direction="top">{{
+                        $root.p3xr.strings.intention.disconnect }}
+                    </md-tooltip>
                 </md-button>
             </span>
 
@@ -46,14 +57,17 @@
 
 
             <md-menu ng-if="!$root.isElectron === true">
-               <md-button ng-click="$mdMenu.open($event)">
+                <md-button ng-click="$mdMenu.open($event)">
                     <md-icon>language</md-icon>
                     <span hide-xs hide-sm>{{ $root.p3xr.strings.intention.language }}</span>
-                    <md-tooltip ng-if="$root.$mdMedia('xs') || $root.$mdMedia('sm')" md-direction="top">{{ $root.p3xr.strings.intention.language }}</md-tooltip>
+                    <md-tooltip ng-if="$root.$mdMedia('xs') || $root.$mdMedia('sm')" md-direction="top">{{
+                        $root.p3xr.strings.intention.language }}
+                    </md-tooltip>
                 </md-button>
 
                 <md-menu-content>
-                    <md-menu-item ng-repeat="(key, value) in $root.p3xr.strings.language" ng-class="{'p3xr-md-menu-item-selected': $root.p3xr.settings.language.current === key}">
+                    <md-menu-item ng-repeat="(key, value) in $root.p3xr.strings.language"
+                                  ng-class="{'p3xr-md-menu-item-selected': $root.p3xr.settings.language.current === key}">
                         <md-button ng-click="$ctrl.setLanguage(key)">
                             {{ $root.p3xr.strings.language[key] }}
                         </md-button>
@@ -65,11 +79,14 @@
                 <md-button ng-click="$mdMenu.open($event)">
                     <md-icon>color_lens</md-icon>
                     <span hide-xs>{{ $root.p3xr.strings.intention.theme }}</span>
-                    <md-tooltip ng-if="$root.$mdMedia('xs')" md-direction="top">{{ $root.p3xr.strings.intention.theme }}</md-tooltip>
+                    <md-tooltip ng-if="$root.$mdMedia('xs')" md-direction="top">{{ $root.p3xr.strings.intention.theme
+                        }}
+                    </md-tooltip>
                 </md-button>
 
                 <md-menu-content>
-                    <md-menu-item ng-repeat="(key, value) in $root.p3xr.theme" ng-class="{'p3xr-md-menu-item-selected': $ctrl.themeSelectedKey === key}">
+                    <md-menu-item ng-repeat="(key, value) in $root.p3xr.theme"
+                                  ng-class="{'p3xr-md-menu-item-selected': $ctrl.themeSelectedKey === key}">
                         <md-button ng-click="$ctrl.setTheme(key)">
                             {{ $root.p3xr.strings.label.theme[key] }}
                         </md-button>
@@ -82,7 +99,9 @@
                 <md-button ng-click="$mdMenu.open($event)">
                     <i class="fab fa-github"></i>
                     <span hide-xs hide-sm>{{ $root.p3xr.strings.intention.github }}</span>
-                    <md-tooltip ng-if="$root.$mdMedia('xs') || $root.$mdMedia('sm')" md-direction="top">{{ $root.p3xr.strings.intention.github }}</md-tooltip>
+                    <md-tooltip ng-if="$root.$mdMedia('xs') || $root.$mdMedia('sm')" md-direction="top">{{
+                        $root.p3xr.strings.intention.github }}
+                    </md-tooltip>
                 </md-button>
 
                 <md-menu-content>
@@ -108,13 +127,14 @@
     </md-toolbar>
 </div>
 
-<div flex layout="row" >
+<div flex layout="row">
     <div flex ng-class="{'p3xr-layout-content': !$root.isElectron, 'p3xr-layout-content-electron': $root.isElectron }">
         <ui-view></ui-view>
     </div>
 </div>
 
-<div id="p3xr-layout-reduced" ng-show="$root.p3xr.state.reducedFunctions" md-theme="{{ $root.p3xr.state.themeCommon }}" md-colors="{ background: 'warn', 'border-color': 'warn-900-0.5'}" ng-click="$ctrl.reducedFunctionalty()">
+<div id="p3xr-layout-reduced" ng-show="$root.p3xr.state.reducedFunctions" md-theme="{{ $root.p3xr.state.themeCommon }}"
+     md-colors="{ background: 'warn', 'border-color': 'warn-900-0.5'}" ng-click="$ctrl.reducedFunctionalty()">
     <md-icon style="font-size: 20px;">warning</md-icon>
     {{ $root.p3xr.strings.label.reducedFunction }}
 </div>

@@ -5,7 +5,7 @@ const htmlEncode = require('js-htmlencode').htmlEncode;
 
 p3xr.ng.component('p3xrConsole', {
     template: require('./p3xr-console.html'),
-    controller: function(p3xrCommon, p3xrSocket, $state, $rootScope, p3xrRedisParser, $mdDialog, $timeout) {
+    controller: function (p3xrCommon, p3xrSocket, $state, $rootScope, p3xrRedisParser, $mdDialog, $timeout) {
         // .p3xr-layout-footer-container
         // .p3xr-layout-header-container
         // #p3xr-console-header
@@ -36,7 +36,7 @@ p3xr.ng.component('p3xrConsole', {
             } else {
                 $components = [$header, $footer, $consoleHeader]
             }
-            for(let item of $components) {
+            for (let item of $components) {
                 minus += item.outerHeight()
             }
             const windowHeight = $window.height()
@@ -44,7 +44,7 @@ p3xr.ng.component('p3xrConsole', {
 
             const adjustments = 66
 
-            const outputHeight = Math.max(windowHeight - minus - adjustments , 0)
+            const outputHeight = Math.max(windowHeight - minus - adjustments, 0)
             $container.height(outputHeight)
             $container.css('max-height', `${outputHeight}px`)
 
@@ -79,20 +79,19 @@ p3xr.ng.component('p3xrConsole', {
             this.clearConsole()
 
 
-            p3xrSocket.ioClient.on('pubsub-message', onPubSubMessage )
+            p3xrSocket.ioClient.on('pubsub-message', onPubSubMessage)
 
         }
 
         this.$onDestroy = function () {
-           $window.off('resize', resize)
-            p3xrSocket.ioClient.removeListener('pubsub-message', onPubSubMessage )
+            $window.off('resize', resize)
+            p3xrSocket.ioClient.removeListener('pubsub-message', onPubSubMessage)
         };
-
 
 
         this.inputValue = ''
 
-        this.actionEnter = async() => {
+        this.actionEnter = async () => {
 
             let response;
             const enter = String(this.inputValue).trim()
@@ -119,7 +118,7 @@ p3xr.ng.component('p3xrConsole', {
                     $rootScope.p3xr.state.currentDatabase = response.database
                     $rootScope.p3xr.state.redisChanged = true
                 }
-            } catch(e) {
+            } catch (e) {
                 console.error(e)
                 $output.append(`<pre>${e.message}</pre>`)
 
@@ -156,7 +155,7 @@ p3xr.ng.component('p3xrConsole', {
         let wasLastTab
         const clearTabAutocomplete = () => {
             lastTabInput = undefined
-            lastTabInputIndex = -1  ;
+            lastTabInputIndex = -1;
             autoComplete = [];
             wasLastTab = false
         }
@@ -168,13 +167,13 @@ p3xr.ng.component('p3xrConsole', {
             })
         }
 
-        this.action =  ($event) => {
+        this.action = ($event) => {
             //console.warn($event.keyCode)
             if ($event.keyCode !== 9 && event.shiftKey !== true) {
                 //console.warn('clear settings')
                 clearTabAutocomplete()
             }
-            switch($event.keyCode) {
+            switch ($event.keyCode) {
                 // enter
                 case 13:
                     return this.actionEnter()
@@ -190,11 +189,11 @@ p3xr.ng.component('p3xrConsole', {
                     actionHistoryPosition--
                     if (actionHistoryPosition > -1) {
                     } else {
-                        actionHistoryPosition = actionHistory.length -1
+                        actionHistoryPosition = actionHistory.length - 1
                     }
                     this.inputValue = actionHistory[actionHistoryPosition]
                     focusInput()
-                  break;
+                    break;
 
                 // keydown 40
                 case 40:
@@ -202,7 +201,7 @@ p3xr.ng.component('p3xrConsole', {
                         return;
                     }
                     actionHistoryPosition++
-                    if (actionHistoryPosition >= actionHistory.length ) {
+                    if (actionHistoryPosition >= actionHistory.length) {
                     } else {
                         actionHistoryPosition = 0
                     }
@@ -233,7 +232,7 @@ p3xr.ng.component('p3xrConsole', {
                         lastTabInputIndex++;
                     }
                     //console.warn('middle event.keyCode, event.shiftKey', event.keyCode, event.shiftKey, lastTabInputIndex)
-                    if (lastTabInputIndex >= autoComplete.length ) {
+                    if (lastTabInputIndex >= autoComplete.length) {
                         lastTabInputIndex = 0;
                     } else if (lastTabInputIndex < 0) {
                         lastTabInputIndex = autoComplete.length - 1;
@@ -262,7 +261,7 @@ p3xr.ng.component('p3xrConsole', {
 
         this.commands = () => {
             $mdDialog.show({
-                controller: function ($scope, $mdDialog ) {
+                controller: function ($scope, $mdDialog) {
 
                     $scope.ok = function () {
                         $mdDialog.hide();

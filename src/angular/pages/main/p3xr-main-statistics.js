@@ -1,9 +1,9 @@
 p3xr.ng.component('p3xrMainStatistics', {
     template: require('./p3xr-main-statistics.html'),
-    controller: function(p3xrCommon, p3xrRedisParser, p3xrSocket, $rootScope, $scope, $timeout, $stateParams) {
+    controller: function (p3xrCommon, p3xrRedisParser, p3xrSocket, $rootScope, $scope, $timeout, $stateParams) {
 
         const exclude = ['in', 'run', 'per']
-        const include = ['sha1', ]
+        const include = ['sha1',]
         const replace = {
             'perc': 'percent',
             'sec': 'seconds'
@@ -12,7 +12,7 @@ p3xr.ng.component('p3xrMainStatistics', {
         this.$onInit = () => {
 
 
-            if (p3xr.state.redisChanged ) {
+            if (p3xr.state.redisChanged) {
                 p3xr.state.redisChanged = false
                 $rootScope.$broadcast('p3x-refresh')
             }

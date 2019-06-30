@@ -89,12 +89,12 @@ p3xr.ng.factory('p3xrDialogKeyNewOrSet', function (p3xrCommon, $mdDialog, p3xrSo
                                     resolve(response)
 
                                     p3xrCommon.toast({
-                                        message:p3xr.strings.status.set
+                                        message: p3xr.strings.status.set
                                     })
                                     //$scope.options.type = 'edit';
                                     $mdDialog.cancel();
 
-                                } catch(e) {
+                                } catch (e) {
                                     reject(e)
                                     p3xrCommon.generalHandleError(e)
                                 }
@@ -109,7 +109,7 @@ p3xr.ng.factory('p3xrDialogKeyNewOrSet', function (p3xrCommon, $mdDialog, p3xrSo
                         fullscreen: true // Only for -xs, -sm breakpoints.
                     })
                     // console.warn(result)
-                } catch(error) {
+                } catch (error) {
                     reject(error)
                     p3xrCommon.generalHandleError(error)
                 }

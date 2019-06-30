@@ -14,19 +14,23 @@
     </div>
 </div>
 
-<div layout-gt-xs="row" layout="column" layout-align="start start" ng-repeat="(key, value) in $ctrl.p3xrValue" style="{{ $ctrl.setTableStyles({ $odd: $odd }) }}">
-    <div flex="15"  ng-click="$ctrl.editValue({ hashKey: key, value: value, $event: $event})">
+<div layout-gt-xs="row" layout="column" layout-align="start start" ng-repeat="(key, value) in $ctrl.p3xrValue"
+     style="{{ $ctrl.setTableStyles({ $odd: $odd }) }}">
+    <div flex="15" ng-click="$ctrl.editValue({ hashKey: key, value: value, $event: $event})">
         &nbsp;
         {{ key }}
     </div>
-    <div flex="60" class="p3xr-pre" style="overflow: auto;align-items: flex-start; max-height: 200px;"  ng-click="$ctrl.editValue({ hashKey: key, value: value, $event: $event})">{{ value }}</div>
+    <div flex="60" class="p3xr-pre" style="overflow: auto;align-items: flex-start; max-height: 200px;"
+         ng-click="$ctrl.editValue({ hashKey: key, value: value, $event: $event})">{{ value }}
+    </div>
     <div flex="20" style="text-align: right; ">
         <md-button class="md-icon-button md-accent" ng-click="$ctrl.showJson({ value: value})">
             <md-tooltip>{{ $root.p3xr.strings.intention.jsonViewShow }}</md-tooltip>
             <md-icon>table_chart</md-icon>
         </md-button>
 
-        <md-button class="md-icon-button md-primary" ng-click="$ctrl.editValue({ hashKey: key, value: value, $event: $event})">
+        <md-button class="md-icon-button md-primary"
+                   ng-click="$ctrl.editValue({ hashKey: key, value: value, $event: $event})">
             <md-tooltip>{{ $root.p3xr.strings.intention.edit }}</md-tooltip>
             <md-icon>edit</md-icon>
         </md-button>

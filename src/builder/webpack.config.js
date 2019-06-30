@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin')
@@ -57,7 +57,6 @@ if (minimize) {
 //            cssProcessorOptions: { safe: true, discardComments: { removeAll: true } },
             canPrint: true
         })
-
     )
 
 
@@ -66,7 +65,8 @@ if (minimize) {
 
     minimizer = [
         new TerserPlugin({
-            sourceMap: true,
+            //FIXME sourcemap is not working since terser 1.3.0
+            sourceMap: false,
             parallel: true,
             cache: true,
             extractComments: {
@@ -153,7 +153,7 @@ module.exports = {
     },
     module: {
         rules: [
-                {
+            {
                 test: /\.(scss|css)$/,
 //      exclude: [`${cwd}/src/assets/ngivr.scss`],
                 use: ExtractTextPlugin.extract({
@@ -205,7 +205,7 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({
-                   // fallback: "style-loader",
+                    // fallback: "style-loader",
                     use: [
                         {
                             loader: 'css-loader',
