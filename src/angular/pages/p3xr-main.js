@@ -304,6 +304,7 @@ p3xr.ng.component('p3xrMain', {
 
                 })
                 $rootScope.p3xr.state.info = p3xrRedisParser.info(response.info)
+                $rootScope.p3xr.state.infoObject = response.infoObject
                 $rootScope.$digest()
                 p3xrCommon.toast({
                     message: p3xr.strings.status.savedRedis
@@ -411,4 +412,3 @@ p3xr.ng.component('p3xrMain', {
           */
     }
 })
-
