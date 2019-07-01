@@ -6,7 +6,7 @@
             <md-tabs md-dynamic-height md-border-bottom class="md-primary">
                 <md-tab label="{{ key }}" ng-repeat="(key, value) in $root.p3xr.state.info.keyspaceDatabases">
                     <md-content>
-                        <md-list flex ng-repeat="(itemKey, itemValue) in $root.p3xr.state.infoObject.databases[key]">
+                        <md-list flex ng-repeat="(itemKey, itemValue) in $root.p3xr.state.info.keyspace['db' + key ]">
                             <md-list-item>
                                 <p><strong>{{ $ctrl.generateKey(itemKey) }}</strong></p>
                                 {{ itemValue }}

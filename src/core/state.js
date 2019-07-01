@@ -17,7 +17,7 @@ p3xr.state = {
     reducedFunctions: false,
     dbsize: undefined,
     monitor: false,
-    infoObject: undefined,
+    //infoObject: undefined,
 }
 
 Object.defineProperty(p3xr.state, 'themeLayout', {
