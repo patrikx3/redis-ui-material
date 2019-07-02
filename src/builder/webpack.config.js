@@ -65,8 +65,7 @@ if (minimize) {
 
     minimizer = [
         new TerserPlugin({
-            //FIXME sourcemap is not working since terser 1.3.0
-            sourceMap: false,
+            sourceMap: true,
             parallel: true,
             cache: true,
             extractComments: {
