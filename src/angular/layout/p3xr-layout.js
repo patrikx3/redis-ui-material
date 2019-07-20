@@ -73,6 +73,9 @@ p3xr.ng.component('p3xrLayout', {
         };
 
         this.connect = async (connection) => {
+
+            console.time('connect')
+
             p3xr.state.search = '';
 
 
@@ -137,6 +140,8 @@ p3xr.ng.component('p3xrLayout', {
                 p3xr.ui.overlay.hide()
             }
             // $rootScope.$digest()
+            console.timeEnd('connect')
+
         }
 
 

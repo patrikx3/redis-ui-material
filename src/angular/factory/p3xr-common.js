@@ -74,6 +74,7 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootSco
     const loadRedisInfoResponse = (options) => {
         const {response} = options
 
+        console.time('loadRedisInfoResponse')
         $rootScope.p3xr.state.info = p3xrRedisParser.info(response.info)
         //$rootScope.p3xr.state.infoObject = response.infoObject
 
@@ -90,6 +91,7 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootSco
         $timeout(() => {
             $rootScope.p3xr.state.reducedFunctions = $rootScope.p3xr.state.keysRaw.length > p3xr.settings.maxLightKeysCount
             $rootScope.$digest()
+            console.timeEnd('loadRedisInfoResponse')
         })
 
     }

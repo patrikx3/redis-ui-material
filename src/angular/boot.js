@@ -214,13 +214,28 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
                 })
                 keysTree = p3xr.state.keys
             }
-            //console.warn('parse tree', ((Date.now() - startNow)) / 1000)
+            //console.log('keysTreeRendered', $rootScope.keysTreeRendered)
             return $rootScope.keysTreeRendered
         },
-        set: (value) => {
-            keysTree = value
+    })
+
+    /*
+    let chunked = []
+    let chunks = []
+    Object.defineProperty($rootScope, 'keysTreeChunked', {
+        get: () => {
+            if ($rootScope.keysTree.length < 50) {
+                return $rootScope.keysTree;
+            }
+            let i, j, chunk = 50;
+            for (i = 0, j = $rootScope.keysTree.length; i < j; i += chunk) {
+                chunks.push($rootScope.keysTree.slice(i, i + chunk));
+            }
+            console.log(chunks)
+            return chunks
         }
     })
+*/
 
     let globalKeysRaw = [];
     Object.defineProperty($rootScope.p3xr.state, 'keys', {

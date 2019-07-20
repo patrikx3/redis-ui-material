@@ -324,6 +324,9 @@ p3xr.ng.component('p3xrMain', {
         }
 
         this.refresh = async (options = {}) => {
+
+            console.time('refresh')
+
             let {withoutParent} = options
             if (withoutParent === undefined) {
                 withoutParent = false
@@ -353,7 +356,7 @@ p3xr.ng.component('p3xrMain', {
                 })
 
                 if (!withoutParent) {
-                    $rootScope.$broadcast('p3x-refresh');
+                    $rootScope.$broadcast('p3x-refresh-key');
                 }
 
             } catch (e) {
@@ -367,6 +370,8 @@ p3xr.ng.component('p3xrMain', {
                 */
 
             }
+            console.timeEnd('refresh')
+
         }
 
         $scope.$on('p3x-refresh', () => {
