@@ -232,7 +232,7 @@ const strings = {
             },
             error: {
                 page: '页数必须是10  -  500之间的整数',
-                maxValueDisplay: '最大值显示值必须是0  -  32768之间的整数',
+                maxValueDisplay: '最大显示值必须是介于-1和32768之间的整数',
             },
 
         },

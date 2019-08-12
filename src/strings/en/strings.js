@@ -235,7 +235,7 @@ const strings = {
             },
             error: {
                 page: 'The page count must be an integer between 10 - 500',
-                maxValueDisplay: '最大值显示值必须是-1到32768之间的整数',
+                maxValueDisplay: 'The maximum display value must be an integer between -1 and 32768',
             },
 
         },
