@@ -37,6 +37,11 @@ p3xr.settings = {
         translation: {}
     },
     pageCount: 50,
+    maxValueDisplay: 1024,
+    maxValueDisplaySetting: {
+      default: 1024,
+      cookieName: 'p3xr-main-treecontrol-max-value-display'
+    },
     keySortInfo: {
         default: false,
         cookieName: 'p3xr-main-treecontrol-key-sort',

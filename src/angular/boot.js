@@ -84,6 +84,25 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
         }
     })
 
+
+    let maxValueDisplay
+    Object.defineProperty($rootScope.p3xr.settings, 'maxValueDisplay', {
+        get: () => {
+            maxValueDisplay = $cookies.get(p3xr.settings.maxValueDisplaySetting.cookieName)
+            if (maxValueDisplay === undefined) {
+                maxValueDisplay = p3xr.settings.maxValueDisplaySetting.default
+            }
+
+            return parseInt(maxValueDisplay)
+        },
+        set: (value) => {
+            maxValueDisplay = parseInt(value)
+            maxValueDisplay = $cookies.put(p3xr.settings.maxValueDisplaySetting.cookieName, value, {
+                expires: p3xr.settings.cookieExpiry,
+            })
+        }
+    })
+
     let language
     Object.defineProperty($rootScope.p3xr.settings.language, 'current', {
         get: () => {

@@ -51,6 +51,21 @@
                     {{ $root.p3xr.strings.label.treeSettingsPageCount }}
                 </div>
 
+                <md-input-container class="md-block p3xr-md-input-container-no-bottom">
+                    <label>{{ $root.p3xr.strings.form.treeSettings.maxValueDisplay }}</label>
+                    <input type="number" required min="-1" max="32768" name="maxValueDisplay" step="1" pattern="-?\d*"
+                           ng-model="model.maxValueDisplay">
+                    <div ng-messages="p3xrDialogTreecontrolSettingsForm.maxValueDisplay.$error">
+                        <div ng-message-exp="['required', 'min', 'max', 'pattern']">
+                            {{ $root.p3xr.strings.form.treeSettings.error.maxValueDisplay }}
+                        </div>
+                    </div>
+                </md-input-container>
+                <div class="p3xr-md-input-container-bottom-info">
+                    {{ $root.p3xr.strings.form.treeSettings.maxValueDisplayInfo }}
+                </div>
+
+
                 <span ng-if="!$root.p3xr.state.reducedFunctions">
 
                     <md-input-container class="md-block p3xr-md-input-container-no-bottom">

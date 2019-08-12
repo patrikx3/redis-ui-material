@@ -23,7 +23,18 @@
         &nbsp;
     </div>
     <div flex="60" class="p3xr-pre" style="overflow: auto;align-items: flex-start; max-height: 200px;"
-         ng-click="$ctrl.editValue({ score: value[0], member: value[1], $event: $event})">{{ value[1] }}
+         ng-click="$ctrl.editValue({ score: value[0], member: value[1], $event: $event})">
+
+        <span ng-if="$root.p3xr.settings.maxValueDisplay > -1">
+            <span ng-if="$root.p3xr.settings.maxValueDisplay > 0 && value[1].length > $root.p3xr.settings.maxValueDisplay">
+              {{ value[1].substring(0, $root.p3xr.settings.maxValueDisplay) }}...
+            </span>
+            <span ng-if="$root.p3xr.settings.maxValueDisplay === 0 || value[1].length <= $root.p3xr.settings.maxValueDisplay">
+                {{ value[1] }}
+            </span>
+        </span>
+
+
     </div>
     <div flex="20" style="text-align: right; ">
         <md-button class="md-icon-button md-accent" ng-click="$ctrl.showJson({ value:  value[1]})">

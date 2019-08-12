@@ -9,12 +9,15 @@ p3xr.ng.factory('p3xrDialogTreecontrolSettings', function (p3xrCommon, $mdDialog
                 await $mdDialog.show({
                     controller: function ($scope, $rootScope) {
 
+                        console.log('$rootScope.p3xr.settings.maxValueDisplay', $rootScope.p3xr.settings.maxValueDisplay)
+
                         $scope.model = {
                             treeSeparator: $rootScope.p3xr.settings.redisTreeDivider,
                             pageCount: $rootScope.p3xr.settings.pageCount,
                             keysSort: $rootScope.p3xr.settings.keysSort,
                             searchClientSide: $rootScope.p3xr.settings.searchClientSide,
                             searchStartsWith: $rootScope.p3xr.settings.searchStartsWith,
+                            maxValueDisplay: $rootScope.p3xr.settings.maxValueDisplay,
                         }
 
                         // Promise reject
@@ -65,7 +68,7 @@ p3xr.ng.factory('p3xrDialogTreecontrolSettings', function (p3xrCommon, $mdDialog
                                 $rootScope.p3xr.settings.searchStartsWith = $scope.model.searchStartsWith
                                 $rootScope.p3xr.state.page = 1
                                 $rootScope.p3xr.state.redisChanged = true;
-
+                                $rootScope.p3xr.settings.maxValueDisplay = $scope.model.maxValueDisplay
                                 /*
                                 $timeout(() => {
                                     $rootScope.$digest()

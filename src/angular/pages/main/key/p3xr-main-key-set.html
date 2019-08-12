@@ -13,7 +13,20 @@
 <div layout-gt-xs="row" layout="column" layout-align="start start" ng-repeat="value in $ctrl.p3xrValue"
      style="{{ $ctrl.setTableStyles({ $odd: $odd }) }}">
     <div flex class="p3xr-pre" style="padding-left: 3px; align-items: flex-start; max-height: 200px;"
-         ng-click="$ctrl.editValue({ value: value, $event: $event})">{{ value }}
+         ng-click="$ctrl.editValue({ value: value, $event: $event})">
+
+
+        <span ng-if="$root.p3xr.settings.maxValueDisplay > -1">
+             <span ng-if="$root.p3xr.settings.maxValueDisplay > 0 && value.length > $root.p3xr.settings.maxValueDisplay">
+                {{ value.substring(0, $root.p3xr.settings.maxValueDisplay) }}...
+            </span>
+            <span ng-if="$root.p3xr.settings.maxValueDisplay === 0 || value.length <= $root.p3xr.settings.maxValueDisplay">
+                {{ value }}
+            </span>
+
+        </span>
+
+
     </div>
     <div flex="5" style="text-align: right; ">
         <md-button class="md-icon-button md-accent" ng-click="$ctrl.showJson({ value: value})">
