@@ -212,7 +212,7 @@ const strings = {
         },
         treeSettings: {
             maxValueDisplay: '最大值显示字符串长度',
-            maxValueDisplayInfo: '如果最大值显示为零，则显示所有内容，如果大于0，则将截断。 如果为-1，则不会在没有编辑的情况下显示该值。',
+            maxValueDisplayInfo: '如果最大值显示为零，则显示所有内容，如果大于0，则将截断。 如果它是-1，它将不显示没有编辑字符串的值，对于其他人，它显示所有内容。',
             keyCount: () => {
                 return `键数: ${p3xr.state.keysRaw.length}`
             },

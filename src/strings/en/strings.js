@@ -215,7 +215,7 @@ const strings = {
         },
         treeSettings: {
             maxValueDisplay: 'Max value display string length',
-            maxValueDisplayInfo: 'If max value display zero, it shows everything, if it is bigger than 0, it will truncate. If it is -1, it will not show the value without edit.',
+            maxValueDisplayInfo: 'If max value display zero, it shows everything, if it is bigger than 0, it will truncate. If it is -1, it will not show the value without edit for strings, for others, it display everything.',
             keyCount: () => {
                 return `Number of keys: ${p3xr.state.keysRaw.length}`
             },
