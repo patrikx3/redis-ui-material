@@ -66,7 +66,7 @@
                 </div>
 
 
-                <span ng-if="!$root.p3xr.state.reducedFunctions">
+                <span ng-if="!$root.p3xr.state.reducedFunctions" style="margin: 0; padding: 0;">
 
                     <md-input-container class="md-block p3xr-md-input-container-no-bottom">
                         <md-switch ng-model="model.keysSort" name="keysSort" aria-label="">
@@ -96,7 +96,7 @@
                 </span>
 
 
-                <md-input-container class="md-block ">
+                <md-input-container class="md-block p3xr-md-input-container-no-bottom" >
                     <md-switch ng-model="model.searchStartsWith" name="searchStartsWith" aria-label="">
                         {{ model.searchStartsWith ? $root.p3xr.strings.form.treeSettings.label.searchModeStartsWith :
                         $root.p3xr.strings.form.treeSettings.label.searchModeIncludes }}

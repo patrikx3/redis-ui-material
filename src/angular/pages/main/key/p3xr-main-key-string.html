@@ -33,21 +33,7 @@
 </div>
 
 
-<div class="p3xr-pre" style="max-width: 100%; overflow: auto;" ng-click="$ctrl.edit()" ng-if="!$ctrl.editable">
-
-    <span ng-if="$root.p3xr.settings.maxValueDisplay > -1">
-        <span ng-if="$root.p3xr.settings.maxValueDisplay > 0 && $ctrl.p3xrValue.length > $root.p3xr.settings.maxValueDisplay">
-                {{ $ctrl.p3xrValue.substring(0, $root.p3xr.settings.maxValueDisplay) }}...
-            </span>
-        <span ng-if="$root.p3xr.settings.maxValueDisplay === 0 || $ctrl.p3xrValue.length <= $root.p3xr.settings.maxValueDisplay">
-            {{ $ctrl.p3xrValue }}
-        </span>
-    </span>
-
-
-
-
-</div>
+<div class="p3xr-pre" style="max-width: 100%; overflow: auto;" ng-click="$ctrl.edit()" ng-if="!$ctrl.editable"><span ng-if="$root.p3xr.settings.maxValueDisplay > -1"><span ng-if="$root.p3xr.settings.maxValueDisplay > 0 && $ctrl.p3xrValue.length > $root.p3xr.settings.maxValueDisplay">{{ $ctrl.p3xrValue.substring(0, $root.p3xr.settings.maxValueDisplay) }}...</span><span ng-if="$root.p3xr.settings.maxValueDisplay === 0 || $ctrl.p3xrValue.length <= $root.p3xr.settings.maxValueDisplay">{{ $ctrl.p3xrValue }}</span></span></div>
 
 <div ng-if="$ctrl.editable">
     <md-switch ng-model="$ctrl.validateJson" class="md-accent" style="float: right;">
