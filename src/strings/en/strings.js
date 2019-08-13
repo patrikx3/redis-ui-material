@@ -220,7 +220,7 @@ const strings = {
                 return `Number of keys: ${p3xr.state.keysRaw.length}`
             },
             label: {
-                formName: 'Tree settings',
+                formName: 'Redis settings',
                 searchModeClient: 'Client search mode',
                 searchModeServer: 'Server search mode',
                 searchModeStartsWith: 'Search with starts with mode',

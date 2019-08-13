@@ -217,7 +217,7 @@ const strings = {
                 return `键数: ${p3xr.state.keysRaw.length}`
             },
             label: {
-                formName: '树设置',
+                formName: 'Redis设置',
                 searchModeClient: '客户端搜索模式',
                 searchModeServer: '服务端搜索模式',
                 searchModeStartsWith: '以模式启动搜索',
