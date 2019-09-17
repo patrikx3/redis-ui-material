@@ -128,8 +128,8 @@ const strings = {
             off: '关闭键排序'
         },
         awsElastiCache: {
-            on: 'AWS ElastiCache on',
-            off: 'AWS ElastiCache off',
+            on: 'AWS ElastiCache / Azure on',
+            off: 'AWS ElastiCache / Azure off',
         },
         cluster: {
             on: '群集',

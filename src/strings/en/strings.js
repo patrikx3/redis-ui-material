@@ -131,8 +131,8 @@ const strings = {
             off: 'Key sorting off'
         },
         awsElastiCache: {
-            on: 'AWS ElastiCache on',
-            off: 'AWS ElastiCache off',
+            on: 'AWS ElastiCache / Azure on',
+            off: 'AWS ElastiCache / Azure off',
         },
         cluster: {
             on: 'Cluster on',
