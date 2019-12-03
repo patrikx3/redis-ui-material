@@ -16,6 +16,8 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                             $scope.model.password = options.model.id
                         } else {
                             $scope.model = {
+                                awsElastiCache: false,
+                                azure: false,
                                 name: undefined,
                                 host: undefined,
                                 port: undefined,

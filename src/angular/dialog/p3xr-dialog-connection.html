@@ -59,6 +59,14 @@
                     </md-switch>
                 </md-input-container>
 
+                <md-input-container style="margin: 0px">
+                    <md-switch ng-model="model.azure" name="azure" aria-label=""
+                               ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
+                        {{ model.azure ? $root.p3xr.strings.label.azure.on :
+                        $root.p3xr.strings.label.azure.off }}
+                    </md-switch>
+                </md-input-container>
+
 
                 <md-input-container style="margin: 0px">
                     <md-switch ng-model="model.cluster" name="cluster" aria-label=""
