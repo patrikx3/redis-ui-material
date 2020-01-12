@@ -131,8 +131,8 @@ const strings = {
             off: 'Key sorting off'
         },
         awsElastiCache: {
-            on: 'AWS ElastiCache on',
-            off: 'AWS ElastiCache off',
+            on: 'AWS ElastiCache / Gcloud memorystore on',
+            off: 'AWS ElastiCache / Gcloud memorystore off',
         },
         azure: {
             on: 'Azure on',
