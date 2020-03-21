@@ -44,7 +44,7 @@
                 <md-input-container class="md-block p3xr-md-input-container-no-bottom">
                     <label>{{ $root.p3xr.strings.form.connection.label.password }}</label>
                     <input name="password" type="password" ng-model="model.password"
-                           ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
+                           ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off">
                 </md-input-container>
                 <div class="p3xr-md-input-container-bottom-info">
                     {{ $root.p3xr.strings.label.passwordSecure }}

@@ -58,7 +58,7 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                             $mdDialog.hide(answer);
                         };
                         */
-                        console.warn('$scope.model', $scope.model)
+                        //console.warn('$scope.model', $scope.model)
 
                         const handleInvalidForm = () => {
                             if ($scope.p3xrConnectionForm.$invalid) {
