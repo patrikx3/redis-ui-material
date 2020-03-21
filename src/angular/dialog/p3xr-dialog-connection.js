@@ -118,6 +118,12 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
 
 
                             try {
+                                p3xr.ui.overlay.show({
+                                    message: p3xr.strings.title.connectingRedis
+                                })
+
+                                //await new Promise(resolve => setTimeout(resolve, 5000))
+
                                 const response = await p3xrSocket.request({
                                     action: 'redis-test-connection',
                                     payload: {
@@ -129,6 +135,8 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                                 })
                             } catch (e) {
                                 p3xrCommon.generalHandleError(e)
+                            } finally {
+                                p3xr.ui.overlay.hide()
                             }
 
                         }
