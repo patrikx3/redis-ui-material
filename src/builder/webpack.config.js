@@ -7,7 +7,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const fileAsset = `[name].[hash].[ext]`;
 const minimize = process.argv.includes('--production');
-const mode = minimize ? 'development' : 'production';
+const mode = minimize ? 'production' : 'development';
 
 const filenamePrefix = minimize ? '[name].[hash]' : '[name]'
 
@@ -176,8 +176,8 @@ module.exports = {
                 use: [{
                     loader: 'html-loader',
                     options: {
-                        minimize: mode,
-                        caseSensitive: true
+                        minimize: minimize,
+                        //caseSensitive: true
                     }
                 }]
             },
