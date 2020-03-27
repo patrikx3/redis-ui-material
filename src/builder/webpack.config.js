@@ -28,7 +28,6 @@ const plugins = [
     new HtmlWebpackPlugin({
         template: `${top}/src/index.html`,
         inject: 'head',
-        chunksSortMode: 'dependency',
         chunks: ['bundle'],
         title: pkg.description,
         minify: minimize
