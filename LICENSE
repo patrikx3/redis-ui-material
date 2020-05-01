@@ -1,9 +1,9 @@
 
-@license p3x-redis-ui-material v2020.4.151
+@license p3x-redis-ui-material v2020.4.154
   
 💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via http and socket.io
 
-https://pages.corifeus.com/redis-ui-material
+https://corifeus.com/redis-ui-material
 
 Copyright (c) 2020 Patrik Laszlo / P3X / Corifeus and contributors.
 
