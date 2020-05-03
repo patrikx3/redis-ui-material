@@ -70,8 +70,8 @@ if (minimize) {
             extractComments: {
                 condition: /^\**!|@preserve|@license|@cc_on/,
 
-                filename: function (fileName) {
-                    return `${fileName}.LICENSE.txt`;
+                filename: function (fileOptions) {
+                    return `${fileOptions.filename}.LICENSE.txt`;
                 },
                 banner: function (webpackBanner) {
                     return `
