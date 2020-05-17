@@ -115,9 +115,11 @@ For more information about all licenses, please see ${webpackBanner}
     )
 
     plugins.push(
-        new CopyWebpackPlugin([
-            'src/public'
-        ])
+        new CopyWebpackPlugin({
+            patterns: [
+                { from: 'src/public', to: 'dist' }
+            ]
+        })
     )
 
 
