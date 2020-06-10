@@ -2,10 +2,15 @@
              tree-model="$root.keysTree" options="$ctrl.keysTreeOptions" expanded-nodes="$root.expandedNodes"
              on-selection="$ctrl.selectTreeNode(node, selected, $parentNode, $index, $first, $middle, $last, $odd, $even, $path)"
              on-node-toggle="$ctrl.showToggle(node, expanded, $parentNode, $index, $first, $middle, $last, $odd, $even, $path)">
-    <md-tooltip md-direction="top">{{ $ctrl.extractNodeTooltip(node) }}</md-tooltip>
-    <label class="p3xr-main-tree-node" ng-mouseover="node.show = true" ng-mouseleave="node.show = false">
 
-        <!-- {{ node.keysInfo }} -->
+
+    <span in-view="$ctrl.displayNode(node, $inview)" ng-if="!node.myDivIsVisible">
+        <span style="display: inline-block; width: 90%; margin: 4px; background-color: grey; height: 2px;"></span>
+    </span>
+    <span ng-if="node.myDivIsVisible">
+        <md-tooltip md-direction="top">{{ $ctrl.extractNodeTooltip(node) }}</md-tooltip>
+        <label class="p3xr-main-tree-node" ng-mouseover="node.show = true" ng-mouseleave="node.show = false">
+
         <span ng-switch="node.keysInfo.type">
             <i ng-switch-when="hash" class="fas fa-hashtag" aria-hidden="true"></i>
             <i ng-switch-when="list" class="fas fa-list" aria-hidden="true"></i>
@@ -13,11 +18,11 @@
             <i ng-switch-when="string" class="fas fa-ellipsis-h" aria-hidden="true"></i>
             <i ng-switch-when="zset" class="fas fa-chart-line" aria-hidden="true"></i>
         </span>
-        {{node.label}}
-        <span class="p3xr-main-tree-node-count" ng-if="node.type === 'folder'">{{$root.p3xr.settings.redisTreeDivider}}* ({{node.childCount}})</span>
-        <span class="p3xr-main-tree-node-count"
-              ng-if="node.type !== 'folder' && node.keysInfo.type !== 'string' && node.keysInfo !== undefined">({{node.keysInfo.length}})</span>
-        <span ng-if="node.type === 'folder' && node.show">
+            {{node.label}}
+            <span class="p3xr-main-tree-node-count" ng-if="node.type === 'folder'">{{$root.p3xr.settings.redisTreeDivider}}* ({{node.childCount}})</span>
+            <span class="p3xr-main-tree-node-count"
+                  ng-if="node.type !== 'folder' && node.keysInfo.type !== 'string' && node.keysInfo !== undefined">({{node.keysInfo.length}})</span>
+            <span ng-if="node.type === 'folder' && node.show">
                         <span>
                             <md-tooltip md-direction="right">{{ $root.p3xr.strings.confirm.deleteAllKeys({key: node.key}) }}</md-tooltip>
                             <md-icon ng-click="$ctrl.deleteTree({event: $event, node: node})"
@@ -30,5 +35,7 @@
                                      class="md-primary p3xr-main-treecontrol-folder-icon">add</md-icon>
                         </span>
                     </span>
-    </label>
+        </label>
+    </span>
+
 </treecontrol>

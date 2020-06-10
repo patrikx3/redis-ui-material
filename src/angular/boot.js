@@ -6,6 +6,7 @@ require('angular-sanitize')
 require('angular-messages');
 require('angular-animate');
 require('angular-cookies');
+require('angular-inview')
 
 require('@uirouter/angularjs')
 require('angular-material');
@@ -25,6 +26,7 @@ p3xr.ng = angular.module('p3xr-redis-ui', [
     'ui.router',
     'treeControl',
     'angular-json-tree',
+    'angular-inview',
 ]);
 
 

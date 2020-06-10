@@ -11,6 +11,10 @@ p3xr.ng.component('p3xrMainTree', {
 
         }
 
+        this.displayNode = (node, $inview) => {
+            node.myDivIsVisible = $inview
+        }
+
         this.getTreeTheme = () => {
             if (!p3xrTheme.isDark()) {
                 return 'tree-classic'
