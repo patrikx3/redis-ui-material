@@ -25,6 +25,7 @@ p3xr.ng.component('p3xrMainTreecontrolControls', {
                     }
                 })
                  */
+                //FIXME use with general recursive solution, as above (just not working, too tired)
                 const recursiveFolders = (node, level = 0) => {
                     delete node.$inview
                     if (node.type === 'folder') {
