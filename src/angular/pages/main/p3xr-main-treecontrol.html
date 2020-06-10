@@ -4,10 +4,10 @@
              on-node-toggle="$ctrl.showToggle(node, expanded, $parentNode, $index, $first, $middle, $last, $odd, $even, $path)">
 
 
-    <span in-view="$ctrl.displayNode(node, $inview)" ng-if="!node.myDivIsVisible">
+    <span in-view="$ctrl.displayNode(node, $inview)" ng-if="!node.$inview">
         <span style="display: inline-block; width: 90%; margin: 4px; background-color: grey; height: 2px;"></span>
     </span>
-    <span ng-if="node.myDivIsVisible">
+    <span ng-if="node.$inview">
         <md-tooltip md-direction="top">{{ $ctrl.extractNodeTooltip(node) }}</md-tooltip>
         <label class="p3xr-main-tree-node" ng-mouseover="node.show = true" ng-mouseleave="node.show = false">
 
