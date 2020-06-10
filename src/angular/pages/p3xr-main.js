@@ -208,6 +208,11 @@ p3xr.ng.component('p3xrMain', {
         this.resize = debounce(rawResize, p3xr.settings.debounce)
 
         this.$onInit = () => {
+
+            require('../../core/node-inview-recursive').recursive({
+                nodes: $rootScope.keysTreeRendered,
+            })
+
             $container = $('#p3xr-main-content')
             $header = $('#p3xr-layout-header-container')
             $footer = $('#p3xr-layout-footer-container')
@@ -224,7 +229,10 @@ p3xr.ng.component('p3xrMain', {
 
             if (p3xr.state.redisChanged) {
                 p3xr.state.redisChanged = false;
-                this.refresh()
+                //console.warn('p3xr', p3xr)
+                if (p3xr.state.connection) {
+                    this.refresh()
+                }
             }
         }
 

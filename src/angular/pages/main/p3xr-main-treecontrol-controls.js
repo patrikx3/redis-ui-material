@@ -13,18 +13,17 @@ p3xr.ng.component('p3xrMainTreecontrolControls', {
                 })
 
                 let expandedNodes = []
-                const recursiveFolders = (node, level = 0) => {
-                    delete node.$inview
-                    if (node.type === 'folder') {
-                        expandedNodes.push(node)
-                        for (let childNode of node.children) {
-                            recursiveFolders(childNode, level++)
+                require('../../../core/node-inview-recursive').recursive({
+                    status: false,
+                    nodes: $rootScope.keysTreeRendered,
+                    nodeCallback: (opts) => {
+                        const { node } = opts
+                        if (node.type === 'folder') {
+                            expandedNodes.push(node)
                         }
                     }
-                }
-                for (let node of $rootScope.keysTreeRendered) {
-                    recursiveFolders(node)
-                }
+                })
+
                 $rootScope.expandedNodes = expandedNodes
 
             } catch (e) {

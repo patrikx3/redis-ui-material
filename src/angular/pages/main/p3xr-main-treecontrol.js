@@ -51,16 +51,8 @@ p3xr.ng.component('p3xrMainTree', {
 
         this.showToggle = function (node, expanded, $parentNode, $index, $first, $middle, $last, $odd, $even, $path) {
             if (!expanded) {
-                const recursive = (opts) => {
-                    for (let child of opts.node.children) {
-                        child.$inview = false
-                        if (child.children.length > 0) {
-                            recursive({ node: child})
-                        }
-                    }
-                }
-                recursive({
-                    node: node
+                require('../../../core/node-inview-recursive').recursive({
+                    nodes: $rootScope.keysTreeRendered,
                 })
             }
             $rootScope.$broadcast('p3xr-main-treecontrol-control-noop')
