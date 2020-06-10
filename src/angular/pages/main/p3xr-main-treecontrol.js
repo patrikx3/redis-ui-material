@@ -63,6 +63,8 @@ p3xr.ng.component('p3xrMainTree', {
                     node: node
                 })
             }
+            $rootScope.$broadcast('p3xr-main-treecontrol-control-noop')
+
             //  console.warn('showToggle', arguments, $path())
             /*
             p3xrCommon.toast({

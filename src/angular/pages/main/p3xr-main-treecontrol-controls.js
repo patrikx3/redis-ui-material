@@ -39,19 +39,18 @@ p3xr.ng.component('p3xrMainTreecontrolControls', {
             }
         }
 
-        let treeCollapseAll = false
         this.treeCollapseAll = () => {
             $rootScope.expandedNodes = []
-            if (!treeCollapseAll) {
-                treeCollapseAll = true
-                $timeout(() => {
-                    $('#p3xr-main-treecontrol-controls-collapse-all').click();
-                    $timeout(() => {
-                        treeCollapseAll = false
-                    })
-                })
-            }
+            $rootScope.$broadcast('p3xr-main-treecontrol-control-noop')
         }
+
+        $scope.$on('p3xr-main-treecontrol-control-noop', () => {
+            $timeout(() => {
+                $('#p3xr-main-treecontrol-controls-click-noop').click();
+            })
+        })
+
+        this.noop = () => {}
 
         this.page = (options) => {
 
