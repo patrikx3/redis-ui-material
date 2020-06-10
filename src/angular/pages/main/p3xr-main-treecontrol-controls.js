@@ -3,7 +3,7 @@ p3xr.ng.component('p3xrMainTreecontrolControls', {
     bindings: {
         p3xrMainRef: '<'
     },
-    controller: function ($cookies, $rootScope, p3xrCommon, $timeout, p3xrDialogTreecontrolSettings) {
+    controller: function ($cookies, $rootScope, p3xrCommon, $timeout, p3xrDialogTreecontrolSettings, $scope) {
 
         this.treeExpandAll = () => {
             try {
@@ -11,8 +11,10 @@ p3xr.ng.component('p3xrMainTreecontrolControls', {
                 p3xr.ui.overlay.show({
                     message: p3xr.strings.status.treeExpandAll
                 })
+
                 let expandedNodes = []
                 const recursiveFolders = (node, level = 0) => {
+                    delete node.$inview
                     if (node.type === 'folder') {
                         expandedNodes.push(node)
                         for (let childNode of node.children) {
@@ -31,14 +33,24 @@ p3xr.ng.component('p3xrMainTreecontrolControls', {
                 p3xr.ui.overlay.hide()
                 /*
                 $timeout(() => {
-                    p3xr.ui.overlay.hide()
+                    $scope.$digest()
                 }, p3xr.settings.debounce)
-                */
+                 */
             }
         }
 
+        let treeCollapseAll = false
         this.treeCollapseAll = () => {
             $rootScope.expandedNodes = []
+            if (!treeCollapseAll) {
+                treeCollapseAll = true
+                $timeout(() => {
+                    $('#p3xr-main-treecontrol-controls-collapse-all').click();
+                    $timeout(() => {
+                        treeCollapseAll = false
+                    })
+                })
+            }
         }
 
         this.page = (options) => {
