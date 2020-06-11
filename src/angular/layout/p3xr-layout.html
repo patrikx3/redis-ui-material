@@ -57,7 +57,7 @@
             <span flex></span>
 
 
-            <md-menu >
+            <md-menu ng-if="$root.isElectron === false">
                 <md-button ng-click="$mdMenu.open($event)">
                     <md-icon>language</md-icon>
                     <span hide-xs hide-sm>{{ $root.p3xr.strings.intention.language }}</span>
