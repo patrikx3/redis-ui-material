@@ -31,11 +31,11 @@ p3xr.ng.component('p3xrConsole', {
         const resize = debounce(() => {
             let minus = 0
             let $components
-            if ($rootScope.isElectron) {
-                $components = [$footer, $consoleHeader]
-            } else {
+            //if ($rootScope.isElectron) {
+            //    $components = [$footer, $consoleHeader]
+            //} else {
                 $components = [$header, $footer, $consoleHeader]
-            }
+            //}
             for (let item of $components) {
                 minus += item.outerHeight()
             }
@@ -289,10 +289,10 @@ p3xr.ng.component('p3xrConsole', {
       </md-button>
       </div>
     </md-toolbar>
-    
+
     <md-dialog-content flex>
       <div id="p3xr-console-commands">
-        <iframe seamless="seamless" src="https://redis.io/commands" frameborder="0" style="width: 100%; height: {{ height - 15 }}px;"></iframe>      
+        <iframe seamless="seamless" src="https://redis.io/commands" frameborder="0" style="width: 100%; height: {{ height - 15 }}px;"></iframe>
       </div>
     </md-dialog-content>
 
@@ -303,7 +303,7 @@ p3xr.ng.component('p3xrConsole', {
         {{ $root.p3xr.strings.intention.close }}
       </md-button>
     </md-dialog-actions>
-</md-dialog>          
+</md-dialog>
           `,
 
             });

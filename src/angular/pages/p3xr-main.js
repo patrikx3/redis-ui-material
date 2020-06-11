@@ -56,18 +56,19 @@ p3xr.ng.component('p3xrMain', {
             let minus = 0
 
             let $components
-            if ($rootScope.isElectron) {
-                $components = [$footer, $consoleHeader]
-            } else {
+            //if ($rootScope.isElectron) {
+            //    $components = [$footer, $consoleHeader]
+            //} else {
                 $components = [$header, $footer, $consoleHeader]
-            }
+            //}
             for (let item of $components) {
                 minus += item.outerHeight()
             }
             const windowHeight = $window.outerHeight()
             //console.log(windowHeight, minus)
 
-            const outputPositionMinus = $rootScope.isElectron ? 0 : 10
+            //const outputPositionMinus = $rootScope.isElectron ? 0 : 10
+            const outputPositionMinus = 10
             const outputHeight = Math.max(windowHeight - minus - outputPositionMinus, 100)
             $container.height(outputHeight)
             $container.css('max-height', `${outputHeight}px`)
