@@ -2,7 +2,8 @@ require('typeface-roboto');
 require('./scss/index.scss')
 
 // fontawesome
-require('@fortawesome/fontawesome-free/js/all')
+//require('@fortawesome/fontawesome-free/js/all')
+
 
 // jquery
 global.$ = require('jquery/dist/jquery.slim')

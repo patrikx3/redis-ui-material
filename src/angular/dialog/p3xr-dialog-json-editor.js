@@ -6,22 +6,16 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
                 return $mdDialog.show({
                     controller: function ($scope, $mdDialog, p3xrCommon) {
 
-                        let lastResult
                         let editor
                         let obj
-                        Object.defineProperty($scope, 'isJson', {
-                            get: () => {
-                                try {
-                                    obj = JSON.parse(options.value)
-                                    lastResult = true
-                                    return true
-                                } catch (e) {
-                                    obj = undefined
-                                    lastResult = false
-                                    return false
-                                }
-                            }
-                        })
+
+                        try {
+                            obj = JSON.parse(options.value)
+                            $scope.isJson = true
+                        } catch (e) {
+                            obj = undefined
+                            $scope.isJson = false
+                        }
 
                         if ($scope.isJson) {
                             $timeout(() => {

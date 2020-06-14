@@ -9,25 +9,14 @@ p3xr.ng.factory('p3xrDialogJsonView', function (p3xrCommon, $mdDialog) {
                 const result = await $mdDialog.show({
                     controller: function ($scope, $mdDialog) {
 
-                        let lastResult
-                        Object.defineProperty($scope, 'isJson', {
-                            get: () => {
-                                try {
-                                    const obj = JSON.parse(options.value)
-                                    if (lastResult !== true) {
-                                        $scope.obj = obj
-                                    }
-                                    lastResult = true
-                                    return true
-                                } catch (e) {
-                                    if (lastResult !== false) {
-                                        $scope.obj = undefined
-                                    }
-                                    lastResult = false
-                                    return false
-                                }
-                            }
-                        })
+                        try {
+                            $scope.obj = JSON.parse(options.value)
+                            $scope.isJson = true
+                        } catch (e) {
+                            $scope.obj = undefined
+                            $scope.isJson = false
+                        }
+
 
                         // Promise reject
                         $scope.ok = function () {
