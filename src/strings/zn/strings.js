@@ -93,8 +93,10 @@ const strings = {
         testConnection: '测试连接',
         getKey: '加载Redis键及相关数据...',
         jsonViewShow: '显示 JSON 树',
+        jsonViewEditor: '编辑JSON',
     },
     label: {
+        bigJson: '此JSON对象超过10 kb，因此请确保您知道自己在做什么，因为某些功能可能会缓慢呈现。',
         addNode: '添加节点',
         validateJson: '验证JSON',
         reducedFunction: `功能限制`,

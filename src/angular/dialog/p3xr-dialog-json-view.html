@@ -12,8 +12,8 @@
     </md-toolbar>
 
     <md-dialog-content flex>
-        <md-content layout-padding>
-            <json-tree object="obj" root-name="$root.p3xr.strings.label.tree" ng-if="isJson"></json-tree>
+        <md-content layout-padding style="font-family: monospace;">
+            <json-tree object="obj" root-name="$root.p3xr.strings.label.tree" ng-if="isJson" start-expanded="true"></json-tree>
             <div ng-if="!isJson">
                 {{ $root.p3xr.strings.label.jsonViewNotParsable}}
             </div>

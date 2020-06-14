@@ -96,8 +96,10 @@ const strings = {
         testConnection: 'Test connection',
         getKey: 'Loading Redis key and associated data ...',
         jsonViewShow: 'Display JSON tree',
+        jsonViewEditor: 'Edit JSON tree',
     },
     label: {
+        bigJson: 'This JSON object is over 10 kb, so make sure you know what you doing, because some functions can be slow rendering.',
         addNode: 'Add node',
         validateJson: 'Validate JSON',
         reducedFunction: `Reduced functionality`,

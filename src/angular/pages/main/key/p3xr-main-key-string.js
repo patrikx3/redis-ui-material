@@ -5,7 +5,7 @@ p3xr.ng.component('p3xrMainKeyString', {
         p3xrKey: '<',
         p3xrResponse: '<',
     },
-    controller: function (p3xrSocket, p3xrCommon, $rootScope, p3xrDialogJsonView) {
+    controller: function (p3xrSocket, p3xrCommon, $rootScope, p3xrDialogJsonView, p3xrDialogJsonEditor) {
 
 
         this.editable = false;
@@ -56,6 +56,20 @@ p3xr.ng.component('p3xrMainKeyString', {
                 event: options.$event,
                 value: this.p3xrValue
             })
+//            this.showJson = !this.showJson
+        }
+
+        this.jsonEditor = async(options) => {
+            try {
+                const result = await p3xrDialogJsonEditor.show({
+                    event: options.$event,
+                    value: this.p3xrValue
+                })
+                this.p3xrValue = result.obj
+                await this.save()
+            } catch(e) {
+                p3xrCommon.generalHandleError(e)
+            }
 //            this.showJson = !this.showJson
         }
 

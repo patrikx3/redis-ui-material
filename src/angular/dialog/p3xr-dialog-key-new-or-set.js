@@ -1,4 +1,4 @@
-p3xr.ng.factory('p3xrDialogKeyNewOrSet', function (p3xrCommon, $mdDialog, p3xrSocket) {
+p3xr.ng.factory('p3xrDialogKeyNewOrSet', function (p3xrCommon, $mdDialog, p3xrSocket, p3xrDialogJsonEditor) {
 
     return new function () {
 
@@ -101,12 +101,27 @@ p3xr.ng.factory('p3xrDialogKeyNewOrSet', function (p3xrCommon, $mdDialog, p3xrSo
 
                             }
 
+                            $scope.jsonEditor = async(options) => {
+                                try {
+                                    const result = await p3xrDialogJsonEditor.show({
+                                        event: options.$event,
+                                        value: options.value
+                                    })
+                                    $scope.model.value = result.obj
+                                    $scope.$digest();
+                                } catch(e) {
+                                    p3xrCommon.generalHandleError(e)
+                                }
+//            this.showJson = !this.showJson
+                            }
+
                         },
                         template: require('./p3xr-dialog-key-new-or-set.html'),
                         parent: angular.element(document.body),
                         targetEvent: options.$event,
                         clickOutsideToClose: true,
-                        fullscreen: true // Only for -xs, -sm breakpoints.
+                        fullscreen: true, // Only for -xs, -sm breakpoints.
+                        multiple: true,
                     })
                     // console.warn(result)
                 } catch (error) {
