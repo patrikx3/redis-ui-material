@@ -44,7 +44,10 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
 
                                 }
                                 if (JSON.stringify(obj).length > 10240) {
-                                    p3xrCommon.toast(p3xr.strings.label.bigJson)
+                                    p3xrCommon.toast({
+                                        message: p3xr.strings.label.bigJson,
+                                        hideDelay: 10000
+                                    })
                                 }
                                 editor = new JSONEditor(container, options)
                                 editor.setMode('tree')
