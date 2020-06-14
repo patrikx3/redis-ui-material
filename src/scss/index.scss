@@ -4,8 +4,10 @@
 @import '~angular-json-tree/dist/angular-json-tree.css';
 @import '~jsoneditor/dist/jsoneditor.css';
 
-table.jsoneditor-tree tbody tr td {
-    width: 0px !important;
+.p3xr-theme-dark {
+   .jsoneditor {
+       background-color: white;
+   }
 }
 
 @import 'vars';

@@ -9,7 +9,7 @@ p3xr.settings = {
         timeout: 300000,
     },
     toast: {
-        timeout: 3000,
+        timeout: 5000,
         position: 'bottom right',
     },
     debounce: 250,
