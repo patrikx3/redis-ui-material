@@ -4,9 +4,9 @@
         <div class="md-toolbar-tools">
 
             <p3xr-button ng-if="!$root.p3xr.state.failed" ui-sref="main.statistics"
-                         p3xr-label="$root.p3xr.strings.title.name" p3xr-fa-icon="fas fa-database"></p3xr-button>
+                         p3xr-label="$root.p3xr.state.donated ? $root.p3xr.strings.title.nameDonated : $root.p3xr.strings.title.name" p3xr-fa-icon="fas fa-database"></p3xr-button>
             <p3xr-button ng-if="$root.p3xr.state.failed" ng-click="$root.locationReload()"
-                         p3xr-label="$root.p3xr.strings.title.name" p3xr-fa-icon="fas fa-redo"></p3xr-button>
+                         p3xr-label="$root.p3xr.state.donated ? $root.p3xr.strings.title.nameDonated : $root.p3xr.strings.title.name" p3xr-fa-icon="fas fa-redo"></p3xr-button>
 
             <span flex></span>
 
@@ -22,9 +22,13 @@
     </md-toolbar>
 </div>
 
-<div id="p3xr-layout-header-version" md-colors="{ color: 'background-A100' }" hide-xs
-     ng-if="$root.isElectron === false">{{ $root.p3xr.state.version }}
+<div id="p3xr-layout-header-version-donated" md-colors="{ color: 'background-A100' }" hide-xs
+     ng-if="$root.isElectron === false && $root.p3xr.state.donated">{{ $root.p3xr.state.version }}
 </div>
+<div id="p3xr-layout-header-version-free" md-colors="{ color: 'background-A100' }" hide-xs
+     ng-if="$root.isElectron === false && !$root.p3xr.state.donated">{{ $root.p3xr.state.version }}
+</div>
+
 
 <div id="p3xr-layout-footer-container">
     <md-toolbar>

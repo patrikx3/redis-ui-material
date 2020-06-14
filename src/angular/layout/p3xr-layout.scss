@@ -25,7 +25,15 @@
     bottom: 0px;
 }
 
-#p3xr-layout-header-version {
+#p3xr-layout-header-version-free {
+    position: fixed;
+    z-index: 6;
+    top: 32px;
+    left: 128px;
+    font-size: 75%;
+}
+
+#p3xr-layout-header-version-donated {
     position: fixed;
     z-index: 6;
     top: 32px;

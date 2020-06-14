@@ -1,6 +1,12 @@
 const strings = {
+    error: {
+        cleared_license: 'Cleared license',
+        invalid_license: 'Invalid license',
+        server_error: 'Server error, please try again',
+    },
     title: {
         name: 'P3X Redis UI',
+        nameDonated: 'P3X Redis UI+',
         main: 'You may choose a Redis connection to connect from the left bottom menu.',
         statistics: 'Statistics',
         error: 'Error',
@@ -43,7 +49,11 @@ const strings = {
             title: 'Are you to change this keys\'s TTL?',
             textContent: 'If you click the change TTL button, it will rename this key\'s time to live, empty will persist this key keep forever.',
             placeholder: 'The Redis key\'s TTL (integer or empty)',
-
+        },
+        license: {
+            title: 'Enable donated license?',
+            textContent: 'If you want to use the donated functions, please contact alabard@gmail.com to request a license. The price is $1/month.',
+            placeholder: 'License key',
         },
     },
     language: {
@@ -90,6 +100,7 @@ const strings = {
         edit: 'Edit',
         save: 'Save',
         ttl: 'Set TTL',
+        license: 'Set license',
         'delete': 'Delete',
         remove: 'Remove',
         'sure': 'Sure',
@@ -159,6 +170,7 @@ const strings = {
 
     },
     status: {
+        licenseSaved: 'License saved',
         nodeRemoved: 'Node removed',
         keyIsNotExisting: 'This key could have been deleted or expired.',
         keyCount: (opts) => {

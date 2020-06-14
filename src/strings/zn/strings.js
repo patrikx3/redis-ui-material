@@ -1,6 +1,12 @@
 const strings = {
+    error: {
+        cleared_license: '清除许可证',
+        invalid_license: '无效的许可证',
+        server_error: '服务器错误，请重试',
+    },
     title: {
         name: 'P3X Redis UI',
+        nameDonated: 'P3X Redis UI+',
         main: '您可以从左下方菜单中选择要连接的Redis进行连接访问',
         statistics: 'Statistics',
         error: '错误',
@@ -46,6 +52,11 @@ const strings = {
             placeholder: 'Redis键的TTL（整数或空）',
 
         },
+        license: {
+            title: '启用商业许可证？',
+            textContent: '如果要使用商业功能，请联系alabard@gmail.com申请许可证. 价格是1美元/月。',
+            placeholder: '注册码',
+        },
     },
     language: {
         en: '英语 / English',
@@ -87,6 +98,7 @@ const strings = {
         edit: '编辑',
         save: '保存',
         ttl: '设置 TTL',
+        license: '设定牌照',
         'delete': '删除',
         remove: '删除',
         'sure': '确定',
@@ -156,6 +168,7 @@ const strings = {
 
     },
     status: {
+        licenseSaved: '许可证已保存',
         nodeRemoved: '节点已删除',
         keyIsNotExisting: '此键可能已被删除或过期。',
         keyCount: (opts) => {

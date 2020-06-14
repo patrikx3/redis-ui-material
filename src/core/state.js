@@ -1,4 +1,5 @@
 p3xr.state = {
+    donated: false,
     theme: undefined,
     connection: undefined,
     currentDatabase: undefined,

@@ -3,8 +3,11 @@
 -->
 
 <p3xr-accordion p3xr-title="$root.p3xr.strings.label.connections" p3xr-accordion-key="settings">
-    <p3xr-accordion-actions ng-if="!$root.p3xr.state.cfg.readonlyConnections">
-        <p3xr-button ng-click="$ctrl.connectionForm({ type: 'new'})"
+    <p3xr-accordion-actions ng-if="!$root.p3xr.state.cfg.readonlyConnections" >
+        <p3xr-button  ng-click="$ctrl.setLicense({ $event: $event })"
+                      p3xr-label="$root.p3xr.strings.intention.license" p3xr-md-icon="fingerprint"></p3xr-button>
+
+        <p3xr-button  ng-click="$ctrl.connectionForm({ type: 'new'})"
                      p3xr-label="$root.p3xr.strings.intention.connectionAdd" p3xr-md-icon="add_box"></p3xr-button>
     </p3xr-accordion-actions>
     <p3xr-accordion-content>

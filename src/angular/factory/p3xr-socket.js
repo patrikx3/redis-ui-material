@@ -27,6 +27,14 @@ p3xr.ng.factory('p3xrSocket', function ($rootScope, p3xrCommon, $state) {
         location.reload()
     })
 
+    let donated = undefined
+    ioClient.on('info-interval', (data) => {
+        $rootScope.p3xr.state.donated = data.donated
+        if (data.donated !== donated) {
+            donated = data.donated
+            $rootScope.$digest();
+        }
+    })
 
     let connectErrorWas = false
     const socketError = async function (error) {
@@ -102,6 +110,7 @@ p3xr.ng.factory('p3xrSocket', function ($rootScope, p3xrCommon, $state) {
 
         $rootScope.$digest();
     })
+
 
     ioClient.on('configuration', (data) => {
         $rootScope.p3xr.state.cfg = data;
