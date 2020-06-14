@@ -53,8 +53,8 @@ const strings = {
 
         },
         license: {
-            title: '启用商业许可证？',
-            textContent: '如果要使用商业功能，请联系alabard@gmail.com申请许可证. 价格是1美元/月。',
+            title: '启用捐赠的许可证？',
+            textContent: '如果要使用捐赠的功能，请联系alabard@gmail.com申请许可证。 价格是1美元/月。',
             placeholder: '注册码',
         },
     },
