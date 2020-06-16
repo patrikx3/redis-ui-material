@@ -50,92 +50,91 @@
                     {{ $root.p3xr.strings.label.passwordSecure }}
                 </div>
 
+                <span ng-if="$root.p3xr.state.donated">
 
-                <md-input-container style="margin: 0px">
-                    <md-switch ng-model="model.awsElastiCache" name="awsElastiCache" aria-label=""
-                               ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
-                        {{ model.awsElastiCache ? $root.p3xr.strings.label.awsElastiCache.on :
-                        $root.p3xr.strings.label.awsElastiCache.off }}
-                    </md-switch>
-                </md-input-container>
+                    <md-input-container style="margin: 0px">
+                        <md-switch ng-model="model.awsElastiCache" name="awsElastiCache" aria-label=""
+                                   ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
+                            {{ model.awsElastiCache ? $root.p3xr.strings.label.awsElastiCache.on :
+                            $root.p3xr.strings.label.awsElastiCache.off }}
+                        </md-switch>
+                    </md-input-container>
 
-                <md-input-container style="margin: 0px">
-                    <md-switch ng-model="model.azure" name="azure" aria-label=""
-                               ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
-                        {{ model.azure ? $root.p3xr.strings.label.azure.on :
-                        $root.p3xr.strings.label.azure.off }}
-                    </md-switch>
-                </md-input-container>
+                    <md-input-container style="margin: 0px">
+                        <md-switch ng-model="model.azure" name="azure" aria-label=""
+                                   ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
+                            {{ model.azure ? $root.p3xr.strings.label.azure.on :
+                            $root.p3xr.strings.label.azure.off }}
+                        </md-switch>
+                    </md-input-container>
 
+                    <md-input-container style="margin: 0px">
+                        <md-switch ng-model="model.cluster" name="cluster" aria-label=""
+                                   ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
+                            {{ model.cluster ? $root.p3xr.strings.label.cluster.on : $root.p3xr.strings.label.cluster.off }}
+                        </md-switch>
+                    </md-input-container>
 
-                <md-input-container style="margin: 0px">
-                    <md-switch ng-model="model.cluster" name="cluster" aria-label=""
-                               ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
-                        {{ model.cluster ? $root.p3xr.strings.label.cluster.on : $root.p3xr.strings.label.cluster.off }}
-                    </md-switch>
-                </md-input-container>
+                    <span ng-if="model.cluster === true && !$root.p3xr.state.cfg.readonlyConnections" ng-click="addNode()">
+                            <md-button class="md-fab md-primary md-mini">
+                                <md-icon>add</md-icon>
+                            </md-button>
+                            {{ $root.p3xr.strings.label.addNode }}
+                        </span>
 
-                <span ng-if="model.cluster === true && !$root.p3xr.state.cfg.readonlyConnections" ng-click="addNode()">
-                        <md-button class="md-fab md-primary md-mini">
-                            <md-icon>add</md-icon>
-                        </md-button>
-                        {{ $root.p3xr.strings.label.addNode }}
-                    </span>
+                    <div ng-if="model.cluster === true">
 
-                <div ng-if="model.cluster === true">
-
-
-                    <div ng-repeat="node in model.nodes">
-                        <fieldset>
-                            <legend>Node {{$index + 1}}</legend>
-                            <div style="float: right;" ng-if="!$root.p3xr.state.cfg.readonlyConnections">
-                                <md-button class="md-fab md-warn md-mini" ng-click="removeNode($event, $index)">
-                                    <md-tooltip>{{ $root.p3xr.strings.confirm.deleteConnectionText }}</md-tooltip>
-                                    <md-icon>delete</md-icon>
-                                </md-button>
-                                <md-button class="md-fab md-primary md-mini" ng-click="addNode($index)">
-                                    <md-tooltip>{{ $root.p3xr.strings.label.addNode }}</md-tooltip>
-                                    <md-icon>add</md-icon>
-                                </md-button>
-                            </div>
-                            <md-input-container class="md-block">
-                                <label>{{ $root.p3xr.strings.form.connection.label.host }}</label>
-                                <input name="host{{$index}}" ng-model="node.host"
-                                       ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
-                            </md-input-container>
-
-
-                            <md-input-container class="md-block">
-                                <label>{{ $root.p3xr.strings.form.connection.label.port }}</label>
-                                <input required name="port{{$index}}" type="number" min="1" max="65535"
-                                       ng-model="node.port" ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
-                                <div ng-messages="p3xrConnectionForm['port' +  $index].$error">
-                                    <div ng-message-exp="['min', 'max']">
-                                        {{ $root.p3xr.strings.form.error.port }}
-                                    </div>
-                                    <div ng-message="required">{{ $root.p3xr.strings.form.error.required }}</div>
+                        <div ng-repeat="node in model.nodes">
+                            <fieldset>
+                                <legend>Node {{$index + 1}}</legend>
+                                <div style="float: right;" ng-if="!$root.p3xr.state.cfg.readonlyConnections">
+                                    <md-button class="md-fab md-warn md-mini" ng-click="removeNode($event, $index)">
+                                        <md-tooltip>{{ $root.p3xr.strings.confirm.deleteConnectionText }}</md-tooltip>
+                                        <md-icon>delete</md-icon>
+                                    </md-button>
+                                    <md-button class="md-fab md-primary md-mini" ng-click="addNode($index)">
+                                        <md-tooltip>{{ $root.p3xr.strings.label.addNode }}</md-tooltip>
+                                        <md-icon>add</md-icon>
+                                    </md-button>
                                 </div>
-                            </md-input-container>
+                                <md-input-container class="md-block">
+                                    <label>{{ $root.p3xr.strings.form.connection.label.host }}</label>
+                                    <input name="host{{$index}}" ng-model="node.host"
+                                           ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
+                                </md-input-container>
 
 
-                            <md-input-container class="md-block p3xr-md-input-container-no-bottom">
-                                <label>{{ $root.p3xr.strings.form.connection.label.password }}</label>
-                                <input name="password{{$index}}" type="password" ng-model="node.password"
-                                       ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
-                            </md-input-container>
+                                <md-input-container class="md-block">
+                                    <label>{{ $root.p3xr.strings.form.connection.label.port }}</label>
+                                    <input required name="port{{$index}}" type="number" min="1" max="65535"
+                                           ng-model="node.port" ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
+                                    <div ng-messages="p3xrConnectionForm['port' +  $index].$error">
+                                        <div ng-message-exp="['min', 'max']">
+                                            {{ $root.p3xr.strings.form.error.port }}
+                                        </div>
+                                        <div ng-message="required">{{ $root.p3xr.strings.form.error.required }}</div>
+                                    </div>
+                                </md-input-container>
 
-                            <div class="p3xr-md-input-container-bottom-info">
-                                {{ $root.p3xr.strings.label.passwordSecure }}
+
+                                <md-input-container class="md-block p3xr-md-input-container-no-bottom">
+                                    <label>{{ $root.p3xr.strings.form.connection.label.password }}</label>
+                                    <input name="password{{$index}}" type="password" ng-model="node.password"
+                                           ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
+                                </md-input-container>
+
+                                <div class="p3xr-md-input-container-bottom-info">
+                                    {{ $root.p3xr.strings.label.passwordSecure }}
+                                </div>
+
+                            </fieldset>
+                            <div ng-if="$last !== true" style="margin-bottom: 16px;">
+                                &nbsp;
                             </div>
-
-                        </fieldset>
-                        <div ng-if="$last !== true" style="margin-bottom: 16px;">
-                            &nbsp;
+                            <div style="clear: both;"></div>
                         </div>
-                        <div style="clear: both;"></div>
                     </div>
-                </div>
-
+                </span>
 
             </md-content>
         </md-dialog-content>
