@@ -65,12 +65,63 @@ p3xr.ng.component('p3xrLayout', {
                     })
                 }
             }, 3000)
+
+            $('head').append(`
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-169625044-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '${p3xr.settings.googleAnalytics}');
+</script>
+`)
+
         }
 
 
         this.$onDestroy = function () {
             $window.off('resize', resize)
         };
+
+        let waitForGoogleTag
+        let waitedForGoogleTag = false
+        const maxWaitForGooglaTag = 4 * 5
+        $rootScope.$on('$locationChangeSuccess', async function (event, to, from) {
+            if (!waitedForGoogleTag) {
+                await new Promise(resolve => {
+                    let loadCount = 0
+                    const load = () => {
+                        loadCount++
+                        if (loadCount >= maxWaitForGooglaTag) {
+                            waitedForGoogleTag = true
+                            clearTimeout(waitForGoogleTag)
+                            return resolve()
+                        }
+                        if (!window['gtag'] && loadCount < maxWaitForGooglaTag) {
+                            console.info('waiting for gtag to load')
+                            waitForGoogleTag = setTimeout(load, 250)
+                        } else {
+                            clearTimeout(waitForGoogleTag)
+                            resolve();
+                        }
+                    }
+                    load();
+                })
+            }
+            if (window['gtag']) {
+                const url = new URL(to)
+                console.log('$locationChangeSuccess gtag', url.pathname)
+                window['gtag']('config', p3xr.settings.googleAnalytics,
+                    {
+                        'page_path': url.pathname
+                    }
+                );
+            } else {
+                console.info('$locationChangeSuccess gtag is not available')
+            }
+        });
+
 
         this.connect = async (connection) => {
 

@@ -22,15 +22,22 @@
 
     <md-dialog-actions layout="row">
         <span flex></span>
-        <md-button ng-click="ok()" class="md-raised md-primary" aria-label="{{ ::$root.p3xr.strings.intention.close }}">
-            <md-icon>cancel</md-icon>
-            {{ ::$root.p3xr.strings.intention.cancel }}
-        </md-button>
 
-        <md-button ng-if="::isJson" class="md-raised md-primary" ng-click="save()">
+        <md-button ng-if="::isJson" class="md-raised md-primary" ng-click="save({ format : false})">
             <md-icon>save</md-icon>
             <span hide-sm hide-xs>{{ ::$root.p3xr.strings.intention.save }}</span>
             <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{ ::$root.p3xr.strings.intention.save }}</md-tooltip>
+        </md-button>
+
+        <md-button ng-if="::isJson" class="md-raised md-primary" ng-click="save({ format : true})">
+            <md-icon>save</md-icon>
+            <span hide-sm hide-xs>{{ ::$root.p3xr.strings.intention.saveWithFormatJson }}</span>
+            <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{ ::$root.p3xr.strings.intention.saveWithFormatJson }}</md-tooltip>
+        </md-button>
+
+        <md-button ng-click="ok()" class="md-raised md-primary" aria-label="{{ ::$root.p3xr.strings.intention.close }}">
+            <md-icon>cancel</md-icon>
+            {{ ::$root.p3xr.strings.intention.cancel }}
         </md-button>
     </md-dialog-actions>
     </form>

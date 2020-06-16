@@ -71,9 +71,9 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
                         };
 
                         // Promise resolve
-                        $scope.save = function () {
+                        $scope.save = function ({ format }) {
                             $mdDialog.hide({
-                                obj: JSON.stringify(editor.get())
+                                obj: JSON.stringify(editor.get(), null, format ? p3xr.settings.jsonFormat : 0)
                             });
                         };
 

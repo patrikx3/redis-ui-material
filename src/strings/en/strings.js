@@ -63,6 +63,7 @@ const strings = {
         zn: 'Chinese / 中文'
     },
     intention: {
+        saveWithFormatJson: 'Save with format',
         formatJson: 'Format Json',
         pubsubMonitor: 'PubSub Monitor',
         // When you translate the language, keep the Language in English

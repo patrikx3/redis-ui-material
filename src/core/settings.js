@@ -27,6 +27,7 @@ p3xr.settings = {
     },
     redisTreeDivider: ':',
     jsonFormat: 2,
+    googleAnalytics: 'UA-169625044-1',
     jsonFormatSettings: {
         default: 2,
         cookieName: 'p3xr-json-format',

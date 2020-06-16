@@ -159,6 +159,15 @@
                 </div>
             </md-list-item>
 
+            <md-divider></md-divider>
+
+            <md-list-item>
+                <div layout="row" flex>
+                    <div flex>
+                        {{ $root.p3xr.settings.jsonFormat == 2 ? $root.p3xr.strings.form.treeSettings.label.jsonFormatTwoSpace : $root.p3xr.strings.form.treeSettings.label.jsonFormatFourSpace }}
+                    </div>
+                </div>
+            </md-list-item>
         </md-list>
 
     </p3xr-accordion-content>
