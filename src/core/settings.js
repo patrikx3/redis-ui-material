@@ -26,6 +26,11 @@ p3xr.settings = {
         defaultDivider: ':',
     },
     redisTreeDivider: ':',
+    jsonFormat: 2,
+    jsonFormatSettings: {
+        default: 2,
+        cookieName: 'p3xr-json-format',
+    },
     paging: {
         default: 50,
         cookieName: 'p3xr-main-treecontrol-page-size'

@@ -1,4 +1,4 @@
-<md-dialog aria-label="{{ ::$root.p3xr.strings.intention.jsonViewShow }}" style="min-width: 320px">
+<md-dialog aria-label="{{ ::$root.p3xr.strings.intention.jsonViewShow }}" style="min-width: 320px; width: 75%; min-height: 200px; height: 75%">
     <md-toolbar md-theme="{{::$root.p3xr.state.themeLayout}}">
         <div class="md-toolbar-tools">
             <md-icon>edit</md-icon>
@@ -11,9 +11,9 @@
         </div>
     </md-toolbar>
 
-    <md-dialog-content flex>
-        <md-content style="font-family: monospace;">
-            <div id="jsoneditor" style="width: 100%; height: 100%;"></div>
+    <md-dialog-content flex >
+        <md-content style="font-family: monospace; height: 100%">
+            <span id="p3xr-jsoneditor" style="width: 100%; height: 100%;"></span>
             <div ng-if="!isJson" layout-padding>
                 {{ ::$root.p3xr.strings.label.jsonViewNotParsable}}
             </div>

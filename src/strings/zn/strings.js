@@ -63,6 +63,7 @@ const strings = {
         zn: '中文 / Chinese'
     },
     intention: {
+        formatJson: '格式化Json',
         pubsubMonitor: 'PubSub监视器',
         language: '语言 / Language',
         ok: '确定',

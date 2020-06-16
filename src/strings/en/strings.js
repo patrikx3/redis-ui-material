@@ -63,6 +63,7 @@ const strings = {
         zn: 'Chinese / 中文'
     },
     intention: {
+        formatJson: 'Format Json',
         pubsubMonitor: 'PubSub Monitor',
         // When you translate the language, keep the Language in English
         // eg. Idioma / Language
@@ -238,6 +239,8 @@ const strings = {
                 return `Number of keys: ${p3xr.state.keysRaw.length}`
             },
             label: {
+                jsonFormatTwoSpace: 'Format JSON with 2 spaces',
+                jsonFormatFourSpace: 'Format JSON with 4 spaces',
                 formName: 'Redis settings',
                 searchModeClient: 'Client search mode',
                 searchModeServer: 'Server search mode',

@@ -4,7 +4,12 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
 
         this.show = (options) => {
                 return $mdDialog.show({
-                    controller: function ($scope, $mdDialog, p3xrCommon) {
+                    controller: function ($scope, $mdDialog, p3xrCommon, $rootScope) {
+
+                        $rootScope.$broadcast('p3xr-main-resizer', {
+                            drag: false
+                        })
+
 
                         let editor
                         let obj
@@ -29,19 +34,19 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
                                         language = 'en'
                                         break;
                                 }
-                                const JSONEditor = require('jsoneditor/dist/jsoneditor')
-                                const container = document.getElementById("jsoneditor")
+                                const container = document.getElementById("p3xr-jsoneditor")
                                 const options = {
                                     //sortObjectKeys: false,
-                                    //limitDragging: false,
+                                    limitDragging: false,
+                                    modes: ['tree', 'view', 'preview'],
                                     //history: false,
-                                    //mode: 'tree',
+                                    mode: 'tree',
                                     //search: true,
                                     //mainMenuBar: false,
                                     language: language,
                                     //enableSort: false,
                                     //enableTransform: false,
-
+                                    //ace: ace,
                                 }
                                 if (JSON.stringify(obj).length > 10240) {
                                     p3xrCommon.toast({
@@ -49,11 +54,16 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
                                         hideDelay: 10000
                                     })
                                 }
-                                editor = new JSONEditor(container, options)
-                                editor.setMode('tree')
-                                editor.set(obj)
+                                editor = new JSONEditor(container, options, obj)
                             })
                         }
+
+                        $scope.$on('$destroy', () => {
+                            $rootScope.$broadcast('p3xr-main-resizer', {
+                                drag: true
+                            })
+                        })
+
 
                         // Promise reject
                         $scope.ok = function () {

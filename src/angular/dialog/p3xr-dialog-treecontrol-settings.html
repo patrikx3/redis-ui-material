@@ -103,6 +103,13 @@
                     </md-switch>
                 </md-input-container>
 
+                <md-input-container class="md-block p3xr-md-input-container-no-bottom" >
+                    <md-switch ng-model="model.jsonFormat" name="jsonFormat" aria-label="">
+                        {{ model.jsonFormat ? $root.p3xr.strings.form.treeSettings.label.jsonFormatTwoSpace :
+                        $root.p3xr.strings.form.treeSettings.label.jsonFormatFourSpace }}
+                    </md-switch>
+                </md-input-container>
+
 
             </md-content>
         </md-dialog-content>

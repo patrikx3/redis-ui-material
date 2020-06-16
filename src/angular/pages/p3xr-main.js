@@ -193,6 +193,18 @@ p3xr.ng.component('p3xrMain', {
 //            document.addEventListener("click", documentClick);
         }
 
+        $scope.$on('p3xr-main-resizer', (event, opts) => {
+            console.info('p3xr-main-resizer dragging:', opts.drag)
+            if (opts.drag === true) {
+                document.addEventListener("mousemove", documentMousemove);
+                document.addEventListener("mousedown", resizeClick);
+                document.addEventListener("mouseup", resizeClick);
+            } else {
+                document.removeEventListener("mousemove", documentMousemove);
+                document.removeEventListener("mousedown", resizeClick);
+                document.removeEventListener("mouseup", resizeClick);
+            }
+        })
 
         const destroyResizer = () => {
             if ($resizer !== undefined && $resizer !== null) {

@@ -9,6 +9,9 @@ require('./scss/index.scss')
 global.$ = require('jquery/dist/jquery.slim')
 global.jQuery = global.$
 
+
+global.JSONEditor = require('jsoneditor/dist/jsoneditor-minimalist.min.js')
+
 global.$window = $(window);
 
 $(() => {

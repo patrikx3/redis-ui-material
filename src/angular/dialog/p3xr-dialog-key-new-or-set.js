@@ -115,6 +115,17 @@ p3xr.ng.factory('p3xrDialogKeyNewOrSet', function (p3xrCommon, $mdDialog, p3xrSo
 //            this.showJson = !this.showJson
                             }
 
+                            $scope.formatJson = () => {
+                                try {
+
+                                    $scope.model.value = JSON.stringify(JSON.parse($scope.model.value), null, p3xr.settings.jsonFormat)
+                                } catch(e) {
+                                    p3xrCommon.toast({
+                                        message: p3xr.strings.label.jsonViewNotParsable
+                                    })
+                                }
+                            }
+
                         },
                         template: require('./p3xr-dialog-key-new-or-set.html'),
                         parent: angular.element(document.body),

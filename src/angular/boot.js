@@ -86,6 +86,23 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
         }
     })
 
+    let jsonFormat
+    Object.defineProperty($rootScope.p3xr.settings, 'jsonFormat', {
+        get: () => {
+            jsonFormat = $cookies.get(p3xr.settings.jsonFormatSettings.cookieName)
+            if (jsonFormat === undefined) {
+                jsonFormat = p3xr.settings.jsonFormatSettings.default
+            }
+            return parseInt(jsonFormat)
+        },
+        set: (value) => {
+            jsonFormat = value
+            jsonFormat = $cookies.put(p3xr.settings.jsonFormatSettings.cookieName, value, {
+                expires: p3xr.settings.cookieExpiry,
+            })
+        }
+    })
+
 
     let maxValueDisplay
     Object.defineProperty($rootScope.p3xr.settings, 'maxValueDisplay', {

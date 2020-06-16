@@ -73,6 +73,17 @@ p3xr.ng.component('p3xrMainKeyString', {
 //            this.showJson = !this.showJson
         }
 
+        this.formatJson = async () => {
+            try {
+                this.p3xrValue = JSON.stringify(JSON.parse(this.p3xrValue), null, p3xr.settings.jsonFormat)
+                await this.save()
+            } catch(e) {
+                p3xrCommon.toast({
+                    message: p3xr.strings.label.jsonViewNotParsable
+                })
+            }
+        }
+
     }
 })
 

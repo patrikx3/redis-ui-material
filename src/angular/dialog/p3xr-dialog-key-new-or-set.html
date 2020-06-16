@@ -67,17 +67,25 @@
                     </span>
                 </span>
 
-
-                <md-switch ng-model="validateJson" class="md-accent" style="margin-top: 0px;">
-                    {{ $root.p3xr.strings.label.validateJson }}
-                </md-switch>
-                <md-button class="md-button md-raised md-accent" ng-if="$root.p3xr.state.donated" ng-click="jsonEditor({ $event: $event, value: model.value})">
+                <md-button class="md-button md-raised md-primary" ng-if="$root.p3xr.state.donated" ng-click="jsonEditor({ $event: $event, value: model.value})">
                     <md-icon>edit</md-icon>
                     <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.jsonViewEditor }}</span>
                     <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{
                         $root.p3xr.strings.intention.jsonViewEditor }}
                     </md-tooltip>
                 </md-button>
+
+                <md-button class="md-button md-raised md-primary" ng-click="formatJson({ $event: $event})" ng-if="$root.p3xr.state.donated">
+                    <md-icon>format_line_spacing</md-icon>
+                    <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.formatJson }}</span>
+                    <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{
+                        $root.p3xr.strings.intention.formatJson }}
+                    </md-tooltip>
+                </md-button>
+
+                <md-switch ng-model="validateJson" class="md-accent" style="margin-top: 0px;">
+                    {{ $root.p3xr.strings.label.validateJson }}
+                </md-switch>
 
                 <md-input-container class="md-block">
                     <label>{{ $root.p3xr.strings.form.key.field.value }}</label>

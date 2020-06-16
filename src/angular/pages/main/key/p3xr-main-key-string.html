@@ -1,21 +1,29 @@
 <div style="text-align: right">
-    <md-button class="md-button md-raised md-accent" ng-click="$ctrl.jsonViewer({ $event: $event})" ng-if="$root.p3xr.state.donated">
-        <md-icon>table_chart</md-icon>
-        <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.jsonViewShow }}</span>
-        <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{
-            $root.p3xr.strings.intention.jsonViewShow }}
-        </md-tooltip>
-    </md-button>
-
-    <md-button class="md-button md-raised md-accent" ng-click="$ctrl.jsonEditor({ $event: $event})" ng-if="$root.p3xr.state.donated">
-        <md-icon>edit</md-icon>
-        <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.jsonViewEditor }}</span>
-        <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{
-            $root.p3xr.strings.intention.jsonViewEditor }}
-        </md-tooltip>
-    </md-button>
-
     <span ng-if="!$ctrl.editable">
+        <md-button class="md-button md-raised md-primary" ng-click="$ctrl.jsonEditor({ $event: $event})" ng-if="$root.p3xr.state.donated">
+            <md-icon>edit</md-icon>
+            <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.jsonViewEditor }}</span>
+            <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{
+                $root.p3xr.strings.intention.jsonViewEditor }}
+            </md-tooltip>
+        </md-button>
+
+        <md-button class="md-button md-raised md-accent" ng-click="$ctrl.jsonViewer({ $event: $event})" ng-if="$root.p3xr.state.donated">
+            <md-icon>table_chart</md-icon>
+            <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.jsonViewShow }}</span>
+            <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{
+                $root.p3xr.strings.intention.jsonViewShow }}
+            </md-tooltip>
+        </md-button>
+
+        <md-button class="md-button md-raised md-accent" ng-click="$ctrl.formatJson({ $event: $event})" ng-if="$root.p3xr.state.donated">
+            <md-icon>format_line_spacing</md-icon>
+            <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.formatJson }}</span>
+            <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{
+                $root.p3xr.strings.intention.formatJson }}
+            </md-tooltip>
+        </md-button>
+
         <md-button class="md-button md-raised md-primary" ng-click="$ctrl.edit()">
             <md-icon>edit</md-icon>
              <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.edit }}</span>
