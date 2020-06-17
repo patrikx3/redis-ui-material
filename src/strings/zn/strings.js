@@ -110,6 +110,9 @@ const strings = {
         jsonViewEditor: '编辑JSON',
     },
     label: {
+        unableToLoadKey: ({ key }) => {
+            return `无法加载此密钥：: ${key}。确切的错误在控制台中。`
+        },
         bigJson: '此JSON对象超过10 kb，因此请确保您知道自己在做什么，因为某些功能可能会缓慢呈现。',
         addNode: '添加节点',
         validateJson: '验证JSON',

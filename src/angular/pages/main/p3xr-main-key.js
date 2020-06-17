@@ -129,7 +129,9 @@ p3xr.ng.component('p3xrMainKey', {
 
             } catch (e) {
                 hadError = e
-                p3xrCommon.generalHandleError(e)
+                console.error(e)
+                p3xrCommon.alert(p3xr.strings.label.unableToLoadKey({ key: $stateParams.key }))
+                //p3xrCommon.generalHandleError(e)
             } finally {
                 p3xr.ui.overlay.hide()
                 if (hadError !== undefined) {

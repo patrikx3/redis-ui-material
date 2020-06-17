@@ -38,7 +38,7 @@ p3xr.settings = {
         cookieName: 'p3xr-json-format',
     },
     paging: {
-        default: 50,
+        default: 250,
         cookieName: 'p3xr-main-treecontrol-page-size'
     },
     language: {

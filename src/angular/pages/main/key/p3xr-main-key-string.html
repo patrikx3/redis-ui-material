@@ -32,17 +32,28 @@
     </span>
 
     <span ng-if="$ctrl.editable">
-        <md-button class="md-button md-raised md-primary" ng-click="$ctrl.save()">
-            <md-icon>save</md-icon>
-             <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.save }}</span>
-            <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{ $root.p3xr.strings.intention.save }}</md-tooltip>
-        </md-button>
+        <div layout="row" layout-align="end center">
+            <div>
+                <md-switch ng-model="$ctrl.validateJson" class="md-accent" style="float: right;">
+                    {{ $root.p3xr.strings.label.validateJson }}
+                </md-switch>
+            </div>
+            <div>
+                <md-button class="md-button md-raised md-primary" ng-click="$ctrl.save()">
+                    <md-icon>save</md-icon>
+                     <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.save }}</span>
+                    <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{ $root.p3xr.strings.intention.save }}</md-tooltip>
+                </md-button>
+            </div>
+            <div>
+                <md-button class="md-button md-raised md-warn" ng-click="$ctrl.cancelEdit()">
+                    <md-icon>cancel</md-icon>
+                     <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.cancel }}</span>
+                    <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{ $root.p3xr.strings.intention.cancel }}</md-tooltip>
+                </md-button>
+            </div>
+        </div>
 
-        <md-button class="md-button md-raised md-warn" ng-click="$ctrl.cancelEdit()">
-            <md-icon>cancel</md-icon>
-             <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.cancel }}</span>
-            <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{ $root.p3xr.strings.intention.cancel }}</md-tooltip>
-        </md-button>
 
     </span>
 
@@ -52,9 +63,6 @@
 <div class="p3xr-pre" style="max-width: 100%; overflow: auto;" ng-click="$ctrl.edit()" ng-if="!$ctrl.editable"><span ng-if="$root.p3xr.settings.maxValueDisplay > -1"><span ng-if="$root.p3xr.settings.maxValueDisplay > 0 && $ctrl.p3xrValue.length > $root.p3xr.settings.maxValueDisplay">{{ $ctrl.p3xrValue.substring(0, $root.p3xr.settings.maxValueDisplay) }}...</span><span ng-if="$root.p3xr.settings.maxValueDisplay === 0 || $ctrl.p3xrValue.length <= $root.p3xr.settings.maxValueDisplay">{{ $ctrl.p3xrValue }}</span></span></div>
 
 <div ng-if="$ctrl.editable">
-    <md-switch ng-model="$ctrl.validateJson" class="md-accent" style="float: right;">
-        {{ $root.p3xr.strings.label.validateJson }}
-    </md-switch>
     <md-input-container class="md-block">
         <label>{{ $root.p3xr.strings.label.edit }}</label>
         <textarea ng-model="$ctrl.p3xrValue"></textarea>

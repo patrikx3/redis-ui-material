@@ -112,6 +112,9 @@ const strings = {
         jsonViewEditor: 'Edit JSON tree',
     },
     label: {
+        unableToLoadKey: ({ key }) => {
+          return `Unable to load this key: ${key}. The exact error is in the console.`
+        },
         bigJson: 'This JSON object is over 10 kb, so make sure you know what you doing, because some functions can be slow rendering.',
         addNode: 'Add node',
         validateJson: 'Validate JSON',
