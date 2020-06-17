@@ -20,6 +20,9 @@ md-toolbar, .md-toolbar-tools {
     max-height: $toolbar-height !important;
 }
 
+body.p3xr-no-animation * {
+    transition: none !important;
+}
 
 #p3xr-redis-ui-bootstrap {
     height: 100vh;

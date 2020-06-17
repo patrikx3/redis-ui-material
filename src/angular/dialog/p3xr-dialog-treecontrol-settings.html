@@ -97,7 +97,7 @@
 
 
                 <md-input-container class="md-block p3xr-md-input-container-no-bottom p3xr-md-input-container-no-top"  >
-                    <md-switch ng-model="model.searchStartsWith" name="searchStartsWith" aria-label="">
+                    <md-switch ng-model="model.searchStartsWith" name="searchStartsWith" aria-label="" class="p3xr-md-input-container-no-bottom p3xr-md-input-container-no-top">
                         {{ model.searchStartsWith ? $root.p3xr.strings.form.treeSettings.label.searchModeStartsWith :
                         $root.p3xr.strings.form.treeSettings.label.searchModeIncludes }}
                     </md-switch>
@@ -107,6 +107,14 @@
                     <md-switch ng-model="model.jsonFormat" name="jsonFormat" aria-label="" class="p3xr-md-input-container-no-bottom p3xr-md-input-container-no-top">
                         {{ model.jsonFormat ? $root.p3xr.strings.form.treeSettings.label.jsonFormatTwoSpace :
                         $root.p3xr.strings.form.treeSettings.label.jsonFormatFourSpace }}
+                    </md-switch>
+                </md-input-container>
+
+
+                <md-input-container class="md-block p3xr-md-input-container-no-bottom p3xr-md-input-container-no-top" >
+                    <md-switch ng-model="model.animation" name="animation" aria-label="" class="p3xr-md-input-container-no-bottom p3xr-md-input-container-no-top">
+                        {{ model.animation ? $root.p3xr.strings.form.treeSettings.label.animation :
+                        $root.p3xr.strings.form.treeSettings.label.noAnimation }}
                     </md-switch>
                 </md-input-container>
 

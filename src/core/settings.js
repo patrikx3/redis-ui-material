@@ -26,10 +26,15 @@ p3xr.settings = {
         defaultDivider: ':',
     },
     redisTreeDivider: ':',
-    jsonFormat: 2,
+    animation: 0,
+    animationSettings: {
+        default: 0,
+        cookieName: 'p3xr-animation-settings',
+    },
+    jsonFormat: 4,
     googleAnalytics: 'UA-169625044-1',
     jsonFormatSettings: {
-        default: 2,
+        default: 4,
         cookieName: 'p3xr-json-format',
     },
     paging: {

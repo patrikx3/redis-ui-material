@@ -42,6 +42,8 @@ p3xr.ng.component('p3xrMainStatistics', {
         }
 
 
+        //FIXME disable hacking on the tab
+        /*
         $scope.$on('p3x-refresh-statistics-tabs', () => {
             $timeout(() => {
                 p3xr.state.info.hack = {
@@ -54,7 +56,7 @@ p3xr.ng.component('p3xrMainStatistics', {
                 })
             })
         })
-
+         */
     }
 })
 

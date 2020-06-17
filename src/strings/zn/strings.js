@@ -238,6 +238,10 @@ const strings = {
                 return `键数: ${p3xr.state.keysRaw.length}`
             },
             label: {
+                animation: '使用动画',
+                noAnimation: '没有动画',
+                jsonFormatTwoSpace: '用2个空格格式化JSON',
+                jsonFormatFourSpace: '用4个空格格式化JSON',
                 formName: 'Redis设置',
                 searchModeClient: '客户端搜索模式',
                 searchModeServer: '服务端搜索模式',

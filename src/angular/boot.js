@@ -49,7 +49,7 @@ p3xr.ng.config(($qProvider, $locationProvider, $urlRouterProvider, $stateProvide
 
 })
 
-p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $cookies, p3xrRedisParser) => {
+p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $cookies, p3xrRedisParser, $animate) => {
 
     $rootScope.p3xr = p3xr;
     $rootScope.$mdMedia = $mdMedia;
@@ -103,6 +103,35 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
         }
     })
 
+
+    const setAnimation = () => {
+        console.log('set animation', $rootScope.p3xr.settings.animation)
+        $animate.enabled($rootScope.p3xr.settings.animation)
+        if ($rootScope.p3xr.settings.animation) {
+            $body.removeClass('p3xr-no-animation')
+        } else {
+            $body.addClass('p3xr-no-animation')
+        }
+    }
+
+    let animation
+    Object.defineProperty($rootScope.p3xr.settings, 'animation', {
+        get: () => {
+            animation = $cookies.get(p3xr.settings.animationSettings.cookieName)
+            if (animation === undefined) {
+                animation = p3xr.settings.animationSettings.default
+            }
+            return parseInt(animation) === 1
+        },
+        set: (value) => {
+            animation = value
+            animation = $cookies.put(p3xr.settings.animationSettings.cookieName, value, {
+                expires: p3xr.settings.cookieExpiry,
+            })
+            setAnimation()
+        }
+    })
+    setAnimation()
 
     let maxValueDisplay
     Object.defineProperty($rootScope.p3xr.settings, 'maxValueDisplay', {

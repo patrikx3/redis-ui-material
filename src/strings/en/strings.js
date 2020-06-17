@@ -240,6 +240,8 @@ const strings = {
                 return `Number of keys: ${p3xr.state.keysRaw.length}`
             },
             label: {
+                animation: 'Use animation',
+                noAnimation: 'No animation',
                 jsonFormatTwoSpace: 'Format JSON with 2 spaces',
                 jsonFormatFourSpace: 'Format JSON with 4 spaces',
                 formName: 'Redis settings',
