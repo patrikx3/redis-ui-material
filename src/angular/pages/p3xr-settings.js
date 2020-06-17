@@ -30,6 +30,15 @@ p3xr.ng.component('p3xrSettings', {
                     }
                 })
 
+                if (!global.p3xr.isBot() && response.donated !== p3xr.state.donated) {
+                    window['gtag']('config', p3xr.settings.googleAnalytics,
+                        {
+                            'page_path': response.donated ? '/donated' : '/free'
+                        }
+                    );
+                }
+
+
                 p3xr.state.donated = response.donated
 
                 //await this.refresh()

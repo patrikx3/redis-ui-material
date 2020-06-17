@@ -88,7 +88,7 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
                     template: require('./p3xr-dialog-json-editor.html'),
                     parent: angular.element(document.body),
                     targetEvent: options.$event,
-                    clickOutsideToClose: true,
+                    clickOutsideToClose: false,
                     fullscreen: true, // Only for -xs, -sm breakpoints.
                     multiple: true,
                 })

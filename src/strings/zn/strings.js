@@ -148,8 +148,8 @@ const strings = {
             off: 'AWS ElastiCache / Gcloud memorystore off',
         },
         azure: {
-            on: 'Azure on',
-            off: 'Azure off',
+            on: 'Azure Redis on',
+            off: 'Azure Redis off',
         },
         cluster: {
             on: '群集',

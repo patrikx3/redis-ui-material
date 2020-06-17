@@ -9,8 +9,18 @@ require('./scss/index.scss')
 global.$ = require('jquery/dist/jquery.slim')
 global.jQuery = global.$
 
+jQuery.event.special.touchstart = {
+    setup: function( _, ns, handle ){
+        if ( ns.includes("noPreventDefault") ) {
+            this.addEventListener("touchstart", handle, { passive: false });
+        } else {
+            this.addEventListener("touchstart", handle, { passive: true });
+        }
+    }
+};
 
-global.JSONEditor = require('jsoneditor/dist/jsoneditor-minimalist.min.js')
+
+global.JSONEditor = require('jsoneditor/dist/jsoneditor.js')
 
 global.$window = $(window);
 
@@ -41,6 +51,7 @@ require('./core/corifeus-renderer')
 require('./core/settings')
 require('./core/strings')
 require('./core/random')
+require('./core/is-bot')
 require('./core/next-id')
 require('./core/api')
 require('./core/state')

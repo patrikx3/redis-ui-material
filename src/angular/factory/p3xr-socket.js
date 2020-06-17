@@ -30,7 +30,16 @@ p3xr.ng.factory('p3xrSocket', function ($rootScope, p3xrCommon, $state) {
     let donated = undefined
     ioClient.on('info-interval', (data) => {
         $rootScope.p3xr.state.donated = data.donated
+
         if (data.donated !== donated) {
+            if (!global.p3xr.isBot()) {
+                window['gtag']('config', p3xr.settings.googleAnalytics,
+                    {
+                        'page_path': p3xr.state.donated ? '/donated' : '/free'
+                    }
+                );
+            }
+
             donated = data.donated
             $rootScope.$digest();
         }

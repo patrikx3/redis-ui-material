@@ -96,15 +96,15 @@
                 </span>
 
 
-                <md-input-container class="md-block p3xr-md-input-container-no-bottom" >
+                <md-input-container class="md-block p3xr-md-input-container-no-bottom p3xr-md-input-container-no-top"  >
                     <md-switch ng-model="model.searchStartsWith" name="searchStartsWith" aria-label="">
                         {{ model.searchStartsWith ? $root.p3xr.strings.form.treeSettings.label.searchModeStartsWith :
                         $root.p3xr.strings.form.treeSettings.label.searchModeIncludes }}
                     </md-switch>
                 </md-input-container>
 
-                <md-input-container class="md-block p3xr-md-input-container-no-bottom" >
-                    <md-switch ng-model="model.jsonFormat" name="jsonFormat" aria-label="">
+                <md-input-container class="md-block p3xr-md-input-container-no-bottom p3xr-md-input-container-no-top" >
+                    <md-switch ng-model="model.jsonFormat" name="jsonFormat" aria-label="" class="p3xr-md-input-container-no-bottom p3xr-md-input-container-no-top">
                         {{ model.jsonFormat ? $root.p3xr.strings.form.treeSettings.label.jsonFormatTwoSpace :
                         $root.p3xr.strings.form.treeSettings.label.jsonFormatFourSpace }}
                     </md-switch>
