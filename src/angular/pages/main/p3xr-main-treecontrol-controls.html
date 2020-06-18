@@ -53,7 +53,7 @@
     <p3xr-input
         placeholder="{{ $root.p3xr.settings.searchClientSide ? $root.p3xr.strings.page.treeControls.search.placeholderClient : $root.p3xr.strings.page.treeControls.search.placeholderServer }}"
         ng-model="$root.p3xr.state.search"
-        ng-class="{ 'withSearch': $ctrl.search.length > 0, 'withoutSearch': $ctrl.search.length  === 0}"
+        ng-class="{ 'withSearch': $root.p3xr.state.search.length > 0, 'withoutSearch': $root.p3xr.state.search.length  === 0}"
         ng-enter="$ctrl.onSearchChange()"></p3xr-input>
     <md-tooltip md-direction="top">{{ $root.p3xr.strings.page.treeControls.search.infoDetails }}</md-tooltip>
 
@@ -62,7 +62,7 @@
         <md-icon>search</md-icon>
     </md-button>
 
-    <span ng-if="$ctrl.search.length > 0">
+    <span ng-if="$root.p3xr.state.search.length > 0">
 
         <md-button class="md-icon-button md-primary" aria-label="" ng-click="$root.p3xr.state.search = ''; $ctrl.onSearchChange()">
             <md-tooltip>{{ $root.p3xr.strings.page.treeControls.search.clear}}</md-tooltip>

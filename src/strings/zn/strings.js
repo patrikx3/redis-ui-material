@@ -54,7 +54,7 @@ const strings = {
         },
         license: {
             title: '启用捐赠的许可证？',
-            textContent: '如果要使用捐赠的功能，请联系alabard@gmail.com申请许可证。 价格是1美元/月。',
+            textContent: '如果要使用捐赠的功能，请联系alabard@gmail.com申请许可证。 捐款是每月1美元。',
             placeholder: '注册码',
         },
     },

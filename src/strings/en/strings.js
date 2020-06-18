@@ -52,7 +52,7 @@ const strings = {
         },
         license: {
             title: 'Enable donated license?',
-            textContent: 'If you want to use the donated functions, please contact alabard@gmail.com to request a license. The price is $1/month.',
+            textContent: 'If you want to use the donated functions, please contact alabard@gmail.com to request a license. The donation is $1/month.',
             placeholder: 'License key',
         },
     },
