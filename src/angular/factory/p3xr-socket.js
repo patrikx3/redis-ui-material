@@ -134,6 +134,19 @@ p3xr.ng.factory('p3xrSocket', function ($rootScope, p3xrCommon, $state) {
     ioClient.on('error', p3xrCommon.generalHandleError)
 
     const request = (options) => {
+
+        if (!options.payload) {
+            options.payload = {}
+        }
+
+        if (typeof $rootScope.p3xr.state.search === 'string' && $rootScope.p3xr.state.search.length > 0) {
+            if ($rootScope.p3xr.settings.searchStartsWith) {
+                options.payload.match = $rootScope.p3xr.state.search + '*';
+            } else {
+                options.payload.match = '*' + $rootScope.p3xr.state.search + '*';
+            }
+        }
+
         let {enableResponse} = options
         if (enableResponse !== false) {
             enableResponse = true

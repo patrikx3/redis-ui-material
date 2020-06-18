@@ -75,6 +75,8 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootSco
     const loadRedisInfoResponse = (options) => {
         const {response} = options
 
+        //console.warn('response', response)
+
         console.time('loadRedisInfoResponse')
         $rootScope.p3xr.state.info = p3xrRedisParser.info(response.info)
         //$rootScope.p3xr.state.infoObject = response.infoObject

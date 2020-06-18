@@ -109,15 +109,18 @@
 
         <md-dialog-actions layout="row" layout-align="end end" md-theme="{{ $root.p3xr.state.theme }}">
 
-            <md-button class="md-raised md-primary" type="submit">
-                <md-icon>{{ options.type === 'edit' ? 'edit' : 'add'}}</md-icon>
-                {{ options.type === 'edit' ? $root.p3xr.strings.intention.save : $root.p3xr.strings.intention.add }}
-            </md-button>
 
             <md-button class="md-raised md-warn" ng-click="cancel()">
                 <md-icon>cancel</md-icon>
                 {{ $root.p3xr.strings.intention.cancel }}
             </md-button>
+
+
+            <md-button class="md-raised md-primary" type="submit">
+                <md-icon>{{ options.type === 'edit' ? 'edit' : 'add'}}</md-icon>
+                {{ options.type === 'edit' ? $root.p3xr.strings.intention.save : $root.p3xr.strings.intention.add }}
+            </md-button>
+
 
         </md-dialog-actions>
     </form>

@@ -119,8 +119,9 @@ p3xr.ng.component('p3xrMainTreecontrolControls', {
             this.search = $rootScope.p3xr.state.search
         }
 
+        //console.warn($rootScope.p3xr.state.search)
         this.onSearchChange = () => {
-            $rootScope.p3xr.state.search = this.search
+//            $rootScope.p3xr.state.search = this.search
             if ($rootScope.p3xr.settings.searchClientSide) {
                 // $rootScope.p3xr.settings.searchClientSide
                 // $rootScope.p3xr.settings.searchStartsWith

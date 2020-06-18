@@ -64,7 +64,7 @@
     <p3xr-accordion-content>
 
         <md-list>
-            <md-list-item>
+            <md-list-item ng-click="$ctrl.openTreeSettingDialog({ $event: $event})">
                 <div layout="row" flex>
                     <div flex>
                         {{ $root.p3xr.strings.form.treeSettings.field.treeSeparator}}
@@ -83,7 +83,7 @@
 
             <md-divider></md-divider>
 
-            <md-list-item>
+            <md-list-item ng-click="$ctrl.openTreeSettingDialog({ $event: $event})">
                 <div layout="row" flex>
                     <div flex>
                         {{ $root.p3xr.strings.form.treeSettings.field.page}}
@@ -97,7 +97,7 @@
             <md-divider></md-divider>
 
 
-            <md-list-item class="md-2-line">
+            <md-list-item class="md-2-line" ng-click="$ctrl.openTreeSettingDialog({ $event: $event})">
                 <div class="md-list-item-text">
                     <h3>
                         <div layout="row" flex>
@@ -117,7 +117,7 @@
 
             <md-divider></md-divider>
 
-            <md-list-item>
+            <md-list-item ng-click="$ctrl.openTreeSettingDialog({ $event: $event})">
                 <div layout="row" flex>
                     <div flex>
                         {{ $root.p3xr.strings.form.treeSettings.field.keysSort}}
@@ -132,7 +132,7 @@
 
             <md-divider></md-divider>
 
-            <md-list-item>
+            <md-list-item ng-click="$ctrl.openTreeSettingDialog({ $event: $event})">
                 <div layout="row" flex>
                     <div flex>
                         {{ $root.p3xr.strings.form.treeSettings.field.searchMode}}
@@ -146,7 +146,7 @@
             </md-list-item>
             <md-divider></md-divider>
 
-            <md-list-item>
+            <md-list-item ng-click="$ctrl.openTreeSettingDialog({ $event: $event})">
                 <div layout="row" flex>
                     <div flex>
                         {{ $root.p3xr.strings.form.treeSettings.field.searchModeStartsWith}}
@@ -161,7 +161,7 @@
 
             <md-divider></md-divider>
 
-            <md-list-item>
+            <md-list-item ng-click="$ctrl.openTreeSettingDialog({ $event: $event})">
                 <div layout="row" flex>
                     <div flex>
                         {{ $root.p3xr.settings.jsonFormat == 2 ? $root.p3xr.strings.form.treeSettings.label.jsonFormatTwoSpace : $root.p3xr.strings.form.treeSettings.label.jsonFormatFourSpace }}
@@ -170,7 +170,7 @@
             </md-list-item>
             <md-divider></md-divider>
 
-            <md-list-item>
+            <md-list-item ng-click="$ctrl.openTreeSettingDialog({ $event: $event})">
                 <div layout="row" flex>
                     <div flex>
                         {{ $root.p3xr.settings.animation ? $root.p3xr.strings.form.treeSettings.label.animation : $root.p3xr.strings.form.treeSettings.label.noAnimation }}

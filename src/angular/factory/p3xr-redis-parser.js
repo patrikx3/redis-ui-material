@@ -69,6 +69,21 @@ p3xr.ng.factory('p3xrRedisParser', function ($rootScope) {
 //console.warn(keys)
             const mainNodes = []
 
+
+            //console.log('expandedNodes', JSON.parse(JSON.stringify($rootScope.expandedNodes)))
+            //$rootScope.expandedNodes = []
+
+
+/*
+            const newSavedExpandedNodes
+            //FIXME saved expanded nodes is not working
+            for (let saveExpandedNode of $rootScope.savedExpandedNodes) {
+                if (saveExpandedNode.key === foundNode.key) {
+                    $rootScope.expandedNodes.push(foundNode)
+                }
+            }
+ */
+            const newExpandedNodes = []
             $rootScope.expandedNodes = []
 
             const recursiveNodes = (splitKey, level = 0, nodes = mainNodes) => {
@@ -100,18 +115,22 @@ p3xr.ng.factory('p3xrRedisParser', function ($rootScope) {
                         })
                     }
                     nodes.push(foundNode)
-                }
 
-                for (let saveExpandedNode of $rootScope.savedExpandedNodes) {
-                    if (saveExpandedNode.key === foundNode.key) {
-                        $rootScope.expandedNodes.push(foundNode)
+                    for (let saveExpandedNode of $rootScope.savedExpandedNodes) {
+                        if (saveExpandedNode.key === foundNode.key) {
+                            newExpandedNodes.push(foundNode)
+                        }
                     }
+
                 }
 
                 if (level + 1 < splitKey.length) {
                     recursiveNodes(splitKey, level + 1, foundNode.children)
                 }
             }
+
+            //console.log('newExpandedNodes', newExpandedNodes)
+            $rootScope.expandedNodes = newExpandedNodes
 
             for (let key of keys) {
                 let splitkey;

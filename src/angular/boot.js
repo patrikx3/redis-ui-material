@@ -69,6 +69,25 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
     }
 
 
+    let search
+    Object.defineProperty($rootScope.p3xr.state, 'search', {
+        get: () => {
+            search = $cookies.get('p3xr-state-search')
+            //console.warn('search', search)
+            if (search === undefined) {
+                search = ''
+            }
+            return search
+        },
+        set: (value) => {
+            //console.warn(`set value ${value}`)
+            search = value
+            search = $cookies.put('p3xr-state-search', value, {
+                expires: p3xr.settings.cookieExpiry,
+            })
+        }
+    })
+
     let treeDivider
     Object.defineProperty($rootScope.p3xr.settings, 'redisTreeDivider', {
         get: () => {

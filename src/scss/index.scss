@@ -5,6 +5,14 @@
 @import '~jsoneditor/dist/jsoneditor.css';
 @import '~@fortawesome/fontawesome-free/css/all.min.css';
 
+md-dialog md-dialog-actions {
+    display: block !important;
+}
+
+md-dialog md-dialog-actions button {
+    float: right !important;
+}
+
 .p3xr-theme-dark {
    .jsoneditor {
        background-color: white;

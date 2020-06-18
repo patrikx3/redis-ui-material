@@ -12,6 +12,7 @@ p3xr.ng.component('p3xrMain', {
         let resizeClicked = false;
         let resizeLeft = undefined
 
+
         Object.defineProperty($scope, 'resizerColor', {
             get: () => {
                 if (resizeClicked || resizerMouseoverOn) {
@@ -382,14 +383,14 @@ p3xr.ng.component('p3xrMain', {
 
             } catch (e) {
                 p3xrCommon.generalHandleError(e)
-            } finally {
-                p3xr.ui.overlay.hide()
                 /*
                 $timeout(() => {
                     p3xr.ui.overlay.hide()
                 }, p3xr.settings.debounce)
                 */
 
+            } finally {
+                p3xr.ui.overlay.hide()
             }
             console.timeEnd('refresh')
 

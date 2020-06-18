@@ -27,6 +27,11 @@ const routes = ($stateProvider, $urlRouterProvider) => {
     $stateProvider.state('main.statistics', {
         url: '/statistics',
         template: '<p3xr-main-statistics></p3xr-main-statistics>',
+        params: {
+            action: null,
+            expandedNodes: null,
+            response: null,
+        },
     });
 
     $stateProvider.state('main.key', {

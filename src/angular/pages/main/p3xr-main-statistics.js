@@ -57,6 +57,17 @@ p3xr.ng.component('p3xrMainStatistics', {
             })
         })
          */
+
+        /*
+        console.warn('$stateParams', $stateParams, $stateParams.action)
+        if ($stateParams.action && $stateParams.action === 'reload-delete') {
+//            $rootScope.savedExpandedNodes = $stateParams.expandedNodes
+            console.log($stateParams.expandedNodes)
+            $rootScope.$broadcast('p3x-refresh')
+            //p3xrCommon.loadRedisInfoResponse({response: $stateParams.response})
+
+        }
+         */
     }
 })
 

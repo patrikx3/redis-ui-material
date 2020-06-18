@@ -86,7 +86,15 @@ p3xr.ng.component('p3xrMainTree', {
                     p3xrCommon.loadRedisInfoResponse({response: response})
                 })
 
-                $state.go('main.statistics')
+                /*
+                const params = {
+                    action: 'reload-delete',
+                    expandedNodes: expandedNodes,
+                    response: expandedNodes,
+                }
+                 */
+                //console.log('delete params', params)
+                $state.go('main.statistics' /*, params*/)
 
                 p3xrCommon.toast({
                     message: p3xr.strings.status.deletedKey({

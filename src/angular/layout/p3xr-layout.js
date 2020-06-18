@@ -105,7 +105,7 @@ p3xr.ng.component('p3xrLayout', {
 
             console.time('connect')
 
-            p3xr.state.search = '';
+            //p3xr.state.search = '';
 
 
             connection = angular.copy(connection)
