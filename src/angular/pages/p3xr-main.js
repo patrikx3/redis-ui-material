@@ -222,20 +222,20 @@ p3xr.ng.component('p3xrMain', {
         this.resize = debounce(rawResize, p3xr.settings.debounce)
 
         this.$onInit = () => {
-
-            require('../../core/node-inview-recursive').recursive({
-                nodes: $rootScope.keysTreeRendered,
-            })
-
             $container = $('#p3xr-main-content')
             $header = $('#p3xr-layout-header-container')
             $footer = $('#p3xr-layout-footer-container')
             $consoleHeader = $('#p3xr-main-header')
             scrollers = $container[0]
 
-            resize()
+            rawResize()
 
             $window.on('resize', rawResize)
+
+            require('../../core/node-inview-recursive').recursive({
+                nodes: $rootScope.keysTreeRendered,
+            })
+
 
             if ($state.current.url === '/main') {
                 $state.go('main.statistics')

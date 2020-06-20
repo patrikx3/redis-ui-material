@@ -158,7 +158,6 @@ const strings = {
             on: '群集',
             off: '集群关闭',
         },
-        treeSettingsPageCount: '由于AngularJS的渲染特性,如果你的分页超过(100/页)且不使用智能树分割,会导致性能下降,但如果你启用了,不仅可以获得更多的数据展示,且不会卡顿一段时间',
         theme: {
             light: '浅棕',
             dark: '暗色',
