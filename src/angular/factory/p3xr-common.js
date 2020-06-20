@@ -37,9 +37,10 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootSco
                 message: options
             }
         }
-        const template = '<md-toast class="md-toast p3xr-toast-default">' + options.message + '</md-toast>'
+        const template = '<md-toast class="md-toast p3xr-toast-default" ng-click="closeToast()">' + options.message + '</md-toast>'
 
         $mdToast.show({
+            controller: 'p3xrToastController',
             template: template,
             hideDelay: options.hideDelay || p3xr.settings.toast.timeout,
             position: p3xr.settings.toast.position,
@@ -129,4 +130,8 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootSco
     }
 
     return result;
-});
+}).controller('p3xrToastController', function ($scope, $mdToast) {
+    $scope.closeToast = function() {
+        $mdToast.hide();
+    };
+})

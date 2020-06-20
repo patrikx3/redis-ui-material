@@ -9,13 +9,25 @@ p3xr.ng.component('p3xrMainStatistics', {
             'sec': 'seconds'
         }
 
+        const $container = $('#p3xr-main-content-container')
+        const resize = () => {
+            //console.log('container', $container, $container[0].offsetHeight)
+            this.maxHeight = $container[0].offsetHeight - 50
+        }
+
+        $window.on('resize', resize)
+        this.$doCheck = () => {
+            resize()
+        }
         this.$onInit = () => {
-
-
             if (p3xr.state.redisChanged) {
                 p3xr.state.redisChanged = false
                 $rootScope.$broadcast('p3x-refresh')
             }
+        }
+
+        this.$onDestroy = () => {
+            $window.off('resize', resize)
         }
 
         this.hasDatabases = Object.keys($rootScope.p3xr.state.info.keyspaceDatabases).length > 0

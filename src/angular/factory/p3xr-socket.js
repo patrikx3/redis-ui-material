@@ -162,7 +162,7 @@ p3xr.ng.factory('p3xrSocket', function ($rootScope, p3xrCommon, $state) {
                     if (data.status === 'ok') {
                         resolve(data)
                     } else {
-                        const error = new Error(data.error.message)
+                        const error = new Error(data.error)
                         error.code = data.error.code
                         reject(error)
                     }
