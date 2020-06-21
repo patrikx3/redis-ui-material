@@ -160,11 +160,16 @@ p3xr.ng.component('p3xrLayout', {
                     expires: p3xr.settings.cookieExpiry
                 })
 
+                $state.go('main.statistics')
+                //$state.reload();
+
+                /*
                 if (!originalState.startsWith('main')) {
                     $state.go(originalState)
                 } else if (originalState === 'main') {
                     $state.go('main.statistics')
                 }
+                 */
             } catch (error) {
                 $cookies.remove(p3xr.settings.connectInfo.cookieName)
                 $rootScope.p3xr.state.connection = undefined
