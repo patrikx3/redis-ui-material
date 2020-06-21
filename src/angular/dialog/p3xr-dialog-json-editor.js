@@ -48,7 +48,7 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
                                     //enableSort: false,
                                     //enableTransform: false,
                                     ace: ace,
-                                    theme: p3xrTheme.isDark() ? 'ace/theme/twilight' : 'ace/theme/jsoneditor'
+                                    theme: p3xrTheme.isDark() ? 'ace/theme/twilight' : 'ace/theme/github'
                                 }
                                 if (JSON.stringify(obj).length > 10240) {
                                     p3xrCommon.toast({
