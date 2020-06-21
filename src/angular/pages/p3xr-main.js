@@ -222,7 +222,7 @@ p3xr.ng.component('p3xrMain', {
         }
 
 
-        this.resize = rawResize
+        this.resize = debounce(rawResize, p3xr.settings.debounce)
 
         /*
         this.$doCheck = () => {

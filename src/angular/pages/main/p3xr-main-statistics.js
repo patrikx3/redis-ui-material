@@ -16,9 +16,7 @@ p3xr.ng.component('p3xrMainStatistics', {
         }
 
         $window.on('resize', resize)
-        this.$doCheck = () => {
-            resize()
-        }
+        this.$doCheck = resize
         this.$onInit = () => {
             if (p3xr.state.redisChanged) {
                 p3xr.state.redisChanged = false
