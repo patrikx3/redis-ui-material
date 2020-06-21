@@ -39,7 +39,7 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
                                 const options = {
                                     //sortObjectKeys: false,
                                     limitDragging: false,
-                                    modes: ['tree', 'view', 'preview', 'code'],
+                                    modes: ['tree', 'code', 'view', 'preview'],
                                     //history: false,
                                     mode: 'tree',
                                     //search: true,
@@ -61,6 +61,9 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
                         }
 
                         $scope.$on('$destroy', () => {
+                            if (editor) {
+                                editor.destroy()
+                            }
                             $rootScope.$broadcast('p3xr-main-resizer', {
                                 drag: true
                             })
