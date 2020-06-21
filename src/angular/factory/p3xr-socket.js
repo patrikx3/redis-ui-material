@@ -163,7 +163,7 @@ p3xr.ng.factory('p3xrSocket', function ($rootScope, p3xrCommon, $state) {
                         resolve(data)
                     } else {
                         const error = new Error(data.error)
-                        error.code = data.error.code
+                        //error.code = data.error.code
                         reject(error)
                     }
                     $rootScope.$digest()

@@ -46,7 +46,7 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
                                     language: language,
                                     //enableSort: false,
                                     //enableTransform: false,
-                                    //ace: ace,
+                                    ace: global.ace,
                                 }
                                 if (JSON.stringify(obj).length > 10240) {
                                     p3xrCommon.toast({
@@ -72,9 +72,13 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
 
                         // Promise resolve
                         $scope.save = function ({ format }) {
-                            $mdDialog.hide({
-                                obj: JSON.stringify(editor.get(), null, format ? p3xr.settings.jsonFormat : 0)
-                            });
+                            try {
+                                $mdDialog.hide({
+                                    obj: JSON.stringify(editor.get(), null, format ? p3xr.settings.jsonFormat : 0)
+                                });
+                            } catch(e) {
+                                p3xrCommon.generalHandleError(e)
+                            }
                         };
 
                         /*

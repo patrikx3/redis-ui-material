@@ -49,7 +49,7 @@ p3xr.ng.component('p3xrMain', {
         }, p3xr.settings.debounce)
 
         const rawResize = (options = {}) => {
-            //console.warn('who is resizing non stop')
+            //console.info('p3xr-main resize')
             let {redrawTabs} = options
             if (redrawTabs === undefined) {
                 redrawTabs = false;
@@ -219,7 +219,13 @@ p3xr.ng.component('p3xrMain', {
         }
 
 
-        this.resize = debounce(rawResize, p3xr.settings.debounce)
+        this.resize = rawResize
+
+        this.$doCheck = () => {
+//            console.time('p3xr-main-resize')
+            rawResize()
+//            console.timeEnd('p3xr-main-resize')
+        }
 
         this.$onInit = () => {
             $container = $('#p3xr-main-content')

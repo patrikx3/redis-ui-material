@@ -18,9 +18,13 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootSco
             }
             console.warn('generalHandleError')
             console.error(error)
-            if (error.hasOwnProperty('code') && p3xr.strings.code.hasOwnProperty(error.code)) {
+
+            if (typeof error === 'string' && p3xr.strings.code.hasOwnProperty(error)) {
+                error = new Error(p3xr.strings.code[error])
+            } else if (error.hasOwnProperty('code') && p3xr.strings.code.hasOwnProperty(error.code)) {
                 error.message = p3xr.strings.code[error.code]
             }
+
 
             result.alert({
                 title: p3xr.strings.title.error,
