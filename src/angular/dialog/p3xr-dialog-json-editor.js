@@ -4,7 +4,7 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
 
         this.show = (options) => {
                 return $mdDialog.show({
-                    controller: function ($scope, $mdDialog, p3xrCommon, $rootScope) {
+                    controller: function ($scope, $mdDialog, p3xrCommon, $rootScope, p3xrTheme) {
 
                         $rootScope.$broadcast('p3xr-main-resizer', {
                             drag: false
@@ -35,10 +35,11 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
                                         break;
                                 }
                                 const container = document.getElementById("p3xr-jsoneditor")
+
                                 const options = {
                                     //sortObjectKeys: false,
                                     limitDragging: false,
-                                    modes: ['tree', 'view', 'preview'],
+                                    modes: ['tree', 'view', 'preview', 'code'],
                                     //history: false,
                                     mode: 'tree',
                                     //search: true,
@@ -46,7 +47,8 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
                                     language: language,
                                     //enableSort: false,
                                     //enableTransform: false,
-                                    ace: global.ace,
+                                    ace: ace,
+                                    theme: p3xrTheme.isDark() ? 'ace/theme/twilight' : 'ace/theme/jsoneditor'
                                 }
                                 if (JSON.stringify(obj).length > 10240) {
                                     p3xrCommon.toast({
@@ -95,6 +97,7 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
                     clickOutsideToClose: false,
                     fullscreen: true, // Only for -xs, -sm breakpoints.
                     multiple: true,
+                    escapeToClose: false,
                 })
         }
 

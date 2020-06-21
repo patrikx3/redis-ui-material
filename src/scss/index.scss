@@ -35,12 +35,12 @@ md-dialog md-dialog-actions button {
      */
 
     .jsoneditor-preview {
-        color: $json-status-color;
+        color: $json-status-color !important;
     }
 
     .jsoneditor-statusbar {
-        background-color: $json-status-bg-color;
-        color: $json-status-color;
+        background-color: rgba($json-status-bg-color, 0.25) !important;
+        color: $json-status-color !important;
     }
 
     div.jsoneditor, div.jsoneditor-menu {

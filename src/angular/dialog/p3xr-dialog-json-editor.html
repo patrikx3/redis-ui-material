@@ -24,9 +24,9 @@
         <span flex></span>
         <md-button ng-click="ok()" class="md-raised md-warn" aria-label="{{ $root.p3xr.strings.intention.close }}">
             <md-icon>cancel</md-icon>
-            {{ $root.p3xr.strings.intention.cancel }}
+            <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.cancel }}</span>
+            <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{ $root.p3xr.strings.intention.cancel }}</md-tooltip>
         </md-button>
-
 
         <md-button ng-if="isJson" class="md-raised md-primary" ng-click="save({ format : false})">
             <md-icon>save</md-icon>

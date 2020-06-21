@@ -20,6 +20,13 @@ jQuery.event.special.touchstart = {
 };
 
 
+global.ace = require('ace-builds')
+require('ace-builds/webpack-resolver')
+require('ace-builds/src-noconflict/mode-json')
+require('ace-builds/src-noconflict/ext-searchbox')
+//require('ace-builds/src-noconflict/theme-twilight')
+//require('ace-builds/src-noconflict/theme-github')
+
 global.JSONEditor = require('jsoneditor/dist/jsoneditor.js')
 
 global.$window = $(window);

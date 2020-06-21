@@ -109,7 +109,7 @@ const strings = {
         testConnection: 'Test connection',
         getKey: 'Loading Redis key and associated data ...',
         jsonViewShow: 'Display JSON tree',
-        jsonViewEditor: 'Edit JSON tree',
+        jsonViewEditor: 'Edit JSON',
     },
     label: {
         unableToLoadKey: ({ key }) => {
