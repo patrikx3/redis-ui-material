@@ -41,8 +41,6 @@ p3xr.ng.component('p3xrSettings', {
 
                 p3xr.state.donated = response.donated
 
-                p3xr.state.donated = true
-
                 //await this.refresh()
                 p3xrCommon.toast({
                     message: response.info !== 'ok' ? p3xr.strings.error[response.info] : p3xr.strings.status.licenseSaved,

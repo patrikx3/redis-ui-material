@@ -30,7 +30,6 @@ p3xr.ng.factory('p3xrSocket', function ($rootScope, p3xrCommon, $state) {
     let donated = undefined
     ioClient.on('info-interval', (data) => {
         $rootScope.p3xr.state.donated = data.donated
-        $rootScope.p3xr.state.donated = true
 
         if (data.donated !== donated) {
             if (!global.p3xr.isBot()) {
@@ -42,7 +41,6 @@ p3xr.ng.factory('p3xrSocket', function ($rootScope, p3xrCommon, $state) {
             }
 
             donated = data.donated
-            donated = true
             $rootScope.$digest();
         }
     })
