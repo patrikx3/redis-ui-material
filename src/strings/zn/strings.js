@@ -218,6 +218,7 @@ const strings = {
         'save-connection': '此连接已更改，因此您与此Redis实例断开连接。 你可以重新连接。',
         'readonly-connections': '连接(添加/保存/删除)只是只读！',
         'list-out-of-bounds': '此列表索引超出范围',
+        'donation-ware-feature': '捐赠版本中提供了此功能。',
     },
     form: {
         error: {

@@ -23,6 +23,8 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootSco
                 error = new Error(p3xr.strings.code[error])
             } else if (error.hasOwnProperty('code') && p3xr.strings.code.hasOwnProperty(error.code)) {
                 error.message = p3xr.strings.code[error.code]
+            } else if (p3xr.strings.code.hasOwnProperty(error.message)) {
+                error.message = p3xr.strings.code[error.message]
             }
 
 
