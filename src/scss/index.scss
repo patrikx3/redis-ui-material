@@ -34,6 +34,10 @@ md-dialog md-dialog-actions button {
     $json-value-invalid: white;
      */
 
+    div.jsoneditor-value.jsoneditor-string.jsoneditor-color-value {
+        color: white;
+    }
+
     .jsoneditor-preview {
         color: $json-status-color !important;
     }
