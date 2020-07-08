@@ -81,6 +81,12 @@ p3xr.ng.component('p3xrMainTree', {
                     }
                 })
 
+                window['gtag']('config', p3xr.settings.googleAnalytics,
+                    {
+                        'page_path': '/delete'
+                    }
+                );
+
                 $timeout(() => {
                     $rootScope.savedExpandedNodes = expandedNodes
                     p3xrCommon.loadRedisInfoResponse({response: response})
@@ -132,6 +138,12 @@ p3xr.ng.component('p3xrMainTree', {
                         keyNew: confirmResponse,
                     }
                 })
+
+                window['gtag']('config', p3xr.settings.googleAnalytics,
+                    {
+                        'page_path': '/rename'
+                    }
+                );
 
                 $timeout(() => {
                     $rootScope.savedExpandedNodes = expandedNodes

@@ -64,7 +64,7 @@ if (minimize) {
 
     minimizer = [
         new TerserPlugin({
-            sourceMap: true,
+            sourceMap: false,
             parallel: true,
             cache: true,
             extractComments: {
@@ -212,7 +212,7 @@ module.exports = {
                             options: {
                                 // in v2 it throws an error
                                 //minimize: minimize,
-                                sourceMap: true
+                                sourceMap: false
                             },
                         }]
                 })

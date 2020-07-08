@@ -163,6 +163,12 @@ p3xr.ng.component('p3xrMainKey', {
         }
 
         this.refresh = (options) => {
+
+            window['gtag']('config', p3xr.settings.googleAnalytics,
+                {
+                    'page_path': '/refresh'
+                }
+            );
             loadKey(options)
         }
 
@@ -202,6 +208,13 @@ p3xr.ng.component('p3xrMainKey', {
                             key: $stateParams.key,
                         }
                     })
+
+                    window['gtag']('config', p3xr.settings.googleAnalytics,
+                        {
+                            'page_path': '/persist'
+                        }
+                    );
+
                     await this.refresh()
                     p3xrCommon.toast({
                         message: p3xr.strings.status.persisted

@@ -86,6 +86,11 @@ p3xr.ng.factory('p3xrDialogKeyNewOrSet', function (p3xrCommon, $mdDialog, p3xrSo
                                             model: angular.copy($scope.model)
                                         },
                                     })
+                                    window['gtag']('config', p3xr.settings.googleAnalytics,
+                                        {
+                                            'page_path': '/key-new-or-set'
+                                        }
+                                    );
                                     resolve(response)
 
                                     p3xrCommon.toast({
@@ -130,9 +135,10 @@ p3xr.ng.factory('p3xrDialogKeyNewOrSet', function (p3xrCommon, $mdDialog, p3xrSo
                         template: require('./p3xr-dialog-key-new-or-set.html'),
                         parent: angular.element(document.body),
                         targetEvent: options.$event,
-                        clickOutsideToClose: true,
+                        clickOutsideToClose: false,
                         fullscreen: true, // Only for -xs, -sm breakpoints.
                         multiple: true,
+                        escapeToClose: false,
                     })
                     // console.warn(result)
                 } catch (error) {

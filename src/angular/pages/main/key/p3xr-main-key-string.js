@@ -44,6 +44,13 @@ p3xr.ng.component('p3xrMainKeyString', {
                         key: this.p3xrKey,
                     }
                 })
+
+                window['gtag']('config', p3xr.settings.googleAnalytics,
+                    {
+                        'page_path': '/key-set'
+                    }
+                );
+
                 this.editable = false
                 $rootScope.$broadcast('p3x-refresh-key');
             } catch (e) {

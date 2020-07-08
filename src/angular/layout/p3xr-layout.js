@@ -92,7 +92,11 @@ p3xr.ng.component('p3xrLayout', {
             $rootScope.$on('$locationChangeSuccess', async function (event, to, from) {
                 const url = new URL(to)
                 if (url.pathname.toLowerCase().startsWith('/main/key/')) {
-                    console.log('$locationChangeSuccess gtag is excluded', url.pathname)
+                    window['gtag']('config', p3xr.settings.googleAnalytics,
+                        {
+                            'page_path': '/main/key'
+                        }
+                    );
                     return
                 }
                 console.log('$locationChangeSuccess gtag', url.pathname)
