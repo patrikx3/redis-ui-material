@@ -71,7 +71,7 @@
 
                 <md-input-container class="md-block p3xr-md-input-container-no-bottom">
                     <label>{{ $root.p3xr.strings.form.treeSettings.maxKeys }}</label>
-                    <input type="number" required min="100" max="100000" name="maxKeys" step="1" pattern="-?\d*"
+                    <input type="number" required min="5" max="100000" name="maxKeys" step="1" pattern="-?\d*"
                            ng-model="model.maxKeys">
                     <div ng-messages="p3xrDialogTreecontrolSettingsForm.maxKeys.$error">
                         <div ng-message-exp="['required', 'min', 'max', 'pattern']">

@@ -131,6 +131,7 @@ p3xr.ng.component('p3xrMainTreecontrolControls', {
 
                 this.p3xrMainRef.refresh()
             }
+            $rootScope.p3xr.state.page = 1;
 
         }
     }

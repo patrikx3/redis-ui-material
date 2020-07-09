@@ -178,8 +178,8 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
                 maxKeysDisplay = p3xr.settings.maxKeysSettings.default
             }
             let value = parseInt(maxKeysDisplay)
-            if (isNaN(value) || value < 100 || value > p3xr.settings.maxKeysSettings.max) {
-               value =  p3xr.settings.maxKeysSettings.max
+            if (isNaN(value) || value < 5 || value > p3xr.settings.maxKeysSettings.max) {
+               value =  p3xr.settings.maxKeysSettings.default
             }
             return value
         },
