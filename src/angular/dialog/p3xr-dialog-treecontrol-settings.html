@@ -37,9 +37,11 @@
                     {{ $root.p3xr.strings.label.treeSeparatorEmpty }}
                 </div>
 
+                <br/>
+
                 <md-input-container class="md-block p3xr-md-input-container-no-bottom">
                     <label>{{ $root.p3xr.strings.form.treeSettings.field.page }}</label>
-                    <input type="number" required min="10" max="500" name="pageCount" step="1" pattern="\d*"
+                    <input type="number" required min="10" max="1000" name="pageCount" step="1" pattern="\d*"
                            ng-model="model.pageCount">
                     <div ng-messages="p3xrDialogTreecontrolSettingsForm.pageCount.$error">
                         <div ng-message-exp="['required', 'min', 'max', 'pattern']">
@@ -47,6 +49,8 @@
                         </div>
                     </div>
                 </md-input-container>
+
+                <br/>
 
 
                 <md-input-container class="md-block p3xr-md-input-container-no-bottom">
@@ -63,11 +67,27 @@
                     {{ $root.p3xr.strings.form.treeSettings.maxValueDisplayInfo }}
                 </div>
 
+                <br/>
+
+                <md-input-container class="md-block p3xr-md-input-container-no-bottom">
+                    <label>{{ $root.p3xr.strings.form.treeSettings.maxKeys }}</label>
+                    <input type="number" required min="100" max="100000" name="maxKeys" step="1" pattern="-?\d*"
+                           ng-model="model.maxKeys">
+                    <div ng-messages="p3xrDialogTreecontrolSettingsForm.maxKeys.$error">
+                        <div ng-message-exp="['required', 'min', 'max', 'pattern']">
+                            {{ $root.p3xr.strings.form.treeSettings.error.maxKeys }}
+                        </div>
+                    </div>
+                </md-input-container>
+                <div class="p3xr-md-input-container-bottom-info">
+                    {{ $root.p3xr.strings.form.treeSettings.maxKeysInfo }}
+                </div>
+
 
                 <span ng-if="!$root.p3xr.state.reducedFunctions" style="margin: 0; padding: 0;">
 
                     <md-input-container class="md-block p3xr-md-input-container-no-bottom">
-                        <md-switch ng-model="model.keysSort" name="keysSort" aria-label="">
+                        <md-switch ng-model="model.keysSort" name="keysSort" aria-label="" class="p3xr-md-input-container-no-bottom p3xr-md-input-container-no-top">
                             {{ model.keysSort ? $root.p3xr.strings.label.keysSort.on :  $root.p3xr.strings.label.keysSort.off  }}
                         </md-switch>
 
@@ -78,7 +98,7 @@
 
                     <md-input-container class="md-block p3xr-md-input-container-no-bottom">
                         <md-switch ng-model="model.searchClientSide" name="searchClientSide" aria-label=""
-                                   ng-disabled="$root.p3xr.state.dbsize > $root.p3xr.settings.maxLightKeysCount ">
+                                   ng-disabled="$root.p3xr.state.dbsize > $root.p3xr.settings.maxLightKeysCount" class="p3xr-md-input-container-no-bottom p3xr-md-input-container-no-top">
                             {{ model.searchClientSide  ? $root.p3xr.strings.form.treeSettings.label.searchModeClient :  $root.p3xr.strings.form.treeSettings.label.searchModeServer }}
                         </md-switch>
                     </md-input-container>
@@ -93,6 +113,7 @@
 
                 </span>
 
+                <br/>
 
                 <md-input-container class="md-block p3xr-md-input-container-no-bottom p3xr-md-input-container-no-top"  >
                     <md-switch ng-model="model.searchStartsWith" name="searchStartsWith" aria-label="" class="p3xr-md-input-container-no-bottom p3xr-md-input-container-no-top">

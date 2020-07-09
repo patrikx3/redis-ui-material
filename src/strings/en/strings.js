@@ -239,6 +239,8 @@ const strings = {
         treeSettings: {
             maxValueDisplay: 'Max value display string length',
             maxValueDisplayInfo: 'If max value display zero, it shows everything, if it is bigger than 0, it will truncate. If it is -1, it will not show the value without edit for strings, for others, it display everything.',
+            maxKeys: 'The max key count',
+            maxKeysInfo: 'So that the GUI does not crash, we limit the max key count.',
             keyCount: () => {
                 return `Number of keys: ${p3xr.state.keysRaw.length}`
             },
@@ -261,8 +263,9 @@ const strings = {
                 searchModeStartsWith: 'Search starts with / includes'
             },
             error: {
-                page: 'The page count must be an integer between 10 - 500',
+                page: 'The page count must be an integer between 10 - 1000',
                 maxValueDisplay: 'The maximum display value must be an integer between -1 and 32768',
+                maxKeys: 'The maximum key count value must be an integer between 100 and 100000',
             },
 
         },

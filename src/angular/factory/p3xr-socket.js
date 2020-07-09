@@ -146,7 +146,7 @@ p3xr.ng.factory('p3xrSocket', function ($rootScope, p3xrCommon, $state) {
                 options.payload.match = '*' + $rootScope.p3xr.state.search + '*';
             }
         }
-
+        options.payload.maxKeys = parseInt(p3xr.settings.maxKeys)
         let {enableResponse} = options
         if (enableResponse !== false) {
             enableResponse = true

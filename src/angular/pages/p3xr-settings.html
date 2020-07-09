@@ -117,6 +117,26 @@
 
             <md-divider></md-divider>
 
+            <md-list-item class="md-2-line" ng-click="$ctrl.openTreeSettingDialog({ $event: $event})">
+                <div class="md-list-item-text">
+                    <h3>
+                        <div layout="row" flex>
+                            <div flex>
+                                {{ $root.p3xr.strings.form.treeSettings.maxKeys}}
+                            </div>
+                            <div>
+                                {{ $root.p3xr.settings.maxKeys}}
+                            </div>
+                        </div>
+                    </h3>
+                    <p>
+                        {{ $root.p3xr.strings.form.treeSettings.maxKeysInfo }}
+                    </p>
+                </div>
+            </md-list-item>
+
+            <md-divider></md-divider>
+
             <md-list-item ng-click="$ctrl.openTreeSettingDialog({ $event: $event})">
                 <div layout="row" flex>
                     <div flex>

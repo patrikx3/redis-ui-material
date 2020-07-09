@@ -325,3 +325,7 @@ input:-webkit-autofill {
 treecontrol, textarea {
     font-family: monospace !important;
 }
+
+md-input-container.p3xr-md-input-container-no-bottom div.md-errors-spacer {
+    min-height: 0px;
+}

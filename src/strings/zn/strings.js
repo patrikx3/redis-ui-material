@@ -237,6 +237,8 @@ const strings = {
         treeSettings: {
             maxValueDisplay: '最大值显示字符串长度',
             maxValueDisplayInfo: '如果最大值显示为零，则显示所有内容，如果大于0，则将截断。 如果它是-1，它将不显示没有编辑字符串的值，对于其他人，它显示所有内容。',
+            maxKeys: '最大密钥数',
+            maxKeysInfo: '为了避免GUI崩溃，我们限制了最大密钥数。',
             keyCount: () => {
                 return `键数: ${p3xr.state.keysRaw.length}`
             },
@@ -261,6 +263,7 @@ const strings = {
             error: {
                 page: '页数必须是10  -  500之间的整数',
                 maxValueDisplay: '最大显示值必须是介于-1和32768之间的整数',
+                maxKeys: '最大密钥计数值必须是100到100000之间的整数',
             },
 
         },

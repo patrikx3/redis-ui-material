@@ -18,6 +18,7 @@ p3xr.ng.factory('p3xrDialogTreecontrolSettings', function (p3xrCommon, $mdDialog
                             searchClientSide: $rootScope.p3xr.settings.searchClientSide,
                             searchStartsWith: $rootScope.p3xr.settings.searchStartsWith,
                             maxValueDisplay: $rootScope.p3xr.settings.maxValueDisplay,
+                            maxKeys: $rootScope.p3xr.settings.maxKeys,
                             jsonFormat: $rootScope.p3xr.settings.jsonFormat === 2,
                             animation: $rootScope.p3xr.settings.animation,
                         }
@@ -71,6 +72,7 @@ p3xr.ng.factory('p3xrDialogTreecontrolSettings', function (p3xrCommon, $mdDialog
                                 $rootScope.p3xr.state.page = 1
                                 $rootScope.p3xr.state.redisChanged = true;
                                 $rootScope.p3xr.settings.maxValueDisplay = $scope.model.maxValueDisplay
+                                $rootScope.p3xr.settings.maxKeys = $scope.model.maxKeys
                                 $rootScope.p3xr.settings.jsonFormat = $scope.model.jsonFormat === true ? 2 : 4
                                 $rootScope.p3xr.settings.animation = $scope.model.animation === true ? 1 : 0
                                 /*

@@ -53,6 +53,12 @@ p3xr.settings = {
       default: 1024,
       cookieName: 'p3xr-main-treecontrol-max-value-display'
     },
+    maxKeys: 10000,
+    maxKeysSettings: {
+        default: 10000,
+        max: 100000,
+        cookieName: 'p3xr-max-keys'
+    },
     keySortInfo: {
         default: false,
         cookieName: 'p3xr-main-treecontrol-key-sort',

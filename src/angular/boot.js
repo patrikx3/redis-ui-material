@@ -170,6 +170,27 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
         }
     })
 
+    let maxKeysDisplay
+    Object.defineProperty($rootScope.p3xr.settings, 'maxKeys', {
+        get: () => {
+            maxKeysDisplay = $cookies.get(p3xr.settings.maxKeysSettings.cookieName)
+            if (maxKeysDisplay === undefined) {
+                maxKeysDisplay = p3xr.settings.maxKeysSettings.default
+            }
+            let value = parseInt(maxKeysDisplay)
+            if (isNaN(value) || value < 100 || value > p3xr.settings.maxKeysSettings.max) {
+               value =  p3xr.settings.maxKeysSettings.max
+            }
+            return value
+        },
+        set: (value) => {
+            maxKeysDisplay = parseInt(value)
+            maxKeysDisplay = $cookies.put(p3xr.settings.maxKeysSettings.cookieName, value, {
+                expires: p3xr.settings.cookieExpiry,
+            })
+        }
+    })
+
     let language
     Object.defineProperty($rootScope.p3xr.settings.language, 'current', {
         get: () => {
