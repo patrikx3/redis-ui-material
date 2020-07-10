@@ -12,7 +12,6 @@ p3xr.ng.component('p3xrMain', {
         let resizeClicked = false;
         let resizeLeft = undefined
 
-
         Object.defineProperty($scope, 'resizerColor', {
             get: () => {
                 if (resizeClicked || resizerMouseoverOn) {
@@ -222,8 +221,8 @@ p3xr.ng.component('p3xrMain', {
         }
 
 
-        //this.resize = debounce(rawResize, p3xr.settings.debounce)
-        this.resize = rawResize
+        this.resize = debounce(rawResize, p3xr.settings.debounce)
+        //this.resizeRaw = rawResize
 
         /*
         this.$doCheck = () => {
@@ -410,6 +409,10 @@ p3xr.ng.component('p3xrMain', {
             this.refresh({
                 withoutParent: true
             })
+        })
+
+        $scope.$on('p3x-resize', () => {
+            rawResize()
         })
 
 
