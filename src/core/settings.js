@@ -60,10 +60,10 @@ p3xr.settings = {
         cookieName: 'p3xr-max-keys'
     },
     keySortInfo: {
-        default: false,
+        default: true,
         cookieName: 'p3xr-main-treecontrol-key-sort',
     },
-    keysSort: false,
+    keysSort: true,
     searchClientSide: false,
     searchInfoClientSide: {
         default: false,
