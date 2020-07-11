@@ -1,6 +1,6 @@
 p3xr.ng.component('p3xrLayout', {
     template: require('./p3xr-layout.html'),
-    controller: function (p3xrTheme, $rootScope, p3xrSocket, p3xrCommon, $state, $cookies, $timeout) {
+    controller: function (p3xrTheme, $rootScope, p3xrSocket, p3xrCommon, $state, $cookies, $timeout, $http) {
         this.setTheme = (theme) => {
             p3xrTheme.setTheme(p3xrTheme.generateThemeName(theme))
         }
@@ -226,7 +226,11 @@ p3xr.ng.component('p3xrLayout', {
 
         this.setLanguage = (key) => {
             $rootScope.p3xr.settings.language.current = key
-            //console.warn($rootScope)
+            if ($rootScope.isElectron) {
+                $http.post('http://localhost:7845/api/set-language', {
+                    language: key,
+                })
+            }
         }
 
 
