@@ -1,4 +1,4 @@
-p3xr.ng.factory('p3xrDialogKeyNewOrSet', function (p3xrCommon, $mdDialog, p3xrSocket, p3xrDialogJsonEditor) {
+p3xr.ng.factory('p3xrDialogKeyNewOrSet', function (p3xrCommon, $mdDialog, p3xrSocket, p3xrDialogJsonEditor, p3xrDialogJsonView) {
 
     return new function () {
 
@@ -10,6 +10,22 @@ p3xr.ng.factory('p3xrDialogKeyNewOrSet', function (p3xrCommon, $mdDialog, p3xrSo
 
                     const result = await $mdDialog.show({
                         controller: function ($scope, $mdDialog) {
+
+                            $scope.jsonViewer = (options) => {
+                                p3xrDialogJsonView.show({
+                                    event: options.$event,
+                                    value: options.value
+                                })
+//            this.showJson = !this.showJson
+                            }
+
+                            $scope.copy = (opts) => {
+                                global.p3xr.clipboard({
+                                    value: opts.value
+                                })
+                                p3xrCommon.toast(p3xr.strings.status.dataCopied)
+                            }
+
 
                             $scope.types = [
                                 'string',

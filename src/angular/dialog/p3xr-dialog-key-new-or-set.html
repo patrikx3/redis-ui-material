@@ -75,12 +75,26 @@
                     </md-tooltip>
                 </md-button>
 
+                <md-button class="md-button md-raised md-accent" ng-click="jsonViewer({ $event: $event, value: model.value})">
+                    <md-icon>table_chart</md-icon>
+                    <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.jsonViewShow }}</span>
+                    <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{
+                        $root.p3xr.strings.intention.jsonViewShow }}
+                    </md-tooltip>
+                </md-button>
+
                 <md-button class="md-button md-raised md-primary" ng-click="formatJson({ $event: $event})">
                     <md-icon>format_line_spacing</md-icon>
                     <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.formatJson }}</span>
                     <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{
                         $root.p3xr.strings.intention.formatJson }}
                     </md-tooltip>
+                </md-button>
+
+
+                <md-button class="md-icon-button md-primary" ng-click="copy({ $event: $event, value: model.value})" >
+                    <md-tooltip>{{ $root.p3xr.strings.intention.copy }}</md-tooltip>
+                    <md-icon>content_copy</md-icon>
                 </md-button>
 
                 <md-switch ng-model="validateJson" class="md-accent" style="margin-top: 0px;">

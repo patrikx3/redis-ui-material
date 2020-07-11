@@ -16,13 +16,6 @@
         </md-tooltip>
     </md-button>
 
-    <md-button class="md-button md-raised md-accent" ng-click="$ctrl.refresh()">
-        <md-icon>refresh</md-icon>
-
-        <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.reloadKey }}</span>
-        <md-tooltip ng-if="$root.$mdMedia('sm')" md-direction="bottom">{{ $root.p3xr.strings.intention.reloadKey }}
-        </md-tooltip>
-    </md-button>
 
     <md-button class="md-button md-raised md-primary" ng-click="$ctrl.setTtl({ $event: $event})">
         <md-icon>timer</md-icon>
@@ -41,6 +34,14 @@
         </md-tooltip>
     </md-button>
 
+
+    <md-button class="md-button md-raised md-accent" ng-click="$ctrl.refresh()">
+        <md-icon>refresh</md-icon>
+
+        <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.reloadKey }}</span>
+        <md-tooltip ng-if="$root.$mdMedia('sm')" md-direction="bottom">{{ $root.p3xr.strings.intention.reloadKey }}
+        </md-tooltip>
+    </md-button>
 </div>
 
 <md-list flex md-theme="{{ $root.p3xr.state.theme}}">
