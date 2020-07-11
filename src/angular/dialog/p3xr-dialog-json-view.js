@@ -7,9 +7,26 @@ p3xr.ng.factory('p3xrDialogJsonView', function (p3xrCommon, $mdDialog) {
 
             try {
                 const result = await $mdDialog.show({
-                    controller: function ($scope, $mdDialog) {
+                    controller: function ($scope, $mdDialog, $timeout) {
+
+                        $scope.treeExpandAll = () => {
+                            p3xr.ui.overlay.show({
+                                message: p3xr.strings.title.jsonRecursive
+                            })
+                            $timeout(() => {
+                                $scope.howExpanded = 'recursive'
+                                $timeout(() => {
+                                    p3xr.ui.overlay.hide()
+                                })
+                            })
+                        }
+
+                        $scope.treeCollapseAll = () => {
+                            $scope.howExpanded = true
+                        }
 
                         try {
+                            $scope.howExpanded = true
                             $scope.obj = JSON.parse(options.value)
                             $scope.isJson = true
                         } catch (e) {

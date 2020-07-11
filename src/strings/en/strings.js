@@ -5,6 +5,7 @@ const strings = {
         server_error: 'Server error, please try again',
     },
     title: {
+        jsonRecursive: 'Expanding all leafs',
         name: 'P3X Redis UI',
         nameDonated: 'P3X Redis UI+',
         main: 'You may choose a Redis connection to connect from the left bottom menu.',

@@ -5,6 +5,7 @@ const strings = {
         server_error: '服务器错误，请重试',
     },
     title: {
+        jsonRecursive: '展开所有叶子',
         name: 'P3X Redis UI',
         nameDonated: 'P3X Redis UI+',
         main: '您可以从左下方菜单中选择要连接的Redis进行连接访问',
