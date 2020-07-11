@@ -8,6 +8,13 @@ p3xr.ng.component('p3xrMainKeyString', {
     controller: function (p3xrSocket, p3xrCommon, $rootScope, p3xrDialogJsonView, p3xrDialogJsonEditor) {
 
 
+        this.copy = () => {
+            global.p3xr.clipboard({
+                value: this.p3xrValue
+            })
+            p3xrCommon.toast(p3xr.strings.status.dataCopied)
+        }
+
         this.editable = false;
         let originalValue
         this.edit = () => {

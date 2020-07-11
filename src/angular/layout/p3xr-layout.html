@@ -10,11 +10,14 @@
 
             <span flex></span>
 
+            <p3xr-button ng-if="$root.hasConnected()" ui-sref="overview"
+                         p3xr-label="$root.p3xr.strings.intention.overview" p3xr-md-icon="info"></p3xr-button>
+
             <p3xr-button ng-if="!$root.p3xr.state.failed" ui-sref="settings"
                          p3xr-label="$root.p3xr.strings.intention.settings" p3xr-md-icon="settings"></p3xr-button>
 
-            <p3xr-button ng-if="$root.hasConnected()" ui-sref="overview"
-                         p3xr-label="$root.p3xr.strings.intention.overview" p3xr-md-icon="info"></p3xr-button>
+            <p3xr-button ng-if="$root.p3xr.state.connection" ui-sref="console"
+                         p3xr-label="$root.p3xr.strings.intention.console" p3xr-md-icon="keyboard"></p3xr-button>
 
             <p3xr-button ng-if="$root.p3xr.state.connection" ui-sref="main.statistics"
                          p3xr-label="$root.p3xr.strings.intention.main" p3xr-md-icon="home"></p3xr-button>
@@ -22,11 +25,11 @@
     </md-toolbar>
 </div>
 
-<div id="p3xr-layout-header-version-donated" md-colors="{ color: 'background-A100' }" hide-xs
-     ng-if="$root.isElectron === false && $root.p3xr.state.donated">{{ $root.p3xr.state.version }}
+<div id="p3xr-layout-header-version-donated" md-colors="{ color: 'background-A100' }"
+     ng-if="$root.isElectron === false && $root.p3xr.state.donated && $root.$mdMedia('(min-width: 699px)')">{{ $root.p3xr.state.version }}
 </div>
-<div id="p3xr-layout-header-version-free" md-colors="{ color: 'background-A100' }" hide-xs
-     ng-if="$root.isElectron === false && !$root.p3xr.state.donated">{{ $root.p3xr.state.version }}
+<div id="p3xr-layout-header-version-free" md-colors="{ color: 'background-A100' }"
+     ng-if="$root.isElectron === false && !$root.p3xr.state.donated && $root.$mdMedia('(min-width: 699px)')">{{ $root.p3xr.state.version }}
 </div>
 
 

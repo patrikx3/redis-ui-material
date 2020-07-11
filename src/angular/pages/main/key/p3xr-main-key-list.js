@@ -7,6 +7,13 @@ p3xr.ng.component('p3xrMainKeyList', {
     },
     controller: function ($mdColors, p3xrCommon, p3xrSocket, $rootScope, p3xrDialogJsonView, p3xrDialogKeyNewOrSet) {
 
+        this.copy = (opts) => {
+            global.p3xr.clipboard({
+                value: opts.value
+            })
+            p3xrCommon.toast(p3xr.strings.status.dataCopied)
+        }
+
         this.appendValue = async (options) => {
 
             try {

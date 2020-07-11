@@ -64,6 +64,7 @@ require('./core/api')
 require('./core/state')
 require('./core/dom')
 require('./core/sort')
+require('./core/clipboard')
 
 require('./jquery/overlay')
 

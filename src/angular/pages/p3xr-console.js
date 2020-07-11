@@ -28,13 +28,14 @@ p3xr.ng.component('p3xrConsole', {
 
         const debounce = require('lodash/debounce')
 
-        const resize = debounce(() => {
+
+        const rawResize = () => {
             let minus = 0
             let $components
             //if ($rootScope.isElectron) {
             //    $components = [$footer, $consoleHeader]
             //} else {
-                $components = [$header, $footer, $consoleHeader]
+            $components = [$header, $footer, $consoleHeader]
             //}
             for (let item of $components) {
                 minus += item.outerHeight()
@@ -48,8 +49,19 @@ p3xr.ng.component('p3xrConsole', {
             $container.height(outputHeight)
             $container.css('max-height', `${outputHeight}px`)
 
-        }, p3xr.settings.debounce)
+        }
 
+        const resize = debounce(rawResize, p3xr.settings.debounce)
+
+        let check = 0
+        this.$doCheck = () => {
+            if (check < 10) {
+                check++
+//                console.log('resize for tree')
+                rawResize()
+//                $rootScope.$broadcast('p3x-resize')
+            }
+        }
 
         const onPubSubMessage = (data) => {
             //console.warn('pub-sub', data)

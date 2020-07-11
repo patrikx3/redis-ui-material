@@ -64,6 +64,7 @@ const strings = {
         zn: 'Chinese / 中文'
     },
     intention: {
+        copy: 'Copy',
         saveWithFormatJson: 'Save with format',
         formatJson: 'Format Json',
         pubsubMonitor: 'PubSub Monitor',
@@ -175,6 +176,7 @@ const strings = {
 
     },
     status: {
+        dataCopied: 'The data is in the clipboard',
         licenseSaved: 'License saved',
         nodeRemoved: 'Node removed',
         keyIsNotExisting: 'This key could have been deleted or expired.',

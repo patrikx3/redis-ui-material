@@ -1,8 +1,8 @@
 <md-button class="{{ $ctrl.p3xrClasses }}">
     <md-icon ng-if="$ctrl.p3xrMdIcon !== undefined">{{ $ctrl.p3xrMdIcon }}</md-icon>
     <i ng-if="$ctrl.p3xrFaIcon !== undefined" class="{{ $ctrl.p3xrFaIcon }}"></i>
-    <span hide-xs>{{ $ctrl.p3xrLabel }}</span>
-    <md-tooltip ng-if="$root.$mdMedia('xs')" md-direction="{{ $ctrl.p3xrTooltipDirection || 'bottom' }}">{{
+    <span ng-if="$root.$mdMedia('(min-width: 699px)')">{{ $ctrl.p3xrLabel }}</span>
+    <md-tooltip ng-if="$root.$mdMedia('(max-width: 699px)')" md-direction="{{ $ctrl.p3xrTooltipDirection || 'bottom' }}">{{
         $ctrl.p3xrLabel }}
     </md-tooltip>
 </md-button>

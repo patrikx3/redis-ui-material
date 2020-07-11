@@ -64,6 +64,7 @@ const strings = {
         zn: '中文 / Chinese'
     },
     intention: {
+        copy: '复制',
         saveWithFormatJson: '保存格式',
         formatJson: '格式化Json',
         pubsubMonitor: 'PubSub监视器',
@@ -173,6 +174,7 @@ const strings = {
 
     },
     status: {
+        dataCopied: '数据在剪贴板中',
         licenseSaved: '许可证已保存',
         nodeRemoved: '节点已删除',
         keyIsNotExisting: '此键可能已被删除或过期。',
