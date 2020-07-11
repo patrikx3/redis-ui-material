@@ -1,4 +1,5 @@
 require('typeface-roboto');
+require('typeface-roboto-mono')
 require('./scss/index.scss')
 
 // fontawesome
