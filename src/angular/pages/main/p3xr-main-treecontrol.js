@@ -6,20 +6,32 @@ p3xr.ng.component('p3xrMainTree', {
     },
     controller: function (p3xrCommon, p3xrRedisParser, p3xrSocket, $rootScope, $timeout, $state, $scope, $mdDialog, p3xrDialogKeyNewOrSet, p3xrTheme, $stateParams) {
 
+        /*
         this.$onInit = () => {
-//            this.p3xrResize()
-//            $rootScope.$broadcast('p3x-resize')
+            this.p3xrResize()
+            $rootScope.$broadcast('p3x-resize')
         }
-
+         */
 
         let check = 0
         this.$doCheck = () => {
             if (check < 10) {
                 check++
-                console.log('resize for tree')
-                $rootScope.$broadcast('p3x-resize')
+//                console.log('resize for tree')
+                this.p3xrMainRef.resizeRaw()
+//                $rootScope.$broadcast('p3x-resize')
             }
         }
+
+        /*
+        this.$onChanges = (changesObj) => {
+            $rootScope.$broadcast('p3x-resize')
+        }
+
+        this.$postLink = () => {
+            $rootScope.$broadcast('p3x-resize')
+        }
+         */
 
         this.displayNode = (node, $inview) => {
             node.$inview = $inview
