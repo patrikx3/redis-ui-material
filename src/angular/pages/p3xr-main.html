@@ -7,11 +7,9 @@
         </h2>
         <span ng-if="$root.p3xr.state.connection !== undefined">
 
-            <md-button class="md-icon-button md-primary" aria-label="{{ $root.p3xr.strings.intention.save }}"
-                       ng-click="$ctrl.save()" ng-if="$root.p3xr.state.connection.awsElastiCache !== true">
-                <md-icon>save</md-icon>
-                <md-tooltip md-direction="bottom">{{ $root.p3xr.strings.intention.save }}</md-tooltip>
-            </md-button>
+            <p3xr-button class="p3xr-main-toolbar-button" ng-if="$root.p3xr.state.connection.awsElastiCache !== true" ng-click="$ctrl.save()"
+                         p3xr-label="$root.p3xr.strings.intention.save" p3xr-md-icon="save"></p3xr-button>
+
 
 
             <md-input-container
@@ -33,17 +31,12 @@
             </md-input-container>
 
 
-            <md-button class="md-icon-button md-primary" aria-label="{{ $root.p3xr.strings.intention.statistics }}"
-                       ng-click="$ctrl.statistics()">
-                <md-icon>show_chart</md-icon>
-                <md-tooltip md-direction="bottom">{{ $root.p3xr.strings.intention.statistics }}</md-tooltip>
-            </md-button>
+              <p3xr-button class="p3xr-main-toolbar-button"  ng-click="$ctrl.statistics()"
+                           p3xr-label="$root.p3xr.strings.intention.statistics" p3xr-md-icon="show_chart"></p3xr-button>
 
-            <md-button class="md-icon-button md-primary" aria-label="{{ $root.p3xr.strings.intention.refresh }}"
-                       ng-click="$ctrl.refresh()">
-                <md-icon>refresh</md-icon>
-                <md-tooltip md-direction="bottom">{{ $root.p3xr.strings.intention.refresh }}</md-tooltip>
-            </md-button>
+
+              <p3xr-button class="p3xr-main-toolbar-button"  ng-click="$ctrl.refresh()"
+                           p3xr-label="$root.p3xr.strings.intention.refresh" p3xr-md-icon="refresh"></p3xr-button>
 
         </span>
     </div>
