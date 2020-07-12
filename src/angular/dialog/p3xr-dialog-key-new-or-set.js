@@ -154,7 +154,7 @@ p3xr.ng.factory('p3xrDialogKeyNewOrSet', function (p3xrCommon, $mdDialog, p3xrSo
                         clickOutsideToClose: false,
                         fullscreen: true, // Only for -xs, -sm breakpoints.
                         multiple: true,
-                        escapeToClose: false,
+                        //escapeToClose: false,
                     })
                     // console.warn(result)
                 } catch (error) {

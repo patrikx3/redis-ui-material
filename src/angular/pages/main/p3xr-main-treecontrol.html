@@ -5,7 +5,7 @@
 
 
     <span in-view="$ctrl.displayNode(node, $inview)" ng-if="!node.$inview">
-        <span style="display: inline-block; width: 90%; margin: 4px; background-color: grey; height: 2px;"></span>
+        <span style="display: inline-block; width: 90%; margin-left: 4px; background-color: rgba(64, 64, 64, 0.5); height: 2px; margin-bottom: 10px; margin-top: 10px;"></span>
     </span>
     <span ng-if="node.$inview">
         <md-tooltip md-direction="top">{{ $ctrl.extractNodeTooltip(node) }}</md-tooltip>

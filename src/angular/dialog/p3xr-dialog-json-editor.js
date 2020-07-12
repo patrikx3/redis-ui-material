@@ -48,7 +48,9 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
                                     //enableSort: false,
                                     //enableTransform: false,
                                     ace: ace,
-                                    theme: p3xrTheme.isDark() ? 'ace/theme/twilight' : 'ace/theme/github'
+                                    theme: p3xrTheme.isDark() ? 'ace/theme/twilight' : 'ace/theme/github',
+                                    indentation: p3xr.settings.jsonFormat,
+
                                 }
                                 if (JSON.stringify(obj).length > 10240) {
                                     p3xrCommon.toast({
@@ -60,6 +62,25 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
                             })
                         }
 
+                        const close = (event) => {
+                            const keycode = event.which || event.keyCode;
+                            // If this is the escape key
+                            //console.log('close')
+                            if ( keycode === 27 ) {
+                                event.preventDefault();
+                                event.stopPropagation();
+                               // $mdDialog.cancel();
+                                const pico = $('.pico-close')
+                                if (pico.length > 0) {
+                                    pico.click()
+                                } else {
+                                    $mdDialog.cancel();
+                                }
+                            }
+
+                        }
+                        document.documentElement.addEventListener('keydown', close, true)
+
                         $scope.$on('$destroy', () => {
                             if (editor) {
                                 editor.destroy()
@@ -67,6 +88,7 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
                             $rootScope.$broadcast('p3xr-main-resizer', {
                                 drag: true
                             })
+                            document.documentElement.removeEventListener('keydown', close, true)
                         })
 
 
