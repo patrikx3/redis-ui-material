@@ -7,28 +7,31 @@
         </h2>
         <span ng-if="$root.p3xr.state.connection !== undefined">
 
+
+            <button class="md-button" style="cursor: inherit !important; margin: 0; padding: 0;" ng-if="$root.p3xr.state.connection.awsElastiCache !== true && $root.p3xr.state.connection.azure !== true && $root.p3xr.state.connection.cluster !== true">
+                <span ng-if="!$root.$mdMedia('xs')" style="position: relative; top: 1px;">{{ $root.p3xr.strings.form.main.label.database.toUpperCase() }}:</span>
+                <md-input-container>
+                    <md-tooltip ng-if="$root.$mdMedia('xs')" md-direction="bottom">{{ $root.p3xr.strings.form.main.label.database }}</md-tooltip>
+
+                    <md-select ng-model="$ctrl.currentDatabase"
+                               aria-label="{{ $root.p3xr.strings.form.main.label.database }}" class="md-accent p3xr-main-db-select">
+                        <md-option ng-repeat="dbIndex in $root.p3xr.state.databaseIndexes" ng-value="dbIndex"
+                                   ng-click="$ctrl.selectDatabase(dbIndex)">
+                            <span ng-if="$root.p3xr.state.info.keyspaceDatabases[dbIndex]">
+                                <md-icon>radio_button_checked</md-icon>
+                            </span>
+                            <span ng-if="!$root.p3xr.state.info.keyspaceDatabases[dbIndex]">
+                                <md-icon>radio_button_unchecked</md-icon>
+                            </span>
+                            {{ dbIndex }}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </button>
+
+
             <p3xr-button class="p3xr-main-toolbar-button" ng-if="$root.p3xr.state.connection.awsElastiCache !== true" ng-click="$ctrl.save()"
                          p3xr-label="$root.p3xr.strings.intention.save" p3xr-md-icon="save"></p3xr-button>
-
-
-
-            <md-input-container
-                ng-if="$root.p3xr.state.connection.awsElastiCache !== true && $root.p3xr.state.connection.azure !== true && $root.p3xr.state.connection.cluster !== true">
-                <md-tooltip md-direction="bottom">{{ $root.p3xr.strings.form.main.label.database }}</md-tooltip>
-                <md-select ng-model="$ctrl.currentDatabase"
-                           aria-label="{{ $root.p3xr.strings.form.main.label.database }}" class="md-accent">
-                    <md-option ng-repeat="dbIndex in $root.p3xr.state.databaseIndexes" ng-value="dbIndex"
-                               ng-click="$ctrl.selectDatabase(dbIndex)">
-                        <span ng-if="$root.p3xr.state.info.keyspaceDatabases[dbIndex]">
-                            <md-icon>radio_button_checked</md-icon>
-                        </span>
-                        <span ng-if="!$root.p3xr.state.info.keyspaceDatabases[dbIndex]">
-                            <md-icon>radio_button_unchecked</md-icon>
-                        </span>
-                        {{ dbIndex }}
-                    </md-option>
-                </md-select>
-            </md-input-container>
 
 
               <p3xr-button class="p3xr-main-toolbar-button"  ng-click="$ctrl.statistics()"

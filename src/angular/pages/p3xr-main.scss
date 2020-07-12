@@ -24,6 +24,11 @@ p3xr-main {
 
     }
 
+    .p3xr-main-db-select {
+        .md-select-value {
+            border-bottom: none !important;
+        }
+    }
 }
 
 #p3xr-main-content-sizer {
