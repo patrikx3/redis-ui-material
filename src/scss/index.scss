@@ -17,6 +17,36 @@ md-dialog md-dialog-actions button {
     $json-status-bg-color: black;
     $json-status-color: white;
 
+    .pico-content {
+        background-color: grey !important;
+        color: white !important;
+    }
+
+    .pico-modal-header {
+        background-color: black !important;
+    }
+    .jsoneditor-modal a {
+        color: black !important;
+    }
+
+    .jsoneditor-modal .jsoneditor-jmespath-label {
+        color: black !important;
+    }
+
+    .jsoneditor-modal .jsoneditor-button-group.jsoneditor-button-group-value-asc input.jsoneditor-button-asc, .jsoneditor-modal .jsoneditor-button-group.jsoneditor-button-group-value-desc input.jsoneditor-button-des {
+        color: white !important;
+        background-color: black !important;
+    }
+
+    .jsoneditor-modal table th, .jsoneditor-modal table td {
+        color: white !important;
+    }
+
+    .pico-content textarea, .pico-content select, .pico-content input {
+        color: white !important;
+        background-color: rgba(0, 0, 0, 0.5) !important;
+    }
+
     /*
     $json-menu-bg: #4b4b4b;
     $json-color: white;
