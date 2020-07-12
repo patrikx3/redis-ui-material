@@ -15,6 +15,9 @@ p3xr.ng.component('p3xrLayout', {
             githubChangelog: () => {
                 window.open(`https://github.com/patrikx3/redis-ui/blob/master/changelog.md#change-log`, `github-patrikx3-${p3xr.pkg.corifeus.reponame}-changelog`)
             },
+            donate: () => {
+                window.open(`https://www.paypal.me/patrikx3`, `p3x-redis-ui-donate`)
+            },
 
         }
 

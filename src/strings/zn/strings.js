@@ -5,6 +5,7 @@ const strings = {
         server_error: '服务器错误，请重试',
     },
     title: {
+        donate: '捐赠',
         jsonRecursive: '展开所有叶子',
         name: 'P3X Redis UI',
         nameDonated: 'P3X Redis UI+',
