@@ -23,7 +23,7 @@
     </md-toolbar>
 
     <md-dialog-content flex>
-        <md-content layout-padding style="font-family: monospace;">
+        <md-content layout-padding class="p3xr-roboto-monospace">
             <json-tree object="obj" root-name="$root.p3xr.strings.label.tree" ng-if="isJson && howExpanded === true" start-expanded="howExpanded"></json-tree>
             <json-tree object="obj" root-name="$root.p3xr.strings.label.tree" ng-if="isJson && howExpanded === 'recursive'" start-expanded="howExpanded"></json-tree>
             <div ng-if="!isJson">
