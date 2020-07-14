@@ -28,8 +28,8 @@ p3xr.theme.light = function ($mdThemingProvider, p3xrThemeNameGenerator) {
 
     $mdThemingProvider.theme(`p3xrThemeLightCommon`)
         .primaryPalette('green')
-        .accentPalette('orange')
-        .warnPalette('yellow')
+        .accentPalette('grey')
+        .warnPalette('blue-grey')
         .backgroundPalette('blue-grey')
     ;
 

@@ -32,11 +32,14 @@ p3xr.theme.dark = function ($mdThemingProvider) {
     $mdThemingProvider.theme(`p3xrThemeDark`).dark()
 
     $mdThemingProvider.theme(`p3xrThemeDarkCommon`)
-        .primaryPalette('light-green')
-        .accentPalette('deep-orange')
-        .warnPalette('lime')
+        .primaryPalette('green')
+        .accentPalette('grey')
+        .warnPalette('indigo', {
+            default: '200',
+        })
         .backgroundPalette('grey')
     ;
     $mdThemingProvider.theme(`p3xrThemeDarkCommon`).dark()
 
 }
+

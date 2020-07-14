@@ -41,8 +41,8 @@ p3xr.theme.darkoBluo = function ($mdThemingProvider) {
 
     $mdThemingProvider.theme(`p3xrThemeDarkoBluoCommon`)
         .primaryPalette('green')
-        .accentPalette('orange')
-        .warnPalette('yellow')
+        .accentPalette('grey')
+        .warnPalette('light-blue')
         .backgroundPalette('indigo', {
             default: '700'
         })

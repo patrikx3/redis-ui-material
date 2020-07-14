@@ -30,8 +30,8 @@ p3xr.theme.enterprise = function ($mdThemingProvider, p3xrThemeNameGenerator) {
 
     $mdThemingProvider.theme(`p3xrThemeEnterpriseCommon`)
         .primaryPalette('green')
-        .accentPalette('orange')
-        .warnPalette('yellow')
+        .accentPalette('grey')
+        .warnPalette('light-blue')
 //        .backgroundPalette('grey')
     ;
 

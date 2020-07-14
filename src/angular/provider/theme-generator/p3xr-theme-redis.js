@@ -34,8 +34,8 @@ p3xr.theme.redis = function ($mdThemingProvider, p3xrThemeNameGenerator) {
 
     $mdThemingProvider.theme(`p3xrThemeRedisCommon`)
         .primaryPalette('green')
-        .accentPalette('orange')
-        .warnPalette('yellow')
+        .accentPalette('grey')
+        .warnPalette('red')
         .backgroundPalette('grey')
     ;
 

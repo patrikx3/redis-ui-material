@@ -29,8 +29,8 @@ p3xr.theme.darkNeu = function ($mdThemingProvider, p3xrThemeNameGenerator) {
 
     $mdThemingProvider.theme(`p3xrThemeDarkNeuCommon`)
         .primaryPalette('green')
-        .accentPalette('orange')
-        .warnPalette('yellow')
+        .accentPalette('grey')
+        .warnPalette('blue')
         .backgroundPalette('blue-grey', {
             default: '900'
     })
