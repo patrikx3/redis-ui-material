@@ -9,15 +9,15 @@ p3xr.theme.redis = function ($mdThemingProvider, p3xrThemeNameGenerator) {
             'hue-2': '700',
             'hue-3': '900',
         })
-        .accentPalette('grey', {
+        .accentPalette('red', {
             default: '200'
         })
         .warnPalette('red')
         .backgroundPalette('red', {
-            'default': '100',
-            'hue-1': '300',
-            'hue-2': '700',
-            'hue-3': '900',
+            'default': '900',
+            'hue-1': '200',
+            'hue-2': '200',
+            'hue-3': '200',
         })
     ;
 

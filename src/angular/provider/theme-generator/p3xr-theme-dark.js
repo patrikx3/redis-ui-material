@@ -12,7 +12,7 @@ p3xr.theme.dark = function ($mdThemingProvider) {
         .accentPalette('grey')
         .warnPalette('grey')
         .backgroundPalette('grey', {
-            'default': 'A700',
+            'default': '900',
             'hue-1': '800',
             'hue-2': '700',
             'hue-3': '900',
@@ -22,8 +22,10 @@ p3xr.theme.dark = function ($mdThemingProvider) {
 
 
     $mdThemingProvider.theme(`p3xrThemeDark`)
-        .primaryPalette('blue-grey')
-        .accentPalette('teal')
+        .primaryPalette('indigo', {
+            default: '300'
+        })
+        .accentPalette('blue')
         .warnPalette('orange')
         .backgroundPalette('grey')
     ;

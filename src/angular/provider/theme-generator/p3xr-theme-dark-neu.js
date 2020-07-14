@@ -32,7 +32,7 @@ p3xr.theme.darkNeu = function ($mdThemingProvider, p3xrThemeNameGenerator) {
         .accentPalette('orange')
         .warnPalette('yellow')
         .backgroundPalette('blue-grey', {
-            default: '700'
+            default: '900'
     })
     ;
     $mdThemingProvider.theme(`p3xrThemeDarkNeuCommon`).dark()
