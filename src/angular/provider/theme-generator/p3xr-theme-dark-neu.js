@@ -9,8 +9,10 @@ p3xr.theme.darkNeu = function ($mdThemingProvider, p3xrThemeNameGenerator) {
             'hue-2': '700',
             'hue-3': '900',
         })
-        .accentPalette('blue-grey')
-        .warnPalette('blue-grey')
+        .accentPalette('blue-grey', {
+            'default': '300',
+        })
+        .warnPalette('grey')
         .backgroundPalette('grey', {
             default: '900',
         })
@@ -18,11 +20,9 @@ p3xr.theme.darkNeu = function ($mdThemingProvider, p3xrThemeNameGenerator) {
     $mdThemingProvider.theme('p3xrThemeDarkNeuLayout').dark();
 
     $mdThemingProvider.theme(`p3xrThemeDarkNeu`)
-        .primaryPalette('grey')
-        .accentPalette('orange', {
-            default: '400'
-        })
-        .warnPalette('red')
+        .primaryPalette('cyan')
+        .accentPalette('blue')
+        .warnPalette('yellow')
 //        .backgroundPalette('blue-grey')
     ;
     $mdThemingProvider.theme(`p3xrThemeDarkNeu`).dark()
