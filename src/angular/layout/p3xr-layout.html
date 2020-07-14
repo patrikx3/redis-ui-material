@@ -103,7 +103,7 @@
                 </md-button>
 
                 <md-menu-content>
-                    <md-menu-item ng-repeat="(key, value) in $root.p3xr.theme"
+                    <md-menu-item ng-repeat="key in $ctrl.getThemeKey($root.p3xr.theme)"
                                   ng-class="{'p3xr-md-menu-item-selected': $ctrl.themeSelectedKey === key}">
                         <md-button ng-click="$ctrl.setTheme(key)">
                             {{ $root.p3xr.strings.label.theme[key] }}

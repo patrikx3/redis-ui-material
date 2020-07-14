@@ -1,6 +1,18 @@
 p3xr.ng.component('p3xrLayout', {
     template: require('./p3xr-layout.html'),
     controller: function (p3xrTheme, $rootScope, p3xrSocket, p3xrCommon, $state, $cookies, $timeout, $http) {
+
+        let themesCache
+        this.getThemeKey = (themes) => {
+            if (themesCache === undefined) {
+                const themesKeys = Object.keys(themes)
+                themesCache = themesKeys.sort((a, b) => {
+                    return themes[a].order - themes[b].order;
+                })
+            }
+            return themesCache
+        }
+
         this.setTheme = (theme) => {
             p3xrTheme.setTheme(p3xrTheme.generateThemeName(theme))
         }

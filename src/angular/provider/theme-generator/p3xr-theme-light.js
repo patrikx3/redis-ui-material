@@ -1,5 +1,7 @@
 p3xr.theme.light = function ($mdThemingProvider, p3xrThemeNameGenerator) {
 
+    p3xr.theme.light.order = 0;
+
     $mdThemingProvider.theme('p3xrThemeLightLayout')
         .primaryPalette('blue-grey', {
             'default': '800',
@@ -30,5 +32,7 @@ p3xr.theme.light = function ($mdThemingProvider, p3xrThemeNameGenerator) {
         .warnPalette('yellow')
         .backgroundPalette('blue-grey')
     ;
+
+    return this
 
 }

@@ -1,5 +1,7 @@
 p3xr.theme.darkoBluo = function ($mdThemingProvider) {
 
+    p3xr.theme.darkoBluo.order = 5
+
     $mdThemingProvider.theme(`p3xrThemeDarkoBluoLayout`)
         .primaryPalette('indigo', {
             'default': '900',
@@ -46,4 +48,5 @@ p3xr.theme.darkoBluo = function ($mdThemingProvider) {
         })
     ;
     $mdThemingProvider.theme(`p3xrThemeDarkoBluoCommon`).dark()
+
 }

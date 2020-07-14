@@ -1,5 +1,7 @@
 p3xr.theme.redis = function ($mdThemingProvider, p3xrThemeNameGenerator) {
 
+    p3xr.theme.redis.order = 4
+
     $mdThemingProvider.theme('p3xrThemeRedisLayout')
         .primaryPalette('red', {
             'default': '800',

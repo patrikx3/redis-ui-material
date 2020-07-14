@@ -165,7 +165,8 @@ const strings = {
         },
         theme: {
             light: 'Light',
-            dark: 'Dark',
+            dark: 'Dark enterprise',
+            darkNeu: 'Dark',
             darkoBluo: 'Darko bluo',
             enterprise: 'Enterprise',
             redis: 'Redis',

@@ -1,5 +1,7 @@
 p3xr.theme.dark = function ($mdThemingProvider) {
 
+    p3xr.theme.dark.order = 3
+
     $mdThemingProvider.theme(`p3xrThemeDarkLayout`)
         .primaryPalette('grey', {
             'default': '800',
@@ -34,4 +36,5 @@ p3xr.theme.dark = function ($mdThemingProvider) {
         .backgroundPalette('grey')
     ;
     $mdThemingProvider.theme(`p3xrThemeDarkCommon`).dark()
+
 }

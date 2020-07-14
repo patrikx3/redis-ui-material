@@ -163,7 +163,8 @@ const strings = {
         },
         theme: {
             light: '浅棕',
-            dark: '暗色',
+            dark: '黑暗企业',
+            darkNeu: '暗色',
             darkoBluo: '蓝色',
             enterprise: '企业风',
             redis: 'Redis风格',

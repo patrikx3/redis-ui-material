@@ -1,5 +1,7 @@
 p3xr.theme.enterprise = function ($mdThemingProvider, p3xrThemeNameGenerator) {
 
+    p3xr.theme.enterprise.order = 2
+
     $mdThemingProvider.theme('p3xrThemeEnterpriseLayout')
         .primaryPalette('grey', {
             'default': '800',
