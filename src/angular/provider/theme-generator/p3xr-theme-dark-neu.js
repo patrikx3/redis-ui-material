@@ -16,16 +16,16 @@ p3xr.theme.darkNeu = function ($mdThemingProvider, p3xrThemeNameGenerator) {
         .backgroundPalette('grey', {
             default: '900',
         })
+        .dark()
     ;
-    $mdThemingProvider.theme('p3xrThemeDarkNeuLayout').dark();
 
     $mdThemingProvider.theme(`p3xrThemeDarkNeu`)
         .primaryPalette('cyan')
         .accentPalette('blue')
         .warnPalette('yellow')
 //        .backgroundPalette('blue-grey')
+        .dark()
     ;
-    $mdThemingProvider.theme(`p3xrThemeDarkNeu`).dark()
 
     $mdThemingProvider.theme(`p3xrThemeDarkNeuCommon`)
         .primaryPalette('green')
@@ -33,9 +33,8 @@ p3xr.theme.darkNeu = function ($mdThemingProvider, p3xrThemeNameGenerator) {
         .warnPalette('blue')
         .backgroundPalette('blue-grey', {
             default: '900'
-    })
+        })
+        .dark()
     ;
-    $mdThemingProvider.theme(`p3xrThemeDarkNeuCommon`).dark()
-
 
 }

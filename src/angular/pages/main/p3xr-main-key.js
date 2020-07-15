@@ -200,7 +200,7 @@ p3xr.ng.component('p3xrMainKey', {
 
                 const confirmResponse = await $mdDialog.show(confirm)
 
-                if (confirmResponse === undefined || confirmResponse.trim() === '') {
+                if (confirmResponse === undefined || String(confirmResponse).trim() === '') {
 
                     const response = await p3xrSocket.request({
                         action: 'persist',
@@ -220,7 +220,7 @@ p3xr.ng.component('p3xrMainKey', {
                         message: p3xr.strings.status.persisted
                     })
 
-                } else if (!confirmResponse.match(/^-{0,1}\d+$/)) {
+                } else if (!String(confirmResponse).match(/^-{0,1}\d+$/)) {
 
                     p3xrCommon.toast({
                         message: p3xr.strings.status.notInteger
