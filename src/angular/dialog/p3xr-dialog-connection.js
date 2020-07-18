@@ -97,7 +97,7 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                                 })
 
                             } catch (e) {
-                                if (error === undefined) {
+                                if (e === undefined) {
                                     /*
                                     p3xrCommon.toast({
                                         message: p3xr.strings.status.cancelled

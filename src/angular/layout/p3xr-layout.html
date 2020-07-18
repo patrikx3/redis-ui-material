@@ -31,10 +31,10 @@
     </md-toolbar>
 </div>
 
-<div id="p3xr-layout-header-version-donated" md-colors="{ color: 'background-A100' }"
+<div id="p3xr-layout-header-version-donated" md-colors="{ color: $ctrl.getVersionColor() }"
      ng-if="$root.isElectron === false && $root.p3xr.state.donated && $root.$mdMedia('(min-width: 699px)')">{{ $root.p3xr.state.version }}
 </div>
-<div id="p3xr-layout-header-version-free" md-colors="{ color: 'background-A100' }"
+<div id="p3xr-layout-header-version-free" md-colors="{ color: $ctrl.getVersionColor() }"
      ng-if="$root.isElectron === false && !$root.p3xr.state.donated && $root.$mdMedia('(min-width: 699px)')">{{ $root.p3xr.state.version }}
 </div>
 

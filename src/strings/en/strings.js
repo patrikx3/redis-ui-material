@@ -51,6 +51,9 @@ const strings = {
             title: 'Are you to change this keys\'s TTL?',
             textContent: 'If you click the change TTL button, it will rename this key\'s time to live, empty will persist this key keep forever.',
             placeholder: 'The Redis key\'s TTL (integer or empty)',
+            placeholderPlaceholder: 'Empty means it persists forever, otherwise the used integer.',
+            convertTextToTime: 'Convert text to time',
+            convertTextToTimePlaceholder: 'Eg. 1d will be 86400',
         },
         license: {
             title: 'Enable donated license?',
@@ -170,6 +173,7 @@ const strings = {
             darkoBluo: 'Darko bluo',
             enterprise: 'Enterprise',
             redis: 'Redis',
+            matrix: 'Matrix',
         },
         connected: (opts) => {
             return `Connected: ${opts.name}`

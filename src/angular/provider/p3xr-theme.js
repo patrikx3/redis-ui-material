@@ -26,6 +26,7 @@ p3xr.ng.provider('p3xrTheme', function p3xrThemeProvider($mdThemingProvider,) {
             'p3xrThemeDarkNeu',
             'p3xrThemeDark',
             'p3xrThemeDarkoBluo',
+            'p3xrThemeMatrix',
         ],
         light: [
             'p3xrThemeLight',

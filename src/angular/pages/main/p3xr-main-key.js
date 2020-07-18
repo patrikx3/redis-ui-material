@@ -6,7 +6,7 @@ p3xr.ng.component('p3xrMainKey', {
     bindings: {
         p3xrResize: '&',
     },
-    controller: function (p3xrCommon, p3xrRedisParser, p3xrSocket, $rootScope, $stateParams, $timeout, $scope, $mdDialog, $state, $interval) {
+    controller: function (p3xrCommon, p3xrRedisParser, p3xrSocket, $rootScope, $stateParams, $timeout, $scope, $mdDialog, $state, $interval, p3xrDialogTtl) {
 
         this.$stateParams = $stateParams;
 
@@ -188,6 +188,7 @@ p3xr.ng.component('p3xrMainKey', {
         this.setTtl = async (options) => {
             try {
 
+                /*
                 const confirm = $mdDialog.prompt()
                     .title(p3xr.strings.confirm.ttl.title)
                     .textContent(p3xr.strings.confirm.ttl.textContent)
@@ -197,10 +198,26 @@ p3xr.ng.component('p3xrMainKey', {
                     .targetEvent(options.$event)
                     .ok(p3xr.strings.intention.ttl)
                     .cancel(p3xr.strings.intention.cancel);
+                 */
 
-                const confirmResponse = await $mdDialog.show(confirm)
+//                const confirmResponse = await $mdDialog.show(confirm)
 
-                if (confirmResponse === undefined || String(confirmResponse).trim() === '') {
+                const confirmResponse = await p3xrDialogTtl.show({
+                    model: {
+                        ttl: this.response.ttl === -1 ? '' : this.response.ttl
+                    }
+                })
+
+
+//                console.error('confirmResponse', confirmResponse)
+
+//                console.error('String(confirmResponse.model.ttl).trim()', String(confirmResponse.model.ttl).trim())
+
+                if (confirmResponse === undefined) {
+                    return
+                }
+
+                if (confirmResponse.model.ttl == null || String(confirmResponse.model.ttl).trim() === '') {
 
                     const response = await p3xrSocket.request({
                         action: 'persist',
@@ -220,7 +237,7 @@ p3xr.ng.component('p3xrMainKey', {
                         message: p3xr.strings.status.persisted
                     })
 
-                } else if (!String(confirmResponse).match(/^-{0,1}\d+$/)) {
+                } else if (!String(confirmResponse.model.ttl).match(/^-{0,1}\d+$/)) {
 
                     p3xrCommon.toast({
                         message: p3xr.strings.status.notInteger
@@ -232,9 +249,18 @@ p3xr.ng.component('p3xrMainKey', {
                         action: 'expire',
                         payload: {
                             key: $stateParams.key,
-                            ttl: parseInt(confirmResponse),
+                            ttl: parseInt(confirmResponse.model.ttl),
                         }
                     })
+
+
+                    window['gtag']('config', p3xr.settings.googleAnalytics,
+                        {
+                            'page_path': '/expire'
+                        }
+                    );
+
+
                     await this.refresh()
                     p3xrCommon.toast({
                         message: p3xr.strings.status.ttlChanged

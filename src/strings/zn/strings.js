@@ -52,7 +52,9 @@ const strings = {
             title: '您要改变该键的TTL吗？',
             textContent: '如果您点击更改TTL按钮, 会改变该键的生存时间,设置为空则有效期永久',
             placeholder: 'Redis键的TTL（整数或空）',
-
+            placeholderPlaceholder: '空意味着它将永久存在，否则将使用所使用的整数。',
+            convertTextToTime: '将文字转换为时间',
+            convertTextToTimePlaceholder: '例如。 1d将是86400',
         },
         license: {
             title: '启用捐赠的许可证？',
@@ -168,6 +170,7 @@ const strings = {
             darkoBluo: '蓝色',
             enterprise: '企业风',
             redis: 'Redis风格',
+            matrix: '矩阵',
         },
         connected: (opts) => {
             return `已连接: ${opts.name}`

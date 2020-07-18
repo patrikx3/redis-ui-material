@@ -1,0 +1,60 @@
+<md-dialog aria-label="unused" style="min-width: 320px;">
+    <form novalidate name="p3xrTtlForm" ng-submit="submit()">
+        <md-toolbar md-theme="{{ $root.p3xr.state.themeLayout }}" class="md-hue-3">
+            <div class="md-toolbar-tools">
+                <h2 flex md-truncate>{{ $root.p3xr.strings.confirm.ttl.title}}</h2>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon>close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content md-theme="{{ $root.p3xr.state.theme }}">
+            <md-content layout-padding>
+
+                <div class="md-text">
+                    {{ $root.p3xr.strings.confirm.ttl.textContent }}
+                </div>
+
+                <md-input-container class="md-block">
+                    <label>{{ $root.p3xr.strings.confirm.ttl.placeholder }}</label>
+                    <input type="number" name="ttl" ng-model="model.ttl" min="-1" placeholder="{{ $root.p3xr.strings.confirm.ttl.placeholderPlaceholder }}">
+                    <div ng-messages="p3xrTtlForm.ttl.$error">
+                    </div>
+                </md-input-container>
+
+
+                <md-input-container class="md-block p3xr-md-input-container-no-bottom">
+                    <label>{{ $root.p3xr.strings.confirm.ttl.convertTextToTime }}</label>
+                    <input name="convertTextToTime" ng-model="convertTextToTime" placeholder="{{ $root.p3xr.strings.confirm.ttl.convertTextToTimePlaceholder}}">
+                    <div ng-messages="p3xrTtlForm.convertTextToTime.$error">
+                    </div>
+                </md-input-container>
+
+                <md-button ng-click="openTimestringNpm()" class="md-accent">https://www.npmjs.com/package/timestring</md-button>
+
+
+
+            </md-content>
+        </md-dialog-content>
+
+        <!--
+                    <md-dialog-actions layout="column" layout-gt-xs="row" layout-align-gt-xs="end end" layout-align="end end" md-theme="{{ $root.p3xr.state.theme }}">
+        -->
+        <md-dialog-actions layout="row" layout-align="end end" md-theme="{{ $root.p3xr.state.theme }}">
+
+
+
+            <md-button class="md-raised md-warn" ng-click="cancel()">
+                <md-icon>cancel</md-icon>
+                {{ $root.p3xr.strings.intention.cancel }}
+            </md-button>
+
+            <md-button class="md-raised md-primary" type="submit">
+                <md-icon>timer</md-icon>
+                {{ $root.p3xr.strings.intention.ttl }}
+            </md-button>
+
+
+        </md-dialog-actions>
+    </form>
+</md-dialog>

@@ -13,6 +13,10 @@ p3xr.ng.component('p3xrLayout', {
             return themesCache
         }
 
+        this.getVersionColor = () => {
+            return p3xrTheme.getCurrentThemeName() === 'p3xrThemeMatrix' ? 'grey-900' : 'background-A100'
+        }
+
         this.setTheme = (theme) => {
             p3xrTheme.setTheme(p3xrTheme.generateThemeName(theme))
         }
