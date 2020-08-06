@@ -117,7 +117,7 @@ For more information about all licenses, please see ${webpackBanner}
     plugins.push(
         new CopyWebpackPlugin({
             patterns: [
-                { from: 'src/public', to: 'dist' }
+                { from: 'src/public', to: './' }
             ]
         })
     )
@@ -162,6 +162,7 @@ module.exports = {
                         {
                             loader: 'css-loader',
                             options: {
+                                esModule: false,
                                 sourceMap: true,
                                 // v2 throws error minimze
                                 //minimize: minimize === true
