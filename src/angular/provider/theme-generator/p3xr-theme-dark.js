@@ -5,7 +5,7 @@ p3xr.theme.dark = function ($mdThemingProvider) {
     $mdThemingProvider.theme(`p3xrThemeDarkLayout`)
         .primaryPalette('grey', {
             'default': '800',
-            'hue-1': '50',
+            'hue-1': '500',
             'hue-2': '700',
             'hue-3': '900',
         })

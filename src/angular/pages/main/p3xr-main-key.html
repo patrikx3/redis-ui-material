@@ -50,23 +50,46 @@
 
     <md-list-item ng-click="$ctrl.rename({ $event: $event})">
         <p>{{ $root.p3xr.strings.page.key.label.key }}:&nbsp;</p>
-        <span class="p3xr-typography-ellipsis" title="{{ $root.p3xr.ui.htmlEncode($ctrl.$stateParams.key) }}">{{ $ctrl.$stateParams.key }}</span>
+        <span class="p3xr-typography-ellipsis"
+              title="{{ $root.p3xr.ui.htmlEncode($ctrl.$stateParams.key) }}">{{ $ctrl.$stateParams.key }}</span>
     </md-list-item>
 
     <md-divider></md-divider>
 
-    <md-list-item ng-click="$ctrl.setTtl({ $event: $event})">
-        <p title="{{ $root.p3xr.strings.page.key.label.ttlTitle  }}"><span class="p3xr-main-key-label-key-title">{{ $root.p3xr.strings.page.key.label.ttl }}</span>:
+    <md-list-item ng-click="$ctrl.setTtl({ $event: $event})" ng-if="$ctrl.response.ttl == -1">
+        <p title="{{ $root.p3xr.strings.page.key.label.ttlTitle  }}"><span
+            class="p3xr-main-key-label-key-title">{{ $root.p3xr.strings.page.key.label.ttl }}</span>:
         </p>
         <span ng-if="$ctrl.response.ttl == -1">
             {{ $root.p3xr.strings.page.key.label.ttlNotExpire }}
         </span>
-        <span ng-if="$ctrl.response.ttl != -1">
-            <span style="opacity: 0.5" ng-click="$ctrl.setTtl({ $event: $event})">
-                ({{ $ctrl.ttlParsed }})
-            </span>
-            {{ $ctrl.response.ttl }}
-        </span>
+    </md-list-item>
+
+
+    <md-list-item class="md-2-line" ng-click="$ctrl.setTtl({ $event: $event})" ng-if="$ctrl.response.ttl != -1">
+        <div class="md-list-item-text">
+            <h3>
+                <div layout="row" flex>
+                    <div flex class="p3xr-main-key-label-key-title">
+                        <span >{{ $root.p3xr.strings.page.key.label.ttl }}</span>:
+                    </div>
+                    <div>
+                        <span ng-if="$ctrl.response.ttl == -1">
+                            {{ $root.p3xr.strings.page.key.label.ttlNotExpire }}
+                        </span>
+                        <span ng-if="$ctrl.response.ttl != -1">
+
+                        {{ $ctrl.response.ttl }}
+                    </span>
+                    </div>
+                </div>
+            </h3>
+            <p ng-click="$ctrl.setTtl({ $event: $event})" style=" text-align: right;">
+               <span style="opacity: 0.5; font-weight: normal;" ng-click="$ctrl.setTtl({ $event: $event})">
+                {{ $ctrl.ttlParsed }}
+                </span>
+            </p>
+        </div>
     </md-list-item>
 
     <md-divider></md-divider>

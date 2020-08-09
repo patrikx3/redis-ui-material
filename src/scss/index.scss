@@ -5,6 +5,11 @@
 @import '~jsoneditor/dist/jsoneditor.css';
 @import '~@fortawesome/fontawesome-free/css/all.min.css';
 
+button > md-icon {
+    position: relative;
+    top: -1px;
+}
+
 md-dialog md-dialog-actions {
     display: block !important;
 }

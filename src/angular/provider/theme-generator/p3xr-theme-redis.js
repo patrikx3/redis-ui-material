@@ -5,7 +5,7 @@ p3xr.theme.redis = function ($mdThemingProvider, p3xrThemeNameGenerator) {
     $mdThemingProvider.theme('p3xrThemeRedisLayout')
         .primaryPalette('red', {
             'default': '800',
-            'hue-1': '50',
+            'hue-1': '200',
             'hue-2': '700',
             'hue-3': '900',
         })
@@ -15,7 +15,7 @@ p3xr.theme.redis = function ($mdThemingProvider, p3xrThemeNameGenerator) {
         .warnPalette('red')
         .backgroundPalette('red', {
             'default': '900',
-            'hue-1': '200',
+            'hue-1': '600',
             'hue-2': '200',
             'hue-3': '200',
         })

@@ -5,7 +5,7 @@ p3xr.theme.light = function ($mdThemingProvider, p3xrThemeNameGenerator) {
     $mdThemingProvider.theme('p3xrThemeLightLayout')
         .primaryPalette('blue-grey', {
             'default': '800',
-            'hue-1': '50',
+            'hue-1': '200',
             'hue-2': '700',
             'hue-3': '900',
         })

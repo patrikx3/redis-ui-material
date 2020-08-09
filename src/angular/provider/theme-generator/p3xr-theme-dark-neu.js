@@ -5,7 +5,7 @@ p3xr.theme.darkNeu = function ($mdThemingProvider, p3xrThemeNameGenerator) {
     $mdThemingProvider.theme('p3xrThemeDarkNeuLayout')
         .primaryPalette('blue-grey', {
             'default': '800',
-            'hue-1': '50',
+            'hue-1': '300',
             'hue-2': '700',
             'hue-3': '900',
         })

@@ -24,7 +24,18 @@ p3xr.ng.factory('p3xrDialogTtl', function (p3xrCommon, $mdDialog) {
 
                         $scope.model = options.model
 
-                        $scope.convertTextToTime = '';
+
+                        const humanizeDuration = require("humanize-duration");
+
+                        if (typeof $scope.model.ttl === 'number' && $scope.model.ttl > 0) {
+
+                            $scope.convertTextToTime = humanizeDuration($scope.model.ttl * 1000, {
+                                delimiter: ' ',
+                            })
+                        } else {
+                            $scope.convertTextToTime = '';
+                        }
+
 
                         $scope.openTimestringNpm = () => {
                             window.open('https://www.npmjs.com/package/timestring#keywords', '_blank')

@@ -5,7 +5,7 @@ p3xr.theme.matrix = function ($mdThemingProvider) {
     $mdThemingProvider.theme(`p3xrThemeMatrixLayout`)
         .primaryPalette('light-green', {
             'default': 'A400',
-            'hue-1': '50',
+            'hue-1': 'A400',
             'hue-2': '700',
             'hue-3': '900',
         })
@@ -22,8 +22,8 @@ p3xr.theme.matrix = function ($mdThemingProvider) {
             'hue-2': '500',
             'hue-3': '100',
         })
+        .dark()
     ;
-    $mdThemingProvider.theme(`p3xrThemeMatrixLayout`).dark()
 
 
     $mdThemingProvider.theme(`p3xrThemeMatrix`)
@@ -40,8 +40,8 @@ p3xr.theme.matrix = function ($mdThemingProvider) {
             'default': 'A700',
         })
         .backgroundPalette('grey')
+        .dark()
     ;
-    $mdThemingProvider.theme(`p3xrThemeMatrix`).dark()
 
     $mdThemingProvider.theme(`p3xrThemeMatrixCommon`)
         .primaryPalette('light-green', {
@@ -60,7 +60,7 @@ p3xr.theme.matrix = function ($mdThemingProvider) {
         .backgroundPalette('grey', {
             default: '900'
         })
+        .dark()
     ;
-    $mdThemingProvider.theme(`p3xrThemeMatrixCommon`).dark()
 
 }
