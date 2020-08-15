@@ -37,6 +37,43 @@ p3xr.ng.component('p3xrMainKey', {
             if (this.response.ttl > -1) {
                 const actualTtl = () => {
                     if (checkTtl()) {
+
+                        /*
+
+                        let years, months, days, hours, mins, seconds
+                        let diff
+
+                        diff = this.response.ttl * 1000;
+                        years = Math.floor((diff) / (1000 * 60 * 60 * 24 * 365));
+                        diff = ((diff) % (1000 * 60 * 60 * 24 * 365));
+                        months = Math.floor((diff) / (1000 * 60 * 60 * 24 * 30));
+                        diff = ((diff) % (1000 * 60 * 60 * 24 * 30));
+                        days = Math.floor((diff) / (1000 * 60 * 60 * 24));
+                        diff = ((diff) % (1000 * 60 * 60 * 24));
+                        hours = Math.floor((diff) / (1000 * 60 * 60));
+                        diff = ((diff) % (1000 * 60 * 60));
+                        mins = Math.floor((diff) / (1000 * 60));
+                        diff = ((diff) / (1000 * 60));
+                        seconds = Math.round((diff - mins) * 0.6 * 100);
+
+                        let duration = '';
+                        if (years > 0) {
+                            duration += years + ' ' + (years === 1 ? $rootScope.p3xr.strings.time.year : $rootScope.p3xr.strings.time.years)
+                            duration += ', '
+                        }
+                        if (months > 0) {
+                            duration += months + ' ' + (months === 1 ? $rootScope.p3xr.strings.time.month : $rootScope.p3xr.strings.time.months)
+                            duration += ', '
+                        }
+                        if (days > 0) {
+                            duration += days + ' ' + (days === 1 ? $rootScope.p3xr.strings.time.day : $rootScope.p3xr.strings.time.days)
+                            duration += ', '
+                        }
+                        duration += `${hours < 10 ? '0' + hours : hours}:${mins < 10 ? '0' + mins : mins}:${seconds < 10 ? '0' + seconds : seconds}`;
+
+                        this.ttlParsed = ' ' + duration
+                         */
+
                         let language
                         switch(p3xr.settings.language.current) {
                             case 'zn':
