@@ -243,12 +243,21 @@ p3xr.ng.component('p3xrLayout', {
         }
 
 
-        this.setLanguage = (key) => {
-            $rootScope.p3xr.settings.language.current = key
-            if ($rootScope.isElectron) {
-                $http.post('http://localhost:7845/api/set-language', {
-                    language: key,
-                })
+        this.isElectronInitialized = false
+        this.setLanguage = async (key) => {
+            try {
+                $rootScope.p3xr.settings.language.current = key
+                if ($rootScope.isElectron) {
+                    await p3xrSocket.request({
+                        action: 'set-language',
+                        payload: {
+                            key: key,
+                        }
+                    })
+                    this.isElectronInitialized = true
+                }
+            } catch (e) {
+                p3xrCommon.generalHandleError(e)
             }
         }
 

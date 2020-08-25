@@ -74,7 +74,7 @@
                          p3xr-tooltip-direction="top"></p3xr-button>
 
 
-            <md-menu >
+            <md-menu ng-if="!$root.isElectron || ($root.isElectron && $ctrl.isElectronInitialized)">
                 <md-button ng-click="$mdMenu.open($event)">
                     <md-icon>language</md-icon>
                     <span hide-xs hide-sm>{{ $root.p3xr.strings.intention.language }}</span>

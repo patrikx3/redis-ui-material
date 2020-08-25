@@ -1,6 +1,6 @@
 {
     "name": "p3x-redis-ui-material",
-    "version": "2020.10.327",
+    "version": "2020.10.406",
     "description": "💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via http and socket.io",
     "corifeus": {
         "icon": "fas fa-database",
@@ -56,11 +56,11 @@
         "concurrently": "^5.3.0",
         "copy-webpack-plugin": "^6.0.3",
         "corifeus-builder": "^2020.10.105",
-        "css-loader": "^4.2.1",
+        "css-loader": "^4.2.2",
         "extract-text-webpack-plugin": "^4.0.0-beta.0",
         "file-loader": "^6.0.0",
         "grunt-injector": "^1.1.0",
-        "html-loader": "^1.1.0",
+        "html-loader": "^1.3.0",
         "html-webpack-plugin": "^4.3.0",
         "jquery": "^3.5.1",
         "js-htmlencode": "^0.3.0",
@@ -70,7 +70,7 @@
         "optimize-css-assets-webpack-plugin": "^5.0.3",
         "pretty-bytes": "^5.3.0",
         "raw-loader": "^4.0.1",
-        "sass-loader": "^9.0.3",
+        "sass-loader": "^10.0.1",
         "socket.io-client": "^2.3.0",
         "style-loader": "^1.2.1",
         "terser-webpack-plugin": "^4.1.0",
@@ -86,7 +86,7 @@
     "dependencies": {
         "angular-inview": "^3.1.0",
         "humanize-duration": "^3.23.1",
-        "jsoneditor": "^9.0.3",
+        "jsoneditor": "^9.0.4",
         "timestring": "^6.0.0",
         "typeface-roboto-mono": "0.0.75"
     }
