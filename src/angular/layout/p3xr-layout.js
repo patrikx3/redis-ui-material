@@ -1,6 +1,6 @@
 p3xr.ng.component('p3xrLayout', {
     template: require('./p3xr-layout.html'),
-    controller: function (p3xrTheme, $rootScope, p3xrSocket, p3xrCommon, $state, $cookies, $timeout, $http) {
+    controller: function (p3xrTheme, $rootScope, p3xrSocket, p3xrCommon, $state, $cookies, $timeout, $scope) {
 
         let themesCache
         this.getThemeKey = (themes) => {
@@ -255,6 +255,7 @@ p3xr.ng.component('p3xrLayout', {
                         }
                     })
                     this.isElectronInitialized = true
+                    $scope.$digest()
                 }
             } catch (e) {
                 p3xrCommon.generalHandleError(e)
