@@ -4,7 +4,7 @@ p3xr.ng.factory('p3xrSocket', function ($rootScope, p3xrCommon, $state) {
     const ioOptions = {
         rejectUnauthorized: false,
         path: '/socket.io',
-        transports: ['websocket'],
+       // transports: ['websocket'],
         secure: true,
     }
 
