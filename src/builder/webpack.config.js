@@ -88,7 +88,8 @@ For more information about all licenses, please see ${webpackBanner}
                 // todo found out if mangle use or not
                 // mangle: false === keep function names
                 // mangle: true === drop function names
-                mangle: false,
+                // for mangle true we are us angularjs-annotate with babel
+                mangle: true,
 
                 comments: false,
                 beautify: false
@@ -137,6 +138,91 @@ const fileLoader = [
         }
     }
 ]
+
+const rules = [
+    {
+        test: /\.js$/,
+        enforce: 'pre',
+        use: ['source-map-loader'],
+    },
+    {
+        test: /\.(scss|css)$/,
+//      exclude: [`${cwd}/src/assets/ngivr.scss`],
+        use: ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: [
+                {
+                    loader: 'css-loader',
+                    options: {
+                        esModule: false,
+                        sourceMap: true,
+                        // v2 throws error minimze
+                        //minimize: minimize === true
+
+                    }
+                }
+                , 'sass-loader'],
+
+        })
+    },
+    {
+        test: /\.html$/,
+        use: [{
+            loader: 'html-loader',
+            options: {
+                minimize: minimize,
+                //caseSensitive: true
+            }
+        }]
+    },
+    {
+        test: /\.(png|jpe?g|gif|ico)$/,
+        use: fileLoader
+    },
+    {
+        test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+        use: fileLoader
+    }, {
+        test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
+        use: fileLoader
+    }, {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        use: fileLoader
+    }, {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        use: fileLoader
+    }, {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        use: fileLoader
+    },
+    {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+            // fallback: "style-loader",
+            use: [
+                {
+                    loader: 'css-loader',
+                    options: {
+                        // in v2 it throws an error
+                        //minimize: minimize,
+                        sourceMap: false
+                    },
+                }]
+        })
+    }
+]
+
+if (minimize) {
+    rules.push(      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+            loader: "babel-loader"
+        }
+    })
+} else {
+}
+
 module.exports = {
 //    watch: true,
     devtool: devtool,
@@ -152,73 +238,7 @@ module.exports = {
         publicPath: ``,
     },
     module: {
-        rules: [
-            {
-                test: /\.(scss|css)$/,
-//      exclude: [`${cwd}/src/assets/ngivr.scss`],
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: [
-                        {
-                            loader: 'css-loader',
-                            options: {
-                                esModule: false,
-                                sourceMap: true,
-                                // v2 throws error minimze
-                                //minimize: minimize === true
-
-                            }
-                        }
-                        , 'sass-loader'],
-
-                })
-            },
-            {
-                test: /\.html$/,
-                use: [{
-                    loader: 'html-loader',
-                    options: {
-                        minimize: minimize,
-                        //caseSensitive: true
-                    }
-                }]
-            },
-            {
-                test: /\.(png|jpe?g|gif|ico)$/,
-                use: fileLoader
-            },
-            {
-                test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-                use: fileLoader
-            }, {
-                test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-                use: fileLoader
-            }, {
-                test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-                use: fileLoader
-            }, {
-                test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-                use: fileLoader
-            }, {
-                test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-                use: fileLoader
-            },
-            {
-                test: /\.css$/,
-                use: ExtractTextPlugin.extract({
-                    // fallback: "style-loader",
-                    use: [
-                        {
-                            loader: 'css-loader',
-                            options: {
-                                // in v2 it throws an error
-                                //minimize: minimize,
-                                sourceMap: false
-                            },
-                        }]
-                })
-            }
-        ]
+        rules: rules
     },
     optimization: {
         minimize: minimize,
