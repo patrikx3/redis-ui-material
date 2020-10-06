@@ -8,7 +8,7 @@
         <span ng-if="$root.p3xr.state.connection !== undefined">
 
 
-            <button class="md-button" style="cursor: inherit !important; margin: 0; padding: 0;" ng-if="$root.p3xr.state.connection.awsElastiCache !== true && $root.p3xr.state.connection.azure !== true && $root.p3xr.state.connection.cluster !== true">
+            <button class="md-button" style="cursor: inherit !important; margin: 0; padding: 0;" ng-if="$root.p3xr.state.connection.cluster !== true">
                 <span ng-if="!$root.$mdMedia('xs')" style="position: relative; top: 1px;">{{ $root.p3xr.strings.form.main.label.database.toUpperCase() }}:</span>
                 <md-input-container>
                     <md-tooltip ng-if="$root.$mdMedia('xs')" md-direction="bottom">{{ $root.p3xr.strings.form.main.label.database }}</md-tooltip>
