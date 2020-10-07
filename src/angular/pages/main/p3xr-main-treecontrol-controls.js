@@ -134,6 +134,12 @@ p3xr.ng.component('p3xrMainTreecontrolControls', {
             $rootScope.p3xr.state.page = 1;
 
         }
+
+        this.treeDividerChange = () => {
+            $rootScope.p3xr.state.redisChanged = true
+//            this.p3xrMainRef.refresh()
+            $rootScope.$broadcast('p3x-refresh');
+        }
     }
 })
 

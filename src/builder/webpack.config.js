@@ -4,7 +4,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const fileAsset = `[name].[hash].[ext]`;
 const minimize = process.argv.includes('--production');
 const mode = minimize ? 'production' : 'development';
@@ -24,11 +24,28 @@ const targetFolder = 'dist';
 
 const pkg = require('../../package')
 
+// https://github.com/webpack-contrib/webpack-hot-middleware/tree/master/example
+/*
+https://stackoverflow.com/questions/44317394/webpack-dev-server-with-hot-reload-reloading-entire-page-with-css-changes
+
+'webpack-dev-server/client?http://localhost:8080',
+'webpack/hot/only-dev-server',
+*/
+const webpackHotClintPath = 'webpack/hot/only-dev-server'
+
+const vendorEntry = [
+    top + "/src/vendor.js"
+]
+const mainEntry = [
+    top + "/src/main.js"
+]
+
 const plugins = [
     new HtmlWebpackPlugin({
         template: `${top}/src/index.html`,
         inject: 'head',
-        chunks: ['bundle'],
+        scriptLoading: 'defer',
+        chunks: ['vendor', 'main'],
         title: pkg.description,
         minify: minimize
     }),
@@ -37,7 +54,12 @@ const plugins = [
         disable: false,
         allChunks: true
     }),
-
+    new MiniCssExtractPlugin({
+        // Options similar to the same options in webpackOptions.output
+        // both options are optional
+        filename: !minimize ? '[name].css' : '[name].[contenthash].css',
+        chunkFilename: !minimize ? '[id].css' : '[id].[contenthash].css',
+    }),
 
 ];
 
@@ -124,6 +146,12 @@ For more information about all licenses, please see ${webpackBanner}
     )
 
 
+} else {
+    plugins.push(
+        new webpack.HotModuleReplacementPlugin()
+    )
+    mainEntry.push(webpackHotClintPath)
+
 }
 
 const fileLoader = [
@@ -148,22 +176,16 @@ const rules = [
     {
         test: /\.(scss|css)$/,
 //      exclude: [`${cwd}/src/assets/ngivr.scss`],
-        use: ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: [
-                {
-                    loader: 'css-loader',
-                    options: {
-                        esModule: false,
-                        sourceMap: true,
-                        // v2 throws error minimze
-                        //minimize: minimize === true
-
-                    }
-                }
-                , 'sass-loader'],
-
-        })
+        use: [
+            {
+                loader: MiniCssExtractPlugin.loader,
+                options: {
+                    hmr: !minimize,
+                },
+            },
+            'css-loader',
+            'sass-loader',
+        ],
     },
     {
         test: /\.html$/,
@@ -212,6 +234,13 @@ const rules = [
     }
 ]
 
+let optimization = {
+    minimize: minimize,
+    minimizer: minimizer,
+    /*
+    */
+}
+
 if (minimize) {
     rules.push(      {
         test: /\.js$/,
@@ -221,6 +250,18 @@ if (minimize) {
         }
     })
 } else {
+    optimization = Object.assign(optimization, {
+        runtimeChunk: 'single',
+        splitChunks: {
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendor-modules',
+                    chunks: 'all',
+                },
+            },
+        },
+    })
 }
 
 module.exports = {
@@ -228,7 +269,8 @@ module.exports = {
     devtool: devtool,
 
     entry: {
-        bundle: top + "/src/bundle.js",
+        vendor: vendorEntry,
+        main: mainEntry,
     },
     output: {
         path: buildDir,
@@ -240,10 +282,7 @@ module.exports = {
     module: {
         rules: rules
     },
-    optimization: {
-        minimize: minimize,
-        minimizer: minimizer
-    },
+    optimization: optimization,
     plugins: plugins,
     mode: mode,
 

@@ -1,21 +1,3 @@
-// angular
-global.angular = require('angular');
-
-require('angular-aria');
-require('angular-sanitize')
-require('angular-messages');
-require('angular-animate');
-require('angular-cookies');
-require('angular-inview')
-
-require('@uirouter/angularjs')
-require('angular-material');
-
-require('angular-tree-control')
-require('angular-tree-control/context-menu')
-
-require('angular-json-tree')
-
 p3xr.ng = angular.module('p3xr-redis-ui', [
     'ngCookies',
     'ngAnimate',
@@ -314,7 +296,7 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
     Object.defineProperty($rootScope, 'keysTree', {
         get: () => {
             //const startNow = Date.now()
-            if (JSON.stringify(keysTree) !== JSON.stringify(p3xr.state.keys) || $rootScope.p3xr.state.redisChanged === true) {
+            if ($rootScope.p3xr.state.redisChanged === true || JSON.stringify(keysTree) !== JSON.stringify(p3xr.state.keys)) {
                 $rootScope.p3xr.state.redisChanged = false
                 $rootScope.keysTreeRendered = p3xrRedisParser.keysToTreeControl({
                     keys: p3xr.state.keys,

@@ -53,6 +53,7 @@ module.exports = (grunt) => {
                             'src/**/*.scss',
                             '!src/scss/index.scss',
                             '!src/injector.scss',
+                            '!src/vendor.scss',
                         ]
                     }
                 },

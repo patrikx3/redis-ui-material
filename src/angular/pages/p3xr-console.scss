@@ -1,5 +1,4 @@
 @import '../../scss/vars';
-@import '~angular-material/modules/scss/angular-material.layout-attributes.scss';
 
 p3xr-console {
     .p3xr-console-electron {
@@ -32,7 +31,7 @@ p3xr-console {
         input {
             min-width: calc(100% - 18px);
             position: fixed;
-            bottom: $toolbar-height + $layout-gutter-width / 2;
+            bottom: $toolbar-height + 8px;
             left: 3px;
             right: 0px;
         }
