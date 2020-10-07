@@ -263,6 +263,7 @@ const strings = {
             },
             field: {
                 treeSeparator: '树分隔符',
+                treeSeparatorSelector: '树分隔符选择器',
                 page: '分页数',
                 keysSort: '对键进行排序',
                 searchMode: '搜索模式',

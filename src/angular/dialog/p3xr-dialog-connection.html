@@ -10,9 +10,8 @@
                 </md-button>
             </div>
         </md-toolbar>
-        <md-dialog-content md-theme="{{ $root.p3xr.state.theme }}">
-            <md-content layout-padding>
-
+        <md-dialog-content md-theme="{{ $root.p3xr.state.theme }}" >
+            <md-content class="p3xr-padding">
                 <md-input-container class="md-block">
                     <label>{{ $root.p3xr.strings.form.connection.label.name }}</label>
                     <input required name="name" ng-model="model.name"

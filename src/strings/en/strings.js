@@ -266,6 +266,7 @@ const strings = {
             },
             field: {
                 treeSeparator: 'Tree separator',
+                treeSeparatorSelector: 'Tree separator selector',
                 page: 'Paging count',
                 keysSort: 'Sort the keys',
                 searchMode: 'Search mode',

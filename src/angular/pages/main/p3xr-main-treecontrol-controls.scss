@@ -29,3 +29,32 @@ p3xr-main-treecontrol-controls {
     }
 
 }
+
+.p3xr-main-treecontrol-controls-divider-select {
+    display: inline-block;
+    .md-select-value {
+        span:not(.md-select-icon) {
+            visibility: hidden !important;
+            display: none !important;
+        }
+        min-width: 0px !important;
+        min-height: 0px !important;
+
+        .md-select-icon {
+            width: 3px !important;
+            position: relative;
+            left: -8px;
+            top: -2px;
+        }
+    }
+}
+.p3xr-main-treecontrol-controls-divider-select-container {
+    font-family: 'Roboto Mono';
+    padding: 0px !important;
+    top: 135px !important;
+    md-select-menu {
+        md-content {
+            min-width: auto;
+        }
+    }
+}
