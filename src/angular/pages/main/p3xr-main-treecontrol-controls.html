@@ -22,9 +22,9 @@
         <md-tooltip>{{ $root.p3xr.strings.form.treeSettings.field.treeSeparator }}</md-tooltip>
     </span>
 
-    <span>
+    <span ng-if="$root.p3xr.state.cfg.treeDividers.length > 0">
         <md-select md-on-open="$ctrl.dividerSelectOpen" ng-model="$root.p3xr.settings.redisTreeDivider" ng-change="$ctrl.treeDividerChange()" class="p3xr-main-treecontrol-controls-divider-select md-no-underline" md-container-class="p3xr-main-treecontrol-controls-divider-select-container">
-            <md-option ng-repeat="divider in $ctrl.dividers" ng-value="divider">
+            <md-option ng-repeat="divider in $root.p3xr.state.cfg.treeDividers" ng-value="divider">
                 {{ divider }}
             </md-option>
         </md-select>
