@@ -17,13 +17,14 @@
     </md-button>
 
     <span>
-        <p3xr-input ng-change="$ctrl.treeDividerChange()" style="width: 10px; text-align:center; font-family: 'Roboto Mono';"
+        <p3xr-input id="p3xr-main-treecontrol-controls-tree-divider-input" ng-change="$ctrl.treeDividerChange()" style="width: 10px; text-align:center; font-family: 'Roboto Mono';"
                     ng-model="$root.p3xr.settings.redisTreeDivider" ng-model-options="{debounce: 666 }"></p3xr-input>
         <md-tooltip>{{ $root.p3xr.strings.form.treeSettings.field.treeSeparator }}</md-tooltip>
     </span>
 
     <span ng-if="$root.p3xr.state.cfg.treeDividers.length > 0">
-        <md-select md-on-open="$ctrl.dividerSelectOpen" ng-model="$root.p3xr.settings.redisTreeDivider" ng-change="$ctrl.treeDividerChange()" class="p3xr-main-treecontrol-controls-divider-select md-no-underline" md-container-class="p3xr-main-treecontrol-controls-divider-select-container">
+        <!-- md-on-open="$ctrl.dividerSelectStatus(true)" md-on-close="$ctrl.dividerSelectStatus(false)"  -->
+        <md-select ng-model="$root.p3xr.settings.redisTreeDivider" ng-change="$ctrl.treeDividerChange()" class="p3xr-main-treecontrol-controls-divider-select md-no-underline" md-container-class="p3xr-main-treecontrol-controls-divider-select-container">
             <md-option ng-repeat="divider in $root.p3xr.state.cfg.treeDividers" ng-value="divider">
                 {{ divider }}
             </md-option>
@@ -33,7 +34,7 @@
 
 </div>
 
-<span ng-if="$root.p3xr.state.pages > 1">
+<span ng-if="$root.p3xr.state.pages > 1" class="p3xr-main-treecontrol-controls-pager">
     <md-tooltip>{{ $root.p3xr.strings.status.keyCount({keyCount: $root.p3xr.state.keysRaw.length }) }}</md-tooltip>
     <md-button class="md-icon-button md-primary" aria-label="" ng-click="$ctrl.page({ page: 'first' })">
         <md-tooltip>{{ $root.p3xr.strings.page.treeControls.pager.first}}</md-tooltip>
@@ -56,7 +57,7 @@
         <md-icon>skip_next</md-icon>
     </md-button>
 </span>
-<span ng-if="$root.p3xr.state.pages < 2" style="opacity: 0.5; float: right; line-height: 26px; margin-top: 5px;">
+<span ng-if="$root.p3xr.state.pages < 2" class="p3xr-main-treecontrol-controls-keycount">
     {{ $root.p3xr.strings.status.keyCount({keyCount: $root.p3xr.state.keysRaw.length }) }}&nbsp;
 </span>
 <!--

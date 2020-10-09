@@ -140,6 +140,23 @@ p3xr.ng.component('p3xrMainTreecontrolControls', {
 //            this.p3xrMainRef.refresh()
             $rootScope.$broadcast('p3x-refresh');
         }
+
+        /*
+        this.dividerSelectStatus = (show) => {
+            if (show === true) {
+                console.log('dividerSelectStatus show', show)
+                const input = $('#p3xr-main-treecontrol-controls-tree-divider-input')
+                const offset = input.offset()
+                const container = $('.p3xr-main-treecontrol-controls-divider-select-container')
+                const top = offset.top + input.height()
+                const left = offset.left
+                container[0].style.top = `${top}px`
+                container[0].style.left = `${left}px`
+                console.log(offset, input.height(), container[0].style.top, container[0].style.left, top, left)
+            }
+        }
+         */
+
     }
 })
 
