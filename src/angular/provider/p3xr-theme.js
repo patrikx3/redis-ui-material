@@ -93,7 +93,10 @@ p3xr.ng.provider('p3xrTheme', function p3xrThemeProvider($mdThemingProvider,) {
     background-color: ${this.isDark() ? $mdColors.getThemeColor(darkColor) : 'auto'} !important;
     border: solid 1px ${this.isDark() ? 'rgba(255, 255, 255, 0.5)' : 'auto'} !important;
     ${this.isDark() ? 'box-shadow:  0 0 10px  rgba(0,0,0,0.6);' : ''}
+}
 
+treecontrol i.tree-branch-head:before {
+    color: ${this.isDark() ? 'white' : 'black'};
 }
 `
                 $('head').append('<style id="p3xr-theme-styles">' + styles + '</style>')

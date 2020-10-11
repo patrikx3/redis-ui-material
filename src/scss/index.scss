@@ -11,11 +11,47 @@ md-dialog md-dialog-actions button {
     float: right !important;
 }
 
+treecontrol > ul > li.tree-expanded > i.tree-branch-head, treecontrol > ul > li.tree-collapsed > i.tree-branch-head {
+    margin-left: 4px !important;
+    margin-right: 4px !important;
+    white-space: nowrap !important;
+}
+
+treecontrol li.tree-expanded > i.tree-branch-head, treecontrol li.tree-collapsed > i.tree-branch-head  {
+    background-image: none !important;
+    font-family: 'Font Awesome 5 Free';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 15px;
+    padding: 0 !important;
+//    margin-left: 10px !important;
+//    margin-left: 8px !important;
+    line-height: 20px;
+}
+
+treecontrol li {
+    white-space: nowrap;
+}
+
+treecontrol li.tree-collapsed > i.tree-branch-head:before {
+    content: "\f07b";
+}
+
+treecontrol li.tree-expanded > i.tree-branch-head:before {
+    content: "\f07c";
+}
+
+.p3xr-theme-light {
+}
+
 .p3xr-theme-dark {
+
+    /*
     .tree-branch-head {
         position: relative;
-        top: 4px;
+        top: 13px;
     }
+     */
 
     $json-status-bg-color: black;
     $json-status-color: white;
