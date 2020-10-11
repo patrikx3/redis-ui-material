@@ -1,15 +1,14 @@
 const webpack = require('webpack');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const fileAsset = `[name].[hash].[ext]`;
-const minimize = process.argv.includes('--production');
+const fileAsset = `[name].[contenthash].[ext]`;
+const minimize = process.argv.includes('--mode=production');
 const mode = minimize ? 'production' : 'development';
 
-const filenamePrefix = minimize ? '[name].[hash]' : '[name]'
+const filenamePrefix = minimize ? '[name].[contenthash]' : '[name]'
 
 let minimizer = undefined;
 
@@ -48,11 +47,6 @@ const plugins = [
         chunks: ['vendor', 'main'],
         title: pkg.description,
         minify: minimize
-    }),
-    new ExtractTextPlugin({
-        filename: `${filenamePrefix}.css`,
-        disable: false,
-        allChunks: true
     }),
     new MiniCssExtractPlugin({
         // Options similar to the same options in webpackOptions.output
@@ -217,21 +211,6 @@ const rules = [
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
         use: fileLoader
     },
-    {
-        test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-            // fallback: "style-loader",
-            use: [
-                {
-                    loader: 'css-loader',
-                    options: {
-                        // in v2 it throws an error
-                        //minimize: minimize,
-                        sourceMap: false
-                    },
-                }]
-        })
-    }
 ]
 
 let optimization = {

@@ -122,7 +122,7 @@ module.exports = (grunt) => {
                 args: [
                     '--config',
                     './src/builder/webpack.config.js',
-                    '--production'
+                    '--mode=production'
                 ]
             });
 
