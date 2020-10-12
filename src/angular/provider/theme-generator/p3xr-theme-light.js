@@ -21,8 +21,12 @@ p3xr.theme.light = function ($mdThemingProvider, p3xrThemeNameGenerator) {
 
     $mdThemingProvider.theme(`p3xrThemeLight`)
         .primaryPalette('deep-purple')
-        .accentPalette('purple')
-        .warnPalette('red')
+        .accentPalette('purple', {
+            default: '500'
+        })
+        .warnPalette('red', {
+            default: '700'
+        })
         .backgroundPalette('blue-grey')
     ;
 

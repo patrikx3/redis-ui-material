@@ -83,7 +83,6 @@ p3xr.ng.provider('p3xrTheme', function p3xrThemeProvider($mdThemingProvider,) {
                 } else {
                     $body.addClass('p3xr-theme-light')
                 }
-
                 $('#p3xr-theme-styles').remove()
 
                 const darkColor = p3xr.state.themeCommon + '-background';
@@ -97,7 +96,7 @@ p3xr.ng.provider('p3xrTheme', function p3xrThemeProvider($mdThemingProvider,) {
 
 treecontrol i.tree-branch-head:before {
     color: ${this.isDark() ? $mdColors.getThemeColor('amber-A100') : $mdColors.getThemeColor('amber-A400')};
-    ${this.isDark() ? 'text-shadow: 0px 0px 1px rgba(255, 255, 255, 1);' : 'text-shadow: 0px 0px 1px rgba(0, 0, 0, 1);' }
+    ${this.isDark() ? 'text-shadow: 0px 0px 1px rgba(55, 29, 27, 1);' : 'text-shadow: 0px 0px 1px rgba(55, 11, 0, 1);' }
 }
 `
                 $('head').append('<style id="p3xr-theme-styles">' + styles + '</style>')
