@@ -96,7 +96,7 @@ p3xr.ng.provider('p3xrTheme', function p3xrThemeProvider($mdThemingProvider,) {
 
 treecontrol i.tree-branch-head:before {
     color: ${this.isDark() ? $mdColors.getThemeColor('amber-A100') : $mdColors.getThemeColor('amber-A400')};
-    ${this.isDark() ? 'text-shadow: 0px 0px 1px rgba(55, 29, 27, 1);' : 'text-shadow: 0px 0px 1px rgba(55, 11, 0, 1);' }
+    ${this.isDark() ? 'text-shadow: 1px 1px 1px rgba(55, 29, 27, 0.5);' : 'text-shadow: 1px 1px 0px rgba(55, 11, 0, 0.5);' }
 }
 `
                 $('head').append('<style id="p3xr-theme-styles">' + styles + '</style>')
