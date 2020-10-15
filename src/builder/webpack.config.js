@@ -80,9 +80,7 @@ if (minimize) {
 
     minimizer = [
         new TerserPlugin({
-            sourceMap: false,
             parallel: true,
-            cache: true,
             extractComments: {
                 condition: /^\**!|@preserve|@license|@cc_on/,
 
@@ -124,12 +122,14 @@ For more information about all licenses, please see ${webpackBanner}
         })
     )
 
+    /*
     plugins.push(
         new webpack.SourceMapDevToolPlugin({
             filename: 'sourcemaps/[file].map',
             append: '\n//# sourceMappingURL=./[url]'
         })
     )
+     */
 
     plugins.push(
         new CopyWebpackPlugin({
