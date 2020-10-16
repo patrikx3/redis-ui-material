@@ -323,7 +323,7 @@ p3xr.ng.component('p3xrMain', {
             } catch (e) {
                 p3xrCommon.generalHandleError(e)
             } finally {
-                // this.resize()
+                this.resize()
             }
         }
 

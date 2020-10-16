@@ -90,7 +90,7 @@ module.exports = (grunt) => {
         }
     });
 
-    grunt.registerTask('default', ['cory-npm', 'clean', 'cory-replace', 'cory:license']);
+    grunt.registerTask('default', ['cory-npm', 'clean', 'cory-replace', 'cory:license', 'injector', 'publish']);
     grunt.registerTask('inject', ['watch:js', 'watch:sass']);
     grunt.registerTask('build', ['injector']);
 

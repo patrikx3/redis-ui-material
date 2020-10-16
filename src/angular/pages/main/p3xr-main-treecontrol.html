@@ -22,13 +22,13 @@
             <span class="p3xr-main-tree-node-count" ng-if="node.type === 'folder'">{{$root.p3xr.settings.redisTreeDivider}}* ({{node.childCount}})</span>
             <span class="p3xr-main-tree-node-count"
                   ng-if="node.type !== 'folder' && node.keysInfo.type !== 'string' && node.keysInfo !== undefined">({{node.keysInfo.length}})</span>
-            <span ng-if="node.type === 'folder' && node.show">
+            <span ng-if="node.type === 'folder'" ng-show="node.show" style="position: relative; top: -1px;">
                         <span>
                             <md-tooltip md-direction="right">{{ $root.p3xr.strings.confirm.deleteAllKeys({key: node.key}) }}</md-tooltip>
                             <md-icon ng-click="$ctrl.deleteTree({event: $event, node: node})"
                                      class="md-warn p3xr-main-treecontrol-folder-icon">close</md-icon>
                         </span>
-                        <span>
+                        <span  style="position: relative; top: -1px;">
                             <md-tooltip md-direction="right">{{ $root.p3xr.strings.intention.addKey }}</md-tooltip>
                             <md-icon ng-click="$ctrl.addKey({event: $event, node: node})"
                                      md-theme="{{ $root.p3xr.state.themeCommon }}"
