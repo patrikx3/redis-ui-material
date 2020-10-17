@@ -41,7 +41,7 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
                                     limitDragging: false,
                                     modes: ['tree', 'code', 'view', 'preview'],
                                     //history: false,
-                                    mode: 'tree',
+                                    mode: 'code',
                                     //search: true,
                                     //mainMenuBar: false,
                                     language: language,
@@ -52,12 +52,14 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
                                     indentation: p3xr.settings.jsonFormat,
 
                                 }
+                                /*
                                 if (JSON.stringify(obj).length > 10240) {
                                     p3xrCommon.toast({
                                         message: p3xr.strings.label.bigJson,
                                         hideDelay: 10000
                                     })
                                 }
+                                 */
                                 editor = new JSONEditor(container, options, obj)
                             })
                         }
