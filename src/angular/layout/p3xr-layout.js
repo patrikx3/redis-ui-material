@@ -128,7 +128,7 @@ p3xr.ng.component('p3xrLayout', {
         }
 
 
-        this.connect = async (connection) => {
+        this.connect = async (connection, disableState = false) => {
 
             console.time('connect')
 
@@ -186,6 +186,9 @@ p3xr.ng.component('p3xrLayout', {
                 //$state.go('main.statistics')
                 $state.reload();
 
+                if (disableState === true) {
+                    originalState = 'main'
+                }
                 if (!originalState.startsWith('main')) {
                     $state.go(originalState)
                 } else if (originalState === 'main') {
