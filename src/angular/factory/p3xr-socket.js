@@ -125,7 +125,7 @@ p3xr.ng.factory('p3xrSocket', function ($rootScope, p3xrCommon, $state) {
         if (p3xr.state.cfg.snapshot === true) {
             p3xr.state.version = 'SNAPSHOT'
         } else {
-            p3xr.state.version = 'v' + p3xr.pkg.version
+            p3xr.state.version = 'v' + p3xr.state.cfg.version
             if (!receivedVersion) {
                 receivedVersion = true
                 window['gtag']('config', p3xr.settings.googleAnalytics,
