@@ -14,17 +14,6 @@ jQuery.event.special.touchstart = {
 };
 
 
-global.ace = require('ace-builds')
-//require('ace-builds/webpack-resolver')
-ace.config.setModuleUrl('ace/theme/twilight', require('file-loader?esModule=false!../node_modules/ace-builds/src-noconflict/theme-twilight.js'))
-ace.config.setModuleUrl('ace/theme/github', require('file-loader?esModule=false!../node_modules/ace-builds/src-noconflict/theme-github.js'))
-require('ace-builds/src-noconflict/mode-json')
-require('ace-builds/src-noconflict/ext-searchbox')
-//require('ace-builds/src-noconflict/theme-twilight')
-//require('ace-builds/src-noconflict/theme-github')
-
-global.JSONEditor = require('jsoneditor/dist/jsoneditor.js')
-
 global.$window = $(window);
 
 $(() => {
@@ -48,6 +37,9 @@ require('@uirouter/angularjs')
 require('angular-material');
 
 require('angular-tree-control')
-require('angular-tree-control/context-menu')
+
+//require('angular-tree-control/context-menu')
+// angular context menu fix
+angular.module("contextMenu", []);
 
 require('angular-json-tree')

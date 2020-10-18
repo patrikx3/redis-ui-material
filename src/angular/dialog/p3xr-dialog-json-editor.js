@@ -23,45 +23,61 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
                         }
 
                         if ($scope.isJson) {
-                            $timeout(() => {
-                                // en , zn
-                                let language
-                                switch(p3xr.settings.language.current) {
-                                    case 'zn':
-                                        language = 'zh-CN'
-                                        break;
-                                    default:
-                                        language = 'en'
-                                        break;
-                                }
-                                const container = document.getElementById("p3xr-jsoneditor")
+                            // https://webpack.js.org/guides/code-splitting/
+                            // /* webpackMode: "lazy" */
+                            const execAsync = async() => {
+                                try {
+                                    await import(
+                                        /* webpackChunkName: "editor" */
+                                        /* webpackPrefetch: true */
+                                        "../../editor"
+                                    )
 
-                                const options = {
-                                    //sortObjectKeys: false,
-                                    limitDragging: false,
-                                    modes: ['tree', 'code', 'view', 'preview'],
-                                    //history: false,
-                                    mode: 'code',
-                                    //search: true,
-                                    //mainMenuBar: false,
-                                    language: language,
-                                    //enableSort: false,
-                                    //enableTransform: false,
-                                    ace: ace,
-                                    theme: p3xrTheme.isDark() ? 'ace/theme/twilight' : 'ace/theme/github',
-                                    indentation: p3xr.settings.jsonFormat,
+                                    $timeout(() => {
+                                        // en , zn
+                                        let language
+                                        switch(p3xr.settings.language.current) {
+                                            case 'zn':
+                                                language = 'zh-CN'
+                                                break;
+                                            default:
+                                                language = 'en'
+                                                break;
+                                        }
+                                        const container = document.getElementById("p3xr-jsoneditor")
 
-                                }
-                                /*
-                                if (JSON.stringify(obj).length > 10240) {
-                                    p3xrCommon.toast({
-                                        message: p3xr.strings.label.bigJson,
-                                        hideDelay: 10000
+                                        const options = {
+                                            //sortObjectKeys: false,
+                                            limitDragging: false,
+                                            modes: ['tree', 'code', 'view', 'preview'],
+                                            //history: false,
+                                            mode: 'code',
+                                            //search: true,
+                                            //mainMenuBar: false,
+                                            language: language,
+                                            //enableSort: false,
+                                            //enableTransform: false,
+                                            ace: ace,
+                                            theme: p3xrTheme.isDark() ? 'ace/theme/twilight' : 'ace/theme/github',
+                                            indentation: p3xr.settings.jsonFormat,
+
+                                        }
+                                        /*
+                                        if (JSON.stringify(obj).length > 10240) {
+                                            p3xrCommon.toast({
+                                                message: p3xr.strings.label.bigJson,
+                                                hideDelay: 10000
+                                            })
+                                        }
+                                         */
+                                        editor = new JSONEditor(container, options, obj)
                                     })
+                                } catch(e) {
+                                    p3xrCommon.generalHandleError(e)
                                 }
-                                 */
-                                editor = new JSONEditor(container, options, obj)
-                            })
+
+                            }
+                            execAsync()
                         }
 
                         const close = (event) => {

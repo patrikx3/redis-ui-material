@@ -39,6 +39,10 @@ const mainEntry = [
     top + "/src/main.js"
 ]
 
+const editorEntry = [
+    top + "/src/editor.js"
+]
+
 const plugins = [
     new HtmlWebpackPlugin({
         template: `${top}/src/index.html`,
@@ -229,6 +233,7 @@ if (minimize) {
         }
     })
 } else {
+
     optimization = Object.assign(optimization, {
         runtimeChunk: 'single',
         splitChunks: {
@@ -250,6 +255,7 @@ module.exports = {
     entry: {
         vendor: vendorEntry,
         main: mainEntry,
+//        editor: editorEntry,
     },
     output: {
         path: buildDir,

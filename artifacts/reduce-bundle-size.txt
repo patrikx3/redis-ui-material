@@ -1,0 +1,20 @@
+2020 October 18 08:00 AM
+-r--r----- 1 www-data www-data 2.3K Oct 17 20:38 2eb6240af39282952504b5e016895183.js
+-r--r----- 1 www-data www-data 2.6K Oct 17 20:38 59bde89bce5c1126ba5ee99c55ec48c8.js
+-r--r----- 1 www-data www-data 186K Oct 17 20:38 main.3b4993afb7ef0c773dd2.js
+-r--r----- 1 www-data www-data  12K Oct 17 20:38 main.82603f4092c1cd8f8cf9.css
+-r--r----- 1 www-data www-data 2.2M Oct 17 20:38 vendor.2bf99f4796897bbcdde3.js
+-r--r----- 1 www-data www-data 500K Oct 17 20:38 vendor.8cec4ee3d875369b3db2.css
+2955,7
+
+2020 October 18 11:00 AM
+-r-------- 1 www-data www-data 2.3K Oct 18 10:43 2eb6240af39282952504b5e016895183.js
+-r-------- 1 www-data www-data 2.6K Oct 18 10:43 59bde89bce5c1126ba5ee99c55ec48c8.js
+-r-------- 1 www-data www-data  23K Oct 18 10:43 f7186078e00d958aa2b316483dfc7e1c.js
+-r-------- 1 www-data www-data 1.2M Oct 18 10:43 362.chunk.js
+-r-------- 1 www-data www-data 189K Oct 18 10:43 main.5bb26a2fed2bb6572b27.js
+-r-------- 1 www-data www-data  12K Oct 18 10:43 main.f0afde82d9f3f4ba2c8d.css
+-r-------- 1 www-data www-data 925K Oct 18 10:43 vendor.423e956f43a2d1406ae5.js
+-r-------- 1 www-data www-data 500K Oct 18 10:43 vendor.8adbf377a94fd3e73b2c.css
+2882,7
+
