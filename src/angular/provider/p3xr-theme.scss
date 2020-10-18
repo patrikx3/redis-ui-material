@@ -1,4 +1,14 @@
+.p3xr-theme-light {
+    md-checkbox.md-checked .md-icon {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+}
+
 .p3xr-theme-dark {
+    md-checkbox.md-checked .md-icon {
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+
     md-select-menu md-content md-option[selected],
     md-select-menu md-content md-option[selected].md-focused,
     md-select-menu md-content md-option[selected]:focus {
@@ -17,6 +27,10 @@ body[md-theme="p3xrThemeDarkoBluoLayout"].p3xr-theme-dark {
 }
 
 body[md-theme="p3xrThemeRedisLayout"].p3xr-theme-light {
+    md-checkbox.md-checked .md-icon {
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+
     .p3xr-main-db-select-container {
         md-select-menu md-content md-option[selected],
         md-select-menu md-content md-option[selected].md-focused,
@@ -29,6 +43,8 @@ body[md-theme="p3xrThemeRedisLayout"].p3xr-theme-light {
     }
 }
 
-md-checkbox.md-p3xrThemeLightLayout-theme.md-checked .md-icon {
-    background-color: rgba(0, 0, 0, 0.5);
+body[md-theme="p3xrThemeMatrixLayout"].p3xr-theme-dark {
+    md-checkbox.md-checked .md-icon {
+        background-color: rgba(128, 255, 128, 0.75);
+    }
 }
