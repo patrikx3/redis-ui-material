@@ -17,10 +17,12 @@ body[md-theme="p3xrThemeDarkoBluoLayout"].p3xr-theme-dark {
 }
 
 body[md-theme="p3xrThemeRedisLayout"].p3xr-theme-light {
-    md-select-menu md-content md-option[selected],
-    md-select-menu md-content md-option[selected].md-focused,
-    md-select-menu md-content md-option[selected]:focus {
-        color: white;
+    .p3xr-main-db-select-container {
+        md-select-menu md-content md-option[selected],
+        md-select-menu md-content md-option[selected].md-focused,
+        md-select-menu md-content md-option[selected]:focus {
+            color: white;
+        }
     }
     #p3xr-main-header .md-select-icon {
         color: black !important;

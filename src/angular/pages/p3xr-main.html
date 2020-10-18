@@ -14,7 +14,7 @@
                     <md-tooltip ng-if="$root.$mdMedia('xs')" md-direction="bottom">{{ $root.p3xr.strings.form.main.label.database }}</md-tooltip>
 
                     <md-select ng-model="$ctrl.currentDatabase"
-                               aria-label="{{ $root.p3xr.strings.form.main.label.database }}" class="md-accent p3xr-main-db-select">
+                               aria-label="{{ $root.p3xr.strings.form.main.label.database }}" class="md-accent p3xr-main-db-select" md-container-class="p3xr-main-db-select-container">
                         <md-option ng-repeat="dbIndex in $root.p3xr.state.databaseIndexes" ng-value="dbIndex"
                                    ng-click="$ctrl.selectDatabase(dbIndex)">
                             <span ng-if="$root.p3xr.state.info.keyspaceDatabases[dbIndex]">
