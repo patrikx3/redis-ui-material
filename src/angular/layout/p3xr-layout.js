@@ -184,7 +184,7 @@ p3xr.ng.component('p3xrLayout', {
                 })
 
                 //$state.go('main.statistics')
-                $state.reload();
+                //$state.reload();
 
                 if (disableState === true) {
                     originalState = 'main'

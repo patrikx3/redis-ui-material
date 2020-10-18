@@ -19,7 +19,7 @@ p3xr.theme = {
 
 p3xr.ui = {
     overlay: undefined,
-    htmlEncode: require('js-htmlencode').htmlEncode
+    htmlEncode: global.htmlEncode
 }
 
 require('./core/corifeus-renderer')

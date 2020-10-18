@@ -1,0 +1,32 @@
+.p3xr-theme-dark {
+    md-select-menu md-content md-option[selected],
+    md-select-menu md-content md-option[selected].md-focused,
+    md-select-menu md-content md-option[selected]:focus {
+        color: white;
+    }
+
+    #p3xr-main-header .md-select-icon {
+        color: black !important;
+    }
+}
+
+body[md-theme="p3xrThemeDarkoBluoLayout"].p3xr-theme-dark {
+    #p3xr-main-header .md-select-icon {
+        color: white !important;
+    }
+}
+
+body[md-theme="p3xrThemeRedisLayout"].p3xr-theme-light {
+    md-select-menu md-content md-option[selected],
+    md-select-menu md-content md-option[selected].md-focused,
+    md-select-menu md-content md-option[selected]:focus {
+        color: white;
+    }
+    #p3xr-main-header .md-select-icon {
+        color: black !important;
+    }
+}
+
+md-checkbox.md-p3xrThemeLightLayout-theme.md-checked .md-icon {
+    background-color: rgba(0, 0, 0, 0.5);
+}

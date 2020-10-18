@@ -20,6 +20,8 @@ $(() => {
     global.$body = $('body');
 })
 
+global.htmlEncode = require('js-htmlencode').htmlEncode
+
 // socket
 global.io = require('socket.io-client')
 

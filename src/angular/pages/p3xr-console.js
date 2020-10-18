@@ -1,7 +1,7 @@
 let actionHistory = []
 let actionHistoryPosition = -1
 
-const htmlEncode = require('js-htmlencode').htmlEncode;
+const htmlEncode = global.htmlEncode;
 
 p3xr.ng.component('p3xrConsole', {
     template: require('./p3xr-console.html'),

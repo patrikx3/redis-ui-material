@@ -319,7 +319,7 @@ p3xr.ng.component('p3xrMain', {
                     })
                 })
                 await this.statistics()
-
+                $(':focus').blur()
             } catch (e) {
                 p3xrCommon.generalHandleError(e)
             } finally {
