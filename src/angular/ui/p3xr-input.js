@@ -7,7 +7,7 @@ p3xr.ng.directive('p3xrInput', function (p3xrTheme) {
             scope.focused = false
 
             scope.inputBackground = () => {
-                return p3xrTheme.isDark() ? 'warn-900-0.5' : 'warn-50'
+                return p3xrTheme.isDark() ? 'warn-900' : 'warn-50'
             }
 
             scope.inputBorderColor = () => {
