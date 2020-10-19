@@ -25,8 +25,8 @@ p3xr.ng.component('p3xrLayout', {
             github: () => {
                 window.open(`https://github.com/patrikx3/redis-ui`, `github-patrikx3-${p3xr.pkg.corifeus.reponame}`)
             },
-            githubTodo: () => {
-                window.open(`https://github.com/patrikx3/redis-ui/blob/master/todo.md#to-do`, `github-patrikx3-${p3xr.pkg.corifeus.reponame}-todo`)
+            githubRelease: () => {
+                window.open(`https://github.com/patrikx3/redis-ui/releases`, `github-patrikx3-${p3xr.pkg.corifeus.reponame}-releases`)
             },
             githubChangelog: () => {
                 window.open(`https://github.com/patrikx3/redis-ui/blob/master/changelog.md#change-log`, `github-patrikx3-${p3xr.pkg.corifeus.reponame}-changelog`)

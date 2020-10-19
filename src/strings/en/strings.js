@@ -92,7 +92,7 @@ const strings = {
         theme: 'Theme',
         github: 'GitHub',
         githubRepo: 'Repository',
-        githubTodo: 'To do',
+        githubRelease: 'Releases',
         githubChangelog: 'Change log',
         settings: 'Settings',
         connect: 'Connect',

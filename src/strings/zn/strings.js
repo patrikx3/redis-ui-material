@@ -89,7 +89,7 @@ const strings = {
         theme: '主题',
         github: 'GitHub',
         githubRepo: '仓库',
-        githubTodo: '待办',
+        githubRelease: '发布',
         githubChangelog: '更新日志',
         settings: '设置',
         connect: '连接',

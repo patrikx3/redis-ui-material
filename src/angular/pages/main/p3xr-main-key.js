@@ -182,14 +182,15 @@ p3xr.ng.component('p3xrMainKey', {
             return '(' + prettyBytes(length) + ')'
         }
 
-        this.refresh = (options) => {
+        this.refresh = async (options) => {
 
             window['gtag']('config', p3xr.settings.googleAnalytics,
                 {
                     'page_path': '/refresh'
                 }
             );
-            loadKey(options)
+            await loadKey(options)
+            $scope.$digest()
         }
 
         this.rename = async (opts) => {
