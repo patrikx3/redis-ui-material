@@ -116,6 +116,9 @@ p3xr.ng.factory('p3xrSocket', function ($rootScope, p3xrCommon, $state) {
 
     ioClient.on('redis-status', (data) => {
         $rootScope.p3xr.state.redisConnections = data.redisConnections
+        setTimeout(() => {
+            $rootScope.$digest()
+        })
     })
 
 

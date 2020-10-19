@@ -12,11 +12,13 @@ const routes = ($stateProvider, $urlRouterProvider) => {
         template: '<p3xr-main></p3xr-main>'
     })
 
+    /*
     $stateProvider.state({
         name: 'overview',
         url: '/overview',
         template: '<p3xr-overview></p3xr-overview>'
     })
+     */
 
     $stateProvider.state({
         name: 'console',
