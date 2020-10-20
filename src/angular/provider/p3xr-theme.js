@@ -99,11 +99,16 @@ p3xr.ng.provider('p3xrTheme', function p3xrThemeProvider($mdThemingProvider,) {
                 const styles = `
 ${additional}
 
-.p3xr-content-border {
-    box-sizing: border-box;
+.p3xr-theme-dark .p3xr-content-border {
     border-left: 1px solid ${borderColor};
     border-right: 1px solid ${borderColor};
     border-bottom: 1px solid ${borderColor};
+}
+
+.p3xr-theme-light .p3xr-content-border {
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    border-bottom: 1px solid transparent;
 }
 
 
@@ -121,6 +126,7 @@ treecontrol i.tree-branch-head:before {
 
                 $('head').append('<style id="p3xr-theme-styles">' + styles + '</style>')
             }
+
 
             this.getCurrentThemeName = () => {
                 return $cookies.get(themeCookieName);
