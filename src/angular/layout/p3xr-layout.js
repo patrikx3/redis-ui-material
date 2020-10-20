@@ -187,7 +187,9 @@ p3xr.ng.component('p3xrLayout', {
                 //$state.reload();
 
                 if (disableState === true) {
-                    originalState = 'main'
+                    if (originalState.startsWith('main.key')) {
+                        originalState = 'main'
+                    }
                 }
                 if (!originalState.startsWith('main')) {
                     $state.go(originalState)

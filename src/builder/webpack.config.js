@@ -272,7 +272,7 @@ module.exports = {
     mode: mode,
 
     devServer: {
-
+        contentBase: './src/public',
         host: '0.0.0.0',
         disableHostCheck: true,
         historyApiFallback: {

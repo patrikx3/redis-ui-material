@@ -87,7 +87,26 @@ p3xr.ng.provider('p3xrTheme', function p3xrThemeProvider($mdThemingProvider,) {
 
                 const darkColor = p3xr.state.themeCommon + '-background';
                 //console.warn(darkColor)
+
+                let additional = ''
+
+                if (themeName == 'p3xrThemeMatrix') {
+                    additional = `
+`
+                }
+
+                const borderColor = $mdColors.getThemeColor(p3xr.state.themeLayout + '-primary-hue-1');
                 const styles = `
+${additional}
+
+.p3xr-content-border {
+    box-sizing: border-box;
+    border-left: 1px solid ${borderColor};
+    border-right: 1px solid ${borderColor};
+    border-bottom: 1px solid ${borderColor};
+}
+
+
 .p3xr-toast-default .md-toast-content {
     background-color: ${this.isDark() ? $mdColors.getThemeColor(darkColor) : 'auto'} !important;
     border: solid 1px ${this.isDark() ? 'rgba(255, 255, 255, 0.5)' : 'auto'} !important;
@@ -99,6 +118,7 @@ treecontrol i.tree-branch-head:before {
     ${this.isDark() ? 'text-shadow: 1px 1px 1px rgba(55, 29, 27, 0.5);' : 'text-shadow: 1px 1px 0px rgba(55, 11, 0, 0.5);' }
 }
 `
+
                 $('head').append('<style id="p3xr-theme-styles">' + styles + '</style>')
             }
 

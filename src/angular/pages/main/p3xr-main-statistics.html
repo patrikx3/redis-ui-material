@@ -3,7 +3,7 @@
             ng-if="$ctrl.hasDatabases && $root.p3xr.state.connection.cluster !== true">
         <md-content>
 
-            <md-tabs md-dynamic-height md-border-bottom class="md-primary">
+            <md-tabs md-dynamic-height md-border-bottom class="md-primary" id="p3xr-main-statistics-dbs">
                 <md-tab label="{{ key }}" ng-repeat="(key, value) in $root.p3xr.state.info.keyspaceDatabases">
                     <md-content>
                         <md-list flex ng-repeat="(itemKey, itemValue) in $root.p3xr.state.info.keyspace['db' + key ]">
