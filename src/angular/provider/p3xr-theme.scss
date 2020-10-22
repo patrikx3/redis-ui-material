@@ -59,3 +59,7 @@ body[md-theme="p3xrThemeMatrixLayout"].p3xr-theme-dark {
         border-color: black;
     }
 }
+
+md-select:not([disabled]):focus .md-select-value {
+    color: inherit !important;
+}

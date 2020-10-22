@@ -13,6 +13,8 @@ p3xr.ng.component('p3xrMainTree', {
         }
          */
 
+
+        /*
         let check = 0
         this.$doCheck = () => {
             if (check < 10) {
@@ -22,6 +24,7 @@ p3xr.ng.component('p3xrMainTree', {
 //                $rootScope.$broadcast('p3x-resize')
             }
         }
+         */
 
         /*
         this.$onChanges = (changesObj) => {

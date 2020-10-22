@@ -53,6 +53,15 @@ p3xr.ng.component('p3xrConsole', {
 
         const resize = debounce(rawResize, p3xr.settings.debounce)
 
+        /*
+        let resizeObserver = new ResizeObserver(entries => {
+            console.log('ResizeObserver', entries)
+            rawResize()
+        })
+         */
+
+
+        /*
         let check = 0
         this.$doCheck = () => {
             if (check < 10) {
@@ -62,6 +71,7 @@ p3xr.ng.component('p3xrConsole', {
 //                $rootScope.$broadcast('p3x-resize')
             }
         }
+         */
 
         const onPubSubMessage = (data) => {
             //console.warn('pub-sub', data)
@@ -93,6 +103,10 @@ p3xr.ng.component('p3xrConsole', {
 
             p3xrSocket.ioClient.on('pubsub-message', onPubSubMessage)
 
+        }
+
+        this.$postLink = () => {
+            rawResize()
         }
 
         this.$onDestroy = function () {

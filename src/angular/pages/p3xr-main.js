@@ -226,11 +226,16 @@ p3xr.ng.component('p3xrMain', {
 
         /*
         this.$doCheck = () => {
+            console.log('do check')
             rawResize()
         }
          */
 
         this.$onInit = () => {
+            require('../../core/node-inview-recursive').recursive({
+                nodes: $rootScope.keysTreeRendered,
+            })
+
             $container = $('#p3xr-main-content')
             $header = $('#p3xr-layout-header-container')
             $footer = $('#p3xr-layout-footer-container')
@@ -240,10 +245,6 @@ p3xr.ng.component('p3xrMain', {
             rawResize()
 
             $window.on('resize', rawResize)
-
-            require('../../core/node-inview-recursive').recursive({
-                nodes: $rootScope.keysTreeRendered,
-            })
 
 
             if ($state.current.url === '/main') {
@@ -319,7 +320,6 @@ p3xr.ng.component('p3xrMain', {
                     })
                 })
                 await this.statistics()
-                $(':focus').blur()
             } catch (e) {
                 p3xrCommon.generalHandleError(e)
             } finally {
@@ -403,17 +403,49 @@ p3xr.ng.component('p3xrMain', {
             }
             console.timeEnd('refresh')
 
+
         }
 
         $scope.$on('p3x-refresh', () => {
             this.refresh({
                 withoutParent: true
             })
+            //resize()
         })
 
-        $scope.$on('p3x-resize', () => {
+        let currentElement
+        let resizeObserver = new ResizeObserver(entries => {
+            console.log('ResizeObserver resize')
             rawResize()
         })
+        const watchResize = async(newVal, oldVal) => {
+            if (currentElement) {
+                resizeObserver.unobserve(currentElement)
+            }
+            if (p3xr.state.connection === undefined) {
+                console.log('no connection for resizing')
+                return
+            }
+            let elem = null
+            while (elem === null ) {
+                elem = document.getElementById('p3xr-main-treecontrol-controls-container')
+                console.log('waiting for observing tree control controls')
+                await new Promise(resolve => setInterval(resolve))
+            }
+//            console.log('elem', elem)
+            currentElement = elem
+            resizeObserver.observe(currentElement)
+//            console.log('watching width')
+        }
+        $scope.$watch(() => $mdMedia('xs'), watchResize)
+        $scope.$watch(() => p3xr.state.connection, watchResize)
+
+        $scope.$on('$destroy', () => {
+            if (currentElement) {
+                resizeObserver.unobserve(currentElement)
+            }
+        })
+
 
 
         this.addKey = (options) => {
