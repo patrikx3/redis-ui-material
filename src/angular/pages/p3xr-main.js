@@ -415,7 +415,7 @@ p3xr.ng.component('p3xrMain', {
 
         let currentElement
         let resizeObserver = new ResizeObserver(entries => {
-            console.log('ResizeObserver resize')
+           // console.log('ResizeObserver resize', JSON.parse(JSON.stringify(entries)))
             rawResize()
         })
         const watchResize = async(newVal, oldVal) => {
@@ -437,13 +437,10 @@ p3xr.ng.component('p3xrMain', {
             resizeObserver.observe(currentElement)
 //            console.log('watching width')
         }
-        $scope.$watch(() => $mdMedia('xs'), watchResize)
-        $scope.$watch(() => p3xr.state.connection, watchResize)
+        $scope.$watch(() => $mdMedia('xs') || p3xr.state.connection, watchResize)
 
         $scope.$on('$destroy', () => {
-            if (currentElement) {
-                resizeObserver.unobserve(currentElement)
-            }
+            resizeObserver.disconnect()
         })
 
 
