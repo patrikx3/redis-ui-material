@@ -1,5 +1,11 @@
 p3xr-main {
 
+    @media (max-width:350px) {
+        .p3xr-main-toolbar-button-hide-on-small {
+            display: none;
+        }
+    }
+
     #p3xr-main-treecontrol-container {
         position: fixed;
         overflow: auto;

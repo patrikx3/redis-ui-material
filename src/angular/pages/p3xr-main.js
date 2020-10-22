@@ -427,6 +427,10 @@ p3xr.ng.component('p3xrMain', {
                 console.log('no connection for resizing')
                 return
             }
+            if ($mdMedia('xs')) {
+                rawResize()
+                return
+            }
             let elem = null
             while (elem === null ) {
                 elem = document.getElementById('p3xr-main-treecontrol-controls-container')

@@ -1,6 +1,6 @@
 p3xr.ng.component('p3xrMainStatistics', {
     template: require('./p3xr-main-statistics.html'),
-    controller: function (p3xrCommon, p3xrRedisParser, p3xrSocket, $rootScope, $scope, $timeout, $stateParams) {
+    controller: function (p3xrCommon, p3xrRedisParser, p3xrSocket, $rootScope, $scope, $timeout, $stateParams, $mdMedia) {
 
         const exclude = ['in', 'run', 'per']
         const include = ['sha1',]
@@ -9,11 +9,21 @@ p3xr.ng.component('p3xrMainStatistics', {
             'sec': 'seconds'
         }
 
-        const $container = $('#p3xr-main-content-container')
+        //const $container =
+        let isXsmall = true
         const resize = () => {
             //console.log('container', $container, $container[0].offsetHeight)
-            this.maxHeight = $container[0].offsetHeight - 50
+            if (isXsmall) {
+                this.maxHeight = 'auto'
+            } else {
+                this.maxHeight = $('#p3xr-main-content-container').offsetHeight - 50
+            }
         }
+
+        $scope.$watch(() => $mdMedia('xs'), (newVal, oldVal) => {
+            isXsmall = newVal
+            resize()
+        })
 
         $window.on('resize', resize)
         this.$doCheck = resize
