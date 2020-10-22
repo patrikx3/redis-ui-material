@@ -48,6 +48,7 @@ p3xr.ng.component('p3xrMain', {
         }, p3xr.settings.debounce)
 
         const rawResize = (options = {}) => {
+            //console.log('p3xr-main rawResize')
             //console.time('p3xr-main-resize')
 
             //console.info('p3xr-main resize')
@@ -322,8 +323,6 @@ p3xr.ng.component('p3xrMain', {
                 await this.statistics()
             } catch (e) {
                 p3xrCommon.generalHandleError(e)
-            } finally {
-                this.resize()
             }
         }
 
@@ -415,8 +414,10 @@ p3xr.ng.component('p3xrMain', {
 
         let currentElement
         let resizeObserver = new ResizeObserver(entries => {
-           // console.log('ResizeObserver resize', JSON.parse(JSON.stringify(entries)))
-            rawResize()
+            if (!resizeClicked) {
+                console.log('ResizeObserver resize', JSON.parse(JSON.stringify(entries)))
+                rawResize()
+            }
         })
         const watchResize = async(newVal, oldVal) => {
             if (currentElement) {
