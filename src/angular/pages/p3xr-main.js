@@ -438,7 +438,9 @@ p3xr.ng.component('p3xrMain', {
             resizeObserver.observe(currentElement)
 //            console.log('watching width')
         }
-        $scope.$watch(() => $mdMedia('xs') || p3xr.state.connection, watchResize)
+        $scope.$watch(() => {
+            return ($mdMedia('xs') ? 'true' : 'false') + '-' + (p3xr.state.connection ? 'true' : 'false')
+        }, watchResize)
 
         $scope.$on('$destroy', () => {
             resizeObserver.disconnect()
