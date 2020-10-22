@@ -16,7 +16,7 @@ p3xr.ng.component('p3xrMainStatistics', {
             if (isXsmall) {
                 this.maxHeight = 'auto'
             } else {
-                this.maxHeight = $('#p3xr-main-content-container').offsetHeight - 50
+                this.maxHeight = document.getElementById('p3xr-main-content-container').offsetHeight - 50
             }
         }
 
