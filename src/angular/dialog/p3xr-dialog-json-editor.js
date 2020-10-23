@@ -27,7 +27,7 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
                             // /* webpackMode: "lazy" */
                             const execAsync = async() => {
                                 try {
-                                    await import(
+                                    const { JSONEditor } = await import(
                                         /* webpackChunkName: "editor" */
                                         /* webpackPrefetch: true */
                                         "../../editor"
@@ -58,9 +58,11 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
                                             //enableSort: false,
                                             //enableTransform: false,
                                             ace: ace,
-                                            theme: p3xrTheme.isDark() ? 'ace/theme/twilight' : 'ace/theme/github',
                                             indentation: p3xr.settings.jsonFormat,
 
+                                        }
+                                        if (p3xrTheme.isDark()) {
+                                            options.theme = 'ace/theme/twilight'// 'ace/theme/github'
                                         }
                                         /*
                                         if (JSON.stringify(obj).length > 10240) {

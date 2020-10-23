@@ -10,8 +10,6 @@ require('./decorate/string')
 
 global.p3xr = global.p3xr || {}
 
-p3xr.pkg = require('../package')
-
 p3xr.theme = {
     dark: undefined,
     light: undefined,
