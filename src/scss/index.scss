@@ -21,11 +21,12 @@ button > md-icon {
 }
 
 md-dialog md-dialog-actions {
-    display: block !important;
+    display: flex;
+    flex-flow: row-reverse;
+    justify-content: right;
 }
 
 md-dialog md-dialog-actions button {
-    float: right !important;
 }
 
 
