@@ -1,4 +1,4 @@
-<md-dialog aria-label="{{ $root.p3xr.strings.intention.jsonViewShow }}">
+<md-dialog aria-label="{{ $root.p3xr.strings.intention.jsonViewShow }}" class="fullscreen-dialog">
     <md-toolbar md-theme="{{$root.p3xr.state.themeLayout}}">
         <div class="md-toolbar-tools">
             <md-icon>table_chart</md-icon>
@@ -22,18 +22,20 @@
         </div>
     </md-toolbar>
 
-    <md-dialog-content flex>
-        <md-content layout-padding class="p3xr-roboto-monospace">
-            <json-tree object="obj" root-name="$root.p3xr.strings.label.tree" ng-if="isJson && howExpanded === true" start-expanded="howExpanded"></json-tree>
-            <json-tree object="obj" root-name="$root.p3xr.strings.label.tree" ng-if="isJson && howExpanded === 'recursive'" start-expanded="howExpanded"></json-tree>
-            <div ng-if="!isJson">
-                {{ $root.p3xr.strings.label.jsonViewNotParsable}}
+    <md-dialog-content flex md-theme="{{ $root.p3xr.state.theme }}">
+        <md-content class="p3xr-roboto-monospace">
+            <div class="p3xr-padding">
+                <json-tree object="obj" root-name="$root.p3xr.strings.label.tree" ng-if="isJson && howExpanded === true" start-expanded="howExpanded"></json-tree>
+                <json-tree object="obj" root-name="$root.p3xr.strings.label.tree" ng-if="isJson && howExpanded === 'recursive'" start-expanded="howExpanded"></json-tree>
+                <div ng-if="!isJson">
+                    {{ $root.p3xr.strings.label.jsonViewNotParsable}}
+                </div>
             </div>
         </md-content>
     </md-dialog-content>
 
-    <md-dialog-actions layout="row">
-        <span flex></span>
+    <md-dialog-actions  md-theme="{{ $root.p3xr.state.theme }}">
+
         <md-button ng-click="ok()" class="md-raised md-accent" aria-label="{{ $root.p3xr.strings.intention.close }}">
             <md-icon>close</md-icon>
             {{ $root.p3xr.strings.intention.close }}

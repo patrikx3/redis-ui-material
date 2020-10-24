@@ -1,3 +1,8 @@
 .jsoneditor-poweredBy {
     display: none;
 }
+@media (min-width:960px) {
+    md-dialog.fullscreen-dialog-json-editor {
+        min-width: 75%;
+    }
+}

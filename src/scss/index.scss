@@ -1,3 +1,20 @@
+@media (max-width:959px) {
+    md-dialog.fullscreen-dialog {
+        min-height: 100%;
+        min-width: 100%;
+        border-radius: 0;
+        md-dialog-content {
+            height: 100vh;
+            md-content {
+                height: 100%;
+            }
+        }
+    }
+
+}
+
+
+
 button > md-icon {
     position: relative;
     top: -1px;

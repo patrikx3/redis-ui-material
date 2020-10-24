@@ -200,9 +200,10 @@ p3xr.ng.component('p3xrMainKey', {
             });
         }
 
-        this.delete = async () => {
+        this.delete = async (options) => {
             $rootScope.$broadcast('p3xr-key-delete', {
-                key: $stateParams.key
+                key: $stateParams.key,
+                $event: options.$event,
             });
         }
 
@@ -224,6 +225,7 @@ p3xr.ng.component('p3xrMainKey', {
 //                const confirmResponse = await $mdDialog.show(confirm)
 
                 const confirmResponse = await p3xrDialogTtl.show({
+                    $event: options.$event,
                     model: {
                         ttl: this.response.ttl === -1 ? '' : this.response.ttl
                     }

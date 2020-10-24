@@ -56,7 +56,7 @@ const plugins = [
         // Options similar to the same options in webpackOptions.output
         // both options are optional
         filename: !minimize ? '[name].css' : '[name].[contenthash].css',
-        chunkFilename: !minimize ? '[id].css' : '[id].[contenthash].css',
+        chunkFilename: !minimize ? '[name].css' : '[name].[contenthash].css',
     }),
 
 ];
@@ -260,7 +260,7 @@ module.exports = {
     output: {
         path: buildDir,
         filename: `${filenamePrefix}.js`,
-        chunkFilename: '[id].chunk.js',
+       // chunkFilename: `${filenamePrefix}.js`,
 //        publicPath: '{{ app.url_subdir }}/webpack/',
         publicPath: ``,
     },

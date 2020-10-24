@@ -1,4 +1,4 @@
-<md-dialog aria-label="{{$root.p3xr.strings.form.key.label.formName}}" style="min-width: 75%; ">
+<md-dialog aria-label="{{$root.p3xr.strings.form.key.label.formName}}" class="fullscreen-dialog">
     <form novalidate name="p3xrKeyNewForm" ng-submit="submit()">
         <md-toolbar md-theme="{{ $root.p3xr.state.themeLayout }}" class="md-hue-3">
             <div class="md-toolbar-tools">
@@ -13,27 +13,28 @@
             </div>
         </md-toolbar>
         <md-dialog-content md-theme="{{ $root.p3xr.state.theme }}">
-            <md-content class="p3xr-padding">
-                <md-input-container class="md-block">
-                    <label>{{ $root.p3xr.strings.form.key.field.key }}</label>
-                    <input required minlength="1" ng-model="model.key" name="key" ng-disabled="options.type !== 'add'">
-                    <div ng-messages="p3xrKeyNewForm.key.$error">
-                        <div ng-message-exp="['required', 'minlength']">
-                            {{ $root.p3xr.strings.form.key.error.key }}
+            <md-content>
+                <div class="p3xr-padding">
+                    <md-input-container class="md-block">
+                        <label>{{ $root.p3xr.strings.form.key.field.key }}</label>
+                        <input required minlength="1" ng-model="model.key" name="key" ng-disabled="options.type !== 'add'">
+                        <div ng-messages="p3xrKeyNewForm.key.$error">
+                            <div ng-message-exp="['required', 'minlength']">
+                                {{ $root.p3xr.strings.form.key.error.key }}
+                            </div>
                         </div>
-                    </div>
-                </md-input-container>
+                    </md-input-container>
 
-                <md-input-container class="md-block">
-                    <label>{{ $root.p3xr.strings.form.key.field.type }}</label>
-                    <md-select ng-model="model.type" name="type" ng-disabled="options.type !== 'add'">
-                        <md-option ng-repeat="type in types" ng-value="type">
-                            {{ $root.p3xr.strings.redisTypes[type] }}
-                        </md-option>
-                    </md-select>
-                </md-input-container>
+                    <md-input-container class="md-block">
+                        <label>{{ $root.p3xr.strings.form.key.field.type }}</label>
+                        <md-select ng-model="model.type" name="type" ng-disabled="options.type !== 'add'">
+                            <md-option ng-repeat="type in types" ng-value="type">
+                                {{ $root.p3xr.strings.redisTypes[type] }}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
 
-                <span ng-switch="model.type">
+                    <span ng-switch="model.type">
                     <span ng-switch-when="list">
                         <md-input-container class="md-block p3xr-md-input-container-no-bottom">
                             <label>{{ $root.p3xr.strings.form.key.field.index }}</label>
@@ -67,61 +68,63 @@
                     </span>
                 </span>
 
-                <md-button class="md-button md-raised md-primary" ng-if="$root.p3xr.state.donated" ng-click="jsonEditor({ $event: $event, value: model.value})">
-                    <md-icon>edit</md-icon>
-                    <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.jsonViewEditor }}</span>
-                    <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{
-                        $root.p3xr.strings.intention.jsonViewEditor }}
-                    </md-tooltip>
-                </md-button>
+                    <md-button class="md-button md-raised md-primary" ng-if="$root.p3xr.state.donated" ng-click="jsonEditor({ $event: $event, value: model.value})">
+                        <md-icon>edit</md-icon>
+                        <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.jsonViewEditor }}</span>
+                        <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{
+                            $root.p3xr.strings.intention.jsonViewEditor }}
+                        </md-tooltip>
+                    </md-button>
 
-                <md-button class="md-button md-raised md-accent" ng-click="jsonViewer({ $event: $event, value: model.value})">
-                    <md-icon>table_chart</md-icon>
-                    <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.jsonViewShow }}</span>
-                    <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{
-                        $root.p3xr.strings.intention.jsonViewShow }}
-                    </md-tooltip>
-                </md-button>
+                    <md-button class="md-button md-raised md-accent" ng-click="jsonViewer({ $event: $event, value: model.value})">
+                        <md-icon>table_chart</md-icon>
+                        <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.jsonViewShow }}</span>
+                        <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{
+                            $root.p3xr.strings.intention.jsonViewShow }}
+                        </md-tooltip>
+                    </md-button>
 
-                <md-button class="md-button md-raised md-primary" ng-click="formatJson({ $event: $event})">
-                    <md-icon>format_line_spacing</md-icon>
-                    <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.formatJson }}</span>
-                    <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{
-                        $root.p3xr.strings.intention.formatJson }}
-                    </md-tooltip>
-                </md-button>
+                    <md-button class="md-button md-raised md-primary" ng-click="formatJson({ $event: $event})">
+                        <md-icon>format_line_spacing</md-icon>
+                        <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.formatJson }}</span>
+                        <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{
+                            $root.p3xr.strings.intention.formatJson }}
+                        </md-tooltip>
+                    </md-button>
 
 
-                <md-button class="md-icon-button md-primary" ng-click="copy({ $event: $event, value: model.value})" >
-                    <md-tooltip>{{ $root.p3xr.strings.intention.copy }}</md-tooltip>
-                    <md-icon>content_copy</md-icon>
-                </md-button>
+                    <md-button class="md-icon-button md-primary" ng-click="copy({ $event: $event, value: model.value})" >
+                        <md-tooltip>{{ $root.p3xr.strings.intention.copy }}</md-tooltip>
+                        <md-icon>content_copy</md-icon>
+                    </md-button>
 
-                <md-switch ng-model="validateJson" class="md-accent" style="margin-top: 0px;">
-                    {{ $root.p3xr.strings.label.validateJson }}
-                </md-switch>
+                    <md-switch ng-model="validateJson" class="md-accent" style="margin-top: 0px;">
+                        {{ $root.p3xr.strings.label.validateJson }}
+                    </md-switch>
 
-                <md-input-container class="md-block">
-                    <label>{{ $root.p3xr.strings.form.key.field.value }}</label>
-                    <textarea ng-model="model.value" required p3x-validate-json
-                              p3x-validate-json-required="validateJson" name="value"></textarea>
-                    <div ng-messages="p3xrKeyNewForm.value.$error">
-                        <div ng-message-exp="['required']">
-                            {{ $root.p3xr.strings.form.key.error.value }}
+                    <md-input-container class="md-block">
+                        <label>{{ $root.p3xr.strings.form.key.field.value }}</label>
+                        <textarea ng-model="model.value" required p3x-validate-json
+                                  p3x-validate-json-required="validateJson" name="value"></textarea>
+                        <div ng-messages="p3xrKeyNewForm.value.$error">
+                            <div ng-message-exp="['required']">
+                                {{ $root.p3xr.strings.form.key.error.value }}
+                            </div>
                         </div>
-                    </div>
-                    <div ng-messages="p3xrKeyNewForm.value.$error">
-                        <div ng-message-exp="['p3xValidateJson']">
-                            {{ $root.p3xr.strings.label.jsonViewNotParsable }}
+                        <div ng-messages="p3xrKeyNewForm.value.$error">
+                            <div ng-message-exp="['p3xValidateJson']">
+                                {{ $root.p3xr.strings.label.jsonViewNotParsable }}
+                            </div>
                         </div>
-                    </div>
-                </md-input-container>
+                    </md-input-container>
+
+                </div>
 
 
             </md-content>
         </md-dialog-content>
 
-        <md-dialog-actions layout="row" layout-align="end end" md-theme="{{ $root.p3xr.state.theme }}">
+        <md-dialog-actions  md-theme="{{ $root.p3xr.state.theme }}">
 
 
             <md-button class="md-raised md-warn" ng-click="cancel()">

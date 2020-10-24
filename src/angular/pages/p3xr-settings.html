@@ -10,7 +10,7 @@
                       p3xr-label="$root.p3xr.strings.intention.license" p3xr-md-icon="fingerprint"></p3xr-button>
         -->
 
-        <p3xr-button  ng-click="$ctrl.connectionForm({ type: 'new'})"
+        <p3xr-button  ng-click="$ctrl.connectionForm({ type: 'new', $event: $event})"
                      p3xr-label="$root.p3xr.strings.intention.connectionAdd" p3xr-md-icon="add_box"></p3xr-button>
     </p3xr-accordion-actions>
     <p3xr-accordion-content>
@@ -35,7 +35,7 @@
                 </md-button>
 
                 <md-button class="md-primary md-raised"
-                           ng-click="$ctrl.connectionForm({ type: 'edit', model: connection})"
+                           ng-click="$ctrl.connectionForm({ type: 'edit', model: connection, $event: $event})"
                            ng-if="!$root.p3xr.state.cfg.readonlyConnections">
                     <md-icon>edit</md-icon>
                     <span hide-xs>{{ $root.p3xr.strings.intention.edit }}</span>

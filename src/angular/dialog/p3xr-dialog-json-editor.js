@@ -2,7 +2,14 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
 
     return new function () {
 
-        this.show = (options) => {
+        this.show = async(options) => {
+          await import(
+                /* webpackChunkName: "editor" */
+                /* webpackPrefetch: true */
+                "../../editor"
+            )
+
+
                 return $mdDialog.show({
                     controller: function ($scope, $mdDialog, p3xrCommon, $rootScope, p3xrTheme) {
 
@@ -27,11 +34,7 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
                             // /* webpackMode: "lazy" */
                             const execAsync = async() => {
                                 try {
-                                    const { JSONEditor } = await import(
-                                        /* webpackChunkName: "editor" */
-                                        /* webpackPrefetch: true */
-                                        "../../editor"
-                                    )
+
 
                                     $timeout(() => {
                                         // en , zn
@@ -59,10 +62,10 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
                                             //enableTransform: false,
                                             ace: ace,
                                             indentation: p3xr.settings.jsonFormat,
-
+                                            //theme: p3xrTheme.isDark() ? 'ace/theme/twilight' : 'ace/theme/github'
                                         }
                                         if (p3xrTheme.isDark()) {
-                                            options.theme = 'ace/theme/twilight'// 'ace/theme/github'
+                                            options.theme = 'ace/theme/twilight'
                                         }
                                         /*
                                         if (JSON.stringify(obj).length > 10240) {

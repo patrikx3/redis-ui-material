@@ -1,4 +1,4 @@
-<md-dialog aria-label="unused" style="min-width: 320px;">
+<md-dialog class="fullscreen-dialog">
     <form novalidate name="p3xrDialogTreecontrolSettingsForm" ng-submit="submit()">
         <md-toolbar md-theme="{{ $root.p3xr.state.themeLayout }}" class="md-hue-3">
             <div class="md-toolbar-tools">
@@ -9,82 +9,81 @@
             </div>
         </md-toolbar>
         <md-dialog-content md-theme="{{ $root.p3xr.state.theme }}">
-            <md-content class="p3xr-padding">
-
-
-                <div ng-if="$root.p3xr.state.reducedFunctions">
-                    <div>
-                        {{ $root.p3xr.strings.form.treeSettings.keyCount() }}
+            <md-content >
+                <div class="p3xr-padding">
+                    <div ng-if="$root.p3xr.state.reducedFunctions">
+                        <div>
+                            {{ $root.p3xr.strings.form.treeSettings.keyCount() }}
+                        </div>
+                        <br/>
+                        <div>
+                            {{ $root.p3xr.strings.label.tooManyKeys({ count: $root.p3xr.state.keysRaw.length,
+                            maxLightKeysCount: $root.p3xr.settings.maxLightKeysCount}) }}
+                        </div>
+                        <br/>
                     </div>
+
+                    <md-input-container class="md-block p3xr-md-input-container-no-bottom">
+                        <label>{{ $root.p3xr.strings.form.treeSettings.field.treeSeparator }}</label>
+                        <input name="treeSeparator" ng-model="model.treeSeparator">
+                        <!--
+                        <div ng-messages="p3xrDialogTreecontrolSettingsForm.treeSeparator.$error">
+                            <div ng-message="required">{{ $root.p3xr.strings.form.error.required }}</div>
+                        </div>
+                        -->
+                    </md-input-container>
+                    <div class="p3xr-md-input-container-bottom-info">
+                        {{ $root.p3xr.strings.label.treeSeparatorEmpty }}
+                    </div>
+
                     <br/>
-                    <div>
-                        {{ $root.p3xr.strings.label.tooManyKeys({ count: $root.p3xr.state.keysRaw.length,
-                        maxLightKeysCount: $root.p3xr.settings.maxLightKeysCount}) }}
-                    </div>
+
+                    <md-input-container class="md-block p3xr-md-input-container-no-bottom">
+                        <label>{{ $root.p3xr.strings.form.treeSettings.field.page }}</label>
+                        <input type="number" required min="10" max="1000" name="pageCount" step="1" pattern="\d*"
+                               ng-model="model.pageCount">
+                        <div ng-messages="p3xrDialogTreecontrolSettingsForm.pageCount.$error">
+                            <div ng-message-exp="['required', 'min', 'max', 'pattern']">
+                                {{ $root.p3xr.strings.form.treeSettings.error.page }}
+                            </div>
+                        </div>
+                    </md-input-container>
+
                     <br/>
-                </div>
 
-                <md-input-container class="md-block p3xr-md-input-container-no-bottom">
-                    <label>{{ $root.p3xr.strings.form.treeSettings.field.treeSeparator }}</label>
-                    <input name="treeSeparator" ng-model="model.treeSeparator">
-                    <!--
-                    <div ng-messages="p3xrDialogTreecontrolSettingsForm.treeSeparator.$error">
-                        <div ng-message="required">{{ $root.p3xr.strings.form.error.required }}</div>
-                    </div>
-                    -->
-                </md-input-container>
-                <div class="p3xr-md-input-container-bottom-info">
-                    {{ $root.p3xr.strings.label.treeSeparatorEmpty }}
-                </div>
 
-                <br/>
-
-                <md-input-container class="md-block p3xr-md-input-container-no-bottom">
-                    <label>{{ $root.p3xr.strings.form.treeSettings.field.page }}</label>
-                    <input type="number" required min="10" max="1000" name="pageCount" step="1" pattern="\d*"
-                           ng-model="model.pageCount">
-                    <div ng-messages="p3xrDialogTreecontrolSettingsForm.pageCount.$error">
-                        <div ng-message-exp="['required', 'min', 'max', 'pattern']">
-                            {{ $root.p3xr.strings.form.treeSettings.error.page }}
+                    <md-input-container class="md-block p3xr-md-input-container-no-bottom">
+                        <label>{{ $root.p3xr.strings.form.treeSettings.maxValueDisplay }}</label>
+                        <input type="number" required min="-1" max="32768" name="maxValueDisplay" step="1" pattern="-?\d*"
+                               ng-model="model.maxValueDisplay">
+                        <div ng-messages="p3xrDialogTreecontrolSettingsForm.maxValueDisplay.$error">
+                            <div ng-message-exp="['required', 'min', 'max', 'pattern']">
+                                {{ $root.p3xr.strings.form.treeSettings.error.maxValueDisplay }}
+                            </div>
                         </div>
+                    </md-input-container>
+                    <div class="p3xr-md-input-container-bottom-info">
+                        {{ $root.p3xr.strings.form.treeSettings.maxValueDisplayInfo }}
                     </div>
-                </md-input-container>
 
-                <br/>
+                    <br/>
 
-
-                <md-input-container class="md-block p3xr-md-input-container-no-bottom">
-                    <label>{{ $root.p3xr.strings.form.treeSettings.maxValueDisplay }}</label>
-                    <input type="number" required min="-1" max="32768" name="maxValueDisplay" step="1" pattern="-?\d*"
-                           ng-model="model.maxValueDisplay">
-                    <div ng-messages="p3xrDialogTreecontrolSettingsForm.maxValueDisplay.$error">
-                        <div ng-message-exp="['required', 'min', 'max', 'pattern']">
-                            {{ $root.p3xr.strings.form.treeSettings.error.maxValueDisplay }}
+                    <md-input-container class="md-block p3xr-md-input-container-no-bottom">
+                        <label>{{ $root.p3xr.strings.form.treeSettings.maxKeys }}</label>
+                        <input type="number" required min="5" max="100000" name="maxKeys" step="1" pattern="-?\d*"
+                               ng-model="model.maxKeys">
+                        <div ng-messages="p3xrDialogTreecontrolSettingsForm.maxKeys.$error">
+                            <div ng-message-exp="['required', 'min', 'max', 'pattern']">
+                                {{ $root.p3xr.strings.form.treeSettings.error.maxKeys }}
+                            </div>
                         </div>
+                    </md-input-container>
+                    <div class="p3xr-md-input-container-bottom-info">
+                        {{ $root.p3xr.strings.form.treeSettings.maxKeysInfo }}
                     </div>
-                </md-input-container>
-                <div class="p3xr-md-input-container-bottom-info">
-                    {{ $root.p3xr.strings.form.treeSettings.maxValueDisplayInfo }}
-                </div>
-
-                <br/>
-
-                <md-input-container class="md-block p3xr-md-input-container-no-bottom">
-                    <label>{{ $root.p3xr.strings.form.treeSettings.maxKeys }}</label>
-                    <input type="number" required min="5" max="100000" name="maxKeys" step="1" pattern="-?\d*"
-                           ng-model="model.maxKeys">
-                    <div ng-messages="p3xrDialogTreecontrolSettingsForm.maxKeys.$error">
-                        <div ng-message-exp="['required', 'min', 'max', 'pattern']">
-                            {{ $root.p3xr.strings.form.treeSettings.error.maxKeys }}
-                        </div>
-                    </div>
-                </md-input-container>
-                <div class="p3xr-md-input-container-bottom-info">
-                    {{ $root.p3xr.strings.form.treeSettings.maxKeysInfo }}
-                </div>
 
 
-                <span ng-if="!$root.p3xr.state.reducedFunctions" style="margin: 0; padding: 0;">
+                    <span ng-if="!$root.p3xr.state.reducedFunctions" style="margin: 0; padding: 0;">
 
                     <md-input-container class="md-block p3xr-md-input-container-no-bottom">
                         <md-switch ng-model="model.keysSort" name="keysSort" aria-label="" class="p3xr-md-input-container-no-bottom p3xr-md-input-container-no-top">
@@ -113,35 +112,38 @@
 
                 </span>
 
-                <br/>
+                    <br/>
 
-                <md-input-container class="md-block p3xr-md-input-container-no-bottom p3xr-md-input-container-no-top"  >
-                    <md-switch ng-model="model.searchStartsWith" name="searchStartsWith" aria-label="" class="p3xr-md-input-container-no-bottom p3xr-md-input-container-no-top">
-                        {{ model.searchStartsWith ? $root.p3xr.strings.form.treeSettings.label.searchModeStartsWith :
-                        $root.p3xr.strings.form.treeSettings.label.searchModeIncludes }}
-                    </md-switch>
-                </md-input-container>
+                    <md-input-container class="md-block p3xr-md-input-container-no-bottom p3xr-md-input-container-no-top"  >
+                        <md-switch ng-model="model.searchStartsWith" name="searchStartsWith" aria-label="" class="p3xr-md-input-container-no-bottom p3xr-md-input-container-no-top">
+                            {{ model.searchStartsWith ? $root.p3xr.strings.form.treeSettings.label.searchModeStartsWith :
+                            $root.p3xr.strings.form.treeSettings.label.searchModeIncludes }}
+                        </md-switch>
+                    </md-input-container>
 
-                <md-input-container class="md-block p3xr-md-input-container-no-bottom p3xr-md-input-container-no-top" >
-                    <md-switch ng-model="model.jsonFormat" name="jsonFormat" aria-label="" class="p3xr-md-input-container-no-bottom p3xr-md-input-container-no-top">
-                        {{ model.jsonFormat ? $root.p3xr.strings.form.treeSettings.label.jsonFormatTwoSpace :
-                        $root.p3xr.strings.form.treeSettings.label.jsonFormatFourSpace }}
-                    </md-switch>
-                </md-input-container>
+                    <md-input-container class="md-block p3xr-md-input-container-no-bottom p3xr-md-input-container-no-top" >
+                        <md-switch ng-model="model.jsonFormat" name="jsonFormat" aria-label="" class="p3xr-md-input-container-no-bottom p3xr-md-input-container-no-top">
+                            {{ model.jsonFormat ? $root.p3xr.strings.form.treeSettings.label.jsonFormatTwoSpace :
+                            $root.p3xr.strings.form.treeSettings.label.jsonFormatFourSpace }}
+                        </md-switch>
+                    </md-input-container>
 
 
-                <md-input-container class="md-block p3xr-md-input-container-no-bottom p3xr-md-input-container-no-top" >
-                    <md-switch ng-model="model.animation" name="animation" aria-label="" class="p3xr-md-input-container-no-bottom p3xr-md-input-container-no-top">
-                        {{ model.animation ? $root.p3xr.strings.form.treeSettings.label.animation :
-                        $root.p3xr.strings.form.treeSettings.label.noAnimation }}
-                    </md-switch>
-                </md-input-container>
+                    <md-input-container class="md-block p3xr-md-input-container-no-bottom p3xr-md-input-container-no-top" >
+                        <md-switch ng-model="model.animation" name="animation" aria-label="" class="p3xr-md-input-container-no-bottom p3xr-md-input-container-no-top">
+                            {{ model.animation ? $root.p3xr.strings.form.treeSettings.label.animation :
+                            $root.p3xr.strings.form.treeSettings.label.noAnimation }}
+                        </md-switch>
+                    </md-input-container>
+
+                </div>
+
 
 
             </md-content>
         </md-dialog-content>
 
-        <md-dialog-actions layout="row" layout-align="end end" md-theme="{{ $root.p3xr.state.theme }}">
+        <md-dialog-actions  md-theme="{{ $root.p3xr.state.theme }}">
 
             <md-button class="md-raised md-warn" ng-click="cancel()">
                 <md-icon>cancel</md-icon>

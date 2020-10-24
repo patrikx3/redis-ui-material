@@ -285,7 +285,7 @@ p3xr.ng.component('p3xrConsole', {
             $input.focus()
         }
 
-        this.commands = () => {
+        this.commands = (options) => {
             $mdDialog.show({
                 controller: function ($scope, $mdDialog) {
 
@@ -302,6 +302,7 @@ p3xr.ng.component('p3xrConsole', {
 
                 },
                 fullscreen: true,
+                targetEvent: options.$event,
                 template: `
 <md-dialog aria-label="{{ $root.p3xr.strings.intention.commands }}" layout-fill>
   <md-toolbar md-theme="{{$root.p3xr.state.themeLayout}}">

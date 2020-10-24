@@ -7,9 +7,7 @@
 //require('ace-builds/src-noconflict/theme-twilight')
 //require('ace-builds/src-noconflict/theme-github')
 
-const JSONEditor = require('jsoneditor/dist/jsoneditor.js')
+global.JSONEditor = require('jsoneditor/dist/jsoneditor.min.js')
 
 ace.config.setModuleUrl('ace/theme/twilight', require('ace-builds/src-noconflict/theme-twilight.js'))
-//ace.config.setModuleUrl('ace/theme/github', require('file-loader?esModule=false!../node_modules/ace-builds/src-noconflict/theme-github.js'))
-
-export { JSONEditor }
+//ace.config.setModuleUrl('ace/theme/github', require('ace-builds/src-noconflict/theme-tomorrow.js'))

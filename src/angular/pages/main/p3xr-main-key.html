@@ -8,7 +8,7 @@
 -->
 <div style="text-align: right">
 
-    <md-button class="md-button md-raised md-warn" ng-click="$ctrl.delete()">
+    <md-button class="md-button md-raised md-warn" ng-click="$ctrl.delete({ $event: $event})">
         <md-icon>delete</md-icon>
         <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.delete }}</span>
         <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{

@@ -95,6 +95,7 @@ p3xr.ng.component('p3xrMainTree', {
             try {
 
                 await p3xrCommon.confirm({
+                    event: options.$event,
                     message: p3xr.strings.confirm.deleteKey
                 })
 
