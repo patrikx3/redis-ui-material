@@ -56,17 +56,17 @@
 
     <md-divider></md-divider>
 
-    <md-list-item ng-click="$ctrl.setTtl({ $event: $event})" ng-if="$ctrl.response.ttl == -1">
+    <md-list-item ng-click="$ctrl.setTtl({ $event: $event})" ng-if="$ctrl.response.ttl === -1">
         <p title="{{ $root.p3xr.strings.page.key.label.ttlTitle  }}"><span
             class="p3xr-main-key-label-key-title">{{ $root.p3xr.strings.page.key.label.ttl }}</span>:
         </p>
-        <span ng-if="$ctrl.response.ttl == -1">
+        <span ng-if="$ctrl.response.ttl === -1">
             {{ $root.p3xr.strings.page.key.label.ttlNotExpire }}
         </span>
     </md-list-item>
 
 
-    <md-list-item class="md-2-line" ng-click="$ctrl.setTtl({ $event: $event})" ng-if="$ctrl.response.ttl != -1">
+    <md-list-item class="md-2-line" ng-click="$ctrl.setTtl({ $event: $event})" ng-if="$ctrl.response.ttl !== -1">
         <div class="md-list-item-text">
             <h3>
                 <div layout="row" flex>
@@ -86,7 +86,7 @@
             </h3>
             <p ng-click="$ctrl.setTtl({ $event: $event})" style=" text-align: right;">
                <span style="opacity: 0.5; font-weight: normal;" ng-click="$ctrl.setTtl({ $event: $event})">
-                {{ $ctrl.ttlParsed }}
+                   <span id="p3xr-main-key-ttl-counter"></span>
                 </span>
             </p>
         </div>

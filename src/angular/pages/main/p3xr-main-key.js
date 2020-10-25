@@ -88,6 +88,10 @@ p3xr.ng.component('p3xrMainKey', {
                             language: language,
                             delimiter: ' ',
                         })
+                        const counterEl = document.getElementById('p3xr-main-key-ttl-counter')
+                        if (counterEl) {
+                            counterEl.innerText = this.ttlParsed
+                        }
                     } else {
                         $interval.cancel(interval)
                     }

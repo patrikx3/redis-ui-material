@@ -1,4 +1,4 @@
-<md-dialog aria-label="{{ $root.p3xr.strings.intention.jsonViewShow }}" class="fullscreen-dialog fullscreen-dialog-json-editor">
+<md-dialog aria-label="{{ $root.p3xr.strings.intention.jsonViewShow }}" class="fullscreen-dialog fullscreen-dialog-fix-width">
     <md-toolbar md-theme="{{$root.p3xr.state.themeLayout}}" class="md-hue-3">
         <div class="md-toolbar-tools">
             <md-icon>edit</md-icon>
@@ -39,6 +39,7 @@
 
         <md-button ng-if="isJson" class="md-raised md-primary" ng-click="save({ format : true})">
             <md-icon>save</md-icon>
+            <md-icon>format_line_spacing</md-icon>
             <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.saveWithFormatJson }}</span>
             <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="top">{{ $root.p3xr.strings.intention.saveWithFormatJson }}</md-tooltip>
         </md-button>

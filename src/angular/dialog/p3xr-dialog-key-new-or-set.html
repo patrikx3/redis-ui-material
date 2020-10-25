@@ -1,4 +1,4 @@
-<md-dialog aria-label="{{$root.p3xr.strings.form.key.label.formName}}" class="fullscreen-dialog">
+<md-dialog aria-label="{{$root.p3xr.strings.form.key.label.formName}}" class="fullscreen-dialog fullscreen-dialog-fix-width">
     <form novalidate name="p3xrKeyNewForm" ng-submit="submit()">
         <md-toolbar md-theme="{{ $root.p3xr.state.themeLayout }}" class="md-hue-3">
             <div class="md-toolbar-tools">
@@ -69,7 +69,7 @@
                 </span>
 
                     <md-button class="md-button md-raised md-primary" ng-if="$root.p3xr.state.donated" ng-click="jsonEditor({ $event: $event, value: model.value})">
-                        <md-icon>edit</md-icon>
+                        <i class="fas fa-file-alt"></i>
                         <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.jsonViewEditor }}</span>
                         <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{
                             $root.p3xr.strings.intention.jsonViewEditor }}

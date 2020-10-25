@@ -10,3 +10,15 @@ json-tree > json-node > span.key {
     position: relative;
     top: -8px;
 }
+
+/*
+json-tree json-node.expandable::before {
+    font-family: 'Font Awesome 5 Free';
+    content: "\f07b";
+}
+
+json-tree json-node.expandable.expanded::before {
+    content: "\f07c";
+    transform: none;
+}
+ */
