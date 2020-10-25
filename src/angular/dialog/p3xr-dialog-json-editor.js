@@ -18,6 +18,7 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
                         })
 
 
+
                         let editor
                         let obj
 
@@ -104,9 +105,21 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
                         }
                         document.documentElement.addEventListener('keydown', close, true)
 
-                        $scope.$on('$destroy', () => {
+                        const debounce = require('lodash/debounce')
+                        const editorResize = debounce(() => {
                             if (editor) {
+                                editor.aceEditor.resize()
+                                console.log('editorResize')
+                            }
+                        }, p3xr.settings.debounce)
+
+                        $window.on('resize', editorResize)
+
+                        $scope.$on('$destroy', () => {
+                            $window.off('resize', editorResize)
+                            if (editor){
                                 editor.destroy()
+                                editor = undefined
                             }
                             $rootScope.$broadcast('p3xr-main-resizer', {
                                 drag: true
