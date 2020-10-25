@@ -114,7 +114,7 @@ const strings = {
         'sure': 'Sure',
         testConnection: 'Test connection',
         getKey: 'Loading Redis key and associated data ...',
-        jsonViewShow: 'Display JSON tree',
+        jsonViewShow: 'Display JSON',
         jsonViewEditor: 'Edit JSON',
     },
     label: {

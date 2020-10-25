@@ -43,19 +43,23 @@ p3xr.ng.component('p3xrMain', {
             screenSizeIsSmall = isScreenSizeIsSmall;
         });
 
+        /*
         const debouncedTabs = debounce(() => {
             $rootScope.$broadcast('p3x-refresh-statistics-tabs')
         }, p3xr.settings.debounce)
+         */
 
         const rawResize = (options = {}) => {
             //console.log('p3xr-main rawResize')
             //console.time('p3xr-main-resize')
 
             //console.info('p3xr-main resize')
+            /*
             let {redrawTabs} = options
             if (redrawTabs === undefined) {
                 redrawTabs = false;
             }
+             */
             let minus = 0
 
             let $components
@@ -128,9 +132,12 @@ p3xr.ng.component('p3xrMain', {
             } else {
                 destroyResizer()
             }
+
+            /*
             if (redrawTabs) {
                 debouncedTabs()
             }
+             */
             //console.timeEnd('p3xr-main-resize')
         };
 
@@ -162,7 +169,7 @@ p3xr.ng.component('p3xrMain', {
             }
             if (resizeClicked === false) {
                 rawResize({
-                    redrawTabs: true
+                    //redrawTabs: true
                 });
             }
             event.stopPropagation();
@@ -415,7 +422,7 @@ p3xr.ng.component('p3xrMain', {
         let currentElement
         let resizeObserver = new ResizeObserver(entries => {
             if (!resizeClicked) {
-                console.log('ResizeObserver resize', JSON.parse(JSON.stringify(entries)))
+                //console.log('ResizeObserver resize', JSON.parse(JSON.stringify(entries)))
                 rawResize()
             }
         })
@@ -434,9 +441,10 @@ p3xr.ng.component('p3xrMain', {
             let elem = null
             while (elem === null ) {
                 elem = document.getElementById('p3xr-main-treecontrol-controls-container')
-                console.log('waiting for observing tree control controls')
+                console.info('waiting for observing tree control controls')
                 await new Promise(resolve => setInterval(resolve))
             }
+            console.info('found observing tree control controls')
 //            console.log('elem', elem)
             currentElement = elem
             resizeObserver.observe(currentElement)

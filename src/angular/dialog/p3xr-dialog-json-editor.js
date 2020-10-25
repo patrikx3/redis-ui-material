@@ -61,7 +61,7 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
                                             language: language,
                                             //enableSort: false,
                                             //enableTransform: false,
-                                            ace: ace,
+                                            //ace: ace,
                                             indentation: p3xr.settings.jsonFormat,
                                             //theme: p3xrTheme.isDark() ? 'ace/theme/twilight' : 'ace/theme/github'
                                         }
@@ -77,6 +77,7 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
                                         }
                                          */
                                         editor = new JSONEditor(container, options, obj)
+
                                     })
                                 } catch(e) {
                                     p3xrCommon.generalHandleError(e)
@@ -107,9 +108,9 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
 
                         const debounce = require('lodash/debounce')
                         const editorResize = debounce(() => {
-                            if (editor) {
+                            if (editor && editor.aceEditor) {
+                                console.log('resize json editor ace resize')
                                 editor.aceEditor.resize()
-                                console.log('editorResize')
                             }
                         }, p3xr.settings.debounce)
 

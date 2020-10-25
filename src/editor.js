@@ -10,5 +10,5 @@
 global.JSONEditor = require('jsoneditor/dist/jsoneditor.js')
 
 ace.config.setModuleUrl('ace/theme/twilight', require('ace-builds/src-noconflict/theme-twilight.js'))
-ace.config.setModuleUrl('ace/ext/prompt', require('ace-builds/src-noconflict/ext-prompt.js'))
+//ace.config.setModuleUrl('ace/ext/prompt', require('ace-builds/src-noconflict/ext-prompt.js'))
 //ace.config.setModuleUrl('ace/theme/github', require('ace-builds/src-noconflict/theme-tomorrow.js'))
