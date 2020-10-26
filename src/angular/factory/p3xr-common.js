@@ -1,7 +1,5 @@
 p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootScope, p3xrRedisParser, $timeout,) {
 
-    const debounce = require('lodash/debounce')
-
     const generalHandleError = (dataOrError) => {
         if (dataOrError === undefined) {
             return;
@@ -106,17 +104,6 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootSco
 
     }
 
-    const setTableZebraStyles = (options) => {
-        const {$odd} = options
-        if (!$odd) {
-            return '';
-        }
-        let style = '';
-        const bg = $mdColors.getThemeColor(`${p3xr.state.themeLayout}-background-500-0.1`)
-        style += `background-color: ${bg};`
-        return style;
-    }
-
     const result = {
         generalHandleError: generalHandleError,
         toast: toast,
@@ -132,7 +119,6 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootSco
         },
         confirm: confirm,
         loadRedisInfoResponse: loadRedisInfoResponse,
-        setTableZebraStyles: setTableZebraStyles,
     }
 
     return result;

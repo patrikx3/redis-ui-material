@@ -49,10 +49,6 @@ p3xr.ng.component('p3xrMainKeyZset', {
             })
         }
 
-        this.setTableStyles = (options) => {
-            return p3xrCommon.setTableZebraStyles(options)
-        }
-
         this.addZSet = async (options) => {
             try {
                 await p3xrDialogKeyNewOrSet.show({

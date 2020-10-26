@@ -80,9 +80,6 @@ p3xr.ng.component('p3xrMainKeyList', {
             })
         }
 
-        this.setTableStyles = (options) => {
-            return p3xrCommon.setTableZebraStyles(options)
-        }
     }
 })
 

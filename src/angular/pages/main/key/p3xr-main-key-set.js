@@ -76,9 +76,6 @@ p3xr.ng.component('p3xrMainKeySet', {
             })
         }
 
-        this.setTableStyles = (options) => {
-            return p3xrCommon.setTableZebraStyles(options)
-        }
     }
 })
 

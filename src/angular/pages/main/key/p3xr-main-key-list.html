@@ -14,8 +14,8 @@
     </div>
 </div>
 
-<div layout-gt-xs="row" layout="column" layout-align="start start" ng-repeat="value in $ctrl.p3xrValue track by $index"
-     style="{{ $ctrl.setTableStyles({ $odd: $odd }) }}">
+<div layout-gt-xs="row" layout="column" layout-align="start center" ng-repeat="value in $ctrl.p3xrValue track by $index"
+     ng-class="{ 'p3xr-list-key-odd-item': $odd }" class="p3xr-list-key-item">
     <div flex="20" ng-click="$ctrl.editValue({ index: $index, value: value, $event: $event})" style="text-align: right">
 
         {{ $index }}

@@ -76,10 +76,6 @@ p3xr.ng.component('p3xrMainKeyHash', {
                 value: value
             })
         }
-
-        this.setTableStyles = (options) => {
-            return p3xrCommon.setTableZebraStyles(options)
-        }
     }
 })
 
