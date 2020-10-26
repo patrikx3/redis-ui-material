@@ -8,6 +8,10 @@ p3xr.ng.factory('p3xrSocket', function ($rootScope, p3xrCommon, $state) {
         secure: true,
     }
 
+    if (global.p3xrDevMode === true ) {
+        ioOptions.transports = ['websocket']
+    }
+
     const ioClient = io.connect(p3xr.api.host, ioOptions);
 //console.warn(p3xr.api.host, ioOptions)
     let reconnect = false;

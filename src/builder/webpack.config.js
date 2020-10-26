@@ -36,11 +36,7 @@ const vendorEntry = [
     top + "/src/vendor.js"
 ]
 const mainEntry = [
-    top + "/src/main.js"
-]
-
-const editorEntry = [
-    top + "/src/editor.js"
+    top + (minimize ? "/src/main.js" : '/src/main-development.js')
 ]
 
 const plugins = [
