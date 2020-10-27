@@ -1,6 +1,6 @@
 <div layout-gt-xs="row" layout="column"  layout-align-gt-sm="start center" layout-align="center center" md-colors="{ background: 'primary-300' }">
     <div flex="20">
-        &nbsp;
+        <span ng-if="!$root.$mdMedia('xs')">&nbsp;</span>
         {{ $root.p3xr.strings.page.key.zset.table.score }}
     </div>
     <div flex="60">
@@ -18,7 +18,7 @@
      ng-class="{ 'p3xr-list-key-odd-item': $odd }" class="p3xr-list-key-item">
     <div flex="20"
          ng-click="$ctrl.editValue({ score: value[0], member: value[1], $event: $event})">
-        &nbsp;
+        <span ng-if="!$root.$mdMedia('xs')">&nbsp;</span>
         {{ value[0] }}
     </div>
     <div flex="60" class="p3xr-pre" style="overflow: auto;align-items: flex-start; max-height: 200px;"

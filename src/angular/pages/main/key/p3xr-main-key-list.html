@@ -1,6 +1,6 @@
 <div layout-gt-xs="row" layout="column" layout-align-gt-sm="start center" layout-align="center center" md-colors="{ background: 'primary-300' }">
     <div flex="20">
-        &nbsp;
+        <span ng-if="!$root.$mdMedia('xs')">&nbsp;</span>
         {{ $root.p3xr.strings.page.key.list.table.index }}
     </div>
     <div flex="60">
@@ -17,7 +17,7 @@
 <div layout-gt-xs="row" layout="column" layout-align-gt-sm="start start" layout-align="center center" ng-repeat="value in $ctrl.p3xrValue track by $index"
      ng-class="{ 'p3xr-list-key-odd-item': $odd }" class="p3xr-list-key-item">
     <div flex="20" ng-click="$ctrl.editValue({ index: $index, value: value, $event: $event})">
-        &nbsp;
+        <span ng-if="!$root.$mdMedia('xs')">&nbsp;</span>
         {{ $index }}
     </div>
     <div flex="60" class="p3xr-pre" style="overflow: auto;align-items: flex-start; max-height: 200px;"
