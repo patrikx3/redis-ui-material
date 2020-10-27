@@ -149,7 +149,7 @@ p3xr.ng.component('p3xrMainKey', {
                     wasExpiring = true
                 }
                 loadTtl()
-
+                $scope.$digest()
 
             } catch (e) {
                 hadError = e
@@ -169,6 +169,7 @@ p3xr.ng.component('p3xrMainKey', {
                 }, p3xr.settings.debounce)
                 */
             }
+
         }
 
         this.$onInit = () => loadKey()

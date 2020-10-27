@@ -12,6 +12,15 @@ p3xr.ng.factory('p3xrSocket', function ($rootScope, p3xrCommon, $state) {
         ioOptions.transports = ['websocket']
     }
 
+    /*
+    // on reconnection, reset the transports option, as the Websocket
+    // connection may have failed (caused by proxy, firewall, browser, ...)
+    // https://socket.io/docs/client-api/
+    ioClient.on('reconnect_attempt', () => {
+      ioClient.io.opts.transports = ['polling', 'websocket'];
+    });
+     */
+
     const ioClient = io.connect(p3xr.api.host, ioOptions);
 //console.warn(p3xr.api.host, ioOptions)
     let reconnect = false;
