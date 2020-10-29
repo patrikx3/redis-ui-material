@@ -36,7 +36,7 @@ p3xr.theme.matrix = function ($mdThemingProvider) {
         .accentPalette('lime', {
             'default': 'A400',
         })
-        .warnPalette('purple', {
+        .warnPalette('green', {
             'default': 'A700',
         })
         .backgroundPalette('grey')

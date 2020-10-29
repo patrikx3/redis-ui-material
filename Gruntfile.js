@@ -31,6 +31,7 @@ module.exports = (grunt) => {
                             'src/angular/**/*.js',
                             '!src/angular/injector.js',
                             '!src/angular/boot.js',
+                            '!src/angular/angular-bootstrap.js',
                             '!src/angular/routes.js',
                         ],
                     }

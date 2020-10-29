@@ -1,3 +1,4 @@
+const config = require('corifeus-builder/src/utils/config').config
 const webpack = require('webpack');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -98,15 +99,12 @@ For more information about all licenses, please see ${webpackBanner}
                 compress: {
                     warnings: false
                 },
-                ecma: 8,
+                ecma: config.ecma,
                 // todo found out if mangle use or not
                 // mangle: false === keep function names
                 // mangle: true === drop function names
                 // for mangle true we are us angularjs-annotate with babel
                 mangle: true,
-
-                comments: false,
-                beautify: false
             },
         }),
     ]
@@ -277,13 +275,7 @@ module.exports = {
             ]
         },
         hot: true,
-        inline: true,
-        stats: {
-            colors: true
-        },
-        clientLogLevel: 'none',
-        progress: true,
-        noInfo: false
+       // hotOnly: true,
     },
 
 }

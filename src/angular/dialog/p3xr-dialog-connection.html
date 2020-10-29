@@ -146,19 +146,13 @@
         -->
         <md-dialog-actions  md-theme="{{ $root.p3xr.state.theme }}" class="p3xr-dialog-connection-actions">
 
-                <md-button class="md-raised md-warn" ng-click="cancel()">
-                    <md-icon>cancel</md-icon>
-                    <span ng-if="$root.$mdMedia('(min-width: 699px)')">{{ $root.p3xr.strings.intention.cancel }}</span>
-                    <md-tooltip ng-if="$root.$mdMedia('(max-width: 699px)')" md-direction="top">{{
-                        $root.p3xr.strings.intention.cancel }}
-                    </md-tooltip>
-                </md-button>
-
-
-                <md-button class="md-raised md-primary" type="submit" ng-if="!$root.p3xr.state.cfg.readonlyConnections">
-                    <md-icon>{{ options.type === 'new' ? 'add' : 'save' }}</md-icon>
-                    {{ options.type === 'new' ? $root.p3xr.strings.intention.add : $root.p3xr.strings.intention.save }}
-                </md-button>
+            <md-button class="md-raised md-warn" ng-click="cancel()">
+                <md-icon>cancel</md-icon>
+                <span ng-if="$root.$mdMedia('(min-width: 699px)')">{{ $root.p3xr.strings.intention.cancel }}</span>
+                <md-tooltip ng-if="$root.$mdMedia('(max-width: 699px)')" md-direction="top">{{
+                    $root.p3xr.strings.intention.cancel }}
+                </md-tooltip>
+            </md-button>
 
             <span md-theme="{{ $root.p3xr.state.themeCommon }}">
                 <md-button class="md-raised md-primary" ng-click="testConnection()">
@@ -166,6 +160,11 @@
                     {{ $root.p3xr.strings.intention.testConnection }}
                 </md-button>
             </span>
+
+            <md-button class="md-raised md-primary" type="submit" ng-if="!$root.p3xr.state.cfg.readonlyConnections">
+                <md-icon>{{ options.type === 'new' ? 'add' : 'save' }}</md-icon>
+                {{ options.type === 'new' ? $root.p3xr.strings.intention.add : $root.p3xr.strings.intention.save }}
+            </md-button>
 
 
         </md-dialog-actions>

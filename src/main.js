@@ -10,6 +10,8 @@ require('./decorate/string')
 
 global.p3xr = global.p3xr || {}
 
+p3xr.destroy = () => {}
+
 p3xr.theme = {
     dark: undefined,
     light: undefined,
@@ -20,7 +22,6 @@ p3xr.ui = {
     htmlEncode: global.htmlEncode
 }
 
-require('./core/corifeus-renderer')
 require('./core/settings')
 require('./core/strings')
 require('./core/random')

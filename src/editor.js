@@ -6,6 +6,7 @@
 //require('ace-builds/src-noconflict/ext-searchbox')
 //require('ace-builds/src-noconflict/theme-twilight')
 //require('ace-builds/src-noconflict/theme-github')
+require('jsoneditor/dist/jsoneditor.css')
 
 global.JSONEditor = require('jsoneditor/dist/jsoneditor.js')
 

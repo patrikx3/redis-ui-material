@@ -391,8 +391,5 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
     p3xrTheme.start()
     console.info('P3X Redis UI ran')
 })
+require('./angular-bootstrap')()
 
-angular.element(document).ready(() => {
-    const bootstrapElement = document.getElementById('p3xr-redis-ui-bootstrap');
-    angular.bootstrap(bootstrapElement, ['p3xr-redis-ui']);
-})
