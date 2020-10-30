@@ -57,13 +57,7 @@
 
     </div>
 
-    <div ng-if="$root.p3xr.state.connections.list.length === 0" layout-padding>
-        <md-button ui-sref="settings" md-no-ink
-                   style="display: inline-block;  word-wrap: break-word;  white-space: normal;">
-            {{ $root.p3xr.strings.intention.noConnections }}
-
-        </md-button>
-    </div>
+    <div ng-if="$root.p3xr.state.connections.list.length === 0 && $root.p3xr.state.connection === undefined" layout-padding><md-button ui-sref="settings" md-no-ink style="display: inline-block;  word-wrap: break-word;  white-space: normal;">{{ $root.p3xr.strings.intention.noConnections }}</md-button></div>
 
     <div ng-if="$root.p3xr.state.connection !== undefined">
 

@@ -129,6 +129,10 @@ treecontrol i.tree-branch-head:before {
 .p3xr-list-key-item {
     border-bottom: 1px solid ${this.isDark() ? $mdColors.getThemeColor(p3xr.state.themeLayout + '-background-300-0.1') : $mdColors.getThemeColor(p3xr.state.themeLayout + '-background-700-0.1') };
 }
+
+body {
+    background-color: ${$mdColors.getThemeColor(p3xr.state.themeLayout + '-background')};
+}
 `
 
                 $('head').append('<style id="p3xr-theme-styles">' + styles + '</style>')
