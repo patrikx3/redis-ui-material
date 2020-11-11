@@ -3,8 +3,8 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
     return new function () {
 
         this.show = async(options) => {
+            /* webpackChunkName: "editor" */
           await import(
-                /* webpackChunkName: "editor" */
                 /* webpackPrefetch: true */
                 "../../editor"
             )

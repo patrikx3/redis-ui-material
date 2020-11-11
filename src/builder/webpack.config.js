@@ -8,6 +8,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const fileAsset = `[name].[contenthash].[ext]`;
 const minimize = process.argv.includes('--mode=production');
 const mode = minimize ? 'production' : 'development';
+const useStats = process.env.hasOwnProperty('WEBPACK_STATS')
 
 const filenamePrefix = minimize ? '[name].[contenthash]' : '[name]'
 
@@ -57,6 +58,13 @@ const plugins = [
     }),
 
 ];
+
+if (useStats) {
+    const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+    plugins.push(
+        new BundleAnalyzerPlugin()
+    )
+}
 
 if (minimize) {
 
@@ -172,7 +180,6 @@ const rules = [
             {
                 loader: MiniCssExtractPlugin.loader,
                 options: {
-                    hmr: !minimize,
                 },
             },
             'css-loader',
@@ -219,6 +226,13 @@ let optimization = {
 }
 
 if (minimize) {
+
+    rules.push({
+        test: /\.js$/,
+        loader: 'webpack-remove-debug'
+    })
+
+
     rules.push(      {
         test: /\.js$/,
         exclude: /node_modules/,
