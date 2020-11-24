@@ -56,6 +56,11 @@ p3xr-main {
         padding-left: 4px;
     }
 
+    treecontrol .tree-label:focus, treecontrol .tree-label.tree-selected {
+        outline: none;
+        font-weight: normal;
+    }
+
 
     .p3xr-main-tree {
         .p3xr-main-tree-node {

@@ -3,5 +3,8 @@
 @import '~angular-tree-control/css/tree-control.css';
 @import '~angular-json-tree/dist/angular-json-tree.css';
 @import '~@fortawesome/fontawesome-free/css/all.min.css';
-@import '~fontsource-roboto/latin.css';
-@import '~fontsource-roboto-mono/latin.css';
+
+@import '~fontsource-roboto/index.css';
+@import '~fontsource-roboto-mono/index.css';
+
+@import "~angular/angular-csp.css";

@@ -6,7 +6,7 @@ p3xr.ng.component('p3xrMainKey', {
     bindings: {
         p3xrResize: '&',
     },
-    controller: function (p3xrCommon, p3xrRedisParser, p3xrSocket, $rootScope, $stateParams, $timeout, $scope, $mdDialog, $state, $interval, p3xrDialogTtl) {
+    controller: function (p3xrCommon, p3xrRedisParser, p3xrSocket, $rootScope, $stateParams, $timeout, $scope, $mdDialog, $state, $interval, p3xrDialogTtl, p3xrTheme, $mdColors) {
 
         this.$stateParams = $stateParams;
 
@@ -172,9 +172,27 @@ p3xr.ng.component('p3xrMainKey', {
 
         }
 
-        this.$onInit = () => loadKey()
+        const generateHighlight = () => {
+            $('#p3xr-theme-styles-tree-key').remove()
+            $('head').append('<style id="p3xr-theme-styles-tree-key">' + `
+[data-p3xr-tree-key="${p3xr.ui.htmlEncode($stateParams.key)}"] {
+    background-color: ${p3xrTheme.isDark() ? $mdColors.getThemeColor(p3xr.state.themeCommon + '-accent-300') : $mdColors.getThemeColor(p3xr.state.themeCommon + '-accent') } !important;
+    color: ${p3xrTheme.isDark() ? 'black' : 'white' } !important;
+    padding: 2px;
+}
+` + '</style>')
+        }
+
+        this.$onInit = () => {
+            loadKey()
+            generateHighlight()
+        }
+
+        $scope.$on('p3xr-theme-switched', generateHighlight)
+
 
         this.$onDestroy = function () {
+            $('#p3xr-theme-styles-tree-key').remove()
             $interval.cancel(interval)
         };
 

@@ -137,6 +137,9 @@ body.p3xr-theme-dark[md-theme="p3xrThemeMatrixLayout"] treecontrol i.tree-branch
 `
 
                 $('head').append('<style id="p3xr-theme-styles">' + styles + '</style>')
+
+
+                $rootScope.$broadcast('p3xr-theme-switched')
             }
 
 

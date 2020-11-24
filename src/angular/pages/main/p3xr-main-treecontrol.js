@@ -244,6 +244,10 @@ p3xr.ng.component('p3xrMainTree', {
             return p3xr.ui.htmlEncode(node.key)
         }
 
+        this.extractNodeKey = (node) => {
+            return p3xr.ui.htmlEncode(node.key)
+        }
+
 
         this.addKey = async (options) => {
             const {event, node} = options

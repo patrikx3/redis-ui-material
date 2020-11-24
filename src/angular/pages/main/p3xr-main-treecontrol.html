@@ -5,17 +5,17 @@
 
 
     <span in-view="$ctrl.displayNode(node, $inview)" ng-if="!node.$inview" style="display: inline-block; width: 89%; margin-left: auto; margin-right: auto; background-color: rgba(128, 128, 128, 0.5); height: 2px; margin-bottom: 10px; margin-top: 10px;"></span>
-    <span ng-if="node.$inview">
+    <span ng-if="node.$inview" data-p3xr-tree-key="{{$ctrl.extractNodeKey(node)}}">
         <md-tooltip md-direction="top">{{ $ctrl.extractNodeTooltip(node) }}</md-tooltip>
         <label class="p3xr-main-tree-node" ng-mouseover="node.show = true" ng-mouseleave="node.show = false">
 
-        <span ng-switch="node.keysInfo.type">
-            <i ng-switch-when="hash" class="p3xr-main-treecontrol-node-icon fas fa-hashtag" aria-hidden="true"></i>
-            <i ng-switch-when="list" class="p3xr-main-treecontrol-node-icon fas fa-list-ol" aria-hidden="true"></i>
-            <i ng-switch-when="set" class="p3xr-main-treecontrol-node-icon fas fa-list" aria-hidden="true"></i>
-            <i ng-switch-when="string" class="p3xr-main-treecontrol-node-icon fas fa-ellipsis-h" aria-hidden="true"></i>
-            <i ng-switch-when="zset" class="p3xr-main-treecontrol-node-icon fas fa-chart-line" aria-hidden="true"></i>
-        </span>
+            <span ng-switch="node.keysInfo.type">
+                <i ng-switch-when="hash" class="p3xr-main-treecontrol-node-icon fas fa-hashtag" aria-hidden="true"></i>
+                <i ng-switch-when="list" class="p3xr-main-treecontrol-node-icon fas fa-list-ol" aria-hidden="true"></i>
+                <i ng-switch-when="set" class="p3xr-main-treecontrol-node-icon fas fa-list" aria-hidden="true"></i>
+                <i ng-switch-when="string" class="p3xr-main-treecontrol-node-icon fas fa-ellipsis-h" aria-hidden="true"></i>
+                <i ng-switch-when="zset" class="p3xr-main-treecontrol-node-icon fas fa-chart-line" aria-hidden="true"></i>
+            </span>
             {{node.label}}
             <span class="p3xr-main-tree-node-count" ng-if="node.type === 'folder'">{{$root.p3xr.settings.redisTreeDivider}}* ({{node.childCount}})</span>
             <span class="p3xr-main-tree-node-count"
