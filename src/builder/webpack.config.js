@@ -129,6 +129,7 @@ For more information about all licenses, please see ${webpackBanner}
     )
 
     /*
+    https://webpack.js.org/guides/build-performance/#source-maps
     plugins.push(
         new webpack.SourceMapDevToolPlugin({
             filename: 'sourcemaps/[file].map',

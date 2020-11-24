@@ -123,15 +123,16 @@ treecontrol i.tree-branch-head:before {
     ${this.isDark() ? 'text-shadow: 1px 1px 1px rgba(55, 29, 27, 0.5);' : 'text-shadow: 1px 1px 0px rgba(55, 11, 0, 0.5);' }
 }
 
+body.p3xr-theme-dark[md-theme="p3xrThemeMatrixLayout"] treecontrol i.tree-branch-head:before {
+    color: ${$mdColors.getThemeColor('lime-A400')} !important;
+}
+
+
 .p3xr-list-key-odd-item {
     background-color: ${$mdColors.getThemeColor(p3xr.state.themeLayout + '-background-500-0.1')};
 }
 .p3xr-list-key-item {
     border-bottom: 1px solid ${this.isDark() ? $mdColors.getThemeColor(p3xr.state.themeLayout + '-background-300-0.1') : $mdColors.getThemeColor(p3xr.state.themeLayout + '-background-700-0.1') };
-}
-
-body {
-    background-color: ${$mdColors.getThemeColor(p3xr.state.themeLayout + '-background')};
 }
 `
 

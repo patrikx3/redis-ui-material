@@ -59,6 +59,7 @@ p3xr-main {
 
     .p3xr-main-tree {
         .p3xr-main-tree-node {
+            cursor: pointer;
             line-height: 28px !important;
             white-space: nowrap; /*# STEP-2   #Set nowrap for node labels ###### THIS DID THE TRICK FOR ME ########*/
             .p3xr-main-tree-node-count {

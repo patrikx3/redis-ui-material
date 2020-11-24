@@ -25,7 +25,7 @@ md-checkbox:not(.md-checked) .md-icon {
     }
 }
 
-body.p3xr-theme-dark > div[md-theme="p3xrThemeDarkoBluoLayout"] {
+body.p3xr-theme-dark[md-theme="p3xrThemeDarkoBluoLayout"] {
     #p3xr-main-header .md-select-icon {
         color: white !important;
     }
@@ -36,7 +36,7 @@ body.p3xr-theme-dark > div[md-theme="p3xrThemeDarkoBluoLayout"] {
 
 }
 
-body.p3xr-theme-light > div[md-theme="p3xrThemeRedisLayout"] {
+body.p3xr-theme-light[md-theme="p3xrThemeRedisLayout"] {
     md-checkbox.md-checked .md-icon {
         background-color: rgba(255, 255, 255, 0.5);
     }
@@ -53,7 +53,7 @@ body.p3xr-theme-light > div[md-theme="p3xrThemeRedisLayout"] {
     }
 }
 
-body.p3xr-theme-dark > div[md-theme="p3xrThemeMatrixLayout"] {
+body.p3xr-theme-dark[md-theme="p3xrThemeMatrixLayout"] {
     md-checkbox.md-checked .md-icon {
         background-color: transparent;
         border-color: black;
