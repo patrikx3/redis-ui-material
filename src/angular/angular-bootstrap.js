@@ -8,10 +8,22 @@ module.exports = () => {
         document.body.innerHTML = bootstrapHtml
     }
 
-    angular.element(document).ready(() => {
-        const bootstrapElement = document.getElementById('p3xr-redis-ui-bootstrap');
-        angular.bootstrap(bootstrapElement, ['p3xr-redis-ui']);
-    })
+    const exec = () => {
+        angular.element(document).ready(() => {
+            const bootstrapElement = document.getElementById('p3xr-redis-ui-bootstrap');
+            angular.bootstrap(bootstrapElement, ['p3xr-redis-ui']);
+        })
+    }
+    if (document.hasFocus()) {
+        exec()
+    } else {
+        const focus =  () => {
+            exec()
+            window.removeEventListener('focus', focus)
+        }
+        window.addEventListener('focus', focus)
+
+    }
 
 }
 
