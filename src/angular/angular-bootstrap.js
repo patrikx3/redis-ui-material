@@ -14,7 +14,7 @@ module.exports = () => {
             angular.bootstrap(bootstrapElement, ['p3xr-redis-ui']);
         })
     }
-    if (document.hasFocus()) {
+    if (document.hasFocus() || /electron/i.test(navigator.userAgent)) {
         exec()
     } else {
         const focus =  () => {
