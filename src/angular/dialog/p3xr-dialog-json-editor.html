@@ -25,7 +25,7 @@
 
     <md-dialog-actions  md-theme="{{ $root.p3xr.state.theme }}">
 
-        <md-button ng-click="ok()" class="md-raised md-warn" aria-label="{{ $root.p3xr.strings.intention.close }}">
+        <md-button ng-click="ok()" class="md-raised md-warn" aria-label="{{ $root.p3xr.strings.intention.close }}" md-autofocus>
             <md-icon>cancel</md-icon>
             <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.cancel }}</span>
             <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="top">{{ $root.p3xr.strings.intention.cancel }}</md-tooltip>
@@ -37,7 +37,7 @@
             <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="top">{{ $root.p3xr.strings.intention.save }}</md-tooltip>
         </md-button>
 
-        <md-button ng-if="isJson" class="md-raised md-primary" ng-click="save({ format : true})">
+        <md-button ng-if="isJson" class="md-raised md-primary" ng-click="save({ format : true})" >
             <md-icon>save</md-icon>
             <md-icon>format_line_spacing</md-icon>
             <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.saveWithFormatJson }}</span>

@@ -403,3 +403,7 @@ md-input-container.p3xr-md-input-container-no-bottom div.md-errors-spacer {
     background-color: black !important;
     color: white !important;
 }
+
+.md-raised:focus {
+    outline: -webkit-focus-ring-color auto 1px;
+}

@@ -53,7 +53,7 @@
                 </md-switch>
             </div>
             <div>
-                <md-button class="md-button md-raised md-warn" ng-click="$ctrl.cancelEdit()">
+                <md-button class="md-button md-raised md-warn" ng-click="$ctrl.cancelEdit()" md-autofocus>
                     <md-icon>cancel</md-icon>
                      <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.cancel }}</span>
                     <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{ $root.p3xr.strings.intention.cancel }}</md-tooltip>

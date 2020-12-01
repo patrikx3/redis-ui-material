@@ -1,6 +1,6 @@
 {
     "name": "p3x-redis-ui-material",
-    "version": "2020.10.540",
+    "version": "2020.10.541",
     "description": "💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via http and socket.io",
     "corifeus": {
         "icon": "fas fa-database",
@@ -86,8 +86,8 @@
         "style-loader": "^2.0.0",
         "terser-webpack-plugin": "^5.0.3",
         "timestring": "^6.0.0",
-        "webpack": "^5.8.0",
-        "webpack-bundle-analyzer": "^4.1.0",
+        "webpack": "^5.9.0",
+        "webpack-bundle-analyzer": "^4.2.0",
         "webpack-cli": "^4.2.0",
         "webpack-dev-server": "^3.11.0",
         "webpack-remove-debug": "^0.1.0"

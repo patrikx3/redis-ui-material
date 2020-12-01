@@ -245,6 +245,9 @@ p3xr.ng.component('p3xrMainTree', {
         }
 
         this.extractNodeKey = (node) => {
+            if (node.type === 'folder') {
+                return ''
+            }
             return p3xr.ui.htmlEncode(node.key)
         }
 
