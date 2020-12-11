@@ -8,6 +8,7 @@ p3xr-console {
     #p3xr-console-content {
 
         font-family: 'Roboto Mono' !important;
+        font-weight: 500;
 
         $minWidthCalc: 20px;
 
@@ -16,6 +17,7 @@ p3xr-console {
         #p3xr-console-content-output {
             pre {
                 font-family: 'Roboto Mono' !important;
+                font-weight: 500;
                 white-space: pre-wrap;
             }
 

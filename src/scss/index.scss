@@ -355,6 +355,7 @@ input:-webkit-autofill {
 
 .p3xr-pre {
     font-family: 'Roboto Mono' !important;
+    font-weight: 500;
     font-size: 16px;
     line-height: 18px;
     overflow: hidden !important;
@@ -382,8 +383,14 @@ input:-webkit-autofill {
 
 @import '../injector';
 
+input {
+    font-family: 'Roboto Mono' !important;
+    font-weight: 500;
+}
+
 treecontrol, textarea {
     font-family: 'Roboto Mono' !important;
+    font-weight: 500;
 }
 
 md-input-container.p3xr-md-input-container-no-bottom div.md-errors-spacer {
@@ -393,6 +400,7 @@ md-input-container.p3xr-md-input-container-no-bottom div.md-errors-spacer {
 
 .p3xr-roboto-monospace * {
     font-family: 'Roboto Mono' !important;
+    font-weight: 500;
 }
 
 .p3xr-padding {
