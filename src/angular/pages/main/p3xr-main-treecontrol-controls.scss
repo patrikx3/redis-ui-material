@@ -49,11 +49,12 @@ p3xr-main-treecontrol-controls {
     }
 }
 .p3xr-main-treecontrol-controls-divider-select-container {
-    font-family: 'Roboto Mono';
+    font-family: 'Roboto Mono' !important;
     font-weight: 500;
+    font-size: 14px;
     padding: 0px !important;
     top: 137px !important;
-    left: 79px !important;
+    left: 81px !important;
     md-select-menu {
         md-content {
             min-width: auto;
