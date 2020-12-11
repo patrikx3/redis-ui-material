@@ -383,14 +383,14 @@ input:-webkit-autofill {
 
 @import '../injector';
 
-input {
+input, textarea {
     font-family: 'Roboto Mono' !important;
-    font-weight: 500;
+//    font-weight: 500;
 }
 
-treecontrol, textarea {
+treecontrol {
     font-family: 'Roboto Mono' !important;
-    font-weight: 500;
+    font-weight: 500 !important;
 }
 
 md-input-container.p3xr-md-input-container-no-bottom div.md-errors-spacer {
@@ -400,7 +400,7 @@ md-input-container.p3xr-md-input-container-no-bottom div.md-errors-spacer {
 
 .p3xr-roboto-monospace * {
     font-family: 'Roboto Mono' !important;
-    font-weight: 500;
+    font-weight: 500 !important;
 }
 
 .p3xr-padding {
