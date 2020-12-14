@@ -166,6 +166,10 @@ const strings = {
             on: 'Cluster on',
             off: 'Cluster off',
         },
+        readonly: {
+            on: 'Readonly on',
+            off: 'Readonly off',
+        },
         theme: {
             light: 'Light',
             dark: 'Dark enterprise',
@@ -228,6 +232,7 @@ const strings = {
         'delete-connection': 'This connection was deleted, so you are disconnected to this Redis instance.',
         'save-connection': 'This connection was changed, so you are disconnected to this Redis instance. You may re-connect.',
         'readonly-connections': 'Connections add/save/delete are readonly only!',
+        'readonly-connection-mode': 'This connection is read only mode!',
         'list-out-of-bounds': 'This list index is out of bounds',
         'donation-ware-feature': 'This feature is present in the donation version.',
     },

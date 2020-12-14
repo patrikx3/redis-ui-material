@@ -23,6 +23,7 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                                 port: undefined,
                                 password: undefined,
                                 id: undefined,
+                                readonly: undefined,
                             }
                         }
                         if (!$scope.model.hasOwnProperty('cluster')) {

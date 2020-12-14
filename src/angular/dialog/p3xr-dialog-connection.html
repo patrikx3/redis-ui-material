@@ -53,6 +53,13 @@
                     <span ng-if="$root.p3xr.state.donated">
 
                     <md-input-container style="margin: 0px">
+                        <md-switch ng-model="model.readonly" name="readonly" aria-label=""
+                                   ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
+                            {{ model.readonly ? $root.p3xr.strings.label.readonly.on : $root.p3xr.strings.label.readonly.off }}
+                        </md-switch>
+                    </md-input-container>
+
+                    <md-input-container style="margin: 0px">
                         <md-switch ng-model="model.awsElastiCache" name="awsElastiCache" aria-label=""
                                    ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
                             {{ model.awsElastiCache ? $root.p3xr.strings.label.awsElastiCache.on :

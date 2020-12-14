@@ -2,8 +2,8 @@
     <div flex style="padding-left: 3px">
         {{ $root.p3xr.strings.page.key.set.table.value }}
     </div>
-    <div flex="5" style="text-align: right">
-        <md-button class="md-icon-button " ng-click="$ctrl.addSet({ $event: $event})">
+    <div flex="5" style="text-align: right" class="p3xr-connected-readonly-filler">
+        <md-button class="md-icon-button " ng-click="$ctrl.addSet({ $event: $event})" ng-if="$root.p3xr.state.connection.readonly !== true">
             <md-tooltip>{{ $root.p3xr.strings.intention.add }}</md-tooltip>
             <md-icon>add</md-icon>
         </md-button>
@@ -16,7 +16,7 @@
          ng-click="$ctrl.editValue({ value: value, $event: $event})"><span ng-if="$root.p3xr.settings.maxValueDisplay > 0 && value.length > $root.p3xr.settings.maxValueDisplay">{{ value.substring(0, $root.p3xr.settings.maxValueDisplay) }}...</span><span ng-if="$root.p3xr.settings.maxValueDisplay === 0 || value.length <= $root.p3xr.settings.maxValueDisplay || $root.p3xr.settings.maxValueDisplay === -1 ">{{ value }}</span></div>
     <div flex="5" style="text-align: right; ">
 
-        <md-button class="md-icon-button md-warn" ng-click="$ctrl.deleteSetMember({ value: value, $event: $event})">
+        <md-button class="md-icon-button md-warn" ng-click="$ctrl.deleteSetMember({ value: value, $event: $event})"  ng-if="$root.p3xr.state.connection.readonly !== true">
             <md-tooltip>{{ $root.p3xr.strings.intention.delete }}</md-tooltip>
             <md-icon>delete</md-icon>
         </md-button>

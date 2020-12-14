@@ -31,13 +31,13 @@
             <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="top">{{ $root.p3xr.strings.intention.cancel }}</md-tooltip>
         </md-button>
 
-        <md-button ng-if="isJson" class="md-raised md-primary" ng-click="save({ format : false})">
+        <md-button ng-if="isJson && $root.p3xr.state.connection.readonly !== true" class="md-raised md-primary" ng-click="save({ format : false})">
             <md-icon>save</md-icon>
             <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.save }}</span>
             <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="top">{{ $root.p3xr.strings.intention.save }}</md-tooltip>
         </md-button>
 
-        <md-button ng-if="isJson" class="md-raised md-primary" ng-click="save({ format : true})" >
+        <md-button ng-if="isJson && $root.p3xr.state.connection.readonly !== true" class="md-raised md-primary" ng-click="save({ format : true})">
             <md-icon>save</md-icon>
             <md-icon>format_line_spacing</md-icon>
             <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.saveWithFormatJson }}</span>

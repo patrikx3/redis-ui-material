@@ -294,6 +294,13 @@ p3xr.ng.component('p3xrMainTree', {
         });
 
 
+        this.treeHover = ({node}) => {
+            if (p3xr.state.connection.readonly === true) {
+                return
+            }
+            node.show = true
+        }
+
     }
 })
 

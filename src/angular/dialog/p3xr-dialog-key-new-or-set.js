@@ -116,7 +116,7 @@ p3xr.ng.factory('p3xrDialogKeyNewOrSet', function (p3xrCommon, $mdDialog, p3xrSo
                                     $mdDialog.cancel();
 
                                 } catch (e) {
-                                    reject(e)
+                                    //reject(e)
                                     p3xrCommon.generalHandleError(e)
                                 }
 

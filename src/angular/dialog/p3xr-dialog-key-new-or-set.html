@@ -133,7 +133,7 @@
             </md-button>
 
 
-            <md-button class="md-raised md-primary" type="submit">
+            <md-button class="md-raised md-primary" type="submit"  ng-if="$root.p3xr.state.connection.readonly !== true">
                 <md-icon>{{ options.type === 'edit' ? 'edit' : 'add'}}</md-icon>
                 {{ options.type === 'edit' ? $root.p3xr.strings.intention.save : $root.p3xr.strings.intention.add }}
             </md-button>

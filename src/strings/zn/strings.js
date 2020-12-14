@@ -163,6 +163,10 @@ const strings = {
             on: '群集',
             off: '集群关闭',
         },
+        readonly: {
+            on: '只读',
+            off: '只读关闭',
+        },
         theme: {
             light: '浅棕',
             dark: '黑暗企业',
@@ -225,6 +229,7 @@ const strings = {
         'delete-connection': '此连接已删除，因此您与此Redis实例断开连接。',
         'save-connection': '此连接已更改，因此您与此Redis实例断开连接。 你可以重新连接。',
         'readonly-connections': '连接(添加/保存/删除)只是只读！',
+        'readonly-connection-mode': '此连接为只读模式！',
         'list-out-of-bounds': '此列表索引超出范围',
         'donation-ware-feature': '捐赠版本中提供了此功能。',
     },
