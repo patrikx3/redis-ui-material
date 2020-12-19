@@ -146,7 +146,7 @@ p3xr.ng.component('p3xrConsole', {
                 }
             } catch (e) {
                 console.error(e)
-                $output.append(`<pre>${e.message}</pre>`)
+                $output.append(`<pre>${p3xr.strings.code[e.message] || e.message}</pre>`)
 
             } finally {
                 let history
