@@ -119,9 +119,9 @@ p3xr.ng.component('p3xrMainKey', {
             try {
 
                 // it can throw an error, when we switch the database
-                p3xr.ui.overlay.show({
-                    message: p3xr.strings.intention.getKey
-                })
+                //p3xr.ui.overlay.show({
+                //    message: p3xr.strings.intention.getKey
+                //})
                 //const type = p3xr.state.keysInfo[$stateParams.key].type
                 const response = await p3xrSocket.request({
                     action: 'key-get',
