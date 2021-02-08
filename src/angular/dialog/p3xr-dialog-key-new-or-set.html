@@ -34,9 +34,10 @@
                         </md-select>
                     </md-input-container>
 
+
                     <span ng-switch="model.type">
                     <span ng-switch-when="list">
-                        <md-input-container class="md-block p3xr-md-input-container-no-bottom">
+                        <md-input-container class="md-block">
                             <label>{{ $root.p3xr.strings.form.key.field.index }}</label>
                              <input type="number" step="1" ng-model="model.index" name="index">
                         </md-input-container>
@@ -62,6 +63,26 @@
                             <div ng-messages="p3xrKeyNewForm.score.$error">
                                 <div ng-message-exp="['required']">
                                     {{ $root.p3xr.strings.form.key.error.score }}
+                                </div>
+                            </div>
+                        </md-input-container>
+                    </span>
+                    <span ng-switch-when="stream">
+                        <md-input-container class="md-block">
+                            <label>{{ $root.p3xr.strings.form.key.field.streamTimestamp }}</label>
+                            <input type="text" required ng-model="model.streamTimestamp" name="streamTimestamp">
+                            <div ng-messages="p3xrKeyNewForm.streamTimestamp.$error">
+                                <div ng-message-exp="['required']">
+                                    {{ $root.p3xr.strings.form.key.error.streamTimestamp }}
+                                </div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>{{ $root.p3xr.strings.form.key.field.streamField }}</label>
+                            <input type="text" required ng-model="model.streamField" name="streamField">
+                            <div ng-messages="p3xrKeyNewForm.streamField.$error">
+                                <div ng-message-exp="['required']">
+                                    {{ $root.p3xr.strings.form.key.error.streamField }}
                                 </div>
                             </div>
                         </md-input-container>

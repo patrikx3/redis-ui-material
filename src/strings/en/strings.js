@@ -31,6 +31,7 @@ const strings = {
         info: 'Info',
         deleteListItem: 'Are you sure to delete this list item?',
         deleteHashKey: 'Are you sure to delete this hash key item?',
+        deleteStreamTimestamp: 'Are you sure to delete this stream timestamp?',
         deleteSetMember: 'Are you sure to delete this set member?',
         deleteZSetMember: 'Are you sure to delete this sorted set member?',
         deleteConnection: 'Confirm',
@@ -293,6 +294,8 @@ const strings = {
                 }
             },
             field: {
+                streamTimestamp: 'Timestamp',
+                streamField: 'Field',
                 key: 'Key',
                 type: 'Type',
                 index: 'Index',
@@ -301,6 +304,8 @@ const strings = {
                 value: 'Value',
             },
             error: {
+                streamField: 'Field is required',
+                streamTimestamp: 'The timestamp is required, either Redis format or as *',
                 key: 'The key is, at least, one character',
                 hashKey: 'The hash table key is at least one character',
                 score: 'The sorted set score is required',
@@ -360,8 +365,13 @@ const strings = {
                     value: 'Member',
                     score: 'Score',
                 }
-            }
-
+            },
+            stream: {
+              table:{
+                  timestamp: 'Timestamp ID',
+                  data: 'Data',
+              }
+            },
         },
         treeControls: {
             settings: 'Tree settings',
@@ -397,7 +407,8 @@ const strings = {
         list: 'List',
         hash: 'Hash table',
         set: 'Set',
-        zset: 'Sorted set - zset'
+        zset: 'Sorted set - zset',
+        stream: 'Stream',
     }
 }
 

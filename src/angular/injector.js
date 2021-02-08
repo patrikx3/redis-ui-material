@@ -14,6 +14,7 @@ require('./layout/p3xr-layout.js');
 require('./pages/main/key/p3xr-main-key-hash.js');
 require('./pages/main/key/p3xr-main-key-list.js');
 require('./pages/main/key/p3xr-main-key-set.js');
+require('./pages/main/key/p3xr-main-key-stream.js');
 require('./pages/main/key/p3xr-main-key-string.js');
 require('./pages/main/key/p3xr-main-key-zset.js');
 require('./pages/main/p3xr-main-key.js');

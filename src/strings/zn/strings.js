@@ -32,6 +32,7 @@ const strings = {
         info: '信息',
         deleteListItem: '您确定要删除该列表项吗？',
         deleteHashKey: '您确定要删除该哈希键项吗？',
+        deleteStreamTimestamp: '您确定要删除此流时间戳吗？',
         deleteSetMember: '您确定要删除该集合成员？',
         deleteZSetMember: '您确定要删除该有序集合成员？',
         deleteConnection: '确认',
@@ -290,6 +291,8 @@ const strings = {
                 }
             },
             field: {
+                streamTimestamp: '时间戳记',
+                streamField: '领域',
                 key: '键',
                 type: '类型',
                 index: '索引',
@@ -298,6 +301,8 @@ const strings = {
                 value: '值',
             },
             error: {
+                streamField: '必填项',
+                streamTimestamp: '时间戳是必需的，可以是Redis格式，也可以*',
                 key: '键至少存在一个字符',
                 hashKey: '哈希表键至少是一个字符',
                 score: '排序的集合分数是必需的',
@@ -357,7 +362,13 @@ const strings = {
                     value: '成员',
                     score: '分数',
                 }
-            }
+            },
+            stream: {
+                table:{
+                    timestamp: '时间戳ID',
+                    data: '数据',
+                }
+            },
 
         },
         treeControls: {
@@ -394,7 +405,8 @@ const strings = {
         list: '列表',
         hash: '哈希表',
         set: '集合',
-        zset: '有序集合 - zset'
+        zset: '有序集合 - zset',
+        stream: '流',
     }
 }
 

@@ -33,6 +33,7 @@ p3xr.ng.factory('p3xrDialogKeyNewOrSet', function (p3xrCommon, $mdDialog, p3xrSo
                                 'hash',
                                 'set',
                                 'zset',
+                                'stream',
                             ]
 
 
@@ -43,6 +44,8 @@ p3xr.ng.factory('p3xrDialogKeyNewOrSet', function (p3xrCommon, $mdDialog, p3xrSo
                                 key: options.node !== undefined ? options.node.key : '',
                                 value: undefined,
                                 score: undefined,
+                                streamTimestamp: '*',
+                                streamField: '',
                                 hashKey: undefined,
                                 index: undefined,
                             }
