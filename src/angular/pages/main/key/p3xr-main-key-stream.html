@@ -1,7 +1,7 @@
 <div layout-gt-xs="row" layout="column" layout-align-gt-sm="start center" layout-align="center center" md-colors="{ background: 'primary-300' }">
     <div flex="20"><span ng-if="!$root.$mdMedia('xs')">&nbsp;</span>{{ $root.p3xr.strings.page.key.stream.table.timestamp }}</div>
     <div flex="60">
-        {{ $root.p3xr.strings.page.key.stream.table.data }}
+        {{ $root.p3xr.strings.page.key.stream.table.field }} <i class="fas fa-chevron-right" style="transform: scale(0.75) !important;"></i> {{ $root.p3xr.strings.page.key.stream.table.value }}
     </div>
     <div flex="20" style="text-align: right" class="p3xr-connected-readonly-filler">
         <md-button class="md-icon-button " ng-click="$ctrl.addStream({ $event: $event})" ng-if="$root.p3xr.state.connection.readonly !== true">
@@ -12,14 +12,14 @@
 </div>
 
 <div layout-gt-xs="row" layout="column" layout-align-gt-sm="start start" layout-align="center center" ng-repeat="(key, value) in $ctrl.p3xrValue"
-     ng-class="{ 'p3xr-list-key-odd-item': $odd }" class="p3xr-list-key-item">
+     ng-class="{ 'p3xr-list-key-odd-item': $odd }" class="p3xr-list-key-item" >
     <div flex="20" >
-        {{ value[0] }}
-        <md-tooltip md-direction="top">{{  $ctrl.showTimestamp({ timestamp: value[0]})}}</md-tooltip>
+        <span>
+            {{ value[0] }}
+            <md-tooltip md-direction="top">{{  $ctrl.showTimestamp({ timestamp: value[0]})}}</md-tooltip>
+        </span>
     </div>
-    <div flex="60" class="p3xr-pre" style="overflow: auto;align-items: flex-start; max-height: 200px;"><span ng-repeat="dataArr in $ctrl.p3xrValueGenerated[key]">{{ dataArr[0]}} <i class="fas fa-chevron-right" style="transform: scale(0.75) !important;"></i> {{ dataArr[1]}}
-</span>
-    </div>
+    <div flex="60" class="p3xr-pre" style="overflow: auto;align-items: flex-start;"><span ng-repeat="dataArr in $ctrl.p3xrValueGenerated[key]">{{ dataArr[0]}} <i class="fas fa-chevron-right" style="transform: scale(0.75) !important;"></i> {{ dataArr[1]}}<span ng-if="!$last"><br/></span></span></div>
     <div flex="20" style="text-align: right; ">
 
         <md-button class="md-icon-button md-warn" ng-click="$ctrl.deleteStreamTimestamp({ streamTimestamp: value[0], $event: $event})" ng-if="$root.p3xr.state.connection.readonly !== true">

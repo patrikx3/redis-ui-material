@@ -42,6 +42,10 @@ p3xr.settings = {
         cookieName: 'p3xr-main-treecontrol-page-size'
     },
     language: {
+        momentDateMap: {
+            en: 'en',
+            zn: 'zh-cn'
+        },
         defaultLanguage: 'en',
         current: undefined,
         cookieName: 'p3xr-language',

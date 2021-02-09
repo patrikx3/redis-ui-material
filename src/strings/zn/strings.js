@@ -116,6 +116,8 @@ const strings = {
         jsonViewEditor: '编辑JSON',
     },
     label: {
+        streamValue: `流字段和值是唯一的。 例如：field1 value1 "field 2" "value 2"`,
+        streamTimestampId: `'*'表示自动生成或指定为<millisecondsTime>-<sequenceNumber>`,
         unableToLoadKey: ({ key }) => {
             return `无法加载此密钥：: ${key}。确切的错误在控制台中。`
         },
@@ -292,7 +294,6 @@ const strings = {
             },
             field: {
                 streamTimestamp: '时间戳记',
-                streamField: '领域',
                 key: '键',
                 type: '类型',
                 index: '索引',
@@ -301,7 +302,6 @@ const strings = {
                 value: '值',
             },
             error: {
-                streamField: '必填项',
                 streamTimestamp: '时间戳是必需的，可以是Redis格式，也可以*',
                 key: '键至少存在一个字符',
                 hashKey: '哈希表键至少是一个字符',
@@ -366,7 +366,8 @@ const strings = {
             stream: {
                 table:{
                     timestamp: '时间戳ID',
-                    data: '数据',
+                    field: '领域',
+                    value: '值',
                 }
             },
 

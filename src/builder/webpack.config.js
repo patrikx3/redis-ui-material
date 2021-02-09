@@ -42,6 +42,11 @@ const mainEntry = [
 ]
 
 const plugins = [
+    new webpack.IgnorePlugin({
+        resourceRegExp: /^\.\/locale$/,
+        contextRegExp: /moment$/
+    }),
+
     new HtmlWebpackPlugin({
         template: `${top}/src/index.html`,
         inject: 'head',

@@ -181,6 +181,7 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
             language = $cookies.get(p3xr.settings.language.cookieName)
             if (language === undefined) {
                 language = p3xr.settings.language.defaultLanguage
+                require('moment').locale(p3xr.settings.language.momentDateMap[language])
             }
             return language
         },
@@ -191,6 +192,9 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
             }
             //console.warn('p3xr-language set actual' , value)
             language = value
+
+            require('moment').locale(p3xr.settings.language.momentDateMap[language])
+
             $rootScope.p3xr.strings = p3xr.settings.language.translation[value]
             //console.warn('p3xr-language set strings' , $rootScope.p3xr.strings)
 

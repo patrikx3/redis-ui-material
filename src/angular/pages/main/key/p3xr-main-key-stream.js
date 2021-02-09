@@ -68,9 +68,11 @@ p3xr.ng.component('p3xrMainKeyStream', {
             }
         }
 
+        const moment = require('moment')
         this.showTimestamp = ({ timestamp }) => {
             const dateNow = Number(timestamp.slice(0, timestamp.indexOf('-') ))
-            return new Date(dateNow).toString()
+            const date = new Date(dateNow)
+            return moment(date).format('L LTS')
         }
 
     }

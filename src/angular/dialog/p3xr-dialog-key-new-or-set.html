@@ -34,60 +34,53 @@
                         </md-select>
                     </md-input-container>
 
-
                     <span ng-switch="model.type">
-                    <span ng-switch-when="list">
-                        <md-input-container class="md-block">
-                            <label>{{ $root.p3xr.strings.form.key.field.index }}</label>
-                             <input type="number" step="1" ng-model="model.index" name="index">
-                        </md-input-container>
-                         <div class="p3xr-md-input-container-bottom-info">
-                            {{ $root.p3xr.strings.label.redisListIndexInfo }}
-                        </div>
-                    </span>
-                    <span ng-switch-when="hash">
-                        <md-input-container class="md-block">
-                            <label>{{ $root.p3xr.strings.form.key.field.hashKey }}</label>
-                            <input required minlength="1" ng-model="model.hashKey" name="hashKey">
-                            <div ng-messages="p3xrKeyNewForm.hashKey.$error">
-                                <div ng-message-exp="['required', 'minlength']">
-                                    {{ $root.p3xr.strings.form.key.error.hashKey }}
-                                </div>
+                        <span ng-switch-when="list">
+                            <md-input-container class="md-block">
+                                <label>{{ $root.p3xr.strings.form.key.field.index }}</label>
+                                 <input type="number" step="1" ng-model="model.index" name="index">
+                            </md-input-container>
+                             <div class="p3xr-md-input-container-bottom-info">
+                                {{ $root.p3xr.strings.label.redisListIndexInfo }}
                             </div>
-                        </md-input-container>
-                    </span>
-                    <span ng-switch-when="zset">
-                        <md-input-container class="md-block">
-                            <label>{{ $root.p3xr.strings.form.key.field.score }}</label>
-                             <input type="number" required ng-model="model.score" name="score">
-                            <div ng-messages="p3xrKeyNewForm.score.$error">
-                                <div ng-message-exp="['required']">
-                                    {{ $root.p3xr.strings.form.key.error.score }}
+                        </span>
+                        <span ng-switch-when="hash">
+                            <md-input-container class="md-block">
+                                <label>{{ $root.p3xr.strings.form.key.field.hashKey }}</label>
+                                <input required minlength="1" ng-model="model.hashKey" name="hashKey">
+                                <div ng-messages="p3xrKeyNewForm.hashKey.$error">
+                                    <div ng-message-exp="['required', 'minlength']">
+                                        {{ $root.p3xr.strings.form.key.error.hashKey }}
+                                    </div>
                                 </div>
-                            </div>
-                        </md-input-container>
-                    </span>
-                    <span ng-switch-when="stream">
-                        <md-input-container class="md-block">
-                            <label>{{ $root.p3xr.strings.form.key.field.streamTimestamp }}</label>
-                            <input type="text" required ng-model="model.streamTimestamp" name="streamTimestamp">
-                            <div ng-messages="p3xrKeyNewForm.streamTimestamp.$error">
-                                <div ng-message-exp="['required']">
-                                    {{ $root.p3xr.strings.form.key.error.streamTimestamp }}
+                            </md-input-container>
+                        </span>
+                        <span ng-switch-when="zset">
+                            <md-input-container class="md-block">
+                                <label>{{ $root.p3xr.strings.form.key.field.score }}</label>
+                                 <input type="number" required ng-model="model.score" name="score">
+                                <div ng-messages="p3xrKeyNewForm.score.$error">
+                                    <div ng-message-exp="['required']">
+                                        {{ $root.p3xr.strings.form.key.error.score }}
+                                    </div>
                                 </div>
-                            </div>
-                        </md-input-container>
-                        <md-input-container class="md-block">
-                            <label>{{ $root.p3xr.strings.form.key.field.streamField }}</label>
-                            <input type="text" required ng-model="model.streamField" name="streamField">
-                            <div ng-messages="p3xrKeyNewForm.streamField.$error">
-                                <div ng-message-exp="['required']">
-                                    {{ $root.p3xr.strings.form.key.error.streamField }}
+                            </md-input-container>
+                        </span>
+                        <span ng-switch-when="stream">
+                            <md-input-container class="md-block">
+                                <label>{{ $root.p3xr.strings.form.key.field.streamTimestamp }}</label>
+                                <input type="text" required ng-model="model.streamTimestamp" name="streamTimestamp">
+                                <div ng-messages="p3xrKeyNewForm.streamTimestamp.$error">
+                                    <div ng-message-exp="['required']">
+                                        {{ $root.p3xr.strings.form.key.error.streamTimestamp }}
+                                    </div>
                                 </div>
-                            </div>
-                        </md-input-container>
+                                 <div class="p3xr-md-input-container-bottom-info">
+                                    {{ $root.p3xr.strings.label.streamTimestampId }}
+                                </div>
+                            </md-input-container>
+                        </span>
                     </span>
-                </span>
 
                     <md-button class="md-button md-raised md-primary" ng-if="$root.p3xr.state.donated" ng-click="jsonEditor({ $event: $event, value: model.value})">
                         <i class="fas fa-file-alt"></i>
@@ -122,6 +115,10 @@
                     <md-switch ng-model="validateJson" class="md-accent" style="margin-top: 0px;">
                         {{ $root.p3xr.strings.label.validateJson }}
                     </md-switch>
+
+                    <div ng-if="model.type === 'stream'" class="p3xr-md-input-container-bottom-info">
+                        {{ $root.p3xr.strings.label.streamValue }}
+                    </div>
 
                     <md-input-container class="md-block">
                         <label>{{ $root.p3xr.strings.form.key.field.value }}</label>

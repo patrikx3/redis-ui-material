@@ -119,6 +119,8 @@ const strings = {
         jsonViewEditor: 'Edit JSON',
     },
     label: {
+        streamValue: `Stream field and value is a oneliner. Eg.: field1 value1 "field 2" "value 2"`,
+        streamTimestampId: `'*' means auto generated or the specification as <millisecondsTime>-<sequenceNumber>`,
         unableToLoadKey: ({ key }) => {
           return `Unable to load this key: ${key}. The exact error is in the console.`
         },
@@ -295,7 +297,6 @@ const strings = {
             },
             field: {
                 streamTimestamp: 'Timestamp',
-                streamField: 'Field',
                 key: 'Key',
                 type: 'Type',
                 index: 'Index',
@@ -304,7 +305,6 @@ const strings = {
                 value: 'Value',
             },
             error: {
-                streamField: 'Field is required',
                 streamTimestamp: 'The timestamp is required, either Redis format or as *',
                 key: 'The key is, at least, one character',
                 hashKey: 'The hash table key is at least one character',
@@ -369,7 +369,8 @@ const strings = {
             stream: {
               table:{
                   timestamp: 'Timestamp ID',
-                  data: 'Data',
+                  field: 'Field',
+                  value: 'Value',
               }
             },
         },
