@@ -125,12 +125,10 @@
                         <textarea ng-model="model.value" required p3x-validate-json
                                   p3x-validate-json-required="validateJson" name="value"></textarea>
                         <div ng-messages="p3xrKeyNewForm.value.$error">
-                            <div ng-message-exp="['required']">
+                            <div ng-message="required">
                                 {{ $root.p3xr.strings.form.key.error.value }}
                             </div>
-                        </div>
-                        <div ng-messages="p3xrKeyNewForm.value.$error">
-                            <div ng-message-exp="['p3xValidateJson']">
+                            <div ng-message="p3xValidateJson">
                                 {{ $root.p3xr.strings.label.jsonViewNotParsable }}
                             </div>
                         </div>

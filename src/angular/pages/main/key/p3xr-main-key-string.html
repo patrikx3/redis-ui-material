@@ -79,7 +79,8 @@
     <div ng-if="$ctrl.editable">
         <md-input-container class="md-block">
             <label>{{ $root.p3xr.strings.label.edit }}</label>
-            <textarea ng-model="$ctrl.p3xrValue"></textarea>
+            <textarea ng-model="$ctrl.p3xrValue" p3x-validate-json
+                      p3x-validate-json-required="validateJson"></textarea>
         </md-input-container>
     </div>
 </div>
