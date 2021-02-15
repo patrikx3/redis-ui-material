@@ -12,6 +12,10 @@ p3xr.ng.component('p3xrMainKeySet', {
             this.page = 1
         }
 
+        $scope.$watch('$ctrl.p3xrValue', (n, o) => {
+            figurePaging()
+        })
+
         $scope.$watch('$root.p3xr.settings.keyPageCount', () => {
             figurePaging()
         })

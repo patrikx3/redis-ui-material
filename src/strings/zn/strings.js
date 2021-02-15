@@ -272,7 +272,7 @@ const strings = {
             field: {
                 treeSeparator: '树分隔符',
                 treeSeparatorSelector: '树分隔符选择器',
-                page: '分页数',
+                page: '树分页数',
                 keyPageCount: '按键分页数',
                 keysSort: '对键进行排序',
                 searchMode: '搜索模式',

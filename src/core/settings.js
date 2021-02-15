@@ -42,10 +42,10 @@ p3xr.settings = {
         cookieName: 'p3xr-main-treecontrol-page-size'
     },
     keyPage: {
-        default: 20,
+        default: 5,
         cookieName: 'p3xr-main-key-page-size',
     },
-    keyPageCount: 20,
+    keyPageCount: 5,
     language: {
         momentDateMap: {
             en: 'en',

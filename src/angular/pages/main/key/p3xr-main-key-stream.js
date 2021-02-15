@@ -5,16 +5,14 @@ p3xr.ng.component('p3xrMainKeyStream', {
         p3xrKey: '<',
         p3xrResponse: '<',
     },
-    controller: function ($scope, p3xrCommon, p3xrSocket, p3xrDialogJsonView, p3xrDialogKeyNewOrSet, $rootScope) {
+    controller: function ($scope, p3xrCommon, p3xrSocket, p3xrDialogJsonView, p3xrDialogKeyNewOrSet, $rootScope, $scope) {
 
         const figurePaging = () => {
             this.pages = Math.ceil(Object.keys(this.p3xrValue).length / p3xr.settings.keyPageCount)
             this.page = 1
         }
 
-        $scope.$watch('$root.p3xr.settings.keyPageCount', () => {
-            figurePaging()
-        })
+        $scope.$watch(this.pageBasedList, figurePaging)
 
         this.$onInit = () => {
             figurePaging()
@@ -85,6 +83,7 @@ p3xr.ng.component('p3xrMainKeyStream', {
                 }
                 this.p3xrValueGenerated.push(result)
             }
+            figurePaging()
         })
 
         this.copy = (opts) => {

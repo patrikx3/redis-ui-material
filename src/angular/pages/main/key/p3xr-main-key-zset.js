@@ -101,6 +101,7 @@ p3xr.ng.component('p3xrMainKeyZset', {
                 //console.warn('p3xr main key zset update')
                 lastVal = newVal
                 this.generatedValue = generateHashFromRedisSortedSet(this.p3xrValue)
+                figurePaging()
             }
         })
 

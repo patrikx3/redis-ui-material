@@ -262,9 +262,6 @@ if (minimize) {
 }
 
 module.exports = {
-    resolve: {
-        symlinks: false
-    },
 //    watch: true,
     devtool: devtool,
 
