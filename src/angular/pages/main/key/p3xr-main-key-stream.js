@@ -5,7 +5,7 @@ p3xr.ng.component('p3xrMainKeyStream', {
         p3xrKey: '<',
         p3xrResponse: '<',
     },
-    controller: function ($scope, p3xrCommon, p3xrSocket, p3xrDialogJsonView, p3xrDialogKeyNewOrSet, $rootScope, $scope) {
+    controller: function ($scope, p3xrCommon, p3xrSocket, p3xrDialogJsonView, p3xrDialogKeyNewOrSet, $rootScope) {
 
         const figurePaging = () => {
             this.pages = Math.ceil(Object.keys(this.p3xrValue).length / p3xr.settings.keyPageCount)
