@@ -193,13 +193,12 @@ const rules = [
         ],
     },
     {
-        test: /\.html$/,
+        test: /\.html$/i,
         use: [{
             loader: 'html-loader',
             options: {
-                minimize: minimize,
-                //caseSensitive: true
-            }
+                esModule: false,
+            },
         }]
     },
     {
