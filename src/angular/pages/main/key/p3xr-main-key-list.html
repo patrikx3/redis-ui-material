@@ -1,3 +1,26 @@
+<div ng-if="$ctrl.pages > 1" style="text-align: center;">
+    <md-button class="md-icon-button md-primary" aria-label="" ng-click="$ctrl.pager({ page: 'first' })">
+        <md-tooltip>{{ $root.p3xr.strings.page.treeControls.pager.first}}</md-tooltip>
+        <md-icon>skip_previous</md-icon>
+    </md-button>
+    <md-button class="md-icon-button" aria-label="" ng-click="$ctrl.pager({ page: 'prev' })">
+        <md-tooltip>{{ $root.p3xr.strings.page.treeControls.pager.prev}}</md-tooltip>
+        <md-icon>keyboard_arrow_left</md-icon>
+    </md-button>
+
+    <p3xr-input type="number" style="width: 48px" step="1" min="1" ng-maxlength="$ctrl.pages"
+                ng-change="$ctrl.pageChange()" ng-model="$ctrl.page"></p3xr-input> / {{ $ctrl.pages }}
+
+    <md-button class="md-icon-button" aria-label="" ng-click="$ctrl.pager({ page: 'next' })">
+        <md-tooltip>{{ $root.p3xr.strings.page.treeControls.pager.next}}</md-tooltip>
+        <md-icon>keyboard_arrow_right</md-icon>
+    </md-button>
+    <md-button class="md-icon-button md-primary" aria-label="" ng-click="$ctrl.pager({ page: 'last' })">
+        <md-tooltip>{{ $root.p3xr.strings.page.treeControls.pager.last}}</md-tooltip>
+        <md-icon>skip_next</md-icon>
+    </md-button>
+</div>
+
 <div layout-gt-xs="row" layout="column" layout-align-gt-sm="start center" layout-align="center center" md-colors="{ background: 'primary-300' }">
     <div flex="20">
         <span ng-if="!$root.$mdMedia('xs')">&nbsp;</span>
@@ -14,11 +37,11 @@
     </div>
 </div>
 
-<div layout-gt-xs="row" layout="column" layout-align-gt-sm="start start" layout-align="center center" ng-repeat="value in $ctrl.p3xrValue track by $index"
+<div layout-gt-xs="row" layout="column" layout-align-gt-sm="start start" layout-align="center center" ng-repeat="value in $ctrl.pageBasedList() track by $index"
      ng-class="{ 'p3xr-list-key-odd-item': $odd }" class="p3xr-list-key-item">
     <div flex="20" ng-click="$ctrl.editValue({ index: $index, value: value, $event: $event})">
         <span ng-if="!$root.$mdMedia('xs')">&nbsp;</span>
-        {{ $index }}
+        {{ $index + ($ctrl.pages * ($ctrl.page -1) ) }}
     </div>
     <div flex="60" class="p3xr-pre" style="overflow: auto;align-items: flex-start; max-height: 200px;"
          ng-click="$ctrl.editValue({ index: $index, value: value, $event: $event})"><span ng-if="$root.p3xr.settings.maxValueDisplay > 0 && value.length > $root.p3xr.settings.maxValueDisplay">{{ value.substring(0, $root.p3xr.settings.maxValueDisplay) }}...</span><span ng-if="$root.p3xr.settings.maxValueDisplay === 0 || value.length <= $root.p3xr.settings.maxValueDisplay|| $root.p3xr.settings.maxValueDisplay === -1 ">{{ value }}</span></div>

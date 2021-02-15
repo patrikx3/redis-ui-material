@@ -390,6 +390,25 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
         }
     })
 
+    let keyPageCount
+    Object.defineProperty($rootScope.p3xr.settings, 'keyPageCount', {
+        get: () => {
+            keyPageCount = $cookies.get(p3xr.settings.keyPage.cookieName)
+            if (keyPageCount === undefined) {
+                keyPageCount = p3xr.settings.keyPage.default
+            } else {
+                keyPageCount = parseInt(keyPageCount)
+            }
+            return keyPageCount
+        },
+        set: (value) => {
+            keyPageCount = value
+            keyPageCount = $cookies.put(p3xr.settings.keyPage.cookieName, value, {
+                expires: p3xr.settings.cookieExpiry,
+            })
+        }
+    })
+
 
     //console.warn('p3xrTheme', p3xrTheme)
     p3xrTheme.start()

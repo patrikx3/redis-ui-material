@@ -276,11 +276,13 @@ const strings = {
                 treeSeparator: 'Tree separator',
                 treeSeparatorSelector: 'Tree separator selector',
                 page: 'Paging count',
+                keyPageCount: 'Key paging count',
                 keysSort: 'Sort the keys',
                 searchMode: 'Search mode',
                 searchModeStartsWith: 'Search starts with / includes'
             },
             error: {
+                keyPageCount: 'The key page count must be an integer between 5 - 100',
                 page: 'The page count must be an integer between 10 - 1000',
                 maxValueDisplay: 'The maximum display value must be an integer between -1 and 32768',
                 maxKeys: 'The maximum key count value must be an integer between 100 and 100000',

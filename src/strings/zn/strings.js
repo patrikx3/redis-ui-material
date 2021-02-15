@@ -273,11 +273,13 @@ const strings = {
                 treeSeparator: '树分隔符',
                 treeSeparatorSelector: '树分隔符选择器',
                 page: '分页数',
+                keyPageCount: '按键分页数',
                 keysSort: '对键进行排序',
                 searchMode: '搜索模式',
                 searchModeStartsWith: '搜索以 / 开头'
             },
             error: {
+                keyPageCount: '密钥页数必须为5到100之间的整数',
                 page: '页数必须是10  -  500之间的整数',
                 maxValueDisplay: '最大显示值必须是介于-1和32768之间的整数',
                 maxKeys: '最大密钥计数值必须是100到100000之间的整数',

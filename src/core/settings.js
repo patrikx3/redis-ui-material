@@ -41,6 +41,11 @@ p3xr.settings = {
         default: 250,
         cookieName: 'p3xr-main-treecontrol-page-size'
     },
+    keyPage: {
+        default: 20,
+        cookieName: 'p3xr-main-key-page-size',
+    },
+    keyPageCount: 20,
     language: {
         momentDateMap: {
             en: 'en',

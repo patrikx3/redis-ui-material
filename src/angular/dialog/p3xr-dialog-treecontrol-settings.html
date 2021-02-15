@@ -40,11 +40,24 @@
 
                     <md-input-container class="md-block p3xr-md-input-container-no-bottom">
                         <label>{{ $root.p3xr.strings.form.treeSettings.field.page }}</label>
-                        <input type="number" required min="10" max="1000" name="pageCount" step="1" pattern="\d*"
+                        <input type="number" required min="5" max="1000" name="pageCount" step="1" pattern="\d*"
                                ng-model="model.pageCount">
                         <div ng-messages="p3xrDialogTreecontrolSettingsForm.pageCount.$error">
                             <div ng-message-exp="['required', 'min', 'max', 'pattern']">
                                 {{ $root.p3xr.strings.form.treeSettings.error.page }}
+                            </div>
+                        </div>
+                    </md-input-container>
+
+                    <br/>
+
+                    <md-input-container class="md-block p3xr-md-input-container-no-bottom">
+                        <label>{{ $root.p3xr.strings.form.treeSettings.field.keyPageCount }}</label>
+                        <input type="number" required min="5" max="100" name="keyPageCount" step="1" pattern="\d*"
+                               ng-model="model.keyPageCount">
+                        <div ng-messages="p3xrDialogTreecontrolSettingsForm.keyPageCount.$error">
+                            <div ng-message-exp="['required', 'min', 'max', 'pattern']">
+                                {{ $root.p3xr.strings.form.treeSettings.error.keyPageCount }}
                             </div>
                         </div>
                     </md-input-container>

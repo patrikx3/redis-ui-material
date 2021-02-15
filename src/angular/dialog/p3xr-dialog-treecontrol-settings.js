@@ -9,11 +9,12 @@ p3xr.ng.factory('p3xrDialogTreecontrolSettings', function (p3xrCommon, $mdDialog
                 await $mdDialog.show({
                     controller: function ($scope, $rootScope) {
 
-                        console.log('$rootScope.p3xr.settings.maxValueDisplay', $rootScope.p3xr.settings.maxValueDisplay)
+                        //console.log('$rootScope.p3xr.settings.maxValueDisplay', $rootScope.p3xr.settings.maxValueDisplay)
 
                         $scope.model = {
                             treeSeparator: $rootScope.p3xr.settings.redisTreeDivider,
                             pageCount: $rootScope.p3xr.settings.pageCount,
+                            keyPageCount: $rootScope.p3xr.settings.keyPageCount,
                             keysSort: $rootScope.p3xr.settings.keysSort,
                             searchClientSide: $rootScope.p3xr.settings.searchClientSide,
                             searchStartsWith: $rootScope.p3xr.settings.searchStartsWith,
@@ -66,6 +67,7 @@ p3xr.ng.factory('p3xrDialogTreecontrolSettings', function (p3xrCommon, $mdDialog
 
                                 $rootScope.p3xr.settings.redisTreeDivider = $scope.model.treeSeparator
                                 $rootScope.p3xr.settings.pageCount = $scope.model.pageCount
+                                $rootScope.p3xr.settings.keyPageCount = $scope.model.keyPageCount
                                 $rootScope.p3xr.settings.keysSort = $scope.model.keysSort
                                 $rootScope.p3xr.settings.searchClientSide = $scope.model.searchClientSide
                                 $rootScope.p3xr.settings.searchStartsWith = $scope.model.searchStartsWith
