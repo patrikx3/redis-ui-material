@@ -1,13 +1,15 @@
 //const moment = require("moment");
 //const momentDurationFormatSetup = require("moment-duration-format");
 
+let interval
+
 p3xr.ng.component('p3xrMainKey', {
     template: require('./p3xr-main-key.html'),
     bindings: {
         p3xrResize: '&',
     },
     controller: function (p3xrCommon, p3xrRedisParser, p3xrSocket, $rootScope, $stateParams, $timeout, $scope, $mdDialog, $state, $interval, p3xrDialogTtl, p3xrTheme, $mdColors) {
-
+        $interval.cancel(interval)
         this.$stateParams = $stateParams;
 
 
@@ -27,9 +29,6 @@ p3xr.ng.component('p3xrMainKey', {
             return true
 
         }
-
-        let interval
-
 
         const humanizeDuration = require("humanize-duration");
 
@@ -99,8 +98,10 @@ p3xr.ng.component('p3xrMainKey', {
                 actualTtl()
 
                 if (!$rootScope.p3xr.state.reducedFunctions) {
+                    $interval.cancel(interval)
                     interval = $interval(() => {
                         this.response.ttl = this.response.ttl - 1
+                        //console.log('aha', this.response.ttl)
                         actualTtl()
                     }, 1000)
                 }

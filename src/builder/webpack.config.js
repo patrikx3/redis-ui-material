@@ -197,6 +197,7 @@ const rules = [
         use: [{
             loader: 'html-loader',
             options: {
+                minimize: minimize,
                 esModule: false,
             },
         }]
