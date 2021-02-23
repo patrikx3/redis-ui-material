@@ -92,121 +92,9 @@ p3xr.ng.provider('p3xrTheme', function p3xrThemeProvider($mdThemingProvider,) {
                 const darkColor = p3xr.state.themeCommon + '-background';
                 //console.warn(darkColor)
 
-                let additional = ''
-
-                if (themeName == 'p3xrThemeMatrix') {
-                    additional = `
-`
-                }
-
                 const borderColor = $mdColors.getThemeColor(p3xr.state.themeLayout + '-primary-hue-1');
 
-                if (this.isDark() && !isMobile) {
-                    additional += `
-    ::-webkit-scrollbar {
-        width: 16px;
-        height: 16px;
-    }
-
-    ::-webkit-scrollbar-corner,
-    ::-webkit-scrollbar-track {
-        background-color: rgb(64, 64, 64);
-    }
-
-    ::-webkit-scrollbar-thumb {
-        background-color: rgb(96, 96, 96);
-        background-clip: padding-box;
-        border: 2px solid transparent;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-        background-color: rgb(112, 112, 112);
-    }
-
-    ::-webkit-scrollbar-thumb:active {
-        background-color: rgb(128, 128, 128);
-    }
-
-    /* Buttons */
-    ::-webkit-scrollbar-button:single-button {
-        background-color: rgb(64, 64, 64);
-
-        display: block;
-        background-size: 10px;
-        background-repeat: no-repeat;
-    }
-
-    /* Up */
-    ::-webkit-scrollbar-button:single-button:vertical:decrement {
-        height: 12px;
-        width: 16px;
-        background-position: center 4px;
-        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(96, 96, 96)'><polygon points='50,00 0,50 100,50'/></svg>");
-    }
-
-    ::-webkit-scrollbar-button:single-button:vertical:decrement:hover {
-        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(112, 112, 112)'><polygon points='50,00 0,50 100,50'/></svg>");
-    }
-
-    ::-webkit-scrollbar-button:single-button:vertical:decrement:active {
-        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(128, 128, 128)'><polygon points='50,00 0,50 100,50'/></svg>");
-    }
-
-    /* Down */
-    ::-webkit-scrollbar-button:single-button:vertical:increment {
-        height: 12px;
-        width: 16px;
-        background-position: center 2px;
-        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(96, 96, 96)'><polygon points='0,0 100,0 50,50'/></svg>");
-    }
-
-    ::-webkit-scrollbar-button:single-button:vertical:increment:hover {
-        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(112, 112, 112)'><polygon points='0,0 100,0 50,50'/></svg>");
-    }
-
-    ::-webkit-scrollbar-button:single-button:vertical:increment:active {
-        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(128, 128, 128)'><polygon points='0,0 100,0 50,50'/></svg>");
-    }
-
-    /* Left */
-    ::-webkit-scrollbar-button:single-button:horizontal:decrement {
-        height: 12px;
-        width: 12px;
-        background-position: 3px 3px;
-        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(96, 96, 96)'><polygon points='0,50 50,100 50,0'/></svg>");
-
-    }
-
-    ::-webkit-scrollbar-button:single-button:horizontal:decrement:hover {
-        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(112, 112, 112)'><polygon points='0,50 50,100 50,0'/></svg>");
-    }
-
-    ::-webkit-scrollbar-button:single-button:horizontal:decrement:active {
-        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(128, 128, 128)'><polygon points='0,50 50,100 50,0'/></svg>");
-    }
-
-    /* Right */
-    ::-webkit-scrollbar-button:single-button:horizontal:increment {
-        height: 12px;
-        width: 12px;
-        background-position: 3px 3px;
-        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(96, 96, 96)'><polygon points='0,0 0,100 50,50'/></svg>");
-    }
-
-    ::-webkit-scrollbar-button:single-button:horizontal:increment:hover {
-        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(112, 112, 112)'><polygon points='0,0 0,100 50,50'/></svg>");
-    }
-
-    ::-webkit-scrollbar-button:single-button:horizontal:increment:active {
-        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='rgb(128, 128, 128)'><polygon points='0,0 0,100 50,50'/></svg>");
-    }
-
-`
-                }
-
                 const styles = `
-${additional}
-
 .p3xr-theme-dark .p3xr-content-border {
     border-left: 1px solid ${borderColor};
     border-right: 1px solid ${borderColor};
@@ -246,6 +134,21 @@ body.p3xr-theme-dark[md-theme="p3xrThemeMatrixLayout"] treecontrol i.tree-branch
 
                 $('head').append('<style id="p3xr-theme-styles">' + styles + '</style>')
 
+                // https://stackoverflow.com/questions/65940522/how-do-i-switch-to-chromes-dark-scrollbar-like-github-does
+                // but fixed by p3x-robot
+                document.documentElement.style.display = 'none';
+
+                document.documentElement.setAttribute(
+                    "data-color-scheme",
+                    this.isDark() ? "dark" : "light"
+                );
+                // remove scrollbars
+//                document.documentElement.style.overflow = "hidden";
+                // trigger reflow so that overflow style is applied
+                document.body.clientWidth;
+                // remove overflow style, which will bring back the scrollbar with the correct scheme
+//                document.documentElement.style.overflow = "";
+                document.documentElement.style.display = '';
 
                 $rootScope.$broadcast('p3xr-theme-switched')
             }
