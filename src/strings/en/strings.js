@@ -238,6 +238,7 @@ const strings = {
         'readonly-connection-mode': 'This connection is read only mode!',
         'list-out-of-bounds': 'This list index is out of bounds',
         'donation-ware-feature': 'This feature is present in the donation version.',
+        'auto-connection-failed': 'Possible, the connection was removed and the auto connection failed, because of this.'
     },
     form: {
         error: {

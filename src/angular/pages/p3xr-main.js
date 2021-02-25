@@ -269,7 +269,7 @@ p3xr.ng.component('p3xrMain', {
             if (p3xr.state.connections.list.length === 0 && p3xr.state.connection === undefined) {
                 setTimeout(() => {
                     rawResize()
-                })
+                }, 250)
             }
         }
 

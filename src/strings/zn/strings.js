@@ -200,7 +200,7 @@ const strings = {
             }
 
         },
-        treeExpandAll: '展开所有树,该操作的代价就是有点费时...',
+        treeExpandAll: '展开所可能的原因是，连接已删除，自动连接失败有树,该操作的代价就是有点费时...',
         noRedisKeys: '此数据库中没有任何键。',
         redisConnected: 'Redis 连接成功',
         reloadingDataInfo: '重新加载Redis数据信息',
@@ -235,6 +235,7 @@ const strings = {
         'readonly-connection-mode': '此连接为只读模式！',
         'list-out-of-bounds': '此列表索引超出范围',
         'donation-ware-feature': '捐赠版本中提供了此功能。',
+        'auto-connection-failed': '因此，可能导致连接被删除并且自动连接失败。'
     },
     form: {
         error: {
