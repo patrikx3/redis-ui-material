@@ -130,6 +130,11 @@ body.p3xr-theme-dark[md-theme="p3xrThemeMatrixLayout"] treecontrol i.tree-branch
 .p3xr-list-key-item {
     border-bottom: 1px solid ${this.isDark() ? $mdColors.getThemeColor(p3xr.state.themeLayout + '-background-300-0.1') : $mdColors.getThemeColor(p3xr.state.themeLayout + '-background-700-0.1') };
 }
+
+input:-webkit-autofill, input:-webkit-autofill:focus {
+    -webkit-box-shadow:0 0 0 50px ${this.isDark() ? 'rgb(66, 66, 66, 0.9)' : 'rgba(255, 255, 255, 0.5)'} inset !important;
+    -webkit-text-fill-color: ${this.isDark() ? 'white' : 'black'}  !important;
+}
 `
 
                 $('head').append('<style id="p3xr-theme-styles">' + styles + '</style>')

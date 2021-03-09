@@ -41,6 +41,12 @@
                     </md-input-container>
 
 
+                    <md-input-container class="md-block">
+                        <label>{{ $root.p3xr.strings.form.connection.label.username }}</label>
+                        <input name="username" type="text" ng-model="model.username"
+                               ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off">
+                    </md-input-container>
+
                     <md-input-container class="md-block p3xr-md-input-container-no-bottom">
                         <label>{{ $root.p3xr.strings.form.connection.label.password }}</label>
                         <input name="password" type="password" ng-model="model.password"
@@ -121,6 +127,13 @@
                                         </div>
                                         <div ng-message="required">{{ $root.p3xr.strings.form.error.required }}</div>
                                     </div>
+                                </md-input-container>
+
+
+                                <md-input-container class="md-block">
+                                    <label>{{ $root.p3xr.strings.form.connection.label.username }}</label>
+                                    <input name="username{{$index}}" type="text" ng-model="node.username"
+                                           ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off">
                                 </md-input-container>
 
 

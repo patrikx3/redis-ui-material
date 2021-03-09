@@ -22,6 +22,7 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                                 host: undefined,
                                 port: undefined,
                                 password: undefined,
+                                username: undefined,
                                 id: undefined,
                                 readonly: undefined,
                             }
@@ -76,6 +77,7 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                                 host: undefined,
                                 port: undefined,
                                 password: undefined,
+                                username: undefined,
                                 id: p3xr.nextId(),
                             }
                             if (index === undefined) {

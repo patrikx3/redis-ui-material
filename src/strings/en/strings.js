@@ -252,6 +252,7 @@ const strings = {
                 host: 'Hostname',
                 port: 'Port',
                 password: 'Password',
+                username: 'Username',
             },
         },
         treeSettings: {

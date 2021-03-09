@@ -249,6 +249,7 @@ const strings = {
                 host: '主机名',
                 port: '端口',
                 password: '密码',
+                username: '用户名',
             },
         },
         treeSettings: {
