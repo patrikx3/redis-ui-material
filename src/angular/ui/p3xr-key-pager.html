@@ -1,0 +1,22 @@
+<div ng-if="$ctrl.p3xrController.pages > 1" style="text-align: center;">
+    <md-button class="md-icon-button md-primary" aria-label="" ng-click="$ctrl.p3xrController.pager({ page: 'first' })">
+        <md-tooltip>{{ $root.p3xr.strings.page.treeControls.pager.first}}</md-tooltip>
+        <md-icon>skip_previous</md-icon>
+    </md-button>
+    <md-button class="md-icon-button" aria-label="" ng-click="$ctrl.p3xrController.pager({ page: 'prev' })">
+        <md-tooltip>{{ $root.p3xr.strings.page.treeControls.pager.prev}}</md-tooltip>
+        <md-icon>keyboard_arrow_left</md-icon>
+    </md-button>
+
+    <p3xr-input type="number" style="width: 48px" step="1" min="1" ng-maxlength="$ctrl.p3xrController.pages"
+                ng-change="$ctrl.p3xrController.pageChange()" ng-model="$ctrl.p3xrController.page"></p3xr-input> / {{ $ctrl.p3xrController.pages }}
+
+    <md-button class="md-icon-button" aria-label="" ng-click="$ctrl.p3xrController.pager({ page: 'next' })">
+        <md-tooltip>{{ $root.p3xr.strings.page.treeControls.pager.next}}</md-tooltip>
+        <md-icon>keyboard_arrow_right</md-icon>
+    </md-button>
+    <md-button class="md-icon-button md-primary" aria-label="" ng-click="$ctrl.p3xrController.pager({ page: 'last' })">
+        <md-tooltip>{{ $root.p3xr.strings.page.treeControls.pager.last}}</md-tooltip>
+        <md-icon>skip_next</md-icon>
+    </md-button>
+</div>

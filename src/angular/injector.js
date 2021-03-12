@@ -8,6 +8,7 @@ require('./dialog/p3xr-dialog-ttl.js');
 require('./directive/p3x-validate-json.js');
 require('./directive/p3xr-ng-enter.js');
 require('./factory/p3xr-common.js');
+require('./factory/p3xr-key-paging.js');
 require('./factory/p3xr-redis-parser.js');
 require('./factory/p3xr-socket.js');
 require('./layout/p3xr-layout.js');
@@ -37,4 +38,5 @@ require('./provider/theme-generator/p3xr-theme-redis.js');
 require('./ui/p3xr-accordion.js');
 require('./ui/p3xr-button.js');
 require('./ui/p3xr-input.js');
+require('./ui/p3xr-key-pager.js');
 //injector-angular-end
