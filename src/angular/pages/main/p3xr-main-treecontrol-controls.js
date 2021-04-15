@@ -8,6 +8,8 @@ p3xr.ng.component('p3xrMainTreecontrolControls', {
         this.treeExpandAll = () => {
             try {
 
+                $rootScope.$broadcast('p3xr-main-treecontrol', false)
+
                 p3xr.ui.overlay.show({
                     message: p3xr.strings.status.treeExpandAll
                 })
@@ -41,31 +43,25 @@ p3xr.ng.component('p3xrMainTreecontrolControls', {
 
 
                 $rootScope.expandedNodes = expandedNodes
-
             } catch (e) {
                 p3xrCommon.generalHandleError(e)
             } finally {
                 p3xr.ui.overlay.hide()
-                /*
+
                 $timeout(() => {
-                    $scope.$digest()
-                }, p3xr.settings.debounce)
-                 */
+                    $rootScope.$broadcast('p3xr-main-treecontrol', true)
+                })
+
             }
         }
 
         this.treeCollapseAll = () => {
+            $rootScope.$broadcast('p3xr-main-treecontrol', false)
             $rootScope.expandedNodes = []
-            $rootScope.$broadcast('p3xr-main-treecontrol-control-noop')
-        }
-
-        $scope.$on('p3xr-main-treecontrol-control-noop', () => {
             $timeout(() => {
-                $('#p3xr-main-treecontrol-controls-click-noop').click();
+                $rootScope.$broadcast('p3xr-main-treecontrol', true)
             })
-        })
-
-        this.noop = () => {}
+        }
 
         this.page = (options) => {
 

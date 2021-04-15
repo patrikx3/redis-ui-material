@@ -1,4 +1,4 @@
-<treecontrol ng-if="$root.keysTree.length > 0" class="{{ $ctrl.getTreeTheme() }} p3xr-main-tree"
+<treecontrol ng-if="$root.keysTree.length > 0 && $ctrl.isEnabled" class="{{ $ctrl.getTreeTheme() }} p3xr-main-tree"
              tree-model="$root.keysTree" options="$ctrl.keysTreeOptions" expanded-nodes="$root.expandedNodes"
              on-selection="$ctrl.selectTreeNode(node, selected, $parentNode, $index, $first, $middle, $last, $odd, $even, $path)"
              on-node-toggle="$ctrl.showToggle(node, expanded, $parentNode, $index, $first, $middle, $last, $odd, $even, $path)">

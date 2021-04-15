@@ -293,6 +293,10 @@ p3xr.ng.component('p3xrMainTree', {
             this.addKey(arg)
         });
 
+        $scope.$on('p3xr-main-treecontrol', (event, arg) => {
+            this.isEnabled = arg
+        });
+
 
         this.treeHover = ({node}) => {
             if (p3xr.state.connection.readonly === true) {
@@ -300,6 +304,10 @@ p3xr.ng.component('p3xrMainTree', {
             }
             node.show = true
         }
+
+        this.isEnabled = true
+
+
 
     }
 })
