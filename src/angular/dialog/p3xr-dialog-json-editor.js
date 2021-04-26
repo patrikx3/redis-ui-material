@@ -10,8 +10,12 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
             )
 
 
+
+
                 return $mdDialog.show({
                     controller: function ($scope, $mdDialog, p3xrCommon, $rootScope, p3xrTheme) {
+
+                        $scope.minHeight = window.innerHeight - 200
 
                         $rootScope.$broadcast('p3xr-main-resizer', {
                             drag: false
