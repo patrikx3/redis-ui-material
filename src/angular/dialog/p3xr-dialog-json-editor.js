@@ -1,4 +1,5 @@
 p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeout) {
+    const debounce = require('lodash/debounce')
 
     return new function () {
 
@@ -13,9 +14,7 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
 
 
                 return $mdDialog.show({
-                    controller: function ($scope, $mdDialog, p3xrCommon, $rootScope, p3xrTheme) {
-
-                        $scope.minHeight = window.innerHeight - 200
+                    controller: function ($scope, $mdDialog, p3xrCommon, $rootScope, p3xrTheme, $mdMedia) {
 
                         $rootScope.$broadcast('p3xr-main-resizer', {
                             drag: false
@@ -110,10 +109,20 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
                         }
                         document.documentElement.addEventListener('keydown', close, true)
 
-                        const debounce = require('lodash/debounce')
+                        const resize = () => {
+                            if ($mdMedia('(max-width:959px)')) {
+                                $scope.minHeight = '100%'
+                            } else {
+                                $scope.minHeight = `${Math.max(10, window.innerHeight - 100)}px`
+                            }
+                        }
+
+                        resize()
                         const editorResize = debounce(() => {
                             if (editor && editor.aceEditor) {
                                 console.log('resize json editor ace resize')
+                                resize()
+                                $scope.$digest()
                                 editor.aceEditor.resize()
                             }
                         }, p3xr.settings.debounce)

@@ -10,12 +10,12 @@ https://corifeus.com/redis-ui
  
 
 [![Donate for Corifeus / P3X](https://img.shields.io/badge/Donate-Corifeus-003087.svg)](https://paypal.me/patrikx3) [![Contact Corifeus / P3X](https://img.shields.io/badge/Contact-P3X-ff9900.svg)](https://www.patrikx3.com/en/front/contact) [![Corifeus @ Facebook](https://img.shields.io/badge/Facebook-Corifeus-3b5998.svg)](https://www.facebook.com/corifeus.software)  [![Build Status](https://github.com/patrikx3/redis-ui-material/workflows/build/badge.svg)](https://github.com/patrikx3/redis-ui-material/actions?query=workflow%3Abuild)
-[![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m780749701-41bcade28c1ea8154eda7cca.svg)](https://uptimerobot.patrikx3.com/)
+[![Uptime Robot ratio (30 days)](https://img.shields.io/uptimerobot/ratio/m780749701-41bcade28c1ea8154eda7cca.svg)](https://stats.uptimerobot.com/9ggnzcWrw)
 
 
 
 ---
-# 💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via http and socket.io v2021.4.142
+# 💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via http and socket.io v2021.4.145
 
 
 
@@ -83,7 +83,7 @@ All my domains ([patrikx3.com](https://patrikx3.com) and [corifeus.com](https://
 
 ---
 
-[**P3X-REDIS-UI-MATERIAL**](https://corifeus.com/redis-ui-material) Build v2021.4.142
+[**P3X-REDIS-UI-MATERIAL**](https://corifeus.com/redis-ui-material) Build v2021.4.145
 
 [![Donate for Corifeus / P3X](https://img.shields.io/badge/Donate-Corifeus-003087.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QZVM4V6HVZJW6)  [![Contact Corifeus / P3X](https://img.shields.io/badge/Contact-P3X-ff9900.svg)](https://www.patrikx3.com/en/front/contact) [![Like Corifeus @ Facebook](https://img.shields.io/badge/LIKE-Corifeus-3b5998.svg)](https://www.facebook.com/corifeus.software)
 
