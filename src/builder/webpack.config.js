@@ -73,26 +73,17 @@ if (useStats) {
 
 if (minimize) {
 
-    const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-
     plugins.unshift(
         new CleanWebpackPlugin()
     )
 
-    plugins.push(
-        new OptimizeCssAssetsPlugin({
-            assetNameRegExp: /\.css$/g,
-//            cssProcessor: require('cssnano'),
-//            cssProcessorOptions: { safe: true, discardComments: { removeAll: true } },
-            canPrint: true
-        })
-    )
-
-
     devtool = false;
     const bannerText = require('corifeus-builder').utils.license();
 
+    const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+
     minimizer = [
+        new CssMinimizerPlugin(),
         new TerserPlugin({
             parallel: true,
             extractComments: {
