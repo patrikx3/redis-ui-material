@@ -1,3 +1,11 @@
+
+<div flex layout="row">
+    <!-- ng-class="{'p3xr-layout-content': !$root.isElectron, 'p3xr-layout-content-electron': $root.isElectron }" -->
+    <div flex class="p3xr-layout-content" >
+        <ui-view></ui-view>
+    </div>
+</div>
+
 <!-- ng-if="$root.isElectron === false" -->
 <div id="p3xr-layout-header-container">
     <md-toolbar md-whiteframe="3">
@@ -145,13 +153,6 @@
 
         </div>
     </md-toolbar>
-</div>
-
-<div flex layout="row">
-    <!-- ng-class="{'p3xr-layout-content': !$root.isElectron, 'p3xr-layout-content-electron': $root.isElectron }" -->
-    <div flex class="p3xr-layout-content" >
-        <ui-view></ui-view>
-    </div>
 </div>
 
 <div id="p3xr-layout-reduced" ng-show="$root.p3xr.state.reducedFunctions" md-theme="{{ $root.p3xr.state.themeCommon }}"
