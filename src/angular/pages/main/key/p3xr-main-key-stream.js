@@ -21,7 +21,8 @@ p3xr.ng.component('p3xrMainKeyStream', {
         }
 
 
-        this.pageBasedList = () => {
+        let values
+        $scope.$watch('$ctrl.page', (n, o) => {
             const values = {}
             const index = p3xr.settings.keyPageCount * (this.page - 1)
             let indexKeys = 0
@@ -31,8 +32,13 @@ p3xr.ng.component('p3xrMainKeyStream', {
                 }
                 indexKeys++
             }
+
+        })
+
+        this.pageBasedList = () => {
             return values
         }
+
 
 
         this.p3xrValueGenerated = []

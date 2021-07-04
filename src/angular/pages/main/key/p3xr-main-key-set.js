@@ -19,8 +19,9 @@ p3xr.ng.component('p3xrMainKeySet', {
             keyPaging.figurePaging()
         }
 
-        this.pageBasedList = () => {
-            const values = []
+        let values
+        $scope.$watch('$ctrl.page', (n, o) => {
+            values = []
             const index = p3xr.settings.keyPageCount * (this.page - 1)
             let indexKeys = 0
             for(let valueIndex in this.p3xrValue) {
@@ -29,9 +30,12 @@ p3xr.ng.component('p3xrMainKeySet', {
                 }
                 indexKeys++
             }
-            //console.warn(values)
+        })
+
+        this.pageBasedList = () => {
             return values
         }
+
 
 
         this.copy = (opts) => {

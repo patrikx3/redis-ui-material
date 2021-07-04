@@ -19,8 +19,9 @@ p3xr.ng.component('p3xrMainKeyHash', {
         }
 
 
-        this.pageBasedList = () => {
-            const values = {}
+        let values
+        $scope.$watch('$ctrl.page', (n, o) => {
+            values = {}
             const index = p3xr.settings.keyPageCount * (this.page - 1)
             let indexKeys = 0
             for(let keys of Object.keys(this.p3xrValue)) {
@@ -29,6 +30,9 @@ p3xr.ng.component('p3xrMainKeyHash', {
                 }
                 indexKeys++
             }
+        })
+
+        this.pageBasedList = () => {
             return values
         }
 

@@ -8,7 +8,7 @@
         <md-icon>keyboard_arrow_left</md-icon>
     </md-button>
 
-    <p3xr-input type="number" style="width: 48px" step="1" min="1" ng-maxlength="$ctrl.p3xrController.pages"
+    <p3xr-input type="number" style="width: 64px" step="1" min="1" ng-maxlength="$ctrl.p3xrController.pages"
                 ng-change="$ctrl.p3xrController.pageChange()" ng-model="$ctrl.p3xrController.page"></p3xr-input> / {{ $ctrl.p3xrController.pages }}
 
     <md-button class="md-icon-button" aria-label="" ng-click="$ctrl.p3xrController.pager({ page: 'next' })">

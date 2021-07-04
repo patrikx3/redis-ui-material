@@ -22,8 +22,9 @@ p3xr.ng.component('p3xrMainKeyZset', {
         }
 
 
-        this.pageBasedList = () => {
-            const values = []
+        let values
+        $scope.$watch('$ctrl.page', (n, o) => {
+            values = []
             const index = p3xr.settings.keyPageCount * (this.page - 1)
             let indexKeys = 0
 //            console.warn(this.generatedValue)
@@ -33,6 +34,9 @@ p3xr.ng.component('p3xrMainKeyZset', {
                 }
                 indexKeys++
             }
+        })
+
+        this.pageBasedList = () => {
             return values
         }
 
