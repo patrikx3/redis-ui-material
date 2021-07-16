@@ -195,23 +195,23 @@ const rules = [
     },
     {
         test: /\.(png|jpe?g|gif|ico)$/,
-        use: fileLoader
+        type: 'asset/resource',
     },
     {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-        use: fileLoader
+        type: 'asset/resource',
     }, {
         test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-        use: fileLoader
+        type: 'asset/resource',
     }, {
         test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-        use: fileLoader
+        type: 'asset/resource',
     }, {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-        use: fileLoader
+        type: 'asset/resource',
     }, {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        use: fileLoader
+        type: 'asset/resource',
     },
 ]
 
@@ -268,6 +268,7 @@ module.exports = {
        // chunkFilename: `${filenamePrefix}.js`,
 //        publicPath: '{{ app.url_subdir }}/webpack/',
         publicPath: ``,
+        assetModuleFilename: 'assets/[hash][ext]',
     },
     module: {
         rules: rules

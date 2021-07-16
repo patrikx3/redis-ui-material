@@ -139,6 +139,20 @@ input:-webkit-autofill, input:-webkit-autofill:focus {
 
                 $('head').append('<style id="p3xr-theme-styles">' + styles + '</style>')
 
+
+                const ngivrCoreThemeMetaName = 'p3xr-theme-meta'
+                const ngivrCoreThemeMetaElement = document.getElementById(ngivrCoreThemeMetaName)
+                if (ngivrCoreThemeMetaElement) {
+                    ngivrCoreThemeMetaElement.remove()
+                }
+
+                const meta = document.createElement('meta');
+                meta.id = ngivrCoreThemeMetaName
+//                    <meta name="theme-color" content="hsl(24.3, 97.4%, 54.3%)">
+                meta.name = 'theme-color'
+                meta.content = $mdColors.getThemeColor(p3xr.state.themeLayout + '-accent')
+                document.head.appendChild(meta)
+
                 // https://stackoverflow.com/questions/65940522/how-do-i-switch-to-chromes-dark-scrollbar-like-github-does
                 // but fixed by p3x-robot
                 document.documentElement.style.display = 'none';
