@@ -10,7 +10,7 @@ const minimize = process.argv.includes('--mode=production');
 const mode = minimize ? 'production' : 'development';
 const useStats = process.env.hasOwnProperty('WEBPACK_STATS')
 
-const filenamePrefix = minimize ? '[name].[contenthash]' : '[name]'
+const filenamePrefix = minimize ? '[id].[contenthash]' : '[name]'
 
 let minimizer = undefined;
 
@@ -58,8 +58,8 @@ const plugins = [
     new MiniCssExtractPlugin({
         // Options similar to the same options in webpackOptions.output
         // both options are optional
-        filename: !minimize ? '[name].css' : '[name].[contenthash].css',
-        chunkFilename: !minimize ? '[name].css' : '[name].[contenthash].css',
+        filename: !minimize ? '[name].css' : '[id].[contenthash].css',
+        chunkFilename: !minimize ? '[name].css' : '[id].[contenthash].css',
     }),
 
 ];

@@ -21,9 +21,7 @@ p3xr.ng.component('p3xrMainKeyZset', {
             keyPaging.figurePaging()
         }
 
-
-        let values
-        $scope.$watch('$ctrl.page', (n, o) => {
+        const onPage = (n, o) => {
             values = []
             const index = p3xr.settings.keyPageCount * (this.page - 1)
             let indexKeys = 0
@@ -34,7 +32,10 @@ p3xr.ng.component('p3xrMainKeyZset', {
                 }
                 indexKeys++
             }
-        })
+        }
+
+        let values
+        $scope.$watch('$ctrl.page', onPage)
 
         this.pageBasedList = () => {
             return values
@@ -73,6 +74,7 @@ p3xr.ng.component('p3xrMainKeyZset', {
                 lastVal = newVal
                 this.generatedValue = generateHashFromRedisSortedSet(this.p3xrValue)
                 keyPaging.figurePaging()
+                onPage()
             }
         })
 
