@@ -235,7 +235,8 @@ const strings = {
         'readonly-connection-mode': '此连接为只读模式！',
         'list-out-of-bounds': '此列表索引超出范围',
         'donation-ware-feature': '捐赠版本中提供了此功能。',
-        'auto-connection-failed': '因此，可能导致连接被删除并且自动连接失败。'
+        'auto-connection-failed': '因此，可能导致连接被删除并且自动连接失败。',
+        invalid_console_command: '此命令无法通过 GUI 运行。',
     },
     form: {
         error: {
