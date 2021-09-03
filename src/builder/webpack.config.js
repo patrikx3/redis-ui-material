@@ -24,6 +24,7 @@ const targetPath = '../..';
 const targetFolder = 'dist';
 
 const pkg = require('../../package')
+const path = require("path");
 
 // https://github.com/webpack-contrib/webpack-hot-middleware/tree/master/example
 /*
@@ -278,9 +279,14 @@ module.exports = {
     mode: mode,
 
     devServer: {
-        contentBase: './src/public',
+        static: {
+            directory: './src/public',
+            staticOptions: {},
+            publicPath: "/",
+            serveIndex: true,
+            watch: true,
+        },
         host: '0.0.0.0',
-        disableHostCheck: true,
         historyApiFallback: {
             rewrites: [
                 {from: /.*\..*/, to: '/index.html'}
