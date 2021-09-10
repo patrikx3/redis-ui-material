@@ -56,6 +56,12 @@
                         {{ $root.p3xr.strings.label.passwordSecure }}
                     </div>
 
+                    <md-input-container class="md-block p3xr-md-input-container-no-bottom">
+                        <label>TLS (ca.pem)</label>
+                        <textarea name="tlsCa" ng-model="model.tlsCa"
+                                  ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off"></textarea>
+                    </md-input-container>
+
                     <span ng-if="$root.p3xr.state.donated">
 
                     <md-input-container style="margin: 0px">

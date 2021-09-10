@@ -1,6 +1,6 @@
 {
     "name": "p3x-redis-ui-material",
-    "version": "2021.10.111",
+    "version": "2021.10.114",
     "description": "💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via http and socket.io",
     "corifeus": {
         "icon": "fas fa-database",
@@ -42,8 +42,8 @@
     "author": "Patrik Laszlo <alabard@gmail.com>",
     "license": "MIT",
     "devDependencies": {
-        "@babel/core": "^7.15.4",
-        "@babel/preset-env": "^7.15.4",
+        "@babel/core": "^7.15.5",
+        "@babel/preset-env": "^7.15.6",
         "@fontsource/roboto": "^4.5.0",
         "@fontsource/roboto-mono": "^4.5.0",
         "@fortawesome/fontawesome-free": "^5.15.4",
@@ -63,7 +63,7 @@
         "clean-webpack-plugin": "^4.0.0",
         "concurrently": "^6.2.1",
         "copy-webpack-plugin": "^9.0.1",
-        "corifeus-builder": "^2021.10.105",
+        "corifeus-builder": "^2021.10.109",
         "css-loader": "^6.2.0",
         "css-minimizer-webpack-plugin": "^3.0.2",
         "grunt-injector": "^1.1.0",
@@ -84,12 +84,12 @@
         "socket.io-client": "^4.2.0",
         "source-map-loader": "^3.0.0",
         "style-loader": "^3.2.1",
-        "terser-webpack-plugin": "^5.2.3",
+        "terser-webpack-plugin": "^5.2.4",
         "timestring": "^6.0.0",
-        "webpack": "^5.51.2",
+        "webpack": "^5.52.1",
         "webpack-bundle-analyzer": "^4.4.2",
         "webpack-cli": "^4.8.0",
-        "webpack-dev-server": "^4.1.0",
+        "webpack-dev-server": "^4.2.0",
         "webpack-remove-debug": "^0.1.0"
     },
     "engines": {
