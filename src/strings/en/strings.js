@@ -142,6 +142,7 @@ const strings = {
         jsonViewNotParsable: 'This value is not JSON parsable  ',
         ttlTitle: 'Set the TTL in seconds',
         passwordSecure: 'The password might will be empty, but still it will show characters, this is a security feature.',
+        tlsSecure: 'If you see a TLS configuration that starts with a P3X or all the TLS settings look like the same, it is a secure feature. To change the settings, just replace these settings with empty or something else and they will be saved. If you do not change the TLS settings, the settings will be kept as they are on the server.',
         treeSeparatorEmpty: 'If the tree separator is empty, the tree wil have no nested nodes, just a pure list',
         treeSeparatorEmptyNote: 'No nested nodes, just a pure list',
         welcomeConsole: 'Welcome to the Redis Console',

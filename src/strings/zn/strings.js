@@ -140,6 +140,7 @@ const strings = {
         ttlTitle: '设置TTL时间(秒)',
         passwordSecure: '密码可能为空，但仍会显示字符，这是一项安全功能。',
         treeSeparatorEmpty: '如果树分隔符为空，则树将没有嵌套节点，只有纯列表',
+        tlsSecure: '如果您看到以 P3X 开头的 TLS 配置或所有 TLS 设置看起来都相同，则这是一项安全功能。 要更改设置，只需将这些设置替换为空或其他内容即可保存。 如果您不更改 TLS 设置，这些设置将保持在服务器上的原样。',
         treeSeparatorEmptyNote: '没有嵌套节点，只是一个纯列表',
         welcomeConsole: '欢迎来到Redis控制台',
         welcomeConsoleInfo: '启用类似Bash命令补全功能,按TAB 或 SHIFT + TAB 补全',

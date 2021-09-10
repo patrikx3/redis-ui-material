@@ -56,11 +56,37 @@
                         {{ $root.p3xr.strings.label.passwordSecure }}
                     </div>
 
+                    <br/>
+
                     <md-input-container class="md-block p3xr-md-input-container-no-bottom">
-                        <label>TLS (ca.pem)</label>
+                        <label>TLS (redis.crt)</label>
+                        <textarea name="tlsCrt" ng-model="model.tlsCrt"
+                                  ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off"></textarea>
+                    </md-input-container>
+                    <div class="p3xr-md-input-container-bottom-info">
+                        {{ $root.p3xr.strings.label.tlsSecure }}
+                    </div>
+                    <br/>
+
+                    <md-input-container class="md-block p3xr-md-input-container-no-bottom">
+                        <label>TLS (redis.key)</label>
+                        <textarea name="tlsKey" ng-model="model.tlsKey"
+                                  ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off"></textarea>
+                    </md-input-container>
+                    <div class="p3xr-md-input-container-bottom-info">
+                        {{ $root.p3xr.strings.label.tlsSecure }}
+                    </div>
+                    <br/>
+
+                    <md-input-container class="md-block p3xr-md-input-container-no-bottom">
+                        <label>TLS (ca.crt)</label>
                         <textarea name="tlsCa" ng-model="model.tlsCa"
                                   ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off"></textarea>
                     </md-input-container>
+                    <div class="p3xr-md-input-container-bottom-info">
+                        {{ $root.p3xr.strings.label.tlsSecure }}
+                    </div>
+                    <br/>
 
                     <span ng-if="$root.p3xr.state.donated">
 
