@@ -27,7 +27,7 @@ $(() => {
 global.htmlEncode = require('js-htmlencode').htmlEncode
 
 // socket
-global.io = require('socket.io-client')
+global.io = require('socket.io-client/dist/socket.io.js')
 
 // angular
 global.angular = require('angular');
