@@ -254,7 +254,7 @@ if (minimize) {
     })
 }
 
-module.exports = {
+const webpackConfig = {
 //    watch: true,
     devtool: devtool,
 
@@ -266,7 +266,7 @@ module.exports = {
     output: {
         path: buildDir,
         filename: `${filenamePrefix}.js`,
-       // chunkFilename: `${filenamePrefix}.js`,
+        // chunkFilename: `${filenamePrefix}.js`,
 //        publicPath: '{{ app.url_subdir }}/webpack/',
         publicPath: ``,
         assetModuleFilename: 'assets/[hash][ext]',
@@ -293,7 +293,12 @@ module.exports = {
             ]
         },
         hot: true,
-       // hotOnly: true,
+        // hotOnly: true,
     },
 
 }
+
+webpackConfig.ignoreWarnings = [/Failed to parse source map/];
+
+module.exports = webpackConfig
+
