@@ -30,12 +30,33 @@ p3xr-console {
             }
         }
 
-        input {
-            min-width: calc(100% - 18px);
-            position: fixed;
-            bottom: $toolbar-height + 8px;
-            left: 3px;
-            right: 0px;
-        }
+
+    }
+}
+
+#p3xr-console-input {
+    min-width: calc(100% - 9px);
+    position: fixed;
+    bottom: $toolbar-height + 8px;
+    left: 3px;
+    right: 0px;
+
+    padding: 3px !important;
+    border-style: solid !important;
+    border-width: 2px !important;
+    margin: 1px !important;
+}
+
+#p3xr-console-input:focus {
+    margin: 0px !important;
+    border-width: 3px !important;
+    outline: none !important;
+}
+
+.p3xr-console {
+    background-color: transparent !important;
+    md-autocomplete-wrap {
+        box-shadow: none;
+        background: none !important;
     }
 }

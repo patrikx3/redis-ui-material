@@ -5,7 +5,7 @@ const htmlEncode = global.htmlEncode;
 
 p3xr.ng.component('p3xrConsole', {
     template: require('./p3xr-console.html'),
-    controller: function (p3xrCommon, p3xrSocket, $state, $rootScope, p3xrRedisParser, $mdDialog, $timeout) {
+    controller: function (p3xrCommon, p3xrSocket, $state, $rootScope, p3xrRedisParser, $mdDialog, $timeout, p3xrTheme, $scope, $mdColors) {
         // .p3xr-layout-footer-container
         // .p3xr-layout-header-container
         // #p3xr-console-header
@@ -90,20 +90,56 @@ p3xr.ng.component('p3xrConsole', {
             $header = $('#p3xr-layout-header-container')
             $footer = $('#p3xr-layout-footer-container')
             $consoleHeader = $('#p3xr-console-header')
-            $input = $('#p3xr-console-input')
             $output = $('#p3xr-console-content-output')
-            $input.focus()
 
             scrollers = $container[0]
 
             $window.on('resize', resize)
             resize()
-            this.clearConsole()
 
 
             p3xrSocket.ioClient.on('pubsub-message', onPubSubMessage)
 
+
+            setTimeout(() => {
+                $input = $('#p3xr-console-input')
+                /*
+                md-colors="{'border-color': $ctrl.inputBorderColor()}" ng-style="{ 'background': $ctrl.inputBackground(), 'color': $ctrl.inputColor()}"
+
+
+                this.inputBackground = () => {
+                    return p3xrTheme.isDark() ? 'rgba(64, 64, 64, 1)' : 'white'
+                }
+
+                this.inputBorderColor = () => {
+                    return p3xrTheme.isDark() ? 'primary-hue-1' : 'primary-hue-1'
+                }
+
+                this.inputColor = () => {
+                    return p3xrTheme.isDark() ? 'white' : 'black'
+                }
+
+                 */
+
+                this.setTheme()
+
+                this.clearConsole()
+            })
         }
+
+        this.setTheme = () => {
+            const css = {
+                borderColor: $mdColors.getThemeColor(p3xr.state.themeLayout + '-primary-hue-1'),
+                backgroundColor: p3xrTheme.isDark() ? 'rgba(64, 64, 64, 1)' : 'white',
+                color: p3xrTheme.isDark() ? 'white' : 'black',
+            }
+            //console.warn('dark', p3xrTheme.isDark(), css)
+            $input.css(css)
+        }
+
+        $scope.$on('p3xr-theme-switched', () => {
+            this.setTheme()
+        })
 
         this.$postLink = () => {
             rawResize()
@@ -115,12 +151,17 @@ p3xr.ng.component('p3xrConsole', {
         };
 
 
-        this.inputValue = ''
+        //this.inputValue = ''
 
-        this.actionEnter = async () => {
+        this.actionEnter = async (inputValue) => {
+
+            var $acElement = angular.element(document.getElementById('p3xr-console-autocomplete'));
+            var acCtrl = $acElement.controller('mdAutocomplete');
+            acCtrl.hidden = true;
 
             let response;
-            const enter = String(this.inputValue).trim()
+            const enter = String(inputValue).trim()
+
             if (enter === '') {
                 return;
             }
@@ -144,33 +185,36 @@ p3xr.ng.component('p3xrConsole', {
                     $rootScope.p3xr.state.currentDatabase = response.database
                     $rootScope.p3xr.state.redisChanged = true
                 }
+                $scope.searchText = ''
+
+                $scope.$digest()
             } catch (e) {
                 console.error(e)
                 $output.append(`<pre>${p3xr.strings.code[e.message] || e.message}</pre>`)
 
             } finally {
-                let history
-                if (response !== undefined) {
-                    history = response.generatedCommand
-                } else {
-                    history = enter
-                }
-                const actionHistoryIndexOf = actionHistory.indexOf(history)
-                if (actionHistoryIndexOf > -1) {
-                    actionHistory.splice(actionHistoryIndexOf, 1)
-                }
-                actionHistory.push(history)
-                /*
-                if (actionHistory.length > 20) {
-                    actionHistory = actionHistory.slice(0, 20)
-                }
-                */
-                actionHistoryPosition = -1
-
-                //console.log(scrollers.scrollHeight, scrollers.scrollTop, scrollers.height)
+                // let history
+                // if (response !== undefined) {
+                //     history = response.generatedCommand
+                // } else {
+                //     history = enter
+                // }
+                // const actionHistoryIndexOf = actionHistory.indexOf(history)
+                // if (actionHistoryIndexOf > -1) {
+                //     actionHistory.splice(actionHistoryIndexOf, 1)
+                // }
+                // actionHistory.push(history)
+                // /*
+                // if (actionHistory.length > 20) {
+                //     actionHistory = actionHistory.slice(0, 20)
+                // }
+                // */
+                // actionHistoryPosition = -1
+                //
+                // //console.log(scrollers.scrollHeight, scrollers.scrollTop, scrollers.height)
                 scrollers.scrollTop = scrollers.scrollHeight;
-                //$output.scrollTop($output.prop("scrollHeight"));
-                $input.focus()
+                $output.scrollTop($output.prop("scrollHeight"));
+                // //$input.focus()
             }
 
         }
@@ -193,6 +237,7 @@ p3xr.ng.component('p3xrConsole', {
             })
         }
 
+        /*
         this.action = ($event) => {
             //console.warn($event.keyCode)
             if ($event.keyCode !== 9 && event.shiftKey !== true) {
@@ -276,6 +321,8 @@ p3xr.ng.component('p3xrConsole', {
                     break;
             }
         }
+         */
+
 
         this.clearConsole = () => {
             $output.empty()
@@ -283,6 +330,10 @@ p3xr.ng.component('p3xrConsole', {
             $output.append('<div class="p3xr-console-content-output-item">' + $rootScope.p3xr.strings.label.welcomeConsoleInfo + '</div>')
             $output.append('<div class="p3xr-console-content-output-item">' + $rootScope.p3xr.strings.label.welcomeConsoleInfo2 + '</div>')
             $input.focus()
+        }
+
+        this.getMatches = (searchText) => {
+            return redisCommands.filter(e => e.includes(searchText))
         }
 
         this.commands = (options) => {

@@ -22,6 +22,16 @@
     <md-content md-theme="{{ $root.p3xr.state.theme}}" layout-padding id="p3xr-console-content" md-whiteframe="1" class="p3xr-content-border">
         <div id="p3xr-console-content-output">
         </div>
+        <!--
         <p3xr-input id="p3xr-console-input" ng-keydown="$ctrl.action($event)" ng-model="$ctrl.inputValue"></p3xr-input>
+        -->
+
     </md-content>
 </div>
+
+<md-autocomplete id="p3xr-console-autocomplete" ng-enter="$ctrl.actionEnter(searchText)" md-input-id="p3xr-console-input" class="p3xr-console" md-input-class="p3xr-input md-input" md-search-text="searchText" md-items="item in  $ctrl.getMatches(searchText)" md-item-text="item" md-clear-button="false" md-escape-options="none">
+    <md-item-template>
+        <span md-highlight-text="searchText">{{item}}</span>
+    </md-item-template>
+
+</md-autocomplete>
