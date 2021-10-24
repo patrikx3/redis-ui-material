@@ -41,7 +41,7 @@
                            p3xr-label="$root.p3xr.strings.intention.statistics" p3xr-md-icon="show_chart"></p3xr-button>
 
 
-              <p3xr-button class="p3xr-main-toolbar-button"  ng-click="$ctrl.refresh()"
+              <p3xr-button ng-if="!$root.$mdMedia('xs')" class="p3xr-main-toolbar-button"  ng-click="$ctrl.refresh()"
                            p3xr-label="$root.p3xr.strings.intention.refresh" p3xr-md-icon="refresh"></p3xr-button>
 
         </span>

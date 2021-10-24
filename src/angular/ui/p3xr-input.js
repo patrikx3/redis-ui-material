@@ -1,22 +1,12 @@
-p3xr.ng.directive('p3xrInput', function (p3xrTheme) {
+p3xr.ng.directive('p3xrInput', function (p3xrTheme, p3xrCommon) {
     return {
-        template: `<input ng-focus="focused=true" ng-blur="focused=false" class="p3xr-input" md-theme="{{ $root.p3xr.state.themeLayout }}" md-colors="{'border-color': inputBorderColor()}" ng-style="{ 'background': inputBackground(), 'color': inputColor()}"/>`,
+        template: `<input ng-focus="focused=true" ng-blur="focused=false" class="p3xr-input" md-theme="{{ $root.p3xr.state.themeLayout }}" md-colors="{}" ng-style="{ 'background': p3xrCommon.inputBackground(), 'color': p3xrCommon.inputColor(), 'border-color': p3xrCommon.inputBorderColor()}"/>`,
         replace: true,
         link: function (scope) {
 
             scope.focused = false
 
-            scope.inputBackground = () => {
-                return p3xrTheme.isDark() ? 'rgba(64, 64, 64, 1)' : 'white'
-            }
-
-            scope.inputBorderColor = () => {
-                return p3xrTheme.isDark() ? 'primary-hue-1' : 'primary-hue-1'
-            }
-
-            scope.inputColor = () => {
-                return p3xrTheme.isDark() ? 'white' : 'black'
-            }
+            scope.p3xrCommon = p3xrCommon
         }
     }
 })

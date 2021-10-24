@@ -4,7 +4,7 @@ cookieExpiry.setFullYear(cookieExpiry.getFullYear() + 5)
 p3xr.settings = {
     maxLightKeysCount: 110000,
 //    maxLightKeysCount: 1,
-    resizeMinWidth: 320,
+    resizeMinWidth: 350,
     socket: {
         timeout: 300000,
     },

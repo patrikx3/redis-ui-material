@@ -1,4 +1,5 @@
 <div style="float: left;">
+
     <md-button class="md-icon-button md-primary" aria-label="" ng-click="$ctrl.treeExpandAll()">
         <md-tooltip>{{ $root.p3xr.strings.page.treeControls.expandAll}}</md-tooltip>
         <md-icon>keyboard_arrow_down</md-icon>
@@ -7,6 +8,11 @@
     <md-button class="md-icon-button" aria-label="" ng-click="$ctrl.treeCollapseAll()" id="p3xr-main-treecontrol-controls-collapse-all">
         <md-tooltip>{{ $root.p3xr.strings.page.treeControls.collapseAll}}</md-tooltip>
         <md-icon>keyboard_arrow_up</md-icon>
+    </md-button>
+
+    <md-button class="md-icon-button" aria-label="" ng-click="$ctrl.p3xrMainRef.refresh()">
+        <md-tooltip>{{ $root.p3xr.strings.intention.refresh}}</md-tooltip>
+        <md-icon>refresh</md-icon>
     </md-button>
 
     <md-button class="md-icon-button" aria-label="" ng-click="$ctrl.openTreeSettingDialog({ $event: $event})">
@@ -65,12 +71,14 @@
 -->
 
 <div class="p3xr-main-treecontrol-controls-search">
-    <p3xr-input
-        placeholder="{{ $root.p3xr.settings.searchClientSide ? $root.p3xr.strings.page.treeControls.search.placeholderClient : $root.p3xr.strings.page.treeControls.search.placeholderServer }}"
-        ng-model="$root.p3xr.state.search"
-        ng-class="{ 'withSearch': $root.p3xr.state.search.length > 0, 'withoutSearch': $root.p3xr.state.search.length  === 0}"
-        ng-enter="$ctrl.onSearchChange()"></p3xr-input>
-    <md-tooltip md-direction="top">{{ $root.p3xr.strings.page.treeControls.search.infoDetails }}</md-tooltip>
+    <span>
+        <p3xr-input
+            placeholder="{{ $root.p3xr.settings.searchClientSide ? $root.p3xr.strings.page.treeControls.search.placeholderClient : $root.p3xr.strings.page.treeControls.search.placeholderServer }}"
+            ng-model="$root.p3xr.state.search"
+            ng-class="{ 'withSearch': $root.p3xr.state.search.length > 0, 'withoutSearch': $root.p3xr.state.search.length  === 0}"
+            ng-enter="$ctrl.onSearchChange()" tooltip=""></p3xr-input>
+        <md-tooltip md-direction="bottom">{{ $root.p3xr.strings.page.treeControls.search.infoDetails }}</md-tooltip>
+    </span>
 
     <md-button class="md-icon-button md-primary" aria-label="" ng-click="$ctrl.onSearchChange()">
         <md-tooltip>{{ $root.p3xr.strings.page.treeControls.search.search}}</md-tooltip>

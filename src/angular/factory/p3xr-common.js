@@ -1,4 +1,4 @@
-p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootScope, p3xrRedisParser, $timeout,) {
+p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootScope, p3xrRedisParser, $timeout, p3xrTheme) {
 
     const generalHandleError = (dataOrError) => {
         if (dataOrError === undefined) {
@@ -105,6 +105,17 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootSco
     }
 
     const result = {
+        inputBackground: () => {
+            return p3xrTheme.isDark() ? 'rgba(64, 64, 64, 1)' : 'white'
+        },
+
+        inputBorderColor: () => {
+            return $mdColors.getThemeColor(p3xr.state.themeLayout + '-primary-hue-1')
+        },
+
+        inputColor: () => {
+            return p3xrTheme.isDark() ? 'white' : 'black'
+        },
         generalHandleError: generalHandleError,
         toast: toast,
         alert: (opts) => {

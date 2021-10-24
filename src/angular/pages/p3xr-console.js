@@ -5,7 +5,7 @@ const htmlEncode = global.htmlEncode;
 
 p3xr.ng.component('p3xrConsole', {
     template: require('./p3xr-console.html'),
-    controller: function (p3xrCommon, p3xrSocket, $state, $rootScope, p3xrRedisParser, $mdDialog, $timeout, p3xrTheme, $scope, $mdColors) {
+    controller: function (p3xrCommon, p3xrSocket, $state, $rootScope, p3xrRedisParser, $mdDialog, $timeout, $scope) {
         // .p3xr-layout-footer-container
         // .p3xr-layout-header-container
         // #p3xr-console-header
@@ -129,9 +129,9 @@ p3xr.ng.component('p3xrConsole', {
 
         this.setTheme = () => {
             const css = {
-                borderColor: $mdColors.getThemeColor(p3xr.state.themeLayout + '-primary-hue-1'),
-                backgroundColor: p3xrTheme.isDark() ? 'rgba(64, 64, 64, 1)' : 'white',
-                color: p3xrTheme.isDark() ? 'white' : 'black',
+                borderColor: p3xrCommon.inputBorderColor(),
+                backgroundColor: p3xrCommon.inputBackground(),
+                color: p3xrCommon.inputColor(),
             }
             //console.warn('dark', p3xrTheme.isDark(), css)
             $input.css(css)
