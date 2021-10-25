@@ -119,7 +119,7 @@ const strings = {
         streamValue: `流字段和值是唯一的。 例如：field1 value1 "field 2" "value 2"`,
         streamTimestampId: `'*'表示自动生成或指定为<millisecondsTime>-<sequenceNumber>`,
         unableToLoadKey: ({ key }) => {
-            return `无法加载此密钥：: ${key}。确切的错误在控制台中。`
+            return `无法加载此密钥：: ${key}。可能，密钥被删除了。确切的错误在控制台中。`
         },
         bigJson: '此JSON对象超过10 kb，因此请确保您知道自己在做什么，因为某些功能可能会缓慢呈现。',
         addNode: '添加节点',

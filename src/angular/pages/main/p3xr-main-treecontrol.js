@@ -94,14 +94,17 @@ p3xr.ng.component('p3xrMainTree', {
         this.delete = async (options) => {
             try {
 
+                options.event.preventDefault()
+                options.event.stopPropagation()
+
                 await p3xrCommon.confirm({
                     event: options.$event,
                     message: p3xr.strings.confirm.deleteKey
                 })
 
-                const expandedNodes = angular.copy($rootScope.expandedNodes);
+                //const expandedNodes = angular.copy($rootScope.expandedNodes);
 
-                const response = await p3xrSocket.request({
+                await p3xrSocket.request({
                     action: 'delete',
                     payload: {
                         key: options.key
@@ -114,10 +117,12 @@ p3xr.ng.component('p3xrMainTree', {
                     }
                 );
 
+                /*
                 $timeout(() => {
                     $rootScope.savedExpandedNodes = expandedNodes
                     p3xrCommon.loadRedisInfoResponse({response: response})
                 })
+                 */
 
                 /*
                 const params = {
@@ -134,6 +139,8 @@ p3xr.ng.component('p3xrMainTree', {
                         key: options.key
                     })
                 })
+
+                await this.p3xrMainRef.refresh()
             } catch (e) {
                 p3xrCommon.generalHandleError(e)
             }
@@ -156,9 +163,7 @@ p3xr.ng.component('p3xrMainTree', {
 
                 const confirmResponse = await $mdDialog.show(confirm)
 
-                const expandedNodes = angular.copy($rootScope.expandedNodes);
-
-                const response = await p3xrSocket.request({
+                await p3xrSocket.request({
                     action: 'rename',
                     payload: {
                         key: options.key,
@@ -172,19 +177,17 @@ p3xr.ng.component('p3xrMainTree', {
                     }
                 );
 
-                $timeout(() => {
-                    $rootScope.savedExpandedNodes = expandedNodes
-                    p3xrCommon.loadRedisInfoResponse({response: response})
-                    $state.go('main.key', {
-                        key: confirmResponse,
-                        resize: this.p3xrResize,
-                    })
+                $state.go('main.key', {
+                    key: confirmResponse,
+                    resize: this.p3xrResize,
                 })
-
 
                 p3xrCommon.toast({
                     message: p3xr.strings.status.renamedKey
                 })
+
+                await this.p3xrMainRef.refresh()
+
             } catch (e) {
                 p3xrCommon.generalHandleError(e)
             }
@@ -197,8 +200,6 @@ p3xr.ng.component('p3xrMainTree', {
                 // event.preventDefault()
                 event.stopPropagation();
 
-                const expandedNodes = angular.copy($rootScope.expandedNodes);
-
                 await p3xrCommon.confirm({
                     event: event,
                     message: p3xr.strings.confirm.deleteAllKeys({
@@ -207,20 +208,11 @@ p3xr.ng.component('p3xrMainTree', {
                 })
 
 
-                const response = await p3xrSocket.request({
+                await p3xrSocket.request({
                     action: 'key-del-tree',
                     payload: {
                         key: node.key,
                         redisTreeDivider: p3xr.settings.redisTreeDivider
-                    }
-                })
-
-                $timeout(() => {
-                    $rootScope.savedExpandedNodes = expandedNodes
-                    p3xrCommon.loadRedisInfoResponse({response: response})
-
-                    if ($stateParams.key !== undefined && $stateParams.key.startsWith(node.key + p3xr.settings.redisTreeDivider)) {
-                        $state.go('main.statistics')
                     }
                 })
 
@@ -229,11 +221,41 @@ p3xr.ng.component('p3xrMainTree', {
                         key: node.key
                     })
                 })
+
+                if ($stateParams.key !== undefined && $stateParams.key.startsWith(node.key + p3xr.settings.redisTreeDivider)) {
+                    $state.go('main.statistics')
+                }
+
+                await this.p3xrMainRef.refresh()
+
             } catch (e) {
                 p3xrCommon.generalHandleError(e)
             }
         }
 
+
+        this.addKey = async (options) => {
+            const {event, node} = options
+            event.stopPropagation();
+
+            try {
+                const response = await p3xrDialogKeyNewOrSet.show({
+                    $event: event,
+                    node: node,
+                    type: 'add',
+                })
+
+                await this.p3xrMainRef.refresh()
+
+                $state.go('main.key', {
+                    key: response.key,
+                    resize: this.p3xrResize,
+                })
+
+            } catch (e) {
+                p3xrCommon.generalHandleError(e)
+            }
+        }
         this.extractNodeTooltip = (node) => {
             if (node.type !== 'folder' && node.keysInfo !== undefined) {
                 if (node.keysInfo === undefined) {
@@ -250,35 +272,6 @@ p3xr.ng.component('p3xrMainTree', {
             }
             return p3xr.ui.htmlEncode(node.key)
         }
-
-
-        this.addKey = async (options) => {
-            const {event, node} = options
-            event.stopPropagation();
-
-            const expandedNodes = angular.copy($rootScope.expandedNodes);
-
-            try {
-                const response = await p3xrDialogKeyNewOrSet.show({
-                    $event: event,
-                    node: node,
-                    type: 'add',
-                })
-
-                $timeout(() => {
-                    $rootScope.savedExpandedNodes = expandedNodes
-                    p3xrCommon.loadRedisInfoResponse({response: response})
-
-                    $state.go('main.key', {
-                        key: response.key,
-                        resize: this.p3xrResize,
-                    })
-                })
-            } catch (e) {
-                p3xrCommon.generalHandleError(e)
-            }
-        }
-
 
         $scope.$on('p3xr-key-delete', (event, arg) => {
             this.delete(arg)
@@ -298,7 +291,7 @@ p3xr.ng.component('p3xrMainTree', {
         });
 
 
-        this.treeHover = ({node}) => {
+        this.hover = ({node}) => {
             if (p3xr.state.connection.readonly === true) {
                 return
             }

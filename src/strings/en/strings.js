@@ -122,7 +122,7 @@ const strings = {
         streamValue: `Stream field and value is a oneliner. Eg.: field1 value1 "field 2" "value 2"`,
         streamTimestampId: `'*' means auto generated or the specification as <millisecondsTime>-<sequenceNumber>`,
         unableToLoadKey: ({ key }) => {
-          return `Unable to load this key: ${key}. The exact error is in the console.`
+          return `Unable to load this key: ${key}. Possible, the key was deleted. The exact error is in the console.`
         },
         bigJson: 'This JSON object is over 10 kb, so make sure you know what you doing, because some functions can be slow rendering.',
         addNode: 'Add node',

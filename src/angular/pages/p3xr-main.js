@@ -370,10 +370,12 @@ p3xr.ng.component('p3xrMain', {
 
             console.time('refresh')
 
-            let {withoutParent} = options
+            let {withoutParent, keepTree} = options
             if (withoutParent === undefined) {
                 withoutParent = false
             }
+
+            let expandedNodes = angular.copy($rootScope.expandedNodes);
 
             try {
                 p3xr.ui.overlay.show({
@@ -395,6 +397,14 @@ p3xr.ng.component('p3xrMain', {
                 })
                 p3xr.state.dbsize = response.dbsize
                 $rootScope.p3xr.state.redisChanged = true
+
+//                if (keepTree) {
+  //                  $timeout(() => {
+                        $rootScope.savedExpandedNodes = expandedNodes
+//                        p3xrCommon.loadRedisInfoResponse()
+//                    })
+//                }
+
                 p3xrCommon.loadRedisInfoResponse({
                     response: response
                 })
@@ -415,7 +425,6 @@ p3xr.ng.component('p3xrMain', {
                 p3xr.ui.overlay.hide()
             }
             console.timeEnd('refresh')
-
 
         }
 
