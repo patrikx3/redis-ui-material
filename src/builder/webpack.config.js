@@ -138,13 +138,7 @@ For more information about all licenses, please see ${webpackBanner}
     )
      */
 
-    plugins.push(
-        new CopyWebpackPlugin({
-            patterns: [
-                { from: 'src/public', to: './' }
-            ]
-        })
-    )
+
 
 
 } else {

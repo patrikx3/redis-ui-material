@@ -370,7 +370,7 @@ p3xr.ng.component('p3xrMain', {
 
             console.time('refresh')
 
-            let {withoutParent, keepTree} = options
+            let { withoutParent } = options
             if (withoutParent === undefined) {
                 withoutParent = false
             }
@@ -378,9 +378,12 @@ p3xr.ng.component('p3xrMain', {
             let expandedNodes = angular.copy($rootScope.expandedNodes);
 
             try {
+                /*
                 p3xr.ui.overlay.show({
                     message: p3xr.strings.status.reloadingDataInfo
                 })
+                 */
+
                 const payload = {}
 
                 if (!$rootScope.p3xr.settings.searchClientSide && typeof ($rootScope.p3xr.state.search) === 'string' && $rootScope.p3xr.state.search.length > 0) {
@@ -422,7 +425,9 @@ p3xr.ng.component('p3xrMain', {
                 */
 
             } finally {
+                /*
                 p3xr.ui.overlay.hide()
+                 */
             }
             console.timeEnd('refresh')
 
