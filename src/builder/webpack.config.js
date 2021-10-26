@@ -5,7 +5,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const fileAsset = `[name].[contenthash].[ext]`;
 const minimize = process.argv.includes('--mode=production');
 const mode = minimize ? 'production' : 'development';
 const useStats = process.env.hasOwnProperty('WEBPACK_STATS')
@@ -19,12 +18,7 @@ const buildDir = top + `/dist`;
 
 let devtool;
 
-const basePath = __dirname;
-const targetPath = '../..';
-const targetFolder = 'dist';
-
 const pkg = require('../../package')
-const path = require("path");
 
 // https://github.com/webpack-contrib/webpack-hot-middleware/tree/master/example
 /*
@@ -33,14 +27,23 @@ https://stackoverflow.com/questions/44317394/webpack-dev-server-with-hot-reload-
 'webpack-dev-server/client?http://localhost:8080',
 'webpack/hot/only-dev-server',
 */
-const webpackHotClintPath = 'webpack/hot/only-dev-server'
-
 const vendorEntry = [
     top + "/src/vendor.js"
 ]
 const mainEntry = [
     top + (minimize ? "/src/main.js" : '/src/main-development.js')
 ]
+
+const entry = {
+    vendor: vendorEntry,
+    main: mainEntry,
+//        editor: editorEntry,
+}
+
+if (!minimize) {
+    vendorEntry.push('webpack/hot/only-dev-server')
+    vendorEntry.unshift('webpack-dev-server/client?http://localhost:8080/')
+}
 
 const plugins = [
     new webpack.IgnorePlugin({
@@ -148,22 +151,7 @@ For more information about all licenses, please see ${webpackBanner}
     plugins.push(
         new webpack.HotModuleReplacementPlugin()
     )
-    mainEntry.push(webpackHotClintPath)
-
 }
-
-const fileLoader = [
-    {
-        loader: 'file-loader',
-        options: {
-            name: fileAsset,
-            outputPath: 'assets',
-            context: 'assets',
-//            publicPath: 'webpack/assets',
-//            useRelativePath: true,
-        }
-    }
-]
 
 const rules = [
     {
@@ -258,11 +246,7 @@ const webpackConfig = {
 //    watch: true,
     devtool: devtool,
 
-    entry: {
-        vendor: vendorEntry,
-        main: mainEntry,
-//        editor: editorEntry,
-    },
+    entry: entry,
     output: {
         path: buildDir,
         filename: `${filenamePrefix}.js`,

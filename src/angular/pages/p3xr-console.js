@@ -103,6 +103,7 @@ p3xr.ng.component('p3xrConsole', {
 
             setTimeout(() => {
                 $input = $('#p3xr-console-input')
+                $input.on('keydown', this.action)
                 /*
                 md-colors="{'border-color': $ctrl.inputBorderColor()}" ng-style="{ 'background': $ctrl.inputBackground(), 'color': $ctrl.inputColor()}"
 
@@ -193,24 +194,23 @@ p3xr.ng.component('p3xrConsole', {
                 $output.append(`<pre>${p3xr.strings.code[e.message] || e.message}</pre>`)
 
             } finally {
-                // let history
-                // if (response !== undefined) {
-                //     history = response.generatedCommand
-                // } else {
-                //     history = enter
-                // }
-                // const actionHistoryIndexOf = actionHistory.indexOf(history)
-                // if (actionHistoryIndexOf > -1) {
-                //     actionHistory.splice(actionHistoryIndexOf, 1)
-                // }
-                // actionHistory.push(history)
-                // /*
-                // if (actionHistory.length > 20) {
-                //     actionHistory = actionHistory.slice(0, 20)
-                // }
-                // */
-                // actionHistoryPosition = -1
-                //
+                let history
+                if (response !== undefined) {
+                     history = response.generatedCommand
+                 } else {
+                     history = enter
+                }
+                const actionHistoryIndexOf = actionHistory.indexOf(history)
+                if (actionHistoryIndexOf > -1) {
+                    actionHistory.splice(actionHistoryIndexOf, 1)
+                }
+                actionHistory.push(history)
+                if (actionHistory.length > 20) {
+                    actionHistory = actionHistory.slice(0, 20)
+                }
+
+                actionHistoryPosition = -1
+
                 // //console.log(scrollers.scrollHeight, scrollers.scrollTop, scrollers.height)
                 scrollers.scrollTop = scrollers.scrollHeight;
                 $output.scrollTop($output.prop("scrollHeight"));
@@ -219,36 +219,8 @@ p3xr.ng.component('p3xrConsole', {
 
         }
 
-        let lastTabInput
-        let lastTabInputIndex
-        let autoComplete
-        let wasLastTab
-        const clearTabAutocomplete = () => {
-            lastTabInput = undefined
-            lastTabInputIndex = -1;
-            autoComplete = [];
-            wasLastTab = false
-        }
-
-        const focusInput = () => {
-            $timeout(() => {
-                const value = $input.val();
-                $input.val('').focus().val(value);
-            })
-        }
-
-        /*
         this.action = ($event) => {
-            //console.warn($event.keyCode)
-            if ($event.keyCode !== 9 && event.shiftKey !== true) {
-                //console.warn('clear settings')
-                clearTabAutocomplete()
-            }
             switch ($event.keyCode) {
-                // enter
-                case 13:
-                    return this.actionEnter()
-
                 // keyup 38
                 case 38:
                     if (actionHistory.length < 1) {
@@ -262,8 +234,7 @@ p3xr.ng.component('p3xrConsole', {
                     } else {
                         actionHistoryPosition = actionHistory.length - 1
                     }
-                    this.inputValue = actionHistory[actionHistoryPosition]
-                    focusInput()
+                    $scope.searchText = actionHistory[actionHistoryPosition]
                     break;
 
                 // keydown 40
@@ -276,53 +247,14 @@ p3xr.ng.component('p3xrConsole', {
                     } else {
                         actionHistoryPosition = 0
                     }
-                    this.inputValue = actionHistory[actionHistoryPosition]
-                    focusInput()
+                    $scope.searchText = actionHistory[actionHistoryPosition]
                     break;
 
-                case 9:
-                    if (this.inputValue === undefined) {
-                        this.inputValue = '';
-                    }
-
-                    if (!wasLastTab) {
-                        const tab = String(this.inputValue).trim()
-                        lastTabInput = tab
-                        lastTabInputIndex = -1
-                        if (lastTabInput === '') {
-                            autoComplete = redisCommands
-                        } else {
-                            autoComplete = redisCommands.filter(filter => filter.startsWith(lastTabInput.toLowerCase()))
-                        }
-                    }
-
-                    //console.warn('before event.keyCode, event.shiftKey', event.keyCode, event.shiftKey, lastTabInputIndex)
-                    if (event.shiftKey === true) {
-                        lastTabInputIndex--;
-                    } else {
-                        lastTabInputIndex++;
-                    }
-                    //console.warn('middle event.keyCode, event.shiftKey', event.keyCode, event.shiftKey, lastTabInputIndex)
-                    if (lastTabInputIndex >= autoComplete.length) {
-                        lastTabInputIndex = 0;
-                    } else if (lastTabInputIndex < 0) {
-                        lastTabInputIndex = autoComplete.length - 1;
-                    }
-                    //console.warn('after event.keyCode, event.shiftKey', event.keyCode, event.shiftKey, lastTabInputIndex)
-
-                    this.inputValue = autoComplete[lastTabInputIndex]
-
-                    $event.stopPropagation();
-                    $event.preventDefault();
-                    wasLastTab = true
-                    break;
                 default:
                     actionHistoryPosition = -1
                     break;
             }
         }
-         */
-
 
         this.clearConsole = () => {
             $output.empty()

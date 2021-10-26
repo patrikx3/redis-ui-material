@@ -104,6 +104,7 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootSco
 
         $rootScope.p3xr.state.keysInfo = response.keysInfo
 
+        console.timeEnd('loadRedisInfoResponse')
         /*
         $timeout(() => {
             $rootScope.p3xr.state.reducedFunctions = $rootScope.p3xr.state.keysRaw.length > p3xr.settings.maxLightKeysCount

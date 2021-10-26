@@ -124,7 +124,7 @@ p3xr.ng.component('p3xrMainKey', {
                 //    message: p3xr.strings.intention.getKey
                 //})
                 //const type = p3xr.state.keysInfo[$stateParams.key].type
-                console.warn('$stateParams.key', $stateParams.key)
+                //console.warn('$stateParams.key', $stateParams.key)
                 const response = await p3xrSocket.request({
                     action: 'key-get',
                     payload: {
