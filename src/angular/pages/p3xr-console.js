@@ -1,4 +1,3 @@
-let actionHistory = []
 let actionHistoryPosition = -1
 
 const htmlEncode = global.htmlEncode;
@@ -11,6 +10,10 @@ p3xr.ng.component('p3xrConsole', {
         // #p3xr-console-header
         // #p3xr-console-input
         // $window.height()
+
+        const getActionHistory = () => {
+            return JSON.parse(localStorage.getItem('console-history') || "[]");
+        }
 
         const redisCommands = p3xr.state.commands
 
@@ -168,8 +171,6 @@ p3xr.ng.component('p3xrConsole', {
             }
             try {
                 $output.append(`<div class="p3xr-console-content-output-item">${enter}</div>`)
-                this.inputValue = ''
-
 
                 response = await p3xrSocket.request({
                     action: 'console',
@@ -200,6 +201,7 @@ p3xr.ng.component('p3xrConsole', {
                  } else {
                      history = enter
                 }
+                let actionHistory = getActionHistory()
                 const actionHistoryIndexOf = actionHistory.indexOf(history)
                 if (actionHistoryIndexOf > -1) {
                     actionHistory.splice(actionHistoryIndexOf, 1)
@@ -208,6 +210,8 @@ p3xr.ng.component('p3xrConsole', {
                 if (actionHistory.length > 20) {
                     actionHistory = actionHistory.slice(0, 20)
                 }
+
+                localStorage.setItem('console-history', JSON.stringify(actionHistory))
 
                 actionHistoryPosition = -1
 
@@ -222,7 +226,9 @@ p3xr.ng.component('p3xrConsole', {
         this.action = ($event) => {
             switch ($event.keyCode) {
                 // keyup 38
-                case 38:
+                case 38: {
+                    const actionHistory = getActionHistory()
+
                     if (actionHistory.length < 1) {
                         return;
                     }
@@ -237,8 +243,11 @@ p3xr.ng.component('p3xrConsole', {
                     $scope.searchText = actionHistory[actionHistoryPosition]
                     break;
 
+                }
+
                 // keydown 40
-                case 40:
+                case 40: {
+                    const actionHistory = getActionHistory()
                     if (actionHistory.length < 1) {
                         return;
                     }
@@ -250,6 +259,8 @@ p3xr.ng.component('p3xrConsole', {
                     $scope.searchText = actionHistory[actionHistoryPosition]
                     break;
 
+                }
+
                 default:
                     actionHistoryPosition = -1
                     break;
@@ -260,7 +271,7 @@ p3xr.ng.component('p3xrConsole', {
             $output.empty()
             $output.append('<div class="p3xr-console-content-output-item"><strong>' + $rootScope.p3xr.strings.label.welcomeConsole + '</strong></div>')
             $output.append('<div class="p3xr-console-content-output-item">' + $rootScope.p3xr.strings.label.welcomeConsoleInfo + '</div>')
-            $output.append('<div class="p3xr-console-content-output-item">' + $rootScope.p3xr.strings.label.welcomeConsoleInfo2 + '</div>')
+            $output.append('<br/>')
             $input.focus()
         }
 
