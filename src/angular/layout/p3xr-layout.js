@@ -29,7 +29,7 @@ p3xr.ng.component('p3xrLayout', {
                 window.open(`https://github.com/patrikx3/redis-ui/releases`, `github-patrikx3--redis-ui-releases`)
             },
             githubChangelog: () => {
-                window.open(`https://github.com/patrikx3/redis-ui/blob/master/changelog.md#change-log`, `github-patrikx3-redis-ui-changelog`)
+                window.open(`https://github.com/patrikx3/redis-ui/blob/master/change-log.md#change-log`, `github-patrikx3-redis-ui-changelog`)
             },
             donate: () => {
                 window.open(`https://www.paypal.me/patrikx3`, `p3x-redis-ui-donate`)
