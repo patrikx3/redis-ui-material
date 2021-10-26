@@ -2,6 +2,8 @@ let actionHistoryPosition = -1
 
 const htmlEncode = global.htmlEncode;
 
+//localStorage.setItem('console-history', '[]')
+
 p3xr.ng.component('p3xrConsole', {
     template: require('./p3xr-console.html'),
     controller: function (p3xrCommon, p3xrSocket, $state, $rootScope, p3xrRedisParser, $mdDialog, $timeout, $scope) {
@@ -224,9 +226,13 @@ p3xr.ng.component('p3xrConsole', {
         }
 
         this.action = ($event) => {
+
             switch ($event.keyCode) {
                 // keyup 38
                 case 38: {
+                    $event.preventDefault()
+                    $event.stopPropagation()
+
                     const actionHistory = getActionHistory()
 
                     if (actionHistory.length < 1) {
@@ -236,8 +242,7 @@ p3xr.ng.component('p3xrConsole', {
                         actionHistoryPosition = actionHistory.length
                     }
                     actionHistoryPosition--
-                    if (actionHistoryPosition > -1) {
-                    } else {
+                    if (actionHistoryPosition < 0) {
                         actionHistoryPosition = actionHistory.length - 1
                     }
                     $scope.searchText = actionHistory[actionHistoryPosition]
@@ -247,13 +252,15 @@ p3xr.ng.component('p3xrConsole', {
 
                 // keydown 40
                 case 40: {
+                    $event.preventDefault()
+                    $event.stopPropagation()
+
                     const actionHistory = getActionHistory()
                     if (actionHistory.length < 1) {
                         return;
                     }
                     actionHistoryPosition++
                     if (actionHistoryPosition >= actionHistory.length) {
-                    } else {
                         actionHistoryPosition = 0
                     }
                     $scope.searchText = actionHistory[actionHistoryPosition]
@@ -265,6 +272,8 @@ p3xr.ng.component('p3xrConsole', {
                     actionHistoryPosition = -1
                     break;
             }
+            const log = getActionHistory()
+            console.log('actionHistoryPosition', actionHistoryPosition, 'getActionHistory()', 'log', log, 'log.length', log.length)
         }
 
         this.clearConsole = () => {
