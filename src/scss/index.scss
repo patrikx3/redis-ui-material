@@ -46,6 +46,11 @@ md-dialog md-dialog-actions button {
 
 .p3xr-theme-dark {
 
+    ::selection, ::-moz-selection {
+        color: white;
+        background: black;
+    }
+
     /*
     .tree-branch-head {
         position: relative;
