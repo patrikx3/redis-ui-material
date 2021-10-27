@@ -84,9 +84,9 @@ p3xr.ng.factory('p3xrDialogTreecontrolSettings', function (p3xrCommon, $mdDialog
                                 */
 
                                 //if ( !$rootScope.p3xr.settings.searchClientSide ) {
-                                if (options.p3xrMainRef !== undefined) {
-                                    options.p3xrMainRef.refresh()
-                                }
+                                //if (options.p3xrMainRef !== undefined) {
+                                //    await options.p3xrMainRef.refresh()
+                                //}
                                 //}
 
                                 //$scope.options.type = 'edit';
