@@ -463,7 +463,9 @@ p3xr.ng.component('p3xrMain', {
             while (elem === null ) {
                 elem = document.getElementById('p3xr-main-treecontrol-controls-container')
                 console.info('waiting for observing tree control controls')
-                await new Promise(resolve => setInterval(resolve))
+                await new Promise(resolve => setTimeout(() => {
+                    resolve()
+                }))
             }
             console.info('found observing tree control controls')
 //            console.log('elem', elem)
