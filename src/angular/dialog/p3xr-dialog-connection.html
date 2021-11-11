@@ -58,22 +58,18 @@
 
                     <br/>
 
-                    <md-input-container style="margin: 0px">
-                        <md-switch ng-model="model.tlsWithoutCert" name="tlsWithoutCert" aria-label=""
-                                   ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
-                            {{ $root.p3xr.strings.label.tlsWithoutCert }}
-                        </md-switch>
-                    </md-input-container>
+                    <md-switch ng-model="model.tlsWithoutCert" name="tlsWithoutCert" aria-label=""
+                               ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
+                        {{ $root.p3xr.strings.label.tlsWithoutCert }}
+                    </md-switch>
 
-                    <md-input-container style="margin: 0px">
-                        <md-switch ng-model="model.tlsRejectUnauthorized" name="tlsRejectUnauthorized" aria-label=""
-                                   ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
-                            {{ $root.p3xr.strings.label.tlsRejectUnauthorized }}
-                        </md-switch>
-                    </md-input-container>
+                    <md-switch ng-model="model.tlsRejectUnauthorized" name="tlsRejectUnauthorized" aria-label=""
+                               ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
+                        {{ $root.p3xr.strings.label.tlsRejectUnauthorized }}
+                    </md-switch>
 
+                    <div ng-if="model.tlsWithoutCert !== true" style="padding-top: 4px;">
 
-                    <span ng-if="model.tlsWithoutCert !== true">
                         <md-input-container class="md-block p3xr-md-input-container-no-bottom">
                             <label>TLS (redis.crt)</label>
                             <textarea name="tlsCrt" ng-model="model.tlsCrt"
@@ -102,41 +98,31 @@
                         <div class="p3xr-md-input-container-bottom-info">
                             {{ $root.p3xr.strings.label.tlsSecure }}
                         </div>
-                    </span>
-                    <br/>
+
+                        <br/>
+                    </div>
+
 
 
                     <span ng-if="$root.p3xr.state.donated">
+                    <md-switch ng-model="model.readonly" name="readonly" aria-label="" style="margin: 0;"
+                               ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
+                        {{ model.readonly ? $root.p3xr.strings.label.readonly.on : $root.p3xr.strings.label.readonly.off }}
+                    </md-switch>
+                        
+                    <br/>
+                        
+                    <md-switch ng-model="model.commandsListing" name="commandsListing" aria-label="" style="margin: 0;"
+                               ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
+                        {{  $root.p3xr.strings.label.commandsListing }}
+                    </md-switch>
 
-                    <md-input-container style="margin: 0px">
-                        <md-switch ng-model="model.readonly" name="readonly" aria-label=""
-                                   ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
-                            {{ model.readonly ? $root.p3xr.strings.label.readonly.on : $root.p3xr.strings.label.readonly.off }}
-                        </md-switch>
-                    </md-input-container>
+                    <br/>
 
-                    <md-input-container style="margin: 0px">
-                        <md-switch ng-model="model.awsElastiCache" name="awsElastiCache" aria-label=""
-                                   ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
-                            {{ model.awsElastiCache ? $root.p3xr.strings.label.awsElastiCache.on :
-                            $root.p3xr.strings.label.awsElastiCache.off }}
-                        </md-switch>
-                    </md-input-container>
-
-                    <md-input-container style="margin: 0px">
-                        <md-switch ng-model="model.azure" name="azure" aria-label=""
-                                   ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
-                            {{ model.azure ? $root.p3xr.strings.label.azure.on :
-                            $root.p3xr.strings.label.azure.off }}
-                        </md-switch>
-                    </md-input-container>
-
-                    <md-input-container style="margin: 0px">
-                        <md-switch ng-model="model.cluster" name="cluster" aria-label=""
-                                   ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
-                            {{ model.cluster ? $root.p3xr.strings.label.cluster.on : $root.p3xr.strings.label.cluster.off }}
-                        </md-switch>
-                    </md-input-container>
+                    <md-switch ng-model="model.cluster" name="cluster" aria-label="" style="margin: 0;"
+                               ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
+                        {{ model.cluster ? $root.p3xr.strings.label.cluster.on : $root.p3xr.strings.label.cluster.off }}
+                    </md-switch>
 
                     <span ng-if="model.cluster === true && !$root.p3xr.state.cfg.readonlyConnections" ng-click="addNode()">
                             <md-button class="md-fab md-primary md-mini">

@@ -156,14 +156,7 @@ const strings = {
             on: '开启键排序',
             off: '关闭键排序'
         },
-        awsElastiCache: {
-            on: 'AWS ElastiCache / Gcloud memorystore on',
-            off: 'AWS ElastiCache / Gcloud memorystore off',
-        },
-        azure: {
-            on: 'Azure Redis on',
-            off: 'Azure Redis off',
-        },
+        commandsListing: '启用命令列表',
         cluster: {
             on: '群集',
             off: '集群关闭',

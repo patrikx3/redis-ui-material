@@ -273,7 +273,7 @@ p3xr.ng.component('p3xrConsole', {
                     break;
             }
             const log = getActionHistory()
-            console.log('actionHistoryPosition', actionHistoryPosition, 'getActionHistory()', 'log', log, 'log.length', log.length)
+            //console.log('actionHistoryPosition', actionHistoryPosition, 'getActionHistory()', 'log', log, 'log.length', log.length)
         }
 
         this.clearConsole = () => {
