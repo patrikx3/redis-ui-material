@@ -58,35 +58,46 @@
 
                     <br/>
 
-                    <md-input-container class="md-block p3xr-md-input-container-no-bottom">
-                        <label>TLS (redis.crt)</label>
-                        <textarea name="tlsCrt" ng-model="model.tlsCrt"
-                                  ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off"></textarea>
+                    <md-input-container style="margin: 0px">
+                        <md-switch ng-model="model.tlsWithoutCert" name="tlsWithoutCert" aria-label=""
+                                   ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
+                            {{ $root.p3xr.strings.label.tlsWithoutCert }}
+                        </md-switch>
                     </md-input-container>
-                    <div class="p3xr-md-input-container-bottom-info">
-                        {{ $root.p3xr.strings.label.tlsSecure }}
-                    </div>
+
+
+                    <span ng-if="model.tlsWithoutCert !== true">
+                        <md-input-container class="md-block p3xr-md-input-container-no-bottom">
+                            <label>TLS (redis.crt)</label>
+                            <textarea name="tlsCrt" ng-model="model.tlsCrt"
+                                      ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off"></textarea>
+                        </md-input-container>
+                        <div class="p3xr-md-input-container-bottom-info">
+                            {{ $root.p3xr.strings.label.tlsSecure }}
+                        </div>
+                        <br/>
+    
+                        <md-input-container class="md-block p3xr-md-input-container-no-bottom">
+                            <label>TLS (redis.key)</label>
+                            <textarea name="tlsKey" ng-model="model.tlsKey"
+                                      ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off"></textarea>
+                        </md-input-container>
+                        <div class="p3xr-md-input-container-bottom-info">
+                            {{ $root.p3xr.strings.label.tlsSecure }}
+                        </div>
+                        <br/>
+    
+                        <md-input-container class="md-block p3xr-md-input-container-no-bottom">
+                            <label>TLS (ca.crt)</label>
+                            <textarea name="tlsCa" ng-model="model.tlsCa"
+                                      ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off"></textarea>
+                        </md-input-container>
+                        <div class="p3xr-md-input-container-bottom-info">
+                            {{ $root.p3xr.strings.label.tlsSecure }}
+                        </div>
+                    </span>
                     <br/>
 
-                    <md-input-container class="md-block p3xr-md-input-container-no-bottom">
-                        <label>TLS (redis.key)</label>
-                        <textarea name="tlsKey" ng-model="model.tlsKey"
-                                  ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off"></textarea>
-                    </md-input-container>
-                    <div class="p3xr-md-input-container-bottom-info">
-                        {{ $root.p3xr.strings.label.tlsSecure }}
-                    </div>
-                    <br/>
-
-                    <md-input-container class="md-block p3xr-md-input-container-no-bottom">
-                        <label>TLS (ca.crt)</label>
-                        <textarea name="tlsCa" ng-model="model.tlsCa"
-                                  ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off"></textarea>
-                    </md-input-container>
-                    <div class="p3xr-md-input-container-bottom-info">
-                        {{ $root.p3xr.strings.label.tlsSecure }}
-                    </div>
-                    <br/>
 
                     <span ng-if="$root.p3xr.state.donated">
 

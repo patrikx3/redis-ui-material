@@ -111,7 +111,7 @@ For more information about all licenses, please see ${webpackBanner}
                 // todo found out if mangle use or not
                 // mangle: false === keep function names
                 // mangle: true === drop function names
-                // for mangle true we are us angularjs-annotate with babel
+                // for mangle true we are using angularjs-annotate with babel
                 mangle: true,
             },
         }),
