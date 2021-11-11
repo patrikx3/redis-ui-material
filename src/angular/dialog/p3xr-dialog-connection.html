@@ -65,6 +65,13 @@
                         </md-switch>
                     </md-input-container>
 
+                    <md-input-container style="margin: 0px">
+                        <md-switch ng-model="model.tlsRejectUnauthorized" name="tlsRejectUnauthorized" aria-label=""
+                                   ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
+                            {{ $root.p3xr.strings.label.tlsRejectUnauthorized }}
+                        </md-switch>
+                    </md-input-container>
+
 
                     <span ng-if="model.tlsWithoutCert !== true">
                         <md-input-container class="md-block p3xr-md-input-container-no-bottom">

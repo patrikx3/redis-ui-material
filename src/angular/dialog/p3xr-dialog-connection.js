@@ -29,6 +29,7 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                                 id: undefined,
                                 readonly: undefined,
                                 tlsWithoutCert: false,
+                                tlsRejectUnauthorized: true,
                                 tlsCrt: undefined,
                                 tlsKey: undefined,
                                 tlsCa: undefined,
