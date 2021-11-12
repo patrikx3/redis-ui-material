@@ -7,6 +7,9 @@ md-toast {
     height: 40px;
 }
 
+md-dialog.fullscreen-dialog {
+    width: 75%;
+}
 @media (max-width:959px) {
     md-dialog.fullscreen-dialog {
         min-height: 100%;
