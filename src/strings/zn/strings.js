@@ -156,7 +156,6 @@ const strings = {
             on: '开启键排序',
             off: '关闭键排序'
         },
-        commandsListing: '启用命令列表',
         cluster: {
             on: '群集',
             off: '集群关闭',

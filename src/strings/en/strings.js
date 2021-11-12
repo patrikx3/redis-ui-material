@@ -159,7 +159,6 @@ const strings = {
             on: 'Key sorting on',
             off: 'Key sorting off'
         },
-        commandsListing: 'Enable command listing',
         cluster: {
             on: 'Cluster on',
             off: 'Cluster off',

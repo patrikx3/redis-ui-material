@@ -18,13 +18,8 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                             $scope.model.tlsKey = options.model.id
                             $scope.model.tlsCa = options.model.id
                             
-                            if ($scope.model.commandsListing === undefined) {
-                                $scope.model.commandsListing = true
-                            }
-                            
                         } else {
                             $scope.model = {
-                                commandsListing: true,
                                 name: undefined,
                                 host: undefined,
                                 port: undefined,

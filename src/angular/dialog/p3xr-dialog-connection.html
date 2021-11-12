@@ -112,13 +112,6 @@
                         
                     <br/>
                         
-                    <md-switch ng-model="model.commandsListing" name="commandsListing" aria-label="" style="margin: 0;"
-                               ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
-                        {{  $root.p3xr.strings.label.commandsListing }}
-                    </md-switch>
-
-                    <br/>
-
                     <md-switch ng-model="model.cluster" name="cluster" aria-label="" style="margin: 0;"
                                ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
                         {{ model.cluster ? $root.p3xr.strings.label.cluster.on : $root.p3xr.strings.label.cluster.off }}
