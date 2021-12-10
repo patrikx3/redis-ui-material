@@ -66,6 +66,7 @@ const strings = {
     language: {
         en: '英语 / English',
         zn: '中文 / Chinese'
+        ru: 'Русский / Russian'
     },
     intention: {
         copy: '复制',
@@ -74,7 +75,7 @@ const strings = {
         pubsubMonitor: 'PubSub监视器',
         language: '语言 / Language',
         ok: '确定',
-        addKey: `加入此键`,
+        addKey: '加入此键',
         addKeyRoot: '加入一个根键',
         reloadKey: '重载键',
         reload: '重载',
