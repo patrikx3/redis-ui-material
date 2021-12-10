@@ -145,271 +145,271 @@ const strings = {
         passwordSecure: 'Пароль может быть пустым, но он всё ещё будет отображать символы, это фича для безопасности.',
         tlsWithoutCert: 'Включить TLS без дополнительного сертификата',
         tlsRejectUnauthorized: 'Reject unauthorized certificate',
-        tlsSecure: 'Если вы видите TLS конфигурацию которая начинается с P3X или все настройки TLS выглядят одинаково, это фича для безопасности. Для изминения настроек надо заменить эти настройки пустыми или чем либо ещё, и они сохранятся. Если you do not change the TLS settings, the settings will be kept as they are on the server.',
-        treeSeparatorEmpty: 'If the tree separator is empty, the tree wil have no nested nodes, just a pure list',
-        treeSeparatorEmptyNote: 'No nested nodes, just a pure list',
-        welcomeConsole: 'Welcome to the Redis Console',
-        welcomeConsoleInfo: 'Cursor UP or DOWN history is enabled',
-        redisListIndexInfo: 'Empty to append, -1 to prepend or save it to the position shown.',
-        console: 'Console',
-        connectiondAdd: 'Add connection',
-        connectiondEdit: 'Edit connection',
-        connectiondView: 'View connection',
-        connections: 'Connections',
+        tlsSecure: 'Если вы видите TLS конфигурацию которая начинается с P3X или все настройки TLS выглядят одинаково, это фича для безопасности. Для изминения настроек надо заменить эти настройки пустыми или чем либо ещё, и они сохранятся. Если вы ек измените настройки TLS, настройки останутся такими же как и на самом сервере.',
+        treeSeparatorEmpty: 'Если разделитель дерева пуст, в дереве вместо вложенных нод будет лишь чистый список',
+        treeSeparatorEmptyNote: 'Никаких вложенных нод, только чистый список',
+        welcomeConsole: 'Добро пожаловать в консоль Redis',
+        welcomeConsoleInfo: 'История по нажатию ВВЕРХ или ВНИЗ кллючена',
+        redisListIndexInfo: 'Пустое для добавления, -1 что бы сделать вид или сохранить в указанную позицию.',
+        console: 'Консоль',
+        connectiondAdd: 'Добавить соединение',
+        connectiondEdit: 'Изменить соединение',
+        connectiondView: 'Осмотреть соединение',
+        connections: 'Соединения',
         keysSort: {
-            on: 'Key sorting on',
-            off: 'Key sorting off'
+            on: 'Сортировка ключей включена',
+            off: 'Сортировка ключей выключена'
         },
         cluster: {
-            on: 'Cluster on',
-            off: 'Cluster off',
+            on: 'Кластеризация активирована',
+            off: 'Кластеризация деактивирована',
         },
         readonly: {
-            on: 'Readonly on',
-            off: 'Readonly off',
+            on: 'Режим \"только чтение\"',
+            off: 'Режим \"редактирование\"',
         },
         theme: {
-            light: 'Light',
-            dark: 'Dark enterprise',
-            darkNeu: 'Dark',
-            darkoBluo: 'Darko bluo',
-            enterprise: 'Enterprise',
+            light: 'Светлая',
+            dark: 'Тёмная корпоративная',
+            darkNeu: 'Тёмная',
+            darkoBluo: 'Тёмное синево',
+            enterprise: 'Корпоративная',
             redis: 'Redis',
-            matrix: 'Matrix',
+            matrix: 'Матрица',
         },
         connected: (opts) => {
-            return `Connected: ${opts.name}`
+            return `Подключено: ${opts.name}`
         },
-        tree: 'Tree',
+        tree: 'Дерево',
 
     },
     status: {
-        dataCopied: 'The data is in the clipboard',
-        licenseSaved: 'License saved',
-        nodeRemoved: 'Node removed',
-        keyIsNotExisting: 'This key could have been deleted or expired.',
+        dataCopied: 'Данные скопированы в буфер обмена',
+        licenseSaved: 'Лицензия сохранена',
+        nodeRemoved: 'Нода удалена',
+        keyIsNotExisting: 'Этот ключ вероятно был удалён или истёк.',
         keyCount: (opts) => {
             if (opts.keyCount === 0) {
-                return 'No key'
+                return 'Нету ключей'
             } else if (opts.keyCount === 1) {
-                return '1 key'
+                return '1 ключ'
             } else {
-                return `${opts.keyCount} keys`
+                return `${opts.keyCount} ключей`
             }
 
         },
-        treeExpandAll: 'Expand all tree leafs, this has a cost, might take time ...',
-        noRedisKeys: 'There are no keys in this database.',
-        redisConnected: 'Redis connected successful',
-        reloadingDataInfo: 'Reloading Redis data info',
-        added: 'Added',
-        saved: 'Updated',
-        cancelled: 'Cancelled',
-        deleted: 'Deleted',
-        savedRedis: 'Redis data is saved',
+        treeExpandAll: 'Развернуть все листья дерева, это имеет цену, временную ...',
+        noRedisKeys: 'Нету ключей в базе данных.',
+        redisConnected: 'Redis успешно подключен',
+        reloadingDataInfo: 'Перезагружаем информацию о данных Redis',
+        added: 'Добавлено',
+        saved: 'Обновлено',
+        cancelled: 'Отменено',
+        deleted: 'Удалено',
+        savedRedis: 'Данные Redis были сохранены',
         redisDisconnected: (opts) => {
-            return `The current connection had an error: ${opts.error.message}`
+            return `Произошла ошибка в теперешнем соединении: ${opts.error.message}`
         },
         dbChanged: (opts) => {
-            return `The db index set to ${opts.db}. `
+            return `Выбран индекс базы данных ${opts.db}. `
         },
         treeDeleted: (opts) => {
-            return `The tree key was deleted (${opts.key}).`
+            return `Ключ дерева был удалён (${opts.key}).`
 
         },
         deletedKey: (opts) => {
-            return `The key was deleted (${opts.key}).`
+            return `Ключ был удалён (${opts.key}).`
         },
-        renamedKey: 'This key has been renamed',
-        ttlChanged: 'This key\'s TTL has been changed',
-        notInteger: 'This input is not an integer',
-        persisted: 'This key is persisted forever',
-        set: 'The key is set/added'
+        renamedKey: 'Этот ключ был переименован',
+        ttlChanged: 'TTL этого ключа был изменён',
+        notInteger: 'Этот ввод не для цельной цифры',
+        persisted: 'Этот ключ не исчезнет сам',
+        set: 'Этот ключ был применён/добавлен'
     },
     code: {
-        'delete-connection': 'This connection was deleted, so you are disconnected to this Redis instance.',
-        'save-connection': 'This connection was changed, so you are disconnected to this Redis instance. You may re-connect.',
-        'readonly-connections': 'Connections add/save/delete are readonly only!',
-        'readonly-connection-mode': 'This connection is read only mode!',
-        'list-out-of-bounds': 'This list index is out of bounds',
-        'donation-ware-feature': 'This feature is present in the donation version.',
-        'auto-connection-failed': 'Possible, the connection was removed and the auto connection failed, because of this.',
-        invalid_console_command: 'This command is not working via the GUI.',
+        'delete-connection': 'Это соединение было удалено и по этому вы были отключены от этой инстанции Redis.',
+        'save-connection': 'Это подключение было изменено и по этому вы были отключены от этой инстанции Redis. Вы можете переподключится.',
+        'readonly-connections': 'Добавление/сохранение/удаление соединений в режиме \"только чтение\"!',
+        'readonly-connection-mode': 'Это соединение в режиме \"только чтение\"!',
+        'list-out-of-bounds': 'Индекс этого списка вышел за границы',
+        'donation-ware-feature': 'Эта функция доступна в донатерской версии.',
+        'auto-connection-failed': 'Вероятно, соединение было удалено и авто-соединение провалилось по таковой причине.',
+        invalid_console_command: 'Эта команда не работает через GUI.',
     },
     form: {
         error: {
-            required: 'Required',
-            port: 'The port is between 1-65535',
-            invalid: 'The form is invalid'
+            required: 'Обязательно',
+            port: 'Порт в границах 1-65535',
+            invalid: 'Форма заполнена неверно'
         },
         connection: {
             label: {
-                name: 'Name',
-                host: 'Hostname',
-                port: 'Port',
-                password: 'Password',
-                username: 'Username',
+                name: 'Название',
+                host: 'Имя хоста',
+                port: 'Порт',
+                password: 'Пароль',
+                username: 'Имя пользователя',
             },
         },
         treeSettings: {
-            maxValueDisplay: 'Max value display string length',
-            maxValueDisplayInfo: 'If max value display zero, it shows everything, if it is bigger than 0, it will truncate. If it is -1, it will not show the value without edit for strings, for others, it display everything.',
-            maxKeys: 'The max key count',
-            maxKeysInfo: 'So that the GUI does not crash, we limit the max key count.',
+            maxValueDisplay: 'Длинна видимой строки',
+            maxValueDisplayInfo: 'Если значение длинны показа равно нулю, будет показано всё, если же оно больше - вывод будет урезан. Если он равен минус одному, вывод будет скрыт до начала редактирования для строк, для других же типов будет показано всё.',
+            maxKeys: 'Максимум символов',
+            maxKeysInfo: 'Максимум ключей ограничен что бы GUI не падал.',
             keyCount: () => {
-                return `Number of keys: ${p3xr.state.keysRaw.length}`
+                return `Количество ключей: ${p3xr.state.keysRaw.length}`
             },
             label: {
-                animation: 'Use animation',
-                noAnimation: 'No animation',
-                jsonFormatTwoSpace: 'Format JSON with 2 spaces',
-                jsonFormatFourSpace: 'Format JSON with 4 spaces',
-                formName: 'Redis settings',
-                searchModeClient: 'Client search mode',
-                searchModeServer: 'Server search mode',
-                searchModeStartsWith: 'Search with starts with mode',
-                searchModeIncludes: 'Search includes mode',
+                animation: 'Использовать анимацию',
+                noAnimation: 'Выключить анимацию',
+                jsonFormatTwoSpace: 'Форматировать JSON двумя пробелами',
+                jsonFormatFourSpace: 'Форматировать JSON четырьмя пробелами',
+                formName: 'Настройки Redis',
+                searchModeClient: 'Клиентский режим поиска',
+                searchModeServer: 'Серверный режим поиска',
+                searchModeStartsWith: 'Поиск начала',
+                searchModeIncludes: 'Поиск содержимого',
             },
             field: {
-                treeSeparator: 'Tree separator',
-                treeSeparatorSelector: 'Tree separator selector',
-                page: 'Tree paging count',
-                keyPageCount: 'Key paging count',
-                keysSort: 'Sort the keys',
-                searchMode: 'Search mode',
-                searchModeStartsWith: 'Search starts with / includes'
+                treeSeparator: 'Разделитель дерева',
+                treeSeparatorSelector: 'Избиратель разделителя дерева',
+                page: 'Счётчик количества страниц',
+                keyPageCount: 'Счётчик количества ключей',
+                keysSort: 'Сортировка ключей',
+                searchMode: 'Режим поиска',
+                searchModeStartsWith: 'Поиск начинается с / содержит'
             },
             error: {
-                keyPageCount: 'The key page count must be an integer between 5 - 100',
-                page: 'The page count must be an integer between 10 - 1000',
-                maxValueDisplay: 'The maximum display value must be an integer between -1 and 32768',
-                maxKeys: 'The maximum key count value must be an integer between 100 and 100000',
+                keyPageCount: 'Ограничитель показа ключей на странице должен быть цельным числом в границах 5 - 100',
+                page: 'Ограничитель показа страниц должен быть цельным числом в границах 10 - 1000',
+                maxValueDisplay: 'Максимальное количество показываемых значений должен быть цельным числом между -1 и 32768',
+                maxKeys: 'Максимальное количество показываемых ключей должен быть цельным числом между 100 и 100000',
             },
 
         },
         key: {
             label: {
                 formName: {
-                    add: 'Add new Redis key',
-                    edit: 'Edit Redis key',
-                    append: 'Add to existing Redis key',
+                    add: 'Добавить новый ключ Redis',
+                    edit: 'Редактировать ключ Redis',
+                    append: 'Добавить к существующему ключу Redis',
                 }
             },
             field: {
-                streamTimestamp: 'Timestamp',
-                key: 'Key',
-                type: 'Type',
-                index: 'Index',
-                hashKey: 'Hash key',
-                score: 'Score',
-                value: 'Value',
+                streamTimestamp: 'Временная отметка',
+                key: 'Ключ',
+                type: 'Тип',
+                index: 'Индекс',
+                hashKey: 'Хэш',
+                score: 'Очки',
+                value: 'Значение',
             },
             error: {
-                streamTimestamp: 'The timestamp is required, either Redis format or as *',
-                key: 'The key is, at least, one character',
-                hashKey: 'The hash table key is at least one character',
-                score: 'The sorted set score is required',
-                value: 'The value is required',
+                streamTimestamp: 'Временная отметка обязательна, либо в формате Redis либо как *',
+                key: 'Ключ должен иметь длинну минимум одного символа',
+                hashKey: 'Стол хэшей ключей должен иметь длинну минимум одного символа',
+                score: 'Очки сортировки набора обязательны',
+                value: 'Значение обязательно',
             }
         },
         main: {
             label: {
-                database: 'DB',
+                database: 'База данных',
             }
         }
     },
     page: {
         overview: {
-            noConnected: 'There is no connection to Redis.',
-            overviewClients: 'List the connected by the count of clients',
+            noConnected: 'Нету подключения к Redis.',
+            overviewClients: 'Показать подключения по количеству клиентов',
             connectedCount: (opt) => {
                 if (opt.length === 1) {
-                    return '1 client'
+                    return '1 клиент'
                 }
-                return `${opt.length} clients`
+                return `${opt.length} клиентов`
 
             }
         },
         key: {
             label: {
-                key: 'Key',
-                encoding: 'Encoding',
-                length: 'Size',
+                key: 'Ключ',
+                encoding: 'Кодировка',
+                length: 'Размер',
                 ttl: 'TTL',
-                ttlTitle: 'Time To Live',
-                type: 'Type',
-                ttlNotExpire: 'does not expire',
-                lengthString: 'characters',
-                lengthItem: 'items',
-                actions: 'Actions',
+                ttlTitle: 'Время На Жизнь (TTL)',
+                type: 'Тип',
+                ttlNotExpire: 'не истекает',
+                lengthString: 'символы',
+                lengthItem: 'обьекты',
+                actions: 'Действия',
             },
             list: {
                 table: {
-                    index: 'Index',
-                    value: 'Value',
+                    index: 'Индекс',
+                    value: 'Значение',
                 }
             },
             hash: {
                 table: {
-                    hashkey: 'Hashkey',
-                    value: 'Value',
+                    hashkey: 'Хэш',
+                    value: 'Значение',
                 }
             },
             set: {
                 table: {
-                    value: 'Member'
+                    value: 'Член'
                 }
             },
             zset: {
                 table: {
-                    value: 'Member',
-                    score: 'Score',
+                    value: 'Член',
+                    score: 'Очки',
                 }
             },
             stream: {
               table:{
-                  timestamp: 'Timestamp ID',
-                  field: 'Field',
-                  value: 'Value',
+                  timestamp: 'Идентификатор временной отметки',
+                  field: 'Поле',
+                  value: 'Значение',
               }
             },
         },
         treeControls: {
-            settings: 'Tree settings',
-            expandAll: 'Expand all',
-            collapseAll: 'Collapse all',
+            settings: 'Настройки дерева',
+            expandAll: 'Развернуть все',
+            collapseAll: 'Свернуть все',
             search: {
-                search: 'Search in the keys',
-                clear: 'Clear current search to set empty',
-                placeholderClient: 'Search client side',
-                placeholderServer: 'Search server side',
-                info: 'The client side search means, that it matches the text in the search input. The server side search means, that is it like search in the keys patterns as *{search-text}*. For large search sets, it is better to use server side searching. For smaller search sets, it is better to use client side search mode.' + ` If the keys count is over ${p3xr.settings.maxLightKeysCount}, you can only search on server side.`,
+                search: 'Поиск ключа',
+                clear: 'Очистить теперешний поиск',
+                placeholderClient: 'Искать в клиенте',
+                placeholderServer: 'Искать на сервере',
                 largeSetInfo: 'In a large set, client side searching is disabled. so right now only server side searching is possible.',
-                infoDetails: 'To find out how the search works, please check out the settings'
+                info: 'Поиск в клиенте означает совпадание с содержимым поля поиска. Серверный поиск означает поиск паттерном на подобие *{искомый-текст}*. Для поиска больших наборов лучше использовать серверный поиск. Для меньших поисковых наборов лучше использовать поиск клиентом.' + ` Если количество ключей превышает ${p3xr.settings.maxLightKeysCount}, можно будет искать только серверным поиском.`,
+                infoDetails: 'Что бы понять как поиск работает, изучите настройки'
             },
             pager: {
-                next: 'Next',
-                prev: 'Previous',
-                first: 'First',
-                last: 'Last'
+                next: 'Следующий',
+                prev: 'Предыдущий',
+                first: 'Первый',
+                last: 'Последний'
             }
         }
     },
     time: {
-        years: 'years',
-        months: 'months',
-        days: 'days',
-        year: 'year',
-        month: 'month',
-        day: 'day',
+        years: 'года',
+        months: 'месяца',
+        days: 'дни',
+        year: 'год',
+        month: 'месяц',
+        day: 'день',
     },
     redisTypes: {
-        string: 'String',
-        list: 'List',
-        hash: 'Hash table',
-        set: 'Set',
-        zset: 'Sorted set - zset',
-        stream: 'Stream',
+        string: 'Строка',
+        list: 'Список',
+        hash: 'Стол хэшей',
+        set: 'Набор',
+        zset: 'Сортированный набор - zset',
+        stream: 'Поток',
     }
 }
 
