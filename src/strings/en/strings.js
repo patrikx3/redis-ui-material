@@ -66,7 +66,7 @@ const strings = {
         // When you translate the english name, keep the Language in English
         // eg. Inglés / English
         en: 'English',
-        zn: '中文 / Chinese'
+        zn: '中文 / Chinese',
         ru: 'Русский / Russian'
     },
     intention: {

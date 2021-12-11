@@ -65,7 +65,7 @@ const strings = {
     },
     language: {
         en: '英语 / English',
-        zn: '中文 / Chinese'
+        zn: '中文 / Chinese',
         ru: 'Русский / Russian'
     },
     intention: {
