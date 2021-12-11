@@ -40,7 +40,7 @@ const strings = {
         deleteAllKeys: (opts) => {
             return `Delete this tree and all it\'s keys (${opts.key})?`
         },
-        socketioConnectError: 'Socket.IO cannot connect to the server, you can reload and you might to resolve the connection error by yourself, the client does not know to solve it by itself.',
+        socketioConnectError: 'Socket.IO cannot connect to the server, you can reload and try resolve the connection error yourself, the client does not know how to solve it itself.',
         deleteKey: 'Are you sure to delete this key?',
         rename: {
             title: 'Are you sure to rename this key?',
@@ -49,7 +49,7 @@ const strings = {
 
         },
         ttl: {
-            title: 'Are you to change this keys\'s TTL?',
+            title: 'Are you sure to change this keys\'s TTL?',
             textContent: 'If you click the change TTL button, it will rename this key\'s time to live, empty will persist this key keep forever.',
             placeholder: 'The Redis key\'s TTL (integer or empty)',
             placeholderPlaceholder: 'Empty means it persists forever, otherwise the used integer.',
@@ -66,7 +66,8 @@ const strings = {
         // When you translate the english name, keep the Language in English
         // eg. Inglés / English
         en: 'English',
-        zn: 'Chinese / 中文'
+        zn: '中文 / Chinese'
+        ru: 'Русский / Russian'
     },
     intention: {
         copy: 'Copy',
@@ -77,7 +78,7 @@ const strings = {
         // eg. Idioma / Language
         language: 'Language',
         ok: 'OK',
-        addKey: `Add to this key`,
+        addKey: 'Add to this key',
         addKeyRoot: 'Add a root key',
         reloadKey: 'Reload key',
         reload: 'Reload',
