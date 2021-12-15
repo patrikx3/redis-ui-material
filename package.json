@@ -42,7 +42,7 @@
     "author": "Patrik Laszlo <alabard@gmail.com>",
     "license": "MIT",
     "devDependencies": {
-        "@babel/core": "^7.16.0",
+        "@babel/core": "^7.16.5",
         "@babel/preset-env": "^7.16.4",
         "@fontsource/roboto": "^4.5.1",
         "@fontsource/roboto-mono": "^4.5.0",
