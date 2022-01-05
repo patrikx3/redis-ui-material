@@ -300,7 +300,10 @@ p3xr.ng.component('p3xrMainTree', {
 
         this.isEnabled = true
 
-
+        window.onfocus = () => {
+            console.log('aha')
+            $rootScope.$digest()
+        }
 
     }
 })
