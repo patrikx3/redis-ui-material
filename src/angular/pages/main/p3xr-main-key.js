@@ -23,7 +23,7 @@ p3xr.ng.component('p3xrMainKey', {
                 $interval.cancel(interval)
                 p3xr.state.redisChanged = true
                 $state.go('main.statistics')
-//                $rootScope.$broadcast('p3x-refresh')
+//                $rootScope.$broadcast('p3xr-refresh')
                 return false
             }
             return true
@@ -321,13 +321,13 @@ p3xr.ng.component('p3xrMainKey', {
         }
 
 //        const refreshDebounced = debounce(this.refresh, 1000)
-        $scope.$on('p3x-refresh', () => {
+        $scope.$on('p3xr-refresh', () => {
             this.refresh({
                 withoutParent: true
             })
         })
 
-        $scope.$on('p3x-refresh-key', () => {
+        $scope.$on('p3xr-refresh-key', () => {
             this.refresh({
                 withoutParent: true
             })

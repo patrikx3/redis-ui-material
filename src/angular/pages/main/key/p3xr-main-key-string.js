@@ -62,7 +62,7 @@ p3xr.ng.component('p3xrMainKeyString', {
             } catch (e) {
                 p3xrCommon.generalHandleError(e)
             } finally {
-                $rootScope.$broadcast('p3x-refresh-key');
+                $rootScope.$broadcast('p3xr-refresh-key');
             }
         }
 

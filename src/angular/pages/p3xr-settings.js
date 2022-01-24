@@ -1,11 +1,18 @@
 p3xr.ng.component('p3xrSettings', {
     template: require('./p3xr-settings.html'),
-    controller: function (p3xrCommon, p3xrDialogConnection, $mdDialog, p3xrSocket, p3xrDialogTreecontrolSettings) {
+    controller: function (p3xrCommon, p3xrDialogConnection, $mdDialog, p3xrSocket, p3xrDialogTreecontrolSettings, $scope) {
 
         this.connectionForm = (options) => {
 
             p3xrDialogConnection.show(options)
 
+        }
+        
+        this.connect = ({ connection }) => {
+            //console.log('connection', connection)
+            $scope.$emit('p3xr-connect', {
+                connection: connection
+            })
         }
 
         this.setLicense = async (options) => {

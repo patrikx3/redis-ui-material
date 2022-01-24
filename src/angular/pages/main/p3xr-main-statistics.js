@@ -30,7 +30,7 @@ p3xr.ng.component('p3xrMainStatistics', {
         this.$onInit = () => {
             if (p3xr.state.redisChanged) {
                 p3xr.state.redisChanged = false
-                $rootScope.$broadcast('p3x-refresh')
+                $rootScope.$broadcast('p3xr-refresh')
             }
         }
 
@@ -64,7 +64,7 @@ p3xr.ng.component('p3xrMainStatistics', {
 
         //FIXME disable hacking on the tab
         /*
-        $scope.$on('p3x-refresh-statistics-tabs', () => {
+        $scope.$on('p3xr-refresh-statistics-tabs', () => {
             $timeout(() => {
                 p3xr.state.info.hack = {
                     hack: 'hacking'
@@ -83,7 +83,7 @@ p3xr.ng.component('p3xrMainStatistics', {
         if ($stateParams.action && $stateParams.action === 'reload-delete') {
 //            $rootScope.savedExpandedNodes = $stateParams.expandedNodes
             console.log($stateParams.expandedNodes)
-            $rootScope.$broadcast('p3x-refresh')
+            $rootScope.$broadcast('p3xr-refresh')
             //p3xrCommon.loadRedisInfoResponse({response: $stateParams.response})
 
         }

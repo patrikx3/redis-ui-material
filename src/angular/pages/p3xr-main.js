@@ -45,7 +45,7 @@ p3xr.ng.component('p3xrMain', {
 
         /*
         const debouncedTabs = debounce(() => {
-            $rootScope.$broadcast('p3x-refresh-statistics-tabs')
+            $rootScope.$broadcast('p3xr-refresh-statistics-tabs')
         }, p3xr.settings.debounce)
          */
 
@@ -413,7 +413,7 @@ p3xr.ng.component('p3xrMain', {
                 })
 
                 if (!withoutParent) {
-                    $rootScope.$broadcast('p3x-refresh-key');
+                    $rootScope.$broadcast('p3xr-refresh-key');
                 }
 
             } catch (e) {
@@ -436,7 +436,7 @@ p3xr.ng.component('p3xrMain', {
 
         }
 
-        $scope.$on('p3x-refresh', () => {
+        $scope.$on('p3xr-refresh', () => {
             this.refresh({
                 withoutParent: true
             })

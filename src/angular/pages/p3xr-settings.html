@@ -50,6 +50,15 @@
                     <md-tooltip ng-if="$root.$mdMedia('xs')">{{ $root.p3xr.strings.intention.view }}</md-tooltip>
                 </md-button>
 
+
+                <md-button class="md-primary md-raised"
+                           ng-click="$ctrl.connect({ connection })"
+                           >
+                    <md-icon>power</md-icon>
+                    <span hide-xs>{{ $root.p3xr.strings.intention.connect }}</span>
+                    <md-tooltip ng-if="$root.$mdMedia('xs')">{{ $root.p3xr.strings.intention.connect }}</md-tooltip>
+                </md-button>
+
                 <md-divider ng-if="!$last"></md-divider>
             </md-list-item>
         </md-list>

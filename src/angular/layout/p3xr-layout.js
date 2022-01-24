@@ -130,11 +130,16 @@ p3xr.ng.component('p3xrLayout', {
             });
         }
 
+        $scope.$on('p3xr-connect', (event, { connection }) => {
+            this.connect(connection, true)
+        })
 
         this.connect = async (connection, disableState = false) => {
 
             console.time('connect')
 
+            
+            //console.log('connection', connection)
             //p3xr.state.search = '';
 
 

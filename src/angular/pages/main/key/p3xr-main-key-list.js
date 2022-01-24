@@ -55,7 +55,7 @@ p3xr.ng.component('p3xrMainKeyList', {
                         key: this.p3xrKey
                     }
                 })
-                $rootScope.$broadcast('p3x-refresh-key');
+                $rootScope.$broadcast('p3xr-refresh-key');
             } catch (e) {
                 p3xrCommon.generalHandleError(e)
             }
@@ -76,7 +76,7 @@ p3xr.ng.component('p3xrMainKeyList', {
                         key: this.p3xrKey
                     }
                 })
-                $rootScope.$broadcast('p3x-refresh-key');
+                $rootScope.$broadcast('p3xr-refresh-key');
             } catch (e) {
                 p3xrCommon.generalHandleError(e)
             }
@@ -96,7 +96,7 @@ p3xr.ng.component('p3xrMainKeyList', {
                         index: options.index,
                     }
                 })
-                $rootScope.$broadcast('p3x-refresh-key');
+                $rootScope.$broadcast('p3xr-refresh-key');
             } catch (e) {
                 p3xrCommon.generalHandleError(e)
             }
