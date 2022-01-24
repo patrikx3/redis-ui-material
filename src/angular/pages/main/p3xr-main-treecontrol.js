@@ -303,8 +303,12 @@ p3xr.ng.component('p3xrMainTree', {
         const focusListener = () => {
             if (this.isEnabled === true) {
                 this.isEnabled = false
+                //console.log('enabled', this.isEnabled)
+                $rootScope.$digest()
                 $timeout(() =>  {
                     this.isEnabled = true
+                    //console.log('enabled', this.isEnabled)
+                    $rootScope.$digest()
                 })
             }
         }
