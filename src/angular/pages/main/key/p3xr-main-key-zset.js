@@ -21,6 +21,7 @@ p3xr.ng.component('p3xrMainKeyZset', {
             keyPaging.figurePaging()
         }
 
+        let page = 1
         const onPage = (n, o) => {
             values = []
             const index = p3xr.settings.keyPageCount * (this.page - 1)

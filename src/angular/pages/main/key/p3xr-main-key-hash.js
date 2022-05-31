@@ -19,21 +19,26 @@ p3xr.ng.component('p3xrMainKeyHash', {
         }
 
 
-        let values
-        $scope.$watch('$ctrl.page', (n, o) => {
-            values = {}
-            const index = p3xr.settings.keyPageCount * (this.page - 1)
-            let indexKeys = 0
-            for(let keys of Object.keys(this.p3xrValue)) {
-                if (indexKeys >= index && indexKeys < index + p3xr.settings.keyPageCount) {
-                    values[keys] = this.p3xrValue[keys]
-                }
-                indexKeys++
-            }
-        })
+       const load = (n, o) => {
+           let values
+           values = {}
+           const index = p3xr.settings.keyPageCount * (this.page - 1)
+           let indexKeys = 0
+           for(let keys of Object.keys(this.p3xrValue)) {
+               if (indexKeys >= index && indexKeys < index + p3xr.settings.keyPageCount) {
+                   values[keys] = this.p3xrValue[keys]
+               }
+               indexKeys++
+           }
+           console.log('test', values)
+           return values
+       }
+        $scope.$watch('$ctrl.page', load)
 
         this.pageBasedList = () => {
-            return values
+            const result =  load()
+            console.log('result', result)
+            return result
         }
 
         this.copy = (opts) => {

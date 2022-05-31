@@ -19,22 +19,29 @@ p3xr.ng.component('p3xrMainKeyList', {
             keyPaging.figurePaging()
         }
 
-        let values
-        $scope.$watch('$ctrl.page', (n, o) => {
-            values = []
+        const load = (n, o) => {
+            const values = []
             const index = p3xr.settings.keyPageCount * (this.page - 1)
             let indexKeys = 0
+
             for(let valueIndex in this.p3xrValue) {
                 if (indexKeys >= index && indexKeys < index + p3xr.settings.keyPageCount) {
                     values.push(this.p3xrValue[valueIndex])
                 }
                 indexKeys++
             }
-        })
-
-        this.pageBasedList = () => {
+            
             return values
         }
+        $scope.$watch('$ctrl.page', (n, o) => {
+            return load()
+        })
+
+        this.pageBasedList = (n, o) => {
+            return load()
+        }
+
+
 
         this.copy = (opts) => {
             global.p3xr.clipboard({

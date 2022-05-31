@@ -431,6 +431,7 @@ p3xr.ng.component('p3xrMain', {
             }
             console.timeEnd('refresh')
             setTimeout(() => {
+                console.log('refresh')
                 $rootScope.$digest()
             })
 

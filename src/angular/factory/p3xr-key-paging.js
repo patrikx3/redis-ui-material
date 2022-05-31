@@ -2,6 +2,7 @@ p3xr.ng.factory('p3xrKeyPaging', function ($mdToast, $mdDialog, $mdColors, $root
 
     return function({ $ctrl, $scope, watch, figurePagingType }) {
 
+        console.log('$ctrl, $scope, watch, figurePagingType', $ctrl, $scope, watch, figurePagingType)
         const figurePaging = () => {
             switch(figurePagingType) {
 

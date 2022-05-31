@@ -19,7 +19,7 @@ const strings = {
         server: 'Server',
         clients: 'Clients',
         memory: 'Memory',
-        persistence: 'Persistance',
+        persistence: 'Persistence',
         stats: 'Statistics',
         replication: 'Replication',
         cpu: 'CPU',
