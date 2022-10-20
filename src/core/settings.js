@@ -32,7 +32,7 @@ p3xr.settings = {
         cookieName: 'p3xr-animation-settings',
     },
     jsonFormat: 4,
-    googleAnalytics: 'UA-169625044-1',
+    googleAnalytics: 'G-8M2CK7993T',
     jsonFormatSettings: {
         default: 4,
         cookieName: 'p3xr-json-format',
