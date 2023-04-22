@@ -180,6 +180,8 @@ p3xr.ng.factory('p3xrSocket', function ($rootScope, p3xrCommon, $state) {
                 let timeout
                 const response = (data) => {
                     clearTimeout(timeout)
+                    console.warn('data', data)
+                    console.trace('data', data)
                     ioClient.off(responseEvent)
                     if (data.status === 'ok') {
                         resolve(data)
