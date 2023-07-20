@@ -63,7 +63,7 @@
         "clean-webpack-plugin": "^4.0.0",
         "concurrently": "^8.2.0",
         "copy-webpack-plugin": "^11.0.0",
-        "corifeus-builder": "^2023.10.128",
+        "corifeus-builder": "^2023.10.129",
         "css-loader": "^6.8.1",
         "css-minimizer-webpack-plugin": "^5.0.1",
         "grunt-injector": "^1.1.0",
