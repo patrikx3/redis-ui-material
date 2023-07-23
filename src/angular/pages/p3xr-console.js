@@ -6,6 +6,9 @@ const htmlEncode = global.htmlEncode;
 
 p3xr.ng.component('p3xrConsole', {
     template: require('./p3xr-console.html'),
+    bindings: {
+        type: '@',
+    },
     controller: function (p3xrCommon, p3xrSocket, $state, $rootScope, p3xrRedisParser, $mdDialog, $timeout, $scope) {
         // .p3xr-layout-footer-container
         // .p3xr-layout-header-container
@@ -16,8 +19,6 @@ p3xr.ng.component('p3xrConsole', {
         const getActionHistory = () => {
             return JSON.parse(localStorage.getItem('console-history') || "[]");
         }
-
-        const redisCommands = p3xr.state.commands
 
         let $container
         let $header;
@@ -40,7 +41,7 @@ p3xr.ng.component('p3xrConsole', {
             //if ($rootScope.isElectron) {
             //    $components = [$footer, $consoleHeader]
             //} else {
-            $components = [$header, $footer, $consoleHeader]
+            $components = [$header, $footer, $consoleHeader]                 
             //}
             for (let item of $components) {
                 minus += item.outerHeight()
@@ -48,11 +49,17 @@ p3xr.ng.component('p3xrConsole', {
             const windowHeight = $window.height()
             //console.log(windowHeight, minus)
 
-            const adjustments = 70
+            let adjustments
+            if (this.type === 'quick') {
+                adjustments = 130
+            } else {
+                adjustments = 70
+            }
 
             const outputHeight = Math.max(windowHeight - minus - adjustments, 0)
             $container.height(outputHeight)
             $container.css('max-height', `${outputHeight}px`)
+            console.log('outputHeight', outputHeight)
 
         }
 
@@ -221,6 +228,10 @@ p3xr.ng.component('p3xrConsole', {
                 scrollers.scrollTop = scrollers.scrollHeight;
                 $output.scrollTop($output.prop("scrollHeight"));
                 // //$input.focus()
+
+                if (this.type === 'quick') {
+                    $rootScope.$broadcast('p3xr-refresh');
+                }
             }
 
         }
@@ -285,7 +296,8 @@ p3xr.ng.component('p3xrConsole', {
         }
 
         this.getMatches = (searchText) => {
-            return redisCommands.filter(e => e.includes(searchText))
+            const matches =  p3xr.state.commands.filter(e => e.includes(searchText))
+            return matches
         }
 
         this.commands = (options) => {

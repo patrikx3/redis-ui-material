@@ -1,7 +1,7 @@
 <!-- ng-class="{ 'p3xr-console-electron': $root.isElectron }" -->
 <div>
-    <md-toolbar class="md-primary md-hue-1" md-theme="{{ $root.p3xr.state.themeLayout}}" id="p3xr-console-header">
-        <div class="md-toolbar-tools">
+    <md-toolbar class="md-primary" ng-class="{'md-hue-1': $ctrl.type !== 'quick', 'md-hue-3': $ctrl.type === 'quick'}" md-theme="{{ $root.p3xr.state.themeLayout}}" id="p3xr-console-header">
+        <div class="md-toolbar-tools" ng-if="$ctrl.type !== 'quick'">
             <h2 flex md-truncate>{{ $root.p3xr.strings.label.console }}</h2>
 
             <span>
@@ -12,14 +12,17 @@
             </span>
 
             <p3xr-button p3xr-label="$root.p3xr.strings.intention.commands" p3xr-md-icon="menu"
-                         ng-click="$ctrl.commands({ $event: $event})"></p3xr-button>
+                            ng-click="$ctrl.commands({ $event: $event})"></p3xr-button>
 
             <p3xr-button p3xr-label="$root.p3xr.strings.intention.clear" p3xr-md-icon="clear"
-                         ng-click="$ctrl.clearConsole()"></p3xr-button>
+                            ng-click="$ctrl.clearConsole()"></p3xr-button>
+        </div>
+        <div class="md-toolbar-tools p3xr-content-border-toolbar" ng-if="$ctrl.type === 'quick'">
+            {{ $root.p3xr.strings.intention.quickConsole }}
         </div>
 
     </md-toolbar>
-    <md-content md-theme="{{ $root.p3xr.state.theme}}" layout-padding id="p3xr-console-content" md-whiteframe="1" class="p3xr-content-border">
+    <md-content md-theme="{{ $root.p3xr.state.theme}}" layout-padding id="p3xr-console-content" md-whiteframe="{{ $ctrl.type !== 'quick' ? 1 : -1}}" class="p3xr-content-border-fixed">
         <div id="p3xr-console-content-output">
         </div>
         <!--
@@ -29,9 +32,10 @@
     </md-content>
 </div>
 
-<md-autocomplete id="p3xr-console-autocomplete" ng-enter="$ctrl.actionEnter(searchText)" md-input-id="p3xr-console-input" class="p3xr-console" md-input-class="p3xr-input md-input" md-search-text="searchText" md-items="item in  $ctrl.getMatches(searchText)" md-item-text="item" md-clear-button="false" md-escape-options="none">
+<md-autocomplete md-autofocus id="p3xr-console-autocomplete" ng-class="{'p3xr-console-autocomplete-quick': $ctrl.type === 'quick'}"  ng-enter="$ctrl.actionEnter(searchText)" md-input-id="p3xr-console-input" class="p3xr-console" md-input-class="p3xr-input md-input" md-search-text="searchText" md-items="item in  $ctrl.getMatches(searchText)" md-item-text="item" md-clear-button="false" md-escape-options="none">
     <md-item-template>
         <span md-highlight-text="searchText">{{item}}</span>
     </md-item-template>
 
 </md-autocomplete>
+        

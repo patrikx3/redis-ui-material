@@ -151,7 +151,6 @@ p3xr.ng.component('p3xrLayout', {
                 if (originalState === '') {
                     originalState = 'main'
                 }
-                //console.warn(originalState)
 
                 p3xr.ui.overlay.show({
                     message: p3xr.strings.title.connectingRedis
@@ -179,6 +178,7 @@ p3xr.ng.component('p3xrLayout', {
                     p3xr.state.commands.push(response.commands[key][0])
                 })
                 p3xr.state.commands.sort()
+                //console.warn('p3xr.state.commands', p3xr.state.commands)
 
                 $rootScope.p3xr.state.databaseIndexes = databaseIndexes
                 $rootScope.p3xr.state.connection = connection
@@ -199,10 +199,18 @@ p3xr.ng.component('p3xrLayout', {
                         originalState = 'main'
                     }
                 }
-                if (!originalState.startsWith('main')) {
-                    $state.go(originalState)
-                } else if (originalState === 'main') {
+                //console.warn('console original state', originalState)
+                if (originalState === 'main') {
                     $state.go('main.statistics')
+                } else {
+                    if (originalState.startsWith('main.key')) {
+                        //console.warn('trigger state', originalStateArr[2])
+                        $state.go('main.key', {
+                            key: decodeURIComponent(originalStateArr[2].replace(/~/g, '%'))
+                        })    
+                    } else {
+                        $state.go(originalState)
+                    }
                 }
             } catch (error) {
                 $cookies.remove(p3xr.settings.connectInfo.cookieName)

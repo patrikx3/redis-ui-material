@@ -44,3 +44,14 @@ p3xr-main {
     z-index: 10;
 
 }
+
+.p3xr-quick-console {
+    margin: 10px; 
+}
+
+.p3xr-quick-console-sidenav {
+    overflow: hidden !important; 
+    min-width: 240px !important;
+    background-color: transparent !important;
+    transition: none !important;
+}

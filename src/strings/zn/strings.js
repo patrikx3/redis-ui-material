@@ -115,6 +115,7 @@ const strings = {
         getKey: '加载Redis键及相关数据...',
         jsonViewShow: '显示 JSON 树',
         jsonViewEditor: '编辑JSON',
+        quickConsole: '快的',
     },
     label: {
         streamValue: `流字段和值是唯一的。 例如：field1 value1 "field 2" "value 2"`,

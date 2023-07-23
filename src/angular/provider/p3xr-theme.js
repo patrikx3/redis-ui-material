@@ -107,6 +107,30 @@ p3xr.ng.provider('p3xrTheme', function p3xrThemeProvider($mdThemingProvider,) {
     border-bottom: 1px solid transparent;
 }
 
+.p3xr-theme-light .p3xr-content-border-fixed {
+    border-left: 1px solid ${borderColor};
+    border-right: 1px solid ${borderColor};
+    border-bottom: 1px solid ${borderColor};
+}
+
+.p3xr-theme-dark .p3xr-content-border-fixed {
+    border-left: 1px solid ${borderColor};
+    border-right: 1px solid ${borderColor};
+    border-bottom: 1px solid ${borderColor};
+}
+
+
+.p3xr-theme-dark .p3xr-content-border-toolbar {
+    border-left: 1px solid ${borderColor};
+    border-right: 1px solid ${borderColor};
+    border-top: 1px solid ${borderColor};
+}
+
+.p3xr-theme-light .p3xr-content-border-toolbar {
+    border-left: 1px solid ${borderColor};
+    border-right: 1px solid ${borderColor};
+    border-top: 1px solid ${borderColor};
+}
 
 .p3xr-toast-default .md-toast-content {
     background-color: ${this.isDark() ? $mdColors.getThemeColor(darkColor) : 'auto'} !important;

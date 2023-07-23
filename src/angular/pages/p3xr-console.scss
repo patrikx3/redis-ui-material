@@ -38,21 +38,26 @@ p3xr-console {
 @import '../ui/p3xr-input';
 
 #p3xr-console-input {
-    @import '../ui/p3xr-input';
-
-    @extend .p3xr-input;
+    
 
     min-width: calc(100% - 9px);
     position: fixed;
     bottom: $toolbar-height + 8px;
     left: 3px;
-    right: 0px;
+    right: 3px;
 
 }
 
 #p3xr-console-input:focus {
 
     @extend .p3xr-input:focus;
+}
+
+#p3xr-console-autocomplete.p3xr-console-autocomplete-quick #p3xr-console-input {
+    min-width: calc(100% - 20px);
+    position: fixed;
+    left: 10px;
+    right: 10px;
 }
 
 .p3xr-console {

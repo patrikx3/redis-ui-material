@@ -118,6 +118,7 @@ const strings = {
         getKey: 'Loading Redis key and associated data ...',
         jsonViewShow: 'Display JSON',
         jsonViewEditor: 'Edit JSON',
+        quickConsole: 'Quick Console',
     },
     label: {
         streamValue: `Stream field and value is a oneliner. Eg.: field1 value1 "field 2" "value 2"`,

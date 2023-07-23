@@ -41,8 +41,11 @@
                            p3xr-label="$root.p3xr.strings.intention.statistics" p3xr-md-icon="show_chart"></p3xr-button>
 
 
-              <p3xr-button ng-if="!$root.$mdMedia('xs')" class="p3xr-main-toolbar-button"  ng-click="$ctrl.refresh({ keepTree: true })"
+              <p3xr-button  class="p3xr-main-toolbar-button"  ng-click="$ctrl.refresh({ keepTree: true })"
                            p3xr-label="$root.p3xr.strings.intention.refresh" p3xr-md-icon="refresh"></p3xr-button>
+
+                <p3xr-button  class="p3xr-main-toolbar-button"  ng-click="$ctrl.quickConsole()"
+                           p3xr-label="$root.p3xr.strings.intention.quickConsole" p3xr-md-icon="keyboard"></p3xr-button>
 
         </span>
     </div>
@@ -75,9 +78,12 @@
                 -->
             </div>
             <div id="p3xr-main-content-container">
+             
                 <ui-view>
                 </ui-view>
+                
             </div>
+            
         </div>
 
 
@@ -85,12 +91,24 @@
             <p3xr-main-treecontrol-controls p3xr-main-ref="$ctrl" flex></p3xr-main-treecontrol-controls>
             <p3xr-main-tree flex id="p3xr-main-treecontrol-container-directive-small" p3xr-resize="$ctrl.resize()"
                             p3xr-main-ref="$ctrl"></p3xr-main-tree>
+                         
+                           
             <ui-view flex>
             </ui-view>
+            
         </div>
     </div>
 
+    
 </md-content>
 
 
 </div>
+
+<md-sidenav class="md-sidenav-right p3xr-quick-console-sidenav" md-component-id="quickConsoleSidenav" >
+
+    <div class="p3xr-quick-console">
+        <p3xr-console type="quick"></p3xr-content>
+    </div>
+
+  </md-sidenav>

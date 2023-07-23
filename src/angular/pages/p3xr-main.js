@@ -1,6 +1,6 @@
 p3xr.ng.component('p3xrMain', {
     template: require('./p3xr-main.html'),
-    controller: function ($cookies, p3xrSocket, p3xrCommon, p3xrRedisParser, $rootScope, $state, $timeout, $scope, $mdMedia) {
+    controller: function ($cookies, p3xrSocket, p3xrCommon, p3xrRedisParser, $rootScope, $state, $timeout, $scope, $mdMedia, $mdSidenav) {
 
         let $container
         let $header;
@@ -448,7 +448,12 @@ p3xr.ng.component('p3xrMain', {
         let resizeObserver = new ResizeObserver(entries => {
             if (!resizeClicked) {
                 //console.log('ResizeObserver resize', JSON.parse(JSON.stringify(entries)))
-                rawResize()
+                window.requestAnimationFrame(() => {
+                    if (!Array.isArray(entries) || !entries.length) {
+                      return;
+                    }
+                    rawResize()
+                });
             }
         })
         const watchResize = async(newVal, oldVal) => {
@@ -498,6 +503,10 @@ p3xr.ng.component('p3xrMain', {
             });
 
 
+        }
+
+        this.quickConsole = () => {
+            $mdSidenav('quickConsoleSidenav').open()
         }
 
         /*

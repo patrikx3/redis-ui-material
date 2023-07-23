@@ -118,6 +118,7 @@ const strings = {
         getKey: 'Загрузка ключа Redis и асоциированных данных ...',
         jsonViewShow: 'Показать JSON',
         jsonViewEditor: 'Редактировать JSON',
+        quickConsole: 'Быстрый',
     },
     label: {
         streamValue: `Поле и значение потока это однополосник. Например: поле1 значение1 "поле 2" "значение 2"`,
