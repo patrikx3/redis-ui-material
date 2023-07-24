@@ -1,6 +1,6 @@
 p3xr.ng.component('p3xrLayout', {
     template: require('./p3xr-layout.html'),
-    controller: function (p3xrTheme, $rootScope, p3xrSocket, p3xrCommon, $state, $cookies, $timeout, $scope) {
+    controller: function (p3xrTheme, $rootScope, p3xrSocket, p3xrCommon, $state, $cookies, $timeout, $scope, p3xrDialogAskAuthorization) {
 
         let themesCache
         this.getThemeKey = (themes) => {
@@ -152,10 +152,29 @@ p3xr.ng.component('p3xrLayout', {
                     originalState = 'main'
                 }
 
+                const db = $cookies.get(p3xr.settings.connection.getCookieNameCurrentDatabase(connection.id))
+
+
+                if (connection.askAuth === true) {
+                    const auth = await p3xrDialogAskAuthorization.show({
+                        $event: undefined
+                    })   
+                    connection.username = undefined
+                    connection.password = undefined
+                    if (auth.username) {
+                        connection.username = auth.username
+                    }
+                    if (auth.password) {
+                        connection.password = auth.password
+                    }
+
+                }
+
                 p3xr.ui.overlay.show({
                     message: p3xr.strings.title.connectingRedis
                 })
-                const db = $cookies.get(p3xr.settings.connection.getCookieNameCurrentDatabase(connection.id))
+
+
                 const response = await p3xrSocket.request({
                     action: 'connection-connect',
                     payload: {

@@ -183,6 +183,7 @@ const strings = {
         },
         tree: 'Tree',
         dragSlowly: 'Drag slowly',
+        askAuth: 'Ask for authorization',
     },
     status: {
         dataCopied: 'The data is in the clipboard',

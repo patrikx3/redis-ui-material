@@ -180,6 +180,7 @@ const strings = {
         },
         tree: '树',
         dragSlowly: '慢慢拖动',
+        askAuth: '请求授权',
     },
     status: {
         dataCopied: '数据在剪贴板中',

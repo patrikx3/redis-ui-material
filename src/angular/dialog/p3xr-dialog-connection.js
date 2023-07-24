@@ -1,4 +1,4 @@
-p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSocket) {
+p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSocket, p3xrDialogAskAuthorization) {
 
 
     return new function () {
@@ -13,6 +13,7 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
 
                         if (options.model !== undefined) {
                             $scope.model = options.model
+                            $scope.model.askAuth = options.model.askAuth
                             $scope.model.password = options.model.id
                             $scope.model.tlsCrt = options.model.id
                             $scope.model.tlsKey = options.model.id
@@ -23,6 +24,7 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                                 name: undefined,
                                 host: undefined,
                                 port: undefined,
+                                askAuth: false,
                                 password: undefined,
                                 username: undefined,
                                 id: undefined,
@@ -119,7 +121,7 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                             }
                         }
 
-                        $scope.testConnection = async () => {
+                        $scope.testConnection = async ($event) => {
                             $scope.p3xrConnectionForm.$setSubmitted();
 
                             if (!handleInvalidForm()) {
@@ -128,18 +130,36 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
 
 
                             try {
+
+                                const authModel = Object.assign({}, $scope.model)
+                                if ($scope.model.askAuth === true) {
+                                    const auth = await p3xrDialogAskAuthorization.show({
+                                        $event: $event
+                                    })   
+                                    authModel.username = undefined
+                                    authModel.password = undefined
+                                    if (auth.username) {
+                                        authModel.username = auth.username
+                                    }
+                                    if (auth.password) {
+                                        authModel.password = auth.password
+                                    }
+                                }
+
                                 p3xr.ui.overlay.show({
                                     message: p3xr.strings.title.connectingRedis
                                 })
+
 
                                 //await new Promise(resolve => setTimeout(resolve, 5000))
 
                                 const response = await p3xrSocket.request({
                                     action: 'redis-test-connection',
                                     payload: {
-                                        model: $scope.model
+                                        model: authModel
                                     },
                                 })
+                                console.warn('response', response)
                                 p3xrCommon.toast({
                                     message: p3xr.strings.status.redisConnected
                                 })

@@ -1,4 +1,5 @@
 //injector-angular-start
+require('./dialog/p3xr-dialog-ask-authorization.js');
 require('./dialog/p3xr-dialog-connection.js');
 require('./dialog/p3xr-dialog-json-editor.js');
 require('./dialog/p3xr-dialog-json-view.js');

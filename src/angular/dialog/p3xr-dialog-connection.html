@@ -40,23 +40,29 @@
                         </div>
                     </md-input-container>
 
+                    <md-switch ng-model="model.askAuth" name="askAuth" aria-label=""
+                    ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
+                        {{ $root.p3xr.strings.label.askAuth }}
+                    </md-switch>
 
-                    <md-input-container class="md-block">
-                        <label>{{ $root.p3xr.strings.form.connection.label.username }}</label>
-                        <input name="username" type="text" ng-model="model.username"
-                               ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off">
-                    </md-input-container>
 
-                    <md-input-container class="md-block p3xr-md-input-container-no-bottom">
-                        <label>{{ $root.p3xr.strings.form.connection.label.password }}</label>
-                        <input name="password" type="password" ng-model="model.password"
-                               ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off">
-                    </md-input-container>
-                    <div class="p3xr-md-input-container-bottom-info">
-                        {{ $root.p3xr.strings.label.passwordSecure }}
-                    </div>
-
-                    <br/>
+                    <span>
+                        <md-input-container class="md-block">
+                            <label>{{ $root.p3xr.strings.form.connection.label.username }}</label>
+                            <input name="username" type="text" ng-model="model.username"
+                                   ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off">
+                        </md-input-container>
+    
+                        <md-input-container class="md-block p3xr-md-input-container-no-bottom">
+                            <label>{{ $root.p3xr.strings.form.connection.label.password }}</label>
+                            <input name="password" type="password" ng-model="model.password"
+                                   ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off">
+                        </md-input-container>
+                        <div class="p3xr-md-input-container-bottom-info">
+                            {{ $root.p3xr.strings.label.passwordSecure }}
+                        </div>    
+                        <br/>
+                    </span>
 
                     <md-switch ng-model="model.tlsWithoutCert" name="tlsWithoutCert" aria-label=""
                                ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
@@ -204,7 +210,7 @@
             </md-button>
 
             <span md-theme="{{ $root.p3xr.state.themeCommon }}">
-                <md-button class="md-raised md-primary" ng-click="testConnection()">
+                <md-button class="md-raised md-primary" ng-click="testConnection($event)">
                     <i class="fas fa-plug"></i>
                     {{ $root.p3xr.strings.intention.testConnection }}
                 </md-button>
