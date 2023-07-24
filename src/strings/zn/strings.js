@@ -179,7 +179,6 @@ const strings = {
             return `已连接: ${opts.name}`
         },
         tree: '树',
-        dragSlowly: '慢慢拖动',
         askAuth: '请求授权',
     },
     status: {

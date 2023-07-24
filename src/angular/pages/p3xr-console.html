@@ -31,11 +31,15 @@
         </div>
 
     </md-toolbar>
-    <md-content md-theme="{{ $root.p3xr.state.theme}}" layout-padding id="p3xr-console-content" md-whiteframe="{{ $ctrl.type !== 'quick' ? 1 : -1}}" class="p3xr-content-border-fixed">
-        <div id="p3xr-console-content-resizer" ng-if="$ctrl.type === 'quick'">
-            <md-tooltip md-direction="left">{{$root.p3xr.strings.label.dragSlowly}}</md-tooltip>
+    <md-content md-theme="{{ $root.p3xr.state.theme}}" ng-class="{'layout-padding': $ctrl.type !== 'quick'}" id="p3xr-console-content" md-whiteframe="{{ $ctrl.type !== 'quick' ? 1 : -1}}" class="p3xr-content-border-fixed">
+
+        <div style="display: flex; flex-direction: row; align-items: stretch; min-height: 100%">
+            <div id="p3xr-console-content-resizer" ng-if="$ctrl.type === 'quick'" ng-mousedown="$ctrl.dragStart()" ng-mouseup="$ctrl.dragEnd()">
+            </div>
+            <div id="p3xr-console-content-output" style="flex-grow: 1;">
+            </div>    
         </div>
-        <div id="p3xr-console-content-output">
+        <div id="p3xr-console-content-output" ng-if="$ctrl.type !== 'quick'">
         </div>
         <!--
         <p3xr-input id="p3xr-console-input" ng-keydown="$ctrl.action($event)" ng-model="$ctrl.inputValue"></p3xr-input>

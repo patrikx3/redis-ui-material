@@ -182,7 +182,6 @@ const strings = {
             return `Connected: ${opts.name}`
         },
         tree: 'Tree',
-        dragSlowly: 'Drag slowly',
         askAuth: 'Ask for authorization',
     },
     status: {

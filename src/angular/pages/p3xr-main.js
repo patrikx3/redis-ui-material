@@ -505,47 +505,33 @@ p3xr.ng.component('p3xrMain', {
 
         }
 
-        const fixSidenavWidth = () => {
-            this.sidenavWidth = 320
-        }
-        fixSidenavWidth()
+        this.sidenavWidth = 320
 
         this.quickConsole = () => {
-            fixSidenavWidth()
             $mdSidenav('quickConsoleSidenav').open()
         }
 
 
+        this.startResizingFlag = false
+        $scope.$on('p3xr-quick-console', (event, data) => {
+            //console.warn('p3xr-quick-console', event, data)
+            this.startResizingFlag = data.start
+        })
 
         this.startResizing = (event) => {
+            if (!this.startResizingFlag) {
+                return
+            }
             const startX = event.clientX;
             const startWidth = this.sidenavWidth;
 
             const $document = $(document)
 
-            let alreadyResizing = false
-            const allowedPixels = 20
-
-            const areWithinXPixels = (num1, num2) => {
-                // Calculate the absolute difference between the two numbers
-                const difference = Math.abs(num1 - num2);
-                // Check if the difference is less than or equal to 10 pixels
-                return difference <= allowedPixels;
-            }
-
-            const handleResizing = (event) => {
+             const handleResizing = (event) => {
                 const deltaX = event.clientX - startX;
-
-                const allowWidth = document.documentElement.clientWidth - this.sidenavWidth
-                //console.info('event.clientX', event.clientX, 'allowWidth', allowWidth, 'alreadyResizing', alreadyResizing)
-                
-
-                if (areWithinXPixels(allowWidth, event.clientX)) {
-                    alreadyResizing = true
-                    document.body.style.cursor = 'ew-resize'
-                    this.sidenavWidth = startWidth - deltaX;
-                    $scope.$apply(); // Update AngularJS bindings    
-                }
+                document.body.style.cursor = 'ew-resize'
+                this.sidenavWidth = startWidth - deltaX;
+                $scope.$apply(); // Update AngularJS bindings    
             }
 
             const endResizing = () => {

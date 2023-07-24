@@ -182,7 +182,6 @@ const strings = {
             return `Подключено: ${opts.name}`
         },
         tree: 'Дерево',
-        dragSlowly: 'Перетащите медленно',
         askAuth: 'Запросить авторизацию',
     },
     status: {

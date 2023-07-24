@@ -34,6 +34,19 @@ p3xr.ng.component('p3xrConsole', {
 
         const debounce = require('lodash/debounce')
 
+        this.dragStart = () => {
+            //console.warn('dragStart')
+            $scope.$emit('p3xr-quick-console', {
+                start: true,
+            })
+        }
+
+        this.dragEnd = () => {
+            //console.warn('dragEnd')
+            $scope.$emit('p3xr-quick-console', {
+                start: false,
+            })
+        }
 
         const rawResize = () => {
             let minus = 0
@@ -51,7 +64,7 @@ p3xr.ng.component('p3xrConsole', {
 
             let adjustments
             if (this.type === 'quick') {
-                adjustments = 130
+                adjustments = 105
             } else {
                 adjustments = 70
             }
