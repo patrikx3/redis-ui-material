@@ -19,14 +19,17 @@
         </div>
         <div class="md-toolbar-tools p3xr-content-border-toolbar" ng-if="$ctrl.type === 'quick'">
             <h2 flex md-truncate>{{ $root.p3xr.strings.intention.quickConsole }}</h2>
-            <span class="p3xr-console-monitor-quick">
-                <md-tooltip md-direction="bottom">{{ $root.p3xr.strings.intention.pubsubMonitor }}</md-tooltip>
+            <span>
+                <md-tooltip ng-if="$root.$mdMedia('xs')" md-direction="bottom">{{ $root.p3xr.strings.intention.pubsubMonitor }}</md-tooltip>
                 <md-checkbox ng-model="$root.p3xr.state.monitor" style="transform: scale(0.75)" id="p3xr-console-pubsub-checkbox">
-                   
+                    <span hide-xs>{{ $root.p3xr.strings.intention.pubsubMonitor }}</span>
                 </md-checkbox>
             </span>
             <p3xr-button p3xr-label="$root.p3xr.strings.intention.clear" p3xr-md-icon="backspace"
                             ng-click="$ctrl.clearConsole()"></p3xr-button>
+
+            <p3xr-button p3xr-label="$root.p3xr.strings.intention.close" p3xr-md-icon="close"
+                            ng-click="$ctrl.closeConsole()"></p3xr-button>
 
         </div>
 

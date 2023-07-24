@@ -48,6 +48,10 @@ p3xr.ng.component('p3xrConsole', {
             })
         }
 
+        this.closeConsole = () => {
+            $scope.$emit('p3xr-quick-console-quit')
+        }
+
         const rawResize = () => {
             let minus = 0
             let $components

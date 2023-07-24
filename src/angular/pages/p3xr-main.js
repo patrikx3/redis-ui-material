@@ -505,7 +505,8 @@ p3xr.ng.component('p3xrMain', {
 
         }
 
-        this.sidenavWidth = 320
+        const $document = $(document)
+        this.sidenavWidth = Math.min($document.width() - 100, 600)
 
         this.quickConsole = () => {
             $mdSidenav('quickConsoleSidenav').open()
@@ -518,6 +519,10 @@ p3xr.ng.component('p3xrMain', {
             this.startResizingFlag = data.start
         })
 
+        $scope.$on('p3xr-quick-console-quit', () => {
+            $mdSidenav('quickConsoleSidenav').close()
+        })
+
         this.startResizing = (event) => {
             if (!this.startResizingFlag) {
                 return
@@ -525,7 +530,7 @@ p3xr.ng.component('p3xrMain', {
             const startX = event.clientX;
             const startWidth = this.sidenavWidth;
 
-            const $document = $(document)
+
 
              const handleResizing = (event) => {
                 const deltaX = event.clientX - startX;
