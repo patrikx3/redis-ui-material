@@ -505,12 +505,17 @@ p3xr.ng.component('p3xrMain', {
 
         }
 
+        const fixSidenavWidth = () => {
+            this.sidenavWidth = 320
+        }
+        fixSidenavWidth()
+
         this.quickConsole = () => {
+            fixSidenavWidth()
             $mdSidenav('quickConsoleSidenav').open()
         }
 
 
-        this.sidenavWidth = 320
 
         this.startResizing = (event) => {
             const startX = event.clientX;
@@ -519,7 +524,7 @@ p3xr.ng.component('p3xrMain', {
             const $document = $(document)
 
             let alreadyResizing = false
-            const allowedPixels = 50
+            const allowedPixels = 20
 
             const areWithinXPixels = (num1, num2) => {
                 // Calculate the absolute difference between the two numbers
