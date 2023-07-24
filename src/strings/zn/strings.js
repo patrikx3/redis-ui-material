@@ -179,7 +179,7 @@ const strings = {
             return `已连接: ${opts.name}`
         },
         tree: '树',
-
+        dragSlowly: '慢慢拖动',
     },
     status: {
         dataCopied: '数据在剪贴板中',

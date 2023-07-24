@@ -182,7 +182,7 @@ const strings = {
             return `Connected: ${opts.name}`
         },
         tree: 'Tree',
-
+        dragSlowly: 'Drag slowly',
     },
     status: {
         dataCopied: 'The data is in the clipboard',

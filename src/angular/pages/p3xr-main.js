@@ -509,6 +509,51 @@ p3xr.ng.component('p3xrMain', {
             $mdSidenav('quickConsoleSidenav').open()
         }
 
+
+        this.sidenavWidth = 320
+
+        this.startResizing = (event) => {
+            const startX = event.clientX;
+            const startWidth = this.sidenavWidth;
+
+            const $document = $(document)
+
+            let alreadyResizing = false
+            const allowedPixels = 50
+
+            const areWithinXPixels = (num1, num2) => {
+                // Calculate the absolute difference between the two numbers
+                const difference = Math.abs(num1 - num2);
+                // Check if the difference is less than or equal to 10 pixels
+                return difference <= allowedPixels;
+            }
+
+            const handleResizing = (event) => {
+                const deltaX = event.clientX - startX;
+
+                const allowWidth = document.documentElement.clientWidth - this.sidenavWidth
+                //console.info('event.clientX', event.clientX, 'allowWidth', allowWidth, 'alreadyResizing', alreadyResizing)
+                
+
+                if (areWithinXPixels(allowWidth, event.clientX)) {
+                    alreadyResizing = true
+                    document.body.style.cursor = 'ew-resize'
+                    this.sidenavWidth = startWidth - deltaX;
+                    $scope.$apply(); // Update AngularJS bindings    
+                }
+            }
+
+            const endResizing = () => {
+                document.body.style.cursor = 'default'
+                $document.off('mousemove', handleResizing);
+                $document.off('mouseup', endResizing);
+            }
+
+            $document.on('mousemove', handleResizing);
+            $document.on('mouseup', endResizing);
+
+        }
+
         /*
  redis version = server - redis_version
  keys =  keyspace - dbIndex -> keys

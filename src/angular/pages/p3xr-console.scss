@@ -14,11 +14,24 @@ p3xr-console {
 
         text-align: center;
 
+        position: relative;
+
+        #p3xr-console-content-resizer {
+            position: absolute;
+            top: 0px;
+            left: -15px;
+            width: 2px;
+            height: 100%;
+            cursor: ew-resize;
+        }
+
+
         #p3xr-console-content-output {
+
             pre {
                 font-family: 'Roboto Mono' !important;
                 //font-weight: 500;
-                white-space: pre-wrap;
+                //white-space: pre-wrap;
             }
 
             min-width: calc(100% - #{$minWidthCalc});
@@ -31,6 +44,10 @@ p3xr-console {
         }
 
 
+    }
+    .p3xr-console-monitor-quick {
+        position: relative;
+        top: 2px;
     }
 }
 

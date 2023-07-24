@@ -14,15 +14,27 @@
             <p3xr-button p3xr-label="$root.p3xr.strings.intention.commands" p3xr-md-icon="menu"
                             ng-click="$ctrl.commands({ $event: $event})"></p3xr-button>
 
-            <p3xr-button p3xr-label="$root.p3xr.strings.intention.clear" p3xr-md-icon="clear"
+            <p3xr-button p3xr-label="$root.p3xr.strings.intention.clear" p3xr-md-icon="backspace"
                             ng-click="$ctrl.clearConsole()"></p3xr-button>
         </div>
         <div class="md-toolbar-tools p3xr-content-border-toolbar" ng-if="$ctrl.type === 'quick'">
-            {{ $root.p3xr.strings.intention.quickConsole }}
+            <h2 flex md-truncate>{{ $root.p3xr.strings.intention.quickConsole }}</h2>
+            <span class="p3xr-console-monitor-quick">
+                <md-tooltip md-direction="bottom">{{ $root.p3xr.strings.intention.pubsubMonitor }}</md-tooltip>
+                <md-checkbox ng-model="$root.p3xr.state.monitor" style="transform: scale(0.75)" id="p3xr-console-pubsub-checkbox">
+                   
+                </md-checkbox>
+            </span>
+            <p3xr-button p3xr-label="$root.p3xr.strings.intention.clear" p3xr-md-icon="backspace"
+                            ng-click="$ctrl.clearConsole()"></p3xr-button>
+
         </div>
 
     </md-toolbar>
     <md-content md-theme="{{ $root.p3xr.state.theme}}" layout-padding id="p3xr-console-content" md-whiteframe="{{ $ctrl.type !== 'quick' ? 1 : -1}}" class="p3xr-content-border-fixed">
+        <div id="p3xr-console-content-resizer" ng-if="$ctrl.type === 'quick'">
+            <md-tooltip md-direction="left">{{$root.p3xr.strings.label.dragSlowly}}</md-tooltip>
+        </div>
         <div id="p3xr-console-content-output">
         </div>
         <!--

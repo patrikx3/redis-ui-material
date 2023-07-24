@@ -182,7 +182,7 @@ const strings = {
             return `Подключено: ${opts.name}`
         },
         tree: 'Дерево',
-
+        dragSlowly: 'Перетащите медленно',
     },
     status: {
         dataCopied: 'Данные скопированы в буфер обмена',
