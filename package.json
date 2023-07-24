@@ -1,6 +1,6 @@
 {
     "name": "p3x-redis-ui-material",
-    "version": "2023.10.135",
+    "version": "2023.10.136",
     "description": "💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via http and socket.io",
     "corifeus": {
         "icon": "fas fa-database",
@@ -97,6 +97,5 @@
         "node": ">=12.13.0"
     },
     "homepage": "https://corifeus.com/redis-ui-material",
-    "dependencies": {       
-    }
+    "dependencies": {}
 }

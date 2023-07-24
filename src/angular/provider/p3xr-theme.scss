@@ -12,6 +12,17 @@
     }
 }
 
+
+.md-hue-3 {
+    md-checkbox:not(.md-checked) .md-icon, md-checkbox.md-checked .md-icon  {
+        background-color: rgba(255, 255, 255, 1) !important;
+        color: black !important;
+    }    
+    md-checkbox.md-checked .md-icon:after {
+        border-color: black !important;
+    }
+}
+
 md-checkbox:not(.md-checked) .md-icon {
     border-color: rgb(0, 0, 0) !important;
 }
