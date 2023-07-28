@@ -535,7 +535,8 @@ p3xr.ng.component('p3xrMain', {
              const handleResizing = (event) => {
                 const deltaX = event.clientX - startX;
                 document.body.style.cursor = 'ew-resize'
-                this.sidenavWidth = startWidth - deltaX;
+                const sideNavWidth = Math.min(startWidth - deltaX, window.innerWidth - 250); 
+                this.sidenavWidth = sideNavWidth
                 $scope.$apply(); // Update AngularJS bindings    
             }
 
