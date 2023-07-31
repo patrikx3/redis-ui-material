@@ -288,7 +288,14 @@ md-toolbar, .md-toolbar-tools {
 }
 
 body.p3xr-no-animation * {
+    //transition: none;
+    // weird fix
     transition: none !important;
+
+    // md-backdrop.md-opaque.ng-enter fix
+    md-backdrop.md-opaque.ng-enter {
+        opacity: 0.48;
+    }
 }
 
 #p3xr-redis-ui-bootstrap {
