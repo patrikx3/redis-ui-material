@@ -1,5 +1,5 @@
 
-@license p3x-redis-ui-material v2023.10.140
+@license p3x-redis-ui-material v2023.10.144
   
 💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via http and socket.io
 
