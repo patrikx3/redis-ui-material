@@ -102,7 +102,8 @@ p3xr.ng.component('p3xrMainTree', {
                     message: p3xr.strings.confirm.deleteKey
                 })
 
-                //const expandedNodes = angular.copy($rootScope.expandedNodes);
+                // const cloneDeep = require('lodash/cloneDeep')
+                //const expandedNodes = cloneDeep($rootScope.expandedNodes);
 
                 await p3xrSocket.request({
                     action: 'delete',

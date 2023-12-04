@@ -95,13 +95,14 @@ p3xr.ng.factory('p3xrDialogKeyNewOrSet', function (p3xrCommon, $mdDialog, p3xrSo
                                     return;
                                 }
                                 try {
+                                    const cloneDeep = require('lodash/cloneDeep')
                                     const response = await p3xrSocket.request({
                                         action: 'key-new-or-set',
                                         payload: {
                                             type: options.type,
                                             originalValue: options.hasOwnProperty('model') ? options.model.value : undefined,
                                             originalHashKey: options.hasOwnProperty('model') ? options.model.hashKey : undefined,
-                                            model: angular.copy($scope.model)
+                                            model: cloneDeep($scope.model)
                                         },
                                     })
                                     window['gtag']('config', p3xr.settings.googleAnalytics,

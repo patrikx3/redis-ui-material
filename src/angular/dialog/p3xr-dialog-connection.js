@@ -197,11 +197,11 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
 
                             try {
 
-
+                                const cloneDeep = require('lodash/cloneDeep')
                                 const response = await p3xrSocket.request({
                                     action: 'connection-save',
                                     payload: {
-                                        model: angular.copy($scope.model)
+                                        model: cloneDeep($scope.model)
                                     },
                                 })
                                 p3xrCommon.toast({
