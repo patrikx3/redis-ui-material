@@ -14,7 +14,7 @@ https://corifeus.com/redis-ui
 
 
 ---
-# 💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via http and socket.io v2023.10.150
+# 💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via http and socket.io v2024.4.104
 
 
 
@@ -28,7 +28,7 @@ https://corifeus.com/redis-ui
 ### Built on NodeJs version
 
 ```txt
-v20.5.1
+v20.11.0
 ```
 
 
@@ -79,7 +79,7 @@ All my domains ([patrikx3.com](https://patrikx3.com) and [corifeus.com](https://
 
 ---
 
-[**P3X-REDIS-UI-MATERIAL**](https://corifeus.com/redis-ui-material) Build v2023.10.150
+[**P3X-REDIS-UI-MATERIAL**](https://corifeus.com/redis-ui-material) Build v2024.4.104
 
 [![Donate for Corifeus / P3X](https://img.shields.io/badge/Donate-Corifeus-003087.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QZVM4V6HVZJW6)  [![Contact Corifeus / P3X](https://img.shields.io/badge/Contact-P3X-ff9900.svg)](https://www.patrikx3.com/en/front/contact) [![Like Corifeus @ Facebook](https://img.shields.io/badge/LIKE-Corifeus-3b5998.svg)](https://www.facebook.com/corifeus.software)
 
