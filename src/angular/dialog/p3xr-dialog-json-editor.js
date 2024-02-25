@@ -44,11 +44,14 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
                                         // en , zn
                                         let language
                                         switch(p3xr.settings.language.current) {
+                                            case 'ru':
+                                                language = 'ru'
+                                                break;
                                             case 'zn':
                                                 language = 'zh-CN'
                                                 break;
                                             default:
-                                                language = 'en'
+                                                language = 'en'                                                
                                                 break;
                                         }
                                         const container = document.getElementById("p3xr-jsoneditor")

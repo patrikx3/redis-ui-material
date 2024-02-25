@@ -110,8 +110,10 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
     const setAnimation = () => {
         console.log('set animation', $rootScope.p3xr.settings.animation)
         $animate.enabled($rootScope.p3xr.settings.animation)
+        $body.removeClass('p3xr-no-animation')
+        $body.removeClass('p3xr-animation')
         if ($rootScope.p3xr.settings.animation) {
-            $body.removeClass('p3xr-no-animation')
+            $body.addClass('p3xr-animation')
         } else {
             $body.addClass('p3xr-no-animation')
         }

@@ -43,6 +43,8 @@ md-dialog md-dialog-actions button {
 }
  */
 
+ .p3xr-animation {
+ }
 
 .p3xr-theme-light {
 }
@@ -303,7 +305,7 @@ body.p3xr-no-animation * {
 }
 
 .fa, .fas, .fab, far, .svg-inline--fa {
-    transform: scale(1.5) !important;
+    transform: scale(1.5);
     margin-right: 5px !important;
     margin-left: 5px !important;
 }

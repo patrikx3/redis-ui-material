@@ -16,6 +16,7 @@ jQuery.event.special.touchstart = {
 // moment
 global.moment = require('moment')
 require('moment/locale/zh-cn')
+require('moment/locale/ru')
 
 
 global.$window = $(window);

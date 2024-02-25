@@ -49,7 +49,8 @@ p3xr.settings = {
     language: {
         momentDateMap: {
             en: 'en',
-            zn: 'zh-cn'
+            zn: 'zh-cn',
+            ru: 'ru',
         },
         defaultLanguage: 'en',
         current: undefined,

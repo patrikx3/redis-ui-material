@@ -151,7 +151,7 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                                 })
 
 
-                                //await new Promise(resolve => setTimeout(resolve, 5000))
+                                //await new Promise(resolve => setTimeout(resolve, 5000000))
 
                                 const response = await p3xrSocket.request({
                                     action: 'redis-test-connection',
