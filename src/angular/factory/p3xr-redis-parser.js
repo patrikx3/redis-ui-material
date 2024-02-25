@@ -57,123 +57,78 @@ p3xr.ng.factory('p3xrRedisParser', function ($rootScope) {
 
 
         this.keysToTreeControl = (options) => {
-
-            //   const start = Date.now()
-
-            let {keys} = options
-
-            let {divider} = options
+            let {keys} = options;
+            let {divider} = options;
             if (divider === undefined) {
-                divider = p3xr.settings.redisTreeDivider
+                divider = p3xr.settings.redisTreeDivider;
             }
-//console.warn(keys)
-            const mainNodes = []
-
-
-            //console.log('expandedNodes', JSON.parse(JSON.stringify($rootScope.expandedNodes)))
-            //$rootScope.expandedNodes = []
-
-
-/*
-            const newSavedExpandedNodes
-            //FIXME saved expanded nodes is not working
-            for (let saveExpandedNode of $rootScope.savedExpandedNodes) {
-                if (saveExpandedNode.key === foundNode.key) {
-                    $rootScope.expandedNodes.push(foundNode)
-                }
-            }
- */
-            const newExpandedNodes = []
-            $rootScope.expandedNodes = []
-
+        
+            const mainNodes = [];
+            const newExpandedNodes = [];
+            $rootScope.expandedNodes = [];
+        
             const recursiveNodes = (splitKey, level = 0, nodes = mainNodes) => {
-                let foundNode = false
+                let foundNode = false;
                 if (level + 1 < splitKey.length) {
-                    for (let nodeIndex in nodes) {
-                        const node = nodes[nodeIndex]
+                    for (let node of nodes) {
                         if (node.label === splitKey[level] && node.type === 'folder') {
-                            foundNode = node
+                            foundNode = node;
                         }
                     }
                 }
-                if (foundNode === false) {
+                if (!foundNode) {
                     const defaultFoundNode = {
                         label: splitKey[level],
                         key: splitKey.slice(0, level + 1).join(divider),
                         children: [],
-                        childCount: 0,
+                        childCount: 0, // Initialize with 0, will be calculated later
+                        type: level + 1 === splitKey.length ? 'element' : 'folder',
+                    };
+                    if (defaultFoundNode.type === 'element') {
+                        defaultFoundNode.keysInfo = p3xr.state.keysInfo[defaultFoundNode.key];
                     }
-                    if (level + 1 === splitKey.length) {
-                        //console.warn(splitKey.length - 1 === level)t
-                        foundNode = Object.assign(defaultFoundNode, {
-                            type: 'element',
-                            keysInfo: p3xr.state.keysInfo[defaultFoundNode.key]
-                        })
-                    } else {
-                        foundNode = Object.assign(defaultFoundNode, {
-                            type: 'folder',
-                        })
-                    }
-                    nodes.push(foundNode)
-
+                    nodes.push(defaultFoundNode);
+                    foundNode = defaultFoundNode;
+        
                     for (let saveExpandedNode of $rootScope.savedExpandedNodes) {
                         if (saveExpandedNode.key === foundNode.key) {
-                            newExpandedNodes.push(foundNode)
+                            newExpandedNodes.push(foundNode);
                         }
                     }
-
                 }
-
+        
                 if (level + 1 < splitKey.length) {
-                    recursiveNodes(splitKey, level + 1, foundNode.children)
+                    recursiveNodes(splitKey, level + 1, foundNode.children);
                 }
-            }
-
-            //console.log('newExpandedNodes', newExpandedNodes)
-            $rootScope.expandedNodes = newExpandedNodes
-
+            };
+        
+            $rootScope.expandedNodes = newExpandedNodes;
+        
             for (let key of keys) {
-                let splitkey;
-                if (divider === '') {
-                    splitkey = [key]
-
-                } else {
-                    splitkey = key.split(divider)
-                }
-                recursiveNodes(splitkey)
+                let splitkey = divider === '' ? [key] : key.split(divider);
+                recursiveNodes(splitkey);
             }
-
-            const generatedKeys = {}
+        
             const recursiveKeyCount = (node) => {
-                generatedKeys[node.key] = node.children.length;
-
+                // Directly modify childCount here based on type 'element'
+                node.childCount = node.children.filter(child => child.type === 'element').length;
                 for (let child of node.children) {
-                    recursiveKeyCount(child)
-                }
-            }
-            for (let node of mainNodes) {
-                recursiveKeyCount(node)
-            }
-
-            const recursiveCounterKeys = (node) => {
-                for (let generatedKey of Object.keys(generatedKeys)) {
-                    if (generatedKey.startsWith(`${node.key}:`) || generatedKey === node.key) {
-                        node.childCount += generatedKeys[generatedKey]
+                    recursiveKeyCount(child);
+                    // For folders, accumulate child counts from their children
+                    if (child.type === 'folder') {
+                        node.childCount += child.childCount;
                     }
                 }
-                for (let child of node.children) {
-                    recursiveCounterKeys(child)
-                }
-            }
+            };
+        
             for (let node of mainNodes) {
-                recursiveCounterKeys(node)
+                recursiveKeyCount(node);
             }
-
-            //console.warn('key calculate', (Date.now() - start), 'ms' )
-
-            $rootScope.savedExpandedNodes = []
-            return mainNodes
-        }
+        
+            $rootScope.savedExpandedNodes = [];
+            return mainNodes;
+        };
+        
 
 
         this.console = new function () {

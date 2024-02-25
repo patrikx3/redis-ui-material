@@ -30,14 +30,14 @@ p3xr.ng.component('p3xrMainKeyHash', {
                }
                indexKeys++
            }
-           console.log('test', values)
+           //console.log('test', values)
            return values
        }
         $scope.$watch('$ctrl.page', load)
 
         this.pageBasedList = () => {
             const result =  load()
-            console.log('result', result)
+            //console.log('result', result)
             return result
         }
 
