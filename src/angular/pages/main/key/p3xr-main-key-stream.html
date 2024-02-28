@@ -22,7 +22,9 @@
             <md-tooltip md-direction="top">{{  $ctrl.showTimestamp({ timestamp: value[0]})}}</md-tooltip>
         </span>
     </div>
-    <div flex="60" class="p3xr-pre" style="overflow: auto;align-items: flex-start;"><span ng-repeat="dataArr in $ctrl.p3xrValueGenerated[key]">{{ dataArr[0]}} <i class="fas fa-chevron-right" style="transform: scale(0.75) !important;"></i> {{ dataArr[1]}}<span ng-if="!$last"><br/></span></span></div>
+    <div flex="60" style="overflow: auto;align-items: flex-start;">
+        <span ng-repeat="dataArr in $ctrl.p3xrValueGenerated[key]"  class="p3xr-pre">{{ dataArr[0]}} <i class="fas fa-chevron-right" style="transform: scale(0.75) !important;"></i> {{ dataArr[1]}}<span ng-if="!$last"><br/></span></span>
+    </div>
     <div flex="20" style="text-align: right; ">
 
         <md-button class="md-icon-button md-warn" ng-click="$ctrl.deleteStreamTimestamp({ streamTimestamp: value[0], $event: $event})" ng-if="$root.p3xr.state.connection.readonly !== true">

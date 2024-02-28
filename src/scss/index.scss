@@ -389,11 +389,13 @@ body.p3xr-no-animation * {
     line-height: 18px;
     overflow: hidden !important;
     //white-space: pre;
-    // white-space: pre-wrap;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+    white-space: pre-wrap;
+    //word-wrap: break-word !important;
+    //overflow-wrap: break-word !important;
    // white-space: pre-wrap;
     word-spacing: 0px;
+    //white-space: text-wrap;
+
 }
 
 
