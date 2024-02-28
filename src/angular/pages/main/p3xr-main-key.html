@@ -8,6 +8,15 @@
 -->
 <div style="text-align: right">
 
+    <md-button class="md-button md-raised md-accent" ng-click="$ctrl.addKey({ $event: $event, key: $ctrl.$stateParams.key})" ng-if="$root.p3xr.state.connection.readonly !== true">
+        <md-icon>add</md-icon>
+        <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.addKey }}</span>
+        <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{
+            $root.p3xr.strings.intention.addKey }}
+        </md-tooltip>
+    </md-button>
+
+
     <md-button class="md-button md-raised md-warn" ng-click="$ctrl.delete({ $event: $event})" ng-if="$root.p3xr.state.connection.readonly !== true">
         <md-icon>delete</md-icon>
         <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.delete }}</span>

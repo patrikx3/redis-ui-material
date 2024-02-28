@@ -218,18 +218,30 @@ p3xr.ng.component('p3xrMainKey', {
             $scope.$digest()
         }
 
-        this.rename = async (opts) => {
+        this.rename = (opts) => {
             $rootScope.$broadcast('p3xr-key-rename', {
                 key: $stateParams.key,
                 $event: opts.$event,
             });
         }
 
-        this.delete = async (options) => {
+        this.delete = (options) => {
             $rootScope.$broadcast('p3xr-key-delete', {
                 key: $stateParams.key,
                 event: options.$event,
             });
+        }
+
+        this.addKey = (options) => {
+            event.stopPropagation();
+
+            $rootScope.$broadcast('p3xr-key-new', {
+                event: options.$event,
+                node: {
+                    key: options.key,
+                }
+            });
+
         }
 
         this.setTtl = async (options) => {

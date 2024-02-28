@@ -41,7 +41,7 @@ p3xr.ng.factory('p3xrDialogKeyNewOrSet', function (p3xrCommon, $mdDialog, p3xrSo
 
                             $scope.model = {
                                 type: 'string',
-                                key: options.node !== undefined ? options.node.key : '',
+                                key: options.node !== undefined ? options.node.key + p3xr.settings.redisTreeDivider : '',
                                 value: undefined,
                                 score: undefined,
                                 streamTimestamp: '*',
