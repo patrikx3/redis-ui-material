@@ -1,6 +1,6 @@
 {
     "name": "p3x-redis-ui-material",
-    "version": "2024.4.122",
+    "version": "2024.4.123",
     "description": "💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via http and socket.io",
     "corifeus": {
         "icon": "fas fa-database",
@@ -42,10 +42,10 @@
     "author": "Patrik Laszlo <alabard@gmail.com>",
     "license": "MIT",
     "devDependencies": {
-        "@babel/core": "^7.23.9",
-        "@babel/preset-env": "^7.23.9",
-        "@fontsource/roboto": "^5.0.8",
-        "@fontsource/roboto-mono": "^5.0.16",
+        "@babel/core": "^7.24.0",
+        "@babel/preset-env": "^7.24.0",
+        "@fontsource/roboto": "^5.0.12",
+        "@fontsource/roboto-mono": "^5.0.17",
         "@fortawesome/fontawesome-free": "^6.5.1",
         "@uirouter/angularjs": "^1.1.0",
         "angular": "^1.8.3",
@@ -63,7 +63,7 @@
         "clean-webpack-plugin": "^4.0.0",
         "concurrently": "^8.2.2",
         "copy-webpack-plugin": "^12.0.2",
-        "corifeus-builder": "^2024.4.108",
+        "corifeus-builder": "^2024.4.109",
         "css-loader": "^6.10.0",
         "css-minimizer-webpack-plugin": "^6.0.0",
         "grunt-injector": "^1.1.0",
