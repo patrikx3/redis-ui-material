@@ -30,6 +30,7 @@ require('./core/state')
 require('./core/dom')
 require('./core/sort')
 require('./core/clipboard')
+require('./core/clone')
 
 require('./jquery/overlay')
 

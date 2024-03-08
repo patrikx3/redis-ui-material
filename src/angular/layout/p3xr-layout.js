@@ -143,8 +143,7 @@ p3xr.ng.component('p3xrLayout', {
             //p3xr.state.search = '';
 
 
-            const cloneDeep = require('lodash/cloneDeep')
-            connection = cloneDeep(connection)
+            connection = global.p3xr.clone(connection)
             try {
                 const originalStateArr = location.pathname.split('/')
                 originalStateArr.shift()

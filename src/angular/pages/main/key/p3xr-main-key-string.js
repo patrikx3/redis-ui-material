@@ -15,11 +15,10 @@ p3xr.ng.component('p3xrMainKeyString', {
             p3xrCommon.toast(p3xr.strings.status.dataCopied)
         }
 
-        const cloneDeep = require('lodash/cloneDeep')
         this.editable = false;
         let originalValue
         this.edit = () => {
-            originalValue = cloneDeep(this.p3xrValue)
+            originalValue = angular.copy(this.p3xrValue)
             this.editable = true
         }
 

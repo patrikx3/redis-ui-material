@@ -102,8 +102,7 @@ p3xr.ng.component('p3xrMainTree', {
                     message: p3xr.strings.confirm.deleteKey
                 })
 
-                // const cloneDeep = require('lodash/cloneDeep')
-                //const expandedNodes = cloneDeep($rootScope.expandedNodes);
+                //const expandedNodes = global.p3xr.clone($rootScope.expandedNodes);
 
                 await p3xrSocket.request({
                     action: 'delete',

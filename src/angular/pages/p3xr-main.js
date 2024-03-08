@@ -375,8 +375,7 @@ p3xr.ng.component('p3xrMain', {
                 withoutParent = false
             }
 
-            const cloneDeep = require('lodash/cloneDeep')
-            let expandedNodes = cloneDeep($rootScope.expandedNodes);
+            let expandedNodes = angular.copy($rootScope.expandedNodes);
 
             try {
                 /*
