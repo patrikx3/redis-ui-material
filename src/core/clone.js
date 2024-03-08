@@ -6,7 +6,7 @@ function customizer(value) {
     if (isObject(value)) {
         // Remove keys that start with '$'
         return transform(value, (result, val, key) => {
-            if (!key.startsWith('$')) {
+            if (key !== '$$hashKey') {
                 result[key] = val;
             }
         });
