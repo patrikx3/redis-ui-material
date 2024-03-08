@@ -375,7 +375,7 @@ p3xr.ng.component('p3xrMain', {
                 withoutParent = false
             }
 
-            let expandedNodes = angular.copy($rootScope.expandedNodes);
+            let expandedNodes = p3xr.clone($rootScope.expandedNodes);
 
             try {
                 /*
