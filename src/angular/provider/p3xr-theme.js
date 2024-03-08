@@ -95,6 +95,13 @@ p3xr.ng.provider('p3xrTheme', function p3xrThemeProvider($mdThemingProvider,) {
                 const borderColor = $mdColors.getThemeColor(p3xr.state.themeLayout + '-primary-hue-1');
 
                 const styles = `
+
+body.p3xr-theme-dark[md-theme="p3xrThemeDarkNeuLayout"] md-toolbar.md-hue-1 .md-button-dark-hover-fix:hover,
+body.p3xr-theme-dark[md-theme="p3xrThemeDarkLayout"] md-toolbar.md-hue-1 .md-button-dark-hover-fix:hover,
+body[md-theme="p3xrThemeEnterpriseLayout"] md-toolbar.md-hue-1 .md-button-dark-hover-fix:hover {
+    background-color: rgba(0, 0, 0, 0.1) !important; /* Lighten on hover for example */
+}
+
 .p3xr-theme-dark .p3xr-content-border {
     border-left: 1px solid ${borderColor};
     border-right: 1px solid ${borderColor};

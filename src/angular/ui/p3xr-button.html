@@ -1,4 +1,4 @@
-<md-button class="{{ $ctrl.p3xrClasses }}">
+<md-button ng-class="$ctrl.p3xrClasses" class="md-button-dark-hover-fix">
     <md-icon ng-if="$ctrl.p3xrMdIcon !== undefined">{{ $ctrl.p3xrMdIcon }}</md-icon>
     <i ng-if="$ctrl.p3xrFaIcon !== undefined" class="{{ $ctrl.p3xrFaIcon }}"></i>
     <span ng-if="$root.$mdMedia('(min-width: 720px)')">{{ $ctrl.p3xrLabel }}</span>
