@@ -2,23 +2,6 @@
     <span ng-if="!$ctrl.editable">
 
 
-        <md-button class="md-button md-raised md-accent" ng-click="$ctrl.jsonViewer({ $event: $event})">
-            <md-icon>table_chart</md-icon>
-            <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.jsonViewShow }}</span>
-            <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{
-                $root.p3xr.strings.intention.jsonViewShow }}
-            </md-tooltip>
-        </md-button>
-
-        <md-button class="md-button md-raised md-accent" ng-click="$ctrl.copy({ $event: $event})">
-            <md-icon>content_copy</md-icon>
-            <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.copy }}</span>
-            <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{
-                $root.p3xr.strings.intention.copy }}
-            </md-tooltip>
-        </md-button>
-
-
         <input type="file" id="p3xr-main-key-string-upload-buffer" style="display: none" onchange="angular.element(this).scope().readFileAsBuffer(event)"/>
         <md-button class="md-button md-raised md-primary" ng-click="$ctrl.setBufferUpload({ $event: $event})">
             <md-icon>upload</md-icon>
@@ -36,6 +19,23 @@
                 $root.p3xr.strings.intention.downloadBuffer }}
             </md-tooltip>
         </md-button>
+
+        <md-button class="md-button md-raised md-accent" ng-click="$ctrl.jsonViewer({ $event: $event})">
+            <md-icon>table_chart</md-icon>
+            <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.jsonViewShow }}</span>
+            <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{
+                $root.p3xr.strings.intention.jsonViewShow }}
+            </md-tooltip>
+        </md-button>
+
+        <md-button class="md-button md-raised md-accent" ng-click="$ctrl.copy({ $event: $event})">
+            <md-icon>content_copy</md-icon>
+            <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.copy }}</span>
+            <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{
+                $root.p3xr.strings.intention.copy }}
+            </md-tooltip>
+        </md-button>
+
 
 
         <md-button class="md-button md-raised md-primary" ng-click="$ctrl.formatJson({ $event: $event})" ng-if="$root.p3xr.state.connection.readonly !== true">
