@@ -15,6 +15,6 @@ function customizer(value) {
 }
 
 p3xr.clone = (value) => {
-    console.warn('clone, executed', value)
+    //console.warn('clone, executed', value)
     return cloneDeepWith(value, customizer)
 }
