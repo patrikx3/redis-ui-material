@@ -71,6 +71,8 @@ const strings = {
     },
     intention: {
         copy: 'Copy',
+        downloadBuffer: 'Download buffer',
+        setBuffer: 'Set buffer',
         saveWithFormatJson: 'Save with format',
         formatJson: 'Format Json',
         pubsubMonitor: 'PubSub Monitor',

@@ -5,7 +5,48 @@ p3xr.ng.component('p3xrMainKeyString', {
         p3xrKey: '<',
         p3xrResponse: '<',
     },
-    controller: function (p3xrSocket, p3xrCommon, $rootScope, p3xrDialogJsonView, p3xrDialogJsonEditor) {
+    controller: function (p3xrSocket, p3xrCommon, $rootScope, p3xrDialogJsonView, p3xrDialogJsonEditor, $scope) {
+
+        this.setBufferUpload = () => {
+            document.getElementById('p3xr-main-key-string-upload-buffer').click()
+        }
+
+        $scope.readFileAsBuffer = async (event) => {
+            const file = event.target.files[0];
+            if (!file) {
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = async (loadEvent) => {
+                const arrayBuffer = loadEvent.target.result;
+                // Process the buffer here
+                //console.log(arrayBuffer);
+
+                try {
+                    const response = await p3xrSocket.request({
+                        action: 'key-set',
+                        payload: {
+                            type: this.p3xrResponse.type,
+                            value: arrayBuffer,
+                            key: this.p3xrKey,
+                        }
+                    })
+    
+                    window['gtag']('config', p3xr.settings.googleAnalytics,
+                        {
+                            'page_path': '/key-set'
+                        }
+                    );
+    
+                } catch (e) {
+                    p3xrCommon.generalHandleError(e)
+                } finally {
+                    $rootScope.$broadcast('p3xr-refresh-key');
+                }
+
+            };
+            reader.readAsArrayBuffer(file);
+        }
 
 
         this.copy = () => {
@@ -13,6 +54,31 @@ p3xr.ng.component('p3xrMainKeyString', {
                 value: this.p3xrValue
             })
             p3xrCommon.toast(p3xr.strings.status.dataCopied)
+        }
+
+        this.downloadBuffer = async () => {
+            try {
+                const response = await p3xrSocket.request({
+                    action: 'key-get-string-buffer',
+                    payload: {
+                        key: this.p3xrKey,
+                    }
+                })
+                //console.log('response', response)
+
+                const blob = new Blob([response.bufferValue]);
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${this.p3xrKey}.bin`;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+            } catch (e) {
+                p3xrCommon.generalHandleError(e)
+            } finally {
+            }
         }
 
         this.editable = false;
