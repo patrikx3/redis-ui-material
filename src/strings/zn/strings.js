@@ -71,8 +71,9 @@ const strings = {
   },
   intention: {
     copy: "复制",
+    downloadBuffer: "下载缓冲区",
     copyBuffer: "复制缓冲区",
-    setBuffer: '设置为缓冲区',
+    setBuffer: "设置为缓冲区",
     saveWithFormatJson: "保存格式",
     formatJson: "格式化Json",
     pubsubMonitor: "PubSub监视器",

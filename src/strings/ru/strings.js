@@ -72,13 +72,13 @@ const strings = {
     // When you translate the english name, keep the Language in English
     // eg. Inglés / English
     en: "Английский / English",
-    zn: "Китайский / Chinese",
+    zn: "中文 / Chinese",
     ru: "Русский / Russian",
   },
   intention: {
     copy: "Копировать",
-    copyBuffer: "Копировать буфер",
-    setBuffer: 'Установить как буфер',
+    downloadBuffer: "Скачать буфер",
+    setBuffer: "Установить как буфер",
     saveWithFormatJson: "Сохранить с форматом",
     formatJson: "Форматировать Json",
     pubsubMonitor: "Мониторинг PubSub",
