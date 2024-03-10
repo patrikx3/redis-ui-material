@@ -8,7 +8,9 @@ p3xr.ng.component('p3xrMainKeyString', {
     controller: function (p3xrSocket, p3xrCommon, $rootScope, p3xrDialogJsonView, p3xrDialogJsonEditor, $scope) {
 
         this.setBufferUpload = () => {
-            document.getElementById('p3xr-main-key-string-upload-buffer').click()
+            const input = document.getElementById('p3xr-main-key-string-upload-buffer');
+            input.value = ''; // Clear the input value
+            input.click();
         }
 
         $scope.readFileAsBuffer = async (event) => {
@@ -45,6 +47,9 @@ p3xr.ng.component('p3xrMainKeyString', {
                 }
 
             };
+            reader.onerror = (error) => {
+                p3xrCommon.generalHandleError(error)
+            } 
             reader.readAsArrayBuffer(file);
         }
 
