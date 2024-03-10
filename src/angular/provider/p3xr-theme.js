@@ -102,6 +102,12 @@ body[md-theme="p3xrThemeEnterpriseLayout"] md-toolbar.md-hue-1 .md-button-dark-h
     background-color: rgba(0, 0, 0, 0.1) !important; /* Lighten on hover for example */
 }
 
+[data-p3xr-tree-key]:hover {
+    background-color: ${this.isDark() ? $mdColors.getThemeColor(p3xr.state.themeCommon + '-accent-300') : $mdColors.getThemeColor(p3xr.state.themeCommon + '-accent-800') } !important;
+    color: ${this.isDark() ? 'black' : 'white' } !important;
+    padding: 2px;
+}
+
 .p3xr-theme-dark .p3xr-content-border {
     border-left: 1px solid ${borderColor};
     border-right: 1px solid ${borderColor};

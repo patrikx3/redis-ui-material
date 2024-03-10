@@ -12,7 +12,7 @@ p3xr.settings = {
         timeout: 5000,
         position: 'bottom right',
     },
-    debounce: 250,
+    debounce: 100,
     debounceSearch: 2000,
     cookieExpiry: cookieExpiry,
     connection: {
