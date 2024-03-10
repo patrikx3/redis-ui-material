@@ -159,7 +159,7 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                                         model: authModel
                                     },
                                 })
-                                console.warn('response', response)
+                                //console.warn('response', response)
                                 p3xrCommon.toast({
                                     message: p3xr.strings.status.redisConnected
                                 })
