@@ -95,18 +95,49 @@
 
             <md-divider></md-divider>
 
-            <md-list-item ng-click="$ctrl.openTreeSettingDialog({ $event: $event})">
-                <div layout="row" flex>
-                    <div flex>
-                        {{ $root.p3xr.strings.form.treeSettings.field.page}}
-                    </div>
-                    <div>
-                        {{ $root.p3xr.settings.pageCount}}
-                    </div>
+
+
+            <md-list-item class="md-2-line" ng-click="$ctrl.openTreeSettingDialog({ $event: $event})">
+                <div class="md-list-item-text">
+                    <h3>
+                        <div layout="row" flex>
+                            <div flex>
+                                {{ $root.p3xr.strings.form.treeSettings.field.page}}
+                            </div>
+                            <div>
+                                {{ $root.p3xr.settings.pageCount}}
+                            </div>
+                        </div>
+                    </h3>
+                    <p>
+                        {{ $root.p3xr.strings.form.treeSettings.error.page }}
+                    </p>
                 </div>
             </md-list-item>
 
             <md-divider></md-divider>
+
+
+            <md-list-item class="md-2-line" ng-click="$ctrl.openTreeSettingDialog({ $event: $event})">
+                <div class="md-list-item-text">
+                    <h3>
+                        <div layout="row" flex>
+                            <div flex>
+                                {{ $root.p3xr.strings.form.treeSettings.field.keyPageCount}}
+                            </div>
+                            <div>
+                                {{ $root.p3xr.settings.keyPageCount}}
+                            </div>
+                        </div>
+                    </h3>
+                    <p>
+                        {{ $root.p3xr.strings.form.treeSettings.error.keyPageCount }}
+                    </p>
+                </div>
+            </md-list-item>
+
+            <md-divider></md-divider>
+
 
 
             <md-list-item class="md-2-line" ng-click="$ctrl.openTreeSettingDialog({ $event: $event})">

@@ -19,7 +19,7 @@
                     <i ng-switch-when="zset" class="p3xr-main-treecontrol-node-icon fas fa-chart-line" aria-hidden="true"></i>
                     <i ng-switch-when="stream" class="p3xr-main-treecontrol-node-icon fas fa-stream" aria-hidden="true"></i>
                 </span>
-                {{node.label}}<span class="p3xr-main-tree-node-count" ng-if="node.type === 'folder'">{{$root.p3xr.settings.redisTreeDivider}}* <span style="opacity: 0.5;">({{node.childCount}})</span></span>
+                <span class="p3xr-main-tree-node-label">{{node.label}}</span><span class="p3xr-main-tree-node-count" ng-if="node.type === 'folder'">{{$root.p3xr.settings.redisTreeDivider}}* <span style="opacity: 0.5;">({{node.childCount}})</span></span>
                 <span class="p3xr-main-tree-node-count"
                       ng-if="node.type !== 'folder' && node.keysInfo.type !== 'string' && node.keysInfo !== undefined">({{node.keysInfo.length}})</span>
                 <span ng-if="node.type === 'folder'" ng-show="node.showTree" style="position: relative; top: -1px;">
