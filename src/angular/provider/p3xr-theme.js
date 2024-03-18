@@ -103,7 +103,7 @@ body[md-theme="p3xrThemeEnterpriseLayout"] md-toolbar.md-hue-1 .md-button-dark-h
 }
 
 [data-p3xr-tree-key]:hover .p3xr-main-tree-node-label {
-    text-decoration: underline;   
+    background-color: ${this.isDark() ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'}
 }
 
 .p3xr-theme-dark .p3xr-content-border {

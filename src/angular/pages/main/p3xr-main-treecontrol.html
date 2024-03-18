@@ -10,7 +10,7 @@
 
         <span data-p3xr-tree-key="{{$ctrl.extractNodeKey(node)}}">
             <md-tooltip md-direction="top">{{ $ctrl.extractNodeTooltip(node) }}</md-tooltip>
-            <label class="p3xr-main-tree-node" ng-mouseover="$ctrl.hoverTree({node})" ng-mouseleave="node.showTree = false">
+            <label class="p3xr-main-tree-node" ng-mouseover="$ctrl.hover({node})" ng-mouseleave="node.showTree = false">
                 <span ng-switch="node.keysInfo.type">
                     <i ng-switch-when="hash" class="p3xr-main-treecontrol-node-icon fas fa-hashtag" aria-hidden="true"></i>
                     <i ng-switch-when="list" class="p3xr-main-treecontrol-node-icon fas fa-list-ol" aria-hidden="true"></i>

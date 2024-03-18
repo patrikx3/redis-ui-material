@@ -177,7 +177,7 @@ p3xr.ng.component('p3xrMainKey', {
         const generateHighlight = () => {
             $('#p3xr-theme-styles-tree-key').remove()
             $('head').append('<style id="p3xr-theme-styles-tree-key">' + `
-[data-p3xr-tree-key="${p3xr.ui.htmlEncode($stateParams.key)}"] {
+[data-p3xr-tree-key="${p3xr.ui.htmlEncode($stateParams.key)}"] .p3xr-main-tree-node-label {
     background-color: ${p3xrTheme.isDark() ? $mdColors.getThemeColor(p3xr.state.themeCommon + '-accent-300') : $mdColors.getThemeColor(p3xr.state.themeCommon + '-accent-800') } !important;
     color: ${p3xrTheme.isDark() ? 'black' : 'white' } !important;
     padding: 2px;
