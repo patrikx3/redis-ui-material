@@ -38,6 +38,12 @@
             <md-icon>content_copy</md-icon>
         </md-button>
 
+        <md-button class="md-icon-button md-accent" ng-click="$ctrl.downloadBuffer({ key: key, $event: $event})">
+            <md-icon>download</md-icon>
+            <md-tooltip>{{ $root.p3xr.strings.intention.downloadBuffer }}
+            </md-tooltip>
+        </md-button>
+
         <md-button class="md-icon-button md-primary"
                    ng-click="$ctrl.editValue({ hashKey: key, value: value, $event: $event})">
             <md-tooltip>{{ $root.p3xr.strings.intention.edit }}</md-tooltip>

@@ -140,17 +140,17 @@
 <md-divider></md-divider>
 
 <span ng-switch="" on="$ctrl.response.type">
-    <p3xr-main-key-string ng-switch-when="string" p3xr-response="$ctrl.response" p3xr-value="$ctrl.response.value"
+    <p3xr-main-key-string ng-switch-when="string" p3xr-response="$ctrl.response" p3xr-value="$ctrl.response.value" p3xr-value-buffer="$ctrl.response.valueBuffer"
                           p3xr-key="$ctrl.$stateParams.key"></p3xr-main-key-string>
-    <p3xr-main-key-list ng-switch-when="list" p3xr-response="$ctrl.response" p3xr-value="$ctrl.response.value"
+    <p3xr-main-key-list ng-switch-when="list" p3xr-response="$ctrl.response" p3xr-value="$ctrl.response.value" p3xr-value-buffer="$ctrl.response.valueBuffer" 
                         p3xr-key="$ctrl.$stateParams.key"></p3xr-main-key-list>
-    <p3xr-main-key-hash ng-switch-when="hash" p3xr-response="$ctrl.response" p3xr-value="$ctrl.response.value"
+    <p3xr-main-key-hash ng-switch-when="hash" p3xr-response="$ctrl.response" p3xr-value="$ctrl.response.value" p3xr-value-buffer="$ctrl.response.valueBuffer"
                         p3xr-key="$ctrl.$stateParams.key"></p3xr-main-key-hash>
-    <p3xr-main-key-set ng-switch-when="set" p3xr-response="$ctrl.response" p3xr-value="$ctrl.response.value"
+    <p3xr-main-key-set ng-switch-when="set" p3xr-response="$ctrl.response" p3xr-value="$ctrl.response.value" p3xr-value-buffer="$ctrl.response.valueBuffer"
                        p3xr-key="$ctrl.$stateParams.key"></p3xr-main-key-set>
-    <p3xr-main-key-zset ng-switch-when="zset" p3xr-response="$ctrl.response" p3xr-value="$ctrl.response.value"
+    <p3xr-main-key-zset ng-switch-when="zset" p3xr-response="$ctrl.response" p3xr-value="$ctrl.response.value" p3xr-value-buffer="$ctrl.response.valueBuffer"
                         p3xr-key="$ctrl.$stateParams.key"></p3xr-main-key-zset>
-    <p3xr-main-key-stream ng-switch-when="stream" p3xr-response="$ctrl.response" p3xr-value="$ctrl.response.value"
+    <p3xr-main-key-stream ng-switch-when="stream" p3xr-response="$ctrl.response" p3xr-value="$ctrl.response.value" p3xr-value-buffer="$ctrl.response.valueBuffer"
                         p3xr-key="$ctrl.$stateParams.key"></p3xr-main-key-stream>
     </span>
 </span>

@@ -2,6 +2,7 @@ p3xr.ng.component('p3xrMainKeyHash', {
     template: require('./p3xr-main-key-hash.html'),
     bindings: {
         p3xrValue: '=',
+        p3xrValueBuffer: ' =',
         p3xrKey: '<',
         p3xrResponse: '<',
     },
@@ -46,6 +47,34 @@ p3xr.ng.component('p3xrMainKeyHash', {
                 value: opts.value
             })
             p3xrCommon.toast(p3xr.strings.status.dataCopied)
+        }
+
+        this.downloadBuffer = async ({key, $event}) => {
+            try {
+                /*
+                const response = await p3xrSocket.request({
+                    action: 'key-get-string-buffer',
+                    payload: {
+                        key: this.p3xrKey,
+                    }
+                })
+                */
+                //console.log('response', response)
+
+                //console.log('key', key, 'buffer', this.p3xrValueBuffer)
+                const blob = new Blob([this.p3xrValueBuffer[key]]);
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${this.p3xrKey}-${key}.bin`;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+            } catch (e) {
+                p3xrCommon.generalHandleError(e)
+            } finally {
+            }
         }
 
         this.addHash = async (options) => {

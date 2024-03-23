@@ -2,6 +2,7 @@ p3xr.ng.component('p3xrMainKeyStream', {
     template: require('./p3xr-main-key-stream.html'),
     bindings: {
         p3xrValue: '=',
+        p3xrValueBuffer: ' =',
         p3xrKey: '<',
         p3xrResponse: '<',
     },

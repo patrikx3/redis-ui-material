@@ -2,6 +2,7 @@ p3xr.ng.component('p3xrMainKeyList', {
     template: require('./p3xr-main-key-list.html'),
     bindings: {
         p3xrValue: '=',
+        p3xrValueBuffer: ' =',
         p3xrKey: '<',
         p3xrResponse: '<',
     },
@@ -19,20 +20,12 @@ p3xr.ng.component('p3xrMainKeyList', {
             keyPaging.figurePaging()
         }
 
-        const load = (n, o) => {
-            const values = []
-            const index = p3xr.settings.keyPageCount * (this.page - 1)
-            let indexKeys = 0
-
-            for(let valueIndex in this.p3xrValue) {
-                if (indexKeys >= index && indexKeys < index + p3xr.settings.keyPageCount) {
-                    values.push(this.p3xrValue[valueIndex])
-                }
-                indexKeys++
-            }
-            
-            return values
-        }
+        const load = () => {
+            const startIndex = p3xr.settings.keyPageCount * (this.page - 1);
+            const endIndex = startIndex + p3xr.settings.keyPageCount;
+            return this.p3xrValue.slice(startIndex, endIndex);
+        };
+        
         $scope.$watch('$ctrl.page', (n, o) => {
             return load()
         })
@@ -48,6 +41,33 @@ p3xr.ng.component('p3xrMainKeyList', {
                 value: opts.value
             })
             p3xrCommon.toast(p3xr.strings.status.dataCopied)
+        }
+
+        this.downloadBuffer = async ({$index, $event}) => {
+            try {
+                /*
+                const response = await p3xrSocket.request({
+                    action: 'key-get-string-buffer',
+                    payload: {
+                        key: this.p3xrKey,
+                    }
+                })
+                */
+                //console.log('response', response)
+
+                const blob = new Blob([this.p3xrValueBuffer[$index]]);
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${this.p3xrKey}-${$index}.bin`;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+            } catch (e) {
+                p3xrCommon.generalHandleError(e)
+            } finally {
+            }
         }
 
         this.appendValue = async (options) => {

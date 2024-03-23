@@ -2,6 +2,7 @@ p3xr.ng.component('p3xrMainKeyZset', {
     template: require('./p3xr-main-key-zset.html'),
     bindings: {
         p3xrValue: '=',
+        p3xrValueBuffer: ' =',
         p3xrKey: '<',
         p3xrResponse: '<',
     },
@@ -48,6 +49,37 @@ p3xr.ng.component('p3xrMainKeyZset', {
                 value: opts.value
             })
             p3xrCommon.toast(p3xr.strings.status.dataCopied)
+        }
+
+
+        this.downloadBuffer = async ({$index, $event}) => {
+            try {
+                /*
+                const response = await p3xrSocket.request({
+                    action: 'key-get-string-buffer',
+                    payload: {
+                        key: this.p3xrKey,
+                    }
+                })
+                */
+                //console.log('response', response)
+
+                //console.log('$index', $index, 'this.p3xrValueBuffer', this.p3xrValueBuffer)
+                //return
+
+                const blob = new Blob([this.p3xrValueBuffer[($index * 2) ]]);
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${this.p3xrKey}.bin`;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+            } catch (e) {
+                p3xrCommon.generalHandleError(e)
+            } finally {
+            }
         }
 
         const generateHashFromRedisSortedSet = (value,) => {

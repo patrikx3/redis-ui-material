@@ -17,7 +17,7 @@
     </div>
 </div>
 
-<div layout-gt-xs="row" layout="column" layout-align-gt-sm="start start" layout-align="center center" ng-repeat="value in $ctrl.pageBasedList()"
+<div layout-gt-xs="row" layout="column" layout-align-gt-sm="start start" layout-align="center center" ng-repeat="value in $ctrl.pageBasedList() track by $index"
      ng-class="{ 'p3xr-list-key-odd-item': $odd }" class="p3xr-list-key-item">
     <div flex="20"
          ng-click="$ctrl.editValue({ score: value[0], member: value[1], $event: $event})">
@@ -43,6 +43,13 @@
         <md-button class="md-icon-button md-accent" ng-click="$ctrl.copy({ $event: $event, value: value[1]})" >
             <md-tooltip>{{ $root.p3xr.strings.intention.copy }}</md-tooltip>
             <md-icon>content_copy</md-icon>
+        </md-button>
+
+
+        <md-button class="md-icon-button md-accent" ng-click="$ctrl.downloadBuffer({ $index: $index + (($ctrl.page -1) * $root.p3xr.settings.keyPageCount  ), $event: $event})">
+            <md-icon>download</md-icon>
+            <md-tooltip>{{ $root.p3xr.strings.intention.downloadBuffer }}
+            </md-tooltip>
         </md-button>
 
         <md-button class="md-icon-button md-primary"

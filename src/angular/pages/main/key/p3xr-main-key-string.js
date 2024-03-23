@@ -2,6 +2,7 @@ p3xr.ng.component('p3xrMainKeyString', {
     template: require('./p3xr-main-key-string.html'),
     bindings: {
         p3xrValue: '=',
+        p3xrValueBuffer: ' =',
         p3xrKey: '<',
         p3xrResponse: '<',
     },
@@ -63,15 +64,17 @@ p3xr.ng.component('p3xrMainKeyString', {
 
         this.downloadBuffer = async () => {
             try {
+                /*
                 const response = await p3xrSocket.request({
                     action: 'key-get-string-buffer',
                     payload: {
                         key: this.p3xrKey,
                     }
                 })
+                */
                 //console.log('response', response)
 
-                const blob = new Blob([response.bufferValue]);
+                const blob = new Blob([this.p3xrValueBuffer]);
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
