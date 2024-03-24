@@ -140,17 +140,36 @@ p3xr.ng.component('p3xrMainKey', {
                     return;
                 }
                 response.size = 0
-                console.log('response', response, 'typeof response.valueBuffer === object', typeof response.valueBuffer === 'object')
-                if (typeof response.valueBuffer === 'object' && response.length > 0) {
-                    for (let keys of Object.keys(response.valueBuffer)) {
-                        response.size += response.valueBuffer[keys].maxByteLength
-                    }
-                } else if (Array.isArray(response.valueBuffer)) {
-                    for (let i = 0; i < response.valueBuffer.length; i++) {
-                        response.size += response.valueBuffer[i].maxByteLength
-                    }
+
+                if (response.type !== 'stream') {
+                    if (typeof response.valueBuffer === 'object' && response.length > 0) {
+                        for (let keys of Object.keys(response.valueBuffer)) {
+                            response.size += response.valueBuffer[keys].byteLength
+                        }
+                    } else if (Array.isArray(response.valueBuffer)) {
+                        for (let i = 0; i < response.valueBuffer.length; i++) {
+                            response.size += response.valueBuffer[i].byteLength
+                        }
+                    } else {
+                        response.size = response.valueBuffer.byteLength
+                    }    
                 } else {
-                    response.size = response.valueBuffer.maxByteLength
+                    //console.log('response', response)
+                    function sumMaxByteLength(arr) {
+                        let total = 0;
+                    
+                        function processElement(element) {
+                            if (ArrayBuffer.isView(element) || element instanceof ArrayBuffer) {
+                                total += element.byteLength;
+                            } else if (Array.isArray(element)) {
+                                element.forEach(processElement);
+                            }
+                        }
+                    
+                        arr.forEach(processElement);
+                        return total;
+                    }
+                    response.size = sumMaxByteLength(response.valueBuffer)                      
                 }
 
                 if (response.ttl > -1) {
