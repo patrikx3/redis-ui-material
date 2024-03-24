@@ -30,7 +30,7 @@
     </div>
     <div flex="20" style="text-align: right; ">
 
-        <md-button class="md-icon-button md-warn" ng-click="$ctrl.deleteZSet({ member: value[1], $event: $event})" ng-if="$root.p3xr.state.connection.readonly !== true">
+        <md-button class="md-icon-button md-warn" ng-click="$ctrl.deleteZSet({ $index: $index + (($ctrl.page -1) * $root.p3xr.settings.keyPageCount), $event: $event})" ng-if="$root.p3xr.state.connection.readonly !== true">
             <md-tooltip>{{ $root.p3xr.strings.intention.delete }}</md-tooltip>
             <md-icon>delete</md-icon>
         </md-button>

@@ -146,7 +146,7 @@ p3xr.ng.component('p3xrMainKeyZset', {
                     action: 'key-zset-delete-member',
                     payload: {
                         key: this.p3xrKey,
-                        value: options.member,
+                        value: this.p3xrValueBuffer[options.$index * 2 ],
                     }
                 })
                 $rootScope.$broadcast('p3xr-refresh-key');

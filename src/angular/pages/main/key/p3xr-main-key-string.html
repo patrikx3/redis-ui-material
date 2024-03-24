@@ -3,7 +3,7 @@
 
 
         <input type="file" id="p3xr-main-key-string-upload-buffer" style="display: none" onchange="angular.element(this).scope().readFileAsBuffer(event)"/>
-        <md-button class="md-button md-raised md-primary" ng-click="$ctrl.setBufferUpload({ $event: $event})">
+        <md-button class="md-button md-raised md-primary" ng-click="$ctrl.setBufferUpload({ $event: $event})"  ng-if="$root.p3xr.state.connection.readonly !== true">
             <md-icon>upload</md-icon>
             <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.setBuffer }}</span>
             <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{

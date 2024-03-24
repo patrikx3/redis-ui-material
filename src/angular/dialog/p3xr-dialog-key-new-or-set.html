@@ -82,6 +82,16 @@
                         </span>
                     </span>
 
+
+                    <input type="file" id="p3xr-main-key-new-upload-buffer" style="display: none" onchange="angular.element(this).scope().readFileAsBuffer(event)"/>
+                    <md-button class="md-button md-raised md-primary" ng-click="setBufferUpload({ $event: $event})" ng-if="model.type !== 'stream'">
+                        <md-icon>upload</md-icon>
+                        <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.setBuffer }}</span>
+                        <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{
+                            $root.p3xr.strings.intention.setBuffer }}
+                        </md-tooltip>
+                    </md-button>
+
                     <md-button class="md-button md-raised md-primary" ng-if="$root.p3xr.state.donated" ng-click="jsonEditor({ $event: $event, value: model.value})">
                         <i class="fas fa-file-alt"></i>
                         <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.jsonViewEditor }}</span>

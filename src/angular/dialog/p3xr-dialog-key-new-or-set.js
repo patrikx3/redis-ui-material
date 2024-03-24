@@ -11,6 +11,32 @@ p3xr.ng.factory('p3xrDialogKeyNewOrSet', function (p3xrCommon, $mdDialog, p3xrSo
                     const result = await $mdDialog.show({
                         controller: function ($scope, $mdDialog) {
 
+
+                            $scope.setBufferUpload = () => {
+                                const input = document.getElementById('p3xr-main-key-new-upload-buffer');
+                                input.value = ''; // Clear the input value
+                                input.click();
+                            }
+                    
+                            $scope.readFileAsBuffer = async (event) => {
+                                const file = event.target.files[0];
+                                if (!file) {
+                                    return;
+                                }
+                                const reader = new FileReader();
+                                reader.onload = async (loadEvent) => {
+                                    
+                                    const arrayBuffer = loadEvent.target.result;                                
+                                    $scope.model.value = arrayBuffer            
+                                    console.log('buffer', $scope.model.value)            
+                    
+                                };
+                                reader.onerror = (error) => {
+                                    p3xrCommon.generalHandleError(error)
+                                } 
+                                reader.readAsArrayBuffer(file);
+                            }
+
                             $scope.jsonViewer = (options) => {
                                 p3xrDialogJsonView.show({
                                     event: options.$event,

@@ -31,6 +31,8 @@ p3xr-main {
     }
 
     .p3xr-main-db-select {
+        position: relative;
+        top: -2px;
         .md-select-value {
             border-bottom: none !important;
         }

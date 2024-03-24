@@ -103,7 +103,7 @@ p3xr.ng.component('p3xrMainKeySet', {
                     action: 'key-set-delete-member',
                     payload: {
                         key: this.p3xrKey,
-                        value: options.value,
+                        value: this.p3xrValueBuffer[options.$index],
                     }
                 })
                 $rootScope.$broadcast('p3xr-refresh-key');
