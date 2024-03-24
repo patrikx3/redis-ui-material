@@ -364,7 +364,7 @@ const strings = {
         ttlTitle: "Время На Жизнь (TTL)",
         type: "Тип",
         ttlNotExpire: "не истекает",
-        lengthString: "символы",
+        lengthString: "байты",
         lengthItem: "обьекты",
         actions: "Действия",
       },

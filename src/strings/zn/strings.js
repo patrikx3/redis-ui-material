@@ -344,7 +344,7 @@ const strings = {
         ttlTitle: "生存时间",
         type: "类型",
         ttlNotExpire: "不会过期",
-        lengthString: "字符",
+        lengthString: "位元組",
         lengthItem: "项数",
         actions: "操作",
       },

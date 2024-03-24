@@ -360,7 +360,7 @@ const strings = {
         ttlTitle: "Time To Live",
         type: "Type",
         ttlNotExpire: "does not expire",
-        lengthString: "characters",
+        lengthString: "bytes",
         lengthItem: "items",
         actions: "Actions",
       },

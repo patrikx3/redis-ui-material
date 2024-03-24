@@ -134,17 +134,23 @@ p3xr.ng.component('p3xrMainKey', {
                 })
                 this.response = response
 
-                const type = response.type
+                //const type = response.type
                 if (response.ttl === -2) {
                     checkTtl()
                     return;
                 }
-                switch (type) {
-                    case 'string':
-                        //p3xr.state.keysInfo[$stateParams.key].length = response.value.length
-                        response.length = response.valueBuffer.maxByteLength
-                        console.warn(response.valueBuffer)
-                        break;
+                response.size = 0
+                console.log('response', response, 'typeof response.valueBuffer === object', typeof response.valueBuffer === 'object')
+                if (typeof response.valueBuffer === 'object' && response.length > 0) {
+                    for (let keys of Object.keys(response.valueBuffer)) {
+                        response.size += response.valueBuffer[keys].maxByteLength
+                    }
+                } else if (Array.isArray(response.valueBuffer)) {
+                    for (let i = 0; i < response.valueBuffer.length; i++) {
+                        response.size += response.valueBuffer[i].maxByteLength
+                    }
+                } else {
+                    response.size = response.valueBuffer.maxByteLength
                 }
 
                 if (response.ttl > -1) {

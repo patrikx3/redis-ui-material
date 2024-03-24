@@ -119,18 +119,9 @@
 
     <md-list-item>
         <p>{{ $root.p3xr.strings.page.key.label.length }}:</p>
-        <span ng-if="$ctrl.response.type === 'string'" style="opacity: 0.5">
-                {{ $ctrl.charactersPrettyBytes($ctrl.response.length) }}
-            &nbsp;
-        </span>
-        {{ $ctrl.response.length }}
-        &nbsp;
-        <span ng-if="$ctrl.response.type === 'string'">
-                {{ $root.p3xr.strings.page.key.label.lengthString }}
-        </span>
-        <span ng-if="$ctrl.response.type !== 'string'">
-            {{ $root.p3xr.strings.page.key.label.lengthItem }}
-        </span>
+        <span style="opacity: 0.5">{{ $ctrl.charactersPrettyBytes($ctrl.response.size) }}&nbsp;</span>
+        {{ $ctrl.response.size }}&nbsp;{{ $root.p3xr.strings.page.key.label.lengthString }}
+        <span ng-if="$ctrl.response.length">,  {{ $ctrl.response.length }} {{ $root.p3xr.strings.page.key.label.lengthItem }}</span>
     </md-list-item>
 
 
