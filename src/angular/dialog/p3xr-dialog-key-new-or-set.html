@@ -130,6 +130,11 @@
                         {{ $root.p3xr.strings.label.streamValue }}
                     </div>
 
+
+                    <div ng-if="valueType === 'object'" class="p3xr-md-input-container-bottom-info">
+                        {{ $root.p3xr.strings.label.isBuffer }}
+                    </div>
+
                     <md-input-container class="md-block">
                         <label>{{ $root.p3xr.strings.form.key.field.value }}</label>
                         <textarea ng-model="model.value" required p3x-validate-json

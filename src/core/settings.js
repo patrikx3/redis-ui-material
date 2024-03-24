@@ -59,6 +59,7 @@ p3xr.settings = {
     },
     pageCount: 50,
     maxValueDisplay: 1024,
+    maxValueAsBuffer: 512 * 1024,
     maxValueDisplaySetting: {
       default: 1024,
       cookieName: 'p3xr-main-treecontrol-max-value-display'

@@ -128,6 +128,7 @@ const strings = {
     quickConsole: "Quick Console",
   },
   label: {
+    isBuffer: "[object ArrayBuffer] means that the value is a binary buffer or the value is bigger than 0.5MB",
     streamValue: `Stream field and value is a oneliner. Eg.: field1 value1 "field 2" "value 2"`,
     streamTimestampId: `'*' means auto generated or the specification as <millisecondsTime>-<sequenceNumber>`,
     unableToLoadKey: ({ key }) => {

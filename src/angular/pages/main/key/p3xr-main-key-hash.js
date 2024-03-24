@@ -121,7 +121,7 @@ p3xr.ng.component('p3xrMainKeyHash', {
                     $event: options.$event,
                     model: {
                         type: 'hash',
-                        value: value,
+                        value: value.length < p3xr.settings.maxValueAsBuffer ? value : this.p3xrValueBuffer[hashKey],
                         hashKey: hashKey,
                         key: this.p3xrKey
                     }

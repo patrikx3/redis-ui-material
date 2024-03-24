@@ -79,6 +79,12 @@ p3xr.ng.factory('p3xrDialogKeyNewOrSet', function (p3xrCommon, $mdDialog, p3xrSo
                             if (options.hasOwnProperty('model')) {
                                 Object.assign($scope.model, options.model)
                             }
+
+                            Object.defineProperty($scope, 'valueType', {
+                                get: () => {
+                                    return typeof $scope.model.value
+                                }
+                            })
                             //console.warn($scope.model)
 
                             // Promise reject

@@ -120,7 +120,7 @@ p3xr.ng.component('p3xrMainKeySet', {
                     $event: options.$event,
                     model: {
                         type: 'set',
-                        value: value,
+                        value: value.length < p3xr.settings.maxValueAsBuffer ?  value : this.p3xrValueBuffer[options.$index],
                         key: this.p3xrKey
                     }
                 })

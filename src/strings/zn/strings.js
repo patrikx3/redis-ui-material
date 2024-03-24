@@ -121,6 +121,7 @@ const strings = {
     quickConsole: "快的",
   },
   label: {
+    isBuffer: "[object ArrayBuffer] 表示該值是二進位緩衝區或該值大於 0.5MB",
     streamValue: `流字段和值是唯一的。 例如：field1 value1 "field 2" "value 2"`,
     streamTimestampId: `'*'表示自动生成或指定为<millisecondsTime>-<sequenceNumber>`,
     unableToLoadKey: ({ key }) => {

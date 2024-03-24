@@ -131,6 +131,7 @@ const strings = {
     quickConsole: "Быстрый",
   },
   label: {
+    isBuffer: "[object ArrayBuffer] означает, что значение представляет собой двоичный буфер или значение превышает 0.5 МБ.",
     streamValue: `Поле и значение потока это однополосник. Например: поле1 значение1 "поле 2" "значение 2"`,
     streamTimestampId: `'*' означает автогенерацию или определяется как <millisecondsTime>-<sequenceNumber>`,
     unableToLoadKey: ({ key }) => {

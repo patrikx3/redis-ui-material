@@ -90,15 +90,27 @@ p3xr.ng.component('p3xrMainKeyString', {
         }
 
         this.editable = false;
+        this.buffer = false
         let originalValue
         this.edit = () => {
-            originalValue = angular.copy(this.p3xrValue)
+            if (this.p3xrValue.length < p3xr.settings.maxValueAsBuffer ) {
+                originalValue = angular.copy(this.p3xrValue) 
+                this.buffer = false
+            } else {
+                originalValue = angular.copy(this.p3xrValueBuffer)
+                this.buffer = true
+            }
             this.editable = true
         }
 
         this.cancelEdit = () => {
-            this.p3xrValue = originalValue
+            if (this.buffer === true) {
+                this.p3xrValueBuffer = originalValue
+            } else {
+                this.p3xrValue = originalValue
+            }
             this.editable = false
+            this.buffer = false
         }
 
 
@@ -108,7 +120,7 @@ p3xr.ng.component('p3xrMainKeyString', {
             try {
                 if (this.validateJson === true) {
                     try {
-                        JSON.parse(this.p3xrValue)
+                        JSON.parse(this.buffer ? this.p3xrValueBuffer : this.p3xrValue)
                     } catch (e) {
                         p3xrCommon.toast({
                             message: p3xr.strings.label.jsonViewNotParsable
@@ -121,7 +133,7 @@ p3xr.ng.component('p3xrMainKeyString', {
                     action: 'key-set',
                     payload: {
                         type: this.p3xrResponse.type,
-                        value: this.p3xrValue,
+                        value: this.buffer ? this.p3xrValueBuffer : this.p3xrValue,
                         key: this.p3xrKey,
                     }
                 })

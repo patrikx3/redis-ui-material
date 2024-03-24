@@ -42,7 +42,7 @@
             </md-tooltip>
         </md-button>
 
-        <md-button class="md-icon-button md-primary" ng-click="$ctrl.editValue({ value: value, $event: $event})">
+        <md-button class="md-icon-button md-primary" ng-click="$ctrl.editValue({ $index: $index + (($ctrl.page -1) * $root.p3xr.settings.keyPageCount  ), value: value, $event: $event})">
             <md-tooltip>{{ $root.p3xr.strings.intention.edit }}</md-tooltip>
             <md-icon>edit</md-icon>
         </md-button>

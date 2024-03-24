@@ -164,7 +164,7 @@ p3xr.ng.component('p3xrMainKeyZset', {
                     model: {
                         type: 'zset',
                         score: options.score,
-                        value: member,
+                        value: member.length < p3xr.settings.maxValueAsBuffer ?  member : this.p3xrValueBuffer[(options.$index * 2) ],
                         key: this.p3xrKey
                     }
                 })

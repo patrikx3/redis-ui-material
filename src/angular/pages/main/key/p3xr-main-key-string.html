@@ -102,8 +102,15 @@
     <div ng-if="$ctrl.editable">
         <md-input-container class="md-block">
             <label>{{ $root.p3xr.strings.label.edit }}</label>
-            <textarea ng-model="$ctrl.p3xrValue" p3x-validate-json
+            <textarea ng-model="$ctrl.p3xrValue" ng-if="$ctrl.p3xrValue.length < $root.p3xr.settings.maxValueAsBuffer" p3x-validate-json
                       p3x-validate-json-required="validateJson"></textarea>
+            <span  ng-if="$ctrl.p3xrValue.length >= $root.p3xr.settings.maxValueAsBuffer">
+                <div class="p3xr-md-input-container-bottom-info">
+                    {{ $root.p3xr.strings.label.isBuffer }}
+                </div>
+                <textarea ng-model="$ctrl.p3xrValueBuffer" p3x-validate-json
+                    p3x-validate-json-required="validateJson"></textarea>
+            </span>                      
         </md-input-container>
     </div>
 </div>
