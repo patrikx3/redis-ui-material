@@ -71,8 +71,8 @@ const strings = {
   },
   intention: {
     copy: "复制",
-    downloadBuffer: "下載緩衝區",
-    setBuffer: "設定緩衝區",
+    downloadBuffer: "下載二進位文件",
+    setBuffer: "上傳二進位文件",
     saveWithFormatJson: "保存格式",
     formatJson: "格式化Json",
     pubsubMonitor: "PubSub监视器",

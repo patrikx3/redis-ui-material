@@ -77,8 +77,8 @@ const strings = {
   },
   intention: {
     copy: "Копировать",
-    downloadBuffer: "Скачать буфер",
-    setBuffer: "Установить как буфер",
+    downloadBuffer: "Скачать бинарный файл",
+    setBuffer: "Загрузить двоичный файл",
     saveWithFormatJson: "Сохранить с форматом",
     formatJson: "Форматировать Json",
     pubsubMonitor: "Мониторинг PubSub",
