@@ -141,9 +141,9 @@ p3xr.ng.component('p3xrMainKey', {
                 }
                 switch (type) {
                     case 'string':
-                        // console.warn(response)
                         //p3xr.state.keysInfo[$stateParams.key].length = response.value.length
-                        response.length = response.value.length
+                        response.length = response.valueBuffer.maxByteLength
+                        console.warn(response.valueBuffer)
                         break;
                 }
 

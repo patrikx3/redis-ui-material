@@ -55,8 +55,8 @@ p3xr.ng.component('p3xrMainKeyString', {
         }
 
 
-        this.copy = () => {
-            global.p3xr.clipboard({
+        this.copy = async() => {
+            await global.p3xr.clipboard({
                 value: this.p3xrValue
             })
             p3xrCommon.toast(p3xr.strings.status.dataCopied)

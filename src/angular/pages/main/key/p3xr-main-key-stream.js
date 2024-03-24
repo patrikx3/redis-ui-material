@@ -61,8 +61,8 @@ p3xr.ng.component('p3xrMainKeyStream', {
             keyPaging.figurePaging()
         })
 
-        this.copy = (opts) => {
-            global.p3xr.clipboard({
+        this.copy = async(opts) => {
+            await global.p3xr.clipboard({
                 value: opts.value
             })
             p3xrCommon.toast(p3xr.strings.status.dataCopied)

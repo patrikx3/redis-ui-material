@@ -1,14 +1,9 @@
-global.p3xr.clipboard = (opts) => {
-
-    var copy = $('<textarea>' + opts.value + '</textarea>');
-    $('body').append(copy);
-    copy.select();
-    var successful = false;
+global.p3xr.clipboard = async (opts) => {
     try {
-        successful = document.execCommand('copy');
+        await navigator.clipboard.writeText(opts.value);
+        return true;
     } catch (err) {
+        console.error("Failed to copy:", err);
+        return false;
     }
-    copy.remove();
-    return successful;
-}
-
+};

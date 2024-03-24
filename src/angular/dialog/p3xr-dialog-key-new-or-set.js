@@ -45,8 +45,8 @@ p3xr.ng.factory('p3xrDialogKeyNewOrSet', function (p3xrCommon, $mdDialog, p3xrSo
 //            this.showJson = !this.showJson
                             }
 
-                            $scope.copy = (opts) => {
-                                global.p3xr.clipboard({
+                            $scope.copy = async (opts) => {
+                                await global.p3xr.clipboard({
                                     value: opts.value
                                 })
                                 p3xrCommon.toast(p3xr.strings.status.dataCopied)
