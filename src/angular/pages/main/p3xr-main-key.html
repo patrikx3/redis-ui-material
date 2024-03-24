@@ -6,142 +6,155 @@
     </span>
 </md-toolbar>
 -->
-<div style="text-align: right">
-
-    <md-button class="md-button md-raised md-accent" ng-click="$ctrl.addKey({ $event: $event, key: $ctrl.$stateParams.key})" ng-if="$root.p3xr.state.connection.readonly !== true">
-        <md-icon>add</md-icon>
-        <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.addKey }}</span>
-        <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{
-            $root.p3xr.strings.intention.addKey }}
-        </md-tooltip>
-    </md-button>
-
-
-    <md-button class="md-button md-raised md-warn" ng-click="$ctrl.delete({ $event: $event})" ng-if="$root.p3xr.state.connection.readonly !== true">
-        <md-icon>delete</md-icon>
-        <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.delete }}</span>
-        <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{
-            $root.p3xr.strings.intention.delete }}
-        </md-tooltip>
-    </md-button>
-
-
-    <md-button class="md-button md-raised md-primary" ng-click="$ctrl.setTtl({ $event: $event})" ng-if="$root.p3xr.state.connection.readonly !== true">
-        <md-icon>timer</md-icon>
-        <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.ttl }}</span>
-        <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{
-            $root.p3xr.strings.intention.ttl }}
-        </md-tooltip>
-        <md-tooltip ng-if="$root.$mdMedia('gt-sm')">{{ $root.p3xr.strings.label.ttlTitle }}</md-tooltip>
-    </md-button>
-
-    <md-button class="md-button md-raised md-primary" ng-click="$ctrl.rename({ $event: $event})" ng-if="$root.p3xr.state.connection.readonly !== true">
-        <md-icon>fingerprint</md-icon>
-        <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.rename }}</span>
-        <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{
-            $root.p3xr.strings.intention.rename }}
-        </md-tooltip>
-    </md-button>
-
-
-    <md-button class="md-button md-raised md-accent" ng-click="$ctrl.refresh()">
-        <md-icon>refresh</md-icon>
-
-        <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.reloadKey }}</span>
-        <md-tooltip ng-if="$root.$mdMedia('sm')" md-direction="bottom">{{ $root.p3xr.strings.intention.reloadKey }}
-        </md-tooltip>
-    </md-button>
+<div ng-if="$ctrl.loading" layout="row" layout-align="center center" flex style="min-height: 100%;">
+    <div>
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        <!-- 
+        <br/>
+        {{ $root.p3xr.strings.intention.getKey }}    
+        -->
+    </div>
 </div>
 
-<md-list flex md-theme="{{ $root.p3xr.state.theme}}">
+<div ng-if="!$ctrl.loading">
+    <div style="text-align: right">
 
-    <md-divider></md-divider>
-
-    <md-list-item ng-click="$ctrl.rename({ $event: $event})">
-        <p>{{ $root.p3xr.strings.page.key.label.key }}:&nbsp;</p>
-        <span class="p3xr-typography-ellipsis"
-              title="{{ $root.p3xr.ui.htmlEncode($ctrl.$stateParams.key) }}">{{ $ctrl.$stateParams.key }}</span>
-    </md-list-item>
-
-    <md-divider></md-divider>
-
-    <md-list-item ng-click="$ctrl.setTtl({ $event: $event})" ng-if="$ctrl.response.ttl === -1">
-        <p title="{{ $root.p3xr.strings.page.key.label.ttlTitle  }}"><span
-            class="p3xr-main-key-label-key-title">{{ $root.p3xr.strings.page.key.label.ttl }}</span>:
-        </p>
-        <span ng-if="$ctrl.response.ttl === -1">
-            {{ $root.p3xr.strings.page.key.label.ttlNotExpire }}
-        </span>
-    </md-list-item>
-
-
-    <md-list-item class="md-2-line" ng-click="$ctrl.setTtl({ $event: $event})" ng-if="$ctrl.response.ttl !== -1">
-        <div class="md-list-item-text">
-            <h3>
-                <div layout="row" flex>
-                    <div flex class="p3xr-main-key-label-key-title">
-                        <span >{{ $root.p3xr.strings.page.key.label.ttl }}</span>:
-                    </div>
-                    <div>
-                        <span ng-if="$ctrl.response.ttl == -1">
-                            {{ $root.p3xr.strings.page.key.label.ttlNotExpire }}
-                        </span>
-                        <span ng-if="$ctrl.response.ttl != -1">
-
-                        {{ $ctrl.response.ttl }}
-                    </span>
-                    </div>
-                </div>
-            </h3>
-            <p ng-click="$ctrl.setTtl({ $event: $event})" style=" text-align: right;">
-               <span style="opacity: 0.5; font-weight: normal;" ng-click="$ctrl.setTtl({ $event: $event})">
-                   <span id="p3xr-main-key-ttl-counter"></span>
-                </span>
+        <md-button class="md-button md-raised md-accent" ng-click="$ctrl.addKey({ $event: $event, key: $ctrl.$stateParams.key})" ng-if="$root.p3xr.state.connection.readonly !== true">
+            <md-icon>add</md-icon>
+            <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.addKey }}</span>
+            <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{
+                $root.p3xr.strings.intention.addKey }}
+            </md-tooltip>
+        </md-button>
+    
+    
+        <md-button class="md-button md-raised md-warn" ng-click="$ctrl.delete({ $event: $event})" ng-if="$root.p3xr.state.connection.readonly !== true">
+            <md-icon>delete</md-icon>
+            <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.delete }}</span>
+            <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{
+                $root.p3xr.strings.intention.delete }}
+            </md-tooltip>
+        </md-button>
+    
+    
+        <md-button class="md-button md-raised md-primary" ng-click="$ctrl.setTtl({ $event: $event})" ng-if="$root.p3xr.state.connection.readonly !== true">
+            <md-icon>timer</md-icon>
+            <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.ttl }}</span>
+            <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{
+                $root.p3xr.strings.intention.ttl }}
+            </md-tooltip>
+            <md-tooltip ng-if="$root.$mdMedia('gt-sm')">{{ $root.p3xr.strings.label.ttlTitle }}</md-tooltip>
+        </md-button>
+    
+        <md-button class="md-button md-raised md-primary" ng-click="$ctrl.rename({ $event: $event})" ng-if="$root.p3xr.state.connection.readonly !== true">
+            <md-icon>fingerprint</md-icon>
+            <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.rename }}</span>
+            <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{
+                $root.p3xr.strings.intention.rename }}
+            </md-tooltip>
+        </md-button>
+    
+    
+        <md-button class="md-button md-raised md-accent" ng-click="$ctrl.refresh()">
+            <md-icon>refresh</md-icon>
+    
+            <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.reloadKey }}</span>
+            <md-tooltip ng-if="$root.$mdMedia('sm')" md-direction="bottom">{{ $root.p3xr.strings.intention.reloadKey }}
+            </md-tooltip>
+        </md-button>
+    </div>
+    
+    <md-list flex md-theme="{{ $root.p3xr.state.theme}}">
+    
+        <md-divider></md-divider>
+    
+        <md-list-item ng-click="$ctrl.rename({ $event: $event})">
+            <p>{{ $root.p3xr.strings.page.key.label.key }}:&nbsp;</p>
+            <span class="p3xr-typography-ellipsis"
+                  title="{{ $root.p3xr.ui.htmlEncode($ctrl.$stateParams.key) }}">{{ $ctrl.$stateParams.key }}</span>
+        </md-list-item>
+    
+        <md-divider></md-divider>
+    
+        <md-list-item ng-click="$ctrl.setTtl({ $event: $event})" ng-if="$ctrl.response.ttl === -1">
+            <p title="{{ $root.p3xr.strings.page.key.label.ttlTitle  }}"><span
+                class="p3xr-main-key-label-key-title">{{ $root.p3xr.strings.page.key.label.ttl }}</span>:
             </p>
-        </div>
-    </md-list-item>
-
+            <span ng-if="$ctrl.response.ttl === -1">
+                {{ $root.p3xr.strings.page.key.label.ttlNotExpire }}
+            </span>
+        </md-list-item>
+    
+    
+        <md-list-item class="md-2-line" ng-click="$ctrl.setTtl({ $event: $event})" ng-if="$ctrl.response.ttl !== -1">
+            <div class="md-list-item-text">
+                <h3>
+                    <div layout="row" flex>
+                        <div flex class="p3xr-main-key-label-key-title">
+                            <span >{{ $root.p3xr.strings.page.key.label.ttl }}</span>:
+                        </div>
+                        <div>
+                            <span ng-if="$ctrl.response.ttl == -1">
+                                {{ $root.p3xr.strings.page.key.label.ttlNotExpire }}
+                            </span>
+                            <span ng-if="$ctrl.response.ttl != -1">
+    
+                            {{ $ctrl.response.ttl }}
+                        </span>
+                        </div>
+                    </div>
+                </h3>
+                <p ng-click="$ctrl.setTtl({ $event: $event})" style=" text-align: right;">
+                   <span style="opacity: 0.5; font-weight: normal;" ng-click="$ctrl.setTtl({ $event: $event})">
+                       <span id="p3xr-main-key-ttl-counter"></span>
+                    </span>
+                </p>
+            </div>
+        </md-list-item>
+    
+        <md-divider></md-divider>
+    
+        <md-list-item>
+            <p>{{ $root.p3xr.strings.page.key.label.type }}:</p>
+            {{ $root.p3xr.strings.redisTypes[$ctrl.response.type] }}
+        </md-list-item>
+    
+        <md-divider></md-divider>
+    
+        <md-list-item>
+            <p>{{ $root.p3xr.strings.page.key.label.encoding }}:</p>
+            {{ $ctrl.response.encoding }}
+        </md-list-item>
+    
+        <md-divider></md-divider>
+    
+        <md-list-item>
+            <p>{{ $root.p3xr.strings.page.key.label.length }}:</p>
+            <span style="opacity: 0.5">{{ $ctrl.charactersPrettyBytes($ctrl.response.size) }}&nbsp;</span>
+            {{ $ctrl.response.size }}&nbsp;{{ $root.p3xr.strings.page.key.label.lengthString }}
+            <span ng-if="$ctrl.response.length">,  {{ $ctrl.response.length }} {{ $root.p3xr.strings.page.key.label.lengthItem }}</span>
+        </md-list-item>
+    
+    
+    </md-list>
+    
+    
     <md-divider></md-divider>
-
-    <md-list-item>
-        <p>{{ $root.p3xr.strings.page.key.label.type }}:</p>
-        {{ $root.p3xr.strings.redisTypes[$ctrl.response.type] }}
-    </md-list-item>
-
-    <md-divider></md-divider>
-
-    <md-list-item>
-        <p>{{ $root.p3xr.strings.page.key.label.encoding }}:</p>
-        {{ $ctrl.response.encoding }}
-    </md-list-item>
-
-    <md-divider></md-divider>
-
-    <md-list-item>
-        <p>{{ $root.p3xr.strings.page.key.label.length }}:</p>
-        <span style="opacity: 0.5">{{ $ctrl.charactersPrettyBytes($ctrl.response.size) }}&nbsp;</span>
-        {{ $ctrl.response.size }}&nbsp;{{ $root.p3xr.strings.page.key.label.lengthString }}
-        <span ng-if="$ctrl.response.length">,  {{ $ctrl.response.length }} {{ $root.p3xr.strings.page.key.label.lengthItem }}</span>
-    </md-list-item>
-
-
-</md-list>
-
-
-<md-divider></md-divider>
-
-<span ng-switch="" on="$ctrl.response.type">
-    <p3xr-main-key-string ng-switch-when="string" p3xr-response="$ctrl.response" p3xr-value="$ctrl.response.value" p3xr-value-buffer="$ctrl.response.valueBuffer"
-                          p3xr-key="$ctrl.$stateParams.key"></p3xr-main-key-string>
-    <p3xr-main-key-list ng-switch-when="list" p3xr-response="$ctrl.response" p3xr-value="$ctrl.response.value" p3xr-value-buffer="$ctrl.response.valueBuffer" 
-                        p3xr-key="$ctrl.$stateParams.key"></p3xr-main-key-list>
-    <p3xr-main-key-hash ng-switch-when="hash" p3xr-response="$ctrl.response" p3xr-value="$ctrl.response.value" p3xr-value-buffer="$ctrl.response.valueBuffer"
-                        p3xr-key="$ctrl.$stateParams.key"></p3xr-main-key-hash>
-    <p3xr-main-key-set ng-switch-when="set" p3xr-response="$ctrl.response" p3xr-value="$ctrl.response.value" p3xr-value-buffer="$ctrl.response.valueBuffer"
-                       p3xr-key="$ctrl.$stateParams.key"></p3xr-main-key-set>
-    <p3xr-main-key-zset ng-switch-when="zset" p3xr-response="$ctrl.response" p3xr-value="$ctrl.response.value" p3xr-value-buffer="$ctrl.response.valueBuffer"
-                        p3xr-key="$ctrl.$stateParams.key"></p3xr-main-key-zset>
-    <p3xr-main-key-stream ng-switch-when="stream" p3xr-response="$ctrl.response" p3xr-value="$ctrl.response.value" p3xr-value-buffer="$ctrl.response.valueBuffer"
-                        p3xr-key="$ctrl.$stateParams.key"></p3xr-main-key-stream>
+    
+    <span ng-switch="" on="$ctrl.response.type">
+        <p3xr-main-key-string ng-switch-when="string" p3xr-response="$ctrl.response" p3xr-value="$ctrl.response.value" p3xr-value-buffer="$ctrl.response.valueBuffer"
+                              p3xr-key="$ctrl.$stateParams.key"></p3xr-main-key-string>
+        <p3xr-main-key-list ng-switch-when="list" p3xr-response="$ctrl.response" p3xr-value="$ctrl.response.value" p3xr-value-buffer="$ctrl.response.valueBuffer" 
+                            p3xr-key="$ctrl.$stateParams.key"></p3xr-main-key-list>
+        <p3xr-main-key-hash ng-switch-when="hash" p3xr-response="$ctrl.response" p3xr-value="$ctrl.response.value" p3xr-value-buffer="$ctrl.response.valueBuffer"
+                            p3xr-key="$ctrl.$stateParams.key"></p3xr-main-key-hash>
+        <p3xr-main-key-set ng-switch-when="set" p3xr-response="$ctrl.response" p3xr-value="$ctrl.response.value" p3xr-value-buffer="$ctrl.response.valueBuffer"
+                           p3xr-key="$ctrl.$stateParams.key"></p3xr-main-key-set>
+        <p3xr-main-key-zset ng-switch-when="zset" p3xr-response="$ctrl.response" p3xr-value="$ctrl.response.value" p3xr-value-buffer="$ctrl.response.valueBuffer"
+                            p3xr-key="$ctrl.$stateParams.key"></p3xr-main-key-zset>
+        <p3xr-main-key-stream ng-switch-when="stream" p3xr-response="$ctrl.response" p3xr-value="$ctrl.response.value" p3xr-value-buffer="$ctrl.response.valueBuffer"
+                            p3xr-key="$ctrl.$stateParams.key"></p3xr-main-key-stream>
+        </span>
     </span>
-</span>
+    
+</div>

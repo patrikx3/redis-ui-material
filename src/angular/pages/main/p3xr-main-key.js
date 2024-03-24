@@ -109,6 +109,7 @@ p3xr.ng.component('p3xrMainKey', {
 
         }
 
+        this.loading = false
         const loadKey = async (options = {}) => {
             $interval.cancel(interval)
             let {withoutParent} = options
@@ -116,6 +117,7 @@ p3xr.ng.component('p3xrMainKey', {
                 withoutParent = false
             }
 
+            
             let hadError = undefined
             try {
 
@@ -123,6 +125,7 @@ p3xr.ng.component('p3xrMainKey', {
                 //p3xr.ui.overlay.show({
                 //    message: p3xr.strings.intention.getKey
                 //})
+                this.loading = true
                 //const type = p3xr.state.keysInfo[$stateParams.key].type
                 //console.warn('$stateParams.key', $stateParams.key)
                 const response = await p3xrSocket.request({
@@ -190,11 +193,11 @@ p3xr.ng.component('p3xrMainKey', {
                 } else if (!withoutParent && $stateParams.resize !== null) {
                     $stateParams.resize()
                 }
-                /*
+
                 $timeout(() => {
-                    p3xr.ui.overlay.hide()
+                    this.loading = false
                 }, p3xr.settings.debounce)
-                */
+
             }
 
         }
