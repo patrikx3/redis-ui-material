@@ -94,10 +94,10 @@ p3xr.ng.component('p3xrMainKeyString', {
         let originalValue
         this.edit = () => {
             if (this.p3xrValue.length < p3xr.settings.maxValueAsBuffer ) {
-                originalValue = angular.copy(this.p3xrValue) 
+                originalValue = p3xr.clone(this.p3xrValue) 
                 this.buffer = false
             } else {
-                originalValue = angular.copy(this.p3xrValueBuffer)
+                originalValue = p3xr.clone(this.p3xrValueBuffer)
                 this.buffer = true
             }
             this.editable = true
@@ -117,18 +117,18 @@ p3xr.ng.component('p3xrMainKeyString', {
         this.validateJson = false
 
         this.save = async () => {
-            try {
-                if (this.validateJson === true) {
-                    try {
-                        JSON.parse(this.buffer ? this.p3xrValueBuffer : this.p3xrValue)
-                    } catch (e) {
-                        p3xrCommon.toast({
-                            message: p3xr.strings.label.jsonViewNotParsable
-                        })
-                        return;
-                    }
+            if (this.validateJson === true) {
+                try {
+                    JSON.parse(this.buffer ? this.p3xrValueBuffer : this.p3xrValue)
+                } catch (e) {
+                    p3xrCommon.toast({
+                        message: p3xr.strings.label.jsonViewNotParsable
+                    })
+                    return
                 }
+            }
 
+            try {
                 const response = await p3xrSocket.request({
                     action: 'key-set',
                     payload: {
