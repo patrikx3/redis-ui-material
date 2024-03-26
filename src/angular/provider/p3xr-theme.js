@@ -11,7 +11,7 @@ p3xr.ng.provider('p3xrTheme', function p3xrThemeProvider($mdThemingProvider,) {
 
     const themeCookieName = 'p3xr-theme'
 
-    const themeDefault = 'p3xrThemeLight';
+    const themeDefault = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'p3xrThemeDark' : 'p3xrThemeEnterprise';
 
     this.start = () => {
 //    console.warn('ngivrTheme we are in the provider eg: config')(
@@ -59,6 +59,7 @@ p3xr.ng.provider('p3xrTheme', function p3xrThemeProvider($mdThemingProvider,) {
             }
 
             this.setTheme = (themeName) => {
+                console.warn('setTheme', themeName) 
                 if (themeName === undefined) {
                     themeName = $cookies.get(themeCookieName)
                     if (themeName === undefined) {
