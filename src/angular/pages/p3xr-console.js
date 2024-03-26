@@ -233,6 +233,9 @@ p3xr.ng.component('p3xrConsole', {
                     actionHistory.splice(actionHistoryIndexOf, 1)
                 }
                 actionHistory.push(history)
+
+                console.log('actionHistory', actionHistory)
+
                 if (actionHistory.length > 20) {
                     actionHistory = actionHistory.slice(0, 20)
                 }

@@ -361,11 +361,13 @@ p3xr.ng.component('p3xrMainKey', {
         }
 
 //        const refreshDebounced = debounce(this.refresh, 1000)
+        /*
         $scope.$on('p3xr-refresh', () => {
             this.refresh({
                 withoutParent: true
             })
         })
+        */
 
         $scope.$on('p3xr-refresh-key', () => {
             this.refresh({
