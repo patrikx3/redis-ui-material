@@ -398,7 +398,6 @@ body.p3xr-no-animation * {
 
 }
 
-
 .p3xr-not-selectable {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -414,10 +413,15 @@ body.p3xr-no-animation * {
 
 @import '../injector';
 
-input, textarea {
+input {
     font-family: 'Roboto' !important;
 //    font-weight: 500;
 }
+
+textarea {
+    font-family: 'Roboto Mono' !important;
+}
+
 
 treecontrol {
     font-family: 'Roboto Mono' !important;
