@@ -180,6 +180,10 @@ const strings = {
       on: "Cluster on",
       off: "Cluster off",
     },
+    sentinel: {
+      on: "Sentinel on",
+      off: "Sentinel off",
+    },
     readonly: {
       on: "Readonly on",
       off: "Readonly off",

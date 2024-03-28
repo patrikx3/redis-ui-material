@@ -170,6 +170,10 @@ const strings = {
       on: "群集",
       off: "集群关闭",
     },
+    sentinel: {
+      on: "哨兵開啟",
+      off: "哨兵關閉",
+    },
     readonly: {
       on: "只读",
       off: "只读关闭",

@@ -39,6 +39,9 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                         if (!$scope.model.hasOwnProperty('cluster')) {
                             $scope.model.cluster = false
                         }
+                        if (!$scope.model.hasOwnProperty('sentinel')) {
+                            $scope.model.sentinel = false
+                        }
 
                         if (!$scope.model.hasOwnProperty('nodes')) {
                             $scope.model.nodes = []
@@ -47,6 +50,17 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                         for (let node of $scope.model.nodes) {
                             node.password = node.id
                         }
+
+                        $scope.$watch('model.cluster', function (newValue, oldValue) {
+                            if (newValue === true) {
+                                $scope.model.sentinel = false
+                            }
+                        })
+                        $scope.$watch('model.sentinel', function (newValue, oldValue) {
+                            if (newValue === true) {
+                                $scope.model.cluster = false
+                            }
+                        })
 
                         // Promise reject
                         $scope.cancel = function () {
