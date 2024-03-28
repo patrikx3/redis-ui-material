@@ -218,19 +218,22 @@ p3xr.ng.component('p3xrLayout', {
                         originalState = 'main'
                     }
                 }
-                //console.warn('console original state', originalState)
-                if (originalState === 'main') {
-                    $state.go('main.statistics')
-                } else {
-                    if (originalState.startsWith('main.key')) {
-                        //console.warn('trigger state', originalStateArr[2])
-                        $state.go('main.key', {
-                            key: decodeURIComponent(originalStateArr[2].replace(/~/g, '%'))
-                        })    
-                    } else {
-                        $state.go(originalState)
-                    }
-                }
+
+                $timeout(() => {
+                        //console.warn('console original state', originalState)
+                        if (originalState === 'main') {
+                            $state.go('main.statistics')
+                        } else {
+                            if (originalState.startsWith('main.key')) {
+                                //console.warn('trigger state', originalStateArr[2])
+                                $state.go('main.key', {
+                                    key: decodeURIComponent(originalStateArr[2].replace(/~/g, '%'))
+                                })    
+                            } else {
+                                $state.go(originalState)
+                            }
+                        }
+                }, p3xr.settings.debounce)
             } catch (error) {
                 $cookies.remove(p3xr.settings.connectInfo.cookieName)
                 $rootScope.p3xr.state.connection = undefined
