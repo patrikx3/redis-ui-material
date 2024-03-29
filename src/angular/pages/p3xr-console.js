@@ -268,8 +268,9 @@ p3xr.ng.component('p3xrConsole', {
         this.action = ($event) => {
 
             switch ($event.keyCode) {
-                // keyup 38
-                case 38: {
+
+                // keydown 40
+                case 40: {
                     $event.preventDefault()
                     $event.stopPropagation()
 
@@ -290,8 +291,8 @@ p3xr.ng.component('p3xrConsole', {
 
                 }
 
-                // keydown 40
-                case 40: {
+                // keyup 38
+                case 38: {
                     $event.preventDefault()
                     $event.stopPropagation()
 
