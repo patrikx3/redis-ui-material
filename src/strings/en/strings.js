@@ -194,6 +194,7 @@ const strings = {
     sentinel: {
       on: "Sentinel on",
       off: "Sentinel off",
+      name: "Sentinel name",
     },
     readonly: {
       on: "Readonly on",

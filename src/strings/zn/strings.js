@@ -183,6 +183,7 @@ const strings = {
     sentinel: {
       on: "哨兵開啟",
       off: "哨兵關閉",
+      name: '哨兵名称',
     },
     readonly: {
       on: "只读",

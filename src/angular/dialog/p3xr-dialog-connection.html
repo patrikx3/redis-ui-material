@@ -125,6 +125,7 @@
                         </span>
                     </fieldset> 
 
+                    <br/>
                     <span ng-if="$root.p3xr.state.donated">
                         <md-switch ng-model="model.readonly" name="readonly" aria-label="" style="margin: 0;"
                                    ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
@@ -154,12 +155,23 @@
                     </div>
 
 
+                    <span ng-if="model.sentinel === true">
+                        <md-input-container class="md-block">
+                            <label>{{ $root.p3xr.strings.label.sentinel.name }}</label>
+                            <input required name="sentinelName" ng-model="model.sentinelName"
+                                   ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
+                                <div ng-messages="p3xrConnectionForm.sentinelName.$error">
+                                    <div ng-message="required">{{ $root.p3xr.strings.form.error.required }}</div>
+                                </div>                                     
+                        </md-input-container>
+                    </span>
+
                     <span ng-if="(model.cluster === true || model.sentinel === true) && !$root.p3xr.state.cfg.readonlyConnections" ng-click="addNode()">
                             <md-button class="md-fab md-primary md-mini">
                                 <md-icon>add</md-icon>
                             </md-button>
                             {{ $root.p3xr.strings.label.addNode }}
-                        </span>
+                    </span>
 
                     <div ng-if="(model.cluster === true || model.sentinel === true)">
 
