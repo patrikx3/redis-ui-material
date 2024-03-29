@@ -65,6 +65,15 @@
                     </span>
 
 
+                    <span ng-if="$root.p3xr.state.donated">
+                        <md-switch ng-model="model.readonly" name="readonly" aria-label="" style="margin: 0;"
+                                   ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
+                            {{ model.readonly ? $root.p3xr.strings.label.readonly.on : $root.p3xr.strings.label.readonly.off }}
+                        </md-switch>
+                            
+    
+                    </span>
+    
                     <br/>
                         
                     <div layout="row" layout-align="start center">
@@ -199,15 +208,7 @@
 
 
 
-                    <span ng-if="$root.p3xr.state.donated">
-                    <md-switch ng-model="model.readonly" name="readonly" aria-label="" style="margin: 0;"
-                               ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
-                        {{ model.readonly ? $root.p3xr.strings.label.readonly.on : $root.p3xr.strings.label.readonly.off }}
-                    </md-switch>
-                        
-
-                </span>
-
+  
                 </div>
 
             </md-content>

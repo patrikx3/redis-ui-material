@@ -28,6 +28,18 @@ p3xr.ng.component('p3xrConsole', {
         let $output
         let scrollers
 
+
+        let index = 0
+        const $outputAppend = (message) => {
+            // write, so it only keep the last 1000 lines by p3xr-console-content-output-item class
+            $output.append(`<span data-index="${index++}" class="p3xr-console-content-output-item">${message}<br/></span>`)
+            let items = $output.find('.p3xr-console-content-output-item');
+            const max = 256
+            if (items.length > max) {
+                items.slice(0, items.length - max).remove(); // Remove the oldest items exceeding 1000 lines
+            }
+        }
+
         if (!$rootScope.hasConnected()) {
             $state.go('main')
         }
@@ -108,8 +120,7 @@ p3xr.ng.component('p3xrConsole', {
                 return
             }
             let message = htmlEncode(String(data.message))
-            $output.append(`<strong>PubSub channel:</strong> ${data.channel}`)
-            $output.append(`<pre>${message}</pre><br/>`)
+            $outputAppend(`<strong>PubSub channel:</strong> ${data.channel}<br/><pre>${message}</pre>`)
             scrollers.scrollTop = scrollers.scrollHeight;
         }
 
@@ -196,8 +207,6 @@ p3xr.ng.component('p3xrConsole', {
                 return;
             }
             try {
-                $output.append(`<div class="p3xr-console-content-output-item">${enter}</div>`)
-
                 response = await p3xrSocket.request({
                     action: 'console',
                     payload: {
@@ -208,7 +217,7 @@ p3xr.ng.component('p3xrConsole', {
 
                 const result = htmlEncode(String(p3xrRedisParser.console.parse(response.result)))
                 //console.log(result)
-                $output.append(`<pre>${result}</pre>`)
+                $outputAppend(`${enter}<br/><pre>${result}</pre>`)
                 if (response.hasOwnProperty('database')) {
                     $rootScope.p3xr.state.currentDatabase = response.database
                     $rootScope.p3xr.state.redisChanged = true
@@ -218,7 +227,7 @@ p3xr.ng.component('p3xrConsole', {
                 $scope.$digest()
             } catch (e) {
                 console.error(e)
-                $output.append(`<pre>${p3xr.strings.code[e.message] || e.message}</pre>`)
+                $outputAppend(`${enter}<br/><pre>${p3xr.strings.code[e.message] || e.message}</pre>`)
 
             } finally {
                 let history
@@ -309,9 +318,8 @@ p3xr.ng.component('p3xrConsole', {
 
         this.clearConsole = () => {
             $output.empty()
-            $output.append('<div class="p3xr-console-content-output-item"><strong>' + $rootScope.p3xr.strings.label.welcomeConsole + '</strong></div>')
-            $output.append('<div class="p3xr-console-content-output-item">' + $rootScope.p3xr.strings.label.welcomeConsoleInfo + '</div>')
-            $output.append('<br/>')
+            $outputAppend('<strong>' + $rootScope.p3xr.strings.label.welcomeConsole + '</strong>')
+            $outputAppend($rootScope.p3xr.strings.label.welcomeConsoleInfo + '<br/>')
             $input.focus()
         }
 
