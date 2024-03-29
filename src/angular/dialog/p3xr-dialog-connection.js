@@ -18,12 +18,14 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                             $scope.model.tlsCrt = options.model.id
                             $scope.model.tlsKey = options.model.id
                             $scope.model.tlsCa = options.model.id
+                            $scope.model.sshPassword = options.model.id
+                            $scope.model.sshPrivateKey = options.model.id
                             
                         } else {
                             $scope.model = {
                                 name: undefined,
                                 host: undefined,
-                                port: undefined,
+                                port: 6379,
                                 askAuth: false,
                                 password: undefined,
                                 username: undefined,
@@ -34,6 +36,16 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                                 tlsCrt: undefined,
                                 tlsKey: undefined,
                                 tlsCa: undefined,
+                            }
+                        }
+                        if (!$scope.model.hasOwnProperty('ssh')) {
+                            $scope.model = { ...$scope.model, 
+                                ssh: false,
+                                sshHost: undefined,
+                                sshPort: 22,
+                                sshUsername: undefined,
+                                sshPassword: options.model?.id,
+                                sshPrivateKey: options.model?.id,
                             }
                         }
                         if (!$scope.model.hasOwnProperty('cluster')) {
@@ -51,14 +63,22 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                             node.password = node.id
                         }
 
+                        $scope.$watch('model.ssh', function (newValue, oldValue) {
+                            if (newValue === true) {
+                                $scope.model.sentinel = false
+                                $scope.model.cluster = false 
+                            }
+                        })
                         $scope.$watch('model.cluster', function (newValue, oldValue) {
                             if (newValue === true) {
                                 $scope.model.sentinel = false
+                                $scope.model.ssh = false 
                             }
                         })
                         $scope.$watch('model.sentinel', function (newValue, oldValue) {
                             if (newValue === true) {
                                 $scope.model.cluster = false
+                                $scope.model.ssh = false 
                             }
                         })
 

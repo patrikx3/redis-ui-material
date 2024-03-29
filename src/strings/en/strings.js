@@ -128,6 +128,17 @@ const strings = {
     quickConsole: "Quick Console",
   },
   label: {
+    secureFeature: 'If you see a value that starts with a P3X an look like the same, it is a secure feature. To change the settings, just replace these settings with empty or something else and they will be saved. If you do not change the settings, the settings will be kept as they are on the server.',
+    ssh: {
+      on: 'SSH on',
+      off: 'SSH off',
+      sshHost: 'SSH Host',
+      sshPort: 'SSH port',
+      sshUsername: 'SSH username',
+      sshPassword: 'SSH password',
+      sshPrivateKey: 'SSH private key',
+
+    },
     isBuffer: "[object ArrayBuffer] means that the value is binary data or the value is bigger than 0.5MB",
     streamValue: `Stream field and value is a oneliner. Eg.: field1 value1 "field 2" "value 2"`,
     streamTimestampId: `'*' means auto generated or the specification as <millisecondsTime>-<sequenceNumber>`,

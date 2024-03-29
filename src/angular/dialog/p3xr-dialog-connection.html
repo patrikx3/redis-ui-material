@@ -13,6 +13,8 @@
         <md-dialog-content md-theme="{{ $root.p3xr.state.theme }}" >
             <md-content>
                 <div class="p3xr-padding">
+
+
                     <md-input-container class="md-block">
                         <label>{{ $root.p3xr.strings.form.connection.label.name }}</label>
                         <input required name="name" ng-model="model.name"
@@ -23,47 +25,105 @@
                     </md-input-container>
 
 
-                    <md-input-container class="md-block">
-                        <label>{{ $root.p3xr.strings.form.connection.label.host }}</label>
-                        <input name="host" ng-model="model.host" ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
-                    </md-input-container>
+                    <span ng-if="$root.p3xr.state.donated">
+                        <md-switch ng-model="model.ssh" name="ssh" aria-label="" style="margin: 0;"
+                        ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
+                            {{ model.ssh ? $root.p3xr.strings.label.ssh.on : $root.p3xr.strings.label.ssh.off }}
+                        </md-switch>    
 
-
-                    <md-input-container class="md-block">
-                        <label>{{ $root.p3xr.strings.form.connection.label.port }}</label>
-                        <input name="port" type="number" min="1" max="65535" ng-model="model.port"
-                               ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
-                        <div ng-messages="p3xrConnectionForm.port.$error">
-                            <div ng-message-exp="['min', 'max']">
-                                {{ $root.p3xr.strings.form.error.port }}
+                        <fieldset ng-if="model.ssh">
+                            <md-input-container class="md-block">
+                                <label>{{ $root.p3xr.strings.label.ssh.sshHost }}</label>
+                                <input required name="sshHost" ng-model="model.sshHost"
+                                       ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
+                                <div ng-messages="p3xrConnectionForm.sshHost.$error">
+                                    <div ng-message="required">{{ $root.p3xr.strings.form.error.required }}</div>
+                                </div>
+                            </md-input-container>
+        
+                            <md-input-container class="md-block">
+                                <label>{{ $root.p3xr.strings.label.ssh.sshPort }}</label>
+                                <input required name="sshPort" type="number" min="1" max="65535"  ng-model="model.sshPort"
+                                       ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
+                                <div ng-messages="p3xrConnectionForm.sshPort.$error">
+                                    <div ng-message="required">{{ $root.p3xr.strings.form.error.required }}</div>
+                                </div>
+                            </md-input-container>
+        
+                            <md-input-container class="md-block">
+                                <label>{{ $root.p3xr.strings.label.ssh.sshUsername }}</label>
+                                <input required name="sshUsername" ng-model="model.sshUsername"
+                                       ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
+                                <div ng-messages="p3xrConnectionForm.sshPort.$error">
+                                    <div ng-message="required">{{ $root.p3xr.strings.form.error.required }}</div>
+                                </div>                                                                       
+                            </md-input-container>
+        
+                            <md-input-container class="md-block p3xr-md-input-container-no-bottom">
+                                <label>{{ $root.p3xr.strings.label.ssh.sshPassword }}</label>
+                                <input name="sshPassword" type="password" ng-model="model.sshPassword"
+                                       ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off">
+                            </md-input-container>
+                            <div class="p3xr-md-input-container-bottom-info">
+                                {{ $root.p3xr.strings.label.passwordSecure }}
+                            </div>    
+        
+                            <md-input-container class="md-block p3xr-md-input-container-no-bottom">
+                                <label>{{ $root.p3xr.strings.label.ssh.sshPrivateKey }}</label>
+                                <textarea name="sshPrivateKey" ng-model="model.sshPrivateKey"
+                                        ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off"></textarea>
+                            </md-input-container>
+                            <div class="p3xr-md-input-container-bottom-info">
+                                {{ $root.p3xr.strings.label.secureFeature }}
                             </div>
-                        </div>
-                    </md-input-container>
+                            <br/>
+                        </fieldset>
+                    </span>                                 
 
-                    <md-switch ng-model="model.askAuth" name="askAuth" aria-label=""
-                    ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
-                        {{ $root.p3xr.strings.label.askAuth }}
-                    </md-switch>
+                    <br/>
 
-
-                    <span>
+                    <fieldset>
                         <md-input-container class="md-block">
-                            <label>{{ $root.p3xr.strings.form.connection.label.username }}</label>
-                            <input name="username" type="text" ng-model="model.username"
-                                   ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off">
+                            <label>{{ $root.p3xr.strings.form.connection.label.host }}</label>
+                            <input name="host" ng-model="model.host" ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
                         </md-input-container>
-    
-                        <md-input-container class="md-block p3xr-md-input-container-no-bottom">
-                            <label>{{ $root.p3xr.strings.form.connection.label.password }}</label>
-                            <input name="password" type="password" ng-model="model.password"
-                                   ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off">
-                        </md-input-container>
-                        <div class="p3xr-md-input-container-bottom-info">
-                            {{ $root.p3xr.strings.label.passwordSecure }}
-                        </div>    
-                        <br/>
-                    </span>
 
+
+                        <md-input-container class="md-block">
+                            <label>{{ $root.p3xr.strings.form.connection.label.port }}</label>
+                            <input name="port" type="number" min="1" max="65535" ng-model="model.port"
+                                ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
+                            <div ng-messages="p3xrConnectionForm.port.$error">
+                                <div ng-message-exp="['min', 'max']">
+                                    {{ $root.p3xr.strings.form.error.port }}
+                                </div>
+                            </div>
+                        </md-input-container>
+
+                        <md-switch ng-model="model.askAuth" name="askAuth" aria-label=""
+                        ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
+                            {{ $root.p3xr.strings.label.askAuth }}
+                        </md-switch>
+
+
+                        <span>
+                            <md-input-container class="md-block">
+                                <label>{{ $root.p3xr.strings.form.connection.label.username }}</label>
+                                <input name="username" type="text" ng-model="model.username"
+                                    ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off">
+                            </md-input-container>
+        
+                            <md-input-container class="md-block p3xr-md-input-container-no-bottom">
+                                <label>{{ $root.p3xr.strings.form.connection.label.password }}</label>
+                                <input name="password" type="password" ng-model="model.password"
+                                    ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off">
+                            </md-input-container>
+                            <div class="p3xr-md-input-container-bottom-info">
+                                {{ $root.p3xr.strings.label.passwordSecure }}
+                            </div>    
+                            <br/>
+                        </span>
+                    </fieldset> 
 
                     <span ng-if="$root.p3xr.state.donated">
                         <md-switch ng-model="model.readonly" name="readonly" aria-label="" style="margin: 0;"
@@ -174,36 +234,38 @@
 
                     <div ng-if="model.tlsWithoutCert !== true" style="padding-top: 4px;">
 
-                        <md-input-container class="md-block p3xr-md-input-container-no-bottom">
-                            <label>TLS (redis.crt)</label>
-                            <textarea name="tlsCrt" ng-model="model.tlsCrt"
-                                      ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off"></textarea>
-                        </md-input-container>
-                        <div class="p3xr-md-input-container-bottom-info">
-                            {{ $root.p3xr.strings.label.tlsSecure }}
-                        </div>
-                        <br/>
+                        <fieldset>
+                            <md-input-container class="md-block p3xr-md-input-container-no-bottom">
+                                <label>TLS (redis.crt)</label>
+                                <textarea name="tlsCrt" ng-model="model.tlsCrt"
+                                          ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off"></textarea>
+                            </md-input-container>
+                            <div class="p3xr-md-input-container-bottom-info">
+                                {{ $root.p3xr.strings.label.tlsSecure }}
+                            </div>
+                            <br/>
+        
+                            <md-input-container class="md-block p3xr-md-input-container-no-bottom">
+                                <label>TLS (redis.key)</label>
+                                <textarea name="tlsKey" ng-model="model.tlsKey"
+                                          ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off"></textarea>
+                            </md-input-container>
+                            <div class="p3xr-md-input-container-bottom-info">
+                                {{ $root.p3xr.strings.label.tlsSecure }}
+                            </div>
+                            <br/>
+        
+                            <md-input-container class="md-block p3xr-md-input-container-no-bottom">
+                                <label>TLS (ca.crt)</label>
+                                <textarea name="tlsCa" ng-model="model.tlsCa"
+                                          ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off"></textarea>
+                            </md-input-container>
+                            <div class="p3xr-md-input-container-bottom-info">
+                                {{ $root.p3xr.strings.label.tlsSecure }}
+                            </div>
     
-                        <md-input-container class="md-block p3xr-md-input-container-no-bottom">
-                            <label>TLS (redis.key)</label>
-                            <textarea name="tlsKey" ng-model="model.tlsKey"
-                                      ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off"></textarea>
-                        </md-input-container>
-                        <div class="p3xr-md-input-container-bottom-info">
-                            {{ $root.p3xr.strings.label.tlsSecure }}
-                        </div>
-                        <br/>
-    
-                        <md-input-container class="md-block p3xr-md-input-container-no-bottom">
-                            <label>TLS (ca.crt)</label>
-                            <textarea name="tlsCa" ng-model="model.tlsCa"
-                                      ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off"></textarea>
-                        </md-input-container>
-                        <div class="p3xr-md-input-container-bottom-info">
-                            {{ $root.p3xr.strings.label.tlsSecure }}
-                        </div>
-
-                        <br/>
+                            <br/>
+                        </fieldset>
                     </div>
 
 

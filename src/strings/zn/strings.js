@@ -121,6 +121,16 @@ const strings = {
     quickConsole: "快的",
   },
   label: {
+    secureFeature: '如果您看到以 P3X 开头的值并且看起来相似，则这是一项安全功能。 要更改设置，只需将这些设置替换为空或其他内容即可保存它们。 如果您不更改设置，这些设置将保留在服务器上的原样。',
+    ssh: {
+      on: 'SSH 开启',
+      off: 'SSH 关闭',
+      sshHost: 'SSH 主机',
+      sshPort: 'SSH端口',
+      sshUsername: 'SSH 用户名',
+      sshPassword: 'SSH密码',
+      sshPrivateKey: 'SSH 私钥',
+    },    
     isBuffer: "[object ArrayBuffer] 表示該值是二進位緩衝區或該值大於 0.5MB",
     streamValue: `流字段和值是唯一的。 例如：field1 value1 "field 2" "value 2"`,
     streamTimestampId: `'*'表示自动生成或指定为<millisecondsTime>-<sequenceNumber>`,

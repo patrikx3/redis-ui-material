@@ -3,7 +3,6 @@ p3xr.ng.component('p3xrSettings', {
     controller: function (p3xrCommon, p3xrDialogConnection, $mdDialog, p3xrSocket, p3xrDialogTreecontrolSettings, $scope) {
 
         this.connectionForm = (options) => {
-
             p3xrDialogConnection.show(options)
 
         }
