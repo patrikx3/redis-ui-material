@@ -231,10 +231,12 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
 
                             try {
 
+                                const saveModel = p3xr.clone($scope.model)
+                                //console.log('saveModel', saveModel)
                                 const response = await p3xrSocket.request({
                                     action: 'connection-save',
                                     payload: {
-                                        model: global.p3xr.clone($scope.model)
+                                        model: saveModel
                                     },
                                 })
                                 p3xrCommon.toast({
