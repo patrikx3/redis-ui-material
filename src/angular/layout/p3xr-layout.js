@@ -237,7 +237,7 @@ p3xr.ng.component('p3xrLayout', {
             } catch (error) {
                 $cookies.remove(p3xr.settings.connectInfo.cookieName)
                 $rootScope.p3xr.state.connection = undefined
-                $state.go('main.statistics')
+                //$state.go('main.statistics')
                 p3xrCommon.generalHandleError(error)
             } finally {
                 p3xr.ui.overlay.hide()
