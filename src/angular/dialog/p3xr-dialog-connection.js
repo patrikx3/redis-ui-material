@@ -165,7 +165,7 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
 
                             try {
 
-                                const authModel = Object.assign({}, $scope.model)
+                                const authModel = p3xr.clone($scope.model)
                                 if ($scope.model.askAuth === true) {
                                     const auth = await p3xrDialogAskAuthorization.show({
                                         $event: $event
