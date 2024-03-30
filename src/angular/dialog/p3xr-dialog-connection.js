@@ -12,7 +12,7 @@ p3xr.ng.factory('p3xrDialogConnection', function (p3xrCommon, $mdDialog, p3xrSoc
                         $scope.options = options
 
                         if (options.model !== undefined) {
-                            $scope.model = options.model
+                            $scope.model = p3xr.clone(options.model)
                             $scope.model.askAuth = options.model.askAuth
                             $scope.model.password = options.model.id
                             $scope.model.tlsCrt = options.model.id
