@@ -124,7 +124,7 @@ const strings = {
     id: {
       nodeId: '节点号',
       id: "连接ID",
-      info: "如果您不想更改以下属性：sshPassword、sshPrivateKey、password、tlsCrt、tlsKey、tlsCa，请在这些属性中输入连接 ID 以保持属性值不变。"
+      info: "如果您不想更改以下属性：sshPassword、sshPrivateKey、password、tlsCrt、tlsKey、tlsCa，请在这些属性中输入连接 ID 以保持属性值不变。 如果您希望节点密码具有相同的逻辑，则在节点密码中输入节点 ID。"
     },
     secureFeature: '如果您看到以 P3X 开头的值并且看起来相似，则这是一项安全功能。 要更改设置，只需将这些设置替换为空或其他内容即可保存它们。 如果您不更改设置，这些设置将保留在服务器上的原样。',
     ssh: {

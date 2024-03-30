@@ -263,7 +263,7 @@ p3xr.ng.component('p3xrLayout', {
             } catch (error) {
                 p3xrCommon.generalHandleError(error)
             } finally {
-                $state.go('main')
+                $state.go('settings')
             }
             // $rootScope.$digest()
         }
