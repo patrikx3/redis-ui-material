@@ -71,13 +71,12 @@ p3xr.ng.factory('p3xrSocket', function ($rootScope, p3xrCommon, $state, $cookies
                     error: error
                 })
 
-                /*
                 await p3xrCommon.confirm({
                     disableCancel: false,
                     message: p3xr.strings.confirm.socketioConnectError
                 })
                 location.reload()
-                */
+
             } catch (e) {
                 p3xrCommon.generalHandleError(e)
             }
