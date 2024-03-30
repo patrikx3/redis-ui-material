@@ -3,11 +3,6 @@ p3xr.ng.component('p3xrMain', {
     controller: function ($cookies, p3xrSocket, p3xrCommon, p3xrRedisParser, $rootScope, $state, $timeout, $scope, $mdMedia, $mdSidenav) {
 
 
-        if (p3xr.state.connections.list.length > 0 && p3xr.state.connection === undefined) {
-            $state.go('settings')
-            return
-        }
-        
         $scope.$watch('$root.p3xr.state.connection', (newVal, oldVal) => {
             if (!newVal) {
                 $state.go('settings')
@@ -586,5 +581,11 @@ p3xr.ng.component('p3xrMain', {
 
 
           */
+
+
+     if (p3xr.state.connection === undefined) {
+        $state.go('settings')
+    }
+    
     }
 })
