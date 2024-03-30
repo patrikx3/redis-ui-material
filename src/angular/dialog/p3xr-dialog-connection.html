@@ -71,7 +71,7 @@
                                 <label>{{ $root.p3xr.strings.label.ssh.sshPassword }}</label>
                                 <input name="sshPassword" type="{{ !sshPasswordType ? 'password' : 'text'}}" ng-model="model.sshPassword"
                                        ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off">
-                                <md-icon ng-click="sshPasswordType = !sshPasswordType ">
+                                <md-icon ng-click="sshPasswordType = !sshPasswordType " ng-if="!$root.p3xr.state.cfg.readonlyConnections">
                                     {{!sshPasswordType ? 'visibility' : 'visibility_off'}}
                                 </md-icon>
                             </md-input-container>
@@ -128,7 +128,7 @@
                                 <label>{{ $root.p3xr.strings.form.connection.label.password }}</label>
                                 <input name="password" type="{{ !passwordType ? 'password' : 'text'}}" ng-model="model.password"
                                     ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off">
-                                <md-icon ng-click="passwordType = !passwordType ">
+                                <md-icon ng-click="passwordType = !passwordType "  ng-if="!$root.p3xr.state.cfg.readonlyConnections">
                                     {{!passwordType ? 'visibility' : 'visibility_off'}}
                                 </md-icon>
                             </md-input-container>
