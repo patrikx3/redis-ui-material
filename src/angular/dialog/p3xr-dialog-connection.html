@@ -68,10 +68,13 @@
                                 </div>                                                                       
                             </md-input-container>
         
-                            <md-input-container class="md-block p3xr-md-input-container-no-bottom">
+                            <md-input-container md-no-float class="md-block p3xr-md-input-container-no-bottom">
                                 <label>{{ $root.p3xr.strings.label.ssh.sshPassword }}</label>
-                                <input name="sshPassword" type="password" ng-model="model.sshPassword"
+                                <input name="sshPassword" type="{{ !sshPasswordType ? 'password' : 'text'}}" ng-model="model.sshPassword"
                                        ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off">
+                                <md-icon ng-click="sshPasswordType = !sshPasswordType ">
+                                    {{!sshPasswordType ? 'visibility' : 'visibility_off'}}
+                                </md-icon>
                             </md-input-container>
                             <div class="p3xr-md-input-container-bottom-info">
                                 {{ $root.p3xr.strings.label.passwordSecure }}
@@ -122,10 +125,13 @@
                                     ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off">
                             </md-input-container>
         
-                            <md-input-container class="md-block p3xr-md-input-container-no-bottom">
+                            <md-input-container md-no-float class="md-block p3xr-md-input-container-no-bottom">
                                 <label>{{ $root.p3xr.strings.form.connection.label.password }}</label>
-                                <input name="password" type="password" ng-model="model.password"
+                                <input name="password" type="{{ !passwordType ? 'password' : 'text'}}" ng-model="model.password"
                                     ng-disabled="$root.p3xr.state.cfg.readonlyConnections" autocomplete="off">
+                                <md-icon ng-click="passwordType = !passwordType ">
+                                    {{!passwordType ? 'visibility' : 'visibility_off'}}
+                                </md-icon>
                             </md-input-container>
                             <div class="p3xr-md-input-container-bottom-info">
                                 {{ $root.p3xr.strings.label.passwordSecure }}
@@ -197,6 +203,7 @@
                                         <md-icon>add</md-icon>
                                     </md-button>
                                 </div>
+                                <br/>
                                 <md-input-container class="md-block">
                                     <label>{{ $root.p3xr.strings.form.connection.label.host }}</label>
                                     <input name="host{{$index}}" ng-model="node.host"
@@ -224,10 +231,13 @@
                                 </md-input-container>
 
 
-                                <md-input-container class="md-block p3xr-md-input-container-no-bottom">
+                                <md-input-container md-no-float class="md-block p3xr-md-input-container-no-bottom">
                                     <label>{{ $root.p3xr.strings.form.connection.label.password }}</label>
-                                    <input name="password{{$index}}" type="password" ng-model="node.password"
+                                    <input name="password{{$index}}" type="{{ !$scope['password' + $index] ? 'password' : 'text'}}" ng-model="node.password"
                                            ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
+                                    <md-icon ng-click="$scope['password' + $index] = !$scope['password' + $index] ">
+                                    {{!$scope['password' + $index] ? 'visibility' : 'visibility_off'}}
+                                </md-icon>
                                 </md-input-container>
 
                                 <div class="p3xr-md-input-container-bottom-info">
