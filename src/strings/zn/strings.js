@@ -122,6 +122,7 @@ const strings = {
   },
   label: {
     id: {
+      nodeId: '节点号',
       id: "ID",
       info: "如果您不想更改以下属性：sshPassword、sshPrivateKey、password、tlsCrt、tlsKey、tlsCa，请在这些属性中输入连接 ID 以保持属性值不变。"
     },

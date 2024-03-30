@@ -16,8 +16,7 @@
                     <span ng-if="model.id">
                         <md-input-container class="md-block p3xr-md-input-container-no-bottom">
                             <label>{{ $root.p3xr.strings.label.id.id }}</label>
-                            <input required name="id" ng-model="model.id"
-                                   ng-disabled="true">
+                            <input required name="id" ng-model="model.id" disabled>
                         </md-input-container>
                         <div class="p3xr-md-input-container-bottom-info">
                            {{ $root.p3xr.strings.label.id.info}}
@@ -166,12 +165,18 @@
                                 {{ model.sentinel ? $root.p3xr.strings.label.sentinel.on : $root.p3xr.strings.label.sentinel.off }}
                             </md-switch>
                         </div>
-
+                        <span flex></span>
+                        <div ng-if="(model.cluster === true || model.sentinel === true) && !$root.p3xr.state.cfg.readonlyConnections" ng-click="addNode()">
+                            {{ $root.p3xr.strings.label.addNode }}
+                            <md-button class="md-fab md-primary md-mini">
+                                <md-icon>add</md-icon>
+                            </md-button>                           
+                        </div>
                     </div>
 
 
                     <span ng-if="model.sentinel === true">
-                        <md-input-container class="md-block">
+                        <md-input-container class="md-block p3xr-md-input-container-no-bottom">
                             <label>{{ $root.p3xr.strings.label.sentinel.name }}</label>
                             <input required name="sentinelName" ng-model="model.sentinelName"
                                    ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
@@ -181,13 +186,7 @@
                         </md-input-container>
                     </span>
 
-                    <span ng-if="(model.cluster === true || model.sentinel === true) && !$root.p3xr.state.cfg.readonlyConnections" ng-click="addNode()">
-                            <md-button class="md-fab md-primary md-mini">
-                                <md-icon>add</md-icon>
-                            </md-button>
-                            {{ $root.p3xr.strings.label.addNode }}
-                    </span>
-
+                    
                     <div ng-if="(model.cluster === true || model.sentinel === true)">
 
                         <div ng-repeat="node in model.nodes">
@@ -204,6 +203,15 @@
                                     </md-button>
                                 </div>
                                 <br/>
+
+                                <span ng-if="node.id">
+                                    <md-input-container class="md-block p3xr-md-input-container-no-bottom">
+                                        <label>{{ $root.p3xr.strings.label.id.nodeId }}</label>
+                                        <input ng-model="node.id" disabled>
+                                    </md-input-container>
+                                         
+                                </span>
+
                                 <md-input-container class="md-block">
                                     <label>{{ $root.p3xr.strings.form.connection.label.host }}</label>
                                     <input name="host{{$index}}" ng-model="node.host"

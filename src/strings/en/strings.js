@@ -129,6 +129,7 @@ const strings = {
   },
   label: {
     id: {
+      nodeId: 'Node ID',
       id: "ID",
       info: "If you do not wan't to change the properties of: sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa, please enter the ID of the connection in those propertes to keep the property values intact."
     },
