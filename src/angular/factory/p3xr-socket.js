@@ -1,4 +1,4 @@
-p3xr.ng.factory('p3xrSocket', function ($rootScope, p3xrCommon, $state) {
+p3xr.ng.factory('p3xrSocket', function ($rootScope, p3xrCommon, $state, $cookies ) {
 
     // socket.io now auto-configures its connection when we ommit a connection url
     const ioOptions = {
@@ -63,6 +63,8 @@ p3xr.ng.factory('p3xrSocket', function ($rootScope, p3xrCommon, $state) {
         if (!connectErrorWas) {
             connectErrorWas = true;
             try {
+                $cookies.remove(p3xr.settings.connectInfo.cookieName)
+
                 p3xrCommon.generalHandleError(error)
 
                 $state.go('socketio-error', {
