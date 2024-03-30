@@ -128,6 +128,10 @@ const strings = {
     quickConsole: "Quick Console",
   },
   label: {
+    id: {
+      id: "ID",
+      info: "If you do not wan't to change the properties of: sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa, please enter the ID of the connection in those propertes to keep the property values intact."
+    },
     secureFeature: 'If you see a value that starts with a P3X an look like the same, it is a secure feature. To change the settings, just replace these settings with empty or something else and they will be saved. If you do not change the settings, the settings will be kept as they are on the server.',
     ssh: {
       on: 'SSH on',

@@ -13,7 +13,16 @@
         <md-dialog-content md-theme="{{ $root.p3xr.state.theme }}" >
             <md-content>
                 <div class="p3xr-padding">
-
+                    <span ng-if="model.id">
+                        <md-input-container class="md-block p3xr-md-input-container-no-bottom">
+                            <label>{{ $root.p3xr.strings.label.id.id }}</label>
+                            <input required name="id" ng-model="model.id"
+                                   ng-disabled="true">
+                        </md-input-container>
+                        <div class="p3xr-md-input-container-bottom-info">
+                           {{ $root.p3xr.strings.label.id.info}}
+                        </div>         
+                    </span>
 
                     <md-input-container class="md-block">
                         <label>{{ $root.p3xr.strings.form.connection.label.name }}</label>
