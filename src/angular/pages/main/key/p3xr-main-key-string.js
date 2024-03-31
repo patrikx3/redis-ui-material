@@ -104,6 +104,7 @@ p3xr.ng.component('p3xrMainKeyString', {
         }
 
         this.cancelEdit = () => {
+            console.log('cancelEdit', this.originalValue)
             if (this.buffer === true) {
                 this.p3xrValueBuffer = this.originalValue                
             } else {
@@ -129,14 +130,16 @@ p3xr.ng.component('p3xrMainKeyString', {
             }
 
             try {
-                const response = await p3xrSocket.request({
+                const request = {
                     action: 'key-set',
                     payload: {
                         type: this.p3xrResponse.type,
                         value: this.buffer ? this.p3xrValueBuffer : this.p3xrValue,
                         key: this.p3xrKey,
                     }
-                })
+                }
+                //console.log('request', request)
+                const response = await p3xrSocket.request(request)
 
                 window['gtag']('config', p3xr.settings.googleAnalytics,
                     {
