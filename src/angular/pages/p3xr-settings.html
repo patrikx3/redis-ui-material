@@ -24,10 +24,10 @@
                     <h3>{{connection.name}}</h3>
                     <!--                    <h4>{{item.who}}</h4> -->
                     <p>{{connection.host}}:{{connection.port}}</p>
-                    <p ng-repeat="(connectionKey, connectionValue) in $root.p3xr.state.redisConnections">
-                        <span ng-if="connectionValue.connection.name === connection.name">
+                    <p>
+                        <span ng-repeat="(connectionKey, connectionValue) in $root.p3xr.state.redisConnections" ng-if="connectionValue.connection.name === connection.name">
                             {{ $root.p3xr.strings.page.overview.connectedCount({ length: connectionValue.clients.length }) }}
-                        </span>                    
+                        </span>                    &nbsp;
                     </p>
                 </div>
 
@@ -43,8 +43,8 @@
 
                 <md-button ng-if="$root.p3xr.state.connection.id === connection.id" class="md-accent md-raised" ng-click="$ctrl.disconnect()">
                     <i class="fa fa-power-off"></i>
-                    <span hide-xs hide-sm>{{ $root.p3xr.strings.intention.disconnect }}</span>
-                    <md-tooltip ng-if="$root.$mdMedia('xs') || $root.$mdMedia('sm')" md-direction="top">{{
+                    <span hide-xs>{{ $root.p3xr.strings.intention.disconnect }}</span>
+                    <md-tooltip ng-if="$root.$mdMedia('xs')" md-direction="top">{{
                         $root.p3xr.strings.intention.disconnect }}
                     </md-tooltip>
                 </md-button>
