@@ -40,6 +40,7 @@ p3xr.ng.component('p3xrMainKeyString', {
                 }
 
                 try {
+                     await p3xrCommon.confirm({})
                     const response = await p3xrSocket.request({
                         action: 'key-set',
                         payload: {
@@ -48,7 +49,7 @@ p3xr.ng.component('p3xrMainKeyString', {
                             key: this.p3xrKey,
                         }
                     })
-    
+                $rootScope.$broadcast('p3xr-refresh-key');
                     window['gtag']('config', p3xr.settings.googleAnalytics,
                         {
                             'page_path': '/key-set'
@@ -58,7 +59,7 @@ p3xr.ng.component('p3xrMainKeyString', {
                 } catch (e) {
                     p3xrCommon.generalHandleError(e)
                 } finally {
-                    $rootScope.$broadcast('p3xr-refresh-key');
+                    
                 }
 
             };
