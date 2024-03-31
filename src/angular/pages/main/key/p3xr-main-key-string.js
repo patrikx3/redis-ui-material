@@ -26,6 +26,20 @@ p3xr.ng.component('p3xrMainKeyString', {
                 //console.log(arrayBuffer);
 
                 try {
+                    if (this.editable === true) {
+                        if (this.buffer === true) {
+                            this.p3xrValueBuffer = arrayBuffer
+                        } else {    
+                            this.p3xrValue = arrayBuffer
+                        }
+                        $scope.$digest()
+                        return
+                    }    
+                } catch(e) {
+                    p3xrCommon.generalHandleError(e)
+                }
+
+                try {
                     const response = await p3xrSocket.request({
                         action: 'key-set',
                         payload: {

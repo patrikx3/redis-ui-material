@@ -1,8 +1,8 @@
 <div style="text-align: right">
+
+    <input type="file" id="p3xr-main-key-string-upload-buffer" style="display: none" onchange="angular.element(this).scope().readFileAsBuffer(event)"/>
+    
     <span ng-if="!$ctrl.editable">
-
-
-        <input type="file" id="p3xr-main-key-string-upload-buffer" style="display: none" onchange="angular.element(this).scope().readFileAsBuffer(event)"/>
         <md-button class="md-button md-raised md-primary" ng-click="$ctrl.setBufferUpload({ $event: $event})"  ng-if="$root.p3xr.state.connection.readonly !== true">
             <md-icon>upload</md-icon>
             <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.setBuffer }}</span>
@@ -10,7 +10,7 @@
                 $root.p3xr.strings.intention.setBuffer }}
             </md-tooltip>
         </md-button>
-
+    
 
         <md-button class="md-button md-raised md-accent" ng-click="$ctrl.downloadBuffer({ $event: $event})">
             <md-icon>download</md-icon>
@@ -77,6 +77,13 @@
                     <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{ $root.p3xr.strings.intention.cancel }}</md-tooltip>
                 </md-button>
             </div>
+            <md-button class="md-button md-raised md-primary" ng-click="$ctrl.setBufferUpload({ $event: $event})"  ng-if="$root.p3xr.state.connection.readonly !== true">
+                <md-icon>upload</md-icon>
+                <span hide-sm hide-xs>{{ $root.p3xr.strings.intention.setBuffer }}</span>
+                <md-tooltip ng-if="$root.$mdMedia('sm') || $root.$mdMedia('xs')" md-direction="bottom">{{
+                    $root.p3xr.strings.intention.setBuffer }}
+                </md-tooltip>
+            </md-button>        
             <div>
                 <md-button class="md-button md-raised md-primary" ng-click="$ctrl.save()" ng-if="$root.p3xr.state.connection.readonly !== true">
                     <md-icon>save</md-icon>
@@ -102,6 +109,9 @@
     <div ng-if="$ctrl.editable">
         <md-input-container class="md-block">
             <label>{{ $root.p3xr.strings.label.edit }}</label>
+            <div class="p3xr-md-input-container-bottom-info" ng-if="$ctrl.p3xrValue && $ctrl.p3xrValue.toString() === '[object ArrayBuffer]'">
+                {{ $root.p3xr.strings.label.isBuffer }}
+            </div>
             <textarea ng-model="$ctrl.p3xrValue" ng-if="!$ctrl.buffer" p3x-validate-json
                       p3x-validate-json-required="validateJson"></textarea>
             <span  ng-if="$ctrl.buffer">
