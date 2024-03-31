@@ -261,7 +261,7 @@ p3xr.ng.component('p3xrMainKey', {
         }
 
         this.addKey = (options) => {
-            event.stopPropagation();
+            options.$event.stopPropagation();
 
             $rootScope.$broadcast('p3xr-key-new', {
                 event: options.$event,
