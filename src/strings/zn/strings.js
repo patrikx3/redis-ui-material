@@ -26,6 +26,9 @@ const strings = {
     cluster: "集群",
   },
   confirm: {
+    uploadBuffer: "您确定上传此二进制数据吗？",
+    uploadBufferDone: "二进制数据已上传",
+    uploadBufferDoneAndSave: "二进制数据上传并保存在服务器上",
     title: "确认",
     alert: "警告",
     info: "信息",

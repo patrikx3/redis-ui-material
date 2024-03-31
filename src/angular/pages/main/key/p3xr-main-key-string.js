@@ -27,20 +27,28 @@ p3xr.ng.component('p3xrMainKeyString', {
 
                 try {
                     if (this.editable === true) {
+                        await p3xrCommon.confirm({
+                            message: p3xr.strings.confirm.uploadBuffer
+                         })
+    
                         if (this.buffer === true) {
                             this.p3xrValueBuffer = arrayBuffer
                         } else {    
                             this.p3xrValue = arrayBuffer
                         }
+                        p3xrCommon.toast(p3xr.strings.confirm.uploadBufferDone)
                         $scope.$digest()
                         return
                     }    
                 } catch(e) {
                     p3xrCommon.generalHandleError(e)
-                }
+                    return
+                } 
 
                 try {
-                     await p3xrCommon.confirm({})
+                     await p3xrCommon.confirm({
+                        message: p3xr.strings.confirm.uploadBuffer
+                     })
                     const response = await p3xrSocket.request({
                         action: 'key-set',
                         payload: {
@@ -49,7 +57,8 @@ p3xr.ng.component('p3xrMainKeyString', {
                             key: this.p3xrKey,
                         }
                     })
-                $rootScope.$broadcast('p3xr-refresh-key');
+                    p3xrCommon.toast(p3xr.strings.confirm.uploadBufferDoneAndSave)
+                    $rootScope.$broadcast('p3xr-refresh-key');
                     window['gtag']('config', p3xr.settings.googleAnalytics,
                         {
                             'page_path': '/key-set'

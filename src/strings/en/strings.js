@@ -26,6 +26,9 @@ const strings = {
     cluster: "Cluster",
   },
   confirm: {
+    uploadBuffer: "Are you sure to upload this binary data?",
+    uploadBufferDone: "The binary data is uploaded",
+    uploadBufferDoneAndSave: "The binary data is uploaded and saved on the server",
     title: "Confirm",
     alert: "Alert",
     info: "Info",

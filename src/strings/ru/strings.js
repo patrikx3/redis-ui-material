@@ -26,6 +26,9 @@ const strings = {
     cluster: "Кластер",
   },
   confirm: {
+    uploadBuffer: "Вы уверены, чтобы загрузить эти двоичные данные?",
+    uploadBufferDone: "Двоичные данные загружаются",
+    uploadBufferDoneAndSave: "Двоичные данные загружаются и сохраняются на сервере.",
     title: "Подтвердить",
     alert: "Внимание",
     info: "Информация",
