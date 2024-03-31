@@ -14,6 +14,15 @@ p3xr.ng.component('p3xrMainKeyString', {
             input.click();
         }
 
+
+        const prettyBytes = require('pretty-bytes');
+
+        this.bufferDisplay = (value) => {            
+            const result = '(' + prettyBytes(value.byteLength) + ')'
+            //console.log('bufferDisplay', result     )
+            return result
+        }
+            
         $scope.readFileAsBuffer = async (event) => {
             const file = event.target.files[0];
             if (!file) {

@@ -78,7 +78,10 @@ p3xr.ng.component('p3xrMainKey', {
                             case 'zn':
                                 language = 'zh_CN'
                                 break;
-                            default:
+                            case 'ru':
+                                language = 'ru'
+                                break;
+                            default:                                
                                 language = 'en'
                                 break;
                         }

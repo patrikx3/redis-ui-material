@@ -106,21 +106,22 @@
         </span>
     </div>
 
-    <div ng-if="$ctrl.editable">
+    <div ng-if="$ctrl.editable">        
         <md-input-container class="md-block">
-            <label>{{ $root.p3xr.strings.label.edit }}</label>
+            <label>{{ $root.p3xr.strings.label.edit }}</label>            
             <div class="p3xr-md-input-container-bottom-info" ng-if="$ctrl.p3xrValue && $ctrl.p3xrValue.toString() === '[object ArrayBuffer]'">
-                {{ $root.p3xr.strings.label.isBuffer }}
+                {{ $root.p3xr.strings.label.isBuffer }} {{$ctrl.bufferDisplay($ctrl.p3xrValue)}}
             </div>
             <textarea ng-model="$ctrl.p3xrValue" ng-if="!$ctrl.buffer" p3x-validate-json
                       p3x-validate-json-required="validateJson"></textarea>
             <span  ng-if="$ctrl.buffer">
                 <div class="p3xr-md-input-container-bottom-info">
-                    {{ $root.p3xr.strings.label.isBuffer }}
+                    {{ $root.p3xr.strings.label.isBuffer }} {{$ctrl.bufferDisplay($ctrl.p3xrValueBuffer)}}
                 </div>
                 <textarea ng-model="$ctrl.p3xrValueBuffer" p3x-validate-json
                     p3x-validate-json-required="validateJson"></textarea>
             </span>                      
+    
         </md-input-container>
     </div>
 </div>
