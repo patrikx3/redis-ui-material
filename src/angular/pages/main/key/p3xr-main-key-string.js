@@ -91,13 +91,13 @@ p3xr.ng.component('p3xrMainKeyString', {
 
         this.editable = false;
         this.buffer = false
-        let originalValue
+        this.originalValue = undefined
         this.edit = () => {
             if (this.p3xrValue.length < p3xr.settings.maxValueAsBuffer ) {
-                originalValue = p3xr.clone(this.p3xrValue) 
+                this.originalValue = p3xr.clone(this.p3xrValue) 
                 this.buffer = false
             } else {
-                originalValue = p3xr.clone(this.p3xrValueBuffer)
+                this.originalValue = p3xr.clone(this.p3xrValueBuffer)
                 this.buffer = true
             }
             this.editable = true
@@ -105,9 +105,9 @@ p3xr.ng.component('p3xrMainKeyString', {
 
         this.cancelEdit = () => {
             if (this.buffer === true) {
-                this.p3xrValueBuffer = originalValue
+                this.p3xrValueBuffer = this.originalValue                
             } else {
-                this.p3xrValue = originalValue
+                this.p3xrValue = this.originalValue
             }
             this.editable = false
             this.buffer = false

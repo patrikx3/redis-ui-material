@@ -1,18 +1,21 @@
-const isObject = require('lodash/isObject')
-const transform = require('lodash/transform')
+const isObject = require('lodash/isObject');
+const transform = require('lodash/transform');
 
 function removeHashKeys(data) {
-    return transform(data, (result, value, key) => {
-      // Exclude $$hashKey from the transformation
-      if (key !== '$$hashKey') {
-        // Recursively apply transformation for objects and arrays, else assign value directly
-        result[key] = isObject(value) ? removeHashKeys(value) : value;
-      }
-    });
-  }
-  
+    // Check explicitly for null and array to prevent treating them as objects
+    if (Array.isArray(data)) {
+        return data.map(item => removeHashKeys(item));
+    } else if (isObject(data) && !Array.isArray(data) && data !== null && typeof data !== 'string') {
+        return transform(data, (result, value, key) => {
+            if (key !== '$$hashKey') {
+                result[key] = isObject(value) ? removeHashKeys(value) : value;
+            }
+        });
+    } else {
+        return data;
+    }
+}
 
 p3xr.clone = (value) => {
-    //console.warn('clone, executed', value)
-    return removeHashKeys(value)
-}
+    return removeHashKeys(value);
+};

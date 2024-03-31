@@ -13,6 +13,11 @@ p3xr.ng.component('p3xrSettings', {
                 connection: connection
             })
         }
+        
+        this.disconnect = () => {
+            //console.log('connection', connection)
+            $scope.$emit('p3xr-disconnect')
+        }
 
         this.setLicense = async (options) => {
             try {

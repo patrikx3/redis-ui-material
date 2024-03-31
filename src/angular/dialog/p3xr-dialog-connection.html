@@ -40,6 +40,7 @@
                         </md-switch>    
 
                         <fieldset ng-if="model.ssh">
+                            <legend>SSH</legend>
                             <md-input-container class="md-block">
                                 <label>{{ $root.p3xr.strings.label.ssh.sshHost }}</label>
                                 <input required name="sshHost" ng-model="model.sshHost"
@@ -94,6 +95,7 @@
                     <br/>
 
                     <fieldset>
+                        <legend>Node 1</legend>
                         <md-input-container class="md-block">
                             <label>{{ $root.p3xr.strings.form.connection.label.host }}</label>
                             <input name="host" ng-model="model.host" ng-disabled="$root.p3xr.state.cfg.readonlyConnections">
@@ -276,6 +278,7 @@
                     <div ng-if="model.tlsWithoutCert !== true" style="padding-top: 4px;">
 
                         <fieldset>
+                            <legend>TLS</legend>
                             <md-input-container class="md-block p3xr-md-input-container-no-bottom">
                                 <label>TLS (redis.crt)</label>
                                 <textarea name="tlsCrt" ng-model="model.tlsCrt"

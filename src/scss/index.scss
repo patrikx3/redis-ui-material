@@ -47,9 +47,18 @@ md-dialog md-dialog-actions button {
  }
 
 .p3xr-theme-light {
+
+    fieldset {
+        border-color: rgba(0, 0, 0, 0.5);
+    }
+
 }
 
 .p3xr-theme-dark {
+
+    fieldset {
+        border-color: rgba(255, 255, 255, 0.25);
+    }
 
     ::selection {
         color: white;

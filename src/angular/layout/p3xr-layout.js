@@ -134,6 +134,10 @@ p3xr.ng.component('p3xrLayout', {
             this.connect(connection, true)
         })
 
+        $scope.$on('p3xr-disconnect', (event) => {
+            this.disconnect()
+        })
+
         this.connect = async (connection, disableState = false) => {
 
             console.time('connect')

@@ -24,8 +24,30 @@
                     <h3>{{connection.name}}</h3>
                     <!--                    <h4>{{item.who}}</h4> -->
                     <p>{{connection.host}}:{{connection.port}}</p>
+                    <p ng-repeat="(connectionKey, connectionValue) in $root.p3xr.state.redisConnections">
+                        <span ng-if="connectionValue.connection.name === connection.name">
+                            {{ $root.p3xr.strings.page.overview.connectedCount({ length: connectionValue.clients.length }) }}
+                        </span>                    
+                    </p>
                 </div>
 
+
+
+                <md-button class="md-accent md-raised"  ng-if="$root.p3xr.state.connection.id !== connection.id" 
+                           ng-click="$ctrl.connect({ connection })"
+                           >
+                    <md-icon>power</md-icon>
+                    <span hide-xs>{{ $root.p3xr.strings.intention.connect }}</span>
+                    <md-tooltip ng-if="$root.$mdMedia('xs')">{{ $root.p3xr.strings.intention.connect }}</md-tooltip>
+                </md-button>
+
+                <md-button ng-if="$root.p3xr.state.connection.id === connection.id" class="md-accent md-raised" ng-click="$ctrl.disconnect()">
+                    <i class="fa fa-power-off"></i>
+                    <span hide-xs hide-sm>{{ $root.p3xr.strings.intention.disconnect }}</span>
+                    <md-tooltip ng-if="$root.$mdMedia('xs') || $root.$mdMedia('sm')" md-direction="top">{{
+                        $root.p3xr.strings.intention.disconnect }}
+                    </md-tooltip>
+                </md-button>
 
                 <md-button class="md-warn md-raised" ng-click="$ctrl.deleteConnection({ model: connection, ev: $event})"
                            ng-if="!$root.p3xr.state.cfg.readonlyConnections">
@@ -50,14 +72,6 @@
                     <md-tooltip ng-if="$root.$mdMedia('xs')">{{ $root.p3xr.strings.intention.view }}</md-tooltip>
                 </md-button>
 
-
-                <md-button class="md-accent md-raised"
-                           ng-click="$ctrl.connect({ connection })"
-                           >
-                    <md-icon>power</md-icon>
-                    <span hide-xs>{{ $root.p3xr.strings.intention.connect }}</span>
-                    <md-tooltip ng-if="$root.$mdMedia('xs')">{{ $root.p3xr.strings.intention.connect }}</md-tooltip>
-                </md-button>
 
                 <md-divider ng-if="!$last"></md-divider>
             </md-list-item>
