@@ -58,6 +58,10 @@ p3xr.ng.component('p3xrMainKeyString', {
                      await p3xrCommon.confirm({
                         message: p3xr.strings.confirm.uploadBuffer
                      })
+
+
+                     p3xr.ui.overlay.show()
+
                     const response = await p3xrSocket.request({
                         action: 'key-set',
                         payload: {
@@ -67,17 +71,17 @@ p3xr.ng.component('p3xrMainKeyString', {
                         }
                     })
                     p3xrCommon.toast(p3xr.strings.confirm.uploadBufferDoneAndSave)
-                    $rootScope.$broadcast('p3xr-refresh-key');
                     window['gtag']('config', p3xr.settings.googleAnalytics,
                         {
                             'page_path': '/key-set'
                         }
                     );
+                    $rootScope.$broadcast('p3xr-refresh-key');                    
     
                 } catch (e) {
                     p3xrCommon.generalHandleError(e)
                 } finally {
-                    
+                    p3xr.ui.overlay.hide()                    
                 }
 
             };
@@ -163,6 +167,7 @@ p3xr.ng.component('p3xrMainKeyString', {
             }
 
             try {
+                p3xr.ui.overlay.show()
                 const request = {
                     action: 'key-set',
                     payload: {
@@ -184,6 +189,7 @@ p3xr.ng.component('p3xrMainKeyString', {
             } catch (e) {
                 p3xrCommon.generalHandleError(e)
             } finally {
+                p3xr.ui.overlay.hide()
                 $rootScope.$broadcast('p3xr-refresh-key');
             }
         }

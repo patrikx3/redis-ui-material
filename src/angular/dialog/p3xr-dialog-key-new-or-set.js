@@ -147,6 +147,8 @@ p3xr.ng.factory('p3xrDialogKeyNewOrSet', function (p3xrCommon, $mdDialog, p3xrSo
                                     return;
                                 }
                                 try {
+                                    p3xr.ui.overlay.show()  
+
                                     const response = await p3xrSocket.request({
                                         action: 'key-new-or-set',
                                         payload: {
@@ -172,6 +174,8 @@ p3xr.ng.factory('p3xrDialogKeyNewOrSet', function (p3xrCommon, $mdDialog, p3xrSo
                                 } catch (e) {
                                     //reject(e)
                                     p3xrCommon.generalHandleError(e)
+                                } finally {
+                                    p3xr.ui.overlay.hide()
                                 }
 
                             }

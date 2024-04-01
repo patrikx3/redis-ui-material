@@ -129,6 +129,11 @@ p3xr.ng.component('p3xrMainKey', {
                 //    message: p3xr.strings.intention.getKey
                 //})
                 this.loading = true
+               
+                setTimeout(() => {
+                    $scope.$digest();
+                })
+
                 //const type = p3xr.state.keysInfo[$stateParams.key].type
                 //console.warn('$stateParams.key', $stateParams.key)
                 const response = await p3xrSocket.request({
@@ -199,6 +204,7 @@ p3xr.ng.component('p3xrMainKey', {
 
                 $timeout(() => {
                     this.loading = false
+                    $scope.$digest()
                 }, p3xr.settings.debounce)
 
             }
