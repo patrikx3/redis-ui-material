@@ -40,6 +40,13 @@ p3xr.settings = {
         }
         return language
     },
+    handleConnectionIsClosed: (error, $rootScope) => {
+        if (error?.message === 'Connection is closed.') {
+            $rootScope.$broadcast('p3xr-disconnect')
+            return true
+        }    
+        return false
+    },
     maxLightKeysCount: 110000,
 //    maxLightKeysCount: 1,
     resizeMinWidth: 350,

@@ -25,6 +25,7 @@ p3xr.ng.factory('p3xrCommon', function ($mdToast, $mdDialog, $mdColors, $rootSco
                 error.message = p3xr.strings.code[error.message]
             }
 
+            p3xr.settings.handleConnectionIsClosed (error, $rootScope)
 
             result.alert({
                 title: p3xr.strings.title.error,

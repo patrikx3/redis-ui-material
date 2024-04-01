@@ -181,7 +181,11 @@ p3xr.ng.component('p3xrMainKey', {
             } catch (e) {
                 hadError = e
                 console.error(e)
-                p3xrCommon.alert(p3xr.strings.label.unableToLoadKey({ key: $stateParams.key }))
+                if (!p3xr.settings.handleConnectionIsClosed(e, $rootScope)) {
+                    p3xrCommon.alert(p3xr.strings.label.unableToLoadKey({ key: $stateParams.key }))
+                } else{
+                    p3xrCommon.alert(e.message)                    
+                }
                 //p3xrCommon.generalHandleError(e)
             } finally {
                 //p3xr.ui.overlay.hide()
@@ -191,7 +195,7 @@ p3xr.ng.component('p3xrMainKey', {
                     $stateParams.resize()
                 }
 
-                $timeout(() => {
+                $timeout(() => {                    
                     this.loading = false
                     $scope.$digest()
                 }, p3xr.settings.debounce)
