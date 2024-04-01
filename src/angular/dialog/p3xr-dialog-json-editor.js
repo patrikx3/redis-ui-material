@@ -41,19 +41,7 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
 
 
                                     $timeout(() => {
-                                        // en , zn
-                                        let language
-                                        switch(p3xr.settings.language.current) {
-                                            case 'ru':
-                                                language = 'ru'
-                                                break;
-                                            case 'zn':
-                                                language = 'zh-CN'
-                                                break;
-                                            default:
-                                                language = 'en'                                                
-                                                break;
-                                        }
+
                                         const container = document.getElementById("p3xr-jsoneditor")
 
                                         const options = {
@@ -64,7 +52,7 @@ p3xr.ng.factory('p3xrDialogJsonEditor', function (p3xrCommon, $mdDialog, $timeou
                                             mode: 'code',
                                             //search: true,
                                             //mainMenuBar: false,
-                                            language: language,
+                                            language: p3xr.settings.getJSONEditorLanguage(),
                                             //enableSort: false,
                                             //enableTransform: false,
                                             //ace: ace,

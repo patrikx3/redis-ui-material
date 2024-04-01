@@ -9,6 +9,22 @@ p3xr.settings = {
             locale: p3xr.settings.language.current
         })
     },
+    getJSONEditorLanguage: () => {
+        // en , zn
+        let language
+        switch(p3xr.settings.language.current) {
+            case 'ru':
+                language = 'ru'
+                break;
+            case 'zn':
+                language = 'zh-CN'
+                break;
+            default:
+                language = 'en'                                                
+                break;
+        }
+        return language
+    },
     getHumanizeDurationLanguage: () => {
         let language
         switch(p3xr.settings.language.current) {
