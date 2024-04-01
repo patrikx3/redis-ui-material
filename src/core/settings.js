@@ -1,7 +1,29 @@
 const cookieExpiry = new Date()
 cookieExpiry.setFullYear(cookieExpiry.getFullYear() + 5)
 
+const prettyBytes = require('pretty-bytes')
+
 p3xr.settings = {
+    prettyBytes: (value) => {
+        return prettyBytes(value, {
+            locale: p3xr.settings.language.current
+        })
+    },
+    getHumanizeDurationLanguage: () => {
+        let language
+        switch(p3xr.settings.language.current) {
+            case 'zn':
+                language = 'zh_CN'
+                break;
+            case 'ru':
+                language = 'ru'
+                break;
+            default:                                
+                language = 'en'
+                break;
+        }
+        return language
+    },
     maxLightKeysCount: 110000,
 //    maxLightKeysCount: 1,
     resizeMinWidth: 350,
@@ -59,7 +81,7 @@ p3xr.settings = {
     },
     pageCount: 50,
     maxValueDisplay: 1024,
-    maxValueAsBuffer: 512 * 1024,
+    maxValueAsBuffer: 1000 * 256,
     maxValueDisplaySetting: {
       default: 1024,
       cookieName: 'p3xr-main-treecontrol-max-value-display'

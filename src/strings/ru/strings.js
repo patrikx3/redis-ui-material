@@ -149,7 +149,7 @@ const strings = {
       sshPassword: 'Пароль SSH',
       sshPrivateKey: 'Приватный ключ SSH',
     },
-    isBuffer: "[object ArrayBuffer] означает, что значение представляет собой двоичный буфер или значение превышает 0.5 МБ.",
+    isBuffer: (opts) => `[object ArrayBuffer] означает, что значение представляет собой двоичный буфер или значение превышает ${opts.maxValueAsBuffer}`,
     streamValue: `Поле и значение потока это однополосник. Например: поле1 значение1 "поле 2" "значение 2"`,
     streamTimestampId: `'*' означает автогенерацию или определяется как <millisecondsTime>-<sequenceNumber>`,
     unableToLoadKey: ({ key }) => {

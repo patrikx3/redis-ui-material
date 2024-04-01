@@ -12,10 +12,8 @@ p3xr.ng.factory('p3xrDialogKeyNewOrSet', function (p3xrCommon, $mdDialog, p3xrSo
                         controller: function ($scope, $mdDialog) {
 
 
-                            const prettyBytes = require('pretty-bytes');
-
                             $scope.bufferDisplay = (value) => {            
-                                const result = '(' + prettyBytes(value.byteLength) + ')'
+                                const result = '(' + p3xr.settings.prettyBytes(value.byteLength) + ')'
                                 //console.log('bufferDisplay', result     )
                                 return result
                             }

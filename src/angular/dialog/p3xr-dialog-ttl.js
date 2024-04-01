@@ -27,10 +27,12 @@ p3xr.ng.factory('p3xrDialogTtl', function (p3xrCommon, $mdDialog) {
 
                         const humanizeDuration = require("humanize-duration");
 
+
                         if (typeof $scope.model.ttl === 'number' && $scope.model.ttl > 0) {
 
                             $scope.convertTextToTime = humanizeDuration($scope.model.ttl * 1000, {
                                 delimiter: ' ',
+                                language: p3xr.settings.getHumanizeDurationLanguage(),
                             })
                         } else {
                             $scope.convertTextToTime = '';

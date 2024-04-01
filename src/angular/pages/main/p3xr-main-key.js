@@ -73,21 +73,10 @@ p3xr.ng.component('p3xrMainKey', {
                         this.ttlParsed = ' ' + duration
                          */
 
-                        let language
-                        switch(p3xr.settings.language.current) {
-                            case 'zn':
-                                language = 'zh_CN'
-                                break;
-                            case 'ru':
-                                language = 'ru'
-                                break;
-                            default:                                
-                                language = 'en'
-                                break;
-                        }
+
 
                         this.ttlParsed = ' ' + humanizeDuration(this.response.ttl * 1000, {
-                            language: language,
+                            language: p3xr.settings.getHumanizeDurationLanguage(),
                             delimiter: ' ',
                         })
                         const counterEl = document.getElementById('p3xr-main-key-ttl-counter')
@@ -240,8 +229,7 @@ p3xr.ng.component('p3xrMainKey', {
             if (length < 1024 || length === undefined) {
                 return ''
             }
-            const prettyBytes = require('pretty-bytes');
-            return '(' + prettyBytes(length) + ')'
+            return '(' + p3xr.settings.prettyBytes(length) + ')'
         }
 
         this.refresh = async (options) => {

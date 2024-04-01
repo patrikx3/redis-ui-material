@@ -15,10 +15,8 @@ p3xr.ng.component('p3xrMainKeyString', {
         }
 
 
-        const prettyBytes = require('pretty-bytes');
-
         this.bufferDisplay = (value) => {            
-            const result = '(' + prettyBytes(value.byteLength) + ')'
+            const result = '(' + p3xr.settings.prettyBytes(value.byteLength) + ')'
             //console.log('bufferDisplay', result     )
             return result
         }

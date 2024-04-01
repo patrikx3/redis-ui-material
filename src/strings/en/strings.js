@@ -147,7 +147,7 @@ const strings = {
       sshPrivateKey: 'SSH private key',
 
     },
-    isBuffer: "[object ArrayBuffer] means that the value is binary data or the value is bigger than 0.5MB",
+    isBuffer: (opts) => `[object ArrayBuffer] means that the value is binary data or the value is bigger than ${opts.maxValueAsBuffer}`,
     streamValue: `Stream field and value is a oneliner. Eg.: field1 value1 "field 2" "value 2"`,
     streamTimestampId: `'*' means auto generated or the specification as <millisecondsTime>-<sequenceNumber>`,
     unableToLoadKey: ({ key }) => {
