@@ -17,42 +17,66 @@ p3xr.ng.factory('p3xrRedisParser', function ($rootScope) {
             const obj = {}
             for (let row of rows) {
                 const rowLine = row.split(fieldDivider)
-                obj[rowLine[0]] = rowLine[1].trim()
+                const rowLineData = rowLine[1] ?? ''
+                obj[rowLine[0]] = rowLineData.trim()
             }
             return obj
         }
 
         this.info = (str) => {
+            //console.log( str)
             const lines = str.split('\n')
             const obj = {}
             let section
             let currentSectionObj
+            let hadSection = false
+
+            //let pikaIndex = 0
             for (let line of lines) {
                 if (line.startsWith('#')) {
+                    if (hadSection) {
+                        continue
+                    }
+                    hadSection = true
                     if (section !== undefined) {
                         obj[section] = currentSectionObj
                     }
                     section = line.substring(1).toLowerCase().trim()
                     currentSectionObj = {}
                 } else if (line.length > 2) {
-                    const lineArray = line.split(':')
-                    const value = lineArray[1] ?? "";
+                    hadSection = false
+                    let lineArray
+                    let value
+                    if (line.includes(':')) {
+                        lineArray = line.split(':')
+                        value = lineArray[1] ?? "";
+                    } else {
+                        continue
+                    }
+                    
                     currentSectionObj[lineArray[0]] = value.includes(',') ? selfMain.array({
                         line: value.trim()
                     }) : value.trim()
                 }
             }
-            if (section !== undefined) {
+            if (section !== undefined && Object.keys(currentSectionObj).length > 0) {
                 obj[section] = currentSectionObj
             }
 
+          
+            obj.keyspaceDatabases = {}
             if (obj.hasOwnProperty('keyspace')) {
-                obj.keyspaceDatabases = {}
+                alert('ok')
                 Object.keys(obj.keyspace).forEach(key => {
                     key = parseInt(key.substring(2))
                     obj.keyspaceDatabases[key] = true
                 })
             }
+            
+
+            //console.log('obj', obj)
+           
+
             return obj
         }
 
