@@ -36,9 +36,10 @@ p3xr.ng.factory('p3xrRedisParser', function ($rootScope) {
                     currentSectionObj = {}
                 } else if (line.length > 2) {
                     const lineArray = line.split(':')
-                    currentSectionObj[lineArray[0]] = lineArray[1].includes(',') ? selfMain.array({
-                        line: lineArray[1].trim()
-                    }) : lineArray[1].trim()
+                    const value = lineArray[1] ?? "";
+                    currentSectionObj[lineArray[0]] = value.includes(',') ? selfMain.array({
+                        line: value.trim()
+                    }) : value.trim()
                 }
             }
             if (section !== undefined) {
