@@ -66,7 +66,7 @@ p3xr.ng.factory('p3xrRedisParser', function ($rootScope) {
           
             obj.keyspaceDatabases = {}
             if (obj.hasOwnProperty('keyspace')) {
-                alert('ok')
+                //alert('ok')
                 Object.keys(obj.keyspace).forEach(key => {
                     key = parseInt(key.substring(2))
                     obj.keyspaceDatabases[key] = true
