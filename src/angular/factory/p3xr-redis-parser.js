@@ -24,14 +24,14 @@ p3xr.ng.factory('p3xrRedisParser', function ($rootScope) {
         }
 
         this.info = (str) => {
-            //console.log( str)
+            console.log( str)
             const lines = str.split('\n')
             const obj = {}
             let section
             let currentSectionObj
             let hadSection = false
 
-            //let pikaIndex = 0
+            let pikaIndex = 0
             for (let line of lines) {
                 if (line.startsWith('#')) {
                     if (hadSection) {
@@ -50,13 +50,33 @@ p3xr.ng.factory('p3xrRedisParser', function ($rootScope) {
                     if (line.includes(':')) {
                         lineArray = line.split(':')
                         value = lineArray[1] ?? "";
+
+                        currentSectionObj[lineArray[0]] = value.includes(',') ? selfMain.array({
+                            line: value.trim()
+                        }) : value.trim()
                     } else {
-                        continue
+                        // pika
+                        let [key, values] = line.split(/ (.+)/); 
+                        lineArray = key
+                        value = values ?? "";
+
+                        value = value.split(',').map((item) => `${(pikaIndex) + '-' + item.trim()}`).join(',')
+
+                        //console.log('value', value)
+
+                        if (currentSectionObj.hasOwnProperty('db0')) {
+                            Object.assign(currentSectionObj['db0'], value.includes(',') ? selfMain.array({
+                                line: value.trim()
+                            }) : value.trim()    )
+                        } else {
+                            currentSectionObj['db0'] = value.includes(',') ? selfMain.array({
+                                line: value.trim()
+                            }) : value.trim()    
+                        }
+                        pikaIndex++
+
                     }
                     
-                    currentSectionObj[lineArray[0]] = value.includes(',') ? selfMain.array({
-                        line: value.trim()
-                    }) : value.trim()
                 }
             }
             if (section !== undefined && Object.keys(currentSectionObj).length > 0) {
@@ -64,6 +84,8 @@ p3xr.ng.factory('p3xrRedisParser', function ($rootScope) {
             }
 
           
+            console.warn('info', obj)
+
             obj.keyspaceDatabases = {}
             if (obj.hasOwnProperty('keyspace')) {
                 //alert('ok')
