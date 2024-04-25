@@ -44,7 +44,7 @@
               <p3xr-button  class="p3xr-main-toolbar-button"  ng-click="$ctrl.refresh({ keepTree: true })"
                            p3xr-label="$root.p3xr.strings.intention.refresh" p3xr-md-icon="refresh"></p3xr-button>
 
-                <p3xr-button  class="p3xr-main-toolbar-button"  ng-click="$ctrl.quickConsole()"
+                <p3xr-button  class="p3xr-main-toolbar-button"  ng-click="$ctrl.quickConsole()" ng-if="!$root.p3xr.state.connection.readonly"
                            p3xr-label="$root.p3xr.strings.intention.quickConsole" p3xr-md-icon="keyboard"></p3xr-button>
 
         </span>

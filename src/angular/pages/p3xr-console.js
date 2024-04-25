@@ -343,6 +343,8 @@ p3xr.ng.component('p3xrConsole', {
                 //console.log('$rootScope.p3xr.state.monitor after', $rootScope.p3xr.state.monitor)
             } catch(e) {
                 p3xrCommon.generalHandleError(e)
+                $rootScope.p3xr.state.monitor = false
+                $scope.$digest()
             }
         }
 
