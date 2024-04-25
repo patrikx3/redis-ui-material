@@ -313,7 +313,7 @@ p3xr.ng.component('p3xrConsole', {
                     actionHistoryPosition = -1
                     break;
             }
-            const log = getActionHistory()
+            //const log = getActionHistory()
             //console.log('actionHistoryPosition', actionHistoryPosition, 'getActionHistory()', 'log', log, 'log.length', log.length)
         }
 
@@ -327,6 +327,23 @@ p3xr.ng.component('p3xrConsole', {
         this.getMatches = (searchText) => {
             const matches =  p3xr.state.commands.filter(e => e.includes(searchText))
             return matches
+        }
+
+
+        this.setMonitorState = async() => {
+            try {
+                console.log('$rootScope.p3xr.state.monitor', $rootScope.p3xr.state.monitor)
+                response = await p3xrSocket.request({
+                    action: 'set-subscription',
+                    payload: {
+                        subscription: $rootScope.p3xr.state.monitor,
+                        subscriberPattern: $rootScope.p3xr.state.monitorPattern,
+                    }
+                })
+                //console.log('$rootScope.p3xr.state.monitor after', $rootScope.p3xr.state.monitor)
+            } catch(e) {
+                p3xrCommon.generalHandleError(e)
+            }
         }
 
         this.commands = (options) => {

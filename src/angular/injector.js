@@ -7,6 +7,7 @@ require('./dialog/p3xr-dialog-key-new-or-set.js');
 require('./dialog/p3xr-dialog-treecontrol-settings.js');
 require('./dialog/p3xr-dialog-ttl.js');
 require('./directive/p3x-validate-json.js');
+require('./directive/p3xr-monitor-input.js');
 require('./directive/p3xr-ng-enter.js');
 require('./factory/p3xr-common.js');
 require('./factory/p3xr-key-paging.js');

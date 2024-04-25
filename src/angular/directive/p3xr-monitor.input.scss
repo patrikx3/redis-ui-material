@@ -1,0 +1,23 @@
+.p3xr-monitor-input {
+    position: absolute;
+    transform: translateX(20px);
+    top: 48px;
+    display: block; /* Hide by default and let AngularJS show it */
+
+    md-toolbar {
+        border: none !important;
+        padding: 4px;
+        min-height: auto !important;
+        height: auto !important;
+
+        .md-toolbar-tools {
+            min-height: auto !important;
+            height: auto !important;
+            padding: 0px;;
+            input {
+                width: 100px;
+                font-size: 0.9rem;
+            }
+        }
+    }
+}

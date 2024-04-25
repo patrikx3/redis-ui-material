@@ -38,6 +38,13 @@ p3xr-console {
                 content: "> ";
                 opacity: 0.5;
             }
+            .p3xr-console-content-output-item {
+                pre {
+                   // word-break: break-all;
+                   // overflow-wrap: break-word;
+                   // white-space: pre-wrap;
+                }
+            }
         }
 
 

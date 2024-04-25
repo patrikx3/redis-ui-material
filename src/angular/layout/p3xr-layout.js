@@ -187,6 +187,8 @@ p3xr.ng.component('p3xrLayout', {
                     },
                 })
                 $rootScope.p3xr.state.page = 1
+                $rootScope.p3xr.state.monitor = false
+                
                 p3xr.state.dbsize = response.dbsize
 
                 let dbIndex = 0

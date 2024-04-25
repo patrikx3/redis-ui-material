@@ -24,7 +24,7 @@ p3xr.ng.factory('p3xrRedisParser', function ($rootScope) {
         }
 
         this.info = (str) => {
-            console.log( str)
+            //console.log( str)
             const lines = str.split('\n')
             const obj = {}
             let section
