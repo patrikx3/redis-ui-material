@@ -99,6 +99,8 @@ p3xr.ng.factory('p3xrSocket', function ($rootScope, p3xrCommon, $state, $cookies
 
     ioClient.on('redis-disconnected', async (data) => {
         if ($rootScope.p3xr.state.connection !== undefined && $rootScope.p3xr.state.connection.id === data.connectionId) {
+            $rootScope.p3xr.monitor = false;
+
             $rootScope.p3xr.state.connection = undefined;
 
             if (data.status === 'error') {
