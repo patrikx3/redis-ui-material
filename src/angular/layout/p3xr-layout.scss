@@ -62,11 +62,11 @@
     text-align: center;
     padding-left: 5px;
     padding-right: 5px;
-    height: $toolbar-height / 2;
-    bottom: $toolbar-height + 5px;
+    height: calc($toolbar-height / 2);
+    bottom: calc(toolbar-height + 5px);
     font-weight: bold;
     text-transform: uppercase;
-    line-height: $toolbar-height / 2;
+    line-height: calc($toolbar-height / 2);
     border-style: solid;
     border-width: 5px;
     cursor: pointer;

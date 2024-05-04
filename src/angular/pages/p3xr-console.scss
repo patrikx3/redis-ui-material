@@ -71,7 +71,7 @@ p3xr-console {
 
 #p3xr-console-input:focus {
 
-    @extend .p3xr-input:focus;
+    @extend .p3xr-input, :focus;
 }
 
 #p3xr-console-autocomplete.p3xr-console-autocomplete-quick #p3xr-console-input {
