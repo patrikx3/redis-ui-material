@@ -5,3 +5,9 @@
     margin-right: $layout-padding;
     margin-bottom: $layout-padding;
 }
+
+p3xr-accordion md-toolbar {
+    // fix with border radious only left and right top of the toolbar
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}

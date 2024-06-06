@@ -275,11 +275,11 @@ p3xr.ng.component('p3xrMain', {
                     this.refresh()
                 }
             }
-            if (p3xr.state.connections.list.length === 0 && p3xr.state.connection === undefined) {
+            //if (p3xr.state.connections.list.length === 0 && p3xr.state.connection === undefined) {
                 setTimeout(() => {
                     rawResize()
                 }, 250)
-            }
+            //}
         }
 
 

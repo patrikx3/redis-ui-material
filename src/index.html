@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>P3X Redis UI</title>
     <meta charset="UTF-8">
@@ -11,15 +12,20 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-8M2CK7993T"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
 
         gtag('config', 'G-8M2CK7993T');
     </script>
-
+    <!--
+    <script async custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1410073260887710"
+     crossorigin="anonymous"></script>
+     -->
 </head>
+
 <body id="p3xr-redis-ui-bootstrap" ng-cloak md-theme-watch md-theme="{{ $root.p3xr.state.themeLayout }}"
-      md-colors="{ background: 'background' }">
+    md-colors="{ background: 'background' }">
 
     <p3xr-layout>
 
@@ -67,6 +73,7 @@
                 0% {
                     transform: translate3d(0, 10px, 0) scale(1.2, 0.85);
                 }
+
                 100% {
                     transform: translate3d(0, -20px, 0) scale(0.9, 1.1);
                 }
@@ -85,5 +92,18 @@
 
 
 
+    <!--
+    <div id="adsbygoogle-container">
+        <amp-ad
+            layout="fixed"
+            width="728"
+            height="90"
+            type="adsense"
+            data-ad-client="ca-pub-1410073260887710"
+            data-ad-slot="8218322555">
+        </amp-ad>
+    </div>
+-->
 </body>
+
 </html>

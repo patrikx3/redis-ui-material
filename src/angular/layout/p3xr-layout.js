@@ -1,6 +1,6 @@
 p3xr.ng.component('p3xrLayout', {
     template: require('./p3xr-layout.html'),
-    controller: function (p3xrTheme, $rootScope, p3xrSocket, p3xrCommon, $state, $cookies, $timeout, $scope, p3xrDialogAskAuthorization) {
+    controller: function (p3xrTheme, $rootScope, p3xrSocket, p3xrCommon, $state, $cookies, $timeout, $scope, p3xrDialogAskAuthorization, $http) {
 
         let themesCache
         this.getThemeKey = (themes) => {
@@ -98,6 +98,16 @@ p3xr.ng.component('p3xrLayout', {
 `)
              */
 
+/*
+            $http.get(p3xr.api.host + '/nonce').then((response) => {
+                // Inject the AdSense script dynamically with the nonce
+                const adsContainer = document.getElementById('adsbygoogle-container');
+                adsContainer.innerHTML = `
+
+                `;
+
+            })
+*/
 
 
         }

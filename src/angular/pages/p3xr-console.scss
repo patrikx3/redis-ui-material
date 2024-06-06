@@ -3,6 +3,12 @@
 p3xr-console {
     .p3xr-console-electron {
         margin: $layout-padding;
+
+    }
+
+    md-toolbar {
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
     }
 
     #p3xr-console-content {
