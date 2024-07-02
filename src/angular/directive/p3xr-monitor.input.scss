@@ -1,3 +1,5 @@
+
+
 .p3xr-monitor-input {
     position: absolute;
     transform: translateX(20px);
@@ -9,6 +11,11 @@
         padding: 4px;
         min-height: auto !important;
         height: auto !important;
+
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        border-bottom-left-radius: $border-radius;
+        border-bottom-right-radius: $border-radius;
 
         .md-toolbar-tools {
             min-height: auto !important;

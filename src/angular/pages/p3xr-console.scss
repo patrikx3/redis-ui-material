@@ -7,8 +7,8 @@ p3xr-console {
     }
 
     md-toolbar {
-        border-top-left-radius: 6px;
-        border-top-right-radius: 6px;
+        border-top-left-radius: $border-radius;
+        border-top-right-radius: $border-radius;
     }
 
     #p3xr-console-content {

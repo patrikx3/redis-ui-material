@@ -1,3 +1,5 @@
+@import "../../scss/vars";
+
 p3xr-main {
 
     @media (max-width:350px) {
@@ -7,8 +9,8 @@ p3xr-main {
     }
 
     md-toolbar, .p3xr-content-border {
-        border-top-left-radius: 6px;
-        border-top-right-radius: 6px;
+        border-top-left-radius: $border-radius;
+        border-top-right-radius: $border-radius;
     }
 
     #p3xr-main-treecontrol-container {

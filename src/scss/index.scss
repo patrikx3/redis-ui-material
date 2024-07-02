@@ -1,3 +1,4 @@
+@import "./vars";
 
 #adsbygoogle-container {
     position: fixed;
@@ -7,7 +8,7 @@
 }
 
 .md-button {
-    border-radius: 6px;
+    border-radius: $border-radius;
 }
 
 md-toast {

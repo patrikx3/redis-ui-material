@@ -1,46 +1,54 @@
 <!-- ng-class="{ 'p3xr-console-electron': $root.isElectron }" -->
 <div>
-    <md-toolbar class="md-primary" ng-class="{'md-hue-1': $ctrl.type !== 'quick', 'md-hue-3': $ctrl.type === 'quick'}" md-theme="{{ $root.p3xr.state.themeLayout}}" id="p3xr-console-header">
+    <md-toolbar class="md-primary" ng-class="{'md-hue-1': $ctrl.type !== 'quick', 'md-hue-3': $ctrl.type === 'quick'}"
+        md-theme="{{ $root.p3xr.state.themeLayout}}" id="p3xr-console-header">
         <div class="md-toolbar-tools" ng-if="$ctrl.type !== 'quick'">
             <h2 flex md-truncate>{{ $root.p3xr.strings.label.console }}</h2>
 
             <span ng-click="$ctrl.setMonitorState()" p3xr-monitor-input controller="$ctrl">
-                <md-tooltip ng-if="$root.$mdMedia('xs')" md-direction="bottom">{{ $root.p3xr.strings.intention.pubsubMonitor }}</md-tooltip>
-                <md-checkbox ng-model="$root.p3xr.state.monitor" style="transform: scale(0.75)" id="p3xr-console-pubsub-checkbox">
+                <md-tooltip ng-if="$root.$mdMedia('xs')" md-direction="bottom">{{
+                    $root.p3xr.strings.intention.pubsubMonitor }}</md-tooltip>
+                <md-checkbox ng-model="$root.p3xr.state.monitor" style="transform: scale(0.75)"
+                    id="p3xr-console-pubsub-checkbox">
                     <span hide-xs>{{ $root.p3xr.strings.intention.pubsubMonitor }}</span>
                 </md-checkbox>
             </span>
 
             <p3xr-button p3xr-label="$root.p3xr.strings.intention.commands" p3xr-md-icon="menu"
-                            ng-click="$ctrl.commands({ $event: $event})"></p3xr-button>
+                ng-click="$ctrl.commands({ $event: $event})"></p3xr-button>
 
             <p3xr-button p3xr-label="$root.p3xr.strings.intention.clear" p3xr-md-icon="backspace"
-                            ng-click="$ctrl.clearConsole()"></p3xr-button>
+                ng-click="$ctrl.clearConsole()"></p3xr-button>
         </div>
         <div class="md-toolbar-tools p3xr-content-border-toolbar" ng-if="$ctrl.type === 'quick'">
             <h2 flex md-truncate>{{ $root.p3xr.strings.intention.quickConsole }}</h2>
-            <span ng-click="$ctrl.setMonitorState()"  p3xr-monitor-input  controller="$ctrl">
-                <md-tooltip ng-if="$root.$mdMedia('xs')" md-direction="bottom">{{ $root.p3xr.strings.intention.pubsubMonitor }}</md-tooltip>
-                <md-checkbox ng-model="$root.p3xr.state.monitor"style="transform: scale(0.75)" id="p3xr-console-pubsub-checkbox">
+            <span ng-click="$ctrl.setMonitorState()" p3xr-monitor-input controller="$ctrl">
+                <md-tooltip ng-if="$root.$mdMedia('xs')" md-direction="bottom">{{
+                    $root.p3xr.strings.intention.pubsubMonitor }}</md-tooltip>
+                <md-checkbox ng-model="$root.p3xr.state.monitor" style="transform: scale(0.75)"
+                    id="p3xr-console-pubsub-checkbox">
                     <span hide-xs>{{ $root.p3xr.strings.intention.pubsubMonitor }}</span>
                 </md-checkbox>
             </span>
             <p3xr-button p3xr-label="$root.p3xr.strings.intention.clear" p3xr-md-icon="backspace"
-                            ng-click="$ctrl.clearConsole()"></p3xr-button>
+                ng-click="$ctrl.clearConsole()"></p3xr-button>
 
             <p3xr-button p3xr-label="$root.p3xr.strings.intention.close" p3xr-md-icon="close"
-                            ng-click="$ctrl.closeConsole()"></p3xr-button>
+                ng-click="$ctrl.closeConsole()"></p3xr-button>
 
         </div>
 
     </md-toolbar>
-    <md-content md-theme="{{ $root.p3xr.state.theme}}" ng-class="{'layout-padding': $ctrl.type !== 'quick'}" id="p3xr-console-content" md-whiteframe="{{ $ctrl.type !== 'quick' ? 1 : -1}}" class="p3xr-content-border-fixed">
+    <md-content md-theme="{{ $root.p3xr.state.theme}}" ng-class="{'layout-padding': $ctrl.type !== 'quick'}"
+        id="p3xr-console-content" md-whiteframe="{{ $ctrl.type !== 'quick' ? 1 : -1}}"
+        class="p3xr-content-border-fixed">
 
         <div style="display: flex; flex-direction: row; align-items: stretch; min-height: 100%">
-            <div id="p3xr-console-content-resizer" ng-if="$ctrl.type === 'quick'" ng-mousedown="$ctrl.dragStart()" ng-mouseup="$ctrl.dragEnd()">
+            <div id="p3xr-console-content-resizer" ng-if="$ctrl.type === 'quick'" ng-mousedown="$ctrl.dragStart()"
+                ng-mouseup="$ctrl.dragEnd()">
             </div>
             <div id="p3xr-console-content-output" style="flex-grow: 1;">
-            </div>    
+            </div>
         </div>
         <div id="p3xr-console-content-output" ng-if="$ctrl.type !== 'quick'">
         </div>
@@ -51,10 +59,13 @@
     </md-content>
 </div>
 
-<md-autocomplete md-autofocus id="p3xr-console-autocomplete" ng-class="{'p3xr-console-autocomplete-quick': $ctrl.type === 'quick'}"  ng-enter="$ctrl.actionEnter(searchText)" md-input-id="p3xr-console-input" class="p3xr-console" md-input-class="p3xr-input md-input" md-search-text="searchText" md-items="item in  $ctrl.getMatches(searchText)" md-item-text="item" md-clear-button="false" md-escape-options="none">
+<md-autocomplete md-autofocus id="p3xr-console-autocomplete"
+    ng-class="{'p3xr-console-autocomplete-quick': $ctrl.type === 'quick'}" ng-enter="$ctrl.actionEnter(searchText)"
+    md-input-id="p3xr-console-input" class="p3xr-console" md-input-class="p3xr-input md-input"
+    md-search-text="searchText" md-items="item in  $ctrl.getMatches(searchText)" md-item-text="item"
+    md-clear-button="false" md-escape-options="none">
     <md-item-template>
         <span md-highlight-text="searchText">{{item}}</span>
     </md-item-template>
 
 </md-autocomplete>
-        
