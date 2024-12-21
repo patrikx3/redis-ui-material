@@ -1,14 +1,17 @@
-@import '../../scss/vars';
+@use '../ui/p3xr-input';
+
+@use '../../scss/vars' as v;
+
 
 p3xr-console {
     .p3xr-console-electron {
-        margin: $layout-padding;
+        margin: v.$layout-padding;
 
     }
 
     md-toolbar {
-        border-top-left-radius: $border-radius;
-        border-top-right-radius: $border-radius;
+        border-top-left-radius: v.$border-radius;
+        border-top-right-radius: v.$border-radius;
     }
 
     #p3xr-console-content {
@@ -31,14 +34,15 @@ p3xr-console {
 
         #p3xr-console-content-output {
 
+            min-width: calc(100% - #{$minWidthCalc});
+            text-align: left;
+            
             pre {
                 font-family: 'Roboto Mono' !important;
                 //font-weight: 500;
                 //white-space: pre-wrap;
             }
 
-            min-width: calc(100% - #{$minWidthCalc});
-            text-align: left;
 
             .p3xr-console-content-output-item:before {
                 content: "> ";
@@ -62,14 +66,13 @@ p3xr-console {
 }
 
 
-@import '../ui/p3xr-input';
 
 #p3xr-console-input {
     
 
     min-width: calc(100% - 9px);
     position: fixed;
-    bottom: $toolbar-height + 8px;
+    bottom: v.$toolbar-height + 8px;
     left: 3px;
     right: 3px;
 

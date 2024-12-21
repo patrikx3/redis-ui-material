@@ -1,13 +1,13 @@
-@import "../../scss/vars";
+@use "../../scss/vars" as v;
 
 .p3xr-accordion-electron {
-    margin-left: $layout-padding;
-    margin-right: $layout-padding;
-    margin-bottom: $layout-padding;
+    margin-left: v.$layout-padding;
+    margin-right: v.$layout-padding;
+    margin-bottom: v.$layout-padding;
 }
 
 p3xr-accordion md-toolbar {
     // fix with border radious only left and right top of the toolbar
-    border-top-left-radius: $border-radius;
-    border-top-right-radius: $border-radius;
+    border-top-left-radius: v.$border-radius;
+    border-top-right-radius: v.$border-radius;
 }

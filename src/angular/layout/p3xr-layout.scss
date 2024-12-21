@@ -1,11 +1,10 @@
-@import '../../scss/vars';
-
+@use '../../scss/vars' as v;
 
 .p3xr-layout-content, .p3xr-layout-content-electron {
     position: absolute;
     left: 0px;
     right: 0px;
-    margin-bottom: $toolbar-height;
+    margin-bottom: v.$toolbar-height;
 }
 
 .p3xr-layout-content-electron {
@@ -13,8 +12,8 @@
 }
 
 .p3xr-layout-content {
-    padding: $layout-padding;
-    margin-top: $toolbar-height;
+    padding: v.$layout-padding;
+    margin-top: v.$toolbar-height;
 }
 
 #p3xr-layout-header-container {
@@ -48,9 +47,9 @@
     width: 100%;
 
     md-toolbar, .md-toolbar-tools {
-        height: $toolbar-height !important;
-        min-height: $toolbar-height !important;
-        max-height: $toolbar-height !important;
+        height: v.$toolbar-height !important;
+        min-height: v.$toolbar-height !important;
+        max-height: v.$toolbar-height !important;
     }
 }
 
@@ -62,11 +61,11 @@
     text-align: center;
     padding-left: 5px;
     padding-right: 5px;
-    height: calc($toolbar-height / 2);
-    bottom: calc(toolbar-height + 5px);
+    height: calc(v.$toolbar-height / 2);
+    bottom: calc(v.$toolbar-height + 5px);
     font-weight: bold;
     text-transform: uppercase;
-    line-height: calc($toolbar-height / 2);
+    line-height: calc(v.$toolbar-height / 2);
     border-style: solid;
     border-width: 5px;
     cursor: pointer;

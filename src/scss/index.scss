@@ -1,4 +1,5 @@
-@import "./vars";
+@use 'vars' as v;
+@use '../injector';
 
 #adsbygoogle-container {
     position: fixed;
@@ -8,7 +9,7 @@
 }
 
 .md-button {
-    border-radius: $border-radius;
+    border-radius: v.$border-radius;
 }
 
 md-toast {
@@ -302,12 +303,11 @@ md-dialog md-dialog-actions button {
 }
 
 
-@import 'vars';
 
 md-toolbar, .md-toolbar-tools {
-    height: $toolbar-height !important;
-    min-height: $toolbar-height !important;
-    max-height: $toolbar-height !important;
+    height: v.$toolbar-height !important;
+    min-height: v.$toolbar-height !important;
+    max-height: v.$toolbar-height !important;
 }
 
 body.p3xr-no-animation * {
@@ -429,10 +429,9 @@ body.p3xr-no-animation * {
 }
 
 .p3x-margin-height {
-    margin-bottom: $layout-padding;
+    margin-bottom: v.$layout-padding;
 }
 
-@import '../injector';
 
 input {
     font-family: 'Roboto' !important;

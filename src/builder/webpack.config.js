@@ -207,10 +207,12 @@ let optimization = {
 
 if (minimize) {
 
+    /*
     rules.push({
         test: /\.js$/,
         loader: 'webpack-remove-debug'
     })
+    */
 
 
     rules.push(      {

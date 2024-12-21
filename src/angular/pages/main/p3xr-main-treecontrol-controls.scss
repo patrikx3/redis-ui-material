@@ -33,13 +33,15 @@ p3xr-main-treecontrol-controls {
 .p3xr-main-treecontrol-controls-divider-select {
     display: inline-block;
     .md-select-value {
+       
+        min-width: 0px !important;
+        min-height: 0px !important;
+
         span:not(.md-select-icon) {
             visibility: hidden !important;
             display: none !important;
         }
-        min-width: 0px !important;
-        min-height: 0px !important;
-
+        
         .md-select-icon {
             width: 3px !important;
             position: relative;

@@ -1,10 +1,6 @@
-
 #p3xr-overlay {
-    i {
-        font-size: 400% !important;
-    }
+    font-size: 125%;  // Move this declaration above the nested rule
 
-    font-size: 125%;
     position: fixed;
     left: 0;
     top: 0;
@@ -20,8 +16,13 @@
     background-color: rgba(0, 0, 0, 0.9);
     z-index: 99999;
     color: rgba(128, 128, 128, 0.5);
+    
+    i {
+        font-size: 400% !important;
+    }
 
     #p3xr-overlay-info {
 
     }
 }
+

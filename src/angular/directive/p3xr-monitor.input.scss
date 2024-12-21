@@ -1,4 +1,5 @@
 
+@use '../../scss/vars' as v;
 
 .p3xr-monitor-input {
     position: absolute;
@@ -14,8 +15,8 @@
 
         border-top-left-radius: 0px;
         border-top-right-radius: 0px;
-        border-bottom-left-radius: $border-radius;
-        border-bottom-right-radius: $border-radius;
+        border-bottom-left-radius: v.$border-radius;
+        border-bottom-right-radius: v.$border-radius;
 
         .md-toolbar-tools {
             min-height: auto !important;

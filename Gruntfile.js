@@ -44,7 +44,7 @@ module.exports = (grunt) => {
                                 srcDir: 'src/',
                                 filePath: filePath,
                             })
-                            return `@import "./${relative}";`;
+                            return `@use "./${relative}";`;
                         },
                         starttag: '//injector-sass-start',
                         endtag: '//injector-sass-end',
