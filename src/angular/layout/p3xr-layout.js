@@ -1,6 +1,6 @@
 p3xr.ng.component('p3xrLayout', {
     template: require('./p3xr-layout.html'),
-    controller: function (p3xrTheme, $rootScope, p3xrSocket, p3xrCommon, $state, $cookies, $timeout, $scope, p3xrDialogAskAuthorization, $http) {
+    controller: function (p3xrTheme, $rootScope, p3xrSocket, p3xrCommon, $state, $cookies, $timeout, $scope, p3xrDialogAskAuthorization) {
 
         let themesCache
         this.getThemeKey = (themes) => {
@@ -111,6 +111,13 @@ p3xr.ng.component('p3xrLayout', {
             })
 */
 
+            if (Math.random() > 0.5) {
+                p3xrCommon.toast({
+                    message: p3xr.strings.corifeusNetwork
+                })
+
+                //global.p3xre.toast('test')
+            }
 
         }
 

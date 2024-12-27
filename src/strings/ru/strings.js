@@ -1,4 +1,5 @@
 const strings = {
+  corifeusNetwork: 'Посмотрите наш новый инструмент @&nbsp;<a href="https://network.corifeus.com" target="_blank" style="color: white;">network.corifeus.com</a>!',
   error: {
     cleared_license: "Очищенная лицензия",
     invalid_license: "Неверная лицензия",
