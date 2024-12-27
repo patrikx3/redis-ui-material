@@ -34,7 +34,9 @@ p3xr.ng.component('p3xrLayout', {
             donate: () => {
                 window.open(`https://www.paypal.me/patrikx3`, `p3x-redis-ui-donate`)
             },
-
+            corifeusNetwork: () => {
+                window.open(`https://network.corifeus.com`, `corifeus-network`)
+            }
         }
 
         const camelCase = require('lodash/camelCase')

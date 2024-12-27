@@ -1,6 +1,6 @@
 {
     "name": "p3x-redis-ui-material",
-    "version": "2024.10.124",
+    "version": "2024.10.126",
     "description": "💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via http and socket.io",
     "corifeus": {
         "icon": "fas fa-database",
@@ -48,6 +48,7 @@
         "@fontsource/roboto-mono": "^5.1.0",
         "@fortawesome/fontawesome-free": "^6.7.2",
         "@uirouter/angularjs": "^1.1.1",
+        "@uirouter/core": "^6.1.1",
         "angular": "^1.8.3",
         "angular-animate": "^1.8.3",
         "angular-aria": "^1.8.3",
@@ -63,7 +64,7 @@
         "clean-webpack-plugin": "^4.0.0",
         "concurrently": "^9.1.0",
         "copy-webpack-plugin": "^12.0.2",
-        "corifeus-builder": "^2024.10.111",
+        "corifeus-builder": "^2024.10.202",
         "css-loader": "^7.1.2",
         "css-minimizer-webpack-plugin": "^7.0.0",
         "grunt-injector": "^1.1.0",
@@ -96,5 +97,6 @@
     "engines": {
         "node": ">=12.13.0"
     },
-    "homepage": "https://corifeus.com/redis-ui-material"
+    "homepage": "https://corifeus.com/redis-ui-material",
+    "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

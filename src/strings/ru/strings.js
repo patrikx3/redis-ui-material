@@ -5,6 +5,7 @@ const strings = {
     server_error: "Серверная ошибка, пожалуйсто попробуйте снова",
   },
   title: {
+    corifeusNetwork: "Корифейс Сеть",
     donate: "Донат",
     jsonRecursive: "Расширяем все листья",
     name: "P3X Redis UI",
