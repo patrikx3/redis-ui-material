@@ -40,7 +40,7 @@ p3xr.ng.factory('p3xrDialogTtl', function (p3xrCommon, $mdDialog) {
 
 
                         $scope.openTimestringNpm = () => {
-                            window.open('https://www.npmjs.com/package/timestring#keywords', '_blank')
+                            location.href = 'https://www.npmjs.com/package/timestring#keywords'
                         }
 
                         let firstWatchConvertTextToTime = true

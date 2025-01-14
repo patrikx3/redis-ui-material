@@ -23,19 +23,19 @@ p3xr.ng.component('p3xrLayout', {
 
         this.openLink = {
             github: () => {
-                window.open(`https://github.com/patrikx3/redis-ui`, `github-patrikx3-redis-ui`)
+                location.href = `https://github.com/patrikx3/redis-ui`
             },
             githubRelease: () => {
-                window.open(`https://github.com/patrikx3/redis-ui/releases`, `github-patrikx3--redis-ui-releases`)
+                location.href = `https://github.com/patrikx3/redis-ui/releases`
             },
             githubChangelog: () => {
-                window.open(`https://github.com/patrikx3/redis-ui/blob/master/change-log.md#change-log`, `github-patrikx3-redis-ui-changelog`)
+                location.href = `https://github.com/patrikx3/redis-ui/blob/master/change-log.md#change-log`
             },
             donate: () => {
-                window.open(`https://www.paypal.me/patrikx3`, `p3x-redis-ui-donate`)
+                location.href = `https://www.paypal.me/patrikx3`
             },
             corifeusNetwork: () => {
-                window.open(`https://network.corifeus.com`, `corifeus-network`)
+                location.href = `https://network.corifeus.com`
             }
         }
 

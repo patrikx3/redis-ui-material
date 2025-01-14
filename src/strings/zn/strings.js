@@ -1,5 +1,5 @@
 const strings = {
-  corifeusNetwork: '看看我们的新工具 @&nbsp;<a href="https://network.corifeus.com" target="_blank" style="color: white;">network.corifeus.com</a>!',
+  corifeusNetwork: '看看我们的新工具 @&nbsp;<a href="https://network.corifeus.com" style="color: white;">network.corifeus.com</a>!',
   error: {
     cleared_license: "清除许可证",
     invalid_license: "无效的许可证",

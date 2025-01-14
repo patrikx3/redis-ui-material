@@ -1,5 +1,5 @@
 const strings = {
-  corifeusNetwork: 'Check out our new tool @&nbsp;<a href="https://network.corifeus.com" target="_blank" style="color: white;">network.corifeus.com</a>!',
+  corifeusNetwork: 'Check out our new tool @&nbsp;<a href="https://network.corifeus.com" style="color: white;">network.corifeus.com</a>!',
   error: {
     cleared_license: "Cleared license",
     invalid_license: "Invalid license",
