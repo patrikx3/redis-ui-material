@@ -34,9 +34,7 @@ p3xr.ng.component('p3xrLayout', {
             donate: () => {
                 location.href = `https://www.paypal.me/patrikx3`
             },
-            corifeusNetwork: () => {
-                location.href = `https://network.corifeus.com`
-            }
+           
         }
 
         const camelCase = require('lodash/camelCase')
@@ -111,15 +109,7 @@ p3xr.ng.component('p3xrLayout', {
             })
 */
 
-            /*
-            if (Math.random() > 0.5) {
-                p3xrCommon.toast({
-                    message: p3xr.strings.corifeusNetwork
-                })
-
-                //global.p3xre.toast('test')
-            }
-                */
+          
 
         }
 

@@ -1,12 +1,12 @@
 const strings = {
-  corifeusNetwork: 'Check out our new tool @&nbsp;<a href="https://network.corifeus.com" style="color: white;">network.corifeus.com</a>!',
+
   error: {
     cleared_license: "Cleared license",
     invalid_license: "Invalid license",
     server_error: "Server error, please try again",
   },
   title: {
-    corifeusNetwork: "Corifeus Network",
+   
     donate: "Donate",
     jsonRecursive: "Expanding all leafs",
     name: "P3X Redis UI",
