@@ -111,6 +111,7 @@ p3xr.ng.component('p3xrLayout', {
             })
 */
 
+            /*
             if (Math.random() > 0.5) {
                 p3xrCommon.toast({
                     message: p3xr.strings.corifeusNetwork
@@ -118,6 +119,7 @@ p3xr.ng.component('p3xrLayout', {
 
                 //global.p3xre.toast('test')
             }
+                */
 
         }
 
