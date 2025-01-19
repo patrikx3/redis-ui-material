@@ -103,21 +103,44 @@ p3xr.ng.component('p3xrMainKey', {
 
         this.loading = false
         const loadKey = async (options = {}) => {
-            const { withoutParent = false } = options;
-        
+            $interval.cancel(interval)
+            let {withoutParent} = options
+            if (withoutParent === undefined) {
+                withoutParent = false
+            }
+
+            
+            let hadError = undefined
             try {
-                this.loading = true;
-        
+
+                // it can throw an error, when we switch the database
+                //p3xr.ui.overlay.show({
+                //    message: p3xr.strings.intention.getKey
+                //})
+                this.loading = true
+               
+                setTimeout(() => {
+                    $scope.$digest();
+                })
+
+                //const type = p3xr.state.keysInfo[$stateParams.key].type
+                //console.warn('$stateParams.key', $stateParams.key)
                 const response = await p3xrSocket.request({
                     action: 'key-get',
-                    payload: { key: $stateParams.key },
-                });
-        
+                    payload: {
+                        key: $stateParams.key,
+                        //type: type,
+                    }
+                })
+                this.response = response
+
+                //const type = response.type
                 if (response.ttl === -2) {
-                    checkTtl();
+                    checkTtl()
                     return;
                 }
-        
+                response.size = 0
+
                 const { type, valueBuffer } = response;
         
                 switch (type) {
@@ -170,23 +193,69 @@ p3xr.ng.component('p3xrMainKey', {
                         response.value = valueBuffer.map((entry) => decodeStreamEntry(entry));
                         break;
                 }
-        
-                //console.log('response', response);
 
-                this.response = response;
-                loadTtl();
-            } catch (e) {
-                console.error(e);
-                if (!p3xr.settings.handleConnectionIsClosed(e, $rootScope)) {
-                    p3xrCommon.alert(p3xr.strings.label.unableToLoadKey({ key: $stateParams.key }));
+                if (response.type !== 'stream') {
+                    if (typeof response.valueBuffer === 'object' && response.length > 0) {
+                        for (let keys of Object.keys(response.valueBuffer)) {
+                            response.size += response.valueBuffer[keys].byteLength
+                        }
+                    } else if (Array.isArray(response.valueBuffer)) {
+                        for (let i = 0; i < response.valueBuffer.length; i++) {
+                            response.size += response.valueBuffer[i].byteLength
+                        }
+                    } else {
+                        response.size = response.valueBuffer.byteLength
+                    }    
                 } else {
-                    p3xrCommon.alert(e.message);
+                    //console.log('response', response)
+                    function sumMaxByteLength(arr) {
+                        let total = 0;
+                    
+                        function processElement(element) {
+                            if (ArrayBuffer.isView(element) || element instanceof ArrayBuffer) {
+                                total += element.byteLength;
+                            } else if (Array.isArray(element)) {
+                                element.forEach(processElement);
+                            }
+                        }
+                    
+                        arr.forEach(processElement);
+                        return total;
+                    }
+                    response.size = sumMaxByteLength(response.valueBuffer)                      
                 }
+
+                if (response.ttl > -1) {
+                    wasExpiring = true
+                }
+                loadTtl()
+                $scope.$digest()
+
+            } catch (e) {
+                hadError = e
+                console.error(e)
+                if (!p3xr.settings.handleConnectionIsClosed(e, $rootScope)) {
+                    p3xrCommon.alert(p3xr.strings.label.unableToLoadKey({ key: $stateParams.key }))
+                } else{
+                    p3xrCommon.alert(e.message)                    
+                }
+                //p3xrCommon.generalHandleError(e)
             } finally {
-                this.loading = false;
+                //p3xr.ui.overlay.hide()
+                if (hadError !== undefined) {
+                    $state.go('main.statistics');
+                } else if (!withoutParent && $stateParams.resize !== null) {
+                    $stateParams.resize()
+                }
+
+                $timeout(() => {                    
+                    this.loading = false
+                    $scope.$digest()
+                }, p3xr.settings.debounce)
+
             }
-        };
-        
+
+        }
 
         const generateHighlight = () => {
             $('#p3xr-theme-styles-tree-key').remove()
