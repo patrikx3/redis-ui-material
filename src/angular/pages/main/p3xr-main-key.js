@@ -103,106 +103,90 @@ p3xr.ng.component('p3xrMainKey', {
 
         this.loading = false
         const loadKey = async (options = {}) => {
-            $interval.cancel(interval)
-            let {withoutParent} = options
-            if (withoutParent === undefined) {
-                withoutParent = false
-            }
-
-            
-            let hadError = undefined
+            const { withoutParent = false } = options;
+        
             try {
-
-                // it can throw an error, when we switch the database
-                //p3xr.ui.overlay.show({
-                //    message: p3xr.strings.intention.getKey
-                //})
-                this.loading = true
-               
-                setTimeout(() => {
-                    $scope.$digest();
-                })
-
-                //const type = p3xr.state.keysInfo[$stateParams.key].type
-                //console.warn('$stateParams.key', $stateParams.key)
+                this.loading = true;
+        
                 const response = await p3xrSocket.request({
                     action: 'key-get',
-                    payload: {
-                        key: $stateParams.key,
-                        //type: type,
-                    }
-                })
-                this.response = response
-
-                //const type = response.type
+                    payload: { key: $stateParams.key },
+                });
+        
                 if (response.ttl === -2) {
-                    checkTtl()
+                    checkTtl();
                     return;
                 }
-                response.size = 0
-
-                if (response.type !== 'stream') {
-                    if (typeof response.valueBuffer === 'object' && response.length > 0) {
-                        for (let keys of Object.keys(response.valueBuffer)) {
-                            response.size += response.valueBuffer[keys].byteLength
-                        }
-                    } else if (Array.isArray(response.valueBuffer)) {
-                        for (let i = 0; i < response.valueBuffer.length; i++) {
-                            response.size += response.valueBuffer[i].byteLength
-                        }
-                    } else {
-                        response.size = response.valueBuffer.byteLength
-                    }    
-                } else {
-                    //console.log('response', response)
-                    function sumMaxByteLength(arr) {
-                        let total = 0;
+        
+                const { type, valueBuffer } = response;
+        
+                switch (type) {
+                    case 'string':
+                        response.value = new TextDecoder().decode(valueBuffer);
+                        break;
+        
+                    case 'list':
+                    case 'set':
+                        response.value = valueBuffer.map((buf) => new TextDecoder().decode(buf));
+                        break;
+        
+                    case 'hash':
+                        response.value = {};
+                        Object.entries(valueBuffer).forEach(([key, buf]) => {
+                            response.value[key] = new TextDecoder().decode(buf);
+                        });
+                        break;
+        
+                    case 'zset':
+                        response.value = [];
+                        for (let i = 0; i < valueBuffer.length; i += 2) {
+                            // Ensure proper decoding of score and value
+                            const value = new TextDecoder().decode(valueBuffer[i]);
+                            const score = new TextDecoder().decode(valueBuffer[i + 1]);
                     
-                        function processElement(element) {
-                            if (ArrayBuffer.isView(element) || element instanceof ArrayBuffer) {
-                                total += element.byteLength;
-                            } else if (Array.isArray(element)) {
-                                element.forEach(processElement);
-                            }
+                            response.value.push(value);
+                            response.value.push(score);
+                        }
+                        break;
+        
+                    case 'stream':
+                        function decodeStreamEntry(entry) {
+                            // Recursively decode stream entry
+                            return entry.map((item) => {
+                                if (Array.isArray(item)) {
+                                    // If the item is an array, recursively process it
+                                    return decodeStreamEntry(item);
+                                } else if (ArrayBuffer.isView(item) || item instanceof ArrayBuffer) {
+                                    // Decode binary data if it's an ArrayBuffer
+                                    return new TextDecoder().decode(item);
+                                } else {
+                                    // Return strings or any other values as-is
+                                    return item;
+                                }
+                            });
                         }
                     
-                        arr.forEach(processElement);
-                        return total;
-                    }
-                    response.size = sumMaxByteLength(response.valueBuffer)                      
+                        // Process the valueBuffer
+                        response.value = valueBuffer.map((entry) => decodeStreamEntry(entry));
+                        break;
                 }
+        
+                //console.log('response', response);
 
-                if (response.ttl > -1) {
-                    wasExpiring = true
-                }
-                loadTtl()
-                $scope.$digest()
-
+                this.response = response;
+                loadTtl();
             } catch (e) {
-                hadError = e
-                console.error(e)
+                console.error(e);
                 if (!p3xr.settings.handleConnectionIsClosed(e, $rootScope)) {
-                    p3xrCommon.alert(p3xr.strings.label.unableToLoadKey({ key: $stateParams.key }))
-                } else{
-                    p3xrCommon.alert(e.message)                    
+                    p3xrCommon.alert(p3xr.strings.label.unableToLoadKey({ key: $stateParams.key }));
+                } else {
+                    p3xrCommon.alert(e.message);
                 }
-                //p3xrCommon.generalHandleError(e)
             } finally {
-                //p3xr.ui.overlay.hide()
-                if (hadError !== undefined) {
-                    $state.go('main.statistics');
-                } else if (!withoutParent && $stateParams.resize !== null) {
-                    $stateParams.resize()
-                }
-
-                $timeout(() => {                    
-                    this.loading = false
-                    $scope.$digest()
-                }, p3xr.settings.debounce)
-
+                this.loading = false;
             }
-
-        }
+        };
+        
 
         const generateHighlight = () => {
             $('#p3xr-theme-styles-tree-key').remove()
