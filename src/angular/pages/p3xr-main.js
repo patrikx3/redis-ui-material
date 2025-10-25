@@ -155,11 +155,11 @@ p3xr.ng.component('p3xrMain', {
 
         const resizerMouseover = () => {
             resizerMouseoverOn = true;
-            $scope.$digest();
+            $scope.$applyAsync();
         }
         const resizeMouseout = () => {
             resizerMouseoverOn = false;
-            $scope.$digest();
+            $scope.$applyAsync();
         }
         const resizeClick = (event) => {
             if (event.type === 'mousedown' && event.target.id !== 'p3xr-main-content-sizer') {
@@ -180,7 +180,7 @@ p3xr.ng.component('p3xrMain', {
                 });
             }
             event.stopPropagation();
-            $scope.$digest();
+            $scope.$applyAsync();
         }
         const documentMousemove = (event) => {
             if (resizeClicked) {
@@ -441,7 +441,7 @@ p3xr.ng.component('p3xrMain', {
             console.timeEnd('refresh')
             setTimeout(() => {
                 console.log('refresh')
-                $rootScope.$digest()
+                $rootScope.$applyAsync()
             })
 
         }

@@ -11,14 +11,14 @@
         <span ng-if="$root.p3xr.state.connection !== undefined">
 
 
-            <button class="md-button" style="cursor: inherit !important; margin: 0; padding: 0;" ng-if="$root.p3xr.state.connection.cluster !== true">
+            <div class="md-button" style="cursor: inherit !important; margin: 0; padding: 0;" ng-if="$root.p3xr.state.connection.cluster !== true">
                 <span ng-if="!$root.$mdMedia('xs')" style="position: relative; top: 1px;">{{ $root.p3xr.strings.form.main.label.database.toUpperCase() }}:</span>
                 <md-input-container>
                     <md-tooltip ng-if="$root.$mdMedia('xs')" md-direction="bottom">{{ $root.p3xr.strings.form.main.label.database }}</md-tooltip>
 
                     <md-select ng-model="$ctrl.currentDatabase"
                                aria-label="{{ $root.p3xr.strings.form.main.label.database }}" class="md-accent p3xr-main-db-select" md-container-class="p3xr-main-db-select-container">
-                        <md-option ng-repeat="dbIndex in $root.p3xr.state.databaseIndexes" ng-value="dbIndex"
+                        <md-option ng-repeat="dbIndex in $root.p3xr.state.databaseIndexes track by dbIndex" ng-value="dbIndex"
                                    ng-click="$ctrl.selectDatabase(dbIndex)">
                             <span ng-if="$root.p3xr.state.info.keyspaceDatabases[dbIndex]">
                                 <md-icon>radio_button_checked</md-icon>
@@ -30,7 +30,7 @@
                         </md-option>
                     </md-select>
                 </md-input-container>
-            </button>
+            </div>
 
 
             <p3xr-button class="p3xr-main-toolbar-button p3xr-main-toolbar-button-hide-on-small" ng-if="$root.p3xr.state.connection.readonly !== true && !$root.$mdMedia('xs')" ng-click="$ctrl.save()"
@@ -69,7 +69,7 @@
                                             p3xr-main-ref="$ctrl"></p3xr-main-treecontrol-controls>
             <p3xr-main-tree id="p3xr-main-treecontrol-container" p3xr-resize="$ctrl.resize()"
                             p3xr-main-ref="$ctrl"></p3xr-main-tree>
-            <div id="p3xr-main-content-sizer" md-colors="{ background: resizerColor }"
+            <div id="p3xr-main-content-sizer" md-colors="{ background: resizerColor }" role="separator" aria-orientation="vertical" aria-label="Resize panels"
                  md-theme="{{ $root.p3xr.state.themeLayout}}">
                 <!--
                 <md-tooltip md-direction="top">{{ $root.p3xr.strings.label.resizerInfo({ width:
@@ -108,7 +108,7 @@
 <md-sidenav class="md-sidenav-right p3xr-quick-console-sidenav" ng-style="{width: $ctrl.sidenavWidth}" md-component-id="quickConsoleSidenav" ng-mousedown="$ctrl.startResizing($event)">
    
     <div class="p3xr-quick-console">
-        <p3xr-console type="quick"></p3xr-content>
+        <p3xr-console type="quick"></p3xr-console>
     </div>
 
 </md-sidenav>
