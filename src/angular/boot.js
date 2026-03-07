@@ -1,3 +1,4 @@
+const merge = require('lodash/merge')
 
 
 p3xr.ng = angular.module('p3xr-redis-ui', [
@@ -182,7 +183,19 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
         get: () => {
             language = $cookies.get(p3xr.settings.language.cookieName)
             if (language === undefined) {
-                language = p3xr.settings.language.defaultLanguage
+                // Try to auto-detect from the browser on first load
+                try {
+                    const navLang = (navigator.language || navigator.userLanguage || '').toLowerCase()
+                    if (navLang.startsWith('zh')) {
+                        language = 'zn'
+                    } else if (navLang.startsWith('ru')) {
+                        language = 'ru'
+                    } else {
+                        language = p3xr.settings.language.defaultLanguage
+                    }
+                } catch (e) {
+                    language = p3xr.settings.language.defaultLanguage
+                }
                 require('moment').locale(p3xr.settings.language.momentDateMap[language])
             }
             return language
@@ -197,7 +210,30 @@ p3xr.ng.run(($rootScope, p3xrSocket, p3xrTheme, $mdMedia, $state, $timeout, $coo
 
             require('moment').locale(p3xr.settings.language.momentDateMap[language])
 
-            $rootScope.p3xr.strings = p3xr.settings.language.translation[value]
+            // Safe i18n fallback: merge with English and log missing keys
+            const en = p3xr.settings.language.translation['en'] || {}
+            const selected = p3xr.settings.language.translation[value] || {}
+            // Compute missing keys (only in dev consoles)
+            const missing = []
+            const isObject = (v) => v && typeof v === 'object' && !Array.isArray(v)
+            const diffKeys = (base, target, path = '') => {
+                Object.keys(base || {}).forEach((k) => {
+                    const nextPath = path ? `${path}.${k}` : k
+                    if (!(target && Object.prototype.hasOwnProperty.call(target, k))) {
+                        missing.push(nextPath)
+                    } else if (isObject(base[k]) && isObject(target[k])) {
+                        diffKeys(base[k], target[k], nextPath)
+                    }
+                })
+            }
+            try {
+                diffKeys(en, selected)
+                if (missing.length) {
+                    console.warn(`[i18n] Missing translation keys for '${value}':`, missing)
+                }
+            } catch (e) { /* noop */ }
+
+            $rootScope.p3xr.strings = merge({}, en, selected)
             //console.warn('p3xr-language set strings' , $rootScope.p3xr.strings)
 
             language = $cookies.put(p3xr.settings.language.cookieName, value, {

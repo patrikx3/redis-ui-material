@@ -1,69 +1,17 @@
-# This is a development package
-
-For the full-blown package, please follow:    
-https://github.com/patrikx3/redis-ui  
-https://www.npmjs.com/package/p3x-redis-ui   
-https://corifeus.com/redis-ui  
-
 [//]: #@corifeus-header
 
- [![NPM](https://img.shields.io/npm/v/p3x-redis-ui-material.svg)](https://www.npmjs.com/package/p3x-redis-ui-material)  [![Donate for PatrikX3 / P3X](https://img.shields.io/badge/Donate-PatrikX3-003087.svg)](https://paypal.me/patrikx3) [![Contact Corifeus / P3X](https://img.shields.io/badge/Contact-P3X-ff9900.svg)](https://www.patrikx3.com/en/front/contact) [![Corifeus @ Facebook](https://img.shields.io/badge/Facebook-Corifeus-3b5998.svg)](https://www.facebook.com/corifeus.software)  [![Uptime ratio (90 days)](https://network.corifeus.com/public/api/uptime-shield/31ad7a5c194347c33e5445dbaf8.svg)](https://network.corifeus.com/status/31ad7a5c194347c33e5445dbaf8)
-
-
-
----
-# 💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via http and socket.io v2026.4.100
-
-
-  
-🌌 **Bugs are evident™ - MATRIX️**  
-🚧 **This project is under active development!**  
-📢 **We welcome your feedback and contributions.**  
-    
-
-
-
-### NodeJS LTS is supported
-
-### 🛠️ Built on NodeJs version
-
-```txt
-v24.14.0
-```
-
-
-
-
-
-# 📝 Description
+# 💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via http and socket.io
 
                         
 [//]: #@corifeus-header:end
-
-
-The is the `p3x-redis-ui-material` web gui, that uses the `p3x-redis-ui-server`.   
-
-It is based on Socket.IO and AngularJs Material, uses themes light/dark schema and internationalization (English is implemented by default). 
-
-
-# For development standalone
-
-For file names do not use camelCase, but use kebab-case. Folder should be named as kebab-case as well. As you can see, all code filenames are using it like that, please do not change that.
-Please apply the `.editorconfig` settings in your IDE.
-
-Make sure that the server app is running at for development standalone:  
-https://github.com/patrikx3/redis-ui-server
-
-Then:  
-```bash
-npm install
-npm run dev
-```
-
-The frontend is available @  
-http://localhost:8080
-
-
+Exceptions
+- Always log a short context plus the full exception (stack trace included).
+- Never swallow errors. Rethrow or propagate unless explicitly safe to continue. Redact secrets.
+- Example (do this): `catch (e) { console.error('context: saving profile failed', e); throw e }`
+- Dont always try/catch, only when we needed, not always.
+ - Avoid micro try/catch. Do not wrap simple setters/state updates or single-line calls in individual try/catch blocks. Prefer a single, meaningful boundary (e.g., around a request handler or an async action) where you can add context and rethrow/propagate.
+ - Only catch when you will: (a) add context and rethrow; or (b) intentionally continue with a documented fallback that is safe. Otherwise, let errors bubble to the existing handler.
+ - Prefer optional chaining, guards, and validations over blanket try/catch.
 [//]: #@corifeus-footer
 
 ---

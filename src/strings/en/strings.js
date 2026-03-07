@@ -8,7 +8,7 @@ const strings = {
   title: {
    
     donate: "Donate",
-    jsonRecursive: "Expanding all leafs",
+    jsonRecursive: "Expanding all leaves",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
     main: "You may choose a Redis connection to connect from the left bottom menu.",
@@ -51,16 +51,16 @@ const strings = {
     rename: {
       title: "Are you sure to rename this key?",
       textContent:
-        "If you click the rename button, it will rename this key forever.",
+        "This action renames the key permanently.",
       placeholder: "The Redis key (required)",
     },
     ttl: {
-      title: "Are you sure to change this keys's TTL?",
+      title: "Are you sure you want to change this key's TTL?",
       textContent:
-        "If you click the change TTL button, it will rename this key's time to live, empty will persist this key keep forever.",
+        "Changing the TTL updates this key's time to live. Leave empty to keep this key forever.",
       placeholder: "The Redis key's TTL (integer or empty)",
       placeholderPlaceholder:
-        "Empty means it persists forever, otherwise the used integer.",
+        "Empty means it persists forever; otherwise enter an integer.",
       convertTextToTime: "Convert text to time",
       convertTextToTimePlaceholder: "Eg. 1d will be 86400",
     },
@@ -106,7 +106,7 @@ const strings = {
     github: "GitHub",
     githubRepo: "Repository",
     githubRelease: "Releases",
-    githubChangelog: "Change log",
+    githubChangelog: "Changelog",
     settings: "Settings",
     connect: "Connect",
     disconnect: "Disconnect",
@@ -240,7 +240,7 @@ const strings = {
       }
     },
     treeExpandAll:
-      "Expand all tree leafs, this has a cost, might take time ...",
+      "Expand all tree leaves. This operation can be expensive and may take time ...",
     noRedisKeys: "There are no keys in this database.",
     redisConnected: "Redis connected successful",
     reloadingDataInfo: "Reloading Redis data info",
@@ -298,7 +298,7 @@ const strings = {
     treeSettings: {
       maxValueDisplay: "Max value display string length",
       maxValueDisplayInfo:
-        "If max value display zero, it shows everything, if it is bigger than 0, it will truncate. If it is -1, it will not show the value without edit for strings, for others, it display everything.",
+        "If set to 0, show full values. If greater than 0, truncate to this length. If -1: for strings, hide the value until edit; for other types, show full content.",
       maxKeys: "The max key count",
       maxKeysInfo:
         "So that the GUI does not crash, we limit the max key count.",

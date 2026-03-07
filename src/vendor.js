@@ -1,6 +1,6 @@
 require('./vendor.scss')
 // jquery
-global.$ = require('jquery/dist/jquery.slim')
+global.$ = require('jquery/slim')
 global.jQuery = global.$
 
 jQuery.event.special.touchstart = {
