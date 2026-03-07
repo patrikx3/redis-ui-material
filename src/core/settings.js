@@ -1,7 +1,8 @@
 const cookieExpiry = new Date()
 cookieExpiry.setFullYear(cookieExpiry.getFullYear() + 5)
 
-const prettyBytes = require('pretty-bytes')
+const prettyBytesModule = require('pretty-bytes')
+const prettyBytes = prettyBytesModule.default || prettyBytesModule
 
 p3xr.settings = {
     prettyBytes: (value) => {
@@ -134,4 +135,3 @@ p3xr.settings = {
         cookieName: 'p3xr-layout-connect',
     }
 }
-

@@ -17,8 +17,10 @@ const top = process.cwd()
 const buildDir = top + `/dist`;
 
 let devtool;
+devtool = minimize ? false : 'source-map';
 
 const pkg = require('../../package')
+const cspPolicy = "default-src 'self'; script-src 'self' https://www.googletagmanager.com 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' ws: wss: http://localhost:* http://127.0.0.1:* https://www.google-analytics.com https://region1.google-analytics.com; object-src 'none'; base-uri 'self'; form-action 'self'"
 
 // https://github.com/webpack-contrib/webpack-hot-middleware/tree/master/example
 /*
@@ -259,6 +261,9 @@ const webpackConfig = {
     mode: mode,
 
     devServer: {
+        headers: {
+            'Content-Security-Policy': cspPolicy,
+        },
         static: {
             directory: './src/public',
             staticOptions: {},
@@ -281,4 +286,3 @@ const webpackConfig = {
 webpackConfig.ignoreWarnings = [/Failed to parse source map/];
 
 module.exports = webpackConfig
-
