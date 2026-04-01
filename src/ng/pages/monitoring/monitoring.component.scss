@@ -1,0 +1,107 @@
+:host {
+    display: block;
+    padding-bottom: 64px;
+    color: var(--mat-app-text-color, inherit);
+}
+
+.p3xr-monitoring-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 64px;
+    opacity: 0.5;
+    font-size: 18px;
+}
+
+.p3xr-monitoring-server-info {
+    opacity: 0.6;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.p3xr-mono {
+    font-family: 'Roboto Mono', monospace;
+}
+
+.p3xr-monitoring-sub {
+    opacity: 0.5;
+    font-size: 12px;
+    margin-left: 8px;
+}
+
+.p3xr-monitoring-chart {
+    width: 100%;
+    min-height: 180px;
+    overflow: hidden;
+
+    .uplot {
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .u-legend {
+        font-size: 12px;
+        color: var(--mat-app-text-color, inherit);
+        opacity: 0.8;
+    }
+
+    .u-legend .u-series td {
+        padding: 1px 4px;
+    }
+}
+
+.p3xr-monitoring-client-row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 8px;
+}
+
+.p3xr-monitoring-client-addr {
+    font-size: 13px;
+    font-weight: 700;
+    min-width: 150px;
+}
+
+.p3xr-monitoring-client-name {
+    opacity: 0.5;
+    font-size: 12px;
+}
+
+.p3xr-monitoring-client-info {
+    flex: 1;
+    text-align: right;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 12px;
+    opacity: 0.6;
+}
+
+.p3xr-monitoring-client-kill {
+    cursor: pointer;
+    font-size: 18px !important;
+    width: 18px !important;
+    height: 18px !important;
+    color: var(--p3xr-btn-warn-bg, #f44336);
+    opacity: 0.7;
+    flex-shrink: 0;
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.p3xr-monitoring-slowlog-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+
+.p3xr-monitoring-slowlog-cmd {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 13px;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

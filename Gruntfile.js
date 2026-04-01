@@ -8,92 +8,12 @@ module.exports = (grunt) => {
     const loader = new builder.loader(grunt);
     loader.js({
 
-        jit: {
-            injector: 'grunt-injector',
-        },
-        config: {
-            injector: {
-                options: {},
-                jsAngular: {
-                    options: {
-                        transform: function (filePath) {
-                            const relative = gruntUtil.injectorRelativePathGenerator({
-                                srcDir: 'src/angular/',
-                                filePath: filePath,
-                            })
-                            return `require('./${relative}');`;
-                        },
-                        starttag: '//injector-angular-start',
-                        endtag: '//injector-angular-end'
-                    },
-                    files: {
-                        'src/angular/injector.js': [
-                            'src/angular/**/*.js',
-                            '!src/angular/injector.js',
-                            '!src/angular/boot.js',
-                            '!src/angular/angular-bootstrap.js',
-                            '!src/angular/routes.js',
-                        ],
-                    }
-                },
-
-                sass: {
-                    options: {
-                        transform: function (filePath) {
-                            const relative = gruntUtil.injectorRelativePathGenerator({
-                                srcDir: 'src/',
-                                filePath: filePath,
-                            })
-                            return `@use "./${relative}";`;
-                        },
-                        starttag: '//injector-sass-start',
-                        endtag: '//injector-sass-end',
-                    },
-                    files: {
-                        'src/injector.scss': [
-                            'src/**/*.scss',
-                            '!src/scss/index.scss',
-                            '!src/injector.scss',
-                            '!src/vendor.scss',
-                        ]
-                    }
-                },
-
-            },
-
-            watch: {
-                options: {
-                    atBegin: true
-                },
-                js: {
-                    files: [
-                        'src/angular/**/*.js',
-                        '!src/angular/injector.js',
-                        '!src/angular/boot.js',
-                        '!src/angular/routes.js',
-                    ],
-                    tasks: [
-                        'injector:jsAngular',
-                    ],
-                },
-                sass: {
-                    files: [
-                        'src/**/*.scss',
-                        '!src/scss/index.scss',
-                        '!src/injector.scss',
-                    ],
-                    tasks: [
-                        'injector:sass'
-                    ],
-                },
-            },
-
-        }
+      
     });
 
-    grunt.registerTask('default', ['cory-npm', 'clean', 'cory-replace', 'cory:license', 'injector', 'publish']);
-    grunt.registerTask('inject', ['watch:js', 'watch:sass']);
-    grunt.registerTask('build', ['injector']);
+    grunt.registerTask('default', ['cory-npm', 'clean', 'cory-replace', 'cory:license', 'publish']);
+  
+    grunt.registerTask('build', ['publish']);
 
 
     grunt.registerTask('publish', async function() {
@@ -102,17 +22,7 @@ module.exports = (grunt) => {
 
         try {
 
-            await gruntUtil.spawn({
-                grunt: grunt,
-                gruntThis: this,
-
-            }, {
-                cmd: `${cwd}/node_modules/.bin/grunt${gruntUtil.commandAddon}`,
-                args: [
-                    'injector'
-                ]
-            });
-
+ 
 
             await gruntUtil.spawn({
                 grunt: grunt,

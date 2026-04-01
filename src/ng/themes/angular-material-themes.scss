@@ -1,0 +1,1557 @@
+// P3X Redis UI — Angular Material Theme Application
+//
+// Each theme has 3 sub-themes matching the AngularJS architecture:
+//   - Layout:  toolbar, header, footer → scoped under .p3xr-mat-layout
+//   - Main:    content area           → scoped under body.p3xr-mat-theme-{name}
+//   - Common:  status indicators      → scoped under .p3xr-mat-common
+//
+// IMPORTANT: Dark themes come FIRST, light themes come LAST.
+// CSS ordering matters — when switching from dark to light, the light theme's
+// CSS variables must override the dark theme's. Since body.class selectors have
+// equal specificity, the LATER rule in the file wins.
+//
+// During hybrid mode, these only affect Angular (mat-*) components.
+// AngularJS (md-*) components continue using their own theme system.
+
+@use '@angular/material' as mat;
+@use 'theme-definitions' as defs;
+@use 'theme-custom';
+
+// Angular Material core styles (typography, ripple, etc.) — applied once globally
+@include mat.core();
+
+// ============================================================================
+// Default theme (Enterprise — light) applied at root level
+// ============================================================================
+:root {
+  @include mat.all-component-themes(defs.$p3xr-theme-enterprise);
+}
+
+// Light theme M3 surface neutralization is at the END of the file (after all per-theme
+// blocks) so it wins the CSS cascade. See the body.p3xr-theme-light block at the bottom.
+
+// ============================================================================
+// DARK THEMES FIRST (so light themes can override when switching)
+// ============================================================================
+
+body.p3xr-mat-theme-dark {
+  @include mat.all-component-colors(defs.$p3xr-theme-dark);
+
+  .p3xr-mat-layout {
+    @include mat.toolbar-color(defs.$p3xr-theme-dark-layout);
+    @include mat.button-color(defs.$p3xr-theme-dark-layout);
+    @include mat.icon-button-color(defs.$p3xr-theme-dark-layout);
+    @include mat.menu-color(defs.$p3xr-theme-dark-layout);
+  }
+
+  .p3xr-mat-common {
+    @include mat.button-color(defs.$p3xr-theme-dark-common);
+    @include mat.icon-color(defs.$p3xr-theme-dark-common);
+  }
+}
+
+body.p3xr-mat-theme-dark-neu {
+  @include mat.all-component-colors(defs.$p3xr-theme-dark-neu);
+
+  .p3xr-mat-layout {
+    @include mat.toolbar-color(defs.$p3xr-theme-dark-neu-layout);
+    @include mat.button-color(defs.$p3xr-theme-dark-neu-layout);
+    @include mat.icon-button-color(defs.$p3xr-theme-dark-neu-layout);
+    @include mat.menu-color(defs.$p3xr-theme-dark-neu-layout);
+  }
+
+  .p3xr-mat-common {
+    @include mat.button-color(defs.$p3xr-theme-dark-neu-common);
+    @include mat.icon-color(defs.$p3xr-theme-dark-neu-common);
+  }
+}
+
+body.p3xr-mat-theme-darko-bluo {
+  @include mat.all-component-colors(defs.$p3xr-theme-darko-bluo);
+
+  .p3xr-mat-layout {
+    @include mat.toolbar-color(defs.$p3xr-theme-darko-bluo-layout);
+    @include mat.button-color(defs.$p3xr-theme-darko-bluo-layout);
+    @include mat.icon-button-color(defs.$p3xr-theme-darko-bluo-layout);
+    @include mat.menu-color(defs.$p3xr-theme-darko-bluo-layout);
+  }
+
+  .p3xr-mat-common {
+    @include mat.button-color(defs.$p3xr-theme-darko-bluo-common);
+    @include mat.icon-color(defs.$p3xr-theme-darko-bluo-common);
+  }
+}
+
+body.p3xr-mat-theme-matrix {
+  @include mat.all-component-colors(defs.$p3xr-theme-matrix);
+
+  .p3xr-mat-layout {
+    @include mat.toolbar-color(defs.$p3xr-theme-matrix-layout);
+    @include mat.button-color(defs.$p3xr-theme-matrix-layout);
+    @include mat.icon-button-color(defs.$p3xr-theme-matrix-layout);
+    @include mat.menu-color(defs.$p3xr-theme-matrix-layout);
+  }
+
+  .p3xr-mat-common {
+    @include mat.button-color(defs.$p3xr-theme-matrix-common);
+    @include mat.icon-color(defs.$p3xr-theme-matrix-common);
+  }
+}
+
+// ============================================================================
+// LIGHT THEMES LAST (override dark theme CSS variables on switch)
+// ============================================================================
+
+body.p3xr-mat-theme-light {
+  @include mat.all-component-colors(defs.$p3xr-theme-light);
+
+  .p3xr-mat-layout {
+    @include mat.toolbar-color(defs.$p3xr-theme-light-layout);
+    @include mat.button-color(defs.$p3xr-theme-light-layout);
+    @include mat.icon-button-color(defs.$p3xr-theme-light-layout);
+    @include mat.menu-color(defs.$p3xr-theme-light-layout);
+  }
+
+  .p3xr-mat-common {
+    @include mat.button-color(defs.$p3xr-theme-light-common);
+    @include mat.icon-color(defs.$p3xr-theme-light-common);
+  }
+}
+
+body.p3xr-mat-theme-enterprise {
+  @include mat.all-component-colors(defs.$p3xr-theme-enterprise);
+
+  .p3xr-mat-layout {
+    @include mat.toolbar-color(defs.$p3xr-theme-enterprise-layout);
+    @include mat.button-color(defs.$p3xr-theme-enterprise-layout);
+    @include mat.icon-button-color(defs.$p3xr-theme-enterprise-layout);
+    @include mat.menu-color(defs.$p3xr-theme-enterprise-layout);
+  }
+
+  .p3xr-mat-common {
+    @include mat.button-color(defs.$p3xr-theme-enterprise-common);
+    @include mat.icon-color(defs.$p3xr-theme-enterprise-common);
+  }
+}
+
+body.p3xr-mat-theme-redis {
+  @include mat.all-component-colors(defs.$p3xr-theme-redis);
+
+  .p3xr-mat-layout {
+    @include mat.toolbar-color(defs.$p3xr-theme-redis-layout);
+    @include mat.button-color(defs.$p3xr-theme-redis-layout);
+    @include mat.icon-button-color(defs.$p3xr-theme-redis-layout);
+    @include mat.menu-color(defs.$p3xr-theme-redis-layout);
+  }
+
+  .p3xr-mat-common {
+    @include mat.button-color(defs.$p3xr-theme-redis-common);
+    @include mat.icon-color(defs.$p3xr-theme-redis-common);
+  }
+}
+
+// ============================================================================
+// Shared app-level styles consuming CSS custom properties
+// ============================================================================
+
+[data-p3xr-tree-key]:hover .p3xr-database-tree-node-label {
+  background-color: var(--p3xr-hover-bg);
+}
+
+.p3xr-content-border {
+  border-left: 1px solid var(--p3xr-content-border-color);
+  border-right: 1px solid var(--p3xr-content-border-color);
+  border-bottom: 1px solid var(--p3xr-content-border-color);
+}
+
+.p3xr-content-border-fixed {
+  border-left: 1px solid var(--p3xr-border-color);
+  border-right: 1px solid var(--p3xr-border-color);
+  border-bottom: 1px solid var(--p3xr-border-color);
+}
+
+.p3xr-content-border-toolbar {
+  border-left: 1px solid var(--p3xr-border-color);
+  border-right: 1px solid var(--p3xr-border-color);
+  border-top: 1px solid var(--p3xr-border-color);
+}
+
+.p3xr-list-key-odd-item {
+  background-color: var(--p3xr-list-odd-bg);
+}
+
+.p3xr-list-key-item {
+  border-bottom: 1px solid var(--p3xr-list-border);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 50px var(--p3xr-autofill-bg) inset !important;
+  -webkit-text-fill-color: var(--p3xr-autofill-color) !important;
+}
+
+fieldset {
+  border-color: var(--p3xr-fieldset-border);
+}
+
+.p3xr-md-menu-item-selected,
+.p3xr-mat-menu-item-selected {
+  background-color: var(--p3xr-menu-selected-bg) !important;
+}
+
+.p3xr-language-highlighted {
+  background-color: var(--mat-menu-item-hover-state-layer-color, rgba(0, 0, 0, 0.04)) !important;
+}
+
+.p3xr-connection-group-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  font-weight: 700;
+  font-size: 13px;
+  opacity: 0.8;
+  background: var(--p3xr-list-odd-bg);
+  border-bottom: 1px solid var(--p3xr-list-border);
+  cursor: pointer;
+  user-select: none;
+}
+.p3xr-connection-group-header:hover {
+  opacity: 1;
+  background: var(--p3xr-hover-bg);
+}
+
+.p3xr-language-menu {
+  min-width: 320px !important;
+  max-height: 400px !important;
+
+  .mat-mdc-menu-content {
+    padding-top: 0;
+  }
+}
+
+.p3xr-language-search-container {
+  padding: 8px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--mat-menu-container-color, var(--mat-app-surface));
+}
+
+.p3xr-language-search-input {
+  display: block;
+  width: calc(100% - 20px);
+  margin: 0 auto;
+  padding: 8px;
+  border: 2px solid var(--p3xr-input-border-color, var(--p3xr-border-color, rgba(0, 0, 0, 0.12)));
+  border-radius: 4px;
+  font-size: 14px;
+  background: var(--p3xr-input-bg, transparent);
+  color: var(--p3xr-input-color, inherit);
+  outline: none;
+  box-sizing: border-box;
+
+  &:focus {
+    border-width: 3px;
+    border-color: var(--p3xr-input-border-color, var(--p3xr-border-color, #1976d2));
+  }
+
+  &::placeholder {
+    color: var(--mat-app-text-color, rgba(0, 0, 0, 0.38));
+    opacity: 0.5;
+  }
+}
+
+.p3xr-command-palette-panel .mat-mdc-dialog-container .mdc-dialog__surface {
+  padding: 0 !important;
+}
+
+json-tree .key {
+  color: var(--p3xr-json-key-color);
+  font-weight: bold;
+}
+
+// Global button color classes — uses correct Angular Material CSS variable names
+// mat-flat-button uses: background-color: var(--mat-button-filled-container-color, var(--mat-sys-primary))
+.btn-primary {
+  --mdc-filled-button-container-color: var(--p3xr-btn-primary-bg) !important;
+  --mdc-filled-button-label-text-color: var(--p3xr-btn-primary-color) !important;
+  --mdc-protected-button-container-color: var(--p3xr-btn-primary-bg) !important;
+  --mdc-protected-button-label-text-color: var(--p3xr-btn-primary-color) !important;
+  --mat-button-filled-container-color: var(--p3xr-btn-primary-bg) !important;
+  --mat-button-filled-label-text-color: var(--p3xr-btn-primary-color) !important;
+  --mat-button-protected-container-color: var(--p3xr-btn-primary-bg) !important;
+  --mat-button-protected-label-text-color: var(--p3xr-btn-primary-color) !important;
+  --mat-fab-container-color: var(--p3xr-btn-primary-bg) !important;
+  --mat-fab-foreground-color: var(--p3xr-btn-primary-color) !important;
+  --mat-fab-small-container-color: var(--p3xr-btn-primary-bg) !important;
+  --mat-fab-small-foreground-color: var(--p3xr-btn-primary-color) !important;
+  color: var(--p3xr-btn-primary-color) !important;
+}
+.btn-accent {
+  --mdc-filled-button-container-color: var(--p3xr-btn-accent-bg) !important;
+  --mdc-filled-button-label-text-color: var(--p3xr-btn-accent-color) !important;
+  --mdc-protected-button-container-color: var(--p3xr-btn-accent-bg) !important;
+  --mdc-protected-button-label-text-color: var(--p3xr-btn-accent-color) !important;
+  --mat-button-filled-container-color: var(--p3xr-btn-accent-bg) !important;
+  --mat-button-filled-label-text-color: var(--p3xr-btn-accent-color) !important;
+  --mat-button-protected-container-color: var(--p3xr-btn-accent-bg) !important;
+  --mat-button-protected-label-text-color: var(--p3xr-btn-accent-color) !important;
+  --mat-fab-container-color: var(--p3xr-btn-accent-bg) !important;
+  --mat-fab-foreground-color: var(--p3xr-btn-accent-color) !important;
+  --mat-fab-small-container-color: var(--p3xr-btn-accent-bg) !important;
+  --mat-fab-small-foreground-color: var(--p3xr-btn-accent-color) !important;
+  color: var(--p3xr-btn-accent-color) !important;
+}
+.btn-warn {
+  --mdc-filled-button-container-color: var(--p3xr-btn-warn-bg) !important;
+  --mdc-filled-button-label-text-color: var(--p3xr-btn-warn-color) !important;
+  --mdc-protected-button-container-color: var(--p3xr-btn-warn-bg) !important;
+  --mdc-protected-button-label-text-color: var(--p3xr-btn-warn-color) !important;
+  --mat-button-filled-container-color: var(--p3xr-btn-warn-bg) !important;
+  --mat-button-filled-label-text-color: var(--p3xr-btn-warn-color) !important;
+  --mat-button-protected-container-color: var(--p3xr-btn-warn-bg) !important;
+  --mat-button-protected-label-text-color: var(--p3xr-btn-warn-color) !important;
+  --mat-fab-container-color: var(--p3xr-btn-warn-bg) !important;
+  --mat-fab-foreground-color: var(--p3xr-btn-warn-color) !important;
+  --mat-fab-small-container-color: var(--p3xr-btn-warn-bg) !important;
+  --mat-fab-small-foreground-color: var(--p3xr-btn-warn-color) !important;
+  color: var(--p3xr-btn-warn-color) !important;
+}
+
+.btn-primary,
+.btn-primary .mdc-button__label,
+.btn-primary mat-icon,
+.btn-primary i {
+  color: var(--p3xr-btn-primary-color) !important;
+}
+
+.btn-accent,
+.btn-accent .mdc-button__label,
+.btn-accent mat-icon,
+.btn-accent i {
+  color: var(--p3xr-btn-accent-color) !important;
+}
+
+.btn-warn,
+.btn-warn .mdc-button__label,
+.btn-warn mat-icon,
+.btn-warn i {
+  color: var(--p3xr-btn-warn-color) !important;
+}
+
+// ============================================================================
+// Accordion content
+// ============================================================================
+.p3xr-accordion-content {
+  background-color: var(--p3xr-content-bg, #fafafa);
+  color: var(--mat-app-text-color, inherit);
+  overflow: visible;
+  padding: 0;
+}
+
+// ============================================================================
+// Buttons — match AngularJS Material md-button md-raised
+// Production: height 36px, padding 0 6px, border-radius 4px, uppercase
+// ============================================================================
+// AngularJS md-button.md-raised: padding 0 6px, margin 6px 8px, min-width 88px, min-height 36px
+// AngularJS md-button.md-raised styling for content-area buttons.
+.mat-mdc-button-base:not(.mat-mdc-icon-button):not(.mat-mdc-fab-base):not(.mat-mdc-snack-bar-action) {
+  text-transform: uppercase !important;
+  letter-spacing: 0.089em !important;
+  border-radius: 4px !important;
+  padding: 0 6px !important;
+  min-width: 88px !important;
+  height: 36px !important;
+  line-height: 36px !important;
+  margin: 6px 8px !important;
+  font-size: 14px !important;
+  // Narrower gap between icon and text than Google M3 default
+  gap: 3px !important;
+  // Match toolbar header/footer letter-spacing
+  letter-spacing: 0.1px !important;
+}
+
+// Dialog content action buttons: match footer button (p3xr-dialog-actions) padding.
+// Must beat global .mat-mdc-button-base:not():not() specificity (0,3,0).
+// Uses symmetric padding + justify-content:center so icons are centered in both
+// icon+text and icon-only states.
+// Wide: icon + text → asymmetric padding matching footer (10px left, 8px right)
+// Narrow: icon only → min-width 48px matching footer CANCEL, centered
+.p3xr-action-btn.mat-mdc-button-base:not(.mat-mdc-icon-button):not(.mat-mdc-fab-base) {
+  padding-left: 10px !important;
+  padding-right: 8px !important;
+  margin: 0 4px !important;
+  min-width: 48px !important;
+  letter-spacing: 0.01em !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.p3xr-action-btn.mat-mdc-button-base mat-icon,
+.p3xr-action-btn.mat-mdc-button-base .mat-icon,
+.p3xr-action-btn.mat-mdc-button-base i {
+  margin-left: 0 !important;
+  margin-right: 4px !important;
+}
+
+.p3xr-action-btn.mat-mdc-button-base .mdc-button__label {
+  display: inline !important;
+  gap: 0 !important;
+  letter-spacing: inherit !important;
+}
+.mat-mdc-button-base:not(.mat-mdc-icon-button):not(.mat-mdc-fab-base):not(.mat-mdc-snack-bar-action) .mdc-button__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.mat-mdc-button-base:not(.mat-mdc-icon-button):not(.mat-mdc-fab-base):not(.mat-mdc-snack-bar-action) .mdc-button__label > mat-icon,
+.mat-mdc-button-base:not(.mat-mdc-icon-button):not(.mat-mdc-fab-base):not(.mat-mdc-snack-bar-action) .mdc-button__label > i {
+  flex-shrink: 0;
+}
+.mat-mdc-button-base:not(.mat-mdc-icon-button):not(.mat-mdc-fab-base):not(.mat-mdc-snack-bar-action) .mdc-button__ripple {
+  border-radius: 4px !important;
+}
+
+// Normalize Font Awesome button icons to the same painted size as Material's 24px icons.
+// Font Awesome ships a visibly larger glyph inside the same 24px box, so normalize the
+// pseudo-element instead of only sizing the outer <i>.
+.mat-mdc-button-base i.fa,
+.mat-mdc-button-base i.fas,
+.mat-mdc-button-base i.far,
+.mat-mdc-button-base i.fab {
+  transform: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 24px !important;
+  height: 24px !important;
+  line-height: 24px !important;
+  font-size: 24px !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.mat-mdc-button-base i.fa::before,
+.mat-mdc-button-base i.fas::before,
+.mat-mdc-button-base i.far::before,
+.mat-mdc-button-base i.fab::before {
+  display: block !important;
+  font-size: 15px !important;
+  line-height: 15px !important;
+  transform: none !important;
+}
+
+// Settings page connection actions should match the original AngularJS md-button box model.
+.p3xr-connection-item .btn-primary,
+.p3xr-connection-item .btn-accent,
+.p3xr-connection-item .btn-warn {
+  min-width: auto !important;
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+  letter-spacing: 0.01em !important;
+}
+
+.p3xr-connection-item .btn-primary .mdc-button__label,
+.p3xr-connection-item .btn-accent .mdc-button__label,
+.p3xr-connection-item .btn-warn .mdc-button__label {
+  display: inline !important;
+  gap: 0 !important;
+  letter-spacing: inherit !important;
+}
+
+.p3xr-connection-item .btn-primary mat-icon,
+.p3xr-connection-item .btn-accent mat-icon,
+.p3xr-connection-item .btn-warn mat-icon {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  width: 24px !important;
+  height: 24px !important;
+  font-size: 24px !important;
+}
+
+.p3xr-connection-item .btn-primary:not([aria-label]) mat-icon,
+.p3xr-connection-item .btn-accent:not([aria-label]) mat-icon,
+.p3xr-connection-item .btn-warn:not([aria-label]) mat-icon,
+.p3xr-connection-item .btn-primary:not([aria-label]) i,
+.p3xr-connection-item .btn-accent:not([aria-label]) i,
+.p3xr-connection-item .btn-warn:not([aria-label]) i {
+  margin-right: 3px !important;
+}
+
+// Standalone p3xr-ng-button should match the original AngularJS md-button:
+// min-width: 0, horizontal padding: 8px, theme-aware black/white foreground.
+p3xr-ng-button .mat-mdc-button-base:not(.mat-mdc-icon-button):not(.mat-mdc-fab-base) {
+  min-width: 0 !important;
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+  color: var(--p3xr-plain-button-color) !important;
+}
+
+p3xr-ng-button .mat-mdc-button-base:not(.mat-mdc-icon-button):not(.mat-mdc-fab-base) mat-icon,
+p3xr-ng-button .mat-mdc-button-base:not(.mat-mdc-icon-button):not(.mat-mdc-fab-base) i,
+p3xr-ng-button .mat-mdc-button-base:not(.mat-mdc-icon-button):not(.mat-mdc-fab-base) .mdc-button__label {
+  color: inherit !important;
+}
+
+// Accordion toolbar: buttons, icons, text use accordion color (md-primary hue-1, always dark-on-light)
+.p3xr-accordion-toolbar .p3xr-accordion-title,
+.p3xr-accordion-toolbar .p3xr-accordion-actions {
+  color: var(--p3xr-accordion-color) !important;
+}
+
+.p3xr-accordion-toolbar .mat-mdc-icon-button,
+.p3xr-accordion-toolbar .mat-mdc-icon-button mat-icon,
+.p3xr-accordion-toolbar p3xr-ng-button .mat-mdc-button-base:not(.mat-mdc-icon-button):not(.mat-mdc-fab-base),
+.p3xr-accordion-toolbar p3xr-ng-button .mat-mdc-button-base:not(.mat-mdc-icon-button):not(.mat-mdc-fab-base) .mdc-button__label,
+.p3xr-accordion-toolbar p3xr-ng-button .mat-mdc-button-base:not(.mat-mdc-icon-button):not(.mat-mdc-fab-base) mat-icon,
+.p3xr-accordion-toolbar p3xr-ng-button .mat-mdc-button-base:not(.mat-mdc-icon-button):not(.mat-mdc-fab-base) i {
+  color: var(--p3xr-accordion-color) !important;
+}
+
+.p3xr-accordion-toolbar .mat-mdc-button-base,
+.p3xr-accordion-toolbar .mat-mdc-icon-button,
+.p3xr-accordion-toolbar mat-icon,
+.p3xr-accordion-toolbar .mat-mdc-button-base .mdc-button__label {
+  color: var(--p3xr-accordion-color) !important;
+}
+
+// Version/SNAPSHOT label overlaying the header toolbar — must match toolbar text color.
+// AngularJS used md-colors="{ color: 'background-A100' }" (white for most themes, grey-900 for Matrix).
+#p3xr-layout-header-version-donated,
+#p3xr-layout-header-version-free {
+  color: var(--p3xr-toolbar-color) !important;
+}
+
+body.p3xr-mat-theme-matrix #p3xr-layout-header-version-donated,
+body.p3xr-mat-theme-matrix #p3xr-layout-header-version-free {
+  color: #212121 !important; // grey-900 — AngularJS used getVersionColor() → 'grey-900' for Matrix
+}
+
+// Matrix: bright green toolbar needs dark hover (white is invisible on #76ff03)
+body.p3xr-mat-theme-matrix mat-toolbar.p3xr-mat-layout .mat-mdc-button-base:not(.mat-mdc-fab-base):hover {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+// Matrix: darken dialog footer — bright #76ff03 is too intense as a footer bg
+body.p3xr-mat-theme-matrix .p3xr-dialog-actions {
+  background-color: #0a2e0d !important; // near-black green
+}
+
+// Accordion toolbar: hue-1 color from Layout sub-theme (section headers in content area).
+// Uses mat-toolbar.class for higher specificity over mat.all-component-colors() output.
+mat-toolbar.p3xr-accordion-toolbar {
+  background-color: var(--p3xr-accordion-bg) !important;
+  color: var(--p3xr-accordion-color) !important;
+}
+// Force all children in accordion toolbar to inherit accordion color
+mat-toolbar.p3xr-accordion-toolbar * {
+  color: inherit;
+}
+mat-toolbar.p3xr-accordion-toolbar .mat-mdc-select,
+mat-toolbar.p3xr-accordion-toolbar .mat-mdc-select-value,
+mat-toolbar.p3xr-accordion-toolbar .mat-mdc-select-arrow,
+mat-toolbar.p3xr-accordion-toolbar .mat-mdc-form-field,
+mat-toolbar.p3xr-accordion-toolbar .mdc-text-field,
+mat-toolbar.p3xr-accordion-toolbar .mat-mdc-floating-label,
+mat-toolbar.p3xr-accordion-toolbar mat-icon,
+mat-toolbar.p3xr-accordion-toolbar span,
+mat-toolbar.p3xr-accordion-toolbar a {
+  color: var(--p3xr-accordion-color) !important;
+}
+
+// Layout toolbar: exact colors matching AngularJS md-toolbar with Layout sub-theme.
+// The mat.toolbar-color() mixin above applies M3 palette colors which approximate
+// but don't match the AngularJS Material M1 colors. These CSS custom properties
+// (defined per-theme in _theme-custom.scss) provide the exact hex values from the
+// original AngularJS palette definitions.
+mat-toolbar.p3xr-mat-layout {
+  background-color: var(--p3xr-toolbar-bg) !important;
+  color: var(--p3xr-toolbar-color) !important;
+  // Match AngularJS Material md-toolbar font-size (M3 default is 22px)
+  font-size: 20px !important;
+  // Override Angular Material button letter-spacing CSS variables to match M1 (~0.1px)
+  --mdc-text-button-label-text-tracking: 0.1px !important;
+  --mdc-protected-button-label-text-tracking: 0.1px !important;
+  --mat-toolbar-title-text-tracking: normal !important;
+  // Lock toolbar to 48px at all breakpoints (AM default is 64px desktop / 56px mobile)
+  --mat-toolbar-standard-height: 48px;
+  --mat-toolbar-mobile-height: 48px;
+}
+
+// Header toolbar elevation: Material elevation 8dp
+#p3xr-layout-header-container mat-toolbar.p3xr-mat-layout {
+  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0px 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0px 3px 14px 2px rgba(0, 0, 0, 0.12) !important;
+}
+
+// Footer toolbar elevation: Material elevation 8dp (upward)
+#p3xr-layout-footer-container mat-toolbar.p3xr-mat-layout {
+  box-shadow: 0px -5px 5px -3px rgba(0, 0, 0, 0.2),
+              0px -8px 10px 1px rgba(0, 0, 0, 0.14),
+              0px -3px 14px 2px rgba(0, 0, 0, 0.12) !important;
+}
+
+// Buttons inside layout toolbars: match AngularJS md-button styling.
+// Uses :not() pseudo-classes to beat the global .mat-mdc-button-base:not():not()
+// rule (specificity 0,3,0) that sets letter-spacing: 0.089em.
+mat-toolbar.p3xr-mat-layout .mat-mdc-button-base:not(.mat-mdc-fab-base) {
+  color: inherit !important;
+  letter-spacing: 0.1px !important;
+  text-transform: uppercase !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  min-width: auto !important;
+  // Narrower padding than production to save space in footer with many buttons
+  padding: 0px 4px !important;
+  margin: 0px 4px !important;
+  // Center icon when button collapses to icon-only
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  // Hover: lighten on dark toolbar background (matches AngularJS md-button-dark-hover-fix).
+  // Uses white alpha since toolbar bg is dark in most themes.
+  // Matrix theme overrides below with dark hover for its bright green toolbar.
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+  }
+}
+
+// All text-bearing children inside layout toolbar buttons
+mat-toolbar.p3xr-mat-layout .mat-mdc-button-base:not(.mat-mdc-fab-base) *,
+mat-toolbar.p3xr-mat-layout .mdc-button__label,
+mat-toolbar.p3xr-mat-layout span {
+  color: inherit !important;
+  letter-spacing: 0.1px !important;
+}
+
+// Uniform icon-to-text gap: zero out Angular Material's internal gaps,
+// then use explicit margin-right on icons for consistent 4px gap.
+mat-toolbar.p3xr-mat-layout .mat-mdc-button-base:not(.mat-mdc-fab-base) {
+  gap: 0 !important;
+}
+mat-toolbar.p3xr-mat-layout .mat-mdc-button-base:not(.mat-mdc-fab-base) .mdc-button__label {
+  gap: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  margin-left: 0 !important;
+}
+// Same margin-right on both icon types for uniform gap.
+// When icon is :last-child (no text label visible), margin is 0 for square icon-only buttons.
+mat-toolbar.p3xr-mat-layout mat-icon,
+mat-toolbar.p3xr-mat-layout i.fa,
+mat-toolbar.p3xr-mat-layout i.fas,
+mat-toolbar.p3xr-mat-layout i.fab {
+  margin-right: 4px !important;
+  margin-left: 0 !important;
+}
+mat-toolbar.p3xr-mat-layout mat-icon:last-child,
+mat-toolbar.p3xr-mat-layout i.fa:last-child,
+mat-toolbar.p3xr-mat-layout i.fas:last-child,
+mat-toolbar.p3xr-mat-layout i.fab:last-child {
+  margin-right: 0 !important;
+}
+
+// All icons inside layout toolbars: uniform 24px matching AngularJS md-icon size
+mat-toolbar.p3xr-mat-layout mat-icon {
+  font-size: 24px !important;
+  width: 24px !important;
+  height: 24px !important;
+  color: inherit !important;
+}
+
+// FA icons in layout toolbars: 24px matching Material icons.
+// Must override the global .mat-mdc-button-base i.fa::before rule (specificity 0,2,1)
+// which forces FA glyphs to 15px — so we use .mat-mdc-button-base in our selector too.
+mat-toolbar.p3xr-mat-layout i.fa,
+mat-toolbar.p3xr-mat-layout i.fas,
+mat-toolbar.p3xr-mat-layout i.fab {
+  font-size: 24px !important;
+  line-height: 1 !important;
+  vertical-align: middle !important;
+  color: inherit !important;
+}
+mat-toolbar.p3xr-mat-layout .mat-mdc-button-base i.fa::before,
+mat-toolbar.p3xr-mat-layout .mat-mdc-button-base i.fas::before,
+mat-toolbar.p3xr-mat-layout .mat-mdc-button-base i.far::before,
+mat-toolbar.p3xr-mat-layout .mat-mdc-button-base i.fab::before {
+  font-size: 24px !important;
+  line-height: 24px !important;
+}
+// fa-power-off and fa-donate glyphs are visually larger than Material icons — scale down to match
+mat-toolbar.p3xr-mat-layout .mat-mdc-button-base i.fa-power-off::before,
+mat-toolbar.p3xr-mat-layout .mat-mdc-button-base i.fa-donate::before {
+  font-size: 21px !important;
+  line-height: 24px !important;
+}
+
+.p3xr-mat-layout-strong {
+  background-color: var(--p3xr-toolbar-strong-bg) !important;
+  color: var(--p3xr-toolbar-strong-color) !important;
+}
+
+.p3xr-mat-layout-strong .mat-mdc-icon-button,
+.p3xr-mat-layout-strong .mat-icon,
+.p3xr-mat-layout-strong .mdc-icon-button,
+.p3xr-mat-layout-strong .mdc-button__label {
+  color: inherit !important;
+}
+
+.p3xr-mat-common .btn-primary {
+  --mdc-filled-button-container-color: var(--p3xr-common-btn-primary-bg) !important;
+  --mdc-filled-button-label-text-color: var(--p3xr-common-btn-primary-color) !important;
+  --mdc-protected-button-container-color: var(--p3xr-common-btn-primary-bg) !important;
+  --mdc-protected-button-label-text-color: var(--p3xr-common-btn-primary-color) !important;
+  --mat-button-filled-container-color: var(--p3xr-common-btn-primary-bg) !important;
+  --mat-button-filled-label-text-color: var(--p3xr-common-btn-primary-color) !important;
+  --mat-button-protected-container-color: var(--p3xr-common-btn-primary-bg) !important;
+  --mat-button-protected-label-text-color: var(--p3xr-common-btn-primary-color) !important;
+  color: var(--p3xr-common-btn-primary-color) !important;
+}
+
+.p3xr-mat-common .btn-primary .mdc-button__label,
+.p3xr-mat-common .btn-primary mat-icon,
+.p3xr-mat-common .btn-primary i {
+  color: inherit !important;
+}
+
+// Accordion toolbar icon buttons must keep the original AngularJS md-icon-button geometry:
+// square 40x40, 8px padding, no 88px min-width from the shared raised-button override.
+.p3xr-accordion-toolbar .mat-mdc-icon-button {
+  min-width: 0 !important;
+  width: 40px !important;
+  height: 40px !important;
+  padding: 8px !important;
+  margin: 0 6px !important;
+  line-height: 24px !important;
+  border-radius: 50% !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 0 0 40px !important;
+}
+
+.p3xr-accordion-toolbar .mat-mdc-icon-button .mat-mdc-button-touch-target {
+  width: 40px !important;
+  height: 40px !important;
+}
+
+.p3xr-accordion-toolbar .mat-mdc-icon-button mat-icon {
+  margin: 0 !important;
+}
+
+// Accordion toolbar button/icon styling — mirrors the layout toolbar rules above.
+// Ensures buttons, icons (Material + FA), and text match the layout footer appearance.
+mat-toolbar.p3xr-accordion-toolbar .mat-mdc-button-base:not(.mat-mdc-fab-base) *,
+mat-toolbar.p3xr-accordion-toolbar .mdc-button__label,
+mat-toolbar.p3xr-accordion-toolbar span {
+  color: inherit !important;
+  letter-spacing: 0.1px !important;
+}
+mat-toolbar.p3xr-accordion-toolbar .mat-mdc-button-base:not(.mat-mdc-fab-base) {
+  gap: 0 !important;
+}
+mat-toolbar.p3xr-accordion-toolbar .mat-mdc-button-base:not(.mat-mdc-fab-base) .mdc-button__label {
+  gap: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  margin-left: 0 !important;
+}
+mat-toolbar.p3xr-accordion-toolbar mat-icon,
+mat-toolbar.p3xr-accordion-toolbar i.fa,
+mat-toolbar.p3xr-accordion-toolbar i.fas,
+mat-toolbar.p3xr-accordion-toolbar i.fab {
+  margin-right: 4px !important;
+  margin-left: 0 !important;
+}
+mat-toolbar.p3xr-accordion-toolbar mat-icon:last-child,
+mat-toolbar.p3xr-accordion-toolbar i.fa:last-child,
+mat-toolbar.p3xr-accordion-toolbar i.fas:last-child,
+mat-toolbar.p3xr-accordion-toolbar i.fab:last-child {
+  margin-right: 0 !important;
+}
+mat-toolbar.p3xr-accordion-toolbar mat-icon {
+  font-size: 24px !important;
+  width: 24px !important;
+  height: 24px !important;
+  color: inherit !important;
+}
+// FA icons in accordion toolbars: 24px matching Material icons.
+// Overrides the global .mat-mdc-button-base rule that forces ::before to 15px.
+mat-toolbar.p3xr-accordion-toolbar i.fa,
+mat-toolbar.p3xr-accordion-toolbar i.fas,
+mat-toolbar.p3xr-accordion-toolbar i.far,
+mat-toolbar.p3xr-accordion-toolbar i.fab {
+  font-size: 24px !important;
+  line-height: 1 !important;
+  vertical-align: middle !important;
+  color: inherit !important;
+}
+mat-toolbar.p3xr-accordion-toolbar i.fa::before,
+mat-toolbar.p3xr-accordion-toolbar i.fas::before,
+mat-toolbar.p3xr-accordion-toolbar i.far::before,
+mat-toolbar.p3xr-accordion-toolbar i.fab::before {
+  font-size: 24px !important;
+  line-height: 24px !important;
+}
+
+// Database select dropdown: wider panel, circle indicator, no selection checkmark
+.p3xr-database-db-select-container {
+  min-width: 120px !important;
+}
+.p3xr-database-db-select-container .mat-mdc-option {
+  color: var(--mat-app-text-color, inherit) !important;
+}
+.p3xr-database-db-select-container .mat-mdc-option .mat-pseudo-checkbox {
+  display: none !important;
+}
+.p3xr-database-db-select-container .mat-mdc-option .p3xr-db-indicator {
+  font-size: 18px !important;
+  width: 18px !important;
+  height: 18px !important;
+  margin-right: 8px !important;
+  vertical-align: middle;
+  color: var(--mat-app-text-color, inherit) !important;
+}
+
+// ============================================================================
+// mat-list — match production md-list
+// ============================================================================
+.mat-mdc-list {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+.mat-mdc-list-item .mdc-list-item__primary-text {
+  font-weight: 400 !important;
+  color: inherit !important;
+}
+.mat-mdc-list-item .p3xr-settings-label {
+  font-weight: 500 !important;
+}
+
+// ============================================================================
+// Hover — only on Redis settings accordion items (not connections/license)
+// Buttons inside list items keep their own bg on hover
+// ============================================================================
+.mat-mdc-list-item .mat-mdc-button-base {
+  position: relative;
+  z-index: 1;
+}
+
+// ============================================================================
+// Color inheritance fixes for hybrid mode
+// ============================================================================
+.mat-mdc-card {
+  color: var(--mat-app-text-color, inherit);
+}
+
+mat-toolbar {
+  color: var(--mat-toolbar-container-text-color, inherit);
+}
+
+mat-dialog-container {
+  color: var(--mat-app-text-color, inherit);
+}
+
+// Dialog layout: surface → container → component-host → form → toolbar+content+actions
+// The surface constrains the overall height. The content area scrolls.
+// Every level in the chain must be flex column with min-height:0 so flex shrinking works.
+.cdk-overlay-pane.p3xr-dialog-panel .mat-mdc-dialog-surface {
+  border-radius: 4px !important;
+  background-color: var(--p3xr-dialog-surface-bg, var(--p3xr-content-bg)) !important;
+  box-shadow:
+    0 7px 8px -4px rgba(0, 0, 0, 0.2),
+    0 13px 19px 2px rgba(0, 0, 0, 0.14),
+    0 5px 24px 4px rgba(0, 0, 0, 0.12) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  max-height: 80vh !important;
+  overflow: hidden !important;
+}
+
+.cdk-overlay-pane.p3xr-dialog-panel .mat-mdc-dialog-container {
+  min-width: 0 !important;
+  max-height: 80vh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+}
+
+.cdk-overlay-pane.p3xr-dialog-panel .mat-mdc-dialog-component-host {
+  display: flex !important;
+  flex: 1 1 auto;
+  flex-direction: column !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+.cdk-overlay-pane.p3xr-dialog-panel .mat-mdc-dialog-component-host > form {
+  display: flex !important;
+  flex: 1 1 auto;
+  flex-direction: column !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+// Toolbar stays fixed at top, actions at bottom, content scrolls in between
+.cdk-overlay-pane.p3xr-dialog-panel .p3xr-dialog-toolbar {
+  flex: 0 0 auto;
+}
+
+.cdk-overlay-pane.p3xr-dialog-panel .mat-mdc-dialog-component-host > .p3xr-dialog-content,
+.cdk-overlay-pane.p3xr-dialog-panel .mat-mdc-dialog-component-host > form > .p3xr-dialog-content {
+  flex: 1 1 auto;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+.cdk-overlay-pane.p3xr-dialog-panel .p3xr-dialog-actions {
+  flex: 0 0 auto;
+}
+
+.cdk-overlay-pane.p3xr-dialog-panel .mat-mdc-dialog-component-host > .p3xr-dialog-actions,
+.cdk-overlay-pane.p3xr-dialog-panel .mat-mdc-dialog-component-host > form > .p3xr-dialog-actions {
+  flex: 0 0 auto;
+}
+
+// Snackbar dismiss button: constrain hover to a square (width = height) like an icon button
+.mat-mdc-snack-bar-container .mat-mdc-snack-bar-action .mdc-button {
+  min-width: 0 !important;
+  width: 12px !important;
+  height: 12px !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.mat-mdc-snack-bar-container .mat-mdc-snack-bar-action .mdc-button .mdc-button__ripple,
+.mat-mdc-snack-bar-container .mat-mdc-snack-bar-action .mdc-button .mat-mdc-button-touch-target {
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 50% !important;
+}
+
+.cdk-overlay-backdrop.p3xr-dialog-backdrop {
+  background-color: rgba(0, 0, 0, 0.48) !important;
+}
+
+html.cdk-global-scrollblock {
+  overflow: hidden !important;
+}
+
+html.cdk-global-scrollblock body {
+  overflow: hidden !important;
+}
+
+// TODO: HACK: Angular CDK's BlockScrollStrategy adds the class cdk-global-scrollblock to the
+// html element (see @angular/cdk overlay.css: .cdk-global-scrollblock { position: fixed; ... }).
+// That makes the html element position:fixed, which in turn affects the body's containing block.
+// When html is position:fixed the CDK overlay pane (position:absolute inside the
+// position:fixed overlay container) loses its correct containing-block relationship and
+// dialog content visually overflows the surface boundary (the "clipping" bug visible
+// in tests/screenshots/dialog-no-clipping-scrolled.png).
+// Setting the body to position:static cancels that side-effect and the dialog surface
+// overflow:hidden clips correctly again.
+// The trade-off is that body.style.top = -scrollY set by CDK has no effect on a static
+// element, so the page scroll position is not preserved while the dialog is open — which
+// is acceptable for this app.
+// Remove this override once you understand the root cause and can fix it properly.
+html.cdk-global-scrollblock > body {
+  position: static !important;
+  overflow: hidden !important;
+}
+
+body.p3xr-no-animation .cdk-overlay-pane.p3xr-dialog-panel,
+body.p3xr-no-animation .cdk-overlay-pane.p3xr-dialog-panel *,
+body.p3xr-no-animation .cdk-overlay-backdrop.p3xr-dialog-backdrop,
+.cdk-overlay-pane.p3xr-dialog-no-animation,
+.cdk-overlay-pane.p3xr-dialog-no-animation *,
+.cdk-overlay-backdrop.p3xr-dialog-backdrop-no-animation {
+  animation: none !important;
+  animation-duration: 0ms !important;
+  transition: none !important;
+  transition-duration: 0ms !important;
+}
+
+.p3xr-dialog-toolbar {
+  box-sizing: border-box;
+  display: flex !important;
+  align-items: center !important;
+  height: 48px !important;
+  min-height: 48px !important;
+  max-height: 48px !important;
+  padding: 0 8px !important;
+}
+
+.p3xr-dialog-toolbar .mat-mdc-button-base {
+  margin: 0 !important;
+}
+
+.p3xr-dialog-toolbar [mat-dialog-title] {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.p3xr-dialog-title {
+  display: flex !important;
+  align-items: center !important;
+  flex: 1 1 auto;
+  height: 100%;
+  line-height: 28px !important;
+  min-width: 0;
+  margin: 0 !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.p3xr-dialog-toolbar .p3xr-dialog-title,
+.p3xr-dialog-toolbar [mat-dialog-title],
+.p3xr-dialog-toolbar .mat-mdc-dialog-title,
+.p3xr-dialog-toolbar .mdc-dialog__title {
+  color: inherit !important;
+}
+
+.p3xr-dialog-title-with-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.p3xr-dialog-title-with-icon .mat-icon {
+  margin: 0 !important;
+}
+
+.p3xr-dialog-content {
+  display: block;
+  padding: 16px !important;
+  background-color: var(--p3xr-content-bg) !important;
+  color: var(--mat-app-text-color, inherit);
+}
+// Links inside dialog content must contrast with the content background
+.p3xr-dialog-content .p3xr-timestring-link,
+.p3xr-dialog-content .p3xr-timestring-link .mdc-button__label {
+  color: var(--mat-app-text-color, inherit) !important;
+}
+// Hint text in dark themes: white with opacity for readability
+body.p3xr-theme-dark .mat-mdc-form-field-hint {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+// Settings page hint text — theme-aware
+.p3xr-settings-hint {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.54);
+}
+body.p3xr-theme-dark .p3xr-settings-hint {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.p3xr-dialog-content-mono {
+  font-family: 'Roboto Mono', monospace;
+}
+
+.p3xr-dialog-actions {
+  align-items: center !important;
+  box-sizing: border-box;
+  justify-content: flex-end !important;
+  gap: 8px;
+  padding: 8px !important;
+  background-color: var(--p3xr-accordion-bg) !important;
+}
+
+.p3xr-dialog-actions .mat-mdc-button-base:not(.mat-mdc-icon-button):not(.mat-mdc-fab-base),
+.p3xr-dialog-actions button.mat-mdc-button-base:not(.mat-mdc-icon-button):not(.mat-mdc-fab-base) {
+  margin: 0 !important;
+  min-width: 0 !important;
+  padding-left: 10px !important;
+  padding-right: 8px !important;
+  letter-spacing: 0.01em !important;
+}
+
+.p3xr-dialog-actions .mat-mdc-button-base .mdc-button__label {
+  display: inline !important;
+  gap: 0 !important;
+  letter-spacing: inherit !important;
+}
+
+.p3xr-dialog-actions .mat-mdc-button-base mat-icon,
+.p3xr-dialog-actions .mat-mdc-button-base .mat-icon,
+.p3xr-dialog-actions .mat-mdc-button-base i,
+.p3xr-dialog-actions .mat-mdc-button-base .mdc-button__label > mat-icon,
+.p3xr-dialog-actions .mat-mdc-button-base .mdc-button__label > .mat-icon,
+.p3xr-dialog-actions .mat-mdc-button-base .mdc-button__label > i {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-left: 0 !important;
+  width: 24px !important;
+  height: 24px !important;
+  line-height: 24px !important;
+  font-size: 24px !important;
+  margin-right: 3px !important;
+}
+
+.cdk-overlay-pane.p3xr-license-dialog {
+  width: 50vw !important;
+  min-width: 0 !important;
+  max-width: 50vw !important;
+}
+
+.cdk-overlay-pane.p3xr-license-tier-policy-dialog {
+  width: 80vw !important;
+  max-width: 80vw !important;
+}
+
+.cdk-overlay-pane.p3xr-license-dialog .mat-mdc-dialog-container,
+.cdk-overlay-pane.p3xr-license-dialog .mat-mdc-dialog-surface {
+  min-width: 0 !important;
+}
+
+.cdk-overlay-pane.p3xr-connection-dialog-panel {
+  width: 75vw !important;
+  max-width: 75vw !important;
+  max-height: 100vh !important;
+}
+
+.p3xr-connection-dialog-panel .mdc-label,
+.p3xr-connection-dialog-panel fieldset legend,
+.p3xr-connection-dialog-panel .mdc-floating-label {
+  font-weight: 700 !important;
+}
+
+.p3xr-connection-dialog-panel .mat-mdc-form-field {
+  display: block;
+}
+
+.p3xr-connection-dialog-panel .p3xr-md-input-container-no-bottom .mat-mdc-form-field-subscript-wrapper {
+  display: none !important;
+}
+
+.p3xr-connection-dialog-panel .p3xr-md-input-container-bottom-info {
+  font-size: 12px;
+  margin-top: 0;
+}
+
+.cdk-overlay-pane.p3xr-tree-settings-dialog-panel {
+  width: 75vw !important;
+  max-width: 75vw !important;
+  max-height: 100vh !important;
+  --mat-form-field-container-height: 40px;
+  --mat-form-field-container-vertical-padding: 8px;
+  --mat-form-field-filled-with-label-container-padding-top: 16px;
+  --mat-form-field-filled-with-label-container-padding-bottom: 4px;
+}
+
+
+.p3xr-connection-dialog-content,
+.p3xr-tree-settings-dialog-content {
+  padding: 0 !important;
+  background-color: var(--p3xr-content-bg) !important;
+  overflow: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+}
+
+.p3xr-tree-settings-dialog-content .p3xr-padding {
+  padding-top: 26px;
+  padding-bottom: 8px;
+}
+
+.p3xr-tree-settings-dialog-panel .mdc-label,
+.p3xr-tree-settings-dialog-panel fieldset legend,
+.p3xr-tree-settings-dialog-panel .mdc-floating-label {
+  font-weight: 700 !important;
+}
+
+.p3xr-tree-settings-dialog-panel .mat-mdc-form-field {
+  display: block;
+}
+
+.p3xr-tree-settings-dialog-panel .p3xr-md-input-container-no-bottom .mat-mdc-form-field-subscript-wrapper {
+  display: none !important;
+}
+
+.p3xr-tree-settings-dialog-panel .p3xr-md-input-container-bottom-info {
+  font-size: 12px;
+  line-height: normal;
+  margin-top: 0;
+}
+
+.p3xr-tree-settings-field-block {
+  margin-bottom: 21px;
+}
+
+.p3xr-tree-settings-field-block-max-keys {
+  margin-bottom: 16px;
+}
+
+.p3xr-tree-settings-toggle-block,
+.p3xr-tree-settings-reduced-functions {
+  margin-bottom: 12px;
+}
+
+.p3xr-tree-settings-toggle-block {
+  margin-bottom: 0;
+}
+
+.p3xr-tree-settings-toggle-block-keys-sort {
+  margin-bottom: 18px;
+}
+
+.p3xr-tree-settings-toggle-block-search-client {
+  margin-bottom: 19px;
+}
+
+.p3xr-tree-settings-reduced-functions-note,
+.p3xr-tree-settings-extra-info {
+  margin-top: 8px;
+}
+
+.p3xr-tree-settings-message-error {
+  color: var(--mat-sys-error, #f44336) !important;
+  opacity: 1 !important;
+}
+
+.p3xr-tree-settings-toggle-block .mat-mdc-slide-toggle {
+  display: block;
+  margin: 0 !important;
+  max-width: 100%;
+}
+
+.p3xr-tree-settings-toggle-block .mdc-form-field {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  white-space: normal !important;
+}
+
+.p3xr-tree-settings-toggle-block .mdc-label {
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+}
+
+.p3xr-tree-settings-toggle-block-last {
+  margin-bottom: 0;
+}
+
+.p3xr-connection-node-add,
+.p3xr-connection-node-actions {
+  display: inline-flex;
+  align-items: center;
+}
+
+.p3xr-connection-node-add .mat-mdc-mini-fab,
+.p3xr-connection-node-actions .mat-mdc-mini-fab {
+  margin: 0 0 0 8px !important;
+}
+
+.p3xr-connection-node-actions .mat-mdc-mini-fab:first-child {
+  margin-left: 0 !important;
+  margin-right: 8px !important;
+}
+
+.p3xr-connection-inline-toggles {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  column-gap: 16px;
+  row-gap: 8px;
+}
+
+.p3xr-connection-inline-toggles .mat-mdc-slide-toggle {
+  margin: 0 !important;
+  max-width: 100%;
+}
+
+.p3xr-connection-inline-toggles .mdc-form-field {
+  white-space: normal !important;
+}
+
+.p3xr-connection-inline-toggles .mdc-label {
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+}
+
+.p3xr-connection-tls-toggles {
+  margin-bottom: 12px;
+}
+
+.p3xr-connection-tls-fields {
+  padding-top: 0;
+}
+
+.p3xr-connection-dialog-panel textarea.mat-mdc-input-element {
+  min-height: 30px !important;
+  resize: vertical;
+}
+
+@media (max-width: 959px) {
+  .cdk-overlay-pane.fullscreen-dialog .mat-mdc-dialog-container,
+  .cdk-overlay-pane.fullscreen-dialog .mat-mdc-dialog-surface {
+    height: 100% !important;
+    max-height: 100% !important;
+  }
+
+  .cdk-overlay-pane.fullscreen-dialog .mat-mdc-dialog-surface form {
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 100% !important;
+    height: 100% !important;
+  }
+
+  .cdk-overlay-pane.fullscreen-dialog .p3xr-dialog-content {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: auto !important;
+  }
+
+  .cdk-overlay-pane.fullscreen-dialog .p3xr-connection-dialog-content {
+    max-height: none !important;
+  }
+
+  .cdk-overlay-pane.fullscreen-dialog .p3xr-dialog-actions {
+    flex: 0 0 auto;
+    margin-top: auto;
+  }
+
+  .cdk-overlay-pane.p3xr-connection-dialog-panel {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+  }
+
+  .cdk-overlay-pane.p3xr-connection-dialog-panel .mat-mdc-dialog-surface {
+    border-radius: 0 !important;
+  }
+
+  .cdk-overlay-pane.p3xr-tree-settings-dialog-panel {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+  }
+
+  .cdk-overlay-pane.p3xr-tree-settings-dialog-panel .mat-mdc-dialog-surface {
+    border-radius: 0 !important;
+  }
+}
+
+p3xr-ng-settings .p3xr-settings-pair-row,
+p3xr-ng-settings .p3xr-license-features-row,
+p3xr-info .p3xr-settings-pair-row,
+p3xr-monitoring .p3xr-settings-pair-row,
+p3xr-search .p3xr-settings-pair-row {
+  display: flex;
+  width: 100%;
+  gap: 16px;
+}
+
+p3xr-ng-settings .p3xr-settings-pair-row,
+p3xr-info .p3xr-settings-pair-row,
+p3xr-monitoring .p3xr-settings-pair-row,
+p3xr-search .p3xr-settings-pair-row {
+  align-items: center;
+}
+
+p3xr-ng-settings .p3xr-settings-pair-row-valid,
+p3xr-ng-settings .p3xr-license-features-row {
+  align-items: flex-start;
+}
+
+p3xr-ng-settings .p3xr-settings-row-label,
+p3xr-info .p3xr-settings-row-label,
+p3xr-monitoring .p3xr-settings-row-label,
+p3xr-search .p3xr-settings-row-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-weight: 700;
+}
+
+p3xr-ng-settings .p3xr-settings-row-value,
+p3xr-ng-settings .p3xr-license-features-text,
+p3xr-info .p3xr-settings-row-value,
+p3xr-monitoring .p3xr-settings-row-value,
+p3xr-search .p3xr-settings-row-value {
+  flex: 0 1 60%;
+  min-width: 0;
+  text-align: right;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+p3xr-ng-settings .p3xr-settings-wrap-text {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+p3xr-ng-settings .p3xr-license-active-devices-item,
+p3xr-ng-settings .p3xr-license-features-item {
+  height: auto !important;
+  min-height: 48px;
+}
+
+p3xr-ng-settings .p3xr-license-active-devices-item .mat-mdc-list-item-unscoped-content,
+p3xr-ng-settings .p3xr-license-features-item .mat-mdc-list-item-unscoped-content {
+  white-space: normal !important;
+}
+
+p3xr-ng-settings .p3xr-license-active-devices-content {
+  width: 100%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+p3xr-ng-settings .p3xr-license-active-devices-note {
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  opacity: 0.78;
+  line-height: 1.35;
+  font-size: 12px;
+}
+
+p3xr-ng-settings .p3xr-license-features-text {
+  line-height: 1.4;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.p3xr-license-tier-policy-dialog .mat-mdc-dialog-title {
+  font-size: 165%;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.p3xr-license-tier-policy-dialog .mat-mdc-dialog-content h4 {
+  font-size: 125%;
+  line-height: 1.2;
+  margin: 0 0 2px 0;
+  font-weight: 700;
+}
+
+.p3xr-license-tier-policy-dialog .mat-mdc-dialog-content hr {
+  opacity: 0.25;
+  margin: 8px 0;
+}
+
+// ============================================================================
+// Prevent horizontal scrollbar from body during hybrid mode
+// ============================================================================
+body {
+  overflow-x: hidden;
+}
+
+// ============================================================================
+// Neutralize Angular Material primary-tinted surface colors for ALL light themes.
+// M3 tints surfaces with the primary palette (e.g. violet → purple inputs/selects).
+// The AngularJS Common sub-theme uses accentPalette('grey') for input backgrounds,
+// so all Angular Material surfaces must be neutral grey/white, not tinted.
+// Must come AFTER all per-theme mat.all-component-colors() blocks to win the cascade.
+// ============================================================================
+body.p3xr-theme-light {
+  // Surfaces: pure white (no primary tint)
+  --mat-select-panel-background-color: #ffffff;
+  --mat-dialog-container-color: #ffffff;
+  --mat-menu-container-color: #ffffff;
+  --mat-autocomplete-background-color: #ffffff;
+  --mat-datepicker-calendar-container-background-color: #ffffff;
+  --mat-card-outlined-container-color: #ffffff;
+  --mat-table-background-color: #ffffff;
+  --mat-paginator-container-background-color: #ffffff;
+  // Form fields: neutral grey (matching AngularJS Common accent=grey)
+  --mdc-filled-text-field-container-color: #f5f5f5;
+  --mat-form-field-filled-container-color: #f5f5f5;
+  // Options / selections
+  --mat-option-selected-state-layer-color: rgba(0, 0, 0, 0.12);
+  --mat-option-label-text-color: rgba(0, 0, 0, 0.87);
+}
+
+// Redis overrides p3xr-theme-light background — must come after body.p3xr-theme-light to win cascade
+body.p3xr-mat-theme-redis {
+  --mat-app-background-color: #ffebee;  // red-50 (lightest red)
+}
+
+// Same neutralization for dark themes — M3 tints dark surfaces with primary palette too.
+// All dark themes use Common accentPalette('grey') except Matrix (light-green),
+// but ALL should use neutral grey for input backgrounds.
+body.p3xr-theme-dark {
+  // Surfaces: neutral dark grey (no primary tint)
+ 
+  --mat-select-panel-background-color: #424242;
+  --mat-dialog-container-color: #424242;
+  --mat-menu-container-color: #424242;
+  --mat-autocomplete-background-color: #424242;
+  --mat-datepicker-calendar-container-background-color: #424242;
+  --mat-card-outlined-container-color: #424242;
+  --mat-table-background-color: #303030;
+  --mat-paginator-container-background-color: #303030;
+  // Form fields: neutral dark grey (matching AngularJS Common accent=grey)
+  --mdc-filled-text-field-container-color: #404040;
+  --mat-form-field-filled-container-color: #404040;
+  // Options / selections
+  --mat-option-selected-state-layer-color: rgba(255, 255, 255, 0.12);
+  --mat-option-label-text-color: rgba(255, 255, 255, 0.87);
+}
+
+// ============================================================================
+// Force AngularJS input/dialog backgrounds to neutral (matching Common accentPalette='grey').
+// AngularJS Material's runtime $mdTheming CSS tints surfaces with the primary palette.
+// These overrides use high specificity to beat the runtime-generated theme CSS.
+// ============================================================================
+body md-dialog,
+body md-dialog md-dialog-content,
+body md-dialog md-dialog-content md-content,
+body [md-theme] md-dialog,
+body [md-theme] md-dialog md-dialog-content {
+  background-color: var(--p3xr-dialog-surface-bg) !important;
+}
+
+// All form controls: inputs, textareas, selects, switches, checkboxes
+body md-input-container,
+body md-input-container .md-input,
+body md-input-container input,
+body md-input-container textarea,
+body md-select,
+body md-select md-select-value,
+body md-switch,
+body md-checkbox,
+body md-radio-button,
+body [md-theme] md-input-container,
+body [md-theme] md-input-container .md-input,
+body [md-theme] md-input-container input,
+body [md-theme] md-input-container textarea,
+body [md-theme] md-select,
+body [md-theme] md-select md-select-value,
+body [md-theme] md-switch,
+body [md-theme] md-checkbox,
+body [md-theme] md-radio-button {
+  background-color: transparent !important;
+}
+
+// Select dropdown panel and menu content
+body md-select-menu,
+body md-select-menu md-content,
+body md-option,
+body [md-theme] md-select-menu,
+body [md-theme] md-select-menu md-content {
+  background-color: var(--p3xr-dialog-surface-bg) !important;
+}
+
+// Fieldset backgrounds inside dialogs (SSH section etc.)
+body md-dialog fieldset,
+body [md-theme] md-dialog fieldset {
+  background-color: transparent !important;
+}
+
+
+// Tree node tooltip: shift 36px right (node label + action buttons)
+.p3xr-tree-node-tooltip {
+  margin-left: 36px !important;
+}

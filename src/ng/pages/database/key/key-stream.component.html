@@ -1,0 +1,42 @@
+<p3xr-key-pager-inline [paging]="paging" (pageChanged)="updatePagedItems()"></p3xr-key-pager-inline>
+
+<div class="p3xr-key-type-table">
+    <div class="p3xr-key-type-header">
+        <span style="flex: 1">{{ strings?.page?.key?.stream?.table?.timestamp || 'Timestamp ID' }}</span>
+        <span style="text-align: right">
+            @if (!isReadonly) {
+                <button mat-icon-button (click)="addStream($event)" [matTooltip]="strings?.intention?.add ?? 'Add'">
+                    <mat-icon>add</mat-icon>
+                </button>
+            }
+        </span>
+    </div>
+
+    @for (entry of pagedEntries; track entry.id) {
+        <div class="p3xr-key-stream-entry-block">
+            <!-- Entry header: timestamp + actions -->
+            <div class="p3xr-key-stream-entry-header">
+                <span class="p3xr-key-stream-timestamp">
+                    <strong>{{ entry.id }}</strong>
+                    <span class="p3xr-key-stream-timestamp-human">{{ showTimestamp(entry.id) }}</span>
+                </span>
+                <span class="p3xr-key-type-row-actions">
+                    <mat-icon class="icon-accent" (click)="copyEntry(entry)" [matTooltip]="strings?.intention?.copy ?? 'Copy'">content_copy</mat-icon>
+                    <mat-icon class="icon-accent" (click)="viewEntryJson(entry, $event)" [matTooltip]="strings?.json ?? 'JSON'">table_chart</mat-icon>
+                    @if (!isReadonly) {
+                        <mat-icon class="icon-warn" (click)="deleteStreamTimestamp(entry.id, $event)" [matTooltip]="strings?.intention?.delete ?? 'Delete'">delete</mat-icon>
+                    }
+                </span>
+            </div>
+
+            <!-- Entry data as JSON tree -->
+            <div class="p3xr-key-stream-data">
+                <p3xr-json-tree
+                    [data]="entry.displayData"
+                    [label]="strings?.label?.tree || 'Tree'"
+                    [expanded]="true">
+                </p3xr-json-tree>
+            </div>
+        </div>
+    }
+</div>

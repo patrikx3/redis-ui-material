@@ -1,10 +1,11 @@
+const path = require('path');
 const config = require('corifeus-builder/src/utils/config').config
 const webpack = require('webpack');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const { AngularWebpackPlugin } = require('@ngtools/webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin;
 const minimize = process.argv.includes('--mode=production');
 const mode = minimize ? 'production' : 'development';
 const useStats = process.env.hasOwnProperty('WEBPACK_STATS')
@@ -20,7 +21,9 @@ let devtool;
 devtool = minimize ? false : 'source-map';
 
 const pkg = require('../../package')
-const cspPolicy = "default-src 'self'; script-src 'self' https://www.googletagmanager.com 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' ws: wss: http://localhost:* http://127.0.0.1:* https://www.google-analytics.com https://region1.google-analytics.com; object-src 'none'; base-uri 'self'; form-action 'self'"
+// Note: 'unsafe-eval' is required for Angular JIT compiler (used during development / hybrid ngUpgrade mode).
+// Once fully migrated to Angular AOT compilation, 'unsafe-eval' can be removed.
+const cspPolicy = "default-src 'self'; script-src 'self' https://www.googletagmanager.com 'unsafe-inline' 'unsafe-eval'; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' ws: wss: http://localhost:* http://127.0.0.1:* https://www.google-analytics.com https://region1.google-analytics.com; frame-src https://redis.io; object-src 'none'; base-uri 'self'; form-action 'self'"
 
 // https://github.com/webpack-contrib/webpack-hot-middleware/tree/master/example
 /*
@@ -48,11 +51,6 @@ if (!minimize) {
 }
 
 const plugins = [
-    new webpack.IgnorePlugin({
-        resourceRegExp: /^\.\/locale$/,
-        contextRegExp: /moment$/
-    }),
-
     new HtmlWebpackPlugin({
         template: `${top}/src/index.html`,
         inject: 'head',
@@ -143,17 +141,43 @@ For more information about all licenses, please see ${webpackBanner}
 
 
 
-} else {
-    plugins.push(
-        new webpack.HotModuleReplacementPlugin()
-    )
 }
+
+// Auto-inject p3xr module reference for every bare `p3xr` variable access.
+// This replaces the global window.p3xr with a webpack module — invisible in browser console.
+plugins.push(
+    new webpack.ProvidePlugin({
+        p3xr: path.resolve(__dirname, '../core/p3xr.js'),
+    })
+)
+
+// Angular AOT compilation — eliminates @angular/compiler from the bundle (~1MB savings)
+plugins.push(
+    new AngularWebpackPlugin({
+        tsconfig: path.resolve(__dirname, '../../tsconfig.json'),
+        jitMode: false,
+    })
+)
 
 const rules = [
     {
-        test: /\.js$/,
-        enforce: 'pre',
-        use: ['source-map-loader'],
+        test: /\.[cm]?js$/,
+        include: /node_modules/,
+        resolve: { fullySpecified: false },
+        use: {
+            loader: 'babel-loader',
+            options: {
+                compact: false,
+                plugins: [
+                    '@angular/compiler-cli/linker/babel',
+                ],
+            },
+        },
+    },
+    {
+        test: /\.[jt]sx?$/,
+        exclude: /node_modules/,
+        loader: '@ngtools/webpack',
     },
     {
         test: /\.(scss|css)$/,
@@ -203,27 +227,10 @@ const rules = [
 let optimization = {
     minimize: minimize,
     minimizer: minimizer,
-    /*
-    */
 }
 
 if (minimize) {
 
-    /*
-    rules.push({
-        test: /\.js$/,
-        loader: 'webpack-remove-debug'
-    })
-    */
-
-
-    rules.push(      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-            loader: "babel-loader?cacheDirectory"
-        }
-    })
 } else {
 
     optimization = Object.assign(optimization, {
@@ -253,6 +260,9 @@ const webpackConfig = {
         publicPath: ``,
         assetModuleFilename: 'assets/[hash][ext]',
     },
+    resolve: {
+        extensions: ['.ts', '.js'],
+    },
     module: {
         rules: rules
     },
@@ -277,8 +287,10 @@ const webpackConfig = {
                 {from: /.*\..*/, to: '/index.html'}
             ]
         },
-        hot: true,
         // hotOnly: true,
+        client: {
+            overlay: false,
+        },
     },
 
 }

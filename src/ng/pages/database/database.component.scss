@@ -1,0 +1,106 @@
+@use "../../../scss/vars" as v;
+
+p3xr-database {
+
+    @media (max-width:350px) {
+        .p3xr-database-toolbar-button-hide-on-small {
+            display: none;
+        }
+    }
+
+    p3xr-database-header, .p3xr-content-border {
+        border-top-left-radius: v.$border-radius;
+        border-top-right-radius: v.$border-radius;
+    }
+
+    #p3xr-database-treecontrol-container {
+        position: fixed;
+        overflow: auto;
+    }
+
+    #p3xr-database-treecontrol-container-directive-small {
+        display: block;
+        flex: 1 1 auto;
+        min-height: 0;
+        max-height: none;
+        overflow-y: auto;
+        overflow-x: auto;
+    }
+
+    .p3xr-database-treecontrol-folder-icon {
+        transform: scale(0.75);
+    }
+
+    #p3xr-database-content-container {
+        position: fixed;
+        overflow: auto;
+        display: block;
+    }
+
+    #p3xr-database-content.p3xr-database-content-with-bottom-console {
+        position: relative;
+        overflow-x: hidden;
+
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 2px;
+            background: inherit;
+            pointer-events: none;
+            z-index: 1;
+        }
+    }
+
+    .p3xr-database-bottom-console-mobile {
+        height: 33vh;
+        min-height: 220px;
+        margin-top: auto;
+        border-top: 1px solid rgba(255, 255, 255, 0.16);
+        overflow-x: hidden;
+    }
+
+    @media (max-width: 959px) {
+        #p3xr-database-content {
+            overflow-x: hidden;
+        }
+
+        .p3xr-database-has-connection {
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
+        }
+    }
+}
+
+#p3xr-database-content-sizer {
+    position: fixed;
+    display: block;
+    cursor: ew-resize;
+    z-index: 8;
+    background-color: var(--p3xr-accordion-bg);
+    transition: background-color 0.15s ease;
+
+    body.p3xr-theme-dark &:hover {
+        filter: brightness(1.3);
+    }
+    body.p3xr-theme-dark &.p3xr-resizer-active {
+        filter: brightness(1.6);
+    }
+    body.p3xr-theme-light &:hover {
+        filter: brightness(0.85);
+    }
+    body.p3xr-theme-light &.p3xr-resizer-active {
+        filter: brightness(0.7);
+    }
+}
+
+#p3xr-database-bottom-console-panel {
+    position: fixed;
+    overflow: hidden;
+    box-sizing: border-box;
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+    z-index: 9;
+}

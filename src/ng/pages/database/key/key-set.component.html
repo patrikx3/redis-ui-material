@@ -1,0 +1,25 @@
+<p3xr-key-pager-inline [paging]="paging" (pageChanged)="updatePagedItems()"></p3xr-key-pager-inline>
+<div class="p3xr-key-type-table">
+    <div class="p3xr-key-type-header">
+        <span style="flex: 95%">{{ strings?.page?.key?.label?.value || 'Value' }}</span>
+        <span style="flex: 5%; text-align: right">
+            @if (!isReadonly) {
+                <button mat-icon-button (click)="addSet($event)" matTooltip="Add">
+                    <mat-icon>add</mat-icon>
+                </button>
+            }
+        </span>
+    </div>
+    @for (item of pagedItems; track item.index) {
+        <div class="p3xr-key-type-row">
+            <span class="p3xr-value-col p3xr-pre" style="flex: 95%; cursor: pointer" (click)="editValue(item.index, item.value, $event)">{{ item.value }}</span>
+            <span style="flex: 5%; text-align: right" class="p3xr-key-type-row-actions">
+                @if (!isReadonly) { <mat-icon class="icon-warn" (click)="deleteSetMember(item.index, $event)" matTooltip="Delete">delete</mat-icon> }
+                <mat-icon class="icon-accent" (click)="showJsonItem(item.value, $event)" matTooltip="JSON">table_chart</mat-icon>
+                <mat-icon class="icon-accent" (click)="copyItem(item.value)" matTooltip="Copy">content_copy</mat-icon>
+                @if (hasProOrEnterprise) { <mat-icon class="icon-accent" (click)="downloadItem(item.index)" matTooltip="Download">download</mat-icon> }
+                @if (!isReadonly) { <mat-icon class="icon-primary" (click)="editValue(item.index, item.value, $event)" matTooltip="Edit">edit</mat-icon> }
+            </span>
+        </div>
+    }
+</div>

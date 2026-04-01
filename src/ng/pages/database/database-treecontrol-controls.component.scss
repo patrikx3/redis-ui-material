@@ -1,0 +1,201 @@
+:host {
+    display: block;
+    margin-top: 2px;
+    min-height: 24px;
+    text-align: center;
+}
+
+#p3xr-database-treecontrol-controls-container {
+    display: inline-block;
+}
+
+.p3xr-database-treecontrol-controls-leading {
+    float: left;
+    line-height: 31px;
+}
+
+.p3xr-database-treecontrol-controls-search {
+    clear: both;
+    padding: 5px;
+    text-align: left;
+    line-height: 24px;
+}
+
+.p3xr-database-treecontrol-controls-pager {
+    display: inline-block;
+    position: relative;
+    top: 2px;
+    vertical-align: middle;
+    line-height: 24px;
+}
+
+.p3xr-database-treecontrol-controls-keycount {
+    float: right;
+    line-height: 26px;
+    margin-top: 6px;
+    opacity: 0.5;
+}
+
+.p3xr-database-treecontrol-divider-menu-label {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+// Divider mat-menu overlay panel — rendered outside the component in CDK overlay
+// translateX shifts popup left to center on the divider input instead of the trigger arrow
+.p3xr-divider-menu.mat-mdc-menu-panel {
+    min-width: 20px !important;
+    max-width: 40px !important;
+    transform: translateX(-20px);
+
+    .mat-mdc-menu-content {
+        padding: 0 !important;
+    }
+
+    .mat-mdc-menu-item {
+        min-height: 28px;
+        height: 28px;
+        padding: 0 !important;
+        min-width: 0;
+        text-align: center;
+        justify-content: center;
+
+        .mdc-list-item__primary-text {
+            width: 100%;
+            text-align: center;
+        }
+    }
+
+    .p3xr-database-treecontrol-divider-menu-label {
+        display: block;
+        text-align: center;
+        width: 100%;
+    }
+}
+
+// Icon buttons — match AngularJS md-button.md-icon-button with overrides
+.p3xr-database-treecontrol-icon-button {
+    align-items: center;
+    background: none;
+    border: 0;
+    border-radius: 50%;
+    color: var(--p3xr-treecontrol-icon-color);
+    cursor: pointer;
+    display: inline-flex;
+    height: 24px;
+    justify-content: center;
+    line-height: 24px;
+    margin: 0;
+    min-height: 24px;
+    min-width: 24px;
+    padding: 0;
+    vertical-align: middle;
+    width: 24px;
+}
+
+.p3xr-database-treecontrol-icon-button:focus {
+    outline: none;
+}
+
+.p3xr-database-treecontrol-icon-button .material-icons {
+    display: block;
+    font-size: 24px;
+    height: 24px;
+    line-height: 24px;
+    width: 24px;
+}
+
+.p3xr-database-treecontrol-root-add {
+    color: var(--p3xr-common-warn-color);
+    cursor: pointer;
+    display: inline-block;
+    font-size: 24px;
+    height: 24px;
+    line-height: 24px;
+    vertical-align: middle;
+    width: 24px;
+}
+
+.p3xr-database-treecontrol-icon-primary {
+    color: var(--p3xr-btn-primary-bg);
+}
+
+// Divider input — sits inline with icon buttons
+p3xr-ng-input.p3xr-database-treecontrol-divider-input {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    vertical-align: middle !important;
+    width: 23px;
+}
+
+p3xr-ng-input.p3xr-database-treecontrol-divider-input input.p3xr-input {
+    text-align: center;
+}
+
+// Divider dropdown trigger button — clicks to open the divider selector
+.p3xr-database-treecontrol-divider-trigger {
+    background: none;
+    border: 0;
+    color: var(--p3xr-treecontrol-icon-color);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 24px;
+    margin: 0;
+    padding: 0;
+    vertical-align: middle;
+    width: 14px;
+}
+
+.p3xr-database-treecontrol-divider-trigger .material-icons {
+    font-size: 18px;
+    height: 18px;
+    width: 18px;
+}
+
+// Page input — inside pager row
+p3xr-ng-input.p3xr-database-treecontrol-page-input {
+    vertical-align: middle !important;
+    width: 48px;
+}
+
+// Pager text "/ 101" alignment
+.p3xr-database-treecontrol-pager-text {
+    vertical-align: middle;
+}
+
+// Menu hint text shown below export/import when search is active
+.p3xr-menu-hint {
+    padding: 0 16px 8px;
+    font-size: 11px;
+    opacity: 0.5;
+    font-style: italic;
+    pointer-events: none;
+    line-height: 1.3;
+}
+
+// Search input
+p3xr-ng-input.p3xr-database-treecontrol-search-input {
+    vertical-align: middle !important;
+    width: auto;
+}
+
+// Not readonly: search + hamburger + add = 3 trailing buttons, +clear = 4
+.p3xr-database-treecontrol-search-input.search-full {
+   width: calc(100% - 73px);
+}
+.p3xr-database-treecontrol-search-input.search-full-clear {
+   width: calc(100% - 98px);
+}
+
+// Readonly: search + hamburger = 2 trailing buttons, +clear = 3
+.p3xr-database-treecontrol-search-input.search-readonly {
+   width: calc(100% - 48px);
+}
+.p3xr-database-treecontrol-search-input.search-readonly-clear {
+   width: calc(100% - 73px);
+}

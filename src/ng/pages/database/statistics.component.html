@@ -1,0 +1,37 @@
+<mat-tab-group dynamicHeight>
+
+    <!-- Database keyspace tab (only when databases exist and not cluster) -->
+    @if (hasDatabases && !isCluster) {
+        <mat-tab [label]="i18n.strings()?.title?.db ?? 'DB'">
+            <mat-tab-group dynamicHeight class="p3xr-statistics-db-tabs">
+                @for (dbEntry of keyspaceDatabaseEntries; track dbEntry.key) {
+                    <mat-tab [label]="dbEntry.key">
+                        <div class="p3xr-statistics-list">
+                            @for (item of getKeyspaceItems(dbEntry.key); track item.key) {
+                                <div class="p3xr-statistics-item">
+                                    <strong>{{ generateKey(item.key) }}</strong>
+                                    <span>{{ item.value }}</span>
+                                </div>
+                            }
+                        </div>
+                    </mat-tab>
+                }
+            </mat-tab-group>
+        </mat-tab>
+    }
+
+    <!-- Info section tabs (skip keyspace and keyspaceDatabases) -->
+    @for (section of infoSections; track section.key) {
+        <mat-tab [label]="generateKey(section.key)">
+            <div class="p3xr-statistics-list">
+                @for (item of section.items; track item.key) {
+                    <div class="p3xr-statistics-item">
+                        <strong>{{ generateKey(item.key) }}</strong>
+                        <span>{{ formatValue(item.value) }}</span>
+                    </div>
+                }
+            </div>
+        </mat-tab>
+    }
+
+</mat-tab-group>

@@ -1,0 +1,182 @@
+<!-- Search Query -->
+<p3xr-ng-accordion [title]="strings().page?.search?.title || 'Search'" accordionKey="search-query">
+    <div content>
+        <div class="p3xr-padding">
+            @if (indexes.length === 0) {
+                <div style="opacity: 0.5;">{{ strings().page?.search?.noIndex || 'No indexes found' }}</div>
+            }
+
+            @if (indexes.length > 0) {
+                <mat-form-field class="md-block">
+                    <mat-label>{{ strings().page?.search?.index || 'Index' }}</mat-label>
+                    <mat-select [(value)]="selectedIndex" (selectionChange)="offset = 0; indexInfo = null">
+                        @for (idx of indexes; track idx) {
+                            <mat-option [value]="idx">{{ idx }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="md-block">
+                    <mat-label>{{ strings().page?.search?.query || 'Query' }}</mat-label>
+                    <input matInput [(ngModel)]="query" (keydown.enter)="offset = 0; searchAndRefreshInfo()" />
+                </mat-form-field>
+
+                <div style="margin-top: 8px; text-align: right;">
+                    @if (isGtSm) {
+                        <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="searchAndRefreshInfo()">
+                            <mat-icon>search</mat-icon>
+                            <span>{{ strings().page?.search?.title || 'Search' }}</span>
+                        </button>
+                    } @else {
+                        <button mat-mini-fab class="btn-primary" type="button" (click)="searchAndRefreshInfo()"
+                                [matTooltip]="strings().page?.search?.title || 'Search'" matTooltipPosition="above">
+                            <mat-icon>search</mat-icon>
+                        </button>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</p3xr-ng-accordion>
+
+<!-- Results -->
+@if (searchDone && total === 0) {
+    <br />
+    <p3xr-ng-accordion [title]="(strings().page?.search?.results || 'Results') + ' (0)'" accordionKey="search-results">
+        <div content>
+            <div style="padding: 16px; opacity: 0.5;">{{ strings().label?.noResults || 'No results' }}</div>
+        </div>
+    </p3xr-ng-accordion>
+}
+@if (results.length > 0 || total > 0) {
+    <br />
+    <p3xr-ng-accordion [title]="(strings().page?.search?.results || 'Results') + ' (' + total + ')'" accordionKey="search-results">
+        <div actions>
+            @if (pages > 1) {
+                <p3xr-ng-button (click)="pageAction('first'); $event.stopPropagation()" label="" mdIcon="skip_previous"></p3xr-ng-button>
+                <p3xr-ng-button (click)="pageAction('prev'); $event.stopPropagation()" label="" mdIcon="keyboard_arrow_left"></p3xr-ng-button>
+                <span style="font-size: 12px; opacity: 0.7;">{{ currentPage }} / {{ pages }}</span>
+                <p3xr-ng-button (click)="pageAction('next'); $event.stopPropagation()" label="" mdIcon="keyboard_arrow_right"></p3xr-ng-button>
+                <p3xr-ng-button (click)="pageAction('last'); $event.stopPropagation()" label="" mdIcon="skip_next"></p3xr-ng-button>
+            }
+        </div>
+        <div content>
+            <mat-list>
+                @for (doc of results; track doc._key) {
+                    <mat-list-item>
+                        <div class="p3xr-settings-pair-row">
+                            <div class="p3xr-settings-row-label">
+                                <kbd class="p3xr-kbd p3xr-kbd-small">{{ doc._key }}</kbd>
+                            </div>
+                            <div class="p3xr-settings-row-value p3xr-mono" style="font-size: 12px;">
+                                @for (field of getDocKeys(doc); track field) {
+                                    <span>{{ field }}: {{ doc[field] }}</span>
+                                    @if (!$last) { <span> · </span> }
+                                }
+                            </div>
+                        </div>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                }
+            </mat-list>
+        </div>
+    </p3xr-ng-accordion>
+}
+
+<!-- Index Info — shown after first search -->
+@if (selectedIndex && indexInfo) {
+    <br />
+    <p3xr-ng-accordion [title]="(strings().page?.search?.indexInfo || 'Index Info') + ': ' + selectedIndex" accordionKey="search-index-info">
+        <div actions>
+            @if (!isReadonly) {
+                <p3xr-ng-button
+                    (click)="dropIndex(); $event.stopPropagation()"
+                    [label]="strings().page?.search?.dropIndex || 'Drop'"
+                    mdIcon="delete">
+                </p3xr-ng-button>
+            }
+        </div>
+        <div content>
+            @if (indexInfo) {
+                <mat-list>
+                    @for (key of getDocKeys(indexInfo); track key) {
+                        <mat-list-item>
+                            <div class="p3xr-settings-pair-row">
+                                <div class="p3xr-settings-row-label">{{ key }}</div>
+                                <div class="p3xr-settings-row-value p3xr-mono" style="font-size: 12px;">{{ indexInfo[key] | json }}</div>
+                            </div>
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
+                    }
+                </mat-list>
+            }
+        </div>
+    </p3xr-ng-accordion>
+}
+
+<!-- Create Index -->
+@if (!isReadonly) {
+    <br />
+    <p3xr-ng-accordion [title]="strings().page?.search?.createIndex || 'Create Index'" accordionKey="search-create-index">
+        <div content>
+            <div class="p3xr-padding">
+                <mat-form-field class="md-block">
+                    <mat-label>{{ strings().page?.search?.indexName || 'Index Name' }}</mat-label>
+                    <input matInput [(ngModel)]="newIndexName" />
+                </mat-form-field>
+
+                <mat-form-field class="md-block">
+                    <mat-label>{{ strings().page?.search?.prefix || 'Key Prefix (optional)' }}</mat-label>
+                    <input matInput [(ngModel)]="newIndexPrefix" placeholder="e.g. doc:" />
+                </mat-form-field>
+
+                <div style="display: flex; align-items: center; gap: 8px; margin: 8px 0;">
+                    <strong>Schema</strong>
+                    <button mat-mini-fab class="btn-primary" (click)="addField()" type="button">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+
+                @for (field of newIndexFields; track $index; let i = $index) {
+                    <div class="p3xr-search-schema-row">
+                        <mat-form-field style="flex: 1;">
+                            <mat-label>{{ strings().page?.search?.fieldName || 'Field Name' }}</mat-label>
+                            <input matInput [(ngModel)]="field.name" />
+                        </mat-form-field>
+                        <div class="p3xr-search-schema-type-row">
+                            <mat-form-field style="width: 130px;">
+                                <mat-label>{{ strings().label?.type || 'Type' }}</mat-label>
+                                <mat-select [(value)]="field.type">
+                                    <mat-option value="TEXT">TEXT</mat-option>
+                                    <mat-option value="NUMERIC">NUMERIC</mat-option>
+                                    <mat-option value="TAG">TAG</mat-option>
+                                    <mat-option value="GEO">GEO</mat-option>
+                                    <mat-option value="VECTOR">VECTOR</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <button mat-mini-fab class="btn-warn" (click)="confirmRemoveField(i)" [disabled]="newIndexFields.length <= 1" type="button">
+                                <mat-icon>remove</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                }
+
+                <div style="margin-top: 8px; text-align: right;">
+                    @if (isGtSm) {
+                        <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="createIndex()" [disabled]="!newIndexName.trim()">
+                            <mat-icon>add</mat-icon>
+                            <span>{{ strings().page?.search?.createIndex || 'Create Index' }}</span>
+                        </button>
+                    } @else {
+                        <button mat-mini-fab class="btn-accent" type="button" (click)="createIndex()" [disabled]="!newIndexName.trim()"
+                                [matTooltip]="strings().page?.search?.createIndex || 'Create Index'" matTooltipPosition="above">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    }
+                </div>
+            </div>
+        </div>
+    </p3xr-ng-accordion>
+}
+
+<div style="height: 64px;"></div>

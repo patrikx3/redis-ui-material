@@ -1,0 +1,275 @@
+p3xr-console {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.p3xr-console-root {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.p3xr-console-root-embedded {
+    overflow: hidden;
+
+    #p3xr-console-content {
+        flex: 1 1 auto;
+        min-height: 0;
+    }
+}
+
+p3xr-console .mat-toolbar {
+    min-height: 48px;
+    height: 48px;
+    color: white;
+    position: relative;
+    z-index: 2;
+}
+
+p3xr-console .mat-toolbar * {
+    color: inherit;
+}
+
+// Force mat-checkbox inside the console toolbar to use white outline/border
+// and transparent background (Angular Material uses internal CSS variables)
+p3xr-console .mat-toolbar .mat-mdc-checkbox {
+    --mdc-checkbox-unselected-icon-color: rgba(255, 255, 255, 0.7);
+    --mdc-checkbox-unselected-hover-icon-color: white;
+    --mdc-checkbox-unselected-focus-icon-color: white;
+    --mdc-checkbox-unselected-pressed-icon-color: white;
+    --mdc-checkbox-selected-icon-color: rgba(255, 255, 255, 0.7);
+    --mdc-checkbox-selected-hover-icon-color: white;
+    --mdc-checkbox-selected-focus-icon-color: white;
+    --mdc-checkbox-selected-pressed-icon-color: white;
+    --mdc-checkbox-selected-checkmark-color: white;
+    --mdc-checkbox-selected-container-color: transparent;
+    --mdc-checkbox-selected-hover-state-layer-color: rgba(255, 255, 255, 0.1);
+    --mdc-checkbox-selected-focus-state-layer-color: rgba(255, 255, 255, 0.1);
+    --mdc-checkbox-selected-pressed-state-layer-color: rgba(255, 255, 255, 0.1);
+    --mat-checkbox-label-text-color: white;
+
+    // Direct override on the checkbox frame since CSS variables alone don't reach it
+    .mdc-checkbox__background {
+        border-color: rgba(255, 255, 255, 0.7) !important;
+    }
+
+    // When checked, make the container transparent with white checkmark
+    .mdc-checkbox__native-control:checked ~ .mdc-checkbox__background,
+    .mdc-checkbox__native-control:indeterminate ~ .mdc-checkbox__background {
+        border-color: white !important;
+        background-color: transparent !important;
+
+        .mdc-checkbox__checkmark {
+            color: white !important;
+        }
+    }
+}
+
+// Buttons inside console toolbar: inherit color, match AngularJS md-button styling
+p3xr-console .mat-toolbar .mat-mdc-button-base:not(.mat-mdc-fab-base) {
+    color: inherit !important;
+    letter-spacing: 0.1px !important;
+    text-transform: uppercase !important;
+    height: 36px !important;
+    min-height: 36px !important;
+    min-width: auto !important;
+    padding: 0px 8px !important;
+    margin: 0px 8px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    // Hover: lighten on dark toolbar background (matches header buttons)
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.15) !important;
+    }
+}
+
+p3xr-console .mat-toolbar .mat-mdc-button-base:not(.mat-mdc-fab-base) *,
+p3xr-console .mat-toolbar .mat-mdc-button-base:not(.mat-mdc-fab-base) .mdc-button__label {
+    color: inherit !important;
+    letter-spacing: 0.1px !important;
+}
+
+p3xr-console .mat-toolbar mat-icon,
+p3xr-console .mat-toolbar .material-icons {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+}
+
+.p3xr-console-toolbar-tools {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 0 8px;
+}
+
+.p3xr-console-toolbar-actions {
+    display: inline-flex;
+    align-items: center;
+}
+
+.p3xr-console-title {
+    font-size: 20px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.p3xr-toolbar-spacer {
+    flex: 1 1 auto;
+}
+
+.p3xr-console-monitor-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.p3xr-console-monitor-label {
+    white-space: nowrap;
+    font-size: 20px;
+}
+
+// Scale down the checkbox to match AngularJS (transform: scale(0.75))
+p3xr-console .mat-toolbar .p3xr-console-monitor-wrap .mat-mdc-checkbox {
+    transform: scale(0.75);
+}
+
+// PubSub monitor pattern popup — appears on hover below the checkbox
+.p3xr-monitor-input {
+    position: absolute;
+    top: 48px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.p3xr-monitor-input-toolbar {
+    border: none;
+    padding: 6px;
+    min-height: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+// Match the main console command input sizing
+.p3xr-monitor-pattern-input {
+    width: 200px;
+    height: 40px;
+    font-size: 16px;
+    font-family: 'Roboto Mono', monospace !important;
+    font-weight: 500;
+    box-sizing: border-box;
+    padding: 3px;
+    border-style: solid;
+    border-width: 2px;
+    margin: 1px;
+}
+
+.p3xr-monitor-pattern-input:focus {
+    margin: 0;
+    border-width: 3px;
+    outline: none;
+}
+
+#p3xr-console-content {
+    font-family: 'Roboto Mono', monospace;
+    text-align: center;
+
+    #p3xr-console-content-resizer {
+        cursor: ew-resize;
+        position: relative;
+        left: -10px;
+        width: 20px !important;
+    }
+
+    #p3xr-console-content-output {
+        min-width: calc(100% - 20px);
+        text-align: left;
+        overflow: auto;
+
+        pre {
+            font-family: 'Roboto Mono', monospace;
+        }
+    }
+}
+
+.p3xr-console-content-output-item:before {
+    content: "> ";
+    opacity: 0.5;
+}
+
+// Console input
+#p3xr-console-autocomplete {
+    position: relative;
+    overflow: hidden;
+    width: 100%
+}
+
+#p3xr-console-autocomplete.p3xr-console-autocomplete-embedded {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    overflow-x: hidden;
+}
+
+#p3xr-console-autocomplete.p3xr-console-autocomplete-embedded #p3xr-console-input {
+    min-width: 100%;
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+p3xr-console.p3xr-console-embedded-collapsed #p3xr-console-autocomplete.p3xr-console-autocomplete-embedded #p3xr-console-input {
+    min-width: calc(100% - 1px);
+    width: calc(100% - 1px);
+}
+
+#p3xr-console-input {
+    width: 100%;
+    box-sizing: border-box;
+    height: 38px;
+    padding: 3px;
+    border-style: solid;
+    border-width: 2px;
+    margin: 1px;
+    font-family: 'Roboto Mono', monospace;
+}
+
+#p3xr-console-input:focus {
+    margin: 0;
+    border-width: 3px;
+    outline: none;
+}
+
+// Mat-autocomplete panel styling for console
+.p3xr-console-autocomplete-panel.mat-mdc-autocomplete-panel {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 13px;
+
+    .mat-mdc-option {
+        min-height: 32px;
+        font-size: 13px;
+        font-family: 'Roboto Mono', monospace;
+    }
+}
+
+@media (max-width: 959px) {
+    .p3xr-console-root-embedded #p3xr-console-content-output {
+        overflow-x: hidden;
+        pre {
+            white-space: pre-wrap;
+            word-break: break-word;
+            overflow-wrap: anywhere;
+        }
+    }
+}

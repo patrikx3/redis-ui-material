@@ -1,0 +1,260 @@
+@if (!current) {
+    <div class="p3xr-monitoring-loading">
+        <mat-icon>hourglass_empty</mat-icon>
+        <span>{{ strings().label?.loading || 'Loading...' }}</span>
+    </div>
+}
+
+@if (current) {
+    <!-- Overview -->
+    <p3xr-ng-accordion [title]="strings().page?.monitor?.title || 'Monitoring'" accordionKey="monitor-overview">
+        <div actions>
+            <p3xr-ng-button
+                (click)="togglePause(); $event.stopPropagation()"
+                [label]="serverInfoLabel()"
+                [mdIcon]="paused ? 'play_arrow' : 'pause'">
+            </p3xr-ng-button>
+        </div>
+        <div content>
+            <mat-list>
+                <mat-list-item>
+                    <div class="p3xr-settings-pair-row">
+                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.memory || 'Memory' }}</div>
+                        <div class="p3xr-settings-row-value p3xr-mono">{{ current.memory.usedHuman }}</div>
+                    </div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <div class="p3xr-settings-pair-row">
+                        <div class="p3xr-settings-row-label">RSS</div>
+                        <div class="p3xr-settings-row-value p3xr-mono">{{ current.memory.rssHuman }}</div>
+                    </div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <div class="p3xr-settings-pair-row">
+                        <div class="p3xr-settings-row-label">Peak</div>
+                        <div class="p3xr-settings-row-value p3xr-mono">{{ current.memory.peakHuman }}</div>
+                    </div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <div class="p3xr-settings-pair-row">
+                        <div class="p3xr-settings-row-label">Fragmentation</div>
+                        <div class="p3xr-settings-row-value p3xr-mono">{{ current.memory.fragRatio }}x</div>
+                    </div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <div class="p3xr-settings-pair-row">
+                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.opsPerSec || 'Ops/sec' }}</div>
+                        <div class="p3xr-settings-row-value p3xr-mono">{{ current.stats.opsPerSec }}</div>
+                    </div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <div class="p3xr-settings-pair-row">
+                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.totalCommands || 'Total Commands' }}</div>
+                        <div class="p3xr-settings-row-value p3xr-mono">{{ current.stats.totalCommands }}</div>
+                    </div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <div class="p3xr-settings-pair-row">
+                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.clients || 'Clients' }}</div>
+                        <div class="p3xr-settings-row-value p3xr-mono">{{ current.clients.connected }}</div>
+                    </div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <div class="p3xr-settings-pair-row">
+                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.blocked || 'Blocked' }}</div>
+                        <div class="p3xr-settings-row-value p3xr-mono">{{ current.clients.blocked }}</div>
+                    </div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <div class="p3xr-settings-pair-row">
+                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.hitsMisses || 'Hit Rate' }}</div>
+                        <div class="p3xr-settings-row-value p3xr-mono">{{ current.stats.hitRate }}%</div>
+                    </div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <div class="p3xr-settings-pair-row">
+                        <div class="p3xr-settings-row-label">Hits / Misses</div>
+                        <div class="p3xr-settings-row-value p3xr-mono">{{ current.stats.hits }} / {{ current.stats.misses }}</div>
+                    </div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <div class="p3xr-settings-pair-row">
+                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.networkIo || 'Network I/O' }}</div>
+                        <div class="p3xr-settings-row-value p3xr-mono">{{ current.stats.inputKbps | number:'1.1-1' }} / {{ current.stats.outputKbps | number:'1.1-1' }} KB/s</div>
+                    </div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <div class="p3xr-settings-pair-row">
+                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.expired || 'Expired' }}</div>
+                        <div class="p3xr-settings-row-value p3xr-mono">{{ current.stats.expiredKeys }}</div>
+                    </div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                    <div class="p3xr-settings-pair-row">
+                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.evicted || 'Evicted' }}</div>
+                        <div class="p3xr-settings-row-value p3xr-mono">{{ current.stats.evictedKeys }}</div>
+                    </div>
+                </mat-list-item>
+            </mat-list>
+        </div>
+    </p3xr-ng-accordion>
+
+    <br />
+
+    <!-- Charts -->
+    <p3xr-ng-accordion [title]="(strings().page?.monitor?.memory || 'Memory') + ' (MB)'" accordionKey="monitor-chart-memory">
+        <div content>
+            <div #memoryChart class="p3xr-monitoring-chart"></div>
+        </div>
+    </p3xr-ng-accordion>
+
+    <br />
+
+    <p3xr-ng-accordion [title]="strings().page?.monitor?.opsPerSec || 'Ops/sec'" accordionKey="monitor-chart-ops">
+        <div content>
+            <div #opsChart class="p3xr-monitoring-chart"></div>
+        </div>
+    </p3xr-ng-accordion>
+
+    <br />
+
+    <p3xr-ng-accordion [title]="strings().page?.monitor?.clients || 'Clients'" accordionKey="monitor-chart-clients">
+        <div content>
+            <div #clientsChart class="p3xr-monitoring-chart"></div>
+        </div>
+    </p3xr-ng-accordion>
+
+    <br />
+
+    <p3xr-ng-accordion [title]="(strings().page?.monitor?.networkIo || 'Network I/O') + ' (KB/s)'" accordionKey="monitor-chart-network">
+        <div content>
+            <div #networkChart class="p3xr-monitoring-chart"></div>
+        </div>
+    </p3xr-ng-accordion>
+
+    <!-- Slow Log -->
+    @if (current.slowlog.length > 0) {
+        <br />
+        <p3xr-ng-accordion [title]="strings().page?.monitor?.slowLog || 'Slow Log'" accordionKey="monitor-slowlog">
+            <div content>
+                <mat-list>
+                    @for (entry of current.slowlog; track entry.id) {
+                        <mat-list-item>
+                            <div class="p3xr-monitoring-slowlog-row">
+                                <kbd class="p3xr-kbd p3xr-kbd-small">{{ entry.duration }}µs</kbd>
+                                <span class="p3xr-monitoring-slowlog-cmd">{{ entry.command }}</span>
+                            </div>
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
+                    }
+                </mat-list>
+            </div>
+        </p3xr-ng-accordion>
+    }
+
+    <!-- Client List -->
+    <br />
+    <p3xr-ng-accordion [title]="strings().page?.monitor?.clientList || 'Client List'" accordionKey="monitor-clients-list">
+        <div actions>
+            <p3xr-ng-button
+                (click)="toggleAutoRefreshClients(); $event.stopPropagation()"
+                [label]="strings().label?.autoRefresh || 'Auto'"
+                [mdIcon]="autoRefreshClients ? 'check_box' : 'check_box_outline_blank'">
+            </p3xr-ng-button>
+            @if (!autoRefreshClients) {
+                <p3xr-ng-button
+                    (click)="loadClientList(); $event.stopPropagation()"
+                    [label]="strings().intention?.refresh || 'Refresh'"
+                    mdIcon="refresh">
+                </p3xr-ng-button>
+            }
+        </div>
+        <div content>
+            @if (clientList.length === 0 && clientListLoaded) {
+                <div style="padding: 16px; opacity: 0.5;">{{ strings().page?.monitor?.noClients || 'No clients' }}</div>
+            }
+            @if (clientList.length === 0 && !clientListLoaded) {
+                <div style="padding: 16px; opacity: 0.5;">{{ strings().label?.loading || 'Loading...' }}</div>
+            }
+            @if (clientList.length > 0) {
+                <mat-list>
+                    @for (client of clientList; track client.id) {
+                        <mat-list-item>
+                            <div class="p3xr-monitoring-client-row">
+                                <span class="p3xr-mono p3xr-monitoring-client-addr">{{ client.addr }}</span>
+                                @if (client.name) {
+                                    <span class="p3xr-monitoring-client-name">({{ client.name }})</span>
+                                }
+                                <span class="p3xr-monitoring-client-info">
+                                    db{{ client.db }} · {{ client.cmd }} · {{ client.idle }}s
+                                </span>
+                                @if (!isReadonly) {
+                                    <mat-icon class="p3xr-monitoring-client-kill" (click)="killClient(client.id, $event)"
+                                            [matTooltip]="strings().page?.monitor?.killClient || 'Kill client'">close</mat-icon>
+                                }
+                            </div>
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
+                    }
+                </mat-list>
+            }
+        </div>
+    </p3xr-ng-accordion>
+
+    <!-- Memory Top Keys -->
+    <br />
+    <p3xr-ng-accordion [title]="strings().page?.monitor?.topKeys || 'Top Keys by Memory'" accordionKey="monitor-top-keys">
+        <div actions>
+            <p3xr-ng-button
+                (click)="toggleAutoRefreshTopKeys(); $event.stopPropagation()"
+                [label]="strings().label?.autoRefresh || 'Auto'"
+                [mdIcon]="autoRefreshTopKeys ? 'check_box' : 'check_box_outline_blank'">
+            </p3xr-ng-button>
+            @if (!autoRefreshTopKeys) {
+                <p3xr-ng-button
+                    (click)="loadTopKeys(); $event.stopPropagation()"
+                    [label]="strings().intention?.refresh || 'Refresh'"
+                    mdIcon="refresh">
+                </p3xr-ng-button>
+            }
+        </div>
+        <div content>
+            @if (topKeys.length === 0 && topKeysLoaded) {
+                <div style="padding: 16px; opacity: 0.5;">{{ strings().page?.monitor?.noKeys || 'No keys' }}</div>
+            }
+            @if (topKeys.length === 0 && !topKeysLoaded) {
+                <div style="padding: 16px; opacity: 0.5;">{{ strings().label?.loading || 'Loading...' }}</div>
+            }
+            @if (topKeys.length > 0) {
+                <mat-list>
+                    @for (entry of topKeys; track entry.key; let i = $index) {
+                        <mat-list-item>
+                            <div class="p3xr-settings-pair-row">
+                                <div class="p3xr-settings-row-label">
+                                    <span style="opacity: 0.4; margin-right: 8px;">#{{ i + 1 }}</span>
+                                    <span class="p3xr-mono" style="font-size: 13px;">{{ entry.key }}</span>
+                                </div>
+                                <div class="p3xr-settings-row-value p3xr-mono">{{ formatBytes(entry.bytes) }}</div>
+                            </div>
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
+                    }
+                </mat-list>
+            }
+        </div>
+    </p3xr-ng-accordion>
+}
+
+<div style="height: 64px;"></div>

@@ -1,0 +1,143 @@
+// Host element — fill the parent container
+p3xr-database-tree {
+    display: block;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+// Tree viewport — fills parent container
+.p3xr-database-tree-viewport {
+    height: 100%;
+    width: 100%;
+}
+
+// Each flat node row
+.p3xr-database-tree-row {
+    display: flex;
+    align-items: center;
+    height: 28px;
+    line-height: 28px;
+    white-space: nowrap;
+    cursor: default;
+}
+
+// Folder expand/collapse icon — Font Awesome folder via ::before
+.p3xr-tree-branch-head {
+    display: inline-block;
+    font-family: 'Font Awesome 5 Free';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 28px;
+    width: 28px;
+    text-align: center;
+    margin-right: 4px;
+    cursor: pointer;
+    color: var(--p3xr-tree-branch-color);
+}
+
+.p3xr-tree-branch-head.tree-collapsed::before {
+    content: "\f07b"; // fa-folder
+}
+
+.p3xr-tree-branch-head.tree-expanded::before {
+    content: "\f07c"; // fa-folder-open
+}
+
+
+
+// Redis type icons
+.p3xr-database-treecontrol-node-icon {
+    display: inline-block;
+    min-width: 12px;
+    text-align: center;
+}
+
+// Node label container
+.p3xr-database-tree-node {
+    cursor: pointer;
+    line-height: 28px;
+    white-space: nowrap;
+}
+
+.p3xr-database-tree-node-label {
+    // Used by main-key component CSS for highlighting selected key
+}
+
+.p3xr-database-tree-node-count {
+    opacity: 0.5;
+}
+
+// Hover action icons — shared sizing
+.p3xr-database-treecontrol-folder-icon,
+.p3xr-database-treecontrol-delete-icon {
+    font-size: 18px !important;
+    height: 18px !important;
+    width: 18px !important;
+    min-width: 18px !important;
+    min-height: 18px !important;
+    line-height: 18px !important;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+// Add icon — warn/accent color
+.p3xr-database-treecontrol-folder-icon {
+    color: var(--p3xr-common-warn-color);
+}
+
+// Delete icon — red warn color
+.p3xr-database-treecontrol-delete-icon {
+    color: var(--p3xr-btn-warn-bg);
+}
+
+// TTL indicator badge
+.p3xr-tree-ttl-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 11px;
+    margin-left: 6px;
+    opacity: 0.7;
+    white-space: nowrap;
+}
+.p3xr-tree-ttl-icon { font-size: 11px; margin-left: 6px; padding: 4px; cursor: default; }
+.p3xr-tree-ttl-green { color: #4caf50; }
+.p3xr-tree-ttl-yellow { color: #ff9800; }
+.p3xr-tree-ttl-red { color: #f44336; }
+.p3xr-tree-ttl-pulse { animation: p3xr-ttl-pulse 1s infinite; }
+@keyframes p3xr-ttl-pulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+.p3xr-database-tree-actions {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    top: -1px;
+    visibility: hidden;
+}
+
+.p3xr-database-tree-row:hover .p3xr-database-tree-actions {
+    visibility: visible;
+}
+
+@media (max-width: 599px) {
+    .p3xr-database-tree-node {
+        display: inline-block;
+    }
+
+    // On mobile the tree is in a flex column with no explicit pixel height.
+    // cdk-virtual-scroll-viewport needs a concrete height to render.
+    p3xr-database-tree {
+        height: auto;
+        min-height: 100px;
+    }
+
+    .p3xr-database-tree-viewport {
+       height: 20vh;
+       min-height: 100px;
+    }
+}

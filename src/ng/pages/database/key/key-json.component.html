@@ -1,0 +1,85 @@
+<!-- Action buttons -->
+<div class="p3xr-key-type-actions">
+    @if (isGtSm) {
+        <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="copyValue()">
+            <mat-icon>content_copy</mat-icon>
+            <span>{{ strings?.intention?.copy || 'Copy' }}</span>
+        </button>
+    } @else {
+        <button mat-mini-fab class="btn-accent" type="button" (click)="copyValue()"
+            [matTooltip]="strings?.intention?.copy ?? 'Copy'" matTooltipPosition="above">
+            <mat-icon>content_copy</mat-icon>
+        </button>
+    }
+    @if (isGtSm) {
+        <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="downloadJsonFile()">
+            <mat-icon>download</mat-icon>
+            <span>{{ strings?.intention?.downloadJson || 'Download JSON' }}</span>
+        </button>
+    } @else {
+        <button mat-mini-fab class="btn-accent" type="button" (click)="downloadJsonFile()"
+            [matTooltip]="strings?.intention?.downloadJson ?? 'Download JSON'" matTooltipPosition="above">
+            <mat-icon>download</mat-icon>
+        </button>
+    }
+    @if (isGtSm) {
+        <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="expandAll()">
+            <mat-icon>unfold_more</mat-icon>
+            <span>{{ strings?.page?.treeControls?.expandAll || 'Expand All' }}</span>
+        </button>
+    } @else {
+        <button mat-mini-fab class="btn-accent" type="button" (click)="expandAll()"
+            [matTooltip]="strings?.page?.treeControls?.expandAll ?? 'Expand All'" matTooltipPosition="above">
+            <mat-icon>unfold_more</mat-icon>
+        </button>
+    }
+    @if (isGtSm) {
+        <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="collapseAll()">
+            <mat-icon>unfold_less</mat-icon>
+            <span>{{ strings?.page?.treeControls?.collapseAll || 'Collapse All' }}</span>
+        </button>
+    } @else {
+        <button mat-mini-fab class="btn-accent" type="button" (click)="collapseAll()"
+            [matTooltip]="strings?.page?.treeControls?.collapseAll ?? 'Collapse All'" matTooltipPosition="above">
+            <mat-icon>unfold_less</mat-icon>
+        </button>
+    }
+    @if (isGtSm) {
+        <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="toggleWrap()">
+            <mat-icon>{{ treeWrap ? 'wrap_text' : 'notes' }}</mat-icon>
+            <span>{{ treeWrap ? (strings?.intention?.unwrap || 'Unwrap') : (strings?.intention?.wrap || 'Wrap') }}</span>
+        </button>
+    } @else {
+        <button mat-mini-fab class="btn-accent" type="button" (click)="toggleWrap()"
+            [matTooltip]="treeWrap ? (strings?.intention?.unwrap ?? 'Unwrap') : (strings?.intention?.wrap ?? 'Wrap')" matTooltipPosition="above">
+            <mat-icon>{{ treeWrap ? 'wrap_text' : 'notes' }}</mat-icon>
+        </button>
+    }
+    @if (!isReadonly && hasProOrEnterprise) {
+        @if (isGtSm) {
+            <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="jsonEditor()">
+                <mat-icon>edit</mat-icon>
+                <span>{{ strings?.intention?.jsonViewEditor || 'Edit JSON' }}</span>
+            </button>
+        } @else {
+            <button mat-mini-fab class="btn-primary" type="button" (click)="jsonEditor()"
+                [matTooltip]="strings?.intention?.jsonViewEditor ?? 'Edit JSON'" matTooltipPosition="above">
+                <mat-icon>edit</mat-icon>
+            </button>
+        }
+    }
+</div>
+
+<!-- Inline JSON tree view -->
+<div class="p3xr-key-type-content" style="overflow: auto;">
+    @if (jsonObj !== undefined) {
+        <p3xr-json-tree
+            [data]="jsonObj"
+            [label]="strings?.label?.tree || 'root'"
+            [expanded]="treeExpanded"
+            [wrap]="treeWrap">
+        </p3xr-json-tree>
+    } @else {
+        <div class="p3xr-pre">{{ truncateDisplay(p3xrValue) }}</div>
+    }
+</div>

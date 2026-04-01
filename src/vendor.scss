@@ -1,7 +1,8 @@
+// Angular Material themes (M3) for new Angular components — @use must come first
+// Each theme is scoped under body.p3xr-mat-theme-{name}
+@use './ng/themes/angular-material-themes';
+
 @import '~material-design-icons-iconfont/dist/material-design-icons.css';
-@import '~angular-material/angular-material.css';
-@import '~angular-tree-control/css/tree-control.css';
-@import '~angular-json-tree/dist/angular-json-tree.css';
 @import '~@fortawesome/fontawesome-free/css/all.css';
 
 
@@ -16,5 +17,3 @@
 @import '~@fontsource/roboto-mono/400-italic.css';
 @import '~@fontsource/roboto-mono/500.css';
 @import '~@fontsource/roboto-mono/700.css';
-
-@import "~angular/angular-csp.css";

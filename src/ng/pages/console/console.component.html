@@ -1,0 +1,118 @@
+<div class="p3xr-console-root" [class.p3xr-console-root-embedded]="embedded" (click)="activate()">
+
+    <!-- Console header toolbar -->
+    <mat-toolbar class="p3xr-console-toolbar p3xr-mat-layout-strong" id="p3xr-console-header"
+        [class.p3xr-content-border-toolbar]="type === 'quick'">
+        <div class="p3xr-console-toolbar-tools">
+
+            @if (type !== 'quick') {
+                <span class="p3xr-console-title">{{ strings().label?.console || 'Console' }}</span>
+                <span class="p3xr-toolbar-spacer"></span>
+
+                <span class="p3xr-console-toolbar-actions">
+                    <span class="p3xr-console-monitor-wrap"
+                          (mouseenter)="onMonitorMouseEnter()" (mouseleave)="onMonitorMouseLeave()">
+                        <span (click)="toggleMonitor()">
+                            <mat-checkbox [(ngModel)]="monitorEnabled" (ngModelChange)="setMonitorState()">
+                                <span class="p3xr-console-monitor-label">{{ strings().intention?.pubsubMonitor || 'PubSub Monitor' }}</span>
+                            </mat-checkbox>
+                        </span>
+                        @if (showMonitorPopup) {
+                            <div class="p3xr-monitor-input">
+                                <div class="p3xr-monitor-input-toolbar p3xr-mat-layout-strong">
+                                    <input class="p3xr-input p3xr-monitor-pattern-input"
+                                           type="text" maxlength="255"
+                                           [ngModel]="monitorPattern"
+                                           (ngModelChange)="onMonitorPatternChange($event)"
+                                           [style.background]="'var(--p3xr-input-bg)'"
+                                           [style.color]="'var(--p3xr-input-color)'"
+                                           [style.border-color]="'var(--p3xr-input-border-color, var(--p3xr-border-color))'" />
+                                </div>
+                            </div>
+                        }
+                    </span>
+
+                    <p3xr-ng-button [label]="strings().label?.redisCommandsReference || 'Redis Commands'" mdIcon="terminal"
+                        (click)="openCommands($event)"></p3xr-ng-button>
+                    <p3xr-ng-button [label]="strings().intention?.clear || 'Clear'" mdIcon="backspace"
+                        (click)="clearConsole()"></p3xr-ng-button>
+                </span>
+            } @else {
+                <span class="p3xr-console-title">{{ embedded ? (strings().label?.console || 'Console') : (strings().intention?.quickConsole || 'Quick Console') }}</span>
+                <span class="p3xr-toolbar-spacer"></span>
+
+                <span class="p3xr-console-toolbar-actions">
+                    <span class="p3xr-console-monitor-wrap"
+                          (mouseenter)="onMonitorMouseEnter()" (mouseleave)="onMonitorMouseLeave()">
+                        <span (click)="toggleMonitor()">
+                            <mat-checkbox [(ngModel)]="monitorEnabled" (ngModelChange)="setMonitorState()">
+                                <span class="p3xr-console-monitor-label">{{ strings().intention?.pubsubMonitor || 'PubSub Monitor' }}</span>
+                            </mat-checkbox>
+                        </span>
+                        @if (showMonitorPopup) {
+                            <div class="p3xr-monitor-input">
+                                <div class="p3xr-monitor-input-toolbar p3xr-mat-layout-strong">
+                                    <input class="p3xr-input p3xr-monitor-pattern-input"
+                                           type="text" maxlength="255"
+                                           [ngModel]="monitorPattern"
+                                           (ngModelChange)="onMonitorPatternChange($event)"
+                                           [style.background]="'var(--p3xr-input-bg)'"
+                                           [style.color]="'var(--p3xr-input-color)'"
+                                           [style.border-color]="'var(--p3xr-input-border-color, var(--p3xr-border-color))'" />
+                                </div>
+                            </div>
+                        }
+                    </span>
+
+                    <p3xr-ng-button [label]="strings().label?.redisCommandsReference || 'Redis Commands'" mdIcon="terminal"
+                        (click)="openCommands($event)"></p3xr-ng-button>
+                    <p3xr-ng-button [label]="strings().intention?.clear || 'Clear'" mdIcon="backspace"
+                        (click)="clearConsole()"></p3xr-ng-button>
+
+                    @if (!embedded) {
+                        <p3xr-ng-button [label]="strings().intention?.close || 'Close'" mdIcon="close"
+                            (click)="closeConsole()"></p3xr-ng-button>
+                    }
+                </span>
+            }
+        </div>
+    </mat-toolbar>
+
+    <!-- Console output area -->
+    <div id="p3xr-console-content" class="p3xr-content-border-fixed"
+         [class.layout-padding]="type !== 'quick'">
+        <div style="display: flex; flex-direction: row; align-items: stretch; min-height: 100%">
+            @if (type === 'quick' && !embedded) {
+                <div id="p3xr-console-content-resizer" (mousedown)="dragStart()" (mouseup)="dragEnd()"></div>
+            }
+            <div id="p3xr-console-content-output" style="flex-grow: 1;"></div>
+        </div>
+        @if (type !== 'quick') {
+            <div id="p3xr-console-content-output"></div>
+        }
+    </div>
+
+    <!-- Console input with mat-autocomplete -->
+    <div id="p3xr-console-autocomplete"
+         [class.p3xr-console-autocomplete-quick]="type === 'quick'"
+         [class.p3xr-console-autocomplete-embedded]="embedded">
+        <input id="p3xr-console-input" class="p3xr-input"
+               type="text"
+               [formControl]="searchControl"
+               (keydown.enter)="actionEnter()"
+               (keydown)="onKeyDown($event)"
+               [matAutocomplete]="auto"
+               autocomplete="off"
+               [style.background]="'var(--p3xr-input-bg)'"
+               [style.color]="'var(--p3xr-input-color)'"
+               [style.border-color]="'var(--p3xr-input-border-color, var(--p3xr-border-color))'" />
+        <mat-autocomplete #auto="matAutocomplete"
+                          (optionSelected)="onAutocompleteSelected($event)"
+                          class="p3xr-console-autocomplete-panel"
+                          position="above">
+            @for (cmd of filteredCommands; track cmd) {
+                <mat-option [value]="cmd">{{ cmd }}</mat-option>
+            }
+        </mat-autocomplete>
+    </div>
+</div>

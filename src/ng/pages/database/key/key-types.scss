@@ -1,0 +1,182 @@
+// Shared styles for all key type renderers
+
+.p3xr-key-type-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 8px;
+}
+
+.p3xr-key-type-content {
+    padding: 8px 16px 24px;
+}
+
+.p3xr-key-type-textarea {
+    width: 100%;
+    font-family: monospace;
+    font-size: 13px;
+    background: var(--p3xr-input-bg);
+    color: var(--p3xr-input-color);
+    border: 1px solid var(--p3xr-fieldset-border);
+    border-radius: 4px;
+    padding: 8px;
+    resize: vertical;
+}
+
+.p3xr-key-type-value {
+    white-space: pre-wrap;
+    word-break: break-all;
+    padding: 8px;
+    margin: 0;
+    font-size: 13px;
+}
+
+.p3xr-key-type-display {
+    padding: 8px;
+}
+
+// Full-width mat-form-field editor matching AngularJS md-input-container md-block
+.p3xr-key-type-editor {
+    width: 100%;
+
+    textarea {
+        font-family: 'Roboto Mono', monospace;
+        font-size: 13px;
+    }
+}
+
+.p3xr-key-type-buffer-info {
+    padding: 8px;
+    opacity: 0.7;
+    font-style: italic;
+}
+
+// Table layout for hash/list/set/zset/stream
+.p3xr-key-type-table {
+    width: 100%;
+}
+
+.p3xr-key-type-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    font-weight: bold;
+    // Themed header background matching AngularJS md-colors="{ background: 'primary-300' }"
+    background-color: var(--p3xr-btn-primary-bg);
+    color: var(--p3xr-btn-primary-color);
+    border-bottom: 2px solid var(--p3xr-list-border);
+
+    // Header icon button should contrast against the primary background
+    .mat-mdc-icon-button {
+        color: var(--p3xr-btn-primary-color) !important;
+    }
+}
+
+.p3xr-key-type-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 6px 16px;
+    border-bottom: 1px solid var(--p3xr-list-border);
+
+    &:hover {
+        background-color: var(--p3xr-hover-bg);
+    }
+
+    // Odd row alternating background
+    &:nth-child(odd) {
+        background-color: var(--p3xr-list-odd-bg);
+
+        &:hover {
+            background-color: var(--p3xr-hover-bg);
+        }
+    }
+
+    // Key column: single-line truncated
+    .p3xr-key-col {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        user-select: text;
+    }
+
+    // Value column: multiline with scroll, matching AngularJS overflow:auto + max-height:200px
+    .p3xr-value-col {
+        overflow: auto;
+        max-height: 200px;
+        white-space: pre-wrap;
+        word-break: break-all;
+        user-select: text;
+    }
+}
+
+.p3xr-key-type-row-actions {
+    white-space: nowrap !important;
+
+    mat-icon {
+        cursor: pointer;
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+        margin: 0 2px;
+        opacity: 0.7;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    // Themed icon colors matching AngularJS md-warn, md-accent, md-primary
+    .icon-warn {
+        color: var(--p3xr-btn-warn-bg);
+    }
+
+    .icon-accent {
+        color: var(--p3xr-btn-accent-bg);
+    }
+
+    .icon-primary {
+        color: var(--p3xr-btn-primary-bg);
+    }
+}
+
+// Stream entry block layout
+.p3xr-key-stream-entry-block {
+    border-bottom: 1px solid var(--p3xr-list-border);
+
+    &:nth-child(odd) {
+        background-color: var(--p3xr-list-odd-bg);
+    }
+
+    &:hover {
+        background-color: var(--p3xr-hover-bg);
+    }
+}
+
+.p3xr-key-stream-entry-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 16px;
+    font-size: 13px;
+}
+
+.p3xr-key-stream-timestamp {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.p3xr-key-stream-timestamp-human {
+    opacity: 0.5;
+    font-size: 12px;
+}
+
+.p3xr-key-stream-data {
+    padding: 0 16px 8px 16px;
+    overflow: auto;
+    max-height: 300px;
+}

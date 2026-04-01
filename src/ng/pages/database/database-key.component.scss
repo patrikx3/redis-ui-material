@@ -1,0 +1,72 @@
+.p3xr-database-key-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100%;
+    padding: 32px;
+}
+
+.p3xr-database-key-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 8px;
+}
+
+.p3xr-database-key-info {
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+body.p3xr-theme-light .p3xr-database-key-info {
+    border-top-color: rgba(0, 0, 0, 0.12);
+}
+
+.p3xr-database-key-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    strong {
+        white-space: nowrap;
+        margin-right: 16px;
+    }
+
+    span {
+        text-align: right;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        user-select: text;
+    }
+}
+
+body.p3xr-theme-light .p3xr-database-key-info-row {
+    border-bottom-color: rgba(0, 0, 0, 0.12);
+}
+
+// Only key and TTL rows are clickable with hover
+.p3xr-database-key-info-row-clickable {
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+    }
+}
+
+body.p3xr-theme-light .p3xr-database-key-info-row-clickable:hover {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+.p3xr-database-key-ttl-value {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.p3xr-database-key-ttl-hint {
+    opacity: 0.5;
+    font-size: 0.85em;
+    font-weight: normal;
+}

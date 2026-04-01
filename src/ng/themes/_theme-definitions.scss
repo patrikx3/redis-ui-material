@@ -1,0 +1,114 @@
+// Angular Material theme definitions for P3X Redis UI
+//
+// Each AngularJS theme has 3 sub-themes (Layout, Main, Common) with different palettes.
+// M3 palette mapping from AngularJS M1:
+//   grey        → neutral (built into M3)    |  indigo      → $azure-palette
+//   blue        → $blue-palette              |  blue-grey   → $azure-palette
+//   cyan        → $cyan-palette              |  deep-purple → $violet-palette
+//   purple      → $magenta-palette           |  light-green → $chartreuse-palette
+//   lime        → $chartreuse-palette        |  green       → $green-palette
+//   orange      → $orange-palette            |  red         → $red-palette
+//   yellow      → $yellow-palette            |  amber       → $orange-palette
+
+@use '@angular/material' as mat;
+
+// ============================================================================
+// Light Theme
+// AngularJS: Layout=blue-grey, Main=deep-purple/purple/red, Common=green/grey/blue-grey
+// ============================================================================
+$p3xr-theme-light-layout: mat.define-theme((
+  color: (theme-type: light, primary: mat.$azure-palette, tertiary: mat.$azure-palette)
+));
+$p3xr-theme-light: mat.define-theme((
+  color: (theme-type: light, primary: mat.$violet-palette, tertiary: mat.$magenta-palette)
+));
+$p3xr-theme-light-common: mat.define-theme((
+  color: (theme-type: light, primary: mat.$green-palette, tertiary: mat.$azure-palette)
+));
+
+// ============================================================================
+// Enterprise Theme (light)
+// AngularJS: Layout=grey, Main=indigo/blue-700/red-700, Common=green/grey/light-blue
+// ============================================================================
+$p3xr-theme-enterprise-layout: mat.define-theme((
+  color: (theme-type: light, primary: mat.$azure-palette, tertiary: mat.$azure-palette)
+));
+$p3xr-theme-enterprise: mat.define-theme((
+  color: (theme-type: light, primary: mat.$azure-palette, tertiary: mat.$blue-palette)
+));
+$p3xr-theme-enterprise-common: mat.define-theme((
+  color: (theme-type: light, primary: mat.$green-palette, tertiary: mat.$blue-palette)
+));
+
+// ============================================================================
+// Redis Theme (light)
+// AngularJS: Layout=red-800/red background, Main=GREY-900/GREY-600/amber (neutral!), Common=green/grey/red
+// IMPORTANT: Main content uses GREY (neutral) — NOT red. Only toolbar is red.
+// ============================================================================
+$p3xr-theme-redis-layout: mat.define-theme((
+  color: (theme-type: light, primary: mat.$red-palette, tertiary: mat.$red-palette)
+));
+// Main uses neutral palette — closest to grey-900 primary in M3
+$p3xr-theme-redis: mat.define-theme((
+  color: (theme-type: light, primary: mat.$rose-palette, tertiary: mat.$orange-palette)
+));
+$p3xr-theme-redis-common: mat.define-theme((
+  color: (theme-type: light, primary: mat.$green-palette, tertiary: mat.$red-palette)
+));
+
+// ============================================================================
+// Dark Theme
+// AngularJS: Layout=grey-800 dark, Main=indigo-300/blue/ORANGE, Common=green/grey/indigo-200 dark
+// ============================================================================
+$p3xr-theme-dark-layout: mat.define-theme((
+  color: (theme-type: dark, primary: mat.$azure-palette, tertiary: mat.$azure-palette)
+));
+$p3xr-theme-dark: mat.define-theme((
+  color: (theme-type: dark, primary: mat.$azure-palette, tertiary: mat.$blue-palette)
+));
+$p3xr-theme-dark-common: mat.define-theme((
+  color: (theme-type: dark, primary: mat.$green-palette, tertiary: mat.$azure-palette)
+));
+
+// ============================================================================
+// DarkNeu Theme
+// AngularJS: Layout=blue-grey-800 dark, Main=cyan/blue/yellow dark, Common=green/grey/blue dark
+// ============================================================================
+$p3xr-theme-dark-neu-layout: mat.define-theme((
+  color: (theme-type: dark, primary: mat.$azure-palette, tertiary: mat.$azure-palette)
+));
+$p3xr-theme-dark-neu: mat.define-theme((
+  color: (theme-type: dark, primary: mat.$cyan-palette, tertiary: mat.$blue-palette)
+));
+$p3xr-theme-dark-neu-common: mat.define-theme((
+  color: (theme-type: dark, primary: mat.$green-palette, tertiary: mat.$blue-palette)
+));
+
+// ============================================================================
+// DarkoBluo Theme
+// AngularJS: Layout=indigo-900 dark, Main=indigo-300/BLUE/orange dark, Common=green/grey/light-blue dark
+// ============================================================================
+$p3xr-theme-darko-bluo-layout: mat.define-theme((
+  color: (theme-type: dark, primary: mat.$violet-palette, tertiary: mat.$violet-palette)
+));
+// DarkoBluo is more indigo/violet than Dark (which is more azure/blue)
+$p3xr-theme-darko-bluo: mat.define-theme((
+  color: (theme-type: dark, primary: mat.$violet-palette, tertiary: mat.$blue-palette)
+));
+$p3xr-theme-darko-bluo-common: mat.define-theme((
+  color: (theme-type: dark, primary: mat.$green-palette, tertiary: mat.$blue-palette)
+));
+
+// ============================================================================
+// Matrix Theme
+// AngularJS: Layout=light-green-A400 dark, Main=light-green-A400/lime-A400/green-A700 dark, Common=light-green-A400 dark
+// ============================================================================
+$p3xr-theme-matrix-layout: mat.define-theme((
+  color: (theme-type: dark, primary: mat.$chartreuse-palette, tertiary: mat.$chartreuse-palette)
+));
+$p3xr-theme-matrix: mat.define-theme((
+  color: (theme-type: dark, primary: mat.$chartreuse-palette, tertiary: mat.$green-palette)
+));
+$p3xr-theme-matrix-common: mat.define-theme((
+  color: (theme-type: dark, primary: mat.$chartreuse-palette, tertiary: mat.$green-palette)
+));

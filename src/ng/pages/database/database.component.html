@@ -1,0 +1,54 @@
+<div class="p3xr-content-border">
+
+<p3xr-database-header></p3xr-database-header>
+
+<div id="p3xr-database-content" class="p3xr-database-content-area"
+     [class.p3xr-database-content-with-bottom-console]="hasConnection && !isXs"
+     style="background-color: var(--p3xr-content-bg); color: var(--mat-app-text-color, inherit);">
+
+    <div class="md-title" style="padding: 16px;"
+         *ngIf="hasConnections && !hasConnection">
+        {{ strings().title?.main }}
+    </div>
+
+    <div *ngIf="!hasConnections && !hasConnection" style="padding: 16px;">
+        <button (click)="goSettings()"
+                style="display: inline-block; word-wrap: break-word; white-space: normal; cursor: pointer; background: none; border: none; color: inherit; font-size: inherit; text-decoration: underline;">
+            {{ strings().intention?.noConnections }}
+        </button>
+    </div>
+
+    <div *ngIf="hasConnection" class="p3xr-database-has-connection">
+
+        <!-- Desktop layout -->
+        <div *ngIf="!isXs">
+            <p3xr-database-treecontrol-controls id="p3xr-database-treecontrol-controls-container"></p3xr-database-treecontrol-controls>
+            <p3xr-database-tree id="p3xr-database-treecontrol-container"></p3xr-database-tree>
+            <div id="p3xr-database-content-sizer" role="separator" aria-orientation="vertical" aria-label="Resize panels"
+                 [class.p3xr-resizer-active]="resizeClicked"></div>
+            <div id="p3xr-database-content-container">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+
+        <!-- Mobile layout -->
+        <div *ngIf="isXs" style="display: flex; flex-direction: column;">
+            <p3xr-database-treecontrol-controls style="flex: 1;"></p3xr-database-treecontrol-controls>
+            <p3xr-database-tree style="flex: 1;" id="p3xr-database-treecontrol-container-directive-small"></p3xr-database-tree>
+            <div style="flex: 1;">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+
+        <div id="p3xr-database-bottom-console-panel" *ngIf="!isXs">
+            <p3xr-console type="quick" [embedded]="true"></p3xr-console>
+        </div>
+
+        <div class="p3xr-database-bottom-console-mobile" *ngIf="isXs">
+            <p3xr-console type="quick" [embedded]="true"></p3xr-console>
+        </div>
+    </div>
+
+</div>
+
+</div>

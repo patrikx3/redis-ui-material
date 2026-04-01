@@ -1,0 +1,35 @@
+<p3xr-key-pager-inline [paging]="paging" (pageChanged)="updatePagedItems()"></p3xr-key-pager-inline>
+
+<div class="p3xr-key-type-table">
+    <div class="p3xr-key-type-header">
+        <span style="flex: 20%">{{ strings?.page?.key?.label?.hashkey || 'Hash Key' }}</span>
+        <span style="flex: 60%">{{ strings?.page?.key?.label?.value || 'Value' }}</span>
+        <span style="flex: 20%; text-align: right">
+            @if (!isReadonly) {
+                <button mat-icon-button (click)="addHash($event)" matTooltip="Add">
+                    <mat-icon>add</mat-icon>
+                </button>
+            }
+        </span>
+    </div>
+
+    @for (item of pagedItems; track item.key) {
+        <div class="p3xr-key-type-row">
+            <span class="p3xr-key-col" style="flex: 20%; cursor: pointer" (click)="editValue(item.key, item.value, $event)">{{ item.key }}</span>
+            <span class="p3xr-value-col p3xr-pre" style="flex: 60%; cursor: pointer" (click)="editValue(item.key, item.value, $event)">{{ item.value }}</span>
+            <span style="flex: 20%; text-align: right" class="p3xr-key-type-row-actions">
+                @if (!isReadonly) {
+                    <mat-icon class="icon-warn" (click)="deleteHashKey(item.key, $event)" matTooltip="Delete">delete</mat-icon>
+                }
+                <mat-icon class="icon-accent" (click)="showJsonItem(item.value, $event)" matTooltip="JSON">table_chart</mat-icon>
+                <mat-icon class="icon-accent" (click)="copyItem(item.value)" matTooltip="Copy">content_copy</mat-icon>
+                @if (hasProOrEnterprise) {
+                    <mat-icon class="icon-accent" (click)="downloadItem(item.key)" matTooltip="Download">download</mat-icon>
+                }
+                @if (!isReadonly) {
+                    <mat-icon class="icon-primary" (click)="editValue(item.key, item.value, $event)" matTooltip="Edit">edit</mat-icon>
+                }
+            </span>
+        </div>
+    }
+</div>

@@ -1,0 +1,145 @@
+@if (loading) {
+    <div class="p3xr-database-key-loading">
+        <mat-spinner diameter="40"></mat-spinner>
+    </div>
+}
+
+@if (!loading && response) {
+    <!-- Action buttons -->
+    <div class="p3xr-database-key-actions">
+        @if (!isReadonly) {
+            @if (isGtSm) {
+                <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="addKey($event)">
+                    <mat-icon>add</mat-icon>
+                    <span>{{ strings()?.intention?.addKey }}</span>
+                </button>
+            } @else {
+                <button mat-mini-fab class="btn-accent" type="button" (click)="addKey($event)"
+                    [matTooltip]="strings()?.intention?.addKey ?? 'Add to this key'" matTooltipPosition="above">
+                    <mat-icon>add</mat-icon>
+                </button>
+            }
+
+            @if (isGtSm) {
+                <button mat-raised-button class="btn-warn p3xr-action-btn" type="button" (click)="deleteKey($event)">
+                    <mat-icon>delete</mat-icon>
+                    <span>{{ strings()?.intention?.delete }}</span>
+                </button>
+            } @else {
+                <button mat-mini-fab class="btn-warn" type="button" (click)="deleteKey($event)"
+                    [matTooltip]="strings()?.intention?.delete ?? 'Delete'" matTooltipPosition="above">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            }
+
+            @if (isGtSm) {
+                <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="setTtl($event)">
+                    <mat-icon>timer</mat-icon>
+                    <span>{{ strings()?.intention?.ttl }}</span>
+                </button>
+            } @else {
+                <button mat-mini-fab class="btn-primary" type="button" (click)="setTtl($event)"
+                    [matTooltip]="strings()?.intention?.ttl ?? 'Set TTL'" matTooltipPosition="above">
+                    <mat-icon>timer</mat-icon>
+                </button>
+            }
+
+            @if (isGtSm) {
+                <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="rename($event)">
+                    <mat-icon>fingerprint</mat-icon>
+                    <span>{{ strings()?.intention?.rename }}</span>
+                </button>
+            } @else {
+                <button mat-mini-fab class="btn-primary" type="button" (click)="rename($event)"
+                    [matTooltip]="strings()?.intention?.rename ?? 'Rename'" matTooltipPosition="above">
+                    <mat-icon>fingerprint</mat-icon>
+                </button>
+            }
+        }
+
+        @if (isGtSm) {
+            <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="refresh()">
+                <mat-icon>refresh</mat-icon>
+                <span>{{ strings()?.intention?.reloadKey }}</span>
+            </button>
+        } @else {
+            <button mat-mini-fab class="btn-accent" type="button" (click)="refresh()"
+                [matTooltip]="strings()?.intention?.reloadKey ?? 'Reload Key'" matTooltipPosition="above">
+                <mat-icon>refresh</mat-icon>
+            </button>
+        }
+    </div>
+
+    <!-- Key info list -->
+    <div class="p3xr-database-key-info">
+        <div class="p3xr-database-key-info-row p3xr-database-key-info-row-clickable" (click)="rename($event)">
+            <strong>{{ strings()?.page?.key?.label?.key }}:</strong>
+            <span class="p3xr-typography-ellipsis" [title]="key">{{ key }}</span>
+        </div>
+
+        <div class="p3xr-database-key-info-row p3xr-database-key-info-row-clickable p3xr-database-key-ttl-row" (click)="setTtl($event)">
+            <strong>{{ strings()?.page?.key?.label?.ttl }}:</strong>
+            @if (response.ttl === -1) {
+                <span>{{ strings()?.page?.key?.label?.ttlNotExpire }}</span>
+            } @else {
+                <span class="p3xr-database-key-ttl-value">
+                    <span>{{ response.ttl }}</span>
+                    <span id="p3xr-database-key-ttl-counter" class="p3xr-database-key-ttl-hint"></span>
+                </span>
+            }
+        </div>
+
+        <div class="p3xr-database-key-info-row">
+            <strong>{{ strings()?.page?.key?.label?.type }}:</strong>
+            <span>{{ strings()?.redisTypes?.[response.type] }}</span>
+        </div>
+
+        <div class="p3xr-database-key-info-row">
+            <strong>{{ strings()?.page?.key?.label?.encoding }}:</strong>
+            <span>{{ response.encoding }}</span>
+        </div>
+
+        <div class="p3xr-database-key-info-row">
+            <strong>{{ strings()?.page?.key?.label?.length }}:</strong>
+            <span>
+                <span style="opacity: 0.5">{{ charactersPrettyBytes(response.size) }}&nbsp;</span>
+                {{ response.size }}&nbsp;{{ strings()?.page?.key?.label?.lengthString }}
+                @if (response.length) {
+                    <span>, {{ response.length }} {{ strings()?.page?.key?.label?.lengthItem }}</span>
+                }
+            </span>
+        </div>
+    </div>
+
+    <!-- Type-specific renderer (pure Angular v21 components) -->
+    @switch (response.type) {
+        @case ('string') {
+            <p3xr-key-string [p3xrResponse]="response" [p3xrValue]="response.value"
+                [p3xrValueBuffer]="response.valueBuffer" [p3xrKey]="key"></p3xr-key-string>
+        }
+        @case ('list') {
+            <p3xr-key-list [p3xrResponse]="response" [p3xrValue]="response.value"
+                [p3xrValueBuffer]="response.valueBuffer" [p3xrKey]="key"></p3xr-key-list>
+        }
+        @case ('hash') {
+            <p3xr-key-hash [p3xrResponse]="response" [p3xrValue]="response.value"
+                [p3xrValueBuffer]="response.valueBuffer" [p3xrKey]="key"></p3xr-key-hash>
+        }
+        @case ('set') {
+            <p3xr-key-set [p3xrResponse]="response" [p3xrValue]="response.value"
+                [p3xrValueBuffer]="response.valueBuffer" [p3xrKey]="key"></p3xr-key-set>
+        }
+        @case ('zset') {
+            <p3xr-key-zset [p3xrResponse]="response" [p3xrValue]="response.value"
+                [p3xrValueBuffer]="response.valueBuffer" [p3xrKey]="key"></p3xr-key-zset>
+        }
+        @case ('stream') {
+            <p3xr-key-stream [p3xrResponse]="response" [p3xrValue]="response.value"
+                [p3xrValueBuffer]="response.valueBuffer" [p3xrKey]="key"></p3xr-key-stream>
+        }
+        @case ('json') {
+            <p3xr-key-json [p3xrResponse]="response" [p3xrValue]="response.value"
+                [p3xrValueBuffer]="response.valueBuffer" [p3xrKey]="key"></p3xr-key-json>
+        }
+    }
+}

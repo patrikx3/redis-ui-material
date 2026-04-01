@@ -1,0 +1,168 @@
+<!-- Action buttons when NOT editing -->
+@if (!editable) {
+    <div class="p3xr-key-type-actions">
+        @if (!isReadonly && hasProOrEnterprise) {
+            @if (isGtSm) {
+                <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="setBufferUpload()">
+                    <mat-icon>upload</mat-icon>
+                    <span>{{ strings?.intention?.setBuffer || 'Upload' }}</span>
+                </button>
+            } @else {
+                <button mat-mini-fab class="btn-primary" type="button" (click)="setBufferUpload()"
+                    [matTooltip]="strings?.intention?.setBuffer ?? 'Upload'" matTooltipPosition="above">
+                    <mat-icon>upload</mat-icon>
+                </button>
+            }
+        }
+        @if (hasProOrEnterprise) {
+            @if (isGtSm) {
+                <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="downloadBufferFile()">
+                    <mat-icon>download</mat-icon>
+                    <span>{{ strings?.intention?.downloadBuffer || 'Download' }}</span>
+                </button>
+            } @else {
+                <button mat-mini-fab class="btn-accent" type="button" (click)="downloadBufferFile()"
+                    [matTooltip]="strings?.intention?.downloadBuffer ?? 'Download'" matTooltipPosition="above">
+                    <mat-icon>download</mat-icon>
+                </button>
+            }
+        }
+        @if (isGtSm) {
+            <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="jsonViewer($event)">
+                <mat-icon>table_chart</mat-icon>
+                <span>{{ strings?.intention?.jsonViewShow || 'JSON' }}</span>
+            </button>
+        } @else {
+            <button mat-mini-fab class="btn-accent" type="button" (click)="jsonViewer($event)"
+                [matTooltip]="strings?.intention?.jsonViewShow ?? 'JSON'" matTooltipPosition="above">
+                <mat-icon>table_chart</mat-icon>
+            </button>
+        }
+        @if (isGtSm) {
+            <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="copyValue()">
+                <mat-icon>content_copy</mat-icon>
+                <span>{{ strings?.intention?.copy || 'Copy' }}</span>
+            </button>
+        } @else {
+            <button mat-mini-fab class="btn-accent" type="button" (click)="copyValue()"
+                [matTooltip]="strings?.intention?.copy ?? 'Copy'" matTooltipPosition="above">
+                <mat-icon>content_copy</mat-icon>
+            </button>
+        }
+        @if (!isReadonly) {
+            @if (isGtSm) {
+                <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="formatJson()">
+                    <mat-icon>format_line_spacing</mat-icon>
+                    <span>{{ strings?.intention?.formatJson || 'Format' }}</span>
+                </button>
+            } @else {
+                <button mat-mini-fab class="btn-primary" type="button" (click)="formatJson()"
+                    [matTooltip]="strings?.intention?.formatJson ?? 'Format JSON'" matTooltipPosition="above">
+                    <mat-icon>format_line_spacing</mat-icon>
+                </button>
+            }
+        }
+        @if (hasProOrEnterprise) {
+            @if (isGtSm) {
+                <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="jsonEditor()">
+                    <mat-icon>description</mat-icon>
+                    <span>{{ strings?.intention?.jsonViewEditor || 'Editor' }}</span>
+                </button>
+            } @else {
+                <button mat-mini-fab class="btn-primary" type="button" (click)="jsonEditor()"
+                    [matTooltip]="strings?.intention?.jsonViewEditor ?? 'JSON Editor'" matTooltipPosition="above">
+                    <mat-icon>description</mat-icon>
+                </button>
+            }
+        }
+        @if (!isReadonly) {
+            @if (isGtSm) {
+                <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="edit()">
+                    <mat-icon>edit</mat-icon>
+                    <span>{{ strings?.intention?.edit || 'Edit' }}</span>
+                </button>
+            } @else {
+                <button mat-mini-fab class="btn-primary" type="button" (click)="edit()"
+                    [matTooltip]="strings?.intention?.edit ?? 'Edit'" matTooltipPosition="above">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            }
+        }
+    </div>
+}
+
+<!-- Edit mode buttons -->
+@if (editable) {
+    <div class="p3xr-key-type-actions">
+        @if (!isReadonly) {
+            <mat-slide-toggle [(ngModel)]="validateJson" class="btn-accent" style="margin-right: 8px;">
+                {{ strings?.label?.validateJson || 'Validate JSON' }}
+            </mat-slide-toggle>
+        }
+        @if (isGtSm) {
+            <button mat-raised-button class="btn-warn p3xr-action-btn" type="button" (click)="cancelEdit()">
+                <mat-icon>cancel</mat-icon>
+                <span>{{ strings?.intention?.cancel || 'Cancel' }}</span>
+            </button>
+        } @else {
+            <button mat-mini-fab class="btn-warn" type="button" (click)="cancelEdit()"
+                [matTooltip]="strings?.intention?.cancel ?? 'Cancel'" matTooltipPosition="above">
+                <mat-icon>cancel</mat-icon>
+            </button>
+        }
+        @if (!isReadonly && hasProOrEnterprise) {
+            @if (isGtSm) {
+                <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="setBufferUpload()">
+                    <mat-icon>upload</mat-icon>
+                    <span>{{ strings?.intention?.setBuffer || 'Upload' }}</span>
+                </button>
+            } @else {
+                <button mat-mini-fab class="btn-primary" type="button" (click)="setBufferUpload()"
+                    [matTooltip]="strings?.intention?.setBuffer ?? 'Upload'" matTooltipPosition="above">
+                    <mat-icon>upload</mat-icon>
+                </button>
+            }
+        }
+        @if (!isReadonly) {
+            @if (isGtSm) {
+                <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="save()">
+                    <mat-icon>save</mat-icon>
+                    <span>{{ strings?.intention?.save || 'Save' }}</span>
+                </button>
+            } @else {
+                <button mat-mini-fab class="btn-primary" type="button" (click)="save()"
+                    [matTooltip]="strings?.intention?.save ?? 'Save'" matTooltipPosition="above">
+                    <mat-icon>save</mat-icon>
+                </button>
+            }
+        }
+    </div>
+}
+
+<!-- Value display / editor -->
+<div class="p3xr-key-type-content">
+    @if (editable) {
+        <mat-form-field class="p3xr-key-type-editor" appearance="fill">
+        
+            @if (p3xrValue && p3xrValue.toString() === '[object ArrayBuffer]') {
+                <div class="p3xr-key-type-buffer-info">
+                    {{ strings?.label?.isBuffer?.({ maxValueAsBuffer: prettyBytes(maxValueAsBuffer) }) }}
+                    {{ bufferDisplay() }}
+                </div>
+            }
+            @if (buffer) {
+                <div class="p3xr-key-type-buffer-info">
+                    {{ strings?.label?.isBuffer?.({ maxValueAsBuffer: prettyBytes(maxValueAsBuffer) }) }}
+                    {{ bufferDisplay() }}
+                </div>
+                <textarea matInput [(ngModel)]="p3xrValueBuffer" cdkTextareaAutosize cdkAutosizeMinRows="4"></textarea>
+            } @else {
+                <textarea matInput [(ngModel)]="p3xrValue" cdkTextareaAutosize cdkAutosizeMinRows="4"></textarea>
+            }
+        </mat-form-field>
+    } @else {
+        <div class="p3xr-key-type-display" style="cursor: pointer; max-width: 100%; overflow: auto;" (click)="edit()">
+            <span class="p3xr-pre">{{ truncateDisplay(p3xrValue) }}</span>
+        </div>
+    }
+</div>

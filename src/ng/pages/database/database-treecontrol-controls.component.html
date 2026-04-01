@@ -1,0 +1,129 @@
+<div class="p3xr-database-treecontrol-controls-leading">
+    <button class="p3xr-database-treecontrol-icon-button p3xr-database-treecontrol-icon-primary" type="button" (click)="treeExpandAll()"
+        [matTooltip]="strings().page?.treeControls?.expandAll || 'Expand all'" matTooltipPosition="below">
+        <span class="material-icons" aria-hidden="true">keyboard_arrow_down</span>
+    </button>
+
+    <button class="p3xr-database-treecontrol-icon-button" type="button" id="p3xr-database-treecontrol-controls-collapse-all"
+        (click)="treeCollapseAll()" [matTooltip]="strings().page?.treeControls?.collapseAll || 'Collapse all'" matTooltipPosition="below">
+        <span class="material-icons" aria-hidden="true">keyboard_arrow_up</span>
+    </button>
+
+    <button class="p3xr-database-treecontrol-icon-button" type="button" (click)="refreshTree()"
+        [matTooltip]="strings().intention?.refresh || 'Refresh'" matTooltipPosition="below">
+        <span class="material-icons" aria-hidden="true">refresh</span>
+    </button>
+
+    <button class="p3xr-database-treecontrol-icon-button" type="button" (click)="openTreeSettingDialog($event)"
+        [matTooltip]="strings().form?.treeSettings?.label?.formName || 'Tree settings'" matTooltipPosition="below">
+        <span class="material-icons" aria-hidden="true">settings</span>
+    </button>
+
+    <p3xr-ng-input id="p3xr-database-treecontrol-controls-tree-divider-input"
+        class="p3xr-database-treecontrol-divider-input"
+        [ngModel]="redisTreeDivider"
+        (ngModelChange)="onDividerInputChange($event)"
+        [matTooltip]="strings().form?.treeSettings?.field?.treeSeparator || 'Tree separator'" matTooltipPosition="below">
+    </p3xr-ng-input>
+
+    @if (treeDividers.length > 0) {
+        <button class="p3xr-database-treecontrol-divider-trigger" type="button"
+            [matMenuTriggerFor]="dividerMenu"
+            [matTooltip]="strings().form?.treeSettings?.field?.treeSeparatorSelector || 'Tree separator selector'" matTooltipPosition="below">
+            <span class="material-icons" aria-hidden="true">arrow_drop_down</span>
+        </button>
+
+        <mat-menu #dividerMenu="matMenu" class="p3xr-divider-menu">
+            @for (divider of treeDividers; track divider) {
+                <button mat-menu-item type="button" (click)="setDivider(divider)">
+                    <span class="p3xr-database-treecontrol-divider-menu-label">{{ divider === '' ? '(empty)' : divider }}</span>
+                </button>
+            }
+        </mat-menu>
+    }
+</div>
+
+@if (pages > 1) {
+    <span class="p3xr-database-treecontrol-controls-pager" [matTooltip]="keyCountText()">
+        <button class="p3xr-database-treecontrol-icon-button p3xr-database-treecontrol-icon-primary" type="button" (click)="pageAction('first')"
+            [matTooltip]="strings().page?.treeControls?.pager?.first || 'First'">
+            <span class="material-icons" aria-hidden="true">skip_previous</span>
+        </button>
+
+        <button class="p3xr-database-treecontrol-icon-button" type="button" (click)="pageAction('prev')"
+            [matTooltip]="strings().page?.treeControls?.pager?.prev || 'Previous'">
+            <span class="material-icons" aria-hidden="true">keyboard_arrow_left</span>
+        </button>
+
+        <p3xr-ng-input class="p3xr-database-treecontrol-page-input" type="number" step="1" min="1" [max]="'' + pages"
+            [ngModel]="page" (ngModelChange)="onPageInputChange($event)">
+        </p3xr-ng-input><span class="p3xr-database-treecontrol-pager-text">/ {{ pages }}</span>
+
+        <button class="p3xr-database-treecontrol-icon-button" type="button" (click)="pageAction('next')"
+            [matTooltip]="strings().page?.treeControls?.pager?.next || 'Next'">
+            <span class="material-icons" aria-hidden="true">keyboard_arrow_right</span>
+        </button>
+
+        <button class="p3xr-database-treecontrol-icon-button p3xr-database-treecontrol-icon-primary" type="button" (click)="pageAction('last')"
+            [matTooltip]="strings().page?.treeControls?.pager?.last || 'Last'">
+            <span class="material-icons" aria-hidden="true">skip_next</span>
+        </button>
+    </span>
+} @else {
+    <span class="p3xr-database-treecontrol-controls-keycount">
+        {{ keyCountText() }}&nbsp;
+    </span>
+}
+
+<div class="p3xr-database-treecontrol-controls-search">
+    <p3xr-ng-input
+        [class]="'p3xr-database-treecontrol-search-input ' + searchInputClass()"
+        [placeholder]="searchPlaceholder()"
+        [ngModel]="search"
+        (ngModelChange)="onSearchModelChange($event)"
+        (enterPressed)="onSearchChange()"
+        [matTooltip]="strings().page?.treeControls?.search?.infoDetails || 'Search'"
+        matTooltipPosition="right"
+        matTooltipClass="p3xr-tree-node-tooltip">
+    </p3xr-ng-input>
+
+    <button class="p3xr-database-treecontrol-icon-button p3xr-database-treecontrol-icon-primary" type="button" (click)="onSearchChange()"
+        [matTooltip]="strings().page?.treeControls?.search?.search || 'Search'" matTooltipPosition="below">
+        <span class="material-icons" aria-hidden="true">search</span>
+    </button>
+
+    @if (search.length > 0) {
+        <button class="p3xr-database-treecontrol-icon-button p3xr-database-treecontrol-icon-primary" type="button" (click)="clearSearch()"
+            [matTooltip]="strings().page?.treeControls?.search?.clear || 'Clear'" matTooltipPosition="below">
+            <span class="material-icons" aria-hidden="true">clear</span>
+        </button>
+    }
+
+    @if (!isReadonly) {
+        <span class="material-icons p3xr-database-treecontrol-root-add" (click)="addRootKey($event)"
+            [matTooltip]="strings().intention?.addKeyRoot || 'Add key'" matTooltipPosition="below">add</span>
+    }
+
+    <button class="p3xr-database-treecontrol-icon-button" type="button" [matMenuTriggerFor]="actionsMenu">
+        <span class="material-icons" aria-hidden="true">more_vert</span>
+    </button>
+
+    <mat-menu #actionsMenu="matMenu">
+        <button mat-menu-item (click)="exportKeys()">
+            <mat-icon>file_download</mat-icon>
+            <span>{{ exportLabel() }}</span>
+        </button>
+        @if (search.length > 0) {
+            <div class="p3xr-menu-hint">{{ strings().label?.exportSearchHint || 'Exporting only keys matching current search' }}</div>
+        }
+        @if (!isReadonly) {
+            <button mat-menu-item (click)="importKeys()">
+                <mat-icon>file_upload</mat-icon>
+                <span>{{ strings().intention?.importKeys || 'Import keys' }}</span>
+            </button>
+            @if (search.length > 0) {
+                <div class="p3xr-menu-hint">{{ strings().label?.importSearchHint || 'Import applies to the full database, not just search results' }}</div>
+            }
+        }
+    </mat-menu>
+</div>

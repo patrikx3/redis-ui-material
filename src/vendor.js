@@ -1,52 +1,73 @@
 require('./vendor.scss')
-// jquery
-global.$ = require('jquery/slim')
-global.jQuery = global.$
 
-jQuery.event.special.touchstart = {
-    setup: function( _, ns, handle ){
-        if ( ns.includes("noPreventDefault") ) {
-            this.addEventListener("touchstart", handle, { passive: false });
-        } else {
-            this.addEventListener("touchstart", handle, { passive: true });
-        }
-    }
-};
+// zone.js must be loaded before Angular bootstraps
+require('zone.js')
 
-// moment
-global.moment = require('moment')
-require('moment/locale/zh-cn')
-require('moment/locale/ru')
+// dayjs (replaces moment.js — 2KB vs 400KB)
+const dayjs = require('dayjs')
+const localizedFormat = require('dayjs/plugin/localizedFormat')
+const relativeTime = require('dayjs/plugin/relativeTime')
+dayjs.extend(localizedFormat)
+dayjs.extend(relativeTime)
 
+// Load dayjs locales
+require('dayjs/locale/ar')
+require('dayjs/locale/az')
+require('dayjs/locale/be')
+require('dayjs/locale/bg')
+require('dayjs/locale/bn')
+require('dayjs/locale/cs')
+require('dayjs/locale/da')
+require('dayjs/locale/de')
+require('dayjs/locale/el')
+require('dayjs/locale/es')
+require('dayjs/locale/et')
+require('dayjs/locale/fi')
+require('dayjs/locale/tl-ph')
+require('dayjs/locale/fr')
+require('dayjs/locale/he')
+require('dayjs/locale/hr')
+require('dayjs/locale/hu')
+require('dayjs/locale/hy-am')
+require('dayjs/locale/id')
+require('dayjs/locale/it')
+require('dayjs/locale/ja')
+require('dayjs/locale/ka')
+require('dayjs/locale/kk')
+require('dayjs/locale/km')
+require('dayjs/locale/ko')
+require('dayjs/locale/ky')
+require('dayjs/locale/lt')
+require('dayjs/locale/mk')
+require('dayjs/locale/ms')
+require('dayjs/locale/ne')
+require('dayjs/locale/nb')
+require('dayjs/locale/nl')
+require('dayjs/locale/pl')
+require('dayjs/locale/pt-br')
+require('dayjs/locale/pt')
+require('dayjs/locale/ro')
+require('dayjs/locale/ru')
+require('dayjs/locale/sk')
+require('dayjs/locale/sl')
+require('dayjs/locale/sr')
+require('dayjs/locale/sv')
+require('dayjs/locale/tg')
+require('dayjs/locale/th')
+require('dayjs/locale/tr')
+require('dayjs/locale/uk')
+require('dayjs/locale/vi')
+require('dayjs/locale/zh-hk')
+require('dayjs/locale/zh-tw')
+require('dayjs/locale/zh-cn')
+require('dayjs/locale/bs')
+require('dayjs/locale/si')
+require('dayjs/locale/sw')
+require('dayjs/locale/ta')
 
-global.$window = $(window);
-
-$(() => {
-    global.$body = $('body');
-})
+global.dayjs = dayjs
 
 global.htmlEncode = require('js-htmlencode').htmlEncode
 
 // socket
 global.io = require('socket.io-client/dist/socket.io.js')
-
-// angular
-global.angular = require('angular');
-
-require('angular-aria');
-require('angular-sanitize')
-require('angular-messages');
-require('angular-animate');
-require('angular-cookies');
-require('angular-inview')
-
-require('@uirouter/angularjs')
-require('angular-material');
-
-require('angular-tree-control')
-
-//require('angular-tree-control/context-menu')
-// angular context menu fix
-angular.module("contextMenu", []);
-
-require('angular-json-tree')

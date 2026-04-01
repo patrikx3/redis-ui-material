@@ -1,0 +1,294 @@
+<!-- ======================================================================
+     HEADER: fixed top toolbar
+     Uses .p3xr-mat-layout to pick up the Layout sub-theme colors from SCSS.
+     ====================================================================== -->
+<div id="p3xr-layout-header-container">
+    <mat-toolbar class="p3xr-mat-layout">
+
+        <!-- App name button: navigates to database or reloads on failure -->
+        @if (!state.failed()) {
+            @if (isWide) {
+                <button mat-button (click)="navigateTo('database.statistics')">
+                    <i class="fas fa-database"></i>
+                    <span>{{ i18n.strings().title?.name }}</span>
+                </button>
+            } @else {
+                <button mat-icon-button (click)="navigateTo('database.statistics')"
+                        [matTooltip]="i18n.strings().title?.name ?? ''"
+                        matTooltipPosition="below">
+                    <i class="fas fa-database"></i>
+                </button>
+            }
+        } @else {
+            @if (isWide) {
+                <button mat-button (click)="reloadPage()">
+                    <i class="fas fa-redo"></i>
+                    <span>{{ i18n.strings().title?.name }}</span>
+                </button>
+            } @else {
+                <button mat-icon-button (click)="reloadPage()"
+                        [matTooltip]="i18n.strings().title?.name ?? ''"
+                        matTooltipPosition="below">
+                    <i class="fas fa-redo"></i>
+                </button>
+            }
+        }
+
+        <!-- Database button — shown only when connected -->
+        @if (currentConnection) {
+            @if (isWide) {
+                <button mat-button (click)="navigateTo('database.statistics')">
+                    <mat-icon>storage</mat-icon>
+                    <span>{{ i18n.strings().intention?.main }}</span>
+                </button>
+            } @else {
+                <button mat-icon-button (click)="navigateTo('database.statistics')"
+                        [matTooltip]="i18n.strings().intention?.main ?? ''"
+                        matTooltipPosition="below">
+                    <mat-icon>storage</mat-icon>
+                </button>
+            }
+        }
+
+        <!-- Search button — shown only when connected and RediSearch module detected -->
+        @if (currentConnection && hasRediSearch) {
+            @if (isWide) {
+                <button mat-button (click)="navigateTo('search')">
+                    <mat-icon>search</mat-icon>
+                    <span>{{ i18n.strings().page?.search?.title || 'Search' }}</span>
+                </button>
+            } @else {
+                <button mat-icon-button (click)="navigateTo('search')"
+                        [matTooltip]="i18n.strings().page?.search?.title ?? 'Search'"
+                        matTooltipPosition="below">
+                    <mat-icon>search</mat-icon>
+                </button>
+            }
+        }
+
+        <!-- Monitoring button — shown only when connected -->
+        @if (currentConnection) {
+            @if (isWide) {
+                <button mat-button (click)="navigateTo('monitoring')">
+                    <mat-icon>monitor_heart</mat-icon>
+                    <span>{{ i18n.strings().page?.monitor?.title || 'Monitoring' }}</span>
+                </button>
+            } @else {
+                <button mat-icon-button (click)="navigateTo('monitoring')"
+                        [matTooltip]="i18n.strings().page?.monitor?.title ?? 'Monitoring'"
+                        matTooltipPosition="below">
+                    <mat-icon>monitor_heart</mat-icon>
+                </button>
+            }
+        }
+
+        <span class="p3xr-layout-spacer"></span>
+
+        <!-- Info button -->
+        @if (!state.failed()) {
+            @if (isWide) {
+                <button mat-button (click)="navigateTo('info')">
+                    <mat-icon>info</mat-icon>
+                    <span>{{ i18n.strings().intention?.info || 'Info' }}</span>
+                </button>
+            } @else {
+                <button mat-icon-button (click)="navigateTo('info')"
+                        [matTooltip]="i18n.strings().intention?.info ?? 'Info'"
+                        matTooltipPosition="below">
+                    <mat-icon>info</mat-icon>
+                </button>
+            }
+        }
+
+        <!-- Settings button -->
+        @if (!state.failed()) {
+            @if (isWide) {
+                <button mat-button (click)="navigateTo('settings')">
+                    <mat-icon>settings</mat-icon>
+                    <span>{{ i18n.strings().intention?.settings }}</span>
+                </button>
+            } @else {
+                <button mat-icon-button (click)="navigateTo('settings')"
+                        [matTooltip]="i18n.strings().intention?.settings ?? ''"
+                        matTooltipPosition="below">
+                    <mat-icon>settings</mat-icon>
+                </button>
+            }
+        }
+
+    </mat-toolbar>
+</div>
+
+<!-- Version number: shown when not in Electron and a version is available -->
+@if (!isElectron && currentVersion && isWide) {
+    <div id="p3xr-layout-header-version-donated"
+         [class.p3xr-layout-version-free]="!state.donated()"
+         [class.p3xr-layout-version-donated]="state.donated()">
+        {{ currentVersion }}
+    </div>
+}
+
+<!-- ======================================================================
+     FOOTER: fixed bottom toolbar
+     ====================================================================== -->
+<div id="p3xr-layout-footer-container">
+    <mat-toolbar class="p3xr-mat-layout">
+
+        <!-- Connection menu — shown only when there are saved connections -->
+        @if (connectionsList.length > 0) {
+            @if (isWide) {
+                <button mat-button [matMenuTriggerFor]="connectionMenu">
+                    <mat-icon>power</mat-icon>
+                    <span>{{ connectionName }}</span>
+                </button>
+            } @else {
+                <button mat-icon-button [matMenuTriggerFor]="connectionMenu"
+                        [matTooltip]="connectionName"
+                        matTooltipPosition="above">
+                    <mat-icon>power</mat-icon>
+                </button>
+            }
+            <mat-menu #connectionMenu>
+                @for (group of groupedConnectionsList; track group.name) {
+                    @if (groupedConnectionsList.length > 1) {
+                        <div class="p3xr-connection-menu-group-label">
+                            {{ group.name || (i18n.strings().label?.ungrouped || 'Ungrouped') }}
+                        </div>
+                    }
+                    @for (conn of group.connections; track conn.id) {
+                        <button mat-menu-item (click)="connect(conn)"
+                                [class.p3xr-mat-menu-item-selected]="currentConnection?.id === conn.id">
+                            {{ conn.name }}
+                        </button>
+                    }
+                    @if (!$last && groupedConnectionsList.length > 1) {
+                        <mat-divider></mat-divider>
+                    }
+                }
+            </mat-menu>
+        }
+
+        <!-- Disconnect button — shown only when connected; text at >960px (AngularJS: hide-xs hide-sm) -->
+        @if (currentConnection) {
+            @if (isGtSm) {
+                <button mat-button (click)="disconnect()">
+                    <i class="fa fa-power-off"></i>
+                    <span>{{ i18n.strings().intention?.disconnect }}</span>
+                </button>
+            } @else {
+                <button mat-icon-button (click)="disconnect()"
+                        [matTooltip]="i18n.strings().intention?.disconnect ?? ''"
+                        matTooltipPosition="above">
+                    <i class="fa fa-power-off"></i>
+                </button>
+            }
+        }
+
+        <span class="p3xr-layout-spacer"></span>
+
+        <!-- Donate button — text at >720px (AngularJS: p3xr-button 720px threshold) -->
+        @if (isWide) {
+            <button mat-button (click)="openLink('donate')">
+                <i class="fas fa-donate"></i>
+                <span>{{ i18n.strings().title?.donate }}</span>
+            </button>
+        } @else {
+            <button mat-icon-button (click)="openLink('donate')"
+                    [matTooltip]="i18n.strings().title?.donate ?? ''"
+                    matTooltipPosition="above">
+                <i class="fas fa-donate"></i>
+            </button>
+        }
+
+        <!-- Language menu: text at >960px (AngularJS: hide-xs hide-sm) -->
+        @if (!isElectron || isElectronInitialized) {
+            @if (isGtSm) {
+                <button mat-button [matMenuTriggerFor]="languageMenu" #languageMenuTrigger="matMenuTrigger" (menuOpened)="onLanguageMenuOpened()">
+                    <mat-icon>language</mat-icon>
+                    <span>{{ i18n.strings().intention?.language }}</span>
+                </button>
+            } @else {
+                <button mat-icon-button [matMenuTriggerFor]="languageMenu" #languageMenuTrigger="matMenuTrigger" (menuOpened)="onLanguageMenuOpened()"
+                        [matTooltip]="i18n.strings().intention?.language ?? ''"
+                        matTooltipPosition="above">
+                    <mat-icon>language</mat-icon>
+                </button>
+            }
+            <mat-menu #languageMenu class="p3xr-language-menu" (closed)="onLanguageMenuClosed()">
+                <div class="p3xr-language-search-container" (click)="$event.stopPropagation()" (keydown)="onLanguageSearchKeydown($event)">
+                    <input #languageSearchInput
+                           class="p3xr-language-search-input"
+                           [placeholder]="i18n.strings().label?.searchLanguage || 'Search...'"
+                           [value]="languageSearch"
+                           (input)="onLanguageSearchInput(languageSearchInput.value)"
+                           autocomplete="off" />
+                </div>
+                @for (langKey of filteredLanguages; track langKey; let i = $index) {
+                    <button mat-menu-item (click)="setLanguage(langKey)"
+                            [class.p3xr-mat-menu-item-selected]="i18n.currentLang() === langKey"
+                            [class.p3xr-language-highlighted]="i === highlightedLanguageIndex">
+                        {{ languageLabel(langKey) }}
+                    </button>
+                }
+            </mat-menu>
+        }
+
+        <!-- Theme menu — text at >600px (AngularJS: hide-xs only — shows text earlier than others) -->
+        @if (isGtXs) {
+            <button mat-button [matMenuTriggerFor]="themeMenu">
+                <mat-icon>color_lens</mat-icon>
+                <span>{{ i18n.strings().intention?.theme }}</span>
+            </button>
+        } @else {
+            <button mat-icon-button [matMenuTriggerFor]="themeMenu"
+                    [matTooltip]="i18n.strings().intention?.theme ?? ''"
+                    matTooltipPosition="above">
+                <mat-icon>color_lens</mat-icon>
+            </button>
+        }
+        <mat-menu #themeMenu>
+            <button mat-menu-item (click)="setThemeAuto()"
+                    [class.p3xr-mat-menu-item-selected]="theme.isAuto()">
+                {{ i18n.strings().label?.themeAuto || 'Auto (system)' }}
+            </button>
+            <mat-divider></mat-divider>
+            @for (key of sortedThemeKeys; track key) {
+                <button mat-menu-item (click)="setTheme(key)"
+                        [class.p3xr-mat-menu-item-selected]="!theme.isAuto() && themeSelectedKey === key">
+                    {{ themeLabel(key) }}
+                </button>
+            }
+        </mat-menu>
+
+        <!-- GitHub menu — text at >960px (AngularJS: hide-xs hide-sm) -->
+        @if (isGtSm) {
+            <button mat-button [matMenuTriggerFor]="githubMenu">
+                <i class="fab fa-github"></i>
+                <span>{{ i18n.strings().intention?.github }}</span>
+            </button>
+        } @else {
+            <button mat-icon-button [matMenuTriggerFor]="githubMenu"
+                    [matTooltip]="i18n.strings().intention?.github ?? ''"
+                    matTooltipPosition="above">
+                <i class="fab fa-github"></i>
+            </button>
+        }
+        <mat-menu #githubMenu>
+            <button mat-menu-item (click)="openLink('github')">
+                {{ i18n.strings().intention?.githubRepo }}
+            </button>
+            <button mat-menu-item (click)="openLink('githubRelease')">
+                {{ i18n.strings().intention?.githubRelease }}
+            </button>
+            <button mat-menu-item (click)="openLink('githubChangelog')">
+                {{ i18n.strings().intention?.githubChangelog }}
+            </button>
+        </mat-menu>
+
+    </mat-toolbar>
+</div>
+
+<!-- Content area: Angular Router renders pages here -->
+<div class="p3xr-layout-content">
+    <router-outlet></router-outlet>
+</div>

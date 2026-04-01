@@ -1,0 +1,58 @@
+// Sticky tab headers — stay visible when scrolling content.
+// The scroll container is #p3xr-database-content-container (position:fixed, overflow:auto).
+// sticky works relative to the nearest scrolling ancestor.
+p3xr-ng-main-statistics > :first-child > .mat-mdc-tab-header,
+p3xr-database-statistics > :first-child > .mat-mdc-tab-header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 2 !important;
+    background-color: var(--p3xr-content-bg, #303030) !important;
+}
+
+.p3xr-statistics-list {
+    padding: 8px 16px;
+}
+
+.p3xr-statistics-item {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+
+    span {
+        text-align: right;
+    }
+}
+
+// Dark theme: lighter border
+body.p3xr-theme-dark .p3xr-statistics-item {
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+// DB sub-tabs: primary background matching AngularJS md-tabs.md-primary
+// Uses the main theme's primary palette (--p3xr-btn-primary-bg)
+.p3xr-statistics-db-tabs .mat-mdc-tab-header {
+    background-color: var(--p3xr-btn-primary-bg) !important;
+}
+
+.p3xr-statistics-db-tabs .mat-mdc-tab:not(.mdc-tab--active) .mdc-tab__text-label {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.p3xr-statistics-db-tabs .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+    color: white !important;
+}
+
+.p3xr-statistics-db-tabs .mat-mdc-tab-header .mdc-tab-indicator__content--underline {
+    border-color: white !important;
+}
+
+// Matrix: black text on bright green tab background
+body.p3xr-mat-theme-matrix .p3xr-statistics-db-tabs .mat-mdc-tab .mdc-tab__text-label {
+    color: rgba(0, 0, 0, 0.87) !important;
+}
+
+body.p3xr-mat-theme-matrix .p3xr-statistics-db-tabs .mat-mdc-tab-header .mdc-tab-indicator__content--underline {
+    border-color: rgba(0, 0, 0, 0.87) !important;
+}

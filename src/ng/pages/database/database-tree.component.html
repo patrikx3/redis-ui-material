@@ -1,0 +1,81 @@
+<cdk-virtual-scroll-viewport
+    *ngIf="dataSource.length > 0 && isEnabled"
+    [itemSize]="28"
+    class="p3xr-database-tree-viewport">
+
+    <div *cdkVirtualFor="let node of dataSource; trackBy: trackByKey"
+         class="p3xr-database-tree-row"
+         [style.padding-left.px]="node.level * 20 + 4">
+
+        <!-- Folder expand/collapse icon / leaf spacer for sibling alignment -->
+        @if (node.expandable) {
+            <span class="p3xr-tree-branch-head"
+                  [class.tree-expanded]="isExpanded(node)"
+                  [class.tree-collapsed]="!isExpanded(node)"
+                  (click)="toggleExpand(node); $event.stopPropagation()">
+            </span>
+        } 
+
+        <!-- Node content -->
+        <span [attr.data-p3xr-tree-key]="node.type === 'folder' ? '' : node.key">
+            <label class="p3xr-database-tree-node"
+                   (click)="node.expandable ? toggleExpand(node) : selectNode(node)"
+                   [matTooltip]="extractNodeTooltip(node)"
+                   matTooltipPosition="right"
+                   matTooltipClass="p3xr-tree-node-tooltip">
+
+                <!-- Type icon for elements -->
+                @if (node.type !== 'folder' && node.keysInfo) {
+                    @switch (node.keysInfo.type) {
+                        @case ('hash') { <i class="p3xr-database-treecontrol-node-icon fas fa-hashtag" aria-hidden="true"></i> }
+                        @case ('list') { <i class="p3xr-database-treecontrol-node-icon fas fa-list-ol" aria-hidden="true"></i> }
+                        @case ('set') { <i class="p3xr-database-treecontrol-node-icon fas fa-list" aria-hidden="true"></i> }
+                        @case ('string') { <i class="p3xr-database-treecontrol-node-icon fas fa-ellipsis-h" aria-hidden="true"></i> }
+                        @case ('zset') { <i class="p3xr-database-treecontrol-node-icon fas fa-chart-line" aria-hidden="true"></i> }
+                        @case ('stream') { <i class="p3xr-database-treecontrol-node-icon fas fa-stream" aria-hidden="true"></i> }
+                        @case ('json') { <i class="p3xr-database-treecontrol-node-icon fas fa-code" aria-hidden="true"></i> }
+                    }
+                }
+
+                <span class="p3xr-database-tree-node-label">{{ node.label }}</span>
+
+                <!-- Folder child count -->
+                @if (node.type === 'folder') {
+                    <span class="p3xr-database-tree-node-count">{{ divider }}* <span style="opacity: 0.5;">({{ node.childCount }})</span></span>
+                }
+
+                <!-- Element length (non-string) -->
+                @if (node.type !== 'folder' && node.keysInfo?.type !== 'string' && node.keysInfo?.type !== 'json' && node.keysInfo) {
+                    <span class="p3xr-database-tree-node-count">({{ node.keysInfo.length }})</span>
+                }
+
+                <!-- TTL indicator -->
+
+            </label>
+        </span>
+
+        <!-- Action buttons (shown on row hover via CSS, hidden in readonly) -->
+        @if (!isReadonly) {
+            <span class="p3xr-database-tree-actions">
+                <!-- Delete tree (folder) / Delete key (element) -->
+                @if (node.type === 'folder') {
+                    <span [matTooltip]="deleteTreeTooltip(node)" matTooltipPosition="after" matTooltipClass="p3xr-tree-node-tooltip">
+                        <span class="material-icons p3xr-database-treecontrol-delete-icon"
+                              (click)="deleteTree($event, node)">close</span>
+                    </span>
+                } @else {
+                    <span [matTooltip]="strings()?.intention?.delete" matTooltipPosition="after" matTooltipClass="p3xr-tree-node-tooltip">
+                        <span class="material-icons p3xr-database-treecontrol-delete-icon"
+                              (click)="deleteKey($event, node.key)">close</span>
+                    </span>
+                }
+
+                <!-- Add key -->
+                <span [matTooltip]="strings()?.intention?.addKey" matTooltipPosition="after" matTooltipClass="p3xr-tree-node-tooltip">
+                    <span class="material-icons p3xr-database-treecontrol-folder-icon"
+                          (click)="addKey($event, node)">add</span>
+                </span>
+            </span>
+        }
+    </div>
+</cdk-virtual-scroll-viewport>

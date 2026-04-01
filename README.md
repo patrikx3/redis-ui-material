@@ -12,7 +12,7 @@ https://corifeus.com/redis-ui
 
 
 ---
-# 💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via http and socket.io v2026.4.101
+# 💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via http and socket.io v2026.4.340
 
 
   
@@ -28,10 +28,17 @@ https://corifeus.com/redis-ui
 ### 🛠️ Built on NodeJs version
 
 ```txt
-v24.14.0
+v24.14.1
 ```
 
 
+
+
+# 📦 Built on Angular
+
+```text
+21.2.6
+```
 
 
 
@@ -43,16 +50,13 @@ v24.14.0
 
 The is the `p3x-redis-ui-material` web gui, that uses the `p3x-redis-ui-server`.   
 
-It is based on Socket.IO and AngularJs Material, uses themes light/dark schema and internationalization (English is implemented by default). 
+It is based on Socket.IO and Angular with Angular Material, uses themes light/dark schema and internationalization (21 languages).
 
 
 # For development standalone
 
 For file names do not use camelCase, but use kebab-case. Folder should be named as kebab-case as well. As you can see, all code filenames are using it like that, please do not change that.
 Please apply the `.editorconfig` settings in your IDE.
-
-Make sure that the server app is running at for development standalone:  
-https://github.com/patrikx3/redis-ui-server
 
 Then:  
 ```bash
@@ -109,7 +113,7 @@ All my domains, including [patrikx3.com](https://patrikx3.com), [corifeus.eu](ht
 ---
 
 
-[**P3X-REDIS-UI-MATERIAL**](https://corifeus.com/redis-ui-material) Build v2026.4.101
+[**P3X-REDIS-UI-MATERIAL**](https://corifeus.com/redis-ui-material) Build v2026.4.340
 
  [![NPM](https://img.shields.io/npm/v/p3x-redis-ui-material.svg)](https://www.npmjs.com/package/p3x-redis-ui-material)  [![Donate for PatrikX3 / P3X](https://img.shields.io/badge/Donate-PatrikX3-003087.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QZVM4V6HVZJW6)  [![Contact Corifeus / P3X](https://img.shields.io/badge/Contact-P3X-ff9900.svg)](https://www.patrikx3.com/en/front/contact) [![Like Corifeus @ Facebook](https://img.shields.io/badge/LIKE-Corifeus-3b5998.svg)](https://www.facebook.com/corifeus.software)
 

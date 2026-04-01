@@ -1,0 +1,643 @@
+const strings = {
+  error: {
+    cleared_license: "Лицензът е изчистен",
+    invalid_license: "Невалиден лиценз",
+    license_max_devices_reached: "Достигнат е максималният брой устройства",
+    license_readonly: "Лицензът може да бъде променен само от сървърния терминал.",
+    server_error: "Грешка на сървъра, моля опитайте отново"
+  },
+  title: {
+    donate: "Дарение",
+    jsonRecursive: "Разгъване на всички листа",
+    name: "P3X Redis UI",
+    nameDonated: "P3X Redis UI+",
+    main: "Можете да изберете Redis връзка от долното ляво меню.",
+    statistics: "Статистика",
+    error: "Грешка",
+    connectingRedis: "Свързване с Redis ...",
+    socketioConnectError: "Грешка на Socket.IO",
+    db: "БД",
+    server: "Сървър",
+    clients: "Клиенти",
+    memory: "Памет",
+    persistence: "Устойчивост",
+    stats: "Статистика",
+    replication: "Репликация",
+    cpu: "CPU",
+    cluster: "Клъстер",
+    modules: "Модули",
+    errorstats: "Статистика за грешки",
+    commandstats: "Статистика на командите",
+    latencystats: "Статистика на закъсненията",
+    keysizes: "Размери на ключовете",
+    threads: "Нишки",
+  },
+  confirm: {
+    dropIndex: "Сигурни ли сте, че искате да изтриете този индекс?",
+    uploadBuffer: "Сигурни ли сте, че искате да качите тези двоични данни?",
+    uploadBufferDone: "Двоичните данни са качени",
+    uploadBufferDoneAndSave: "Двоичните данни са качени и запазени на сървъра",
+    title: "Потвърждение",
+    alert: "Внимание",
+    info: "Информация",
+    deleteListItem: "Сигурни ли сте, че искате да изтриете този елемент от списъка?",
+    deleteHashKey: "Сигурни ли сте, че искате да изтриете този хеш ключ?",
+    deleteStreamTimestamp: "Сигурни ли сте, че искате да изтриете тази времева марка от потока?",
+    deleteSetMember: "Сигурни ли сте, че искате да изтриете този член на множеството?",
+    deleteZSetMember: "Сигурни ли сте, че искате да изтриете този член на подреденото множество?",
+    deleteConnection: "Потвърждение",
+    deleteConnectionText: "Сигурни ли сте, че искате да изтриете тази Redis връзка?",
+    deleteNode: "Сигурни ли сте, че искате да изтриете този Redis възел?",
+    deleteAllKeys: opts => {
+      return `Изтриване на това дърво и всички негови ключове (${opts.key})?`;
+    },
+    socketioConnectError: "Socket.IO не може да се свърже със сървъра, можете да презаредите и да опитате да разрешите грешката при свързването сами, клиентът не знае как да я разреши сам.",
+    socketioAuthRequired: "Необходима е оторизация чрез Socket.IO. Моля, удостоверете се с HTTP Basic Auth (потребителско име/парола) и презаредете.",
+    deleteKey: "Сигурни ли сте, че искате да изтриете този ключ?",
+    rename: {
+      title: "Сигурни ли сте, че искате да преименувате този ключ?",
+      textContent: "Това действие преименува ключа окончателно.",
+      placeholder: "Redis ключ (задължителен)"
+    },
+    ttl: {
+      title: "Сигурни ли сте, че искате да промените TTL на този ключ?",
+      textContent: "Промяната на TTL обновява времето за живот на този ключ. Оставете празно, за да запазите ключа завинаги.",
+      placeholder: "TTL на Redis ключа (цяло число или празно)",
+      placeholderPlaceholder: "Празно означава, че се запазва завинаги; в противен случай въведете цяло число.",
+      convertTextToTime: "Преобразуване на текст във време",
+      convertTextToTimePlaceholder: "Напр. 1d ще бъде 86400"
+    },
+    license: {
+      title: "Задаване на лиценз",
+      textContent: "Ако искате да използвате платени функции, моля свържете се с support@corifeus.com, за да заявите лиценз. Цените са Pro 400 HUF/месец (€1/месец) или 4,000 HUF/годишно (€10/годишно), и Enterprise 1,200 HUF/месец (€3/месец) или 12,000 HUF/годишно (€30/годишно). Годишната цена е 10 пъти месечната. С 27% ДДС общите суми са Pro 500 HUF/месец (€1.27/месец) или 5,100 HUF/годишно (€12.70/годишно), Enterprise 1,500 HUF/месец (€3.81/месец) или 15,200 HUF/годишно (€38.10/годишно). Валидирането на лиценза изисква достъп до интернет. Стандартният лиценз включва 5 места. Ако имате нужда от повече места, свържете се с нас на support@corifeus.com.",
+      placeholder: "Лицензен ключ"
+    }
+  },
+  language: {
+    // When you translate the english name, keep the Language in English
+    // eg. Inglés / English
+    bg: "Български / Bulgarian",
+    cs: "Čeština / Czech",
+    de: "Deutsch / German",
+    el: "Ελληνικά / Greek",
+    en: "English",
+    es: "Español / Spanish",
+    fr: "Français / French",
+    hu: "Magyar / Hungarian",
+    it: "Italiano / Italian",
+    ja: "日本語 / Japanese",
+    nl: "Nederlands / Dutch",
+    pl: "Polski / Polish",
+    "pt-PT": "Português / Portuguese",
+    ro: "Română / Romanian",
+    ru: "Русский / Russian",
+    sk: "Slovenčina / Slovak",
+    sr: "Српски / Serbian",
+    sv: "Svenska / Swedish",
+    tr: "Türkçe / Turkish",
+    uk: "Українська / Ukrainian",
+    zn: "中文 / Chinese",
+    ar: "العربية / Arabic",
+    az: "Azərbaycanca / Azerbaijani",
+    be: "Беларуская / Belarusian",
+    bn: "বাংলা / Bengali",
+    da: "Dansk / Danish",
+    et: "Eesti / Estonian",
+    fi: "Suomi / Finnish",
+    fil: "Filipino / Filipino",
+    he: "עברית / Hebrew",
+    hr: "Hrvatski / Croatian",
+    hy: "Հայերեն / Armenian",
+    id: "Bahasa Indonesia / Indonesian",
+    ka: "ქართული / Georgian",
+    kk: "Қазақша / Kazakh",
+    km: "ខ្មែរ / Khmer",
+    ko: "한국어 / Korean",
+    ky: "Кыргызча / Kyrgyz",
+    lt: "Lietuvių / Lithuanian",
+    mk: "Македонски / Macedonian",
+    ms: "Bahasa Melayu / Malay",
+    ne: "नेपाली / Nepali",
+    no: "Norsk / Norwegian",
+    "pt-BR": "Português (Brasil) / Portuguese (Brazil)",
+    sl: "Slovenščina / Slovenian",
+    tg: "Тоҷикӣ / Tajik",
+    th: "ไทย / Thai",
+    vi: "Tiếng Việt / Vietnamese",
+    "zh-HK": "中文（香港） / Chinese (Hong Kong)",
+    "zh-TW": "中文（台灣） / Chinese (Taiwan)",
+    bs: 'Bosanski / Bosnian',
+    si: 'සිංහල / Sinhala',
+    sw: 'Kiswahili / Swahili',
+    ta: 'தமிழ் / Tamil'
+  },
+  intention: {
+    copy: "Копирай",
+    downloadBuffer: "Изтегли двоичен файл",
+    setBuffer: "Качи двоичен файл",
+    exportKeys: "Експортиране на ключове",
+    exportAllKeys: (opts) => `Експорт на всички ${opts.count} ключа`,
+    exportSearchResults: (opts) => `Експорт на ${opts.count} резултата`,
+    importKeys: "Импортиране на ключове",
+    saveWithFormatJson: "Запази с форматиране",
+    formatJson: "Форматирай Json",
+    wrap: "Обвиване",
+    unwrap: "Развиване",
+    downloadJson: "Изтегли JSON",
+    pubsubMonitor: "PubSub Монитор",
+    // When you translate the language, keep the Language in English
+    // eg. Idioma / Language
+    language: "Език / Language",
+    ok: "OK",
+    addKey: "Добави към този ключ",
+    addKeyRoot: "Добави основен ключ",
+    reloadKey: "Презареди ключ",
+    reload: "Презареди",
+    close: "Затвори",
+    commands: "Команди",
+    view: "Изглед",
+    statistics: "Статистика",
+    refresh: "Обнови",
+    pause: "Пауза",
+    resume: "Продължи",
+    clear: "Изчисти",
+    rename: "Преименувай",
+    main: "База данни",
+    cancel: "Отказ",
+    theme: "Тема",
+    github: "GitHub",
+    githubRepo: "Хранилище",
+    githubRelease: "Издания",
+    githubChangelog: "Списък с промени",
+    info: "Info",
+    settings: "Настройки",
+    connect: "Свържи",
+    disconnect: "Прекъсни",
+    overview: "Преглед",
+    console: "Конзола",
+    noConnections: "Няма връзки, добавете връзка в менюто с настройки.",
+    noConnectionsInSettings: "Няма връзки, можете да добавите НОВА ВРЪЗКА по-горе.",
+    connectionAdd: "Нова връзка",
+    addGroup: "Добави група",
+    extend: "Разгъни",
+    collapse: "Свий",
+    add: "Добави",
+    edit: "Редактирай",
+    save: "Запази",
+    ttl: "Задай TTL",
+    license: "Задай лиценз",
+    delete: "Изтрий",
+    remove: "Премахни",
+    sure: "Сигурен",
+    testConnection: "Тестване на връзката",
+    getKey: "Зареждане на Redis ключ и свързани данни ...",
+    jsonViewShow: "Покажи JSON",
+    jsonViewEditor: "Редактирай JSON",
+    quickConsole: "Бърза конзола"
+  },
+  label: {
+    id: {
+      nodeId: 'ID на възела',
+      id: "ID на връзката",
+      info: "Ако не искате да променяте свойствата: sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa, моля въведете ID на връзката в тези полета, за да запазите стойностите на свойствата. Ако искате същата логика за паролата на възела, въведете ID на възела в паролата на възела."
+    },
+    secureFeature: 'Ако видите стойност, която започва с P3X и изглежда еднаква, това е защитна функция. За да промените настройките, просто заменете тези настройки с празни или нещо друго и те ще бъдат запазени. Ако не промените настройките, те ще бъдат запазени така, както са на сървъра.',
+    ssh: {
+      on: 'SSH включен',
+      off: 'SSH изключен',
+      sshHost: 'SSH Хост',
+      sshPort: 'SSH Порт',
+      sshUsername: 'SSH Потребителско име',
+      sshPassword: 'SSH Парола',
+      sshPrivateKey: 'SSH Частен ключ'
+    },
+    isBuffer: opts => `[object ArrayBuffer] означава, че стойността е двоични данни или стойността е по-голяма от ${opts.maxValueAsBuffer}`,
+    streamValue: `Полето и стойността на потока са на един ред. Напр.: field1 value1 "field 2" "value 2"`,
+    streamTimestampId: `'*' означава автоматично генериране или спецификация като <millisecondsTime>-<sequenceNumber>`,
+    unableToLoadKey: ({
+      key
+    }) => {
+      return `Не може да се зареди този ключ: ${key}. Възможно е ключът да е изтрит. Точната грешка е в конзолата.`;
+    },
+    bigJson: "Този JSON обект е над 10 кб, затова се уверете, че знаете какво правите, защото някои функции могат да се визуализират бавно.",
+    addNode: "Добави възел",
+    validateJson: "Валидирай JSON",
+    reducedFunction: `Намалена функционалност`,
+    tooManyKeys: opts => {
+      return `За пълните максимални функции допустимият общ брой ключове е ${opts.maxLightKeysCount}. Тази база данни има повече от допустимия общ брой ключове ${opts.count}. Сортирането на ключовете и допълнителната информация за дървото са деактивирани. Търсенето се извършва само на сървъра, вместо на клиента.`;
+    },
+    redisCommandNotFound: "Не е намерена съвпадаща Redis команда ...",
+    treeKeyStore: `Сортирането (естествено сравнение) се изпълнява на клиента, т.е. браузъра, което означава, че има забавяне при големи набори от данни, като над 10 хил. ключа, може да добави малко време за визуализация на страницата. В Redis няма сортиране на ключове, само по този начин.`,
+    socketIoTimeout: options => {
+      return `Socket.IO изтече за тази заявка (макс. ${options.timeout / 1000} секунди) ...`;
+    },
+    resizerInfo: options => {
+      return `Минималната ширина на левия или десния панел е ${options.width}px`;
+    },
+    jsonViewNotParsable: "Тази стойност не може да бъде обработена като JSON  ",
+    ttlTitle: "Задайте TTL в секунди",
+    passwordSecure: "Паролата може да е празна, но все пак ще показва символи, това е защитна функция.",
+    tlsWithoutCert: "Активиране на TLS без допълнителен сертификат",
+    tlsRejectUnauthorized: "Отхвърляне на неоторизиран сертификат",
+    tlsSecure: "Ако видите TLS конфигурация, която започва с P3X или всички TLS настройки изглеждат еднакви, това е защитна функция. За да промените настройките, просто заменете тези настройки с празни или нещо друго и те ще бъдат запазени. Ако не промените TLS настройките, те ще бъдат запазени така, както са на сървъра.",
+    treeSeparatorEmpty: "Ако разделителят на дървото е празен, дървото няма да има вложени възли, а само обикновен списък",
+    treeSeparatorEmptyNote: "Без вложени възли, само обикновен списък",
+    welcomeConsole: "Добре дошли в Redis Конзолата",
+    welcomeConsoleInfo: "Историята с курсора НАГОРЕ или НАДОЛУ е активирана",
+    redisListIndexInfo: "Празно за добавяне накрая, -1 за добавяне в началото или запазете на показаната позиция.",
+    console: "Конзола",
+    connectiondAdd: "Добави връзка",
+    connectiondEdit: "Редактирай връзка",
+    connectiondView: "Преглед на връзка",
+    connections: "Връзки",
+    licenseInfo: "Лиценз",
+    licenseEditable: "Лицензът е редактируем",
+    licenseEditableYes: "Да",
+    licenseEditableNo: "Не",
+    licenseTerminalOnly: "Лицензът може да бъде конфигуриран само от сървърния терминал.",
+    licenseTierPolicyTitle: "Политика на нивата",
+    licenseTierPolicyText: "<h4>Безплатен</h4>Само основен Redis UI; без SSH тунелиране, без режим Readonly за връзки, без Cluster/Sentinel, без Редактиране на JSON/Качване на двоични файлове/Изтегляне на двоични файлове, без ReJSON.<br/><strong>Цена: 0 HUF/месец (€0/месец).</strong><br/><br/><h4>Pro</h4>SSH тунелиране, режим Readonly за връзки (включително --readonly-connections/-r), Редактиране на JSON, Качване на двоични файлове, Изтегляне на двоични файлове, ReJSON.<br/><strong>Базова цена: 400 HUF/месец (€1/месец) или 4,000 HUF/годишно (€10/годишно).</strong><br/><strong>Общо с 27% ДДС: 500 HUF/месец (€1.27/месец) или 5,100 HUF/годишно (€12.70/годишно).</strong><br/><br/><h4>Enterprise</h4>SSH тунелиране, Cluster и Sentinel, плюс Редактиране на JSON, Качване на двоични файлове, Изтегляне на двоични файлове, ReJSON; --readonly-connections/-r също работи.<br/><strong>Базова цена: 1,200 HUF/месец (€3/месец) или 12,000 HUF/годишно (€30/годишно).</strong><br/><strong>Общо с 27% ДДС: 1,500 HUF/месец (€3.81/месец) или 15,200 HUF/годишно (€38.10/годишно).</strong><br/><br/><h4>Годишно правило</h4>Годишната цена е 10 пъти месечната цена.<br/><br/><h4>Места</h4>Стандартният лиценз включва 5 места. Ако имате нужда от повече места, свържете се с нас на <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><br/><h4>Enterprise пробен период</h4>10 дни безплатно за всеки с реален съществуващ имейл адрес (не тестов имейл).<br/><hr/><h4>Информация за фактуриране по имейл</h4>Име, Имейл за фактуриране, Код на държавата, Пощенски код, Град, Адрес, ДДС номер (по избор).<br/><br/><h4>Плащане</h4>PayPal плащане е достъпно само в HUF (форинти); след изпращане на сумата @ <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> ще ви изпратя фактура. Всички плащания са невъзвращаеми.<br/><br/><h4>ДДС</h4>ДДС се добавя към цената (27% в Унгария).<br/><hr/><h4>Контакт</h4>Ако искате да се свържете с нас или имате въпрос, пишете на <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><hr/><h4>Език</h4>Фактурата и лицензната имейл комуникация са на английски. Валутата на фактурата е HUF.<br/><hr/><h4>Забележка</h4>Валидирането на лиценза изисква достъп до интернет.",
+    licenseState: "Състояние",
+    licenseStateActive: "Активен",
+    licenseStateInactive: "Неактивен",
+    licenseStateNoLicense: "Няма лиценз",
+    licenseKeyMasked: "Запазен ключ",
+    licenseTier: "Ниво",
+    licenseValid: "Валиден",
+    licenseStatus: "Статус на лиценза",
+    licenseReason: "Причина",
+    licenseCheckedAt: "Проверен на",
+    licenseStartsAt: "Започва на",
+    licenseExpiresAt: "Изтича на",
+    licenseDaysLeft: "Оставащи дни",
+    licenseMaxDevices: "Максимален брой устройства",
+    licenseActiveDevices: "Активни устройства",
+    licenseActiveDevicesInfo: "Ако устройство вече не се използва, мястото му се освобождава автоматично след 75 минути.",
+    licenseCustomerEmail: "Имейл на клиента",
+    licenseFeatures: "Функции",
+    licenseFeaturesEmpty: "Няма допълнителни функции",
+    licenseFeatureReadonlyMode: "Режим Readonly за връзка",
+    licenseFeatureReadonlyConnectionsFlag: "Readonly връзки (--readonly-connections/-r)",
+    licenseFeatureSsh: "SSH тунелиране",
+    licenseFeatureCluster: "Клъстер връзки",
+    licenseFeatureSentinel: "Sentinel връзки",
+    licenseFeatureReJSON: "ReJSON (JSON data type)",
+    keysSort: {
+      on: "Сортиране на ключове включено",
+      off: "Сортиране на ключове изключено"
+    },
+    cluster: {
+      on: "Клъстер включен",
+      off: "Клъстер изключен"
+    },
+    sentinel: {
+      on: "Sentinel включен",
+      off: "Sentinel изключен",
+      name: "Sentinel име"
+    },
+    readonly: {
+      on: "Readonly включен",
+      off: "Readonly изключен"
+    },
+    proSshOnly: "SSH е достъпен в Pro или Enterprise.",
+    proReadonlyOnly: "Режимът Readonly за връзки е достъпен в Pro или Enterprise.",
+    enterpriseClusterSentinelOnly: "Cluster и Sentinel са достъпни само в Enterprise.",
+    theme: {
+      light: "Светла",
+      dark: "Тъмна enterprise",
+      darkNeu: "Тъмна",
+      darkoBluo: "Darko bluo",
+      enterprise: "Enterprise",
+      redis: "Redis",
+      matrix: "Matrix"
+    },
+    connected: opts => {
+      return `Свързан: ${opts.name}`;
+    },
+    tree: "Дърво",
+    askAuth: "Заявка за оторизация",
+    keyboardShortcuts: "Клавишни комбинации",
+    about: "Относно",
+    supportedLanguages: "Поддържани езици",
+    version: "Версия",
+    redisVersion: "Redis версия",
+    modules: "Модули",
+    shortcutRefresh: "Опресняване",
+    shortcutSearch: "Фокус върху търсенето",
+    shortcutNewKey: "Нов ключ",
+    shortcutDisconnect: "Прекъсни",
+    themeAuto: "Автоматично (система)",
+    shortcutCommandPalette: "Палитра с команди",
+    commandPalette: "Палитра с команди",
+    noResults: "Няма резултати",
+    redisCommandsReference: "Redis Команди",
+    ungrouped: "Без група",
+    grouped: "Групирани",
+    connectFirst: "Първо се свържете с Redis сървър",
+    searchLanguage: "Търсене на език...",
+    exportProgress: "Експортиране на ключове...",
+    importProgress: "Импортиране на ключове...",
+    importPreview: "Преглед",
+    importOverwrite: "Презаписване",
+    importSkip: "Пропускане",
+    importConflict: "Ако ключът вече съществува:",
+    noKeysToExport: "Няма ключове за експортиране",
+    time: "Време",
+    loading: "Зареждане...",
+    autoRefresh: "Авто",
+    exportSearchHint: "Експортиране само на ключове, съвпадащи с текущото търсене",
+    importSearchHint: "Импортът се прилага към цялата база данни, не само към резултатите от търсенето",
+    importNoKeys: "Не са намерени ключове във файла",
+  },
+  status: {
+    dataCopied: "Данните са в клипборда",
+    licenseSaved: "Лицензът е запазен",
+    exportDone: "Експортът е завършен",
+    indexCreated: "Индексът е създаден",
+    indexDropped: "Индексът е изтрит",
+    importDone: (opts) => `Импортът завършен: ${opts.created} създадени, ${opts.skipped} пропуснати, ${opts.errors} грешки`,
+    nodeRemoved: "Възелът е премахнат",
+    keyIsNotExisting: "Този ключ може да е бил изтрит или изтекъл.",
+    keyCount: opts => {
+      if (opts.keyCount === 0) {
+        return "Няма ключове";
+      } else if (opts.keyCount === 1) {
+        return "1 ключ";
+      } else {
+        return `${opts.keyCount} ключа`;
+      }
+    },
+    treeExpandAll: "Разгъване на всички листа на дървото. Тази операция може да е ресурсоемка и да отнеме време ...",
+    noRedisKeys: "Няма ключове в тази база данни.",
+    redisConnected: "Redis е свързан успешно",
+    reloadingDataInfo: "Презареждане на информацията за Redis данните",
+    added: "Добавено",
+    saved: "Обновено",
+    cancelled: "Отменено",
+    deleted: "Изтрито",
+    savedRedis: "Redis данните са запазени",
+    redisDisconnected: opts => {
+      return `Текущата връзка имаше грешка: ${opts.error.message}`;
+    },
+    dbChanged: opts => {
+      return `Индексът на БД е зададен на ${opts.db}. `;
+    },
+    treeDeleted: opts => {
+      return `Ключът на дървото е изтрит (${opts.key}).`;
+    },
+    deletedKey: opts => {
+      return `Ключът е изтрит (${opts.key}).`;
+    },
+    renamedKey: "Този ключ е преименуван",
+    ttlChanged: "TTL на този ключ е променен",
+    notInteger: "Този вход не е цяло число",
+    persisted: "Този ключ е запазен завинаги",
+    set: "Ключът е зададен/добавен"
+  },
+  code: {
+    "delete-connection": "Тази връзка е изтрита, затова сте прекъснати от тази Redis инстанция.",
+    "save-connection": "Тази връзка е променена, затова сте прекъснати от тази Redis инстанция. Можете да се свържете отново.",
+    "readonly-connections": "Връзките за добавяне/запазване/изтриване са само за четене!",
+    "readonly-connection-mode": "Тази връзка е в режим само за четене!",
+    "list-out-of-bounds": "Индексът на списъка е извън обхвата",
+    "donation-ware-feature": "Тази функция е налична в платената версия.",
+    "feature-pro-readonly-required": "Режимът Readonly за връзки изисква Pro или Enterprise лиценз.",
+    "feature-pro-ssh-required": "SSH тунелирането изисква Pro или Enterprise лиценз.",
+    "feature-enterprise-cluster-sentinel-required": "Cluster и Sentinel изискват Enterprise лиценз.",
+    "feature-pro-json-binary-required": "Редактиране на JSON, Качване на двоични файлове и Изтегляне на двоични файлове изискват Pro или Enterprise лиценз.",
+    "feature-pro-rejson-required": "ReJSON (JSON data type) requires Pro or Enterprise license.",
+    "invalid-json-value": "The value is not valid JSON.",
+    "http_auth_required": "Необходима е оторизация: моля, удостоверете се с HTTP Basic Auth и презаредете.",
+    "auto-connection-failed": "Възможно е връзката да е била премахната и автоматичното свързване е неуспешно поради това.",
+    invalid_console_command: "Тази команда не работи чрез GUI."
+  },
+  licenseReason: {
+    LICENSE_VALID: "Лицензът е валиден",
+    LICENSE_INVALID: "Лицензът е невалиден",
+    LICENSE_MISSING: "Не е зададен лицензен ключ",
+    LICENSE_DISABLED: "Лицензът е деактивиран в конфигурацията на сървъра",
+    LICENSE_NOT_FOUND: "Лицензът не е намерен",
+    LICENSE_EXPIRED: "Лицензът е изтекъл",
+    LICENSE_CLEARED: "Лицензният ключ е изчистен",
+    LICENSE_MAX_DEVICES_REACHED: "Достигнат е максималният брой устройства",
+    PRODUCT_MISMATCH: "Продуктът на лиценза не съвпада"
+  },
+  licenseStatusValue: {
+    active: "Активен",
+    deleted: "Изтрит",
+    all: "Всички",
+    expired: "Изтекъл",
+    missing: "Липсващ",
+    inactive: "Неактивен"
+  },
+  form: {
+    error: {
+      required: "Задължително",
+      port: "Портът е между 1-65535",
+      invalid: "Формулярът е невалиден"
+    },
+    connection: {
+      label: {
+        name: "Име",
+        group: "Група",
+        host: "Хост",
+        port: "Порт",
+        password: "Парола",
+        username: "Потребителско име"
+      }
+    },
+    treeSettings: {
+      maxValueDisplay: "Максимална дължина на показвания текст",
+      maxValueDisplayInfo: "Ако е зададено 0, показва пълните стойности. Ако е по-голямо от 0, съкращава до тази дължина. Ако е -1: за низове скрива стойността до редактиране; за други типове показва пълното съдържание.",
+      maxKeys: "Максимален брой ключове",
+      maxKeysInfo: "За да не се срине GUI, ограничаваме максималния брой ключове.",
+      keyCount: () => {
+        return `Брой ключове: ${p3xr.state.keysRaw.length}`;
+      },
+      label: {
+        animation: "Използвай анимация",
+        noAnimation: "Без анимация",
+        jsonFormatTwoSpace: "Форматиране на JSON с 2 интервала",
+        jsonFormatFourSpace: "Форматиране на JSON с 4 интервала",
+        formName: "Redis настройки",
+        searchModeClient: "Търсене от страната на клиента",
+        searchModeServer: "Търсене от страната на сървъра",
+        searchModeStartsWith: "Търсене с режим 'започва с'",
+        searchModeIncludes: "Режим на търсене 'съдържа'"
+      },
+      field: {
+        treeSeparator: "Разделител на дървото",
+        treeSeparatorSelector: "Селектор на разделител на дървото",
+        page: "Брой страници на дървото",
+        keyPageCount: "Брой ключове на страница",
+        keysSort: "Сортиране на ключовете",
+        searchMode: "Режим на търсене",
+        searchModeStartsWith: "Търсене 'започва с' / 'съдържа'"
+      },
+      error: {
+        keyPageCount: "Броят ключове на страница трябва да е цяло число между 5 - 100",
+        page: "Броят на страниците трябва да е цяло число между 10 - 5000",
+        maxValueDisplay: "Максималната показвана стойност трябва да е цяло число между -1 и 32768",
+        maxKeys: "Максималният брой ключове трябва да е цяло число между 100 и 100000"
+      }
+    },
+    key: {
+      label: {
+        formName: {
+          add: "Добавяне на нов Redis ключ",
+          edit: "Редактиране на Redis ключ",
+          append: "Добавяне към съществуващ Redis ключ"
+        }
+      },
+      field: {
+        streamTimestamp: "Времева марка",
+        key: "Ключ",
+        type: "Тип",
+        index: "Индекс",
+        hashKey: "Хеш ключ",
+        score: "Резултат",
+        value: "Стойност"
+      },
+      error: {
+        streamTimestamp: "Времевата марка е задължителна, във формат на Redis или като *",
+        key: "Ключът е поне един символ",
+        hashKey: "Хеш ключът е поне един символ",
+        score: "Резултатът на подреденото множество е задължителен",
+        value: "Стойността е задължителна"
+      }
+    },
+    main: {
+      label: {
+        database: "БД"
+      }
+    }
+  },
+  page: {
+    search: {
+      title: "Търсене",
+      index: "Индекс",
+      query: "Заявка",
+      results: "Резултати",
+      noIndex: "Не са намерени индекси",
+      createIndex: "Създай индекс",
+      dropIndex: "Изтрий индекс",
+      indexInfo: "Инфо за индекс",
+      indexName: "Име на индекс",
+      prefix: "Префикс на ключ (по избор)",
+      fieldName: "Име на поле",
+    },
+    monitor: {
+      title: "Мониторинг",
+      memory: "Памет",
+      opsPerSec: "Операции/сек",
+      clients: "Клиенти",
+      blocked: "Блокирани",
+      hitsMisses: "Процент попадения",
+      networkIo: "Мрежов I/O",
+      slowLog: "Бавен журнал",
+      totalCommands: "Общо",
+      expired: "Изтекли",
+      evicted: "Изгонени",
+      clientList: "Списък с клиенти",
+      topKeys: "Най-големи ключове",
+      killClient: "Убий клиент",
+      clientKilled: "Клиентът е убит",
+      confirmKillClient: "Сигурни ли сте, че искате да спрете този клиент?",
+      noKeys: "Няма ключове",
+      noClients: "Няма клиенти",
+    },
+    overview: {
+      noConnected: "Няма връзка с Redis.",
+      overviewClients: "Списък на свързаните по брой клиенти",
+      connectedCount: opt => {
+        if (opt.length === 1) {
+          return "1 клиент";
+        }
+        return `${opt.length} клиента`;
+      }
+    },
+    key: {
+      label: {
+        key: "Ключ",
+        encoding: "Кодиране",
+        length: "Размер",
+        ttl: "TTL",
+        ttlTitle: "Време за живот",
+        type: "Тип",
+        ttlNotExpire: "не изтича",
+        lengthString: "байта",
+        lengthItem: "елемента",
+        actions: "Действия"
+      },
+      list: {
+        table: {
+          index: "Индекс",
+          value: "Стойност"
+        }
+      },
+      hash: {
+        table: {
+          hashkey: "Хеш ключ",
+          value: "Стойност"
+        }
+      },
+      set: {
+        table: {
+          value: "Член"
+        }
+      },
+      zset: {
+        table: {
+          value: "Член",
+          score: "Резултат"
+        }
+      },
+      stream: {
+        table: {
+          timestamp: "ID на времева марка",
+          field: "Поле",
+          value: "Стойност"
+        }
+      }
+    },
+    treeControls: {
+      settings: "Настройки на дървото",
+      expandAll: "Разгъни всичко",
+      collapseAll: "Свий всичко",
+      search: {
+        search: "Търсене в ключовете",
+        clear: "Изчисти текущото търсене",
+        placeholderClient: "Търсене от страната на клиента",
+        placeholderServer: "Търсене от страната на сървъра",
+        info: "Търсенето от страната на клиента означава, че съвпада текстът във входното поле за търсене. Търсенето от страната на сървъра означава, че се търси в шаблоните на ключовете като *{текст-за-търсене}*. За големи набори от данни е по-добре да се използва търсене от страната на сървъра. За по-малки набори от данни е по-добре да се използва режим на търсене от страната на клиента." + ` Ако броят на ключовете е над ${p3xr.settings.maxLightKeysCount}, можете да търсите само от страната на сървъра.`,
+        largeSetInfo: "При голям набор от данни търсенето от страната на клиента е деактивирано, така че в момента е възможно само търсене от страната на сървъра.",
+        infoDetails: "За да разберете как работи търсенето, моля проверете настройките"
+      },
+      pager: {
+        next: "Следващ",
+        prev: "Предишен",
+        first: "Първи",
+        last: "Последен"
+      }
+    }
+  },
+  time: {
+    loading: "Зареждане...",
+    years: "години",
+    months: "месеци",
+    days: "дни",
+    year: "година",
+    month: "месец",
+    day: "ден"
+  },
+  redisTypes: {
+    string: "String",
+    list: "List",
+    hash: "Hash table",
+    set: "Set",
+    zset: "Sorted set - zset",
+    stream: "Stream",
+    json: "JSON"
+  }
+};
+module.exports = strings;
