@@ -200,6 +200,13 @@ const strings = {
       info: "Nếu bạn không muốn thay đổi các thuộc tính của: sshPassword, sshPrivateKey, mật khẩu, tlsCrt, tlsKey, tlsCa, vui lòng nhập ID của kết nối vào các thuộc tính đó để giữ nguyên các giá trị thuộc tính. Nếu bạn muốn logic tương tự trong mật khẩu nút, hãy nhập ID nút vào mật khẩu nút."
     },
     secureFeature: "Nếu bạn thấy một giá trị bắt đầu bằng P3X và trông giống như vậy thì đó là một tính năng bảo mật. Để thay đổi cài đặt, chỉ cần thay thế các cài đặt này bằng trống hoặc cài đặt khác và chúng sẽ được lưu. Nếu bạn không thay đổi cài đặt, cài đặt sẽ được giữ nguyên trên máy chủ.",
+    aiTranslating: "Đang dịch...",
+    aiSettings: "Cài đặt AI",
+    aiGroqApiKey: "Khóa API Groq",
+    aiGroqApiKeyInfo: "Tùy chọn. Khóa API Groq riêng để có hiệu suất tốt hơn. Nhận khóa miễn phí từ",
+    aiGroqApiKeyPlaceholder: "gsk_...",
+    aiGroqApiKeySaved: "Đã lưu khóa API AI",
+    aiGroqApiKeyNotSet: "Chưa đặt (mặc định máy chủ)",
     ssh: {
       on: "SSH đang bật",
       off: "Tắt SSH",

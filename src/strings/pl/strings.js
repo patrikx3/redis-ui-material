@@ -191,7 +191,7 @@ const strings = {
     getKey: "Ładowanie klucza Redis i powiązanych danych ...",
     jsonViewShow: "Wyświetl JSON",
     jsonViewEditor: "Edytuj JSON",
-    quickConsole: "Szybka Konsola"
+    quickConsole: "Szybka Konsola",
   },
   label: {
     id: {
@@ -200,6 +200,13 @@ const strings = {
       info: "Jeśli nie chcesz zmieniać właściwości: sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa, wpisz ID połączenia w tych właściwościach, aby zachować wartości bez zmian. Jeśli chcesz zastosować tę samą logikę dla hasła węzła, wpisz ID węzła w haśle węzła."
     },
     secureFeature: 'Jeśli widzisz wartość zaczynającą się od P3X, która wygląda tak samo, jest to funkcja bezpieczeństwa. Aby zmienić ustawienia, po prostu zastąp je pustymi lub innymi wartościami, a zostaną zapisane. Jeśli nie zmienisz ustawień, pozostaną takie, jakie są na serwerze.',
+    aiTranslating: "Tłumaczenie...",
+    aiSettings: "Ustawienia AI",
+    aiGroqApiKey: "Klucz API Groq",
+    aiGroqApiKeyInfo: "Opcjonalnie. Własny klucz API Groq dla lepszej wydajności. Uzyskaj darmowy klucz na",
+    aiGroqApiKeyPlaceholder: "gsk_...",
+    aiGroqApiKeySaved: "Klucz API AI zapisany",
+    aiGroqApiKeyNotSet: "Nie ustawiono (domyślne serwera)",
     ssh: {
       on: 'SSH włączony',
       off: 'SSH wyłączony',

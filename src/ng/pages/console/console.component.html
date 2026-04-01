@@ -80,7 +80,9 @@
 
     <!-- Console output area -->
     <div id="p3xr-console-content" class="p3xr-content-border-fixed"
-         [class.layout-padding]="type !== 'quick'">
+         [class.layout-padding]="type !== 'quick'"
+         (click)="$event.stopPropagation()"
+         (mousedown)="onContentMouseDown($event)">
         <div style="display: flex; flex-direction: row; align-items: stretch; min-height: 100%">
             @if (type === 'quick' && !embedded) {
                 <div id="p3xr-console-content-resizer" (mousedown)="dragStart()" (mouseup)="dragEnd()"></div>
@@ -103,9 +105,11 @@
                (keydown)="onKeyDown($event)"
                [matAutocomplete]="auto"
                autocomplete="off"
+               [disabled]="aiLoading"
+               [placeholder]="aiLoading ? (strings().label?.aiTranslating || 'Translating...') : ''"
                [style.background]="'var(--p3xr-input-bg)'"
                [style.color]="'var(--p3xr-input-color)'"
-               [style.border-color]="'var(--p3xr-input-border-color, var(--p3xr-border-color))'" />
+               [style.border-color]="aiLoading ? 'var(--mat-sys-primary, var(--p3xr-input-border-color))' : 'var(--p3xr-input-border-color, var(--p3xr-border-color))'" />
         <mat-autocomplete #auto="matAutocomplete"
                           (optionSelected)="onAutocompleteSelected($event)"
                           class="p3xr-console-autocomplete-panel"

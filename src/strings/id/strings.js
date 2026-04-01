@@ -200,6 +200,13 @@ const strings = {
       info: "Jika Anda tidak ingin mengubah properti: sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa, silakan masukkan ID koneksi di properti tersebut agar nilai properti tetap utuh. Jika ingin logika yang sama pada kata sandi simpul, maka masukkan ID simpul pada kata sandi simpul."
     },
     secureFeature: "Jika Anda melihat nilai yang dimulai dengan P3X dan terlihat sama, itu adalah fitur aman. Untuk mengubah pengaturan, cukup ganti pengaturan ini dengan yang kosong atau yang lain dan pengaturan itu akan disimpan. Jika Anda tidak mengubah pengaturan, pengaturan akan tetap seperti yang ada di server.",
+    aiTranslating: "Menerjemahkan...",
+    aiSettings: "Pengaturan AI",
+    aiGroqApiKey: "Kunci API Groq",
+    aiGroqApiKeyInfo: "Opsional. Kunci API Groq sendiri untuk performa lebih baik. Dapatkan kunci gratis dari",
+    aiGroqApiKeyPlaceholder: "gsk_...",
+    aiGroqApiKeySaved: "Kunci API AI tersimpan",
+    aiGroqApiKeyNotSet: "Belum diatur (bawaan server)",
     ssh: {
       on: "SSH aktif",
       off: "SSH mati",

@@ -16,6 +16,7 @@ import { MainCommandService } from '../services/main-command.service';
 import { ConnectionDialogService } from '../dialogs/connection-dialog.service';
 import { createDialogPopupSettings } from '../dialogs/dialog-popup';
 import { TreecontrolSettingsDialogService } from '../dialogs/treecontrol-settings-dialog.service';
+import { AiSettingsDialogService } from '../dialogs/ai-settings-dialog.service';
 import { P3xrAccordionComponent } from '../components/p3xr-accordion.component';
 import { P3xrButtonComponent } from '../components/p3xr-button.component';
 // import { DatePipe } from '../pipes/date.pipe';
@@ -423,6 +424,31 @@ declare const p3xr: any;
 
         <br />
 
+        <!-- AI Settings -->
+        <p3xr-ng-accordion [title]="strings().label?.aiSettings || 'AI Settings'" accordionKey="ai-settings">
+            <div actions>
+                @if (!readonlyConnections && !isGroqApiKeyReadonly()) {
+                    <p3xr-ng-button
+                        (click)="openAiSettings($event)"
+                        [label]="strings().intention?.edit || 'Edit'"
+                        mdIcon="edit">
+                    </p3xr-ng-button>
+                }
+            </div>
+            <div content>
+                <mat-list>
+                    <mat-list-item>
+                        <div class="p3xr-settings-pair-row">
+                            <div class="p3xr-settings-row-label">{{ strings().label?.aiGroqApiKey || 'Groq API Key' }}</div>
+                            <div class="p3xr-settings-row-value" style="font-family: monospace;">{{ getGroqApiKeyDisplay() }}</div>
+                        </div>
+                    </mat-list-item>
+                </mat-list>
+            </div>
+        </p3xr-ng-accordion>
+
+        <br />
+
         <!-- Tree Settings -->
         <p3xr-ng-accordion [title]="strings().form?.treeSettings?.label?.formName || 'Redis Settings'" accordionKey="tree-settings">
             <div actions>
@@ -602,6 +628,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
         @Inject(MainCommandService) private cmd: MainCommandService,
         @Inject(ConnectionDialogService) private connectionDialog: ConnectionDialogService,
         @Inject(TreecontrolSettingsDialogService) private treeSettingsDialog: TreecontrolSettingsDialogService,
+        @Inject(AiSettingsDialogService) private aiSettingsDialog: AiSettingsDialogService,
         @Inject(MatDialog) private dialog: MatDialog,
         @Inject(BreakpointObserver) private breakpointObserver: BreakpointObserver,
         @Inject(ChangeDetectorRef) private cdr: ChangeDetectorRef,
@@ -1012,6 +1039,24 @@ export class SettingsComponent implements OnInit, OnDestroy {
             panelClass: 'p3xr-license-tier-policy-dialog',
             autoFocus: false,
         });
+    }
+
+    // --- AI Settings ---
+
+    isGroqApiKeyReadonly(): boolean {
+        return p3xr.state.cfg?.groqApiKeyReadonly === true;
+    }
+
+    async openAiSettings($event: any): Promise<void> {
+        await this.aiSettingsDialog.show();
+        this.cdr.markForCheck();
+    }
+
+    getGroqApiKeyDisplay(): string {
+        const key = p3xr.state.cfg?.groqApiKey || '';
+        if (!key) return this.strings().label?.aiGroqApiKeyNotSet || 'Not set';
+        if (key.length <= 8) return '****';
+        return `${key.slice(0, 4)}...${key.slice(-4)}`;
     }
 
     // --- Tree Settings ---

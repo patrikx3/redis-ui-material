@@ -200,6 +200,13 @@ const strings = {
       info: "אם אינך רוצה לשנות את המאפיינים של: sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa, אנא הזן את מזהה החיבור במאפיינים אלה כדי לשמור על ערכי הנכס ללא פגע. אם אתה רוצה את אותו היגיון בסיסמת הצומת, הזן את מזהה הצומת בסיסמת הצומת."
     },
     secureFeature: "אם אתה רואה ערך שמתחיל ב-P3X במראה זהה, זוהי תכונה מאובטחת. כדי לשנות את ההגדרות, פשוט החליפו את ההגדרות הללו בריקות או במשהו אחר והן יישמרו. אם לא תשנה את ההגדרות, ההגדרות יישמרו כפי שהן בשרת.",
+    aiTranslating: "מתרגם...",
+    aiSettings: "הגדרות AI",
+    aiGroqApiKey: "מפתח API של Groq",
+    aiGroqApiKeyInfo: "אופציונלי. מפתח API Groq משלך לביצועים טובים יותר. קבל מפתח חינמי מ",
+    aiGroqApiKeyPlaceholder: "gsk_...",
+    aiGroqApiKeySaved: "מפתח API AI נשמר",
+    aiGroqApiKeyNotSet: "לא הוגדר (ברירת מחדל של השרת)",
     ssh: {
       on: "SSH פועל",
       off: "SSH כבוי",

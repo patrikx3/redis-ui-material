@@ -57,8 +57,11 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
     showMonitorPopup = false;
     filteredCommands: string[] = [];
 
+    aiLoading = false;
+
     readonly strings;
 
+    private contentClicked = false;
     private readonly unsubs: Array<() => void> = [];
     private index = 0;
     private monitorPopupTimeout: any = null;
@@ -162,9 +165,27 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
+    onContentMouseDown(event: MouseEvent): void {
+        // Flag that user clicked inside console content (for text selection/copy)
+        // This prevents the blur handler from collapsing the console
+        this.contentClicked = true;
+        setTimeout(() => { this.contentClicked = false; }, 500);
+    }
+
+    private aiExecuting = false;
+
     async actionEnter(): Promise<void> {
         const enter = (this.searchText || '').trim();
-        if (!enter) return;
+        if (!enter || this.aiLoading) return;
+
+        // Explicit ai: prefix — go straight to AI
+        if (/^ai:\s*/i.test(enter)) {
+            const prompt = enter.replace(/^ai:\s*/i, '').trim();
+            if (prompt) {
+                await this.handleAiQuery(prompt, enter);
+            }
+            return;
+        }
 
         let response: any;
         try {
@@ -174,7 +195,15 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
             });
 
             const result = htmlEncode(String(this.redisParser.consoleParse(response.result)));
-            this.outputAppend(`${htmlEncode(enter)}<br/><pre>${result}</pre>`);
+            if (this.aiExecuting) {
+                const trimmed = result.replace(/&nbsp;/g, '').trim();
+                if (trimmed.length > 0 && this.outputEl) {
+                    this.outputEl.insertAdjacentHTML('beforeend', `<span data-index="${this.index++}" class="p3xr-console-ai-result"><pre>${result}</pre><br/></span>`);
+                    this.persistOutputDebounced?.();
+                }
+            } else {
+                this.outputAppend(`${htmlEncode(enter)}<br/><pre>${result}</pre>`);
+            }
 
             if (response.hasOwnProperty('database')) {
                 p3xr.state.currentDatabase = response.database;
@@ -185,7 +214,18 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
             this.searchControl.setValue('');
         } catch (e: any) {
             console.error(e);
-            this.outputAppend(`${htmlEncode(enter)}<br/><pre>${this.i18n.strings().code?.[e.message] || e.message}</pre>`);
+            const errorMsg = e.message || '';
+
+            // If Redis doesn't recognize the command, silently try AI
+            if (this.looksLikeNaturalLanguage(enter, errorMsg)) {
+                const aiSuccess = await this.handleAiQuery(enter, enter);
+                if (aiSuccess) return;
+                // AI also failed — show the original Redis error
+                this.outputAppend(`${htmlEncode(enter)}<br/><pre>${this.i18n.strings().code?.[errorMsg] || errorMsg}</pre>`);
+                return;
+            }
+
+            this.outputAppend(`${htmlEncode(enter)}<br/><pre>${this.i18n.strings().code?.[errorMsg] || errorMsg}</pre>`);
         } finally {
             const history = response?.generatedCommand ?? enter;
             this.updateCommandHistory(history);
@@ -194,6 +234,89 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
             if (this.type === 'quick' || this.embedded) {
                 this.cmd.refresh({ withoutParent: true });
             }
+        }
+    }
+
+    private looksLikeNaturalLanguage(input: string, errorMsg: string): boolean {
+        // Only try AI if Redis returned an unknown/wrong command error
+        const isUnknownCmd = /unknown command|wrong number of arguments|ERR unknown/i.test(errorMsg);
+        if (!isUnknownCmd) return false;
+
+        // Check if input looks like natural language (contains spaces and isn't a known Redis pattern)
+        const words = input.trim().split(/\s+/);
+        if (words.length < 2) return false;
+
+        // If the first word is a known Redis command, it's probably a syntax error, not natural language
+        const firstWord = words[0].toUpperCase();
+        if (p3xr.state.commands?.includes(firstWord)) return false;
+
+        return true;
+    }
+
+    private async handleAiQuery(prompt: string, originalInput: string): Promise<boolean> {
+        this.aiLoading = true;
+
+        try {
+            // Gather RediSearch indexes for context
+            let indexes: string[] = [];
+            try {
+                const indexResponse = await this.socket.request({ action: 'search-list', payload: {} });
+                indexes = indexResponse.data || [];
+            } catch { /* no search module, ignore */ }
+
+            // Gather Redis server info for context
+            const info = p3xr.state.info || {};
+            const redisContext: any = { indexes };
+            if (info.redis_version) redisContext.redisVersion = info.redis_version;
+            if (info.redis_mode) redisContext.redisMode = info.redis_mode;
+            if (info.os) redisContext.os = info.os;
+            if (info.connected_clients) redisContext.connectedClients = info.connected_clients;
+            if (info.used_memory_human) redisContext.usedMemory = info.used_memory_human;
+            if (info.db0 || info.db1) redisContext.databases = Object.keys(info).filter((k: string) => /^db\d+$/.test(k)).map((k: string) => `${k}: ${info[k]}`);
+            if (info.modules) redisContext.modules = info.modules;
+            redisContext.uiLanguage = this.i18n.currentLang();
+
+            const response = await this.socket.request({
+                action: 'ai-redis-query',
+                payload: {
+                    prompt,
+                    context: redisContext,
+                },
+            });
+
+            const command = response.command || '';
+            const explanation = response.explanation || '';
+
+            this.outputAppend(htmlEncode(originalInput));
+            if (command) {
+                let aiLine = `<strong style="color: var(--mat-sys-primary);">AI &rarr;</strong> <code>${htmlEncode(command)}</code>`;
+                if (explanation) {
+                    aiLine += `<br/><span style="opacity: 0.7; font-size: 0.9em;">${htmlEncode(explanation)}</span>`;
+                }
+                this.outputAppend(aiLine);
+            }
+            this.updateCommandHistory(originalInput);
+
+            // Auto-execute the generated command
+            if (command) {
+                this.searchText = command;
+                this.searchControl.setValue(command);
+                this.aiLoading = false;
+                this.aiExecuting = true;
+                try {
+                    await this.actionEnter();
+                } finally {
+                    this.aiExecuting = false;
+                }
+            }
+            return true;
+        } catch (e: any) {
+            console.error('ai-redis-query failed', e);
+            return false;
+        } finally {
+            this.aiLoading = false;
+            this.scrollOutputToBottom();
+            (this.inputEl as HTMLElement)?.focus();
         }
     }
 
@@ -362,10 +485,18 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
                 };
                 this.inputBlurHandler = () => {
                     setTimeout(() => {
+                        // Don't collapse if user clicked inside console content
+                        if (this.contentClicked) return;
                         const active = document.activeElement;
                         if (active?.id === 'p3xr-console-input') return;
                         const root = this.elementRef.nativeElement;
                         if (root && active && root.contains(active)) return;
+                        // Don't deactivate if user is selecting text in the console output
+                        const selection = window.getSelection();
+                        if (selection && selection.toString().length > 0) {
+                            const range = selection.getRangeAt?.(0);
+                            if (range && root?.contains(range.commonAncestorContainer)) return;
+                        }
                         this.emitToAngularJS('p3xr-console-deactivate');
                     }, 0);
                 };
@@ -410,7 +541,6 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
             if (this.outputEl) {
                 this.outputEl.style.display = collapsed ? 'none' : 'block';
             }
-            this.scrollOutputToBottom();
             return;
         }
 
@@ -431,6 +561,8 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
 
     private outputAppend(message: string): void {
         if (!this.outputEl) return;
+        const stripped = (message || '').replace(/<[^>]*>/g, '').replace(/&[a-z]+;/g, '').trim();
+        if (!stripped) return;
         this.outputEl.insertAdjacentHTML('beforeend', `<span data-index="${this.index++}" class="p3xr-console-content-output-item">${message}<br/></span>`);
         this.trimOutputToLimit(consoleOutputMaxBytes);
         this.persistOutputDebounced?.();

@@ -200,6 +200,13 @@ const strings = {
       info: "如果您不想變更下列屬性：sshPassword、sshPrivateKey、password、tlsCrt、tlsKey、tlsCa，請在這些屬性中輸入連接 ID 以保持屬性值不變。如果您希望節點密碼具有相同的邏輯，則在節點密碼中輸入節點 ID。"
     },
     secureFeature: "如果您看到以 P3X 開頭的值並且看起來相似，則這是一項安全功能。要更改設置，只需將這些設置替換為空或其他內容即可保存它們。如果您不更改設置，這些設置將保留在伺服器上的原樣。",
+    aiTranslating: "翻譯中...",
+    aiSettings: "AI 設定",
+    aiGroqApiKey: "Groq API 金鑰",
+    aiGroqApiKeyInfo: "選填。使用自己的 Groq API 金鑰以獲得更好效能。免費取得金鑰",
+    aiGroqApiKeyPlaceholder: "gsk_...",
+    aiGroqApiKeySaved: "AI API 金鑰已儲存",
+    aiGroqApiKeyNotSet: "未設定（使用伺服器預設）",
     ssh: {
       on: "SSH 開啟",
       off: "SSH 關閉",

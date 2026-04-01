@@ -18,17 +18,17 @@
 
                 <mat-form-field class="md-block">
                     <mat-label>{{ strings().page?.search?.query || 'Query' }}</mat-label>
-                    <input matInput [(ngModel)]="query" (keydown.enter)="offset = 0; searchAndRefreshInfo()" />
+                    <input matInput [(ngModel)]="query" (keydown.enter)="offset = 0; handleSearchEnter()" [disabled]="aiLoading" />
                 </mat-form-field>
 
                 <div style="margin-top: 8px; text-align: right;">
                     @if (isGtSm) {
-                        <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="searchAndRefreshInfo()">
+                        <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="handleSearchEnter()" [disabled]="aiLoading">
                             <mat-icon>search</mat-icon>
-                            <span>{{ strings().page?.search?.title || 'Search' }}</span>
+                            <span>{{ aiLoading ? (strings().label?.aiTranslating || 'Translating...') : (strings().page?.search?.title || 'Search') }}</span>
                         </button>
                     } @else {
-                        <button mat-mini-fab class="btn-primary" type="button" (click)="searchAndRefreshInfo()"
+                        <button mat-mini-fab class="btn-primary" type="button" (click)="handleSearchEnter()" [disabled]="aiLoading"
                                 [matTooltip]="strings().page?.search?.title || 'Search'" matTooltipPosition="above">
                             <mat-icon>search</mat-icon>
                         </button>

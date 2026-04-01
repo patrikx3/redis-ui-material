@@ -193,7 +193,7 @@ const strings = {
     getKey: "Učitavanje Redis ključa i povezanih podataka ...",
     jsonViewShow: "Prikaži JSON",
     jsonViewEditor: "Uredi JSON",
-    quickConsole: "Brza konzola"
+    quickConsole: "Brza konzola",
   },
   label: {
     id: {
@@ -202,6 +202,13 @@ const strings = {
       info: "Ako ne želite promijeniti svojstva: sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa, molimo unesite ID konekcije u ta svojstva kako biste zadržali vrijednosti svojstava. Ako želite istu logiku u lozinci čvora, unesite ID čvora u lozinku čvora."
     },
     secureFeature: 'Ako vidite vrijednost koja počinje sa P3X i izgleda isto, to je sigurnosna funkcija. Da promijenite postavke, zamijenite ove postavke sa praznim ili nečim drugim i bit će sačuvane. Ako ne mijenjate postavke, postavke će ostati kakve jesu na serveru.',
+    aiTranslating: "Translating...",
+    aiSettings: "AI Postavke",
+    aiGroqApiKey: "Groq API ključ",
+    aiGroqApiKeyInfo: "Opcionalno. Vlastiti Groq API ključ za bolje performanse. Nabavite besplatni ključ na",
+    aiGroqApiKeyPlaceholder: "gsk_...",
+    aiGroqApiKeySaved: "AI API ključ sačuvan",
+    aiGroqApiKeyNotSet: "Nije postavljeno (zadano servera)",
     ssh: {
       on: 'SSH uključen',
       off: 'SSH isključen',

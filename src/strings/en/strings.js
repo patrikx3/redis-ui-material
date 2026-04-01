@@ -193,7 +193,7 @@ const strings = {
     getKey: "Loading Redis key and associated data ...",
     jsonViewShow: "Display JSON",
     jsonViewEditor: "Edit JSON",
-    quickConsole: "Quick Console"
+    quickConsole: "Quick Console",
   },
   label: {
     id: {
@@ -202,6 +202,13 @@ const strings = {
       info: "If you do not wan't to change the properties of: sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa, please enter the ID of the connection in those propertes to keep the property values intact. If you want the same logic in the node password, then enter the node ID in the node password."
     },
     secureFeature: 'If you see a value that starts with a P3X an look like the same, it is a secure feature. To change the settings, just replace these settings with empty or something else and they will be saved. If you do not change the settings, the settings will be kept as they are on the server.',
+    aiTranslating: "Translating...",
+    aiSettings: "AI Settings",
+    aiGroqApiKey: "Groq API Key",
+    aiGroqApiKeyInfo: "Optional. Your own Groq API key for better performance. Get a free key from",
+    aiGroqApiKeyPlaceholder: "gsk_...",
+    aiGroqApiKeySaved: "AI API key saved",
+    aiGroqApiKeyNotSet: "Not set (using server default)",
     ssh: {
       on: 'SSH on',
       off: 'SSH off',

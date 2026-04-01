@@ -200,6 +200,13 @@ const strings = {
       info: "Hvis du ikke ønsker at ændre egenskaberne for: sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa, skal du indtaste forbindelsens ID i disse egenskaber for at holde egenskabsværdierne intakte. Hvis du ønsker den samme logik i node-adgangskoden, skal du indtaste node-id'et i node-adgangskoden."
     },
     secureFeature: "Hvis du ser en værdi, der starter med en P3X og ligner den samme, er det en sikker funktion. For at ændre indstillingerne skal du bare erstatte disse indstillinger med tomme eller noget andet, og de vil blive gemt. Hvis du ikke ændrer indstillingerne, bevares indstillingerne, som de er på serveren.",
+    aiTranslating: "Oversætter...",
+    aiSettings: "AI-indstillinger",
+    aiGroqApiKey: "Groq API-nøgle",
+    aiGroqApiKeyInfo: "Valgfrit. Egen Groq API-nøgle for bedre ydeevne. Få en gratis nøgle på",
+    aiGroqApiKeyPlaceholder: "gsk_...",
+    aiGroqApiKeySaved: "AI API-nøgle gemt",
+    aiGroqApiKeyNotSet: "Ikke indstillet (serverstandard)",
     ssh: {
       on: "SSH tændt",
       off: "SSH slukket",

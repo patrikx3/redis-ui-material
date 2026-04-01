@@ -189,7 +189,7 @@ const strings = {
     getKey: "Laddar Redis-nyckel och tillhörande data ...",
     jsonViewShow: "Visa JSON",
     jsonViewEditor: "Redigera JSON",
-    quickConsole: "Snabbkonsol"
+    quickConsole: "Snabbkonsol",
   },
   label: {
     id: {
@@ -198,6 +198,13 @@ const strings = {
       info: "Om du inte vill ändra egenskaperna för: sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa, ange anslutningens ID i dessa egenskaper för att behålla värdena. Om du vill ha samma logik för nodlösenordet, ange nod-ID:t i nodlösenordet."
     },
     secureFeature: 'Om du ser ett värde som börjar med P3X och ser likadant ut, är det en säkerhetsfunktion. För att ändra inställningarna, ersätt dem med tomt eller något annat så sparas de. Om du inte ändrar inställningarna behålls de som de är på servern.',
+    aiTranslating: "Översätter...",
+    aiSettings: "AI-inställningar",
+    aiGroqApiKey: "Groq API-nyckel",
+    aiGroqApiKeyInfo: "Valfritt. Egen Groq API-nyckel för bättre prestanda. Skaffa en gratis nyckel på",
+    aiGroqApiKeyPlaceholder: "gsk_...",
+    aiGroqApiKeySaved: "AI API-nyckel sparad",
+    aiGroqApiKeyNotSet: "Ej inställd (serverstandard)",
     ssh: {
       on: 'SSH på',
       off: 'SSH av',

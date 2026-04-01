@@ -200,6 +200,13 @@ const strings = {
       info: "Jei nenorite keisti ypatybių: sshPassword, sshPrivateKey, slaptažodžio, tlsCrt, tlsKey, tlsCa, įveskite ryšio ID šiose ypatybėse, kad ypatybių reikšmės liktų nepakitusios. Jei norite, kad mazgo slaptažodis būtų tokia pati, tada įveskite mazgo ID į mazgo slaptažodį."
     },
     secureFeature: "Jei matote reikšmę, kuri prasideda P3X ir atrodo taip pat, tai yra saugi funkcija. Norėdami pakeisti nustatymus, tiesiog pakeiskite ��iuos nustatymus tuščiais ar kažkuo kitu ir jie bus išsaugoti. Jei nustatymų nepakeisite, nustatymai išliks tokie, kokie yra serveryje.",
+    aiTranslating: "Translating...",
+    aiSettings: "AI nustatymai",
+    aiGroqApiKey: "Groq API raktas",
+    aiGroqApiKeyInfo: "Neprivaloma. Savo Groq API raktas geresniam veikimui. Gaukite nemokamą raktą",
+    aiGroqApiKeyPlaceholder: "gsk_...",
+    aiGroqApiKeySaved: "AI API raktas išsaugotas",
+    aiGroqApiKeyNotSet: "Nenustatyta (serverio numatytasis)",
     ssh: {
       on: "SSH įjungta",
       off: "SSH išjungtas",

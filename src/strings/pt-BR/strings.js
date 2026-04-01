@@ -200,6 +200,13 @@ const strings = {
       info: "Se você não deseja alterar as propriedades de: sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa, insira o ID da conexão nessas propriedades para manter os valores das propriedades intactos. Se desejar a mesma lógica na senha do nó, insira o ID do nó na senha do nó."
     },
     secureFeature: "Se você vir um valor que começa com P3X e tem a mesma aparência, é um recurso seguro. Para alterar as configurações, basta substituir essas configurações por vazias ou qualquer outra coisa e elas serão salvas. Se você não alterar as configurações, elas serão mantidas como estão no servidor.",
+    aiTranslating: "Traduzindo...",
+    aiSettings: "Configurações de IA",
+    aiGroqApiKey: "Chave API Groq",
+    aiGroqApiKeyInfo: "Opcional. Sua própria chave API Groq para melhor desempenho. Obtenha uma chave gratuita em",
+    aiGroqApiKeyPlaceholder: "gsk_...",
+    aiGroqApiKeySaved: "Chave API IA salva",
+    aiGroqApiKeyNotSet: "Não definido (padrão do servidor)",
     ssh: {
       on: "SSH ativado",
       off: "SSH desativado",

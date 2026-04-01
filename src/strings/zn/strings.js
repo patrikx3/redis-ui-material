@@ -189,7 +189,7 @@ const strings = {
     getKey: "加载Redis键及相关数据...",
     jsonViewShow: "显示 JSON 树",
     jsonViewEditor: "编辑JSON",
-    quickConsole: "快的"
+    quickConsole: "快的",
   },
   label: {
     id: {
@@ -198,6 +198,13 @@ const strings = {
       info: "如果您不想更改以下属性：sshPassword、sshPrivateKey、password、tlsCrt、tlsKey、tlsCa，请在这些属性中输入连接 ID 以保持属性值不变。 如果您希望节点密码具有相同的逻辑，则在节点密码中输入节点 ID。"
     },
     secureFeature: '如果您看到以 P3X 开头的值并且看起来相似，则这是一项安全功能。 要更改设置，只需将这些设置替换为空或其他内容即可保存它们。 如果您不更改设置，这些设置将保留在服务器上的原样。',
+    aiTranslating: "翻译中...",
+    aiSettings: "AI 设置",
+    aiGroqApiKey: "Groq API 密钥",
+    aiGroqApiKeyInfo: "可选。使用自己的 Groq API 密钥获得更好性能。免费获取密钥",
+    aiGroqApiKeyPlaceholder: "gsk_...",
+    aiGroqApiKeySaved: "AI API 密钥已保存",
+    aiGroqApiKeyNotSet: "未设置（使用服务器默认）",
     ssh: {
       on: 'SSH 开启',
       off: 'SSH 关闭',

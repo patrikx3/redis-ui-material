@@ -50,6 +50,8 @@ export class SearchComponent implements OnInit, OnDestroy {
     isReadonly = false;
     isGtSm = true;
 
+    aiLoading = false;
+
     // Index creation
     newIndexName = '';
     newIndexPrefix = '';
@@ -222,6 +224,62 @@ export class SearchComponent implements OnInit, OnDestroy {
             await this.loadIndexes();
         } catch (e) {
             this.common.generalHandleError(e);
+        }
+    }
+
+    async handleSearchEnter(): Promise<void> {
+        const q = (this.query || '').trim();
+
+        // Explicit ai: prefix
+        if (/^ai:\s*/i.test(q)) {
+            await this.handleAiQuery(q.replace(/^ai:\s*/i, '').trim());
+            return;
+        }
+
+        // Try normal search first
+        try {
+            await this.searchAndRefreshInfo();
+        } catch (e: any) {
+            // If search failed and query looks like natural language, try AI
+            if (q.length > 2 && q !== '*' && /\s/.test(q)) {
+                await this.handleAiQuery(q);
+            }
+        }
+    }
+
+    private async handleAiQuery(prompt: string): Promise<void> {
+        if (!prompt) return;
+
+        this.aiLoading = true;
+        this.cdr.markForCheck();
+        try {
+            let indexSchema: any = undefined;
+            if (this.selectedIndex && this.indexInfo) {
+                indexSchema = this.indexInfo;
+            }
+
+            const response = await this.socket.request({
+                action: 'ai-redis-query',
+                payload: {
+                    prompt,
+                    context: {
+                        indexes: this.indexes,
+                        schema: indexSchema,
+                    },
+                },
+            });
+
+            this.query = response.command || '*';
+            if (response.explanation) {
+                this.common.toast({ message: response.explanation });
+            }
+            this.offset = 0;
+            await this.searchAndRefreshInfo();
+        } catch (e: any) {
+            this.common.generalHandleError(e);
+        } finally {
+            this.aiLoading = false;
+            this.cdr.markForCheck();
         }
     }
 

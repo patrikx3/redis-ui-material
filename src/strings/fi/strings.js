@@ -200,6 +200,13 @@ const strings = {
       info: "Jos et halua muuttaa seuraavia ominaisuuksia: sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa, kirjoita yhteyden tunnus näihin ominaisuuksiin, jotta ominaisuusarvot pysyvät ennallaan. Jos haluat saman logiikan solmun salasanaan, kirjoita solmun tunnus solmun salasanaan."
     },
     secureFeature: "Jos näet arvon, joka alkaa P3X:llä ja näyttää samalta, se on turvallinen ominaisuus. Jos haluat muuttaa asetuksia, korvaa nämä asetukset tyhjällä tai jollain muulla, ja ne tallennetaan. Jos et muuta asetuksia, asetukset säilytetään sellaisina kuin ne ovat palvelimella.",
+    aiTranslating: "Käännetään...",
+    aiSettings: "AI-asetukset",
+    aiGroqApiKey: "Groq API-avain",
+    aiGroqApiKeyInfo: "Valinnainen. Oma Groq API-avain parempaan suorituskykyyn. Hanki ilmainen avain",
+    aiGroqApiKeyPlaceholder: "gsk_...",
+    aiGroqApiKeySaved: "AI API-avain tallennettu",
+    aiGroqApiKeyNotSet: "Ei asetettu (palvelimen oletus)",
     ssh: {
       on: "SSH päällä",
       off: "SSH pois päältä",

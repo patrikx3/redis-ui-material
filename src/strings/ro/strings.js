@@ -191,7 +191,7 @@ const strings = {
     getKey: "Se incarca cheia Redis si datele asociate ...",
     jsonViewShow: "Afisare JSON",
     jsonViewEditor: "Editare JSON",
-    quickConsole: "Consola rapida"
+    quickConsole: "Consola rapida",
   },
   label: {
     id: {
@@ -200,6 +200,13 @@ const strings = {
       info: "Daca nu doriti sa schimbati proprietatile: sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa, va rugam introduceti ID-ul conexiunii in acele proprietati pentru a pastra valorile intacte. Daca doriti aceeasi logica pentru parola nodului, introduceti ID-ul nodului in parola nodului."
     },
     secureFeature: 'Daca vedeti o valoare care incepe cu P3X si arata la fel, este o functie de securitate. Pentru a schimba setarile, inlocuiti aceste setari cu gol sau altceva si vor fi salvate. Daca nu schimbati setarile, acestea vor ramane asa cum sunt pe server.',
+    aiTranslating: "Se traduce...",
+    aiSettings: "Setări AI",
+    aiGroqApiKey: "Cheie API Groq",
+    aiGroqApiKeyInfo: "Opțional. Cheia API Groq proprie pentru performanță mai bună. Obțineți o cheie gratuită de la",
+    aiGroqApiKeyPlaceholder: "gsk_...",
+    aiGroqApiKeySaved: "Cheie API AI salvată",
+    aiGroqApiKeyNotSet: "Nesetat (implicit server)",
     ssh: {
       on: 'SSH activat',
       off: 'SSH dezactivat',

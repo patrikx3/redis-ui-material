@@ -193,7 +193,7 @@ const strings = {
     getKey: "Inapakia ufunguo wa Redis na data inayohusiana ...",
     jsonViewShow: "Onyesha JSON",
     jsonViewEditor: "Hariri JSON",
-    quickConsole: "Konsoli ya Haraka"
+    quickConsole: "Konsoli ya Haraka",
   },
   label: {
     id: {
@@ -202,6 +202,13 @@ const strings = {
       info: "Ikiwa hutaki kubadilisha mali za: sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa, tafadhali ingiza Kitambulisho cha muunganisho kwenye mali hizo ili kuhifadhi thamani za mali. Ikiwa unataka mantiki sawa katika nenosiri la nodi, basi ingiza Kitambulisho cha nodi kwenye nenosiri la nodi."
     },
     secureFeature: 'Ikiwa unaona thamani inayoanza na P3X na inaonekana sawa, ni kipengele cha usalama. Ili kubadilisha mipangilio, badilisha mipangilio hii na tupu au kitu kingine na itahifadhiwa. Ikiwa haubadilishi mipangilio, mipangilio itabaki kama ilivyo kwenye seva.',
+    aiTranslating: "Translating...",
+    aiSettings: "Mipangilio ya AI",
+    aiGroqApiKey: "Ufunguo wa API Groq",
+    aiGroqApiKeyInfo: "Hiari. Ufunguo wako wa API Groq kwa utendaji bora. Pata ufunguo bila malipo kutoka",
+    aiGroqApiKeyPlaceholder: "gsk_...",
+    aiGroqApiKeySaved: "Ufunguo wa API AI umehifadhiwa",
+    aiGroqApiKeyNotSet: "Haijawekwa (chaguo-msingi la seva)",
     ssh: {
       on: 'SSH imewashwa',
       off: 'SSH imezimwa',

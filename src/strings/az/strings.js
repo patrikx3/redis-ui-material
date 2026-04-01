@@ -200,6 +200,13 @@ const strings = {
       info: "Əgər aşağıdakıların xassələrini dəyişmək istəmirsinizsə: sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa, xassə d��yərlərinin toxunulmazlığını qorumaq üçün lütfən, əlaqənin identifikatorunu həmin xüsusiyyətlərə daxil edin. Əgər qovşaq parolunda eyni məntiqin olmasını istəyirsinizsə, onda node parolunda node ID-ni daxil edin."
     },
     secureFeature: "P3X ilə başlayan dəyərin eyni göründüyünü görsəniz, bu təhlükəsiz xüsusiyyətdir. Parametrləri dəyişdirmək üçün sadəcə bu parametrləri boş və ya başqa bir şeylə əvəz edin və onlar yadda saxlanılacaq. Parametrləri dəyişdirməsəniz, parametrlər serverdə olduğu kimi saxlanılacaq.",
+    aiTranslating: "Translating...",
+    aiSettings: "AI Parametrlər",
+    aiGroqApiKey: "Groq API açarı",
+    aiGroqApiKeyInfo: "İstəyə bağlı. Daha yaxşı performans üçün öz Groq API açarınız. Pulsuz açar əldə edin",
+    aiGroqApiKeyPlaceholder: "gsk_...",
+    aiGroqApiKeySaved: "AI API açarı saxlanıldı",
+    aiGroqApiKeyNotSet: "Təyin edilməyib (server standartı)",
     ssh: {
       on: "SSH aktivdir",
       off: "SSH deaktivdir",

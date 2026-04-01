@@ -200,6 +200,13 @@ const strings = {
       info: "Kui te ei soovi muuta atribuute: sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa, sisestage atribuutide väärtuste muutmiseks nendesse atribuutidesse ühenduse ID. Kui soovid sõlme paroolis sama loogikat, siis sisesta sõlme paroolisse sõlme ID."
     },
     secureFeature: "Kui näete väärtust, mis algab P3X-iga ja näeb välja sama, on see turvaline funktsioon. Seadete muutmiseks lihtsalt asenda need sätted tühjade või millegi muuga ja need salvestatakse. Kui te sätteid ei muuda, säilitatakse sätted serveris nii, nagu need on.",
+    aiTranslating: "Translating...",
+    aiSettings: "AI seaded",
+    aiGroqApiKey: "Groq API võti",
+    aiGroqApiKeyInfo: "Valikuline. Oma Groq API võti parema jõudluse jaoks. Hankige tasuta võti",
+    aiGroqApiKeyPlaceholder: "gsk_...",
+    aiGroqApiKeySaved: "AI API võti salvestatud",
+    aiGroqApiKeyNotSet: "Pole seatud (serveri vaikeväärtus)",
     ssh: {
       on: "SSH sisse lülitatud",
       off: "SSH väljas",

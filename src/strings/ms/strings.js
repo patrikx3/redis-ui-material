@@ -200,6 +200,13 @@ const strings = {
       info: "Jika anda tidak mahu menukar sifat-sifat: sshPassword, sshPrivateKey, kata laluan, tlsCrt, tlsKey, tlsCa, sila masukkan ID sambungan dalam sifat-sifat tersebut untuk mengekalkan nilai harta benda tersebut. Jika anda mahukan logik yang sama dalam kata laluan nod, kemudian masukkan ID nod dalam kata laluan nod."
     },
     secureFeature: "Jika anda melihat nilai yang bermula dengan P3X rupa yang sama, ia adalah ciri selamat. Untuk menukar tetapan, cuma gantikan tetapan ini dengan kosong atau sesuatu yang lain dan ia akan disimpan. Jika anda tidak menukar tetapan, tetapan akan disimpan kerana ia berada pada pelayan.",
+    aiTranslating: "Translating...",
+    aiSettings: "Tetapan AI",
+    aiGroqApiKey: "Kunci API Groq",
+    aiGroqApiKeyInfo: "Pilihan. Kunci API Groq sendiri untuk prestasi lebih baik. Dapatkan kunci percuma dari",
+    aiGroqApiKeyPlaceholder: "gsk_...",
+    aiGroqApiKeySaved: "Kunci API AI disimpan",
+    aiGroqApiKeyNotSet: "Tidak ditetapkan (lalai pelayan)",
     ssh: {
       on: "SSH dihidupkan",
       off: "SSH dimatikan",

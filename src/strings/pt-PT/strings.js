@@ -191,7 +191,7 @@ const strings = {
     getKey: "A carregar a chave Redis e dados associados ...",
     jsonViewShow: "Mostrar JSON",
     jsonViewEditor: "Editar JSON",
-    quickConsole: "Consola Rápida"
+    quickConsole: "Consola Rápida",
   },
   label: {
     id: {
@@ -200,6 +200,13 @@ const strings = {
       info: "Se não pretende alterar as propriedades: sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa, introduza o ID da ligação nessas propriedades para manter os valores intactos. Se pretende a mesma lógica para a palavra-passe do nó, introduza o ID do nó na palavra-passe do nó."
     },
     secureFeature: 'Se vir um valor que começa com P3X e parece igual, é uma funcionalidade de segurança. Para alterar as definições, basta substituí-las por valores vazios ou por outra coisa e serão guardadas. Se não alterar as definições, estas mantêm-se como estão no servidor.',
+    aiTranslating: "A traduzir...",
+    aiSettings: "Definições de IA",
+    aiGroqApiKey: "Chave API Groq",
+    aiGroqApiKeyInfo: "Opcional. A sua própria chave API Groq para melhor desempenho. Obtenha uma chave gratuita em",
+    aiGroqApiKeyPlaceholder: "gsk_...",
+    aiGroqApiKeySaved: "Chave API IA guardada",
+    aiGroqApiKeyNotSet: "Não definido (predefinição do servidor)",
     ssh: {
       on: 'SSH ativado',
       off: 'SSH desativado',

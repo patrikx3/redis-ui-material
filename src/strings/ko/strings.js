@@ -200,6 +200,13 @@ const strings = {
       info: "sshPassword, sshPrivateKey, 비밀번호, tlsCrt, tlsKey, tlsCa 속성을 변경하지 않으려면 해당 속성에 연결 ID를 입력하여 속성 값을 그대로 유지하세요. 노드 비밀번호에 동일한 논리를 적용하려면 노드 비밀번호에 노드 ID를 입력하세요."
     },
     secureFeature: "P3X로 시작하는 값이 동일하게 보이면 이는 보안 기능입니다. 설정을 변경하려면 해당 설정을 ��어 있거나 다른 것으로 바꾸면 저장됩니다. 설정을 변경하지 않으면 설정이 서버에 있는 그대로 유지됩니다.",
+    aiTranslating: "번역 중...",
+    aiSettings: "AI 설정",
+    aiGroqApiKey: "Groq API 키",
+    aiGroqApiKeyInfo: "선택사항. 더 나은 성능을 위한 자체 Groq API 키. 무료 키 받기",
+    aiGroqApiKeyPlaceholder: "gsk_...",
+    aiGroqApiKeySaved: "AI API 키 저장됨",
+    aiGroqApiKeyNotSet: "미설정 (서버 기본값)",
     ssh: {
       on: "SSH 켜짐",
       off: "SSH 꺼짐",

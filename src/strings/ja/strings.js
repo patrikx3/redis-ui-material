@@ -189,7 +189,7 @@ const strings = {
     getKey: "Redisキーと関連データを読み込み中 ...",
     jsonViewShow: "JSONを表示",
     jsonViewEditor: "JSONを編集",
-    quickConsole: "クイックコンソール"
+    quickConsole: "クイックコンソール",
   },
   label: {
     id: {
@@ -198,6 +198,13 @@ const strings = {
       info: "sshPassword、sshPrivateKey、password、tlsCrt、tlsKey、tlsCaのプロパティを変更したくない場合は、それらのプロパティに接続IDを入力して値を維持してください。ノードパスワードでも同じロジックを使用する場合は、ノードパスワードにノードIDを入力してください。"
     },
     secureFeature: 'P3Xで始まる同じように見える値がある場合、それはセキュリティ機能です。設定を変更するには、これらの設定を空または他の値に置き換えると保存されます。設定を変更しない場合、サーバー上のまま維持されます。',
+    aiTranslating: "翻訳中...",
+    aiSettings: "AI 設定",
+    aiGroqApiKey: "Groq API キー",
+    aiGroqApiKeyInfo: "任意。自分のGroq APIキーでパフォーマンス向上。無料キーの取得先",
+    aiGroqApiKeyPlaceholder: "gsk_...",
+    aiGroqApiKeySaved: "AI APIキーを保存しました",
+    aiGroqApiKeyNotSet: "未設定（サーバーデフォルト）",
     ssh: {
       on: 'SSH オン',
       off: 'SSH オフ',

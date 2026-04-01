@@ -189,7 +189,7 @@ const strings = {
     getKey: "Redis anahtarı ve ilgili veriler yükleniyor ...",
     jsonViewShow: "JSON Görüntüle",
     jsonViewEditor: "JSON Düzenle",
-    quickConsole: "Hızlı Konsol"
+    quickConsole: "Hızlı Konsol",
   },
   label: {
     id: {
@@ -198,6 +198,13 @@ const strings = {
       info: "sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa özelliklerini değiştirmek istemiyorsanız, değerleri korumak için bu özelliklere bağlantı ID'sini girin. Aynı mantığı düğüm şifresi için istiyorsanız, düğüm şifresine düğüm ID'sini girin."
     },
     secureFeature: 'P3X ile başlayan ve aynı görünen bir değer görüyorsanız, bu bir güvenlik özelliğidir. Ayarları değiştirmek için bunları boş veya başka bir şeyle değiştirin, kaydedilecektir. Ayarları değiştirmezseniz sunucudaki haliyle korunacaktır.',
+    aiTranslating: "Çevriliyor...",
+    aiSettings: "AI Ayarları",
+    aiGroqApiKey: "Groq API Anahtarı",
+    aiGroqApiKeyInfo: "İsteğe bağlı. Daha iyi performans için kendi Groq API anahtarınız. Ücretsiz anahtar alın",
+    aiGroqApiKeyPlaceholder: "gsk_...",
+    aiGroqApiKeySaved: "AI API anahtarı kaydedildi",
+    aiGroqApiKeyNotSet: "Ayarlanmamış (sunucu varsayılanı)",
     ssh: {
       on: 'SSH açık',
       off: 'SSH kapalı',

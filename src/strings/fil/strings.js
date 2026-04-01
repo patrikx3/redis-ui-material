@@ -200,6 +200,13 @@ const strings = {
       info: "Kung ayaw mong baguhin ang mga katangian ng: sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa, mangyaring ilagay ang ID ng koneksyon sa mga property na iyon upang mapanatiling buo ang mga value ng property. Kung gusto mo ng parehong logic sa node password, pagkatapos ay ilagay ang node ID sa node password."
     },
     secureFeature: "Kung makakita ka ng isang halaga na nagsisimula sa isang P3X na katulad ng hitsura, ito ay isang secure na tampok. Upang baguhin ang mga setting, palitan lamang ang mga setting na ito ng walang laman o iba pa at mase-save ang mga ito. Kung hindi mo babaguhin ang mga setting, ang mga setting ay pananatilihin habang ang mga ito ay nasa server.",
+    aiTranslating: "Translating...",
+    aiSettings: "Mga Setting ng AI",
+    aiGroqApiKey: "Groq API Key",
+    aiGroqApiKeyInfo: "Opsyonal. Sariling Groq API key para sa mas magandang performance. Kumuha ng libreng key mula sa",
+    aiGroqApiKeyPlaceholder: "gsk_...",
+    aiGroqApiKeySaved: "Na-save ang AI API key",
+    aiGroqApiKeyNotSet: "Hindi nakatakda (server default)",
     ssh: {
       on: "Naka-on ang SSH",
       off: "Naka-off ang SSH",

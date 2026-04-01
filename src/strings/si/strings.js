@@ -193,7 +193,7 @@ const strings = {
     getKey: "Redis යතුර සහ ආශ්\u200dරිත දත්ත පූරණය වෙමින් ...",
     jsonViewShow: "JSON පෙන්වන්න",
     jsonViewEditor: "JSON සංස්කරණය",
-    quickConsole: "ඉක්මන් කොන්සෝලය"
+    quickConsole: "ඉක්මන් කොන්සෝලය",
   },
   label: {
     id: {
@@ -202,6 +202,13 @@ const strings = {
       info: "ඔබට sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa හි ගුණාංග වෙනස් කිරීමට අවශ්\u200dය නැතිනම්, කරුණාකර ගුණාංග අගයන් නොවෙනස්ව තැබීමට එම ගුණාංගවල සම්බන්ධතා ID ඇතුළත් කරන්න. නෝඩ මුරපදයේ එම තර්කනයම අවශ්\u200dය නම්, නෝඩ මුරපදයේ නෝඩ ID ඇතුළත් කරන්න."
     },
     secureFeature: 'ඔබට P3X සමඟ ආරම්භ වන අගයක් පෙනෙන්නේ නම් සහ සියල්ල සමානව පෙනේ නම්, එය ආරක්ෂිත විශේෂාංගයකි. සැකසුම් වෙනස් කිරීමට, මෙම සැකසුම් හිස් හෝ වෙනත් දෙයකින් ආදේශ කරන්න, ඒවා සුරැකෙනු ඇත. ඔබ සැකසුම් වෙනස් නොකරන්නේ නම්, සැකසුම් සේවාදායකයේ ඇති ආකාරයටම පවතිනු ඇත.',
+    aiTranslating: "Translating...",
+    aiSettings: "AI සැකසුම්",
+    aiGroqApiKey: "Groq API යතුර",
+    aiGroqApiKeyInfo: "විකල්ප. වඩා හොඳ ක්‍රියාකාරීත්වය සඳහා ඔබේම Groq API යතුර. නොමිලේ යතුරක් ලබා ගන්න",
+    aiGroqApiKeyPlaceholder: "gsk_...",
+    aiGroqApiKeySaved: "AI API යතුර සුරකින ලදී",
+    aiGroqApiKeyNotSet: "සකසා නැත (සේවාදායක පෙරනිමිය)",
     ssh: {
       on: 'SSH සක්\u200dරීයයි',
       off: 'SSH අක්\u200dරීයයි',

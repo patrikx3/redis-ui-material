@@ -189,7 +189,7 @@ const strings = {
     getKey: "Redis kulcs és kapcsolódó adatok betöltése ...",
     jsonViewShow: "JSON megjelenítése",
     jsonViewEditor: "JSON szerkesztése",
-    quickConsole: "Gyors Konzol"
+    quickConsole: "Gyors Konzol",
   },
   label: {
     id: {
@@ -198,6 +198,13 @@ const strings = {
       info: "Ha nem szeretné módosítani a következő tulajdonságokat: sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa, kérjük adja meg a kapcsolat azonosítóját ezekben a tulajdonságokban az értékek megtartásához. Ha ugyanezt a logikát szeretné a csomópont jelszónál, akkor adja meg a csomópont azonosítóját a csomópont jelszóban."
     },
     secureFeature: 'Ha olyan értéket lát, ami P3X-szel kezdődik és hasonlónak tűnik, az egy biztonsági funkció. A beállítások módosításához cserélje ki ezeket üresre vagy valami másra, és mentésre kerülnek. Ha nem módosítja a beállításokat, azok a szerveren maradnak.',
+    aiTranslating: "Fordítás...",
+    aiSettings: "AI Beállítások",
+    aiGroqApiKey: "Groq API Kulcs",
+    aiGroqApiKeyInfo: "Opcionális. Saját Groq API kulcs a jobb teljesítményért. Ingyenes kulcs beszerzése:",
+    aiGroqApiKeyPlaceholder: "gsk_...",
+    aiGroqApiKeySaved: "AI API kulcs mentve",
+    aiGroqApiKeyNotSet: "Nincs beállítva (szerver alapértelmezett)",
     ssh: {
       on: 'SSH be',
       off: 'SSH ki',

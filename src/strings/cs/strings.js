@@ -193,7 +193,7 @@ const strings = {
     getKey: "Načítání Redis klíče a přidružených dat ...",
     jsonViewShow: "Zobrazit JSON",
     jsonViewEditor: "Upravit JSON",
-    quickConsole: "Rychlá konzole"
+    quickConsole: "Rychlá konzole",
   },
   label: {
     id: {
@@ -202,6 +202,13 @@ const strings = {
       info: "Pokud nechcete měnit vlastnosti: sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa, zadejte prosím ID připojení do těchto vlastností, aby se hodnoty zachovaly. Pokud chcete stejnou logiku pro heslo uzlu, zadejte ID uzlu do hesla uzlu."
     },
     secureFeature: 'Pokud vidíte hodnotu, která začíná na P3X a vypadá stejně, jedná se o bezpečnostní funkci. Chcete-li změnit nastavení, jednoduše nahraďte tato nastavení prázdnými nebo něčím jiným a budou uložena. Pokud nastavení nezměníte, zůstanou zachována tak, jak jsou na serveru.',
+    aiTranslating: "Překládání...",
+    aiSettings: "Nastavení AI",
+    aiGroqApiKey: "Groq API klíč",
+    aiGroqApiKeyInfo: "Volitelné. Vlastní Groq API klíč pro lepší výkon. Získejte bezplatný klíč na",
+    aiGroqApiKeyPlaceholder: "gsk_...",
+    aiGroqApiKeySaved: "AI API klíč uložen",
+    aiGroqApiKeyNotSet: "Nenastaveno (výchozí serveru)",
     ssh: {
       on: 'SSH zapnuto',
       off: 'SSH vypnuto',

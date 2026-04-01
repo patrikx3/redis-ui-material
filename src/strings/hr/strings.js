@@ -200,6 +200,13 @@ const strings = {
       info: "Ako ne želite promijeniti svojstva: sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa, unesite ID veze u ta svojstva kako biste zadržali vrijednosti svojstava netaknutima. Ako želite istu logiku u zaporci čvora, tada unesite ID čvora u zaporku čvora."
     },
     secureFeature: "Ako vidite vrijednost koja počinje s P3X i izgleda isto, to je sigurna značajka. Da biste promijenili postavke, samo zamijenite ove postavke praznim ili nečim drugim i one će biti spremljene. Ako ne promijenite postavke, postavke će se zadržati onakve kakve jesu na poslužitelju.",
+    aiTranslating: "Prevođenje...",
+    aiSettings: "AI Postavke",
+    aiGroqApiKey: "Groq API ključ",
+    aiGroqApiKeyInfo: "Opcionalno. Vlastiti Groq API ključ za bolju izvedbu. Nabavite besplatni ključ na",
+    aiGroqApiKeyPlaceholder: "gsk_...",
+    aiGroqApiKeySaved: "AI API ključ spremljen",
+    aiGroqApiKeyNotSet: "Nije postavljeno (zadano poslužitelja)",
     ssh: {
       on: "SSH uključen",
       off: "SSH isključeno",

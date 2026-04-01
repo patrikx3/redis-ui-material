@@ -191,7 +191,7 @@ const strings = {
     getKey: "Redis-sleutel en bijbehorende gegevens laden ...",
     jsonViewShow: "JSON weergeven",
     jsonViewEditor: "JSON bewerken",
-    quickConsole: "Snelle Console"
+    quickConsole: "Snelle Console",
   },
   label: {
     id: {
@@ -200,6 +200,13 @@ const strings = {
       info: "Als u de volgende eigenschappen niet wilt wijzigen: sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa, voer dan de ID van de verbinding in bij die eigenschappen om de waarden intact te houden. Als u dezelfde logica wilt voor het knooppuntwachtwoord, voer dan de knooppunt-ID in bij het knooppuntwachtwoord."
     },
     secureFeature: 'Als u een waarde ziet die begint met P3X en er hetzelfde uitziet, dan is het een beveiligingsfunctie. Om de instellingen te wijzigen, vervangt u deze instellingen door lege waarden of iets anders en ze worden opgeslagen. Als u de instellingen niet wijzigt, blijven ze zoals ze op de server staan.',
+    aiTranslating: "Vertalen...",
+    aiSettings: "AI-instellingen",
+    aiGroqApiKey: "Groq API-sleutel",
+    aiGroqApiKeyInfo: "Optioneel. Eigen Groq API-sleutel voor betere prestaties. Verkrijg een gratis sleutel op",
+    aiGroqApiKeyPlaceholder: "gsk_...",
+    aiGroqApiKeySaved: "AI API-sleutel opgeslagen",
+    aiGroqApiKeyNotSet: "Niet ingesteld (server standaard)",
     ssh: {
       on: 'SSH aan',
       off: 'SSH uit',
