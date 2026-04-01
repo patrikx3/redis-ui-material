@@ -201,8 +201,7 @@
         }
 
         <!-- Language menu: text at >960px (AngularJS: hide-xs hide-sm) -->
-        @if (!isElectron || isElectronInitialized) {
-            @if (isGtSm) {
+        @if (isGtSm) {
                 <button mat-button [matMenuTriggerFor]="languageMenu" #languageMenuTrigger="matMenuTrigger" (menuOpened)="onLanguageMenuOpened()">
                     <mat-icon>language</mat-icon>
                     <span>{{ i18n.strings().intention?.language }}</span>
@@ -231,7 +230,6 @@
                     </button>
                 }
             </mat-menu>
-        }
 
         <!-- Theme menu — text at >600px (AngularJS: hide-xs only — shows text earlier than others) -->
         @if (isGtXs) {

@@ -82,13 +82,27 @@ export class AiSettingsDialogComponent {
 
     async save(): Promise<void> {
         this.saving = true;
+        this.cdr.markForCheck();
         try {
+            const key = this.apiKey.trim();
+
+            if (key) {
+                const validation = await this.socket.request({
+                    action: 'validate-groq-api-key',
+                    payload: { apiKey: key },
+                });
+                if (!validation.valid) {
+                    this.common.toast({ message: this.strings().label?.aiGroqApiKeyInvalid || 'Invalid Groq API key' });
+                    return;
+                }
+            }
+
             await this.socket.request({
                 action: 'set-groq-api-key',
-                payload: { apiKey: this.apiKey.trim() },
+                payload: { apiKey: key, aiEnabled: p3xr.state.cfg?.aiEnabled !== false, aiUseOwnKey: p3xr.state.cfg?.aiUseOwnKey === true },
             });
-            p3xr.state.cfg.groqApiKey = this.apiKey.trim() || '';
-            this.common.toast({ message: this.strings().label?.aiGroqApiKeySaved || 'AI API key saved' });
+            p3xr.state.cfg.groqApiKey = key || '';
+            this.common.toast({ message: this.strings().label?.aiGroqApiKeySaved || 'AI settings saved' });
             this.dialogRef.close();
         } catch (e: any) {
             this.common.generalHandleError(e);

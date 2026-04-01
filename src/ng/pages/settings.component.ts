@@ -3,6 +3,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDialog } from '@angular/material/dialog';
@@ -37,7 +38,7 @@ declare const p3xr: any;
     standalone: true,
     imports: [
         // DatePipe,
-        MatToolbarModule, MatButtonModule, MatIconModule, MatListModule,
+        MatToolbarModule, MatButtonModule, MatIconModule, MatListModule, MatSlideToggleModule,
         MatTooltipModule, MatDividerModule, DragDropModule,
         P3xrAccordionComponent, P3xrButtonComponent,
     ],
@@ -437,12 +438,38 @@ declare const p3xr: any;
             </div>
             <div content>
                 <mat-list>
-                    <mat-list-item>
+                    <mat-list-item (click)="$event.stopPropagation()">
                         <div class="p3xr-settings-pair-row">
-                            <div class="p3xr-settings-row-label">{{ strings().label?.aiGroqApiKey || 'Groq API Key' }}</div>
-                            <div class="p3xr-settings-row-value" style="font-family: monospace;">{{ getGroqApiKeyDisplay() }}</div>
+                            <div class="p3xr-settings-row-label">{{ strings().label?.aiEnabled || 'AI Enabled' }}</div>
+                            <div class="p3xr-settings-row-value">
+                                <mat-slide-toggle [checked]="isAiEnabled()" [disabled]="isAiReadonly()" (change)="toggleAiEnabled($event.checked)"></mat-slide-toggle>
+                            </div>
                         </div>
                     </mat-list-item>
+                    @if (isAiEnabled() && hasGroqApiKey()) {
+                        <mat-list-item (click)="$event.stopPropagation()">
+                            <div style="width: 100%;">
+                                <div class="p3xr-settings-pair-row">
+                                    <div class="p3xr-settings-row-label">{{ strings().label?.aiRouteViaNetwork || 'Route via network.corifeus.com' }}</div>
+                                    <div class="p3xr-settings-row-value">
+                                        <mat-slide-toggle [checked]="!isUseOwnKey()" [disabled]="isAiReadonly()" (change)="toggleUseOwnKey(!$event.checked)"></mat-slide-toggle>
+                                    </div>
+                                </div>
+                                <div class="p3xr-settings-hint">
+                                    {{ isUseOwnKey() ? (strings().label?.aiRoutingDirect || 'Queries go directly to Groq using your own API key, bypassing network.corifeus.com.') : (strings().label?.aiRoutingNetwork || 'AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.') }}
+                                    @if (!isUseOwnKey()) {
+                                        <a href="https://console.groq.com" target="_blank" style="color: inherit; text-decoration: underline;">console.groq.com</a>
+                                    }
+                                </div>
+                            </div>
+                        </mat-list-item>
+                        <mat-list-item>
+                            <div class="p3xr-settings-pair-row">
+                                <div class="p3xr-settings-row-label">{{ strings().label?.aiGroqApiKey || 'Groq API Key' }}</div>
+                                <div class="p3xr-settings-row-value" [style.font-family]="hasGroqApiKey() ? 'monospace' : 'inherit'">{{ getGroqApiKeyDisplay() }}</div>
+                            </div>
+                        </mat-list-item>
+                    }
                 </mat-list>
             </div>
         </p3xr-ng-accordion>
@@ -1042,6 +1069,61 @@ export class SettingsComponent implements OnInit, OnDestroy {
     }
 
     // --- AI Settings ---
+
+    isAiEnabled(): boolean {
+        return p3xr.state.cfg?.aiEnabled !== false;
+    }
+
+    async toggleAiEnabled(enabled: boolean): Promise<void> {
+        try {
+            await this.socket.request({
+                action: 'set-groq-api-key',
+                payload: {
+                    apiKey: p3xr.state.cfg?.groqApiKey || '',
+                    aiEnabled: enabled,
+                },
+            });
+            p3xr.state.cfg.aiEnabled = enabled;
+            this.cdr.markForCheck();
+        } catch (e) {
+            this.common.generalHandleError(e);
+        }
+    }
+
+    hasGroqApiKey(): boolean {
+        const key = p3xr.state.cfg?.groqApiKey || '';
+        return key.startsWith('gsk_') && key.length > 20;
+    }
+
+    isUseOwnKey(): boolean {
+        // Can only use own key if one is actually set
+        return p3xr.state.cfg?.aiUseOwnKey === true && this.hasGroqApiKey();
+    }
+
+    async toggleUseOwnKey(useOwn: boolean): Promise<void> {
+        // Can't use own key if no key is set
+        if (useOwn && !this.hasGroqApiKey()) {
+            return;
+        }
+        try {
+            await this.socket.request({
+                action: 'set-groq-api-key',
+                payload: {
+                    apiKey: p3xr.state.cfg?.groqApiKey || '',
+                    aiEnabled: p3xr.state.cfg?.aiEnabled !== false,
+                    aiUseOwnKey: useOwn,
+                },
+            });
+            p3xr.state.cfg.aiUseOwnKey = useOwn;
+            this.cdr.markForCheck();
+        } catch (e) {
+            this.common.generalHandleError(e);
+        }
+    }
+
+    isAiReadonly(): boolean {
+        return this.readonlyConnections || p3xr.state.cfg?.groqApiKeyReadonly === true;
+    }
 
     isGroqApiKeyReadonly(): boolean {
         return p3xr.state.cfg?.groqApiKeyReadonly === true;

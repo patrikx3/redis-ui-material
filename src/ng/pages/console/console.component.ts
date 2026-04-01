@@ -178,8 +178,8 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
         const enter = (this.searchText || '').trim();
         if (!enter || this.aiLoading) return;
 
-        // Explicit ai: prefix — go straight to AI
-        if (/^ai:\s*/i.test(enter)) {
+        // Explicit ai: prefix — go straight to AI (if enabled)
+        if (p3xr.state.cfg?.aiEnabled !== false && /^ai:\s*/i.test(enter)) {
             const prompt = enter.replace(/^ai:\s*/i, '').trim();
             if (prompt) {
                 await this.handleAiQuery(prompt, enter);
@@ -216,8 +216,8 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
             console.error(e);
             const errorMsg = e.message || '';
 
-            // If Redis doesn't recognize the command, silently try AI
-            if (this.looksLikeNaturalLanguage(enter, errorMsg)) {
+            // If Redis doesn't recognize the command, silently try AI (if enabled)
+            if (p3xr.state.cfg?.aiEnabled !== false && this.looksLikeNaturalLanguage(enter, errorMsg)) {
                 const aiSuccess = await this.handleAiQuery(enter, enter);
                 if (aiSuccess) return;
                 // AI also failed — show the original Redis error
