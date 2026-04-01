@@ -70,6 +70,13 @@ export class I18nService {
             this.setStorageItem(I18nService.STORAGE_KEY, lang);
             this.applyDocumentLanguage(lang);
 
+            // Notify Electron shell so language persists across restarts
+            try {
+                if (window.parent && window.parent !== window) {
+                    window.parent.postMessage({ type: 'p3x-ui-storage-set', key: I18nService.STORAGE_KEY, value: lang }, '*');
+                }
+            } catch { /* not in iframe */ }
+
             // Update dayjs locale
             try {
                 const dayjs = require('dayjs');

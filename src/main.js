@@ -142,11 +142,16 @@ p3xr.settings.language.loadTranslation = (lang) => {
     })
 }
 
-// Read the language from localStorage so we can pre-load the correct
-// translation before bootstrapping Angular.
+// Read the language from localStorage or Electron bootstrap storage.
 let _initialLang = 'en'
 try {
-    _initialLang = localStorage.getItem(p3xr.settings.language.storageKey) || 'en'
+    // Check Electron bootstrap storage first (passed via query params before Angular strips them)
+    const electronLang = p3xr.electronUiStorageBootstrap?.[p3xr.settings.language.storageKey]
+    if (electronLang) {
+        _initialLang = electronLang
+    } else {
+        _initialLang = localStorage.getItem(p3xr.settings.language.storageKey) || 'en'
+    }
 } catch { /* ignore */ }
 
 // Load the initial language (no-op for English — already loaded above), then boot.
