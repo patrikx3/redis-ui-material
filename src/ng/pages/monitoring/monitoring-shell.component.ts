@@ -10,6 +10,8 @@ import { MonitoringDataService } from './monitoring-data.service';
 
 require('./monitoring-shell.component.scss');
 
+declare const p3xr: any;
+
 @Component({
     selector: 'p3xr-monitoring-shell',
     standalone: true,
@@ -19,6 +21,7 @@ require('./monitoring-shell.component.scss');
             <mat-tab [label]="strings().intention?.pulse || 'Pulse'"></mat-tab>
             <mat-tab [label]="strings().intention?.profiler || 'Profiler'"></mat-tab>
             <mat-tab [label]="strings().intention?.pubsubMonitor || 'PubSub'"></mat-tab>
+            <mat-tab [label]="strings().intention?.memoryAnalysis || 'Analysis'"></mat-tab>
         </mat-tab-group>
         <router-outlet></router-outlet>
     `,
@@ -28,8 +31,10 @@ export class MonitoringShellComponent implements OnInit, OnDestroy {
     strings;
     selectedTab = 0;
 
-    private readonly routes = ['/monitoring', '/monitoring/profiler', '/monitoring/pubsub'];
+    private readonly routes = ['/monitoring', '/monitoring/profiler', '/monitoring/pubsub', '/monitoring/analysis'];
     private routerSub?: Subscription;
+    private subs: Subscription[] = [];
+    private servicesStarted = false;
 
     constructor(
         @Inject(I18nService) private readonly i18n: I18nService,
@@ -42,13 +47,26 @@ export class MonitoringShellComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.data.init(this.socket, () => this.i18n.currentLang());
-        this.startServices();
-
         this.syncTab(this.router.url);
         this.routerSub = this.router.events
             .pipe(filter(e => e instanceof NavigationEnd))
             .subscribe((e: NavigationEnd) => this.syncTab(e.urlAfterRedirects));
+
+        // Redirect to settings on Redis disconnect
+        this.subs.push(this.socket.redisDisconnected$.subscribe(() => {
+            this.router.navigate(['/settings']);
+        }));
+
+        // If connected, start immediately; otherwise wait for connection
+        if (p3xr?.state?.connection) {
+            this.initServices();
+        } else {
+            this.subs.push(this.socket.stateChanged$.subscribe(() => {
+                if (p3xr?.state?.connection && !this.servicesStarted) {
+                    this.initServices();
+                }
+            }));
+        }
     }
 
     ngOnDestroy(): void {
@@ -56,6 +74,13 @@ export class MonitoringShellComponent implements OnInit, OnDestroy {
         this.data.stopPubSub();
         this.data.destroy();
         this.routerSub?.unsubscribe();
+        this.subs.forEach(s => s.unsubscribe());
+    }
+
+    private initServices(): void {
+        this.servicesStarted = true;
+        this.data.init(this.socket, () => this.i18n.currentLang());
+        this.startServices();
     }
 
     private async startServices(): Promise<void> {
@@ -82,6 +107,8 @@ export class MonitoringShellComponent implements OnInit, OnDestroy {
             this.selectedTab = 1;
         } else if (url.startsWith('/monitoring/pubsub')) {
             this.selectedTab = 2;
+        } else if (url.startsWith('/monitoring/analysis')) {
+            this.selectedTab = 3;
         } else {
             this.selectedTab = 0;
         }

@@ -78,6 +78,13 @@ export const appRoutes: Routes = [
                     './pages/profiler/pubsub.component'
                 ).then(m => m.PubsubComponent),
             },
+            {
+                path: 'analysis',
+                loadComponent: () => import(
+                    /* webpackChunkName: "page-memory-analysis" */
+                    './pages/monitoring/memory-analysis.component'
+                ).then(m => m.MemoryAnalysisComponent),
+            },
         ],
     },
     {

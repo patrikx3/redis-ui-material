@@ -7,14 +7,21 @@
             }
 
             @if (indexes.length > 0) {
-                <mat-form-field class="md-block">
-                    <mat-label>{{ strings().page?.search?.index || 'Index' }}</mat-label>
-                    <mat-select [(value)]="selectedIndex" (selectionChange)="offset = 0; indexInfo = null">
-                        @for (idx of indexes; track idx) {
-                            <mat-option [value]="idx">{{ idx }}</mat-option>
-                        }
-                    </mat-select>
-                </mat-form-field>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <mat-form-field class="md-block" style="flex: 1;">
+                        <mat-label>{{ strings().page?.search?.index || 'Index' }}</mat-label>
+                        <mat-select [(value)]="selectedIndex" (selectionChange)="offset = 0; indexInfo = null; loadIndexInfo()">
+                            @for (idx of indexes; track idx) {
+                                <mat-option [value]="idx">{{ idx }}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    @if (!isReadonly && selectedIndex) {
+                        <button mat-mini-fab class="btn-warn" (click)="dropIndex()" [matTooltip]="strings().page?.search?.dropIndex || 'Drop Index'" matTooltipPosition="above">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    }
+                </div>
 
                 <mat-form-field class="md-block">
                     <mat-label>{{ strings().page?.search?.query || 'Query' }}</mat-label>

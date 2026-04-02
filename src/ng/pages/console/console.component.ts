@@ -60,6 +60,8 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
     private contentClicked = false;
     private readonly unsubs: Array<() => void> = [];
     private index = 0;
+    private singleLineHeight = 0;
+    private aiCommandPending = false;
 
     // DOM references
     private containerEl: HTMLElement | null = null;
@@ -72,6 +74,7 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
     private scrollers: HTMLElement | null = null;
     private persistOutputDebounced: any;
     private inputFocusHandler: any;
+    private inputResizeHandler: any;
     private inputBlurHandler: any;
     private resizeFn: any;
 
@@ -91,6 +94,7 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
         // Filter commands as user types
         this.searchControl.valueChanges.subscribe((value: string | null) => {
             this.searchText = value || '';
+            this.autoResizeTextarea();
             if (value && value.length > 0 && p3xr.state.commands?.length > 0) {
                 const text = value.toUpperCase();
                 this.filteredCommands = p3xr.state.commands
@@ -118,6 +122,10 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.inputEl) {
             if (this.inputFocusHandler) this.inputEl.removeEventListener('focus', this.inputFocusHandler);
             if (this.inputBlurHandler) this.inputEl.removeEventListener('blur', this.inputBlurHandler);
+            if (this.inputResizeHandler) {
+                this.inputEl.removeEventListener('focus', this.inputResizeHandler);
+                this.inputEl.removeEventListener('blur', this.inputResizeHandler);
+            }
         }
 
         window.removeEventListener('resize', this.resizeFn);
@@ -164,12 +172,51 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
     private aiExecuting = false;
 
     async actionEnter(): Promise<void> {
-        const enter = (this.searchText || '').trim();
+        const fullInput = (this.searchText || '').trim();
+        if (!fullInput) return;
+        if (this.aiLoading) return;
+
+        try {
+            // Split into lines for multi-line execution
+            const lines = fullInput.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+            if (lines.length === 0) return;
+
+            // EVAL/EVALSHA commands may span multiple lines — execute as single command
+            const firstWord = lines[0].split(/\s+/)[0].toUpperCase();
+            const isSingleCommand = lines.length === 1 || firstWord === 'EVAL' || firstWord === 'EVALSHA';
+
+            if (isSingleCommand) {
+                await this.executeSingleLine(fullInput);
+            } else {
+                for (const line of lines) {
+                    await this.executeSingleLine(line);
+                }
+            }
+        } finally {
+            this.updateCommandHistory(fullInput);
+            // Don't clear input if AI placed a command for the user to review/execute
+            if (this.aiCommandPending) {
+                this.aiCommandPending = false;
+            } else {
+                this.searchText = '';
+                this.searchControl.setValue('');
+                setTimeout(() => this.autoResizeTextarea(), 0);
+            }
+            this.forceScrollToBottom();
+
+            if (this.type === 'quick' || this.embedded) {
+                this.cmd.refresh({ withoutParent: true });
+            }
+            (this.inputEl as HTMLElement)?.focus();
+        }
+    }
+
+    private async executeSingleLine(command: string): Promise<void> {
+        const enter = command.trim();
         if (!enter) return;
 
         // Explicit ai: prefix — go straight to AI (if enabled)
         if (p3xr.state.cfg?.aiEnabled !== false && /^ai:\s*/i.test(enter)) {
-            if (this.aiLoading) return;
             const prompt = enter.replace(/^ai:\s*/i, '').trim();
             if (prompt) {
                 await this.handleAiQuery(prompt, enter);
@@ -177,11 +224,8 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
             return;
         }
 
-        if (this.aiLoading) return;
-
-        let response: any;
         try {
-            response = await this.socket.request({
+            const response = await this.socket.request({
                 action: 'console',
                 payload: { command: enter },
             });
@@ -202,31 +246,19 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
                 p3xr.state.redisChanged = true;
                 this.socket.stateChanged$.next();
             }
-            this.searchText = '';
-            this.searchControl.setValue('');
         } catch (e: any) {
             console.error(e);
             const errorMsg = e.message || '';
 
             // If Redis doesn't recognize the command, silently try AI (if enabled)
             if (p3xr.state.cfg?.aiEnabled !== false && this.looksLikeNaturalLanguage(enter, errorMsg)) {
-                let aiSuccess = false;
-                aiSuccess = await this.handleAiQuery(enter, enter);
+                const aiSuccess = await this.handleAiQuery(enter, enter);
                 if (aiSuccess) return;
-                // AI also failed — show the original Redis error
                 this.outputAppend(`${htmlEncode(enter)}<br/><pre>${this.i18n.strings().code?.[errorMsg] || errorMsg}</pre>`);
                 return;
             }
 
             this.outputAppend(`${htmlEncode(enter)}<br/><pre>${this.i18n.strings().code?.[errorMsg] || errorMsg}</pre>`);
-        } finally {
-            this.updateCommandHistory(enter);
-            this.forceScrollToBottom();
-
-            if (this.type === 'quick' || this.embedded) {
-                this.cmd.refresh({ withoutParent: true });
-            }
-            (this.inputEl as HTMLElement)?.focus();
         }
     }
 
@@ -289,6 +321,8 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.searchText = command;
                 this.searchControl.setValue(command, { emitEvent: false });
                 this.filteredCommands = [];
+                this.aiCommandPending = true;
+                setTimeout(() => this.autoResizeTextarea(), 0);
             }
             return true;
         } catch (e: any) {
@@ -302,13 +336,31 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     onKeyDown(event: KeyboardEvent): void {
+        // Enter handling: Enter = execute, Shift+Enter = newline
+        if (event.key === 'Enter') {
+            if (event.shiftKey) {
+                // Shift+Enter inserts newline, auto-resize after DOM update
+                setTimeout(() => this.autoResizeTextarea(), 0);
+                return;
+            }
+            event.preventDefault();
+            this.actionEnter();
+            return;
+        }
+
         // Let mat-autocomplete handle ArrowDown/ArrowUp when panel is open
         if (this.filteredCommands.length > 0 && (event.key === 'ArrowDown' || event.key === 'ArrowUp')) {
             return;
         }
 
+        // Plain ArrowUp/Down = scroll textarea; Shift+ArrowUp/Down = command history
         if (event.key !== 'ArrowUp' && event.key !== 'ArrowDown') {
             actionHistoryPosition = -1;
+            return;
+        }
+
+        if (!event.shiftKey) {
+            // Let textarea handle natural cursor/scroll movement
             return;
         }
 
@@ -330,6 +382,7 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
         const value = actionHistory[actionHistoryPosition] ?? '';
         this.searchText = value;
         this.searchControl.setValue(value, { emitEvent: false });
+        setTimeout(() => this.autoResizeTextarea(), 0);
     }
 
     onAutocompleteSelected(event: any): void {
@@ -403,6 +456,16 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
             }
             this.rawResize();
 
+            // Paste needs a deferred resize (browser hasn't finished layout when valueChanges fires)
+            this.inputEl?.addEventListener('paste', () => {
+                setTimeout(() => this.autoResizeTextarea(), 0);
+            });
+
+            // Textarea resize on focus/blur
+            this.inputResizeHandler = () => setTimeout(() => this.autoResizeTextarea(), 0);
+            this.inputEl?.addEventListener('focus', this.inputResizeHandler);
+            this.inputEl?.addEventListener('blur', this.inputResizeHandler);
+
             // Embedded focus/blur handlers
             if (this.embedded) {
                 this.inputFocusHandler = () => {
@@ -462,17 +525,44 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
             return;
         }
 
-        // Non-embedded resize
-        let minus = 0;
-        for (const el of [this.headerEl, this.footerEl, this.consoleHeaderEl]) {
-            if (el) minus += el.offsetHeight;
-        }
-
-        const windowHeight = window.innerHeight;
-        const adjustments = this.type === 'quick' ? 105 : 70;
-        const outputHeight = Math.max(windowHeight - minus - adjustments, 0);
+        // Non-embedded resize — measure available space directly from DOM positions
+        const containerTop = this.containerEl.getBoundingClientRect().top;
+        const footerTop = this.footerEl?.getBoundingClientRect().top ?? window.innerHeight;
+        const autocompleteHeight = this.autocompleteEl?.offsetHeight || 28;
+        const outputHeight = Math.max(footerTop - containerTop - autocompleteHeight, 0);
         this.containerEl.style.height = outputHeight + 'px';
         this.containerEl.style.maxHeight = outputHeight + 'px';
+    }
+
+    private autoResizeTextarea(): void {
+        const el = this.inputEl as HTMLTextAreaElement;
+        if (!el) return;
+        if (!this.singleLineHeight) {
+            this.singleLineHeight = el.offsetHeight;
+        }
+        const isFocused = document.activeElement === el;
+        // Blurred with multi-line: collapse to single line
+        if (!isFocused && (el.value || '').includes('\n')) {
+            el.style.height = this.singleLineHeight + 'px';
+            el.style.overflowY = 'hidden';
+            this.rawResize();
+            return;
+        }
+        el.style.height = this.singleLineHeight + 'px';
+        el.style.overflowY = 'hidden';
+        // Only grow when focused and there are actual newlines (max 3 lines)
+        if ((el.value || '').includes('\n') && el.scrollHeight > el.clientHeight) {
+            const maxHeight = this.singleLineHeight * 3;
+            const borderHeight = el.offsetHeight - el.clientHeight;
+            const needed = el.scrollHeight + borderHeight;
+            if (needed > maxHeight) {
+                el.style.height = maxHeight + 'px';
+                el.style.overflowY = 'auto';
+            } else {
+                el.style.height = needed + 'px';
+            }
+        }
+        this.rawResize();
     }
 
     // --- Output management ---

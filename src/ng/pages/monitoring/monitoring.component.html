@@ -11,7 +11,7 @@
         <div actions>
             <p3xr-ng-button
                 (click)="togglePause(); $event.stopPropagation()"
-                [label]="serverInfoLabel()"
+                [label]="paused ? (strings().intention?.resume || 'Resume') : (strings().intention?.pause || 'Pause')"
                 [mdIcon]="paused ? 'play_arrow' : 'pause'">
             </p3xr-ng-button>
             <p3xr-ng-button
@@ -19,9 +19,21 @@
                 [label]="strings().intention?.export || 'Export'"
                 mdIcon="download">
             </p3xr-ng-button>
+            <p3xr-ng-button
+                (click)="exportAll(); $event.stopPropagation()"
+                [label]="strings().page?.analysis?.exportAll || 'Export All'"
+                mdIcon="archive">
+            </p3xr-ng-button>
         </div>
         <div content>
             <mat-list>
+                <mat-list-item>
+                    <div class="p3xr-settings-pair-row">
+                        <div class="p3xr-settings-row-label">Redis {{ current.server.version }} · {{ current.server.mode }}</div>
+                        <div class="p3xr-settings-row-value p3xr-mono">{{ uptimeFormatted }}</div>
+                    </div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
                 <mat-list-item>
                     <div class="p3xr-settings-pair-row">
                         <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.memory || 'Memory' }}</div>
@@ -31,21 +43,21 @@
                 <mat-divider></mat-divider>
                 <mat-list-item>
                     <div class="p3xr-settings-pair-row">
-                        <div class="p3xr-settings-row-label">RSS</div>
+                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.rss || 'RSS' }}</div>
                         <div class="p3xr-settings-row-value p3xr-mono">{{ current.memory.rssHuman }}</div>
                     </div>
                 </mat-list-item>
                 <mat-divider></mat-divider>
                 <mat-list-item>
                     <div class="p3xr-settings-pair-row">
-                        <div class="p3xr-settings-row-label">Peak</div>
+                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.peak || 'Peak' }}</div>
                         <div class="p3xr-settings-row-value p3xr-mono">{{ current.memory.peakHuman }}</div>
                     </div>
                 </mat-list-item>
                 <mat-divider></mat-divider>
                 <mat-list-item>
                     <div class="p3xr-settings-pair-row">
-                        <div class="p3xr-settings-row-label">Fragmentation</div>
+                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.fragmentation || 'Fragmentation' }}</div>
                         <div class="p3xr-settings-row-value p3xr-mono">{{ current.memory.fragRatio }}x</div>
                     </div>
                 </mat-list-item>
@@ -87,7 +99,7 @@
                 <mat-divider></mat-divider>
                 <mat-list-item>
                     <div class="p3xr-settings-pair-row">
-                        <div class="p3xr-settings-row-label">Hits / Misses</div>
+                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.hitsAndMisses || 'Hits / Misses' }}</div>
                         <div class="p3xr-settings-row-value p3xr-mono">{{ current.stats.hits }} / {{ current.stats.misses }}</div>
                     </div>
                 </mat-list-item>

@@ -149,20 +149,18 @@ p3xr-console.p3xr-console-embedded-collapsed #p3xr-console-autocomplete.p3xr-con
 }
 
 #p3xr-console-input {
+    display: block;
     width: 100%;
     box-sizing: border-box;
-    height: 38px;
     padding: 3px;
     border-style: solid;
-    border-width: 2px;
-    margin: 1px;
-    font-family: 'Roboto Mono', monospace;
-}
-
-#p3xr-console-input:focus {
-    margin: 0;
     border-width: 3px;
+    margin: 0;
+    font-family: 'Roboto Mono', monospace;
+    resize: none;
+    overflow-y: hidden;
     outline: none;
+    max-height: 90px;
 }
 
 // Mat-autocomplete panel styling for console

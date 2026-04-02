@@ -1,6 +1,6 @@
 {
     "name": "p3x-redis-ui-material",
-    "version": "2026.4.348",
+    "version": "2026.4.351",
     "description": "💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via http and socket.io",
     "corifeus": {
         "icon": "fas fa-database",
@@ -113,6 +113,8 @@
         "@uiw/codemirror-theme-github": "^4.25.9",
         "codemirror": "^6.0.2",
         "dayjs": "^1.11.20",
+        "jspdf": "^4.2.1",
+        "jszip": "^3.10.1",
         "uplot": "^1.6.32"
     },
     "resolutions": {

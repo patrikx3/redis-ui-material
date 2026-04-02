@@ -185,7 +185,7 @@ export class RedisParserService {
      * Parses console command response into a display string.
      */
     consoleParse(responseResult: any): string {
-        if (typeof responseResult === 'object') {
+        if (responseResult !== null && typeof responseResult === 'object') {
             let result = '';
             Object.keys(responseResult).forEach((key) => {
                 if (result !== '') {

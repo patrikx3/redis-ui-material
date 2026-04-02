@@ -54,17 +54,16 @@
     <div id="p3xr-console-autocomplete"
          [class.p3xr-console-autocomplete-quick]="type === 'quick'"
          [class.p3xr-console-autocomplete-embedded]="embedded">
-        <input id="p3xr-console-input" class="p3xr-input"
-               type="text"
+        <textarea id="p3xr-console-input" class="p3xr-input"
+               rows="1"
                [formControl]="searchControl"
-               (keydown.enter)="actionEnter()"
                (keydown)="onKeyDown($event)"
                [matAutocomplete]="auto"
                autocomplete="off"
                [placeholder]="aiLoading ? (strings().label?.aiTranslating || 'Translating...') : ''"
                [style.background]="'var(--p3xr-input-bg)'"
                [style.color]="'var(--p3xr-input-color)'"
-               [style.border-color]="aiLoading ? 'var(--mat-sys-primary, var(--p3xr-input-border-color))' : 'var(--p3xr-input-border-color, var(--p3xr-border-color))'" />
+               [style.border-color]="aiLoading ? 'var(--mat-sys-primary, var(--p3xr-input-border-color))' : 'var(--p3xr-input-border-color, var(--p3xr-border-color))'"></textarea>
         <mat-autocomplete #auto="matAutocomplete"
                           (optionSelected)="onAutocompleteSelected($event)"
                           class="p3xr-console-autocomplete-panel"

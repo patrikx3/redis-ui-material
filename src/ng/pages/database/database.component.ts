@@ -61,7 +61,18 @@ export class DatabaseComponent implements OnInit, OnDestroy {
     private readonly unsubs: Array<() => void> = [];
 
     private readonly resizeMinWidth = p3xr.settings.resizeMinWidth;
-    private readonly bottomConsoleCollapsedHeight = 88;
+    private get bottomConsoleCollapsedHeight(): number {
+        const panel = document.getElementById('p3xr-database-bottom-console-panel');
+        if (panel) {
+            const toolbar = panel.querySelector('#p3xr-console-header') as HTMLElement;
+            const autocomplete = panel.querySelector('#p3xr-console-autocomplete') as HTMLElement;
+            if (toolbar && autocomplete) {
+                // +1 for the panel's border-top
+                return toolbar.offsetHeight + autocomplete.offsetHeight + 1;
+            }
+        }
+        return 88;
+    }
 
     constructor(
         @Inject(NgZone) private readonly ngZone: NgZone,

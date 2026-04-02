@@ -35,22 +35,6 @@
             }
         }
 
-        <!-- Search button — shown only when connected and RediSearch module detected -->
-        @if (currentConnection && hasRediSearch) {
-            @if (isWide) {
-                <button mat-button (click)="navigateTo('search')" [class.p3xr-nav-active]="isActivePage('search')">
-                    <mat-icon>search</mat-icon>
-                    <span>{{ i18n.strings().page?.search?.title || 'Search' }}</span>
-                </button>
-            } @else {
-                <button mat-icon-button (click)="navigateTo('search')" [class.p3xr-nav-active]="isActivePage('search')"
-                        [matTooltip]="i18n.strings().page?.search?.title ?? 'Search'"
-                        matTooltipPosition="below">
-                    <mat-icon>search</mat-icon>
-                </button>
-            }
-        }
-
         <!-- Monitoring button — shown only when connected -->
         @if (currentConnection) {
             @if (isWide) {
@@ -63,6 +47,22 @@
                         [matTooltip]="i18n.strings().page?.monitor?.title ?? 'Monitoring'"
                         matTooltipPosition="below">
                     <mat-icon>monitor_heart</mat-icon>
+                </button>
+            }
+        }
+
+        <!-- Search button — shown only when connected and RediSearch module detected -->
+        @if (currentConnection && hasRediSearch) {
+            @if (isWide) {
+                <button mat-button (click)="navigateTo('search')" [class.p3xr-nav-active]="isActivePage('search')">
+                    <mat-icon>search</mat-icon>
+                    <span>{{ i18n.strings().page?.search?.title || 'Search' }}</span>
+                </button>
+            } @else {
+                <button mat-icon-button (click)="navigateTo('search')" [class.p3xr-nav-active]="isActivePage('search')"
+                        [matTooltip]="i18n.strings().page?.search?.title ?? 'Search'"
+                        matTooltipPosition="below">
+                    <mat-icon>search</mat-icon>
                 </button>
             }
         }

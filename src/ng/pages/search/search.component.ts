@@ -113,6 +113,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             this.indexes = response.data;
             if (this.indexes.length > 0 && !this.selectedIndex) {
                 this.selectedIndex = this.indexes[0];
+                this.loadIndexInfo();
             }
             this.cdr.markForCheck();
         } catch { /* ignore */ }
@@ -183,6 +184,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             this.selectedIndex = '';
             this.results = [];
             this.total = 0;
+            this.searchDone = false;
             this.indexInfo = null;
             await this.loadIndexes();
         } catch (e) {
