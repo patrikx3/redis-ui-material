@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "Leseni imesafishwa",
-    invalid_license: "Leseni batili",
-    license_max_devices_reached: "Idadi ya juu ya vifaa imefikiwa",
-    license_readonly: "Leseni inaweza kubadilishwa kutoka kwenye terminal ya seva pekee.",
     server_error: "Hitilafu ya seva, tafadhali jaribu tena"
   },
   title: {
@@ -51,8 +47,12 @@ const strings = {
     deleteAllKeys: opts => {
       return `Futa mti huu na funguo zake zote (${opts.key})?`;
     },
+    deleteSearchKeys: opts => {
+      return `Una uhakika wa kufuta funguo zote zinazolingana na "${opts.pattern}"? Funguo ${opts.count} zimepatikana.`;
+    },
     socketioConnectError: "Socket.IO haiwezi kuunganisha na seva, unaweza kupakia upya na kujaribu kutatua hitilafu ya muunganisho mwenyewe, mteja hajui jinsi ya kutatua peke yake.",
     socketioAuthRequired: "Idhini ya Socket.IO inahitajika. Tafadhali thibitisha na HTTP Basic Auth (jina la mtumiaji/nenosiri) na upakia upya.",
+    delete: "Futa?",
     deleteKey: "Una uhakika wa kufuta ufunguo huu?",
     rename: {
       title: "Una uhakika wa kubadilisha jina la ufunguo huu?",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "Badilisha maandishi kuwa wakati",
       convertTextToTimePlaceholder: "Mfano 1d itakuwa 86400"
     },
-    license: {
-      title: "Weka leseni",
-      textContent: "If you want to use paid features, please contact support@corifeus.com to request a license. Pricing is Pro 400 HUF/month (\u20ac1/month) or 4,000 HUF/year (\u20ac10/year), and Enterprise 1,200 HUF/month (\u20ac3/month) or 12,000 HUF/year (\u20ac30/year). Yearly is 10x monthly. With 27% VAT, totals are Pro 500 HUF/month (\u20ac1.27/month) or 5,100 HUF/year (\u20ac12.70/year), Enterprise 1,500 HUF/month (\u20ac3.81/month) or 15,200 HUF/year (\u20ac38.10/year). License validation requires internet access. Default license includes 5 seats. If you need more seats, contact us at support@corifeus.com.",
-      placeholder: "Ufunguo wa leseni"
-    }
   },
   language: {
     // When you translate the english name, keep the Language in English
@@ -138,13 +133,17 @@ const strings = {
     exportKeys: "Hamisha funguo",
     exportAllKeys: (opts) => `Hamisha funguo zote ${opts.count}`,
     exportSearchResults: (opts) => `Hamisha matokeo ${opts.count}`,
+    deleteAllKeysMenu: (opts) => `Futa zote ${opts.count}`,
     importKeys: "Ingiza funguo",
+    deleteSearchKeys: (opts) => `Futa funguo ${opts.count} zinazolingana`,
     saveWithFormatJson: "Hifadhi na muundo",
     formatJson: "Umbiza Json",
     wrap: "Funga",
     unwrap: "Fungua",
     downloadJson: "Pakua JSON",
-    pubsubMonitor: "Mfuatiliaji wa PubSub",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "Lugha / Language",
@@ -185,7 +184,6 @@ const strings = {
     edit: "Hariri",
     save: "Hifadhi",
     ttl: "Weka TTL",
-    license: "Weka leseni",
     delete: "Futa",
     remove: "Ondoa",
     sure: "Hakika",
@@ -264,38 +262,6 @@ const strings = {
     connectiondEdit: "Hariri muunganisho",
     connectiondView: "Tazama muunganisho",
     connections: "Muunganisho",
-    licenseInfo: "Leseni",
-    licenseEditable: "Leseni inaweza kuhaririwa",
-    licenseEditableYes: "Ndiyo",
-    licenseEditableNo: "Hapana",
-    licenseTerminalOnly: "Leseni inaweza kusanidiwa kutoka kwenye terminal ya seva pekee.",
-    licenseTierPolicyTitle: "Sera ya ngazi",
-    licenseTierPolicyText: "<h4>Bure</h4>Redis UI ya msingi pekee; hakuna uhandisi wa SSH, hakuna hali ya muunganisho wa Kusoma tu, hakuna Nguzo/Mlinzi, hakuna Kuhariri JSON/Kupakia binary/Kupakua binary, hakuna ReJSON.<br/><strong>Bei: 0 HUF/mwezi (\u20ac0/mwezi).</strong><br/><br/><h4>Pro</h4>Uhandisi wa SSH, hali ya muunganisho wa Kusoma tu (ikiwa ni pamoja na --readonly-connections/-r), Kuhariri JSON, Kupakia binary, Kupakua binary, ReJSON.<br/><strong>Bei ya msingi: 400 HUF/mwezi (\u20ac1/mwezi) au 4,000 HUF/mwaka (\u20ac10/mwaka).</strong><br/><strong>Jumla na 27% VAT: 500 HUF/mwezi (\u20ac1.27/mwezi) au 5,100 HUF/mwaka (\u20ac12.70/mwaka).</strong><br/><br/><h4>Enterprise</h4>Uhandisi wa SSH, Nguzo na Mlinzi, pamoja na Kuhariri JSON, Kupakia binary, Kupakua binary, ReJSON; --readonly-connections/-r pia inafanya kazi.<br/><strong>Bei ya msingi: 1,200 HUF/mwezi (\u20ac3/mwezi) au 12,000 HUF/mwaka (\u20ac30/mwaka).</strong><br/><strong>Jumla na 27% VAT: 1,500 HUF/mwezi (\u20ac3.81/mwezi) au 15,200 HUF/mwaka (\u20ac38.10/mwaka).</strong><br/><br/><h4>Kanuni ya kila mwaka</h4>Bei ya kila mwaka ni 10x bei ya kila mwezi.<br/><br/><h4>Viti</h4>Leseni ya kawaida inajumuisha viti 5. Ikiwa unahitaji viti zaidi, wasiliana nasi kwa <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><br/><h4>Jaribio la Enterprise</h4>Siku 10 bure kwa mtu yeyote aliye na anwani halisi ya barua pepe (sio barua pepe ya majaribio).<br/><hr/><h4>Taarifa za malipo kwa barua pepe</h4>Jina, Barua pepe ya malipo, Msimbo wa nchi, Msimbo wa posta, Jiji, Anwani, Kitambulisho cha VAT (hiari).<br/><br/><h4>Malipo</h4>Malipo ya PayPal yanapatikana kwa HUF (forint) pekee; baada ya kutuma pesa @ <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> nitakutumia ankara. Malipo yote hayarudishwi.<br/><br/><h4>VAT</h4>VAT inaongezwa kwenye bei (27% nchini Hungaria).<br/><hr/><h4>Mawasiliano</h4>Ikiwa unataka kusema habari au una swali, wasiliana na <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><hr/><h4>Lugha</h4>Ankara na mawasiliano ya barua pepe ya leseni ni kwa Kiingereza. Sarafu ya ankara ni HUF.<br/><hr/><h4>Kumbuka</h4>Uthibitishaji wa leseni unahitaji upatikanaji wa mtandao.",
-    licenseState: "Hali",
-    licenseStateActive: "Hai",
-    licenseStateInactive: "Haifanyi kazi",
-    licenseStateNoLicense: "Hakuna leseni",
-    licenseKeyMasked: "Ufunguo uliohifadhiwa",
-    licenseTier: "Ngazi",
-    licenseValid: "Halali",
-    licenseStatus: "Hali ya leseni",
-    licenseReason: "Sababu",
-    licenseCheckedAt: "Imeangaliwa saa",
-    licenseStartsAt: "Inaanza saa",
-    licenseExpiresAt: "Inaisha saa",
-    licenseDaysLeft: "Siku zilizobaki",
-    licenseMaxDevices: "Vifaa vya juu",
-    licenseActiveDevices: "Vifaa vilivyo hai",
-    licenseActiveDevicesInfo: "Ikiwa kifaa hakitumiki tena, kiti chake kinatolewa kiotomatiki baada ya dakika 75.",
-    licenseCustomerEmail: "Barua pepe ya mteja",
-    licenseFeatures: "Vipengele",
-    licenseFeaturesEmpty: "Hakuna vipengele vya ziada",
-    licenseFeatureReadonlyMode: "Hali ya muunganisho wa kusoma tu",
-    licenseFeatureReadonlyConnectionsFlag: "Muunganisho wa kusoma tu (--readonly-connections/-r)",
-    licenseFeatureSsh: "Uhandisi wa SSH",
-    licenseFeatureCluster: "Muunganisho wa nguzo",
-    licenseFeatureSentinel: "Muunganisho wa mlinzi",
-    licenseFeatureReJSON: "ReJSON (aina ya data ya JSON)",
     keysSort: {
       on: "Upangaji wa funguo umewashwa",
       off: "Upangaji wa funguo umezimwa"
@@ -313,9 +279,6 @@ const strings = {
       on: "Kusoma tu kumewashwa",
       off: "Kusoma tu kumezimwa"
     },
-    proSshOnly: "SSH inapatikana katika Pro au Enterprise.",
-    proReadonlyOnly: "Hali ya muunganisho wa kusoma tu inapatikana katika Pro au Enterprise.",
-    enterpriseClusterSentinelOnly: "Nguzo na Mlinzi zinapatikana katika Enterprise pekee.",
     theme: {
       light: "Mwanga",
       dark: "Giza enterprise",
@@ -357,16 +320,20 @@ const strings = {
     importConflict: "Ikiwa ufunguo tayari upo:",
     noKeysToExport: "Hakuna funguo za kuhamisha",
     time: "Muda",
+    type: "Aina",
+    format: "Muundo",
     loading: "Inapakia...",
     autoRefresh: "Otomatiki",
     exportSearchHint: "Kuhamisha funguo zinazolingana na utafutaji wa sasa pekee",
     importSearchHint: "Uingizaji unatumika kwa hifadhidata nzima, si matokeo ya utafutaji pekee",
+    deleteSearchHint: "Hufuta funguo zote zinazolingana na utafutaji wa sasa kwenye seva",
+    deletingSearchKeys: "Inafuta funguo zinazolingana...",
     importNoKeys: "Hakuna funguo zilizopatikana kwenye faili",
   },
   status: {
     dataCopied: "Data iko kwenye ubao wa kunakili",
-    licenseSaved: "Leseni imehifadhiwa",
     exportDone: "Uhamishaji umekamilika",
+    deletedSearchKeys: (opts) => `Funguo ${opts.count} zimefutwa`,
     indexCreated: "Faharasa imeundwa",
     indexDropped: "Faharasa imefutwa",
     importDone: (opts) => `Uingizaji umekamilika: ${opts.created} vimeundwa, ${opts.skipped} vimerukwa, ${opts.errors} makosa`,
@@ -414,35 +381,10 @@ const strings = {
     "readonly-connections": "Muunganisho wa kuongeza/kuhifadhi/kufuta ni wa kusoma pekee!",
     "readonly-connection-mode": "Muunganisho huu ni wa hali ya kusoma pekee!",
     "list-out-of-bounds": "Faharasa hii ya orodha iko nje ya mipaka",
-    "donation-ware-feature": "Kipengele hiki kipo katika toleo la mchango.",
-    "feature-pro-readonly-required": "Hali ya muunganisho wa kusoma pekee inahitaji leseni ya Pro au Enterprise.",
-    "feature-pro-ssh-required": "Uhandisi wa SSH unahitaji leseni ya Pro au Enterprise.",
-    "feature-enterprise-cluster-sentinel-required": "Nguzo na Mlinzi zinahitaji leseni ya Enterprise.",
-    "feature-pro-json-binary-required": "Kuhariri JSON, Kupakia binary na Kupakua binary zinahitaji leseni ya Pro au Enterprise.",
-    "feature-pro-rejson-required": "ReJSON (aina ya data ya JSON) inahitaji leseni ya Pro au Enterprise.",
     "invalid-json-value": "Thamani si JSON halali.",
     "http_auth_required": "Idhini inahitajika: tafadhali thibitisha na HTTP Basic Auth na upakia upya.",
     "auto-connection-failed": "Huenda muunganisho uliondolewa na muunganisho wa kiotomatiki umeshindwa kwa sababu hiyo.",
     invalid_console_command: "Amri hii haifanyi kazi kupitia GUI."
-  },
-  licenseReason: {
-    LICENSE_VALID: "Leseni ni halali",
-    LICENSE_INVALID: "Leseni ni batili",
-    LICENSE_MISSING: "Hakuna ufunguo wa leseni uliowekwa",
-    LICENSE_DISABLED: "Leseni imezimwa katika usanidi wa seva",
-    LICENSE_NOT_FOUND: "Leseni haikupatikana",
-    LICENSE_EXPIRED: "Leseni imekwisha muda",
-    LICENSE_CLEARED: "Ufunguo wa leseni umesafishwa",
-    LICENSE_MAX_DEVICES_REACHED: "Idadi ya juu ya viti vya vifaa imefikiwa",
-    PRODUCT_MISMATCH: "Bidhaa ya leseni hailingani"
-  },
-  licenseStatusValue: {
-    active: "Hai",
-    deleted: "Imefutwa",
-    all: "Zote",
-    expired: "Imekwisha muda",
-    missing: "Inakosekana",
-    inactive: "Haifanyi kazi"
   },
   form: {
     error: {
@@ -612,12 +554,49 @@ const strings = {
           field: "Uga",
           value: "Thamani"
         }
+      },
+      timeseries: {
+        chart: "Chati",
+        info: "Taarifa",
+        addPoint: "Ongeza Sehemu ya Data",
+        from: "Kutoka (ms au -)",
+        to: "Hadi (ms au +)",
+        aggregation: "Mkusanyiko",
+        timeBucket: "Ndoo (ms)",
+        none: "Hakuna",
+        dataPoints: "pointi za data",
+        labels: "Lebo",
+        rules: "Sheria",
+        retention: "Uhifadhi",
+        timestamp: "Muhuri wa wakati",
+        value: "Thamani",
+        retentionHint: "0 = hakuna muda wa kuisha, au milisekunde",
+        duplicatePolicy: "Sera ya nakala pacha",
+        labelsHint: "ufunguo1 thamani1 ufunguo2 thamani2",
+        timestampHint: "'*' inamaanisha inazalishwa kiotomatiki, au muhuri wa wakati wa milisekunde",
+        editAllHint: "Sehemu moja ya data kwa kila mstari: muhuri_wa_wakati thamani (muhuri wa wakati unaweza kuwa * kwa otomatiki)",
+        autoSpread: "Muda wa kuenea * otomatiki",
+        formula: "Fomula",
+        formulaLinear: "Mstari",
+        formulaRandom: "Nasibu",
+        formulaSawtooth: "Jino la msumeno",
+        formulaPoints: "Pointi",
+        formulaAmplitude: "Amplitude",
+        formulaOffset: "Ofiseti",
+        generate: "Zalisha",
+        exportChart: "Hamisha PNG",
+        overlay: "Funguo za kupachika",
+        overlayHint: "Funguo zilizotengwa kwa koma",
+        mrangeFilter: "Kichujio cha lebo",
+        bulkMode: "Uzalishaji wa wingi",
+        mrangeHint: "mf. sensor=temp"
       }
     },
     treeControls: {
       settings: "Mipangilio ya mti",
       expandAll: "Panua yote",
       collapseAll: "Kunja yote",
+      level: "Kiwango",
       search: {
         search: "Tafuta kwenye funguo",
         clear: "Futa utafutaji wa sasa ili kuweka tupu",
@@ -636,13 +615,21 @@ const strings = {
     }
   },
   time: {
+    type: "Aina",
+    format: "Muundo",
     loading: "Inapakia...",
     years: "miaka",
     months: "miezi",
     days: "siku",
     year: "mwaka",
     month: "mwezi",
-    day: "siku"
+    day: "siku",
+    second: "sekunde",
+    seconds: "sekunde",
+    minute: "dakika",
+    minutes: "dakika",
+    hour: "saa",
+    hours: "masaa"
   },
   redisTypes: {
     string: "String",
@@ -651,7 +638,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

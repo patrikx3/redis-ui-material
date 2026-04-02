@@ -519,13 +519,11 @@ p3xr-ng-button .mat-mdc-button-base:not(.mat-mdc-icon-button):not(.mat-mdc-fab-b
 
 // Version/SNAPSHOT label overlaying the header toolbar — must match toolbar text color.
 // AngularJS used md-colors="{ color: 'background-A100' }" (white for most themes, grey-900 for Matrix).
-#p3xr-layout-header-version-donated,
-#p3xr-layout-header-version-free {
+#p3xr-layout-header-version {
   color: var(--p3xr-toolbar-color) !important;
 }
 
-body.p3xr-mat-theme-matrix #p3xr-layout-header-version-donated,
-body.p3xr-mat-theme-matrix #p3xr-layout-header-version-free {
+body.p3xr-mat-theme-matrix #p3xr-layout-header-version {
   color: #212121 !important; // grey-900 — AngularJS used getVersionColor() → 'grey-900' for Matrix
 }
 
@@ -832,7 +830,7 @@ mat-toolbar.p3xr-accordion-toolbar i.fab::before {
 }
 
 // ============================================================================
-// Hover — only on Redis settings accordion items (not connections/license)
+// Hover — only on Redis settings accordion items, not the connections list
 // Buttons inside list items keep their own bg on hover
 // ============================================================================
 .mat-mdc-list-item .mat-mdc-button-base {
@@ -1095,22 +1093,6 @@ body.p3xr-theme-dark .p3xr-settings-hint {
   margin-right: 3px !important;
 }
 
-.cdk-overlay-pane.p3xr-license-dialog {
-  width: 50vw !important;
-  min-width: 0 !important;
-  max-width: 50vw !important;
-}
-
-.cdk-overlay-pane.p3xr-license-tier-policy-dialog {
-  width: 80vw !important;
-  max-width: 80vw !important;
-}
-
-.cdk-overlay-pane.p3xr-license-dialog .mat-mdc-dialog-container,
-.cdk-overlay-pane.p3xr-license-dialog .mat-mdc-dialog-surface {
-  min-width: 0 !important;
-}
-
 .cdk-overlay-pane.p3xr-connection-dialog-panel {
   width: 75vw !important;
   max-width: 75vw !important;
@@ -1342,7 +1324,6 @@ body.p3xr-theme-dark .p3xr-settings-hint {
 }
 
 p3xr-ng-settings .p3xr-settings-pair-row,
-p3xr-ng-settings .p3xr-license-features-row,
 p3xr-info .p3xr-settings-pair-row,
 p3xr-monitoring .p3xr-settings-pair-row,
 p3xr-search .p3xr-settings-pair-row {
@@ -1358,11 +1339,6 @@ p3xr-search .p3xr-settings-pair-row {
   align-items: center;
 }
 
-p3xr-ng-settings .p3xr-settings-pair-row-valid,
-p3xr-ng-settings .p3xr-license-features-row {
-  align-items: flex-start;
-}
-
 p3xr-ng-settings .p3xr-settings-row-label,
 p3xr-info .p3xr-settings-row-label,
 p3xr-monitoring .p3xr-settings-row-label,
@@ -1373,7 +1349,6 @@ p3xr-search .p3xr-settings-row-label {
 }
 
 p3xr-ng-settings .p3xr-settings-row-value,
-p3xr-ng-settings .p3xr-license-features-text,
 p3xr-info .p3xr-settings-row-value,
 p3xr-monitoring .p3xr-settings-row-value,
 p3xr-search .p3xr-settings-row-value {
@@ -1389,56 +1364,6 @@ p3xr-ng-settings .p3xr-settings-wrap-text {
   white-space: normal;
   overflow-wrap: anywhere;
   word-break: break-word;
-}
-
-p3xr-ng-settings .p3xr-license-active-devices-item,
-p3xr-ng-settings .p3xr-license-features-item {
-  height: auto !important;
-  min-height: 48px;
-}
-
-p3xr-ng-settings .p3xr-license-active-devices-item .mat-mdc-list-item-unscoped-content,
-p3xr-ng-settings .p3xr-license-features-item .mat-mdc-list-item-unscoped-content {
-  white-space: normal !important;
-}
-
-p3xr-ng-settings .p3xr-license-active-devices-content {
-  width: 100%;
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-p3xr-ng-settings .p3xr-license-active-devices-note {
-  white-space: normal !important;
-  overflow-wrap: anywhere;
-  word-break: break-word;
-  opacity: 0.78;
-  line-height: 1.35;
-  font-size: 12px;
-}
-
-p3xr-ng-settings .p3xr-license-features-text {
-  line-height: 1.4;
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-
-.p3xr-license-tier-policy-dialog .mat-mdc-dialog-title {
-  font-size: 165%;
-  line-height: 1.2;
-  font-weight: 700;
-}
-
-.p3xr-license-tier-policy-dialog .mat-mdc-dialog-content h4 {
-  font-size: 125%;
-  line-height: 1.2;
-  margin: 0 0 2px 0;
-  font-weight: 700;
-}
-
-.p3xr-license-tier-policy-dialog .mat-mdc-dialog-content hr {
-  opacity: 0.25;
-  margin: 8px 0;
 }
 
 // ============================================================================

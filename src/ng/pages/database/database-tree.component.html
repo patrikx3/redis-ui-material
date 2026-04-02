@@ -34,6 +34,7 @@
                         @case ('zset') { <i class="p3xr-database-treecontrol-node-icon fas fa-chart-line" aria-hidden="true"></i> }
                         @case ('stream') { <i class="p3xr-database-treecontrol-node-icon fas fa-stream" aria-hidden="true"></i> }
                         @case ('json') { <i class="p3xr-database-treecontrol-node-icon fas fa-code" aria-hidden="true"></i> }
+                        @case ('timeseries') { <i class="p3xr-database-treecontrol-node-icon fas fa-chart-area" aria-hidden="true"></i> }
                     }
                 }
 
@@ -61,12 +62,12 @@
                 @if (node.type === 'folder') {
                     <span [matTooltip]="deleteTreeTooltip(node)" matTooltipPosition="after" matTooltipClass="p3xr-tree-node-tooltip">
                         <span class="material-icons p3xr-database-treecontrol-delete-icon"
-                              (click)="deleteTree($event, node)">close</span>
+                              (click)="deleteTree($event, node)">delete</span>
                     </span>
                 } @else {
                     <span [matTooltip]="strings()?.intention?.delete" matTooltipPosition="after" matTooltipClass="p3xr-tree-node-tooltip">
                         <span class="material-icons p3xr-database-treecontrol-delete-icon"
-                              (click)="deleteKey($event, node.key)">close</span>
+                              (click)="deleteKey($event, node.key)">delete</span>
                     </span>
                 }
 

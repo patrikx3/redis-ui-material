@@ -105,7 +105,7 @@
 
     // Value column: multiline with scroll, matching AngularJS overflow:auto + max-height:200px
     .p3xr-value-col {
-        overflow: auto;
+        overflow: auto !important;
         max-height: 200px;
         white-space: pre-wrap;
         word-break: break-all;
@@ -179,4 +179,38 @@
     padding: 0 16px 8px 16px;
     overflow: auto;
     max-height: 300px;
+}
+
+// TimeSeries
+.p3xr-timeseries-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 8px 0;
+}
+
+.p3xr-timeseries-field {
+    min-width: 140px;
+    max-width: 200px;
+}
+
+.p3xr-timeseries-chart-container {
+    width: 100%;
+    min-height: 400px;
+}
+
+.p3xr-timeseries-chart-info {
+    padding: 4px 0;
+    opacity: 0.6;
+    font-size: 13px;
+}
+
+.p3xr-timeseries-info-key {
+    min-width: 180px;
+    flex-shrink: 0;
+}
+
+.p3xr-timeseries-info-value {
+    word-break: break-all;
 }

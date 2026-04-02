@@ -135,6 +135,26 @@ export class DatabaseTreeComponent implements OnInit, OnDestroy {
         }));
         this.unsubs.push(() => subCollapse.unsubscribe());
 
+        const subExpandLevel = this.common.treeExpandToLevel$.subscribe((level: number) => this.ngZone.run(() => {
+            const keys = new Set<string>();
+            const collect = (nodes: any[], depth: number) => {
+                for (const node of nodes) {
+                    if (node.type === 'folder') {
+                        if (depth < level) {
+                            keys.add(node.key);
+                        }
+                        collect(node.children ?? [], depth + 1);
+                    }
+                }
+            };
+            collect(this.hierarchicalNodes, 0);
+            this.expandedKeys = keys;
+            this.flattenVisibleNodes();
+            this.syncExpandedNodesToGlobal();
+            this.cdr.markForCheck();
+        }));
+        this.unsubs.push(() => subExpandLevel.unsubscribe());
+
         setTimeout(() => {
             this.isEnabled = true;
             this.cdr.markForCheck();

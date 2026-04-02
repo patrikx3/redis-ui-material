@@ -13,14 +13,13 @@ export class SocketService {
 
     private ioClient: any;
     private reconnect = false;
-    private licenseRefreshInterval: any;
     private connectErrorWas = false;
+    private disconnected = false;
 
     readonly connections$ = new Subject<any>();
     readonly redisDisconnected$ = new Subject<any>();
     readonly redisStatus$ = new Subject<any>();
     readonly configuration$ = new Subject<any>();
-    readonly licenseUpdate$ = new Subject<any>();
     readonly socketError$ = new Subject<any>();
     readonly stateChanged$ = new Subject<void>();
 
@@ -39,6 +38,10 @@ export class SocketService {
             rejectUnauthorized: false,
             path: '/socket.io',
             secure: true,
+            reconnection: true,
+            reconnectionAttempts: Infinity,
+            reconnectionDelay: 1000,
+            reconnectionDelayMax: 5000,
         };
 
         if ((globalThis as any).p3xrDevMode === true) {
@@ -49,34 +52,25 @@ export class SocketService {
 
 
         this.ioClient.on('connect', async () => {
+            if (this.disconnected || this.connectErrorWas) {
+                console.log('p3xr-socket RE-connected', this.ioClient.id);
+                this.disconnected = false;
+                this.connectErrorWas = false;
+                location.reload();
+                return;
+            }
+
             if (this.reconnect) {
                 console.log('p3xr-socket RE-connected', this.ioClient.id);
             } else {
                 console.log('p3xr-socket connected', this.ioClient.id);
             }
             this.reconnect = true;
-
-            if (this.licenseRefreshInterval) {
-                clearInterval(this.licenseRefreshInterval);
-            }
-            this.licenseRefreshInterval = setInterval(() => {
-                this.refreshLicenseStatus();
-            }, 1000 * 60 * 60);
-
-            await this.refreshLicenseStatus();
         });
 
         this.ioClient.on('disconnect', () => {
-            if (this.licenseRefreshInterval) {
-                clearInterval(this.licenseRefreshInterval);
-                this.licenseRefreshInterval = undefined;
-            }
-            location.reload();
-        });
-
-        this.ioClient.on('info-interval', (data: any) => {
-            this.applyLicenseData(data);
-            this.tick();
+            this.disconnected = true;
+            try { p3xr.ui.overlay.show(); } catch {}
         });
 
         this.ioClient.on('error', (error: any) => {
@@ -145,101 +139,8 @@ export class SocketService {
         });
     }
 
-    // --- License ---
-
-    private applyLicenseData(data: any = {}): void {
-        const nextLicense: any = Object.assign({
-            licenseEditable: true,
-            editableActive: true,
-            disabled: false,
-            hasLicenseKey: false,
-            licenseKeyMasked: '',
-            tier: 'free',
-            valid: false,
-            reason: 'LICENSE_MISSING',
-            licenseStatus: 'inactive',
-            maxDevices: null,
-            activeDevices: null,
-            deviceLease: null,
-            daysLeft: null,
-            features: [],
-        }, (data.license && typeof data.license === 'object') ? data.license : {});
-
-        if (typeof data.hasLicenseKey === 'boolean') {
-            nextLicense.hasLicenseKey = data.hasLicenseKey;
-        } else {
-            nextLicense.hasLicenseKey = nextLicense.hasLicenseKey === true;
-        }
-        if (typeof data.licenseEditable === 'boolean') {
-            nextLicense.licenseEditable = data.licenseEditable;
-        } else if (typeof data.editableActive === 'boolean') {
-            nextLicense.licenseEditable = data.editableActive;
-        } else if (typeof data.disabled === 'boolean') {
-            nextLicense.licenseEditable = !data.disabled;
-        } else if (typeof nextLicense.licenseEditable !== 'boolean') {
-            nextLicense.licenseEditable = true;
-        }
-        nextLicense.editableActive = nextLicense.licenseEditable;
-        nextLicense.disabled = !nextLicense.licenseEditable;
-        if (typeof data.licenseKeyMasked === 'string') {
-            nextLicense.licenseKeyMasked = data.licenseKeyMasked;
-        } else if (typeof nextLicense.licenseKeyMasked !== 'string') {
-            nextLicense.licenseKeyMasked = '';
-        }
-        if (typeof data.tier === 'string' && data.tier.length > 0) {
-            nextLicense.tier = data.tier;
-        }
-        if (!Array.isArray(nextLicense.features)) {
-            nextLicense.features = [];
-        }
-        if (!nextLicense.deviceLease || typeof nextLicense.deviceLease !== 'object') {
-            nextLicense.deviceLease = null;
-        }
-        if (typeof nextLicense.maxDevices !== 'number') {
-            nextLicense.maxDevices = nextLicense.deviceLease?.maxDevices ?? null;
-        }
-        if (typeof nextLicense.activeDevices !== 'number') {
-            nextLicense.activeDevices = nextLicense.deviceLease?.activeDevices ?? null;
-        }
-
-        const wasDonated = p3xr.state.donated === true;
-        // All features are free — always enterprise
-        const isDonated = true;
-        const activeForFeatures = true;
-        const hasProOrEnterpriseJsonBinary = true;
-
-        p3xr.state.license = nextLicense;
-        p3xr.state.donated = isDonated;
-        // All features are free — always enterprise
-        p3xr.state.hasProOrEnterpriseJsonBinary = true;
-        // p3xr.state.hasProOrEnterpriseJsonBinary = hasProOrEnterpriseJsonBinary;
-        if (p3xr.state.cfg && typeof data.readonlyConnections === 'boolean') {
-            p3xr.state.cfg.readonlyConnections = data.readonlyConnections;
-        }
-
-        if (wasDonated !== isDonated) {
-            try {
-                if (!p3xr.isBot?.()) {
-                    (window as any).gtag?.('config', p3xr.settings.googleAnalytics, {
-                        page_path: isDonated ? '/donated' : '/free'
-                    });
-                }
-            } catch { /* noop */ }
-        }
-
-        this.licenseUpdate$.next(nextLicense);
-    }
-
-    private async refreshLicenseStatus(): Promise<void> {
-        try {
-            const data = await this.request({ action: 'license-status' });
-            this.applyLicenseData(data);
-        } catch (e: any) {
-            console.warn('license-status refresh failed', e.message);
-        }
-    }
-
     private handleSocketError(error: any): void {
+        try { p3xr.ui.overlay.show(); } catch {}
         if (!this.connectErrorWas) {
             this.connectErrorWas = true;
             this.socketError$.next(error);
@@ -294,9 +195,6 @@ export class SocketService {
                 clearTimeout(timeout);
                 this.ioClient.off(responseEvent);
                 if (data?.status === 'ok') {
-                    if (data.license || data.licenseKey || data.donated || options.action === 'license-status') {
-                        this.applyLicenseData(data);
-                    }
                     resolve(data);
                 } else {
                     let errMsg = 'Unknown error';

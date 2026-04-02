@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "Исчистена лиценца",
-    invalid_license: "Неважечка лиценца",
-    license_max_devices_reached: "Достигнати се максимални места на уредот",
-    license_readonly: "Лиценцата може да се смени само од терминалот на серверот.",
     server_error: "Грешка на серверот, обидете се повторно"
   },
   title: {
@@ -51,8 +47,12 @@ const strings = {
     deleteAllKeys: opts => {
       return `Избришете го ова дрво и сите негови клучеви (${opts.key})?`;
     },
+    deleteSearchKeys: opts => {
+      return `Дали сте сигурни дека ќе ги избришете сите клучеви што одговараат на "${opts.pattern}"? Пронајдени ${opts.count} клучеви.`;
+    },
     socketioConnectError: "Socket.IO не може да се поврзе со серверот, можете повторно да вчитате и да се обидете сами да ја решите грешката во врската, клиентот не знае како сам да ја реши.",
     socketioAuthRequired: "Потребна е овластување Socket.IO. Ве молиме проверете ја автентичноста со HTTP Basic Auth (корисничко име/лозинка) и вчитајте повторно.",
+    delete: "Избриши?",
     deleteKey: "Дали сигурно ќе го избришете овој клуч?",
     rename: {
       title: "Дали сигурно ќе го преименувате овој клуч?",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "Претворете го текстот во време",
       convertTextToTimePlaceholder: "На пр. 1d ќе биде 86400"
     },
-    license: {
-      title: "Поставете лиценца",
-      textContent: "If you want to use paid features, please contact support@corifeus.com to request a license. Pricing is Pro 400 HUF/month (€1/month) or 4,000 HUF/year (€10/year), and Enterprise 1,200 HUF/month (€3/month) or 12,000 HUF/year (€30/year). Yearly is 10x monthly. With 27% VAT, totals are Pro 500 HUF/month (€1.27/month) or 5,100 HUF/year (€12.70/year), Enterprise 1,500 HUF/month (€3.81/month) or 15,200 HUF/year (€38.10/year). License validation requires internet access. Default license includes 5 seats. If you need more seats, contact us at support@corifeus.com.",
-      placeholder: "Лиценца клуч"
-    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -136,13 +131,17 @@ const strings = {
     exportKeys: "Извези клучеви",
     exportAllKeys: (opts) => `Извези ги сите ${opts.count} клучеви`,
     exportSearchResults: (opts) => `Извези ${opts.count} резултати`,
+    deleteAllKeysMenu: (opts) => `Избриши ги сите ${opts.count}`,
     importKeys: "Увези клучеви",
+    deleteSearchKeys: (opts) => `Избриши ${opts.count} совпаѓачки клучеви`,
     saveWithFormatJson: "Зач��вај со формат",
     formatJson: "Форматирајте Json",
     wrap: "Завиткајте",
     unwrap: "Одвиткајте",
     downloadJson: "Преземете го JSON",
-    pubsubMonitor: "PubSub Монитор",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "Јазик",
@@ -183,7 +182,6 @@ const strings = {
     edit: "Уреди",
     save: "Зачувај",
     ttl: "Поставете TTL",
-    license: "Поставете лиценца",
     delete: "Избриши",
     remove: "Отстрани",
     sure: "Секако",
@@ -262,38 +260,6 @@ const strings = {
     connectiondEdit: "Уред�� врска",
     connectiondView: "Прикажи ја врската",
     connections: "Врски",
-    licenseInfo: "Лиценца",
-    licenseEditable: "Лиценца за уредување",
-    licenseEditableYes: "Да",
-    licenseEditableNo: "бр",
-    licenseTerminalOnly: "Лиценцата може да се конфигурира само од терминалот на серверот.",
-    licenseTierPolicyTitle: "Политика на нивоа",
-    licenseTierPolicyText: "<h4>Free</h4>core Redis UI only; no SSH tunneling, no Readonly connection mode, no Cluster/Sentinel, no Edit JSON/Upload binary/Download binary, no ReJSON.<br/><strong>Price: 0 HUF/month (€0/month).</strong><br/><br/><h4>Pro</h4>SSH tunneling, Readonly connection mode (including --readonly-connections/-r), Edit JSON, Upload binary, Download binary, ReJSON.<br/><strong>Base price: 400 HUF/month (€1/month) or 4,000 HUF/year (€10/year).</strong><br/><strong>Total with 27% VAT: 500 HUF/month (€1.27/month) or 5,100 HUF/year (€12.70/year).</strong><br/><br/><h4>Enterprise</h4>SSH tunneling, Cluster and Sentinel, plus Edit JSON, Upload binary, Download binary, ReJSON; --readonly-connections/-r also works.<br/><strong>Base price: 1,200 HUF/month (€3/month) or 12,000 HUF/year (€30/year).</strong><br/><strong>Total with 27% VAT: 1,500 HUF/month (€3.81/month) or 15,200 HUF/year (€38.10/year).</strong><br/><br/><h4>Yearly rule</h4>Yearly price is 10x the monthly price.<br/><br/><h4>Seats</h4>Default license includes 5 seats. If you need more seats, contact us at <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><br/><h4>Enterprise trial</h4>10 days free for anyone with a real existing email address (non-test email).<br/><hr/><h4>Billing info in e-mail</h4>Name, Billing e-mail, Country code, Postal code, City, Address, VAT ID (optional).<br/><br/><h4>Payment</h4>PayPal payment is available only in HUF (forint); after sending the money @ <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> I will send you an invoice. All payments are non-refundable.<br/><br/><h4>VAT</h4>VAT is added to the price (27% in Hungary).<br/><hr/><h4>Contact</h4>If you want to say hi or have a question, contact <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><hr/><h4>Language</h4>Invoice and license e-mail communication is in English. Invoice currency is HUF.<br/><hr/><h4>Note</h4>License validation requires internet access.",
-    licenseState: "држава",
-    licenseStateActive: "Активен",
-    licenseStateInactive: "Неактивен",
-    licenseStateNoLicense: "Без лиценца",
-    licenseKeyMasked: "Зачуван клуч",
-    licenseTier: "Ниво",
-    licenseValid: "Важи",
-    licenseStatus: "Статус на лиценца",
-    licenseReason: "Причина",
-    licenseCheckedAt: "Проверено во",
-    licenseStartsAt: "Започнува во",
-    licenseExpiresAt: "Истекува во",
-    licenseDaysLeft: "Преостануваат денови",
-    licenseMaxDevices: "Макс уреди",
-    licenseActiveDevices: "Активни уреди",
-    licenseActiveDevicesInfo: "Ако некој уред повеќе не се користи, неговото седиште автоматски се ослободува по 75 минути.",
-    licenseCustomerEmail: "Е-пошта на клиентите",
-    licenseFeatures: "Карактеристики",
-    licenseFeaturesEmpty: "Нема дополнителни функции",
-    licenseFeatureReadonlyMode: "Режим за поврзување само за читање",
-    licenseFeatureReadonlyConnectionsFlag: "Врски само за читање (--readonly-connections/-r)",
-    licenseFeatureSsh: "SSH тунелирање",
-    licenseFeatureCluster: "Cluster врски",
-    licenseFeatureSentinel: "Sentinel врски",
-    licenseFeatureReJSON: "ReJSON (тип на податоци JSON)",
     keysSort: {
       on: "Вклучено е сортирање на копчињата",
       off: "Сортирање на копчињата"
@@ -311,9 +277,6 @@ const strings = {
       on: "Вклучено само за читање",
       off: "Исклучено само за читање"
     },
-    proSshOnly: "SSH е достапен во Pro или Enterprise.",
-    proReadonlyOnly: "Режимот за поврзување само за читање е достапен во Pro или Enterprise.",
-    enterpriseClusterSentinelOnly: "Cluster и Sentinel се достапн�� само во Enterprise.",
     theme: {
       light: "Светлина",
       dark: "Темно претпријатие",
@@ -355,16 +318,20 @@ const strings = {
     importConflict: "Ако клучот веќе постои:",
     noKeysToExport: "Нема клучеви за извоз",
     time: "Време",
+    type: "Тип",
+    format: "Формат",
     loading: "Се вчитува...",
     autoRefresh: "Авто",
     exportSearchHint: "Извоз само на клучеви кои одговараат на тековното пребарување",
     importSearchHint: "Увозот се применува на целата база на податоци, не само на резултатите од пребарувањето",
+    deleteSearchHint: "Ги брише сите клучеви што одговараат на тековното пребарување на серверот",
+    deletingSearchKeys: "Бришење на совпаѓачки клучеви...",
     importNoKeys: "Не се пронајдени клучеви во датотеката",
   },
   status: {
     dataCopied: "Податоците се во таблата со исечоци",
-    licenseSaved: "Лиценцата е зачувана",
     exportDone: "Извозот е завршен",
+    deletedSearchKeys: (opts) => `Избришани ${opts.count} клучеви`,
     indexCreated: "Индексот е создаден",
     indexDropped: "Индексот е избришан",
     importDone: (opts) => `Увозот завршен: ${opts.created} создадени, ${opts.skipped} прескокнати, ${opts.errors} грешки`,
@@ -412,35 +379,10 @@ const strings = {
     "readonly-connections": "Врските за додавање/зачувување/бришење се само за читање!",
     "readonly-connection-mode": "Оваа врска е режим само за читање!",
     "list-out-of-bounds": "Овој индекс на список е надвор од границите",
-    "donation-ware-feature": "Оваа функција е присутна во верзијата за донации.",
-    "feature-pro-readonly-required": "Режимот за поврзување само за читање бара лиценца Pro или Enterprise.",
-    "feature-pro-ssh-required": "За тунелирање SSH е потребна лиценца Pro или Enterprise.",
-    "feature-enterprise-cluster-sentinel-required": "Cluster и Sentinel бараат лиценца на Enterprise.",
-    "feature-pro-json-binary-required": "Уредете го JSON, Поставете бинарно и преземање бинарно бара лиценца Pro или Enterprise.",
-    "feature-pro-rejson-required": "ReJSON (тип на податоци JSON) бара лиценца Pro или Enterprise.",
     "invalid-json-value": "Вредноста не е валидна JSON.",
     "http_auth_required": "Потребна е овластување: ве молиме проверете ја автентичноста со HTTP Basic Auth и вчитајте ја повторно.",
     "auto-connection-failed": "Можно е, врската е отстранета и автоматската врска не успеа, поради ова.",
     invalid_console_command: "Оваа команда не работи преку GUI."
-  },
-  licenseReason: {
-    LICENSE_VALID: "Лиценцата е валидна",
-    LICENSE_INVALID: "Лиценцата е неважечка",
-    LICENSE_MISSING: "Не е поставен клуч за лиценца",
-    LICENSE_DISABLED: "Лиценцата е оневозможена во конфигурацијата на серверот",
-    LICENSE_NOT_FOUND: "Лиценцата не е пронајдена",
-    LICENSE_EXPIRED: "Лиценцата е истечена",
-    LICENSE_CLEARED: "Клучот за лиценца беше исчистен",
-    LICENSE_MAX_DEVICES_REACHED: "Достигнати се максимални места на уредот",
-    PRODUCT_MISMATCH: "Производот за лиценцирање не се совпаѓа"
-  },
-  licenseStatusValue: {
-    active: "Активен",
-    deleted: "Избришано",
-    all: "Сите",
-    expired: "Истечен",
-    missing: "Недостасува",
-    inactive: "Неактивен"
   },
   form: {
     error: {
@@ -610,12 +552,49 @@ const strings = {
           field: "Поле",
           value: "Вредност"
         }
+      },
+      timeseries: {
+        chart: "Графикон",
+        info: "Информации",
+        addPoint: "Додај податочна точка",
+        from: "Од (ms или -)",
+        to: "До (ms или +)",
+        aggregation: "Агрегација",
+        timeBucket: "Корпа (ms)",
+        none: "Нема",
+        dataPoints: "податочни точки",
+        labels: "Етикети",
+        rules: "Правила",
+        retention: "Задржување",
+        timestamp: "Временски печат",
+        value: "Вредност",
+        retentionHint: "0 = без истекување, или милисекунди",
+        duplicatePolicy: "Политика за дупликати",
+        labelsHint: "клуч1 вредност1 клуч2 вредност2",
+        timestampHint: "'*' значи автоматски генерирано, или милисекунди временски печат",
+        editAllHint: "Една податочна точка по ред: временски_печат вредност (временскиот печат може да биде * за автоматски)",
+        autoSpread: "Авто * интервал на ширење",
+        formula: "Формула",
+        formulaLinear: "Линеарна",
+        formulaRandom: "Случајна",
+        formulaSawtooth: "Пила",
+        formulaPoints: "Точки",
+        formulaAmplitude: "Амплитуда",
+        formulaOffset: "Поместување",
+        generate: "Генерирај",
+        exportChart: "Извези PNG",
+        overlay: "Преклопи клучеви",
+        overlayHint: "Клучеви одделени со запирка",
+        mrangeFilter: "Филтер за етикети",
+        bulkMode: "Масовно генерирање",
+        mrangeHint: "пр. sensor=temp"
       }
     },
     treeControls: {
       settings: "Поставки за дрво",
       expandAll: "Прошири ги сите",
       collapseAll: "Собори ги сите",
+      level: "Ниво",
       search: {
         search: "Пребарајте во копчињата",
         clear: "Исчистете го тековното пребарување за да го поставите празно",
@@ -634,13 +613,21 @@ const strings = {
     }
   },
   time: {
+    type: "Тип",
+    format: "Формат",
     loading: "Се вчитува...",
     years: "години",
     months: "месеци",
     days: "денови",
     year: "година",
     month: "месец",
-    day: "ден"
+    day: "ден",
+    second: "секунда",
+    seconds: "секунди",
+    minute: "минута",
+    minutes: "минути",
+    hour: "час",
+    hours: "часови"
   },
   redisTypes: {
     string: "String",
@@ -649,7 +636,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

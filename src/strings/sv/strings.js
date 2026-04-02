@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "Licensen har rensats",
-    invalid_license: "Ogiltig licens",
-    license_max_devices_reached: "Maximalt antal enhetsplatser har nåtts",
-    license_readonly: "Licensen kan bara ändras från serverns terminal.",
     server_error: "Serverfel, vänligen försök igen"
   },
   title: {
@@ -51,8 +47,12 @@ const strings = {
     deleteAllKeys: opts => {
       return `Radera detta träd och alla dess nycklar (${opts.key})?`;
     },
+    deleteSearchKeys: opts => {
+      return `Är du säker på att du vill radera alla nycklar som matchar "${opts.pattern}"? Hittade ${opts.count} nycklar.`;
+    },
     socketioConnectError: "Socket.IO kan inte ansluta till servern, du kan ladda om och försöka lösa anslutningsfelet själv, klienten vet inte hur den ska lösa det.",
     socketioAuthRequired: "Socket.IO-auktorisering krävs. Vänligen autentisera med HTTP Basic Auth (användarnamn/lösenord) och ladda om.",
+    delete: "Radera?",
     deleteKey: "Är du säker på att du vill radera denna nyckel?",
     rename: {
       title: "Är du säker på att du vill byta namn på denna nyckel?",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "Konvertera text till tid",
       convertTextToTimePlaceholder: "T.ex. 1d blir 86400"
     },
-    license: {
-      title: "Ange licens",
-      textContent: "Om du vill använda betalfunktioner, kontakta support@corifeus.com för att begära en licens. Priset är Pro 400 HUF/månad (€1/månad) eller 4 000 HUF/år (€10/år), och Enterprise 1 200 HUF/månad (€3/månad) eller 12 000 HUF/år (€30/år). Årspris är 10x månadspriset. Med 27% moms blir totalen Pro 500 HUF/månad (€1,27/månad) eller 5 100 HUF/år (€12,70/år), Enterprise 1 500 HUF/månad (€3,81/månad) eller 15 200 HUF/år (€38,10/år). Licensvalidering kräver internetåtkomst. Standardlicensen inkluderar 5 platser. Om du behöver fler platser, kontakta oss på support@corifeus.com.",
-      placeholder: "Licensnyckel"
-    }
   },
   language: {
     bg: "Български / Bulgarian",
@@ -136,13 +131,17 @@ const strings = {
     exportKeys: "Exportera nycklar",
     exportAllKeys: (opts) => `Exportera alla ${opts.count} nycklar`,
     exportSearchResults: (opts) => `Exportera ${opts.count} resultat`,
+    deleteAllKeysMenu: (opts) => `Radera alla ${opts.count}`,
     importKeys: "Importera nycklar",
+    deleteSearchKeys: (opts) => `Radera ${opts.count} matchande nycklar`,
     saveWithFormatJson: "Spara med formatering",
     formatJson: "Formatera Json",
     wrap: "Radbrytning",
     unwrap: "Ingen radbrytning",
     downloadJson: "Ladda ner JSON",
-    pubsubMonitor: "PubSub-övervakare",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     language: "Språk / Language",
     ok: "OK",
     addKey: "Lägg till i denna nyckel",
@@ -181,7 +180,6 @@ const strings = {
     edit: "Redigera",
     save: "Spara",
     ttl: "Ange TTL",
-    license: "Ange licens",
     delete: "Radera",
     remove: "Ta bort",
     sure: "Säker",
@@ -260,38 +258,6 @@ const strings = {
     connectiondEdit: "Redigera anslutning",
     connectiondView: "Visa anslutning",
     connections: "Anslutningar",
-    licenseInfo: "Licens",
-    licenseEditable: "Licens redigerbar",
-    licenseEditableYes: "Ja",
-    licenseEditableNo: "Nej",
-    licenseTerminalOnly: "Licensen kan bara konfigureras från serverns terminal.",
-    licenseTierPolicyTitle: "Nivåpolicy",
-    licenseTierPolicyText: "<h4>Gratis</h4>Enbart grundläggande Redis UI; ingen SSH-tunnel, inget skrivskyddat anslutningsläge, inget Cluster/Sentinel, ingen Redigera JSON/Ladda upp binär/Ladda ner binär, ingen ReJSON.<br/><strong>Pris: 0 HUF/månad (€0/månad).</strong><br/><br/><h4>Pro</h4>SSH-tunnel, skrivskyddat anslutningsläge (inklusive --readonly-connections/-r), Redigera JSON, Ladda upp binär, Ladda ner binär, ReJSON.<br/><strong>Baspris: 400 HUF/månad (€1/månad) eller 4 000 HUF/år (€10/år).</strong><br/><strong>Totalt med 27% moms: 500 HUF/månad (€1,27/månad) eller 5 100 HUF/år (€12,70/år).</strong><br/><br/><h4>Enterprise</h4>SSH-tunnel, Cluster och Sentinel, plus Redigera JSON, Ladda upp binär, Ladda ner binär, ReJSON; --readonly-connections/-r fungerar också.<br/><strong>Baspris: 1 200 HUF/månad (€3/månad) eller 12 000 HUF/år (€30/år).</strong><br/><strong>Totalt med 27% moms: 1 500 HUF/månad (€3,81/månad) eller 15 200 HUF/år (€38,10/år).</strong><br/><br/><h4>Årsregel</h4>Årspriset är 10x månadspriset.<br/><br/><h4>Platser</h4>Standardlicensen inkluderar 5 platser. Om du behöver fler platser, kontakta oss på <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><br/><h4>Enterprise-provperiod</h4>10 dagars gratis provperiod för alla med en riktig befintlig e-postadress (ej test-e-post).<br/><hr/><h4>Faktureringsinfo via e-post</h4>Namn, Faktura-e-post, Landskod, Postnummer, Stad, Adress, Momsregistreringsnummer (valfritt).<br/><br/><h4>Betalning</h4>PayPal-betalning är tillgänglig enbart i HUF (forint); efter att du skickat pengarna @ <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> skickar jag en faktura. Alla betalningar är icke-återbetalningsbara.<br/><br/><h4>Moms</h4>Moms läggs till priset (27% i Ungern).<br/><hr/><h4>Kontakt</h4>Om du vill hälsa eller har en fråga, kontakta <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><hr/><h4>Språk</h4>Faktura och licens-e-postkommunikation sker på engelska. Fakturavaluta är HUF.<br/><hr/><h4>Obs</h4>Licensvalidering kräver internetåtkomst.",
-    licenseState: "Status",
-    licenseStateActive: "Aktiv",
-    licenseStateInactive: "Inaktiv",
-    licenseStateNoLicense: "Ingen licens",
-    licenseKeyMasked: "Sparad nyckel",
-    licenseTier: "Nivå",
-    licenseValid: "Giltig",
-    licenseStatus: "Licensstatus",
-    licenseReason: "Orsak",
-    licenseCheckedAt: "Kontrollerad",
-    licenseStartsAt: "Börjar",
-    licenseExpiresAt: "Går ut",
-    licenseDaysLeft: "Dagar kvar",
-    licenseMaxDevices: "Max enheter",
-    licenseActiveDevices: "Aktiva enheter",
-    licenseActiveDevicesInfo: "Om en enhet inte längre används frigörs dess plats automatiskt efter 75 minuter.",
-    licenseCustomerEmail: "Kund-e-post",
-    licenseFeatures: "Funktioner",
-    licenseFeaturesEmpty: "Inga extra funktioner",
-    licenseFeatureReadonlyMode: "Skrivskyddat anslutningsläge",
-    licenseFeatureReadonlyConnectionsFlag: "Skrivskyddade anslutningar (--readonly-connections/-r)",
-    licenseFeatureSsh: "SSH-tunnel",
-    licenseFeatureCluster: "Cluster-anslutningar",
-    licenseFeatureSentinel: "Sentinel-anslutningar",
-    licenseFeatureReJSON: "ReJSON (JSON data type)",
     keysSort: {
       on: "Nyckelsortering på",
       off: "Nyckelsortering av"
@@ -309,9 +275,6 @@ const strings = {
       on: "Skrivskydd på",
       off: "Skrivskydd av"
     },
-    proSshOnly: "SSH är tillgängligt i Pro eller Enterprise.",
-    proReadonlyOnly: "Skrivskyddat anslutningsläge är tillgängligt i Pro eller Enterprise.",
-    enterpriseClusterSentinelOnly: "Cluster och Sentinel är tillgängliga enbart i Enterprise.",
     theme: {
       light: "Ljus",
       dark: "Mörk enterprise",
@@ -353,16 +316,20 @@ const strings = {
     importConflict: "Om nyckeln redan finns:",
     noKeysToExport: "Inga nycklar att exportera",
     time: "Tid",
+    type: "Typ",
+    format: "Format",
     loading: "Laddar...",
     autoRefresh: "Auto",
     exportSearchHint: "Exporterar bara nycklar som matchar aktuell sökning",
     importSearchHint: "Import gäller hela databasen, inte bara sökresultat",
+    deleteSearchHint: "Raderar alla nycklar som matchar den aktuella sökningen på servern",
+    deletingSearchKeys: "Raderar matchande nycklar...",
     importNoKeys: "Inga nycklar hittades i filen",
   },
   status: {
     dataCopied: "Datan finns i urklipp",
-    licenseSaved: "Licensen sparad",
     exportDone: "Export klar",
+    deletedSearchKeys: (opts) => `${opts.count} nycklar raderade`,
     indexCreated: "Index skapat",
     indexDropped: "Index borttaget",
     importDone: (opts) => `Import klar: ${opts.created} skapade, ${opts.skipped} hoppade över, ${opts.errors} fel`,
@@ -410,35 +377,10 @@ const strings = {
     "readonly-connections": "Anslutningar lägg till/spara/radera är enbart skrivskyddade!",
     "readonly-connection-mode": "Denna anslutning är i skrivskyddat läge!",
     "list-out-of-bounds": "Detta listindex är utanför intervallet",
-    "donation-ware-feature": "Denna funktion finns i donationsversionen.",
-    "feature-pro-readonly-required": "Skrivskyddat anslutningsläge kräver Pro- eller Enterprise-licens.",
-    "feature-pro-ssh-required": "SSH-tunnel kräver Pro- eller Enterprise-licens.",
-    "feature-enterprise-cluster-sentinel-required": "Cluster och Sentinel kräver Enterprise-licens.",
-    "feature-pro-json-binary-required": "Redigera JSON, Ladda upp binär och Ladda ner binär kräver Pro- eller Enterprise-licens.",
-    "feature-pro-rejson-required": "ReJSON (JSON data type) requires Pro or Enterprise license.",
     "invalid-json-value": "The value is not valid JSON.",
     "http_auth_required": "Auktorisering krävs: vänligen autentisera med HTTP Basic Auth och ladda om.",
     "auto-connection-failed": "Möjligen togs anslutningen bort och den automatiska anslutningen misslyckades på grund av detta.",
     invalid_console_command: "Detta kommando fungerar inte via GUI."
-  },
-  licenseReason: {
-    LICENSE_VALID: "Licensen är giltig",
-    LICENSE_INVALID: "Licensen är ogiltig",
-    LICENSE_MISSING: "Ingen licensnyckel angiven",
-    LICENSE_DISABLED: "Licensen är inaktiverad i serverkonfigurationen",
-    LICENSE_NOT_FOUND: "Licensen hittades inte",
-    LICENSE_EXPIRED: "Licensen har gått ut",
-    LICENSE_CLEARED: "Licensnyckeln har rensats",
-    LICENSE_MAX_DEVICES_REACHED: "Maximalt antal enhetsplatser har nåtts",
-    PRODUCT_MISMATCH: "Licensprodukten matchar inte"
-  },
-  licenseStatusValue: {
-    active: "Aktiv",
-    deleted: "Raderad",
-    all: "Alla",
-    expired: "Utgången",
-    missing: "Saknas",
-    inactive: "Inaktiv"
   },
   form: {
     error: {
@@ -608,12 +550,49 @@ const strings = {
           field: "Fält",
           value: "Värde"
         }
+      },
+      timeseries: {
+        chart: "Diagram",
+        info: "Info",
+        addPoint: "Lägg till datapunkt",
+        from: "Från (ms eller -)",
+        to: "Till (ms eller +)",
+        aggregation: "Aggregering",
+        timeBucket: "Tidsintervall (ms)",
+        none: "Ingen",
+        dataPoints: "datapunkter",
+        labels: "Etiketter",
+        rules: "Regler",
+        retention: "Lagring",
+        timestamp: "Tidsstämpel",
+        value: "Värde",
+        retentionHint: "0 = ingen utgång, eller millisekunder",
+        duplicatePolicy: "Dubblettpolicy",
+        labelsHint: "nyckel1 värde1 nyckel2 värde2",
+        timestampHint: "'*' betyder automatisk generering, eller tidsstämpel i millisekunder",
+        editAllHint: "En datapunkt per rad: tidsstämpel värde (tidsstämpel kan vara * för auto)",
+        autoSpread: "Automatiskt * spridningsintervall",
+        formula: "Formel",
+        formulaLinear: "Linjär",
+        formulaRandom: "Slumpmässig",
+        formulaSawtooth: "Sågtand",
+        formulaPoints: "Punkter",
+        formulaAmplitude: "Amplitud",
+        formulaOffset: "Förskjutning",
+        generate: "Generera",
+        exportChart: "Exportera PNG",
+        overlay: "Överlagra nycklar",
+        overlayHint: "Kommaseparerade nycklar",
+        mrangeFilter: "Etikettfilter",
+        bulkMode: "Massgenerering",
+        mrangeHint: "t.ex. sensor=temp"
       }
     },
     treeControls: {
       settings: "Trädinställningar",
       expandAll: "Expandera alla",
       collapseAll: "Komprimera alla",
+      level: "Nivå",
       search: {
         search: "Sök bland nycklarna",
         clear: "Rensa aktuell sökning",
@@ -632,13 +611,21 @@ const strings = {
     }
   },
   time: {
+    type: "Typ",
+    format: "Format",
     loading: "Laddar...",
     years: "år",
     months: "månader",
     days: "dagar",
     year: "år",
     month: "månad",
-    day: "dag"
+    day: "dag",
+    second: "sekund",
+    seconds: "sekunder",
+    minute: "minut",
+    minutes: "minuter",
+    hour: "timme",
+    hours: "timmar"
   },
   redisTypes: {
     string: "String",
@@ -647,7 +634,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

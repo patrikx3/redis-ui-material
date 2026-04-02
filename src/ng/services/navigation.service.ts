@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
  * - 'settings'              → /settings
  * - 'database.statistics'   → /database/statistics
  * - 'database.key'          → /database/key/:key
- * - 'socketio-error'        → /socketio-error
  *
  * Legacy 'main.*' names are supported for backward compatibility.
  */
@@ -41,9 +40,6 @@ export class NavigationService {
             case 'database.key':
             case 'main.key':
                 this.router.navigate(['/database/key', params?.key ?? '']);
-                break;
-            case 'socketio-error':
-                this.router.navigate(['/socketio-error'], { state: { error: params?.error } });
                 break;
             default:
                 console.warn(`[NavigationService] Unknown state: ${state}`);

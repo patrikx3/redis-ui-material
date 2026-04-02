@@ -155,7 +155,17 @@ export class RedisParserService {
         }
 
         const recursiveKeyCount = (node: any) => {
-            node.childCount = node.children.filter((child: any) => child.type === 'element').length;
+            node.childCount = 0;
+            for (const child of node.children) {
+                if (child.type === 'element') {
+                    const info = child.keysInfo;
+                    if (info && info.type !== 'string' && info.type !== 'json' && info.length != null) {
+                        node.childCount += info.length;
+                    } else {
+                        node.childCount += 1;
+                    }
+                }
+            }
             for (const child of node.children) {
                 recursiveKeyCount(child);
                 if (child.type === 'folder') {

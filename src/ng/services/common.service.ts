@@ -30,6 +30,7 @@ export class CommonService {
 
     readonly treeExpandAll$ = new Subject<void>();
     readonly treeCollapseAll$ = new Subject<void>();
+    readonly treeExpandToLevel$ = new Subject<number>();
 
     private lastResponse: any;
 

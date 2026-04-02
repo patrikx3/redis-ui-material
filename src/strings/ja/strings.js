@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "ライセンスがクリアされました",
-    invalid_license: "無効なライセンス",
-    license_max_devices_reached: "最大デバイス数に達しました",
-    license_readonly: "ライセンスはサーバーターミナルからのみ変更できます。",
     server_error: "サーバーエラー、もう一度お試しください"
   },
   title: {
@@ -48,8 +44,12 @@ const strings = {
     deleteConnection: "確認",
     deleteConnectionText: "このRedis接続を削除してもよろしいですか？",
     deleteNode: "このRedisノードを削除してもよろしいですか？",
+    delete: "削除しますか？",
     deleteAllKeys: opts => {
       return `このツリーとすべてのキーを削除しますか (${opts.key})？`;
+    },
+    deleteSearchKeys: opts => {
+      return `"${opts.pattern}" に一致するすべてのキーを削除してもよろしいですか？ ${opts.count} 件のキーが見つかりました。`;
     },
     socketioConnectError: "Socket.IOがサーバーに接続できません。再読み込みして接続エラーの解決を試みることができますが、クライアント側では自動的に解決できません。",
     socketioAuthRequired: "Socket.IO認証が必要です。HTTP Basic Auth（ユーザー名/パスワード）で認証し、再読み込みしてください。",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "テキストを時間に変換",
       convertTextToTimePlaceholder: "例：1dは86400になります"
     },
-    license: {
-      title: "ライセンスの設定",
-      textContent: "有料機能を使用したい場合は、support@corifeus.comに連絡してライセンスをリクエストしてください。価格はPro 400 HUF/月（€1/月）または4,000 HUF/年（€10/年）、Enterprise 1,200 HUF/月（€3/月）または12,000 HUF/年（€30/年）です。年間は月額の10倍です。27%のVATを含む合計はPro 500 HUF/月（€1.27/月）または5,100 HUF/年（€12.70/年）、Enterprise 1,500 HUF/月（€3.81/月）または15,200 HUF/年（€38.10/年）です。ライセンスの検証にはインターネットアクセスが必要です。デフォルトライセンスには5シートが含まれます。追加のシートが必要な場合は、support@corifeus.comまでお問い合わせください。",
-      placeholder: "ライセンスキー"
-    }
   },
   language: {
     bg: "Български / Bulgarian",
@@ -136,13 +131,17 @@ const strings = {
     exportKeys: "キーをエクスポート",
     exportAllKeys: (opts) => `全 ${opts.count} キーをエクスポート`,
     exportSearchResults: (opts) => `${opts.count} 件の結果をエクスポート`,
+    deleteAllKeysMenu: (opts) => `すべて削除 ${opts.count}`,
     importKeys: "キーをインポート",
+    deleteSearchKeys: (opts) => `一致する ${opts.count} 件のキーを削除`,
     saveWithFormatJson: "フォーマット付きで保存",
     formatJson: "JSONをフォーマット",
     wrap: "折り返し",
     unwrap: "折り返しなし",
     downloadJson: "JSONダウンロード",
-    pubsubMonitor: "PubSub Monitor",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     language: "言語 / Language",
     ok: "OK",
     addKey: "このキーに追加",
@@ -181,7 +180,6 @@ const strings = {
     edit: "編集",
     save: "保存",
     ttl: "TTLを設定",
-    license: "ライセンスを設定",
     delete: "削除",
     remove: "除去",
     sure: "確認",
@@ -260,38 +258,6 @@ const strings = {
     connectiondEdit: "接続を編集",
     connectiondView: "接続を表示",
     connections: "接続",
-    licenseInfo: "ライセンス",
-    licenseEditable: "ライセンス編集可能",
-    licenseEditableYes: "はい",
-    licenseEditableNo: "いいえ",
-    licenseTerminalOnly: "ライセンスはサーバーターミナルからのみ設定できます。",
-    licenseTierPolicyTitle: "ティアポリシー",
-    licenseTierPolicyText: "<h4>無料</h4>基本Redis UIのみ。SSHトンネリング、読み取り専用接続モード、Cluster/Sentinel、JSON編集/バイナリアップロード/バイナリダウンロード/ReJSONはありません。<br/><strong>価格：0 HUF/月（€0/月）。</strong><br/><br/><h4>Pro</h4>SSHトンネリング、読み取り専用接続モード（--readonly-connections/-rを含む）、JSON編集、バイナリアップロード、バイナリダウンロード、ReJSON。<br/><strong>基本価格：400 HUF/月（€1/月）または4,000 HUF/年（€10/年）。</strong><br/><strong>27% VAT込み合計：500 HUF/月（€1.27/月）または5,100 HUF/年（€12.70/年）。</strong><br/><br/><h4>Enterprise</h4>SSHトンネリング、ClusterとSentinel、JSON編集、バイナリアップロード、バイナリダウンロード、ReJSON。--readonly-connections/-rも対応。<br/><strong>基本価格：1,200 HUF/月（€3/月）または12,000 HUF/年（€30/年）。</strong><br/><strong>27% VAT込み合計：1,500 HUF/月（€3.81/月）または15,200 HUF/年（€38.10/年）。</strong><br/><br/><h4>年間ルール</h4>年間価格は月額の10倍です。<br/><br/><h4>シート</h4>デフォルトライセンスには5シートが含まれます。追加のシートが必要な場合は、<a href='mailto:support@corifeus.com'>support@corifeus.com</a>までお問い合わせください。<br/><br/><h4>Enterpriseトライアル</h4>実在するメールアドレス（テスト用メール以外）をお持ちの方は10日間無料。<br/><hr/><h4>請求情報（メール）</h4>名前、請求用メール、国コード、郵便番号、市区町村、住所、VAT ID（任意）。<br/><br/><h4>支払い</h4>PayPal支払いはHUF（フォリント）のみ対応。<a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a>に送金後、請求書をお送りします。すべての支払いは返金不可です。<br/><br/><h4>VAT</h4>VATが価格に追加されます（ハンガリーでは27%）。<br/><hr/><h4>お問い合わせ</h4>ご挨拶やご質問がある場合は、<a href='mailto:support@corifeus.com'>support@corifeus.com</a>までご連絡ください。<br/><hr/><h4>言語</h4>請求書とライセンスのメール通信は英語です。請求書の通貨はHUFです。<br/><hr/><h4>注意</h4>ライセンスの検証にはインターネットアクセスが必要です。",
-    licenseState: "状態",
-    licenseStateActive: "有効",
-    licenseStateInactive: "無効",
-    licenseStateNoLicense: "ライセンスなし",
-    licenseKeyMasked: "保存済みキー",
-    licenseTier: "ティア",
-    licenseValid: "有効",
-    licenseStatus: "ライセンス状態",
-    licenseReason: "理由",
-    licenseCheckedAt: "確認日時",
-    licenseStartsAt: "開始日",
-    licenseExpiresAt: "有効期限",
-    licenseDaysLeft: "残り日数",
-    licenseMaxDevices: "最大デバイス数",
-    licenseActiveDevices: "アクティブデバイス",
-    licenseActiveDevicesInfo: "デバイスが使用されなくなった場合、そのシートは75分後に自動的に解放されます。",
-    licenseCustomerEmail: "顧客メール",
-    licenseFeatures: "機能",
-    licenseFeaturesEmpty: "追加機能なし",
-    licenseFeatureReadonlyMode: "読み取り専用接続モード",
-    licenseFeatureReadonlyConnectionsFlag: "読み取り専用接続 (--readonly-connections/-r)",
-    licenseFeatureSsh: "SSHトンネリング",
-    licenseFeatureCluster: "クラスター接続",
-    licenseFeatureSentinel: "Sentinel接続",
-    licenseFeatureReJSON: "ReJSON (JSON data type)",
     keysSort: {
       on: "キーソート オン",
       off: "キーソート オフ"
@@ -309,9 +275,6 @@ const strings = {
       on: "読み取り専用 オン",
       off: "読み取り専用 オフ"
     },
-    proSshOnly: "SSHはProまたはEnterpriseで利用可能です。",
-    proReadonlyOnly: "読み取り専用接続モードはProまたはEnterpriseで利用可能です。",
-    enterpriseClusterSentinelOnly: "ClusterとSentinelはEnterpriseでのみ利用可能です。",
     theme: {
       light: "ライト",
       dark: "ダーク enterprise",
@@ -353,16 +316,20 @@ const strings = {
     importConflict: "キーが既に存在する場合:",
     noKeysToExport: "エクスポートするキーがありません",
     time: "時間",
+    type: "タイプ",
+    format: "フォーマット",
     loading: "読み込み中...",
     autoRefresh: "自動",
     exportSearchHint: "現在の検索に一致するキーのみをエクスポート",
     importSearchHint: "インポートは検索結果だけでなくデータベース全体に適用されます",
+    deleteSearchHint: "現在の検索に一致するすべてのキーを削除",
+    deletingSearchKeys: "一致するキーを削除中...",
     importNoKeys: "ファイルにキーが見つかりません",
   },
   status: {
     dataCopied: "データがクリップボードにコピーされました",
-    licenseSaved: "ライセンスが保存されました",
     exportDone: "エクスポート完了",
+    deletedSearchKeys: (opts) => `${opts.count} 件のキーを削除しました`,
     indexCreated: "インデックス作成完了",
     indexDropped: "インデックス削除完了",
     importDone: (opts) => `インポート完了: ${opts.created} 作成、${opts.skipped} スキップ、${opts.errors} エラー`,
@@ -410,35 +377,10 @@ const strings = {
     "readonly-connections": "接続の追加/保存/削除は読み取り専用です！",
     "readonly-connection-mode": "この接続は読み取り専用モードです！",
     "list-out-of-bounds": "このリストインデックスは範囲外です",
-    "donation-ware-feature": "この機能は寄付版で利用可能です。",
-    "feature-pro-readonly-required": "読み取り専用接続モードにはProまたはEnterpriseライセンスが必要です。",
-    "feature-pro-ssh-required": "SSHトンネリングにはProまたはEnterpriseライセンスが必要です。",
-    "feature-enterprise-cluster-sentinel-required": "ClusterとSentinelにはEnterpriseライセンスが必要です。",
-    "feature-pro-json-binary-required": "JSON編集、バイナリアップロード、バイナリダウンロードにはProまたはEnterpriseライセンスが必要です。",
-    "feature-pro-rejson-required": "ReJSON (JSON data type) requires Pro or Enterprise license.",
     "invalid-json-value": "The value is not valid JSON.",
     "http_auth_required": "認証が必要です。HTTP Basic Authで認証し、再読み込みしてください。",
     "auto-connection-failed": "接続が削除された可能性があり、そのため自動接続に失敗しました。",
     invalid_console_command: "このコマンドはGUIでは動作しません。"
-  },
-  licenseReason: {
-    LICENSE_VALID: "ライセンスは有効です",
-    LICENSE_INVALID: "ライセンスは無効です",
-    LICENSE_MISSING: "ライセンスキーが設定されていません",
-    LICENSE_DISABLED: "サーバー設定でライセンスが無効になっています",
-    LICENSE_NOT_FOUND: "ライセンスが見つかりません",
-    LICENSE_EXPIRED: "ライセンスの有効期限が切れています",
-    LICENSE_CLEARED: "ライセンスキーがクリアされました",
-    LICENSE_MAX_DEVICES_REACHED: "最大デバイス数に達しました",
-    PRODUCT_MISMATCH: "ライセンス製品が一致しません"
-  },
-  licenseStatusValue: {
-    active: "有効",
-    deleted: "削除済み",
-    all: "すべて",
-    expired: "期限切れ",
-    missing: "未設定",
-    inactive: "無効"
   },
   form: {
     error: {
@@ -608,12 +550,49 @@ const strings = {
           field: "フィールド",
           value: "値"
         }
+      },
+      timeseries: {
+        chart: "チャート",
+        info: "情報",
+        addPoint: "ポイント追加",
+        from: "開始 (ms または -)",
+        to: "終了 (ms または +)",
+        aggregation: "集計",
+        timeBucket: "バケット (ms)",
+        none: "なし",
+        dataPoints: "データポイント",
+        labels: "ラベル",
+        rules: "ルール",
+        retention: "保持期間",
+        timestamp: "タイムスタンプ",
+        value: "値",
+        retentionHint: "0 = 有効期限なし、またはミリ秒",
+        duplicatePolicy: "重複ポリシー",
+        labelsHint: "キー1 値1 キー2 値2",
+        timestampHint: "'*' は自動生成、またはミリ秒タイムスタンプ",
+        editAllHint: "1行に1データポイント: タイムスタンプ 値 (タイムスタンプは自動の場合 * を使用)",
+        autoSpread: "自動 * 分散間隔",
+        formula: "数式",
+        formulaLinear: "リニア",
+        formulaRandom: "ランダム",
+        formulaSawtooth: "ノコギリ波",
+        formulaPoints: "ポイント",
+        formulaAmplitude: "振幅",
+        formulaOffset: "オフセット",
+        generate: "生成",
+        exportChart: "PNG エクスポート",
+        overlay: "キーを重ねる",
+        overlayHint: "カンマ区切りのキー",
+        mrangeFilter: "ラベルフィルター",
+        bulkMode: "一括生成",
+        mrangeHint: "例: sensor=temp"
       }
     },
     treeControls: {
       settings: "ツリー設定",
       expandAll: "すべて展開",
       collapseAll: "すべて折りたたむ",
+      level: "レベル",
       search: {
         search: "キー内を検索",
         clear: "現在の検索をクリア",
@@ -632,13 +611,21 @@ const strings = {
     }
   },
   time: {
+    type: "タイプ",
+    format: "フォーマット",
     loading: "読み込み中...",
     years: "年",
     months: "ヶ月",
     days: "日",
     year: "年",
     month: "ヶ月",
-    day: "日"
+    day: "日",
+    second: "秒",
+    seconds: "秒",
+    minute: "分",
+    minutes: "分",
+    hour: "時間",
+    hours: "時間"
   },
   redisTypes: {
     string: "String",
@@ -647,7 +634,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

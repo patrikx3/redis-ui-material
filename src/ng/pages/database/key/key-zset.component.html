@@ -14,12 +14,12 @@
     @for (item of pagedItems; track item.index) {
         <div class="p3xr-key-type-row">
             <span class="p3xr-key-col" style="flex: 20%; cursor: pointer" (click)="editValue(item, $event)">{{ item.score }}</span>
-            <span class="p3xr-value-col p3xr-pre" style="flex: 60%; cursor: pointer" (click)="editValue(item, $event)">{{ item.member }}</span>
+            <span class="p3xr-value-col p3xr-pre" style="flex: 60%; cursor: pointer" (click)="editValue(item, $event)">{{ formatValue(truncateDisplay(item.member)) }}@if (isTruncated(item.member)) {<span style="opacity: 0.5;">...</span>}</span>
             <span style="flex: 20%; text-align: right" class="p3xr-key-type-row-actions">
                 @if (!isReadonly) { <mat-icon class="icon-warn" (click)="deleteZSet(item, $event)" matTooltip="Delete">delete</mat-icon> }
                 <mat-icon class="icon-accent" (click)="showJsonItem(item.member, $event)" matTooltip="JSON">table_chart</mat-icon>
                 <mat-icon class="icon-accent" (click)="copyItem(item.member)" matTooltip="Copy">content_copy</mat-icon>
-                @if (hasProOrEnterprise) { <mat-icon class="icon-accent" (click)="downloadItem(item.index)" matTooltip="Download">download</mat-icon> }
+                <mat-icon class="icon-accent" (click)="downloadItem(item.index)" matTooltip="Download">download</mat-icon>
                 @if (!isReadonly) { <mat-icon class="icon-primary" (click)="editValue(item, $event)" matTooltip="Edit">edit</mat-icon> }
             </span>
         </div>

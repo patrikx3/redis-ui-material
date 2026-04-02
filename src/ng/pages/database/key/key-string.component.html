@@ -1,7 +1,7 @@
 <!-- Action buttons when NOT editing -->
 @if (!editable) {
     <div class="p3xr-key-type-actions">
-        @if (!isReadonly && hasProOrEnterprise) {
+        @if (!isReadonly) {
             @if (isGtSm) {
                 <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="setBufferUpload()">
                     <mat-icon>upload</mat-icon>
@@ -14,18 +14,16 @@
                 </button>
             }
         }
-        @if (hasProOrEnterprise) {
-            @if (isGtSm) {
-                <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="downloadBufferFile()">
-                    <mat-icon>download</mat-icon>
-                    <span>{{ strings?.intention?.downloadBuffer || 'Download' }}</span>
-                </button>
-            } @else {
-                <button mat-mini-fab class="btn-accent" type="button" (click)="downloadBufferFile()"
-                    [matTooltip]="strings?.intention?.downloadBuffer ?? 'Download'" matTooltipPosition="above">
-                    <mat-icon>download</mat-icon>
-                </button>
-            }
+        @if (isGtSm) {
+            <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="downloadBufferFile()">
+                <mat-icon>download</mat-icon>
+                <span>{{ strings?.intention?.downloadBuffer || 'Download' }}</span>
+            </button>
+        } @else {
+            <button mat-mini-fab class="btn-accent" type="button" (click)="downloadBufferFile()"
+                [matTooltip]="strings?.intention?.downloadBuffer ?? 'Download'" matTooltipPosition="above">
+                <mat-icon>download</mat-icon>
+            </button>
         }
         @if (isGtSm) {
             <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="jsonViewer($event)">
@@ -62,18 +60,16 @@
                 </button>
             }
         }
-        @if (hasProOrEnterprise) {
-            @if (isGtSm) {
-                <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="jsonEditor()">
-                    <mat-icon>description</mat-icon>
-                    <span>{{ strings?.intention?.jsonViewEditor || 'Editor' }}</span>
-                </button>
-            } @else {
-                <button mat-mini-fab class="btn-primary" type="button" (click)="jsonEditor()"
-                    [matTooltip]="strings?.intention?.jsonViewEditor ?? 'JSON Editor'" matTooltipPosition="above">
-                    <mat-icon>description</mat-icon>
-                </button>
-            }
+        @if (isGtSm) {
+            <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="jsonEditor()">
+                <mat-icon>description</mat-icon>
+                <span>{{ strings?.intention?.jsonViewEditor || 'Editor' }}</span>
+            </button>
+        } @else {
+            <button mat-mini-fab class="btn-primary" type="button" (click)="jsonEditor()"
+                [matTooltip]="strings?.intention?.jsonViewEditor ?? 'JSON Editor'" matTooltipPosition="above">
+                <mat-icon>description</mat-icon>
+            </button>
         }
         @if (!isReadonly) {
             @if (isGtSm) {
@@ -110,7 +106,7 @@
                 <mat-icon>cancel</mat-icon>
             </button>
         }
-        @if (!isReadonly && hasProOrEnterprise) {
+        @if (!isReadonly) {
             @if (isGtSm) {
                 <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="setBufferUpload()">
                     <mat-icon>upload</mat-icon>
@@ -162,7 +158,7 @@
         </mat-form-field>
     } @else {
         <div class="p3xr-key-type-display" style="cursor: pointer; max-width: 100%; overflow: auto;" (click)="edit()">
-            <span class="p3xr-pre">{{ truncateDisplay(p3xrValue) }}</span>
+            <span class="p3xr-pre" style="word-break: break-all; white-space: pre-wrap;">{{ formatValue(truncateDisplay(p3xrValue)) }}@if (isTruncated(p3xrValue)) {<span style="opacity: 0.5;">...</span>}</span>
         </div>
     }
 </div>

@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "Η άδεια καθαρίστηκε",
-    invalid_license: "Μη έγκυρη άδεια",
-    license_max_devices_reached: "Επιτεύχθηκε ο μέγιστος αριθμός θέσεων συσκευών",
-    license_readonly: "Η άδεια μπορεί να αλλάξει μόνο από το τερματικό του διακομιστή.",
     server_error: "Σφάλμα διακομιστή, παρακαλώ δοκιμάστε ξανά"
   },
   title: {
@@ -51,8 +47,12 @@ const strings = {
     deleteAllKeys: opts => {
       return `Διαγραφή αυτού του δέντρου και όλων των κλειδιών του (${opts.key});`;
     },
+    deleteSearchKeys: opts => {
+      return `Είστε σίγουροι ότι θέλετε να διαγράψετε όλα τα κλειδιά που ταιριάζουν με "${opts.pattern}"; Βρέθηκαν ${opts.count} κλειδιά.`;
+    },
     socketioConnectError: "Το Socket.IO δεν μπορεί να συνδεθεί στον διακομιστή, μπορείτε να κάνετε επαναφόρτωση και να προσπαθήσετε να επιλύσετε το σφάλμα σύνδεσης μόνοι σας, ο πελάτης δεν γνωρίζει πώς να το λύσει μόνος του.",
     socketioAuthRequired: "Απαιτείται εξουσιοδότηση Socket.IO. Παρακαλώ πιστοποιηθείτε με HTTP Basic Auth (όνομα χρήστη/κωδικό πρόσβασης) και κάντε επαναφόρτωση.",
+    delete: "Διαγραφή;",
     deleteKey: "Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το κλειδί;",
     rename: {
       title: "Είστε σίγουροι ότι θέλετε να μετονομάσετε αυτό το κλειδί;",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "Μετατροπή κειμένου σε χρόνο",
       convertTextToTimePlaceholder: "Π.χ. 1d θα γίνει 86400"
     },
-    license: {
-      title: "Ορισμός άδειας",
-      textContent: "Αν θέλετε να χρησιμοποιήσετε λειτουργίες επί πληρωμή, παρακαλώ επικοινωνήστε με support@corifeus.com για να ζητήσετε άδεια. Οι τιμές είναι Pro 400 HUF/μήνα (€1/μήνα) ή 4.000 HUF/έτος (€10/έτος) και Enterprise 1.200 HUF/μήνα (€3/μήνα) ή 12.000 HUF/έτος (€30/έτος). Η ετήσια τιμή είναι 10x η μηνιαία. Με 27% ΦΠΑ, τα σύνολα είναι Pro 500 HUF/μήνα (€1,27/μήνα) ή 5.100 HUF/έτος (€12,70/έτος), Enterprise 1.500 HUF/μήνα (€3,81/μήνα) ή 15.200 HUF/έτος (€38,10/έτος). Η επαλήθευση άδειας απαιτεί πρόσβαση στο διαδίκτυο. Η προεπιλεγμένη άδεια περιλαμβάνει 5 θέσεις. Αν χρειάζεστε περισσότερες θέσεις, επικοινωνήστε μαζί μας στο support@corifeus.com.",
-      placeholder: "Κλειδί άδειας"
-    }
   },
   language: {
     // When you translate the english name, keep the Language in English
@@ -138,13 +133,17 @@ const strings = {
     exportKeys: "Εξαγωγή κλειδιών",
     exportAllKeys: (opts) => `Εξαγωγή όλων των ${opts.count} κλειδιών`,
     exportSearchResults: (opts) => `Εξαγωγή ${opts.count} αποτελεσμάτων`,
+    deleteAllKeysMenu: (opts) => `Διαγραφή όλων ${opts.count}`,
     importKeys: "Εισαγωγή κλειδιών",
+    deleteSearchKeys: (opts) => `Διαγραφή ${opts.count} αντίστοιχων κλειδιών`,
     saveWithFormatJson: "Αποθήκευση με μορφοποίηση",
     formatJson: "Μορφοποίηση Json",
     wrap: "Αναδίπλωση",
     unwrap: "Χωρίς αναδίπλωση",
     downloadJson: "Λήψη JSON",
-    pubsubMonitor: "Παρακολούθηση PubSub",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "Γλώσσα / Language",
@@ -185,7 +184,6 @@ const strings = {
     edit: "Επεξεργασία",
     save: "Αποθήκευση",
     ttl: "Ορισμός TTL",
-    license: "Ορισμός άδειας",
     delete: "Διαγραφή",
     remove: "Αφαίρεση",
     sure: "Σίγουρα",
@@ -264,38 +262,6 @@ const strings = {
     connectiondEdit: "Επεξεργασία σύνδεσης",
     connectiondView: "Προβολή σύνδεσης",
     connections: "Συνδέσεις",
-    licenseInfo: "Άδεια",
-    licenseEditable: "Επεξεργάσιμη άδεια",
-    licenseEditableYes: "Ναι",
-    licenseEditableNo: "Όχι",
-    licenseTerminalOnly: "Η άδεια μπορεί να ρυθμιστεί μόνο από το τερματικό του διακομιστή.",
-    licenseTierPolicyTitle: "Πολιτική επιπέδων",
-    licenseTierPolicyText: "<h4>Δωρεάν</h4>μόνο βασικό Redis UI· χωρίς SSH tunneling, χωρίς λειτουργία σύνδεσης μόνο ανάγνωσης, χωρίς Cluster/Sentinel, χωρίς Επεξεργασία JSON/Ανέβασμα δυαδικών/Λήψη δυαδικών, χωρίς ReJSON.<br/><strong>Τιμή: 0 HUF/μήνα (€0/μήνα).</strong><br/><br/><h4>Pro</h4>SSH tunneling, λειτουργία σύνδεσης μόνο ανάγνωσης (συμπεριλαμβανομένου --readonly-connections/-r), Επεξεργασία JSON, Ανέβασμα δυαδικών, Λήψη δυαδικών, ReJSON.<br/><strong>Βασική τιμή: 400 HUF/μήνα (€1/μήνα) ή 4.000 HUF/έτος (€10/έτος).</strong><br/><strong>Σύνολο με 27% ΦΠΑ: 500 HUF/μήνα (€1,27/μήνα) ή 5.100 HUF/έτος (€12,70/έτος).</strong><br/><br/><h4>Enterprise</h4>SSH tunneling, Cluster και Sentinel, καθώς και Επεξεργασία JSON, Ανέβασμα δυαδικών, Λήψη δυαδικών, ReJSON· --readonly-connections/-r λειτουργεί επίσης.<br/><strong>Βασική τιμή: 1.200 HUF/μήνα (€3/μήνα) ή 12.000 HUF/έτος (€30/έτος).</strong><br/><strong>Σύνολο με 27% ΦΠΑ: 1.500 HUF/μήνα (€3,81/μήνα) ή 15.200 HUF/έτος (€38,10/έτος).</strong><br/><br/><h4>Ετήσιος κανόνας</h4>Η ετήσια τιμή είναι 10x η μηνιαία τιμή.<br/><br/><h4>Θέσεις</h4>Η προεπιλεγμένη άδεια περιλαμβάνει 5 θέσεις. Αν χρειάζεστε περισσότερες θέσεις, επικοινωνήστε μαζί μας στο <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><br/><h4>Δοκιμή Enterprise</h4>10 ημέρες δωρεάν για οποιονδήποτε με πραγματικό υπάρχον email (μη δοκιμαστικό email).<br/><hr/><h4>Στοιχεία τιμολόγησης μέσω e-mail</h4>Όνομα, Email τιμολόγησης, Κωδικός χώρας, Ταχυδρομικός κώδικας, Πόλη, Διεύθυνση, ΑΦΜ (προαιρετικά).<br/><br/><h4>Πληρωμή</h4>Η πληρωμή PayPal είναι διαθέσιμη μόνο σε HUF (φιορίνι)· μετά την αποστολή χρημάτων στο <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> θα σας στείλω τιμολόγιο. Όλες οι πληρωμές δεν επιστρέφονται.<br/><br/><h4>ΦΠΑ</h4>Ο ΦΠΑ προστίθεται στην τιμή (27% στην Ουγγαρία).<br/><hr/><h4>Επικοινωνία</h4>Αν θέλετε να πείτε γεια ή έχετε ερώτηση, επικοινωνήστε με <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><hr/><h4>Γλώσσα</h4>Η επικοινωνία τιμολογίων και αδειών μέσω email γίνεται στα Αγγλικά. Το νόμισμα τιμολογίων είναι HUF.<br/><hr/><h4>Σημείωση</h4>Η επαλήθευση άδειας απαιτεί πρόσβαση στο διαδίκτυο.",
-    licenseState: "Κατάσταση",
-    licenseStateActive: "Ενεργή",
-    licenseStateInactive: "Ανενεργή",
-    licenseStateNoLicense: "Χωρίς άδεια",
-    licenseKeyMasked: "Αποθηκευμένο κλειδί",
-    licenseTier: "Επίπεδο",
-    licenseValid: "Έγκυρη",
-    licenseStatus: "Κατάσταση άδειας",
-    licenseReason: "Αιτία",
-    licenseCheckedAt: "Ελέγχθηκε στις",
-    licenseStartsAt: "Αρχίζει στις",
-    licenseExpiresAt: "Λήγει στις",
-    licenseDaysLeft: "Υπόλοιπες ημέρες",
-    licenseMaxDevices: "Μέγιστες συσκευές",
-    licenseActiveDevices: "Ενεργές συσκευές",
-    licenseActiveDevicesInfo: "Αν μια συσκευή δεν χρησιμοποιείται πλέον, η θέση της απελευθερώνεται αυτόματα μετά από 75 λεπτά.",
-    licenseCustomerEmail: "Email πελάτη",
-    licenseFeatures: "Χαρακτηριστικά",
-    licenseFeaturesEmpty: "Χωρίς επιπλέον χαρακτηριστικά",
-    licenseFeatureReadonlyMode: "Λειτουργία σύνδεσης μόνο ανάγνωσης",
-    licenseFeatureReadonlyConnectionsFlag: "Συνδέσεις μόνο ανάγνωσης (--readonly-connections/-r)",
-    licenseFeatureSsh: "SSH tunneling",
-    licenseFeatureCluster: "Συνδέσεις Cluster",
-    licenseFeatureSentinel: "Συνδέσεις Sentinel",
-    licenseFeatureReJSON: "ReJSON (JSON data type)",
     keysSort: {
       on: "Ταξινόμηση κλειδιών ενεργή",
       off: "Ταξινόμηση κλειδιών ανενεργή"
@@ -313,9 +279,6 @@ const strings = {
       on: "Μόνο ανάγνωση ενεργό",
       off: "Μόνο ανάγνωση ανενεργό"
     },
-    proSshOnly: "Το SSH είναι διαθέσιμο σε Pro ή Enterprise.",
-    proReadonlyOnly: "Η λειτουργία σύνδεσης μόνο ανάγνωσης είναι διαθέσιμη σε Pro ή Enterprise.",
-    enterpriseClusterSentinelOnly: "Τα Cluster και Sentinel είναι διαθέσιμα μόνο σε Enterprise.",
     theme: {
       light: "Φωτεινό",
       dark: "Σκοτεινό enterprise",
@@ -357,16 +320,20 @@ const strings = {
     importConflict: "Αν το κλειδί υπάρχει ήδη:",
     noKeysToExport: "Δεν υπάρχουν κλειδιά για εξαγωγή",
     time: "Χρόνος",
+    type: "Τύπος",
+    format: "Μορφή",
     loading: "Φόρτωση...",
     autoRefresh: "Αυτόματο",
     exportSearchHint: "Εξαγωγή μόνο κλειδιών που ταιριάζουν με την τρέχουσα αναζήτηση",
     importSearchHint: "Η εισαγωγή εφαρμόζεται σε ολόκληρη τη βάση δεδομένων, όχι μόνο στα αποτελέσματα αναζήτησης",
+    deleteSearchHint: "Διαγράφει όλα τα κλειδιά που ταιριάζουν με την τρέχουσα αναζήτηση στον διακομιστή",
+    deletingSearchKeys: "Διαγραφή αντίστοιχων κλειδιών...",
     importNoKeys: "Δεν βρέθηκαν κλειδιά στο αρχείο",
   },
   status: {
     dataCopied: "Τα δεδομένα βρίσκονται στο πρόχειρο",
-    licenseSaved: "Η άδεια αποθηκεύτηκε",
     exportDone: "Η εξαγωγή ολοκληρώθηκε",
+    deletedSearchKeys: (opts) => `Διαγράφηκαν ${opts.count} κλειδιά`,
     indexCreated: "Ευρετήριο δημιουργήθηκε",
     indexDropped: "Ευρετήριο διαγράφηκε",
     importDone: (opts) => `Εισαγωγή ολοκληρώθηκε: ${opts.created} δημιουργήθηκαν, ${opts.skipped} παραλείφθηκαν, ${opts.errors} σφάλματα`,
@@ -414,35 +381,10 @@ const strings = {
     "readonly-connections": "Οι λειτουργίες προσθήκης/αποθήκευσης/διαγραφής συνδέσεων είναι μόνο για ανάγνωση!",
     "readonly-connection-mode": "Αυτή η σύνδεση είναι σε λειτουργία μόνο ανάγνωσης!",
     "list-out-of-bounds": "Αυτός ο δείκτης λίστας είναι εκτός ορίων",
-    "donation-ware-feature": "Αυτή η δυνατότητα υπάρχει στην έκδοση δωρεάς.",
-    "feature-pro-readonly-required": "Η λειτουργία σύνδεσης μόνο ανάγνωσης απαιτεί άδεια Pro ή Enterprise.",
-    "feature-pro-ssh-required": "Το SSH tunneling απαιτεί άδεια Pro ή Enterprise.",
-    "feature-enterprise-cluster-sentinel-required": "Τα Cluster και Sentinel απαιτούν άδεια Enterprise.",
-    "feature-pro-json-binary-required": "Η Επεξεργασία JSON, το Ανέβασμα δυαδικών και η Λήψη δυαδικών απαιτούν άδεια Pro ή Enterprise.",
-    "feature-pro-rejson-required": "ReJSON (JSON data type) requires Pro or Enterprise license.",
     "invalid-json-value": "The value is not valid JSON.",
     "http_auth_required": "Απαιτείται εξουσιοδότηση: παρακαλώ πιστοποιηθείτε με HTTP Basic Auth και κάντε επαναφόρτωση.",
     "auto-connection-failed": "Πιθανόν, η σύνδεση αφαιρέθηκε και η αυτόματη σύνδεση απέτυχε εξαιτίας αυτού.",
     invalid_console_command: "Αυτή η εντολή δεν λειτουργεί μέσω του GUI."
-  },
-  licenseReason: {
-    LICENSE_VALID: "Η άδεια είναι έγκυρη",
-    LICENSE_INVALID: "Η άδεια δεν είναι έγκυρη",
-    LICENSE_MISSING: "Δεν έχει οριστεί κλειδί άδειας",
-    LICENSE_DISABLED: "Η άδεια είναι απενεργοποιημένη στις ρυθμίσεις διακομιστή",
-    LICENSE_NOT_FOUND: "Η άδεια δεν βρέθηκε",
-    LICENSE_EXPIRED: "Η άδεια έχει λήξει",
-    LICENSE_CLEARED: "Το κλειδί άδειας καθαρίστηκε",
-    LICENSE_MAX_DEVICES_REACHED: "Επιτεύχθηκε ο μέγιστος αριθμός θέσεων συσκευών",
-    PRODUCT_MISMATCH: "Το προϊόν της άδειας δεν αντιστοιχεί"
-  },
-  licenseStatusValue: {
-    active: "Ενεργή",
-    deleted: "Διαγραμμένη",
-    all: "Όλες",
-    expired: "Ληγμένη",
-    missing: "Απούσα",
-    inactive: "Ανενεργή"
   },
   form: {
     error: {
@@ -612,12 +554,49 @@ const strings = {
           field: "Πεδίο",
           value: "Τιμή"
         }
+      },
+      timeseries: {
+        chart: "Γράφημα",
+        info: "Πληροφορίες",
+        addPoint: "Προσθήκη σημείου δεδομένων",
+        from: "Από (ms ή -)",
+        to: "Έως (ms ή +)",
+        aggregation: "Συνάθροιση",
+        timeBucket: "Χρονικό διάστημα (ms)",
+        none: "Κανένα",
+        dataPoints: "σημεία δεδομένων",
+        labels: "Ετικέτες",
+        rules: "Κανόνες",
+        retention: "Διατήρηση",
+        timestamp: "Χρονοσήμανση",
+        value: "Τιμή",
+        retentionHint: "0 = χωρίς λήξη, ή χιλιοστά του δευτερολέπτου",
+        duplicatePolicy: "Πολιτική διπλοτύπων",
+        labelsHint: "κλειδί1 τιμή1 κλειδί2 τιμή2",
+        timestampHint: "'*' σημαίνει αυτόματη δημιουργία, ή χρονοσήμανση σε χιλιοστά του δευτερολέπτου",
+        editAllHint: "Ένα σημείο δεδομένων ανά γραμμή: χρονοσήμανση τιμή (η χρονοσήμανση μπορεί να είναι * για αυτόματο)",
+        autoSpread: "Αυτόματο διάστημα κατανομής *",
+        formula: "Τύπος",
+        formulaLinear: "Γραμμικός",
+        formulaRandom: "Τυχαίος",
+        formulaSawtooth: "Πριονωτός",
+        formulaPoints: "Σημεία",
+        formulaAmplitude: "Πλάτος",
+        formulaOffset: "Μετατόπιση",
+        generate: "Δημιουργία",
+        exportChart: "Εξαγωγή PNG",
+        overlay: "Επικάλυψη κλειδιών",
+        overlayHint: "Κλειδιά χωρισμένα με κόμμα",
+        mrangeFilter: "Φίλτρο ετικετών",
+        bulkMode: "Μαζική δημιουργία",
+        mrangeHint: "π.χ. sensor=temp"
       }
     },
     treeControls: {
       settings: "Ρυθμίσεις δέντρου",
       expandAll: "Ανάπτυξη όλων",
       collapseAll: "Σύμπτυξη όλων",
+      level: "Επίπεδο",
       search: {
         search: "Αναζήτηση στα κλειδιά",
         clear: "Εκκαθάριση τρέχουσας αναζήτησης",
@@ -636,13 +615,21 @@ const strings = {
     }
   },
   time: {
+    type: "Τύπος",
+    format: "Μορφή",
     loading: "Φόρτωση...",
     years: "χρόνια",
     months: "μήνες",
     days: "ημέρες",
     year: "χρόνος",
     month: "μήνας",
-    day: "ημέρα"
+    day: "ημέρα",
+    second: "δευτερόλεπτο",
+    seconds: "δευτερόλεπτα",
+    minute: "λεπτό",
+    minutes: "λεπτά",
+    hour: "ώρα",
+    hours: "ώρες"
   },
   redisTypes: {
     string: "String",
@@ -651,7 +638,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

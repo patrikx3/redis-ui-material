@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "Puhastatud litsents",
-    invalid_license: "Kehtetu litsents",
-    license_max_devices_reached: "Seadmete maksimaalne istekohtade arv on täis",
-    license_readonly: "Litsentsi saab muuta ainult serveriterminalist.",
     server_error: "Serveri viga, proovige uuesti"
   },
   title: {
@@ -48,8 +44,12 @@ const strings = {
     deleteConnection: "Kinnita",
     deleteConnectionText: "Kas olete kindel, et kustutate selle Redis ühenduse?",
     deleteNode: "Kas olete kindel, et kustutate selle Redis sõlme?",
+    delete: "Kustutada?",
     deleteAllKeys: opts => {
       return `Kustuta see puu ja kõik selle võtmed (${opts.key})?`;
+    },
+    deleteSearchKeys: opts => {
+      return `Kas olete kindel, et soovite kustutada kõik mustrile "${opts.pattern}" vastavad võtmed? Leiti ${opts.count} võtit.`;
     },
     socketioConnectError: "Socket.IO ei saa serveriga ühendust, saate uuesti laadida ja proovida ühenduse tõrke ise lahendada, klient ei tea, kuidas seda ise lahendada.",
     socketioAuthRequired: "Nõutav on Socket.IO autoriseerimine. Autentige koodiga HTTP Basic Auth (kasutajanimi/parool) ja laadige uuesti.",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "Teisendage tekst kellaajaks",
       convertTextToTimePlaceholder: "Nt. 1d on 86400"
     },
-    license: {
-      title: "Määra litsents",
-      textContent: "If you want to use paid features, please contact support@corifeus.com to request a license. Pricing is Pro 400 HUF/month (€1/month) or 4,000 HUF/year (€10/year), and Enterprise 1,200 HUF/month (€3/month) or 12,000 HUF/year (€30/year). Yearly is 10x monthly. With 27% VAT, totals are Pro 500 HUF/month (€1.27/month) or 5,100 HUF/year (€12.70/year), Enterprise 1,500 HUF/month (€3.81/month) or 15,200 HUF/year (€38.10/year). License validation requires internet access. Default license includes 5 seats. If you need more seats, contact us at support@corifeus.com.",
-      placeholder: "Litsentsi võti"
-    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -136,13 +131,17 @@ const strings = {
     exportKeys: "Ekspordi võtmed",
     exportAllKeys: (opts) => `Ekspordi kõik ${opts.count} võtit`,
     exportSearchResults: (opts) => `Ekspordi ${opts.count} tulemust`,
+    deleteAllKeysMenu: (opts) => `Kustuta kõik ${opts.count}`,
     importKeys: "Impordi võtmed",
+    deleteSearchKeys: (opts) => `Kustuta ${opts.count} vastavat võtit`,
     saveWithFormatJson: "Salvestage vorminguga",
     formatJson: "Vorming Json",
     wrap: "Mähi",
     unwrap: "Lahti pakkida",
     downloadJson: "Laadige alla JSON",
-    pubsubMonitor: "Monitor PubSub",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "Keel",
@@ -183,7 +182,6 @@ const strings = {
     edit: "Muuda",
     save: "Salvesta",
     ttl: "Komplekt TTL",
-    license: "Määra litsents",
     delete: "Kustuta",
     remove: "Eemalda",
     sure: "Muidugi",
@@ -262,38 +260,6 @@ const strings = {
     connectiondEdit: "Redigeeri ühendust",
     connectiondView: "Vaata ühendust",
     connections: "Ühendused",
-    licenseInfo: "Litsents",
-    licenseEditable: "Litsentsi saab redigeerida",
-    licenseEditableYes: "Jah",
-    licenseEditableNo: "Ei",
-    licenseTerminalOnly: "Litsentsi saab konfigureerida ainult serveriterminali kaudu.",
-    licenseTierPolicyTitle: "Tasemepoliitika",
-    licenseTierPolicyText: "<h4>Free</h4>core Redis UI only; no SSH tunneling, no Readonly connection mode, no Cluster/Sentinel, no Edit JSON/Upload binary/Download binary, no ReJSON.<br/><strong>Price: 0 HUF/month (€0/month).</strong><br/><br/><h4>Pro</h4>SSH tunneling, Readonly connection mode (including --readonly-connections/-r), Edit JSON, Upload binary, Download binary, ReJSON.<br/><strong>Base price: 400 HUF/month (€1/month) or 4,000 HUF/year (€10/year).</strong><br/><strong>Total with 27% VAT: 500 HUF/month (€1.27/month) or 5,100 HUF/year (€12.70/year).</strong><br/><br/><h4>Enterprise</h4>SSH tunneling, Cluster and Sentinel, plus Edit JSON, Upload binary, Download binary, ReJSON; --readonly-connections/-r also works.<br/><strong>Base price: 1,200 HUF/month (€3/month) or 12,000 HUF/year (€30/year).</strong><br/><strong>Total with 27% VAT: 1,500 HUF/month (€3.81/month) or 15,200 HUF/year (€38.10/year).</strong><br/><br/><h4>Yearly rule</h4>Yearly price is 10x the monthly price.<br/><br/><h4>Seats</h4>Default license includes 5 seats. If you need more seats, contact us at <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><br/><h4>Enterprise trial</h4>10 days free for anyone with a real existing email address (non-test email).<br/><hr/><h4>Billing info in e-mail</h4>Name, Billing e-mail, Country code, Postal code, City, Address, VAT ID (optional).<br/><br/><h4>Payment</h4>PayPal payment is available only in HUF (forint); after sending the money @ <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> I will send you an invoice. All payments are non-refundable.<br/><br/><h4>VAT</h4>VAT is added to the price (27% in Hungary).<br/><hr/><h4>Contact</h4>If you want to say hi or have a question, contact <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><hr/><h4>Language</h4>Invoice and license e-mail communication is in English. Invoice currency is HUF.<br/><hr/><h4>Note</h4>License validation requires internet access.",
-    licenseState: "osariik",
-    licenseStateActive: "Aktiivne",
-    licenseStateInactive: "Mitteaktiivne",
-    licenseStateNoLicense: "Litsentsi pole",
-    licenseKeyMasked: "Salvestatud võti",
-    licenseTier: "Tase",
-    licenseValid: "Kehtiv",
-    licenseStatus: "Litsentsi olek",
-    licenseReason: "Põhjus",
-    licenseCheckedAt: "Kontrollitud kell",
-    licenseStartsAt: "Algus kell",
-    licenseExpiresAt: "Aegub kell",
-    licenseDaysLeft: "Päevad jäänud",
-    licenseMaxDevices: "Max seadmed",
-    licenseActiveDevices: "Aktiivsed seadmed",
-    licenseActiveDevicesInfo: "Kui seadet enam ei kasutata, vabastatakse selle iste automaatselt 75 minuti pärast.",
-    licenseCustomerEmail: "Kliendi email",
-    licenseFeatures: "Omadused",
-    licenseFeaturesEmpty: "Ei mingeid lisafunktsioone",
-    licenseFeatureReadonlyMode: "Kirjutuskaitstud ühenduse režiim",
-    licenseFeatureReadonlyConnectionsFlag: "Kirjutuskaitstud ühendused (--readonly-connections/-r)",
-    licenseFeatureSsh: "Tunneldamine SSH",
-    licenseFeatureCluster: "Cluster ühendused",
-    licenseFeatureSentinel: "Sentinel ühendused",
-    licenseFeatureReJSON: "ReJSON (andmetüüp JSON)",
     keysSort: {
       on: "Võtmete sorteerimine sisse",
       off: "Võtmete sorteerimine ära"
@@ -311,9 +277,6 @@ const strings = {
       on: "Ainult lugemiseks edasi",
       off: "Readonly off"
     },
-    proSshOnly: "SSH on saadaval Pro või Enterprise versioonides.",
-    proReadonlyOnly: "Kirjutuskaitstud ühendusrežiim on saadaval Pro või Enterprise puhul.",
-    enterpriseClusterSentinelOnly: "Cluster ja Sentinel on saadaval ainult ettevõttes.",
     theme: {
       light: "Valgus",
       dark: "Tume ettevõtmine",
@@ -355,16 +318,20 @@ const strings = {
     importConflict: "Kui võti on juba olemas:",
     noKeysToExport: "Pole võtmeid eksportimiseks",
     time: "Aeg",
+    type: "Tüüp",
+    format: "Formaat",
     loading: "Laadimine...",
     autoRefresh: "Auto",
     exportSearchHint: "Eksporditakse ainult praegusele otsingule vastavad võtmed",
     importSearchHint: "Import kehtib kogu andmebaasile, mitte ainult otsingutulemustele",
+    deleteSearchHint: "Kustutab kõik serveris praegusele otsingule vastavad võtmed",
+    deletingSearchKeys: "Vastavate võtmete kustutamine...",
     importNoKeys: "Failis ei leitud võtmeid",
   },
   status: {
     dataCopied: "Andmed on lõikepuhvril",
-    licenseSaved: "Litsents salvestatud",
     exportDone: "Eksport lõpetatud",
+    deletedSearchKeys: (opts) => `Kustutatud ${opts.count} võtit`,
     indexCreated: "Indeks loodud",
     indexDropped: "Indeks kustutatud",
     importDone: (opts) => `Import lõpetatud: ${opts.created} loodud, ${opts.skipped} vahele jäetud, ${opts.errors} viga`,
@@ -412,35 +379,10 @@ const strings = {
     "readonly-connections": "Ühenduste lisamine/salvestamine/kustutamine on kirjutuskaitstud!",
     "readonly-connection-mode": "See ühendus on kirjutuskaitstud režiimis!",
     "list-out-of-bounds": "See loendi register on väljaspool piire",
-    "donation-ware-feature": "See funktsioon on annetamise versioonis olemas.",
-    "feature-pro-readonly-required": "Kirjutuskaitstud ühenduse režiim nõuab Pro või Enterprise litsentsi.",
-    "feature-pro-ssh-required": "SSH tunnelimiseks on vaja Pro või Enterprise litsentsi.",
-    "feature-enterprise-cluster-sentinel-required": "Cluster ja Sentinel nõuavad ettevõtte litsentsi.",
-    "feature-pro-json-binary-required": "Redigeerige JSON, binaarfailide üleslaadimine ja kahendfaili allalaadimine nõuavad Pro või Enterprise litsentsi.",
-    "feature-pro-rejson-required": "ReJSON (andmetüüp JSON) nõuab Pro või Enterprise litsentsi.",
     "invalid-json-value": "Väärtus ei kehti JSON.",
     "http_auth_required": "Nõutav autoriseerimine: autentige HTTP Basic Auth ja laadige uuesti.",
     "auto-connection-failed": "Võimalik, et ühendus eemaldati ja automaatne ühendus ebaõnnestus.",
     invalid_console_command: "See käsk ei tööta GUI kaudu."
-  },
-  licenseReason: {
-    LICENSE_VALID: "Litsents kehtib",
-    LICENSE_INVALID: "Litsents on kehtetu",
-    LICENSE_MISSING: "Litsentsivõtit pole määratud",
-    LICENSE_DISABLED: "Litsents on serveri konfiguratsioonis keelatud",
-    LICENSE_NOT_FOUND: "Litsentsi ei leitud",
-    LICENSE_EXPIRED: "Litsents on aegunud",
-    LICENSE_CLEARED: "Litsentsivõti kustutati",
-    LICENSE_MAX_DEVICES_REACHED: "Seadmete maksimaalne istekohtade arv on täis",
-    PRODUCT_MISMATCH: "Litsentsiga toode ei sobi"
-  },
-  licenseStatusValue: {
-    active: "Aktiivne",
-    deleted: "Kustutatud",
-    all: "Kõik",
-    expired: "Aegunud",
-    missing: "Kadunud",
-    inactive: "Mitteaktiivne"
   },
   form: {
     error: {
@@ -610,12 +552,49 @@ const strings = {
           field: "Väli",
           value: "Väärtus"
         }
+      },
+      timeseries: {
+        chart: "Diagramm",
+        info: "Teave",
+        addPoint: "Lisa andmepunkt",
+        from: "Alates (ms või -)",
+        to: "Kuni (ms või +)",
+        aggregation: "Agregatsioon",
+        timeBucket: "Ämber (ms)",
+        none: "Puudub",
+        dataPoints: "andmepunktid",
+        labels: "Sildid",
+        rules: "Reeglid",
+        retention: "Säilitamine",
+        timestamp: "Ajatempel",
+        value: "Väärtus",
+        retentionHint: "0 = ei aegu, või millisekundid",
+        duplicatePolicy: "Duplikaatide poliitika",
+        labelsHint: "key1 value1 key2 value2",
+        timestampHint: "'*' tähendab automaatselt genereeritud, või millisekundite ajatempel",
+        editAllHint: "Üks andmepunkt rea kohta: ajatempel väärtus (ajatempel võib olla * automaatse jaoks)",
+        autoSpread: "Automaatne * leviku intervall",
+        formula: "Valem",
+        formulaLinear: "Lineaarne",
+        formulaRandom: "Juhuslik",
+        formulaSawtooth: "Saehamba",
+        formulaPoints: "Punktid",
+        formulaAmplitude: "Amplituud",
+        formulaOffset: "Nihe",
+        generate: "Genereeri",
+        exportChart: "Ekspordi PNG",
+        overlay: "Kattuvad võtmed",
+        overlayHint: "Komadega eraldatud võtmed",
+        mrangeFilter: "Siltide filter",
+        bulkMode: "Hulgi genereerimine",
+        mrangeHint: "nt. sensor=temp"
       }
     },
     treeControls: {
       settings: "Puu seaded",
       expandAll: "Laienda kõik",
       collapseAll: "Ahenda kõik",
+      level: "Tase",
       search: {
         search: "Otsige klahvidest",
         clear: "Tühjendamiseks tühjenda praegune otsing",
@@ -634,13 +613,21 @@ const strings = {
     }
   },
   time: {
+    type: "Tüüp",
+    format: "Formaat",
     loading: "Laadimine...",
     years: "aastat",
     months: "kuud",
     days: "päevadel",
     year: "aastal",
     month: "kuu",
-    day: "päeval"
+    day: "päeval",
+    second: "sekund",
+    seconds: "sekundit",
+    minute: "minut",
+    minutes: "minutit",
+    hour: "tund",
+    hours: "tundi"
   },
   redisTypes: {
     string: "String",
@@ -649,7 +636,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

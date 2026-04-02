@@ -148,7 +148,14 @@ function workerFn() {
         const recursiveKeyCount = (node: any) => {
             node.childCount = 0;
             for (let i = 0; i < node.children.length; i++) {
-                if (node.children[i].type === 'element') node.childCount++;
+                if (node.children[i].type === 'element') {
+                    const info = node.children[i].keysInfo;
+                    if (info && info.type !== 'string' && info.type !== 'json' && info.length != null) {
+                        node.childCount += info.length;
+                    } else {
+                        node.childCount++;
+                    }
+                }
             }
             for (let i = 0; i < node.children.length; i++) {
                 recursiveKeyCount(node.children[i]);
@@ -243,7 +250,17 @@ function buildTreeSync(options: {
     }
 
     const recursiveKeyCount = (node: any) => {
-        node.childCount = node.children.filter((c: any) => c.type === 'element').length;
+        node.childCount = 0;
+        for (const child of node.children) {
+            if (child.type === 'element') {
+                const info = child.keysInfo;
+                if (info && info.type !== 'string' && info.type !== 'json' && info.length != null) {
+                    node.childCount += info.length;
+                } else {
+                    node.childCount += 1;
+                }
+            }
+        }
         for (const child of node.children) {
             recursiveKeyCount(child);
             if (child.type === 'folder') node.childCount += child.childCount;

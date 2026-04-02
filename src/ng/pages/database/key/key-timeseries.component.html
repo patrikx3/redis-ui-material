@@ -1,0 +1,226 @@
+<div class="p3xr-key-type-content">
+
+    <!-- Chart -->
+    <br />
+    <p3xr-ng-accordion [title]="strings?.page?.key?.timeseries?.chart || 'Chart'" accordionKey="ts-chart" [expanded]="true">
+        <div actions>
+            @if (!isReadonly) {
+                <p3xr-ng-button
+                    (click)="editAllDataPoints($event); $event.stopPropagation()"
+                    [label]="strings?.intention?.edit || 'Edit'"
+                    mdIcon="edit">
+                </p3xr-ng-button>
+            }
+            <p3xr-ng-button
+                (click)="exportChartPng(); $event.stopPropagation()"
+                [label]="strings?.page?.key?.timeseries?.exportChart || 'Export PNG'"
+                mdIcon="image">
+            </p3xr-ng-button>
+            <p3xr-ng-button
+                (click)="toggleAutoRefresh(); $event.stopPropagation()"
+                [label]="strings?.label?.autoRefresh || 'Auto'"
+                [mdIcon]="autoRefresh ? 'check_box' : 'check_box_outline_blank'">
+            </p3xr-ng-button>
+            @if (!autoRefresh) {
+                <p3xr-ng-button
+                    (click)="loadRange(); $event.stopPropagation()"
+                    [label]="strings?.intention?.refresh || 'Refresh'"
+                    mdIcon="refresh">
+                </p3xr-ng-button>
+            }
+        </div>
+        <div content style="padding: 16px;">
+            <div class="p3xr-timeseries-controls">
+                <mat-form-field class="p3xr-timeseries-field" subscriptSizing="dynamic">
+                    <mat-label>{{ strings?.page?.key?.timeseries?.from || 'From (ms or -)' }}</mat-label>
+                    <input matInput [(ngModel)]="rangeFrom" (ngModelChange)="debouncedLoadRange()" placeholder="-" />
+                </mat-form-field>
+
+                <mat-form-field class="p3xr-timeseries-field" subscriptSizing="dynamic">
+                    <mat-label>{{ strings?.page?.key?.timeseries?.to || 'To (ms or +)' }}</mat-label>
+                    <input matInput [(ngModel)]="rangeTo" (ngModelChange)="debouncedLoadRange()" placeholder="+" />
+                </mat-form-field>
+
+                <mat-form-field class="p3xr-timeseries-field" subscriptSizing="dynamic">
+                    <mat-label>{{ strings?.page?.key?.timeseries?.aggregation || 'Aggregation' }}</mat-label>
+                    <mat-select [(ngModel)]="aggregationType" (ngModelChange)="loadRange()">
+                        <mat-option value="">{{ strings?.page?.key?.timeseries?.none || 'None' }}</mat-option>
+                        @for (agg of aggregationTypes; track agg) {
+                            <mat-option [value]="agg">{{ agg }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+
+                @if (aggregationType) {
+                    <mat-form-field class="p3xr-timeseries-field" subscriptSizing="dynamic">
+                        <mat-label>{{ strings?.page?.key?.timeseries?.timeBucket || 'Bucket (ms)' }}</mat-label>
+                        <input matInput type="number" [(ngModel)]="aggregationBucket" (ngModelChange)="debouncedLoadRange()" placeholder="5000" />
+                    </mat-form-field>
+                }
+
+                <mat-form-field class="p3xr-timeseries-field" subscriptSizing="dynamic" style="min-width: 200px;">
+                    <mat-label>{{ strings?.page?.key?.timeseries?.overlay || 'Overlay keys' }}</mat-label>
+                    <input matInput [(ngModel)]="overlayKeysInput" (ngModelChange)="debouncedLoadRange()" [placeholder]="strings?.page?.key?.timeseries?.overlayHint || 'key1, key2'" />
+                </mat-form-field>
+
+                <mat-form-field class="p3xr-timeseries-field" subscriptSizing="dynamic" style="min-width: 180px;">
+                    <mat-label>{{ strings?.page?.key?.timeseries?.mrangeFilter || 'Label filter' }}</mat-label>
+                    <input matInput [(ngModel)]="mrangeFilter" (ngModelChange)="debouncedLoadRange()" [placeholder]="strings?.page?.key?.timeseries?.mrangeHint || 'sensor=temp'" />
+                </mat-form-field>
+            </div>
+
+            <div class="p3xr-timeseries-chart-info">
+                {{ rangeData.length }} {{ strings?.page?.key?.timeseries?.dataPoints || 'data points' }}
+            </div>
+
+            <div #tsChart class="p3xr-timeseries-chart-container"></div>
+
+            <!-- Add data point inline -->
+            @if (!isReadonly) {
+                <div class="p3xr-timeseries-controls" style="margin-top: 16px;">
+                    <mat-form-field class="p3xr-timeseries-field" subscriptSizing="dynamic">
+                        <mat-label>{{ strings?.page?.key?.timeseries?.timestamp || 'Timestamp' }}</mat-label>
+                        <input matInput [(ngModel)]="addTimestamp" placeholder="* (auto)" />
+                    </mat-form-field>
+
+                    <mat-form-field class="p3xr-timeseries-field" subscriptSizing="dynamic">
+                        <mat-label>{{ strings?.page?.key?.timeseries?.value || 'Value' }}</mat-label>
+                        <input matInput type="number" [(ngModel)]="addValue" (keydown.enter)="addDataPoint()" />
+                    </mat-form-field>
+
+                    @if (isGtSm) {
+                        <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="addDataPoint()" [disabled]="!addValue">
+                            <mat-icon>add</mat-icon>
+                            <span>{{ strings?.intention?.add || 'Add' }}</span>
+                        </button>
+                    } @else {
+                        <button mat-mini-fab class="btn-primary" type="button" (click)="addDataPoint()" [disabled]="!addValue"
+                                [matTooltip]="strings?.intention?.add ?? 'Add'" matTooltipPosition="above">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    }
+                </div>
+            }
+
+        </div>
+    </p3xr-ng-accordion>
+
+    <!-- Data table -->
+    @if (rangeData.length > 0) {
+        <br />
+        <p3xr-ng-accordion [title]="capitalize(strings?.page?.key?.timeseries?.dataPoints || 'Data') + ' (' + rangeData.length + ')'" accordionKey="ts-data">
+            <div content>
+                <div class="p3xr-key-type-table">
+                    <div class="p3xr-key-type-header">
+                        <span style="flex: 1">{{ strings?.page?.key?.timeseries?.timestamp || 'Timestamp' }}</span>
+                        <span>{{ strings?.page?.key?.timeseries?.value || 'Value' }}</span>
+                        @if (!isReadonly) {
+                            <span style="min-width: 52px;"></span>
+                        }
+                    </div>
+                    <cdk-virtual-scroll-viewport #tsDataViewport [itemSize]="40" style="height: 600px;">
+                        <div *cdkVirtualFor="let point of rangeData" class="p3xr-key-type-row">
+                            <span style="flex: 1">{{ formatTimestamp(point.timestamp) }}</span>
+                            <span>{{ point.value }}</span>
+                            @if (!isReadonly) {
+                                <span class="p3xr-key-type-row-actions">
+                                    <mat-icon class="icon-warn"
+                                              (click)="deleteDataPoint(point)"
+                                              [matTooltip]="strings?.intention?.delete ?? 'Delete'">delete</mat-icon>
+                                    <mat-icon class="icon-accent"
+                                              (click)="editDataPoint(point)"
+                                              [matTooltip]="strings?.intention?.edit ?? 'Edit'">edit</mat-icon>
+                                </span>
+                            }
+                        </div>
+                    </cdk-virtual-scroll-viewport>
+                </div>
+            </div>
+        </p3xr-ng-accordion>
+    }
+
+    <!-- TS.INFO -->
+    <br />
+    <p3xr-ng-accordion [title]="strings?.page?.key?.timeseries?.info || 'Info'" accordionKey="ts-info">
+        @if (!isReadonly) {
+            <div actions>
+                <p3xr-ng-button
+                    (click)="toggleAlterMode(); $event.stopPropagation()"
+                    [label]="strings?.intention?.edit || 'Edit'"
+                    [mdIcon]="alterMode ? 'check_box' : 'edit'">
+                </p3xr-ng-button>
+            </div>
+        }
+        <div content>
+            @if (alterMode) {
+                <div style="padding: 16px;">
+                    <div class="p3xr-timeseries-controls">
+                        <mat-form-field style="flex: 1; min-width: 150px;" subscriptSizing="dynamic">
+                            <mat-label>{{ strings?.page?.key?.timeseries?.retention || 'Retention' }} (ms)</mat-label>
+                            <input matInput type="number" [(ngModel)]="alterRetention" />
+                            <mat-hint>{{ strings?.page?.key?.timeseries?.retentionHint || '0 = no expiry, or milliseconds' }}</mat-hint>
+                        </mat-form-field>
+                        <mat-form-field style="flex: 1; min-width: 150px;" subscriptSizing="dynamic">
+                            <mat-label>{{ strings?.page?.key?.timeseries?.duplicatePolicy || 'Duplicate policy' }}</mat-label>
+                            <mat-select [(ngModel)]="alterDuplicatePolicy">
+                                <mat-option value="LAST">LAST</mat-option>
+                                <mat-option value="FIRST">FIRST</mat-option>
+                                <mat-option value="MIN">MIN</mat-option>
+                                <mat-option value="MAX">MAX</mat-option>
+                                <mat-option value="SUM">SUM</mat-option>
+                                <mat-option value="BLOCK">BLOCK</mat-option>
+                            </mat-select>
+                            <mat-hint>&nbsp;</mat-hint>
+                        </mat-form-field>
+                        <mat-form-field style="flex: 1; min-width: 200px;" subscriptSizing="dynamic">
+                            <mat-label>{{ strings?.page?.key?.timeseries?.labels || 'Labels' }}</mat-label>
+                            <input matInput [(ngModel)]="alterLabels" />
+                            <mat-hint>{{ strings?.page?.key?.timeseries?.labelsHint || 'key1 value1 key2 value2' }}</mat-hint>
+                        </mat-form-field>
+                        <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="saveAlter()">
+                            <mat-icon>save</mat-icon>
+                            <span>{{ strings?.intention?.save || 'Save' }}</span>
+                        </button>
+                    </div>
+                </div>
+            }
+
+            <mat-list>
+                @for (item of infoLabels; track item.key) {
+                    <mat-list-item>
+                        <div><div style="display: flex; width: 100%;"><span class="p3xr-settings-label" style="flex: 1;">{{ item.key }}</span><span class="p3xr-settings-value">{{ item.value }}</span></div></div>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                }
+
+                @if (tsLabels.length > 0) {
+                    <mat-list-item>
+                        <div><strong>{{ strings?.page?.key?.timeseries?.labels || 'Labels' }}</strong></div>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    @for (label of tsLabels; track label.key) {
+                        <mat-list-item>
+                            <div><div style="display: flex; width: 100%;"><span class="p3xr-settings-label" style="flex: 1;">{{ label.key }}</span><span class="p3xr-settings-value">{{ label.value }}</span></div></div>
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
+                    }
+                }
+
+                @if (tsRules.length > 0) {
+                    <mat-list-item>
+                        <div><strong>{{ strings?.page?.key?.timeseries?.rules || 'Rules' }}</strong></div>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    @for (rule of tsRules; track rule.destKey) {
+                        <mat-list-item>
+                            <div><div style="display: flex; width: 100%;"><span class="p3xr-settings-label" style="flex: 1;">{{ rule.destKey }}</span><span class="p3xr-settings-value">{{ rule.aggregationType }} / {{ rule.bucketDuration }}ms</span></div></div>
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
+                    }
+                }
+            </mat-list>
+        </div>
+    </p3xr-ng-accordion>
+
+
+</div>

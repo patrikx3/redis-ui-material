@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "Иҷозатномаи тозашуда",
-    invalid_license: "Иҷозатномаи беэътибор",
-    license_max_devices_reached: "Ба ҳадди ниҳоии курсиҳои дастгоҳ расид",
-    license_readonly: "Литсензияро танҳо аз терминали сервер иваз кардан мумкин аст.",
     server_error: "Хатогии сервер, лутфан бори дигар кӯшиш кунед"
   },
   title: {
@@ -51,8 +47,12 @@ const strings = {
     deleteAllKeys: opts => {
       return `Ин дарахт ва ҳамаи калидҳои онро нест кунед (${opts.key})?`;
     },
+    deleteSearchKeys: opts => {
+      return `Оё мутмаин ҳастед, ки ҳамаи калидҳои мувофиқи "${opts.pattern}"-ро нест кунед? ${opts.count} калид ёфт шуд.`;
+    },
     socketioConnectError: "Socket.IO ба сервер пайваст шуда наметавонад, шумо метавонед аз нав бор кунед ва кӯшиш кунед, ки хатои пайвастшавиро худатон ҳал кунед, муштарӣ намедонад худаш чӣ гуна онро ҳал кунад.",
     socketioAuthRequired: "Иҷозатномаи Socket.IO лозим аст. Лутфан бо HTTP Basic Auth (номи корбар/парол) тасдиқ кунед ва аз нав бор кунед.",
+    delete: "Нест кардан?",
     deleteKey: "Оё мутмаин ҳастед, ки ин калидро нест кунед?",
     rename: {
       title: "Оё мутмаин ҳастед, ки ин калидро тағир диҳед?",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "Матнро ба вақт табдил диҳед",
       convertTextToTimePlaceholder: "Масалан. 1d 86400 хоҳад буд"
     },
-    license: {
-      title: "Муқаррар кардани иҷозатнома",
-      textContent: "If you want to use paid features, please contact support@corifeus.com to request a license. Pricing is Pro 400 HUF/month (€1/month) or 4,000 HUF/year (€10/year), and Enterprise 1,200 HUF/month (€3/month) or 12,000 HUF/year (€30/year). Yearly is 10x monthly. With 27% VAT, totals are Pro 500 HUF/month (€1.27/month) or 5,100 HUF/year (€12.70/year), Enterprise 1,500 HUF/month (€3.81/month) or 15,200 HUF/year (€38.10/year). License validation requires internet access. Default license includes 5 seats. If you need more seats, contact us at support@corifeus.com.",
-      placeholder: "Калиди иҷозатнома"
-    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -136,13 +131,17 @@ const strings = {
     exportKeys: "Содирот кардани калидҳо",
     exportAllKeys: (opts) => `Содироти ҳамаи ${opts.count} калидҳо`,
     exportSearchResults: (opts) => `Содироти ${opts.count} натиҷа`,
+    deleteAllKeysMenu: (opts) => `Ҳамаро нест кардан ${opts.count}`,
     importKeys: "Воридот кардани калидҳо",
+    deleteSearchKeys: (opts) => `${opts.count} калиди мувофиқро нест кунед`,
     saveWithFormatJson: "Бо формат захира кунед",
     formatJson: "Формат Json",
     wrap: "печонед",
     unwrap: "Кушодан",
     downloadJson: "Download JSON",
-    pubsubMonitor: "Монитор PubSub",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "Забон",
@@ -183,7 +182,6 @@ const strings = {
     edit: "Таҳрир",
     save: "Захира кунед",
     ttl: "Танзими TTL",
-    license: "Муқаррар кардани иҷозатнома",
     delete: "Ноб��д кунед",
     remove: "Хориҷ кунед",
     sure: "Албатта",
@@ -262,38 +260,6 @@ const strings = {
     connectiondEdit: "Таҳрири пайвастшавӣ",
     connectiondView: "Пайвастшавиро дидан",
     connections: "Пайвастшавӣ",
-    licenseInfo: "Иҷозатнома",
-    licenseEditable: "Литсензия таҳриршаванда",
-    licenseEditableYes: "Бале",
-    licenseEditableNo: "Не",
-    licenseTerminalOnly: "Литсензияро танҳо аз терминали сервер танзим кардан мумкин аст.",
-    licenseTierPolicyTitle: "Сиёсати сатҳ",
-    licenseTierPolicyText: "<h4>Free</h4>core Redis UI only; no SSH tunneling, no Readonly connection mode, no Cluster/Sentinel, no Edit JSON/Upload binary/Download binary, no ReJSON.<br/><strong>Price: 0 HUF/month (€0/month).</strong><br/><br/><h4>Pro</h4>SSH tunneling, Readonly connection mode (including --readonly-connections/-r), Edit JSON, Upload binary, Download binary, ReJSON.<br/><strong>Base price: 400 HUF/month (€1/month) or 4,000 HUF/year (€10/year).</strong><br/><strong>Total with 27% VAT: 500 HUF/month (€1.27/month) or 5,100 HUF/year (€12.70/year).</strong><br/><br/><h4>Enterprise</h4>SSH tunneling, Cluster and Sentinel, plus Edit JSON, Upload binary, Download binary, ReJSON; --readonly-connections/-r also works.<br/><strong>Base price: 1,200 HUF/month (€3/month) or 12,000 HUF/year (€30/year).</strong><br/><strong>Total with 27% VAT: 1,500 HUF/month (€3.81/month) or 15,200 HUF/year (€38.10/year).</strong><br/><br/><h4>Yearly rule</h4>Yearly price is 10x the monthly price.<br/><br/><h4>Seats</h4>Default license includes 5 seats. If you need more seats, contact us at <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><br/><h4>Enterprise trial</h4>10 days free for anyone with a real existing email address (non-test email).<br/><hr/><h4>Billing info in e-mail</h4>Name, Billing e-mail, Country code, Postal code, City, Address, VAT ID (optional).<br/><br/><h4>Payment</h4>PayPal payment is available only in HUF (forint); after sending the money @ <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> I will send you an invoice. All payments are non-refundable.<br/><br/><h4>VAT</h4>VAT is added to the price (27% in Hungary).<br/><hr/><h4>Contact</h4>If you want to say hi or have a question, contact <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><hr/><h4>Language</h4>Invoice and license e-mail communication is in English. Invoice currency is HUF.<br/><hr/><h4>Note</h4>License validation requires internet access.",
-    licenseState: "Давлат",
-    licenseStateActive: "Фаъол",
-    licenseStateInactive: "ғайрифаъол",
-    licenseStateNoLicense: "Не иҷозатнома",
-    licenseKeyMasked: "Калиди захирашуда",
-    licenseTier: "Сатҳи",
-    licenseValid: "Эътибор дорад",
-    licenseStatus: "Ҳолати иҷозатнома",
-    licenseReason: "Сабаб",
-    licenseCheckedAt: "Санҷида шуд",
-    licenseStartsAt: "Сар мешавад",
-    licenseExpiresAt: "Мӯҳлаташ дар",
-    licenseDaysLeft: "Рӯзҳо мондаанд",
-    licenseMaxDevices: "Дастгоҳҳои максималӣ",
-    licenseActiveDevices: "Дастгоҳҳои фаъол",
-    licenseActiveDevicesInfo: "Агар дастгоҳ дигар истифода нашавад, курсии он пас аз 75 дақиқа ба таври худкор озод карда мешавад.",
-    licenseCustomerEmail: "почтаи электронии муштарӣ",
-    licenseFeatures: "Хусусиятҳо",
-    licenseFeaturesEmpty: "Ҳеҷ гуна хусусиятҳои иловагӣ",
-    licenseFeatureReadonlyMode: "Ҳолати пайвастшавӣ танҳо барои хондан",
-    licenseFeatureReadonlyConnectionsFlag: "Пайвастҳои танҳо барои хондан (--readonly-connections/-r)",
-    licenseFeatureSsh: "Нақби SSH",
-    licenseFeatureCluster: "Пайвастҳои Cluster",
-    licenseFeatureSentinel: "Пайвастҳои Sentinel",
-    licenseFeatureReJSON: "ReJSON (навъи маълумот JSON)",
     keysSort: {
       on: "Ҷудокунии калид фаъол аст",
       off: "Хомӯш кардани калид"
@@ -311,9 +277,6 @@ const strings = {
       on: "Танҳо хондан дар",
       off: "Танҳо барои хондан хомӯш"
     },
-    proSshOnly: "SSH дар Pro ё Enterprise дастрас аст.",
-    proReadonlyOnly: "Ҳолати пайвастшавӣ танҳо барои хондан дар Pro ё Enterprise дастрас аст.",
-    enterpriseClusterSentinelOnly: "Cluster ва Sentinel танҳо дар Enterprise дастрасанд.",
     theme: {
       light: "Нур",
       dark: "Корхонаи сиёҳ",
@@ -355,16 +318,20 @@ const strings = {
     importConflict: "Агар калид аллакай мавҷуд бошад:",
     noKeysToExport: "Калидҳо барои содирот нест",
     time: "Вақт",
+    type: "Намуд",
+    format: "Формат",
     loading: "Бор мешавад...",
     autoRefresh: "Авто",
     exportSearchHint: "Танҳо калидҳои мувофиқи ҷустуҷӯи ҷорӣ содирот мешаванд",
     importSearchHint: "Воридот ба тамоми пойгоҳи додаҳо татбиқ мешавад, на танҳо ба натиҷаҳои ҷустуҷӯ",
+    deleteSearchHint: "Ҳамаи калидҳои мувофиқи ҷустуҷӯи ҷориро дар сервер нест мекунад",
+    deletingSearchKeys: "Калидҳои мувофиқ нест карда мешаванд...",
     importNoKeys: "Дар файл калидҳо ёфт нашуд",
   },
   status: {
     dataCopied: "Маълумот дар буфер аст",
-    licenseSaved: "Иҷозатнома захира карда шуд",
     exportDone: "Содирот анҷом ёфт",
+    deletedSearchKeys: (opts) => `${opts.count} калид нест карда шуд`,
     indexCreated: "Индекс сохта шуд",
     indexDropped: "Индекс нест шуд",
     importDone: (opts) => `Воридот анҷом ёфт: ${opts.created} сохта шуд, ${opts.skipped} гузашт, ${opts.errors} хато`,
@@ -412,35 +379,10 @@ const strings = {
     "readonly-connections": "Пайвастшавӣ илова/захира/нест кардан танҳо барои хондан аст!",
     "readonly-connection-mode": "Ин пайвастшавӣ ҳолати танҳо барои хондан аст!",
     "list-out-of-bounds": "Ин шохиси рӯйхат берун аз ҳудуди аст",
-    "donation-ware-feature": "Ин хусусият дар версияи хайрия мавҷуд аст.",
-    "feature-pro-readonly-required": "Ҳолати пайвастшавӣ танҳо барои хондан иҷозатномаи Pro ё Enterprise -ро талаб мекунад.",
-    "feature-pro-ssh-required": "Нақби SSH иҷозатномаи Pro ё Enterprise-ро талаб мекунад.",
-    "feature-enterprise-cluster-sentinel-required": "Cluster ва Sentinel иҷозатномаи корхонаро талаб мекунанд.",
-    "feature-pro-json-binary-required": "Таҳрири JSON, Боркунии бинарӣ ва зеркашии бинарӣ иҷозатномаи Pro ё Enterprise талаб мекунанд.",
-    "feature-pro-rejson-required": "ReJSON (навъи маълумот JSON) иҷозатномаи Pro ё Enterprise -ро талаб мекунад.",
     "invalid-json-value": "Қимат JSON эътибор надорад.",
     "http_auth_required": "Иҷозатнома талаб карда мешавад: лутфан б�� HTTP Basic Auth аутентификатсия кунед ва аз нав бор кунед.",
     "auto-connection-failed": "Эҳтимол аст, ки пайвастшавӣ хориҷ карда шуд ва пайвасти худкор аз ин сабаб ноком шуд.",
     invalid_console_command: "Ин фармон тавассути GUI кор намекунад."
-  },
-  licenseReason: {
-    LICENSE_VALID: "Иҷозатнома эътибор дорад",
-    LICENSE_INVALID: "Иҷозатнома беэътибор аст",
-    LICENSE_MISSING: "Калиди литсензия муқаррар карда нашудааст",
-    LICENSE_DISABLED: "Литсензия дар конфигуратсияи сервер ғайрифаъол аст",
-    LICENSE_NOT_FOUND: "Литсензия ёфт нашуд",
-    LICENSE_EXPIRED: "Мӯҳлати иҷозатнома ба охир расидааст",
-    LICENSE_CLEARED: "Калиди литсензия тоза карда шуд",
-    LICENSE_MAX_DEVICES_REACHED: "Ба ҳадди ниҳоии курсиҳои дастгоҳ расид",
-    PRODUCT_MISMATCH: "Маҳсулоти иҷозатнома мувофиқат намекунад"
-  },
-  licenseStatusValue: {
-    active: "Фаъол",
-    deleted: "Нобуд",
-    all: "Ҳама",
-    expired: "Муддат гузаштааст",
-    missing: "Бедарак",
-    inactive: "ғайрифаъол"
   },
   form: {
     error: {
@@ -610,12 +552,49 @@ const strings = {
           field: "Майдон",
           value: "Арзиш"
         }
+      },
+      timeseries: {
+        chart: "Диаграмма",
+        info: "Маълумот",
+        addPoint: "Нуқтаи маълумот илова кунед",
+        from: "Аз (ms ё -)",
+        to: "То (ms ё +)",
+        aggregation: "Агрегатсия",
+        timeBucket: "Сатил (ms)",
+        none: "Ҳеҷ",
+        dataPoints: "нуқтаҳои маълумот",
+        labels: "Тамғаҳо",
+        rules: "Қоидаҳо",
+        retention: "Нигоҳдорӣ",
+        timestamp: "Тамғаи вақт",
+        value: "Арзиш",
+        retentionHint: "0 = бе мӯҳлат, ё миллисония",
+        duplicatePolicy: "Сиёсати такрорӣ",
+        labelsHint: "калид1 арзиш1 калид2 арзиш2",
+        timestampHint: "'*' маънои худкор тавлидшуда, ё тамғаи вақти миллисония",
+        editAllHint: "Дар як сатр як нуқтаи маълумот: тамғаи_вақт арзиш (тамғаи вақт метавонад * барои худкор бошад)",
+        autoSpread: "Фосилаи паҳншавии худкор *",
+        formula: "Формула",
+        formulaLinear: "Хаттӣ",
+        formulaRandom: "Тасодуфӣ",
+        formulaSawtooth: "Дандонаи арра",
+        formulaPoints: "Нуқтаҳо",
+        formulaAmplitude: "Амплитуда",
+        formulaOffset: "Ҷойгузинӣ",
+        generate: "Тавлид кунед",
+        exportChart: "Содирот PNG",
+        overlay: "Калидҳои рӯйгузорӣ",
+        overlayHint: "Калидҳои бо вергул ҷудошуда",
+        mrangeFilter: "Филтри тамғаҳо",
+        bulkMode: "Эҷоди оммавӣ",
+        mrangeHint: "мас. sensor=temp"
       }
     },
     treeControls: {
       settings: "Танзимоти дарахт",
       expandAll: "Ҳамаро васеъ кунед",
       collapseAll: "Ҳамаро вайрон кунед",
+      level: "Сатdelays",
       search: {
         search: "Дар калидҳо ҷустуҷӯ кунед",
         clear: "Ҷустуҷӯи ҷориро тоза кунед, то холӣ таъин кунед",
@@ -634,13 +613,21 @@ const strings = {
     }
   },
   time: {
+    type: "Намуд",
+    format: "Формат",
     loading: "Бор мешавад...",
     years: "сол",
     months: "моҳҳо",
     days: "рӯз",
     year: "сол",
     month: "моҳ",
-    day: "рӯз"
+    day: "рӯз",
+    second: "сония",
+    seconds: "сонияҳо",
+    minute: "дақиқа",
+    minutes: "дақиқаҳо",
+    hour: "соат",
+    hours: "соатҳо"
   },
   redisTypes: {
     string: "String",
@@ -649,7 +636,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

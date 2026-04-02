@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "Godkjent lisens",
-    invalid_license: "Ugyldig lisens",
-    license_max_devices_reached: "Maksimalt antall enhetsplasser nådd",
-    license_readonly: "Lisens kan bare endres fra serverterminalen.",
     server_error: "Serverfeil, prøv igjen"
   },
   title: {
@@ -51,8 +47,12 @@ const strings = {
     deleteAllKeys: opts => {
       return `Slett dette treet og alle dets nøkler (${opts.key})?`;
     },
+    deleteSearchKeys: opts => {
+      return `Er du sikker på at du vil slette alle nøkler som matcher "${opts.pattern}"? Fant ${opts.count} nøkler.`;
+    },
     socketioConnectError: "Socket.IO kan ikke koble til serveren, du kan laste inn på nytt og prøve å løse tilkoblingsfeilen selv, klienten vet ikke hvordan den skal løse det selv.",
     socketioAuthRequired: "Socket.IO-autorisasjon kreves. Vennligst autentiser med HTTP Basic Auth (brukernavn/passord) og last inn på nytt.",
+    delete: "Slette?",
     deleteKey: "Er du sikker på at du vil slette denne nøkkelen?",
     rename: {
       title: "Er du sikker på at du vil gi nytt navn til denne nøkkelen?",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "Konverter tekst til tid",
       convertTextToTimePlaceholder: "F.eks. 1d vil være 86400"
     },
-    license: {
-      title: "Angi lisens",
-      textContent: "If you want to use paid features, please contact support@corifeus.com to request a license. Pricing is Pro 400 HUF/month (€1/month) or 4,000 HUF/year (€10/year), and Enterprise 1,200 HUF/month (€3/month) or 12,000 HUF/year (€30/year). Yearly is 10x monthly. With 27% VAT, totals are Pro 500 HUF/month (€1.27/month) or 5,100 HUF/year (€12.70/year), Enterprise 1,500 HUF/month (€3.81/month) or 15,200 HUF/year (€38.10/year). License validation requires internet access. Default license includes 5 seats. If you need more seats, contact us at support@corifeus.com.",
-      placeholder: "Lisensnøkkel"
-    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -136,13 +131,17 @@ const strings = {
     exportKeys: "Eksporter nøkler",
     exportAllKeys: (opts) => `Eksporter alle ${opts.count} nøkler`,
     exportSearchResults: (opts) => `Eksporter ${opts.count} resultater`,
+    deleteAllKeysMenu: (opts) => `Slett alle ${opts.count}`,
     importKeys: "Importer nøkler",
+    deleteSearchKeys: (opts) => `Slett ${opts.count} matchende nøkler`,
     saveWithFormatJson: "Lagre med format",
     formatJson: "Format Json",
     wrap: "Pakk inn",
     unwrap: "Pakk ut",
     downloadJson: "Last ned JSON",
-    pubsubMonitor: "PubSub-skjerm",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "Språk",
@@ -183,7 +182,6 @@ const strings = {
     edit: "Rediger",
     save: "Lagre",
     ttl: "Sett TTL",
-    license: "Angi lisens",
     delete: "Slett",
     remove: "Fjern",
     sure: "Klart det",
@@ -262,38 +260,6 @@ const strings = {
     connectiondEdit: "Rediger tilkobling",
     connectiondView: "Se tilkoblingen",
     connections: "Tilkoblinger",
-    licenseInfo: "Lisens",
-    licenseEditable: "Lisens kan redigeres",
-    licenseEditableYes: "Ja",
-    licenseEditableNo: "Nei",
-    licenseTerminalOnly: "Lisens kan bare konfigureres fra serverterminalen.",
-    licenseTierPolicyTitle: "Nivåpolicy",
-    licenseTierPolicyText: "<h4>Free</h4>core Redis UI only; no SSH tunneling, no Readonly connection mode, no Cluster/Sentinel, no Edit JSON/Upload binary/Download binary, no ReJSON.<br/><strong>Price: 0 HUF/month (€0/month).</strong><br/><br/><h4>Pro</h4>SSH tunneling, Readonly connection mode (including --readonly-connections/-r), Edit JSON, Upload binary, Download binary, ReJSON.<br/><strong>Base price: 400 HUF/month (€1/month) or 4,000 HUF/year (€10/year).</strong><br/><strong>Total with 27% VAT: 500 HUF/month (€1.27/month) or 5,100 HUF/year (€12.70/year).</strong><br/><br/><h4>Enterprise</h4>SSH tunneling, Cluster and Sentinel, plus Edit JSON, Upload binary, Download binary, ReJSON; --readonly-connections/-r also works.<br/><strong>Base price: 1,200 HUF/month (€3/month) or 12,000 HUF/year (€30/year).</strong><br/><strong>Total with 27% VAT: 1,500 HUF/month (€3.81/month) or 15,200 HUF/year (€38.10/year).</strong><br/><br/><h4>Yearly rule</h4>Yearly price is 10x the monthly price.<br/><br/><h4>Seats</h4>Default license includes 5 seats. If you need more seats, contact us at <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><br/><h4>Enterprise trial</h4>10 days free for anyone with a real existing email address (non-test email).<br/><hr/><h4>Billing info in e-mail</h4>Name, Billing e-mail, Country code, Postal code, City, Address, VAT ID (optional).<br/><br/><h4>Payment</h4>PayPal payment is available only in HUF (forint); after sending the money @ <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> I will send you an invoice. All payments are non-refundable.<br/><br/><h4>VAT</h4>VAT is added to the price (27% in Hungary).<br/><hr/><h4>Contact</h4>If you want to say hi or have a question, contact <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><hr/><h4>Language</h4>Invoice and license e-mail communication is in English. Invoice currency is HUF.<br/><hr/><h4>Note</h4>License validation requires internet access.",
-    licenseState: "stat",
-    licenseStateActive: "Aktiv",
-    licenseStateInactive: "Inaktiv",
-    licenseStateNoLicense: "Ingen lisens",
-    licenseKeyMasked: "Lagret nøkkel",
-    licenseTier: "Nivå",
-    licenseValid: "Gyldig",
-    licenseStatus: "Lisensstatus",
-    licenseReason: "Grunn",
-    licenseCheckedAt: "Sjekket kl",
-    licenseStartsAt: "Starter kl",
-    licenseExpiresAt: "Utløper kl",
-    licenseDaysLeft: "Dager igjen",
-    licenseMaxDevices: "Maks enheter",
-    licenseActiveDevices: "Aktive enheter",
-    licenseActiveDevicesInfo: "Hvis en enhet ikke lenger brukes, frigjøres setet automatisk etter 75 minutter.",
-    licenseCustomerEmail: "Kundens e-post",
-    licenseFeatures: "Funksjoner",
-    licenseFeaturesEmpty: "Ingen ekstra funksjoner",
-    licenseFeatureReadonlyMode: "Skrivebeskyttet tilkoblingsmodus",
-    licenseFeatureReadonlyConnectionsFlag: "Skrivebeskyttede tilkoblinger (--readonly-connections/-r)",
-    licenseFeatureSsh: "SSH tunnelering",
-    licenseFeatureCluster: "Cluster tilkoblinger",
-    licenseFeatureSentinel: "Sentinel tilkoblinger",
-    licenseFeatureReJSON: "ReJSON (JSON datatype)",
     keysSort: {
       on: "Nøkkelsortering på",
       off: "Nøkkelsortering"
@@ -311,9 +277,6 @@ const strings = {
       on: "Skrivebeskyttet på",
       off: "Skrivebeskyttet av"
     },
-    proSshOnly: "SSH er tilgjengelig i Pro eller Enterprise.",
-    proReadonlyOnly: "Skrivebeskyttet tilkoblingsmodus er tilgjengelig i Pro eller Enterprise.",
-    enterpriseClusterSentinelOnly: "Cluster og Sentinel er kun tilgjengelig i Enterprise.",
     theme: {
       light: "Lys",
       dark: "Mørk bedrift",
@@ -355,16 +318,20 @@ const strings = {
     importConflict: "Hvis nøkkelen allerede finnes:",
     noKeysToExport: "Ingen nøkler å eksportere",
     time: "Tid",
+    type: "Type",
+    format: "Format",
     loading: "Laster...",
     autoRefresh: "Auto",
     exportSearchHint: "Eksporterer kun nøkler som matcher gjeldende søk",
     importSearchHint: "Import gjelder for hele databasen, ikke bare søkeresultater",
+    deleteSearchHint: "Sletter alle nøkler som matcher gjeldende søk på serveren",
+    deletingSearchKeys: "Sletter matchende nøkler...",
     importNoKeys: "Ingen nøkler funnet i filen",
   },
   status: {
     dataCopied: "Dataene er i utklippstavlen",
-    licenseSaved: "Lisensen er lagret",
     exportDone: "Eksport fullført",
+    deletedSearchKeys: (opts) => `${opts.count} nøkler slettet`,
     indexCreated: "Indeks opprettet",
     indexDropped: "Indeks slettet",
     importDone: (opts) => `Import fullført: ${opts.created} opprettet, ${opts.skipped} hoppet over, ${opts.errors} feil`,
@@ -412,35 +379,10 @@ const strings = {
     "readonly-connections": "Tilkoblinger legg til/lagre/slett er skrivebeskyttet!",
     "readonly-connection-mode": "Denne tilkoblingen er skrivebeskyttet modus!",
     "list-out-of-bounds": "Denne listeindeksen er utenfor grensene",
-    "donation-ware-feature": "Denne funksjonen er til stede i donasjonsversjonen.",
-    "feature-pro-readonly-required": "Skrivebeskyttet tilkoblingsmodus krever Pro- eller Enterprise-lisens.",
-    "feature-pro-ssh-required": "SSH-tunnelering krever Pro- eller Enterprise-lisens.",
-    "feature-enterprise-cluster-sentinel-required": "Cluster og Sentinel krever Enterprise-lisens.",
-    "feature-pro-json-binary-required": "Rediger JSON, Last opp binær og Last ned binær krever Pro- eller Enterprise-lisens.",
-    "feature-pro-rejson-required": "ReJSON (JSON datatype) krever Pro- eller Enterprise-lisens.",
     "invalid-json-value": "Verdien er ikke gyldig JSON.",
     "http_auth_required": "Autorisasjon kreves: vennligst autentiser med HTTP Basic Auth og last inn på nytt.",
     "auto-connection-failed": "Mulig, tilkoblingen ble fjernet og den automatiske tilkoblingen mislyktes på grunn av dette.",
     invalid_console_command: "Denne kommandoen fungerer ikke via GUI."
-  },
-  licenseReason: {
-    LICENSE_VALID: "Lisensen er gyldig",
-    LICENSE_INVALID: "Lisensen er ugyldig",
-    LICENSE_MISSING: "Ingen lisensnøkkel er angitt",
-    LICENSE_DISABLED: "Lisensen er deaktivert i serverkonfigurasjonen",
-    LICENSE_NOT_FOUND: "Finner ikke lisensen",
-    LICENSE_EXPIRED: "Lisensen er utløpt",
-    LICENSE_CLEARED: "Lisensnøkkelen ble slettet",
-    LICENSE_MAX_DEVICES_REACHED: "Maksimalt antall enhetsplasser nådd",
-    PRODUCT_MISMATCH: "Lisensproduktet samsvarer ikke"
-  },
-  licenseStatusValue: {
-    active: "Aktiv",
-    deleted: "Slettet",
-    all: "Alle",
-    expired: "Utløpt",
-    missing: "Mangler",
-    inactive: "Inaktiv"
   },
   form: {
     error: {
@@ -610,12 +552,49 @@ const strings = {
           field: "Felt",
           value: "Verdi"
         }
+      },
+      timeseries: {
+        chart: "Diagram",
+        info: "Info",
+        addPoint: "Legg til datapunkt",
+        from: "Fra (ms eller -)",
+        to: "Til (ms eller +)",
+        aggregation: "Aggregering",
+        timeBucket: "Tidsintervall (ms)",
+        none: "Ingen",
+        dataPoints: "datapunkter",
+        labels: "Etiketter",
+        rules: "Regler",
+        retention: "Oppbevaring",
+        timestamp: "Tidsstempel",
+        value: "Verdi",
+        retentionHint: "0 = ingen utlop, eller millisekunder",
+        duplicatePolicy: "Duplikatpolicy",
+        labelsHint: "nokkel1 verdi1 nokkel2 verdi2",
+        timestampHint: "'*' betyr automatisk generering, eller tidsstempel i millisekunder",
+        editAllHint: "Ett datapunkt per linje: tidsstempel verdi (tidsstempel kan vaere * for auto)",
+        autoSpread: "Automatisk * spredningsintervall",
+        formula: "Formel",
+        formulaLinear: "Lineaer",
+        formulaRandom: "Tilfeldig",
+        formulaSawtooth: "Sagtann",
+        formulaPoints: "Punkter",
+        formulaAmplitude: "Amplitude",
+        formulaOffset: "Forskyvning",
+        generate: "Generer",
+        exportChart: "Eksporter PNG",
+        overlay: "Overlegg nokler",
+        overlayHint: "Kommaseparerte nokler",
+        mrangeFilter: "Etikettfilter",
+        bulkMode: "Massegenerering",
+        mrangeHint: "f.eks. sensor=temp"
       }
     },
     treeControls: {
       settings: "Treinnstillinger",
       expandAll: "Utvid alle",
       collapseAll: "Skjul alle",
+      level: "Nivå",
       search: {
         search: "Søk i tastene",
         clear: "Slett gjeldende søk for å sette tomt",
@@ -634,13 +613,21 @@ const strings = {
     }
   },
   time: {
+    type: "Type",
+    format: "Format",
     loading: "Laster...",
     years: "år",
     months: "måneder",
     days: "dager",
     year: "år",
     month: "måned",
-    day: "dag"
+    day: "dag",
+    second: "sekund",
+    seconds: "sekunder",
+    minute: "minutt",
+    minutes: "minutter",
+    hour: "time",
+    hours: "timer"
   },
   redisTypes: {
     string: "String",
@@ -649,7 +636,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

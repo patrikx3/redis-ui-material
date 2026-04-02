@@ -53,21 +53,37 @@ export const appRoutes: Routes = [
     {
         path: 'monitoring',
         loadComponent: () => import(
-            /* webpackChunkName: "page-monitoring" */
-            './pages/monitoring/monitoring.component'
-        ).then(m => m.MonitoringComponent),
+            /* webpackChunkName: "page-monitoring-shell" */
+            './pages/monitoring/monitoring-shell.component'
+        ).then(m => m.MonitoringShellComponent),
+        children: [
+            {
+                path: '',
+                loadComponent: () => import(
+                    /* webpackChunkName: "page-monitoring" */
+                    './pages/monitoring/monitoring.component'
+                ).then(m => m.MonitoringComponent),
+            },
+            {
+                path: 'profiler',
+                loadComponent: () => import(
+                    /* webpackChunkName: "page-profiler" */
+                    './pages/profiler/profiler.component'
+                ).then(m => m.ProfilerComponent),
+            },
+            {
+                path: 'pubsub',
+                loadComponent: () => import(
+                    /* webpackChunkName: "page-pubsub" */
+                    './pages/profiler/pubsub.component'
+                ).then(m => m.PubsubComponent),
+            },
+        ],
     },
     {
         path: 'main',
         redirectTo: 'database',
         pathMatch: 'prefix',
-    },
-    {
-        path: 'socketio-error',
-        loadComponent: () => import(
-            /* webpackChunkName: "page-error" */
-            './components/p3xr-error.component'
-        ).then(m => m.P3xrErrorComponent),
     },
     {
         path: '',

@@ -22,6 +22,7 @@
                 </span>
                 <span class="p3xr-key-type-row-actions">
                     <mat-icon class="icon-accent" (click)="copyEntry(entry)" [matTooltip]="strings?.intention?.copy ?? 'Copy'">content_copy</mat-icon>
+                    <mat-icon class="icon-accent" (click)="downloadEntry(entry)" [matTooltip]="strings?.intention?.downloadBuffer ?? 'Download'">download</mat-icon>
                     <mat-icon class="icon-accent" (click)="viewEntryJson(entry, $event)" [matTooltip]="strings?.json ?? 'JSON'">table_chart</mat-icon>
                     @if (!isReadonly) {
                         <mat-icon class="icon-warn" (click)="deleteStreamTimestamp(entry.id, $event)" [matTooltip]="strings?.intention?.delete ?? 'Delete'">delete</mat-icon>
@@ -29,13 +30,14 @@
                 </span>
             </div>
 
-            <!-- Entry data as JSON tree -->
+            <!-- Entry fields -->
             <div class="p3xr-key-stream-data">
-                <p3xr-json-tree
-                    [data]="entry.displayData"
-                    [label]="strings?.label?.tree || 'Tree'"
-                    [expanded]="true">
-                </p3xr-json-tree>
+                @for (field of entry.fields; track field[0]) {
+                    <div style="display: flex; gap: 8px; padding: 2px 0;">
+                        <span style="min-width: 120px; opacity: 0.7;">{{ field[0] }}</span>
+                        <span class="p3xr-value-col p3xr-pre" style="flex: 1; max-height: 200px; word-break: break-all;">{{ formatValue(truncateDisplay(field[1])) }}@if (isTruncated(field[1])) {<span style="opacity: 0.5;">...</span>}</span>
+                    </div>
+                }
             </div>
         </div>
     }

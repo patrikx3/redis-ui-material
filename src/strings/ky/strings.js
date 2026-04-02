@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "Тазаланган лицензия",
-    invalid_license: "Жараксыз лицензия",
-    license_max_devices_reached: "Түзмөктүн максималдуу орундарына жетти",
-    license_readonly: "Лицензияны сервер терминалынан гана өзгөртүүгө болот.",
     server_error: "Сервер катасы, кайталап к��рүңүз"
   },
   title: {
@@ -51,8 +47,12 @@ const strings = {
     deleteAllKeys: opts => {
       return `Бул даракты жана анын бардык ачкычтарын жок кылыңыз (${opts.key})?`;
     },
+    deleteSearchKeys: opts => {
+      return `"${opts.pattern}" дал келген бардык ачкычтарды жок кыласызбы? ${opts.count} ачкыч табылды.`;
+    },
     socketioConnectError: "Socket.IO серверге туташа албайт, сиз кайра жүктөп, байланыш катасын өзүңүз чечип көрүңүз, кардар аны кантип чечүүнү билбейт.",
     socketioAuthRequired: "Socket.IO авторизациясы талап кылынат. Сураныч, HTTP Basic Auth (колдонуучунун аты/сырсөз) менен аныктыгын текшерип, кайра жүктөңүз.",
+    delete: "Жок кылуу?",
     deleteKey: "Бул ачкычты чын эле жок кыласызбы?",
     rename: {
       title: "Бул ачкычтын атын чын эле өзгөртөсүзбү?",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "Текстти убакытка айландыруу",
       convertTextToTimePlaceholder: "Мис. 1d 86400 болот"
     },
-    license: {
-      title: "Лицензия коюу",
-      textContent: "If you want to use paid features, please contact support@corifeus.com to request a license. Pricing is Pro 400 HUF/month (€1/month) or 4,000 HUF/year (€10/year), and Enterprise 1,200 HUF/month (€3/month) or 12,000 HUF/year (€30/year). Yearly is 10x monthly. With 27% VAT, totals are Pro 500 HUF/month (€1.27/month) or 5,100 HUF/year (€12.70/year), Enterprise 1,500 HUF/month (€3.81/month) or 15,200 HUF/year (€38.10/year). License validation requires internet access. Default license includes 5 seats. If you need more seats, contact us at support@corifeus.com.",
-      placeholder: "Лицензия ачкычы"
-    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -136,13 +131,17 @@ const strings = {
     exportKeys: "Ачкычтарды экспорттоо",
     exportAllKeys: (opts) => `Бардык ${opts.count} ачкычты экспорттоо`,
     exportSearchResults: (opts) => `${opts.count} натыйжаны экспорттоо`,
+    deleteAllKeysMenu: (opts) => `Баарын жок кылуу ${opts.count}`,
     importKeys: "Ачкычтарды импорттоо",
+    deleteSearchKeys: (opts) => `${opts.count} дал келген ачкычтарды жок кылуу`,
     saveWithFormatJson: "Формат менен сактоо",
     formatJson: "Json форматы",
     wrap: "Ороо",
     unwrap: "Оракты ачуу",
     downloadJson: "JSON жүктөп алыңыз",
-    pubsubMonitor: "PubSub Монитор",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "Тил",
@@ -183,7 +182,6 @@ const strings = {
     edit: "Түзөтүү",
     save: "Сактоо",
     ttl: "TTL орнотуңуз",
-    license: "Лицензия коюу",
     delete: "Жок кылуу",
     remove: "Алып салуу",
     sure: "Албетте",
@@ -262,38 +260,6 @@ const strings = {
     connectiondEdit: "Туташууну түзөтүү",
     connectiondView: "Байланышты көрүү",
     connections: "Байланыштар",
-    licenseInfo: "Лицензия",
-    licenseEditable: "Лицензия түзөтүлөт",
-    licenseEditableYes: "Ооба",
-    licenseEditableNo: "жок",
-    licenseTerminalOnly: "Лицензияны сервер терминалынан гана конфигурациялоого болот.",
-    licenseTierPolicyTitle: "Деңгээл саясаты",
-    licenseTierPolicyText: "<h4>Free</h4>core Redis UI only; no SSH tunneling, no Readonly connection mode, no Cluster/Sentinel, no Edit JSON/Upload binary/Download binary, no ReJSON.<br/><strong>Price: 0 HUF/month (€0/month).</strong><br/><br/><h4>Pro</h4>SSH tunneling, Readonly connection mode (including --readonly-connections/-r), Edit JSON, Upload binary, Download binary, ReJSON.<br/><strong>Base price: 400 HUF/month (€1/month) or 4,000 HUF/year (€10/year).</strong><br/><strong>Total with 27% VAT: 500 HUF/month (€1.27/month) or 5,100 HUF/year (€12.70/year).</strong><br/><br/><h4>Enterprise</h4>SSH tunneling, Cluster and Sentinel, plus Edit JSON, Upload binary, Download binary, ReJSON; --readonly-connections/-r also works.<br/><strong>Base price: 1,200 HUF/month (€3/month) or 12,000 HUF/year (€30/year).</strong><br/><strong>Total with 27% VAT: 1,500 HUF/month (€3.81/month) or 15,200 HUF/year (€38.10/year).</strong><br/><br/><h4>Yearly rule</h4>Yearly price is 10x the monthly price.<br/><br/><h4>Seats</h4>Default license includes 5 seats. If you need more seats, contact us at <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><br/><h4>Enterprise trial</h4>10 days free for anyone with a real existing email address (non-test email).<br/><hr/><h4>Billing info in e-mail</h4>Name, Billing e-mail, Country code, Postal code, City, Address, VAT ID (optional).<br/><br/><h4>Payment</h4>PayPal payment is available only in HUF (forint); after sending the money @ <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> I will send you an invoice. All payments are non-refundable.<br/><br/><h4>VAT</h4>VAT is added to the price (27% in Hungary).<br/><hr/><h4>Contact</h4>If you want to say hi or have a question, contact <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><hr/><h4>Language</h4>Invoice and license e-mail communication is in English. Invoice currency is HUF.<br/><hr/><h4>Note</h4>License validation requires internet access.",
-    licenseState: "Мамлекет",
-    licenseStateActive: "Активдүү",
-    licenseStateInactive: "Жигерсиз",
-    licenseStateNoLicense: "Лицензия жок",
-    licenseKeyMasked: "Сакталган ачкыч",
-    licenseTier: "Деңгээл",
-    licenseValid: "Жарактуу",
-    licenseStatus: "Лицензия статусу",
-    licenseReason: "Себеп",
-    licenseCheckedAt: "текшерилди",
-    licenseStartsAt: "башталат",
-    licenseExpiresAt: "Мөөнөтү бүтөт",
-    licenseDaysLeft: "Күндөр калды",
-    licenseMaxDevices: "Максималдуу түзмөктөр",
-    licenseActiveDevices: "Активдүү түзмөктөр",
-    licenseActiveDevicesInfo: "Эгер аппарат колдонулбай калса, анын отургучу 75 мүнөттөн кийин автоматтык түрдө бошотулат.",
-    licenseCustomerEmail: "Кардардын электрондук почтасы",
-    licenseFeatures: "Өзгөчөлүктөрү",
-    licenseFeaturesEmpty: "Эч кандай кошумча функциялар",
-    licenseFeatureReadonlyMode: "окуу үчүн гана туташуу режими",
-    licenseFeatureReadonlyConnectionsFlag: "Окуу үчүн гана туташуулар (--readonly-connections/-r)",
-    licenseFeatureSsh: "SSH туннелдер",
-    licenseFeatureCluster: "Cluster байланыштары",
-    licenseFeatureSentinel: "Sentinel байланыштары",
-    licenseFeatureReJSON: "ReJSON (JSON маалымат түрү)",
     keysSort: {
       on: "Ачкычтарды иреттөө күйүк",
       off: "Ачкычты сорттоо"
@@ -311,9 +277,6 @@ const strings = {
       on: "Окуу үчүн гана",
       off: "Окуу үчүн гана өчүрүү"
     },
-    proSshOnly: "SSH Pro же Ишканада жеткиликтүү.",
-    proReadonlyOnly: "Окуу үчүн гана туташуу режими Pro же Ишканада жеткиликтүү.",
-    enterpriseClusterSentinelOnly: "Cluster жана Sentinel Ишканада гана жеткиликтүү.",
     theme: {
       light: "Жарык",
       dark: "��араңгы ишкана",
@@ -355,16 +318,20 @@ const strings = {
     importConflict: "Ачкыч мурунтан бар болсо:",
     noKeysToExport: "Экспорттоо үчүн ачкычтар жок",
     time: "Убакыт",
+    type: "Түрү",
+    format: "Формат",
     loading: "Жүктөлүүдө...",
     autoRefresh: "Авто",
     exportSearchHint: "Учурдагы издөөгө дал келген ачкычтар гана экспортолот",
     importSearchHint: "Импорт издөө натыйжаларына эмес, бүт маалымат базасына колдонулат",
+    deleteSearchHint: "Серверде учурдагы издөөгө дал келген бардык ачкычтарды жок кылат",
+    deletingSearchKeys: "Дал келген ачкычтарды жок кылуу...",
     importNoKeys: "Файлдан ачкычтар табылган жок",
   },
   status: {
     dataCopied: "Маалымат алмашуу буферинде",
-    licenseSaved: "Лицензия сакталды",
     exportDone: "Экспорт аякталды",
+    deletedSearchKeys: (opts) => `${opts.count} ачкыч жок кылынды`,
     indexCreated: "Индекс түзүлдү",
     indexDropped: "Индекс жоюлду",
     importDone: (opts) => `Импорт аякталды: ${opts.created} түзүлдү, ${opts.skipped} өткөрүлдү, ${opts.errors} ката`,
@@ -412,35 +379,10 @@ const strings = {
     "readonly-connections": "Туташууларды кошуу/сактоо/жок кылуу окуу үчүн гана!",
     "readonly-connection-mode": "Бул байланыш окуу гана режими!",
     "list-out-of-bounds": "Бул тизме индекси чектен чыккан",
-    "donation-ware-feature": "Бул өзгөчөлүк кайрымдуулук версиясында бар.",
-    "feature-pro-readonly-required": "Окуу үчүн гана туташуу режими Pro же Enterprise лицензиясын талап кылат.",
-    "feature-pro-ssh-required": "SSH туннелдөө үчүн Pro же Enterprise лицензиясы талап кылынат.",
-    "feature-enterprise-cluster-sentinel-required": "Cluster жана Sentinel Enterprise лицензиясын талап кылат.",
-    "feature-pro-json-binary-required": "JSON түзөтүү, экилик жүктөө жана экилик жүктөө Pro же Enterprise лицензиясын талап кылат.",
-    "feature-pro-rejson-required": "ReJSON (JSON маалымат түрү) Pro же Enterprise лицензиясын талап кылат.",
     "invalid-json-value": "Маани жарактуу эмес JSON.",
     "http_auth_required": "Авторизация талап кылынат: HTTP Basic Auth менен аныктыгын текшерип, кайра жүктөңүз.",
     "auto-connection-failed": "Мүмкүн, туташуу өчүрүлүп, автоматтык туташуу ишке ашпай калды, ушундан улам.",
     invalid_console_command: "Бул буйрук GUI аркылуу иштебейт."
-  },
-  licenseReason: {
-    LICENSE_VALID: "Лицензия жарактуу",
-    LICENSE_INVALID: "Лицензия жараксыз",
-    LICENSE_MISSING: "Лицензия ачкычы коюлган эмес",
-    LICENSE_DISABLED: "Лицензия сервер конфигурациясында өчүрүлгөн",
-    LICENSE_NOT_FOUND: "Лицензия табылган жок",
-    LICENSE_EXPIRED: "Лицензиянын мөөнөтү бүттү",
-    LICENSE_CLEARED: "Лицензия ачкычы тазаланды",
-    LICENSE_MAX_DEVICES_REACHED: "Түзмөктүн максималдуу орундарына жетти",
-    PRODUCT_MISMATCH: "Лицензия продукт дал келбейт"
-  },
-  licenseStatusValue: {
-    active: "Активдүү",
-    deleted: "Жок кылынды",
-    all: "Баары",
-    expired: "Мөөнөтү бүттү",
-    missing: "Жок",
-    inactive: "Жигерсиз"
   },
   form: {
     error: {
@@ -610,12 +552,49 @@ const strings = {
           field: "Талаа",
           value: "Нарк"
         }
+      },
+      timeseries: {
+        chart: "Диаграмма",
+        info: "Маалымат",
+        addPoint: "Маалымат чекити кошуу",
+        from: "Баштоо (ms же -)",
+        to: "Аяктоо (ms же +)",
+        aggregation: "Агрегация",
+        timeBucket: "Чака (ms)",
+        none: "Жок",
+        dataPoints: "маалымат чекиттери",
+        labels: "Энбелгилер",
+        rules: "Эрежелер",
+        retention: "Сактоо",
+        timestamp: "Убакыт белгиси",
+        value: "Маани",
+        retentionHint: "0 = мөөнөтү жок, же миллисекунд",
+        duplicatePolicy: "Кайталоо саясаты",
+        labelsHint: "ачкыч1 маани1 ачкыч2 маани2",
+        timestampHint: "'*' автоматтык түрдө түзүлөт, же миллисекунд убакыт белгиси",
+        editAllHint: "Бир сапка бир маалымат чекити: убакыт_белгиси маани (убакыт белгиси * авто үчүн болот)",
+        autoSpread: "Авто * жайылтуу аралыгы",
+        formula: "Формула",
+        formulaLinear: "Сызыктуу",
+        formulaRandom: "Кокустук",
+        formulaSawtooth: "Араа тиш",
+        formulaPoints: "Чекиттер",
+        formulaAmplitude: "Амплитуда",
+        formulaOffset: "Оффсет",
+        generate: "Түзүү",
+        exportChart: "PNG экспорттоо",
+        overlay: "Үстүнө коюу ачкычтары",
+        overlayHint: "Үтүр менен бөлүнгөн ачкычтар",
+        mrangeFilter: "Энбелги чыпкасы",
+        bulkMode: "Массалык генерация",
+        mrangeHint: "мис. sensor=temp"
       }
     },
     treeControls: {
       settings: "Дарак орнотуулары",
       expandAll: "Баарын кеңейтүү",
       collapseAll: "Баарын жыйноо",
+      level: "Деңgeeл",
       search: {
         search: "Ачкычтардан издеңиз",
         clear: "Бош коюу үчүн учурдагы издөөнү тазалаңыз",
@@ -634,13 +613,21 @@ const strings = {
     }
   },
   time: {
+    type: "Түрү",
+    format: "Формат",
     loading: "Жүктөлүүдө...",
     years: "жыл",
     months: "айлар",
     days: "күн",
     year: "жыл",
     month: "ай",
-    day: "күн"
+    day: "күн",
+    second: "секунд",
+    seconds: "секунд",
+    minute: "мүнөт",
+    minutes: "мүнөт",
+    hour: "саат",
+    hours: "саат"
   },
   redisTypes: {
     string: "String",
@@ -649,7 +636,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

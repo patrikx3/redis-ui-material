@@ -222,9 +222,8 @@ export class DatabaseHeaderComponent implements OnInit, OnDestroy {
         // Subscribe to socket events for reactive state updates
         const sub1 = this.socket.connections$.subscribe(() => this.syncFromGlobal());
         const sub2 = this.socket.redisDisconnected$.subscribe(() => this.syncFromGlobal());
-        const sub3 = this.socket.licenseUpdate$.subscribe(() => this.syncFromGlobal());
-        const sub4 = this.socket.stateChanged$.subscribe(() => this.syncFromGlobal());
-        this.unsubs.push(() => { sub1.unsubscribe(); sub2.unsubscribe(); sub3.unsubscribe(); sub4.unsubscribe(); });
+        const sub3 = this.socket.stateChanged$.subscribe(() => this.syncFromGlobal());
+        this.unsubs.push(() => { sub1.unsubscribe(); sub2.unsubscribe(); sub3.unsubscribe(); });
 
         const xsSub = this.breakpointObserver.observe('(max-width: 599px)').subscribe(result => {
             this.isXs = result.matches;

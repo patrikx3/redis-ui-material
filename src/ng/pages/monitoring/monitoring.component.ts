@@ -12,6 +12,7 @@ import { SocketService } from '../../services/socket.service';
 import { CommonService } from '../../services/common.service';
 import { P3xrAccordionComponent } from '../../components/p3xr-accordion.component';
 import { P3xrButtonComponent } from '../../components/p3xr-button.component';
+import { RedisStateService } from '../../services/redis-state.service';
 
 declare const p3xr: any;
 
@@ -69,6 +70,7 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
     private resizeObserver: ResizeObserver | null = null;
     private themeObserver: MutationObserver | null = null;
     private unsubFns: Array<() => void> = [];
+    private boundRecalcHost: (() => void) | null = null;
 
     constructor(
         @Inject(I18nService) private i18n: I18nService,
@@ -76,6 +78,8 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
         @Inject(CommonService) private common: CommonService,
         @Inject(ChangeDetectorRef) private cdr: ChangeDetectorRef,
         @Inject(NgZone) private ngZone: NgZone,
+        @Inject(ElementRef) private elementRef: ElementRef,
+        @Inject(RedisStateService) private state: RedisStateService,
     ) {
         this.strings = this.i18n.strings;
     }
@@ -133,11 +137,21 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
+        document.body.classList.add('p3xr-no-main-scroll');
+        this.recalcHostHeight();
+        this.ngZone.runOutsideAngular(() => {
+            this.boundRecalcHost = () => this.recalcHostHeight();
+            window.addEventListener('resize', this.boundRecalcHost);
+        });
         // Delay chart init to ensure DOM has layout
         setTimeout(() => this.loadUPlot(), 500);
     }
 
     ngOnDestroy(): void {
+        document.body.classList.remove('p3xr-no-main-scroll');
+        if (this.boundRecalcHost) {
+            window.removeEventListener('resize', this.boundRecalcHost);
+        }
         if (this.intervalId) clearInterval(this.intervalId);
         this.unsubFns.forEach(fn => fn());
         this.themeObserver?.disconnect();
@@ -146,6 +160,16 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
         this.opsPlot?.destroy();
         this.clientsPlot?.destroy();
         this.networkPlot?.destroy();
+    }
+
+    private recalcHostHeight(): void {
+        const el = this.elementRef.nativeElement as HTMLElement;
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        const footerHeight = document.getElementById('p3xr-layout-footer-container')?.offsetHeight || 48;
+        const available = window.innerHeight - rect.top - footerHeight;
+        el.style.height = Math.max(available, 100) + 'px';
+        el.style.overflowY = 'auto';
     }
 
     serverInfoLabel(): string {
@@ -223,6 +247,67 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
 
     togglePause(): void {
         this.paused = !this.paused;
+    }
+
+    private get connName(): string {
+        return this.state.connection()?.name || 'redis';
+    }
+
+    exportOverview(): void {
+        if (!this.current) return;
+        const c = this.current;
+        const lines = [
+            `Memory: ${c.memory.usedHuman}`,
+            `RSS: ${c.memory.rssHuman}`,
+            `Peak: ${c.memory.peakHuman}`,
+            `Fragmentation: ${c.memory.fragRatio}x`,
+            `Ops/sec: ${c.stats.opsPerSec}`,
+            `Total Commands: ${c.stats.totalCommands}`,
+            `Clients: ${c.clients.connected}`,
+            `Blocked: ${c.clients.blocked}`,
+            `Hit Rate: ${c.stats.hitRate}%`,
+            `Hits / Misses: ${c.stats.hits} / ${c.stats.misses}`,
+            `Network I/O: ${c.stats.inputKbps.toFixed(1)} / ${c.stats.outputKbps.toFixed(1)} KB/s`,
+            `Expired: ${c.stats.expiredKeys}`,
+            `Evicted: ${c.stats.evictedKeys}`,
+        ];
+        this.downloadText(lines.join('\n'), `${this.connName}-overview.txt`);
+    }
+
+    exportChart(chartRef: ElementRef<HTMLDivElement> | undefined, name: string): void {
+        const canvas = chartRef?.nativeElement?.querySelector('canvas') as HTMLCanvasElement;
+        if (!canvas) return;
+        const url = canvas.toDataURL('image/png');
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${this.connName}-${name}.png`;
+        a.click();
+    }
+
+    exportSlowLog(): void {
+        if (!this.current) return;
+        const lines = this.current.slowlog.map(e => `${e.duration}µs ${e.command}`);
+        this.downloadText(lines.join('\n'), `${this.connName}-slowlog.txt`);
+    }
+
+    exportClientList(): void {
+        const lines = this.clientList.map(c => `${c.addr} ${c.name || ''} db${c.db} ${c.cmd} idle:${c.idle}s`);
+        this.downloadText(lines.join('\n'), `${this.connName}-clients.txt`);
+    }
+
+    exportTopKeys(): void {
+        const lines = this.topKeys.map((e, i) => `#${i + 1} ${e.key} ${this.formatBytes(e.bytes)}`);
+        this.downloadText(lines.join('\n'), `${this.connName}-topkeys.txt`);
+    }
+
+    private downloadText(content: string, filename: string): void {
+        const blob = new Blob([content], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(url);
     }
 
     get uptimeFormatted(): string {

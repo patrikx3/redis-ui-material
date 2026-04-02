@@ -14,7 +14,6 @@ import { MainCommandService } from '../../../services/main-command.service';
 import { KeyTypeBase } from './key-type-base';
 import { KeyPaging } from './key-paging';
 import { KeyPagerInlineComponent } from './key-pager-inline.component';
-import { JsonTreeComponent } from '../../../components/json-tree.component';
 
 declare const p3xr: any;
 const dayjs = require('dayjs');
@@ -22,7 +21,7 @@ const dayjs = require('dayjs');
 @Component({
     selector: 'p3xr-key-stream',
     standalone: true,
-    imports: [CommonModule, FormsModule, MatButtonModule, MatIconModule, MatTooltipModule, KeyPagerInlineComponent, JsonTreeComponent],
+    imports: [CommonModule, FormsModule, MatButtonModule, MatIconModule, MatTooltipModule, KeyPagerInlineComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     templateUrl: './key-stream.component.html',
     encapsulation: ViewEncapsulation.None,
@@ -171,6 +170,22 @@ export class KeyStreamComponent extends KeyTypeBase implements OnInit, OnChanges
             };
         }
         return { id: entry.id, ...entry.data };
+    }
+
+    downloadEntry(entry: { id: string; fields: Array<[string, string]> }): void {
+        const lines = [entry.id];
+        for (const [field, value] of entry.fields) {
+            lines.push(field);
+            lines.push(value);
+        }
+        const text = lines.join('\n');
+        const blob = new Blob([text], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${this.p3xrKey}-${entry.id}.txt`;
+        a.click();
+        URL.revokeObjectURL(url);
     }
 
     async copyEntry(entry: { id: string; fields: Array<[string, string]>; data: any; displayData: any; hasDuplicateFields: boolean }): Promise<void> {

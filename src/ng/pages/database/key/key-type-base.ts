@@ -24,6 +24,9 @@ export abstract class KeyTypeBase {
     /** >960px — show button text labels (matching AngularJS hide-xs hide-sm) */
     isGtSm = window.innerWidth >= 960;
 
+    /** Value display format */
+    @Input() valueFormat: 'raw' | 'json' | 'hex' | 'base64' = 'raw';
+
     protected readonly unsubFns: Array<() => void> = [];
 
     constructor(
@@ -49,7 +52,6 @@ export abstract class KeyTypeBase {
 
     get strings() { return this.i18n.strings(); }
     get isReadonly(): boolean { return p3xr?.state?.connection?.readonly === true; }
-    get hasProOrEnterprise(): boolean { return p3xr?.state?.hasProOrEnterpriseJsonBinary === true; }
     get maxValueDisplay(): number { return p3xr?.settings?.maxValueDisplay ?? 1024; }
     get maxValueAsBuffer(): number { return p3xr?.settings?.maxValueAsBuffer ?? 1024; }
 
@@ -89,12 +91,53 @@ export abstract class KeyTypeBase {
     protected truncateDisplay(value: any): string {
         if (value == null) return '';
         const str = String(value);
-        // maxValueDisplay: -1 or 0 means show all, >0 means truncate at that length
-        if (this.maxValueDisplay > 0 && str.length > this.maxValueDisplay) {
-            return str.substring(0, this.maxValueDisplay) + '...';
+        if (this.maxValueDisplay <= 0) return str;
+        if (str.length > this.maxValueDisplay) {
+            return str.substring(0, this.maxValueDisplay);
         }
         return str;
     }
+
+    protected isTruncated(value: any): boolean {
+        if (value == null || this.maxValueDisplay <= 0) return false;
+        return String(value).length > this.maxValueDisplay;
+    }
+
+    formatValue(value: any): string {
+        if (value == null) return '';
+        const str = String(value);
+        switch (this.valueFormat) {
+            case 'json':
+                try {
+                    return JSON.stringify(JSON.parse(str), null, 2);
+                } catch {
+                    return str;
+                }
+            case 'hex': {
+                const encoder = new TextEncoder();
+                const encoded = encoder.encode(str);
+                const lines: string[] = [];
+                for (let i = 0; i < encoded.length; i += 16) {
+                    const chunk = encoded.slice(i, i + 16);
+                    const addr = i.toString(16).padStart(8, '0');
+                    const hexPart = Array.from(chunk).map(b => b.toString(16).padStart(2, '0')).join(' ');
+                    lines.push(`${addr}  ${hexPart}`);
+                }
+                return lines.join('\n');
+            }
+            case 'base64': {
+                const raw = new TextEncoder().encode(str);
+                let binary = '';
+                for (let i = 0; i < raw.length; i++) {
+                    binary += String.fromCharCode(raw[i]);
+                }
+                return btoa(binary);
+            }
+            default:
+                return str;
+        }
+    }
+
 
     protected isBufferValue(value: any): boolean {
         return typeof value === 'object' && value !== null && value.byteLength !== undefined;

@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "உரிமம் அழிக்கப்பட்டது",
-    invalid_license: "தவறான உரிமம்",
-    license_max_devices_reached: "அதிகபட்ச சாதன இடங்கள் எட்டப்பட்டது",
-    license_readonly: "உரிமத்தை சேவையக முனையத்தில் இருந்து மட்டுமே மாற்ற முடியும்.",
     server_error: "சேவையக பிழை, மீண்டும் முயற்சிக்கவும்"
   },
   title: {
@@ -51,8 +47,12 @@ const strings = {
     deleteAllKeys: opts => {
       return `இந்த மரத்தையும் அதன் அனைத்து விசைகளையும் நீக்கவா (${opts.key})?`;
     },
+    deleteSearchKeys: opts => {
+      return `"${opts.pattern}" உடன் பொருந்தும் அனைத்து விசைகளையும் நீக்க விரும்புகிறீர்களா? ${opts.count} விசைகள் கண்டறியப்பட்டன.`;
+    },
     socketioConnectError: "Socket.IO சேவையகத்துடன் இணைக்க முடியவில்லை, நீங்கள் மீளேற்றம் செய்து இணைப்புப் பிழையை தீர்க்க முயற்சிக்கலாம், வாடிக்கையாளருக்கு அதை தானே தீர்க்கத் தெரியவில்லை.",
     socketioAuthRequired: "Socket.IO அங்கீகாரம் தேவை. தயவுசெய்து HTTP Basic Auth (பயனர்பெயர்/கடவுச்சொல்) மூலம் அங்கீகரித்து மீளேற்றம் செய்யவும்.",
+    delete: "நீக்கவா?",
     deleteKey: "இந்த விசையை நிச்சயமாக நீக்க விரும்புகிறீர்களா?",
     rename: {
       title: "இந்த விசையை நிச்சயமாக மறுபெயரிட விரும்புகிறீர்களா?",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "உரையை நேரமாக மாற்றவும்",
       convertTextToTimePlaceholder: "எ.கா. 1d 86400 ஆக இருக்கும்"
     },
-    license: {
-      title: "உரிமத்தை அமைக்கவும்",
-      textContent: "If you want to use paid features, please contact support@corifeus.com to request a license. Pricing is Pro 400 HUF/month (\u20ac1/month) or 4,000 HUF/year (\u20ac10/year), and Enterprise 1,200 HUF/month (\u20ac3/month) or 12,000 HUF/year (\u20ac30/year). Yearly is 10x monthly. With 27% VAT, totals are Pro 500 HUF/month (\u20ac1.27/month) or 5,100 HUF/year (\u20ac12.70/year), Enterprise 1,500 HUF/month (\u20ac3.81/month) or 15,200 HUF/year (\u20ac38.10/year). License validation requires internet access. Default license includes 5 seats. If you need more seats, contact us at support@corifeus.com.",
-      placeholder: "உரிம விசை"
-    }
   },
   language: {
     // When you translate the english name, keep the Language in English
@@ -138,13 +133,17 @@ const strings = {
     exportKeys: "விசைகளை ஏற்றுமதி செய்",
     exportAllKeys: (opts) => `அனைத்து ${opts.count} விசைகளையும் ஏற்றுமதி செய்`,
     exportSearchResults: (opts) => `${opts.count} முடிவுகளை ஏற்றுமதி செய்`,
+    deleteAllKeysMenu: (opts) => `அனைத்தையும் நீக்கு ${opts.count}`,
     importKeys: "விசைகளை இறக்குமதி செய்",
+    deleteSearchKeys: (opts) => `${opts.count} பொருந்தும் விசைகளை நீக்கு`,
     saveWithFormatJson: "வடிவமைப்புடன் சேமி",
     formatJson: "Json வடிவமை",
     wrap: "மடி",
     unwrap: "விரி",
     downloadJson: "JSON பதிவிறக்கம்",
-    pubsubMonitor: "PubSub கண்காணிப்பான்",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "மொழி / Language",
@@ -185,7 +184,6 @@ const strings = {
     edit: "திருத்து",
     save: "சேமி",
     ttl: "TTL அமை",
-    license: "உரிமம் அமை",
     delete: "நீக்கு",
     remove: "அகற்று",
     sure: "உறுதி",
@@ -264,38 +262,6 @@ const strings = {
     connectiondEdit: "இணைப்பைத் திருத்து",
     connectiondView: "இணைப்பைப் பார்",
     connections: "இணைப்புகள்",
-    licenseInfo: "உரிமம்",
-    licenseEditable: "உரிமம் திருத்தக்கூடியது",
-    licenseEditableYes: "ஆம்",
-    licenseEditableNo: "இல்லை",
-    licenseTerminalOnly: "உரிமத்தை சேவையக முனையத்தில் இருந்து மட்டுமே உள்ளமைக்க முடியும்.",
-    licenseTierPolicyTitle: "அடுக்கு கொள்கை",
-    licenseTierPolicyText: "<h4>இலவசம்</h4>அடிப்படை Redis UI மட்டும்; SSH சுரங்கப்பாதை இல்லை, படிக்க மட்டும் இணைப்பு முறை இல்லை, Cluster/Sentinel இல்லை, JSON திருத்தம்/பைனரி பதிவேற்றம்/பைனரி பதிவிறக்கம் இல்லை, ReJSON இல்லை.<br/><strong>விலை: 0 HUF/மாதம் (\u20ac0/மாதம்).</strong><br/><br/><h4>Pro</h4>SSH சுரங்கப்பாதை, படிக்க மட்டும் இணைப்பு முறை (--readonly-connections/-r உட்பட), JSON திருத்தம், பைனரி பதிவேற்றம், பைனரி பதிவிறக்கம், ReJSON.<br/><strong>அடிப்படை விலை: 400 HUF/மாதம் (\u20ac1/மாதம்) அல்லது 4,000 HUF/ஆண்டு (\u20ac10/ஆண்டு).</strong><br/><strong>27% VAT உடன் மொத்தம்: 500 HUF/மாதம் (\u20ac1.27/மாதம்) அல்லது 5,100 HUF/ஆண்டு (\u20ac12.70/ஆண்டு).</strong><br/><br/><h4>Enterprise</h4>SSH சுரங்கப்பாதை, Cluster மற்றும் Sentinel, மற்றும் JSON திருத்தம், பைனரி பதிவேற்றம், பைனரி பதிவிறக்கம், ReJSON; --readonly-connections/-r வும் வேலை செய்யும்.<br/><strong>அடிப்படை விலை: 1,200 HUF/மாதம் (\u20ac3/மாதம்) அல்லது 12,000 HUF/ஆண்டு (\u20ac30/ஆண்டு).</strong><br/><strong>27% VAT உடன் மொத்தம்: 1,500 HUF/மாதம் (\u20ac3.81/மாதம்) அல்லது 15,200 HUF/ஆண்டு (\u20ac38.10/ஆண்டு).</strong><br/><br/><h4>ஆண்டு விதி</h4>ஆண்டு விலை மாத விலையின் 10 மடங்கு.<br/><br/><h4>இடங்கள்</h4>இயல்புநிலை உரிமத்தில் 5 இடங்கள் அடங்கும். மேலும் இடங்கள் தேவைப்பட்டால், <a href='mailto:support@corifeus.com'>support@corifeus.com</a> இல் எங்களைத் தொடர்பு கொள்ளவும்.<br/><br/><h4>Enterprise சோதனை</h4>உண்மையான மின்னஞ்சல் முகவரி உள்ள எவருக்கும் 10 நாட்கள் இலவசம் (சோதனை மின்னஞ்சல் அல்ல).<br/><hr/><h4>மின்னஞ்சலில் பில்லிங் தகவல்</h4>பெயர், பில்லிங் மின்னஞ்சல், நாட்டுக் குறியீடு, அஞ்சல் குறியீடு, நகரம், முகவரி, VAT ID (விருப்பத்திற்கு).<br/><br/><h4>பணம் செலுத்துதல்</h4>PayPal பணம் செலுத்துதல் HUF (forint) இல் மட்டுமே கிடைக்கும்; <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> @ பணம் அனுப்பிய பிறகு நான் உங்களுக்கு விலைப்பட்டியல் அனுப்புவேன். அனைத்து பணம் செலுத்துதல்களும் திரும்பப் பெற இயலாது.<br/><br/><h4>VAT</h4>VAT விலையில் சேர்க்கப்படும் (ஹங்கேரியில் 27%).<br/><hr/><h4>தொடர்பு</h4>நீங்கள் வணக்கம் சொல்ல அல்லது கேள்வி இருந்தால், <a href='mailto:support@corifeus.com'>support@corifeus.com</a> ஐ தொடர்பு கொள்ளவும்.<br/><hr/><h4>மொழி</h4>விலைப்பட்டியல் மற்றும் உரிம மின்னஞ்சல் தொடர்பு ஆங்கிலத்தில். விலைப்பட்டியல் நாணயம் HUF.<br/><hr/><h4>குறிப்பு</h4>உரிம சரிபார்ப்புக்கு இணைய அணுகல் தேவை.",
-    licenseState: "நிலை",
-    licenseStateActive: "செயலில்",
-    licenseStateInactive: "செயலற்றது",
-    licenseStateNoLicense: "உரிமம் இல்லை",
-    licenseKeyMasked: "சேமிக்கப்பட்ட விசை",
-    licenseTier: "அடுக்கு",
-    licenseValid: "செல்லுபடியாகும்",
-    licenseStatus: "உரிம நிலை",
-    licenseReason: "காரணம்",
-    licenseCheckedAt: "சரிபார்க்கப்பட்ட நேரம்",
-    licenseStartsAt: "தொடக்க நேரம்",
-    licenseExpiresAt: "காலாவதி நேரம்",
-    licenseDaysLeft: "மீதமுள்ள நாட்கள்",
-    licenseMaxDevices: "அதிகபட்ச சாதனங்கள்",
-    licenseActiveDevices: "செயலில் உள்ள சாதனங்கள்",
-    licenseActiveDevicesInfo: "ஒரு சாதனம் இனி பயன்படுத்தப்படாவிட்டால், அதன் இடம் 75 நிமிடங்களுக்குப் பிறகு தானாகவே விடுவிக்கப்படும்.",
-    licenseCustomerEmail: "வாடிக்கையாளர் மின்னஞ்சல்",
-    licenseFeatures: "அம்சங்கள்",
-    licenseFeaturesEmpty: "கூடுதல் அம்சங்கள் இல்லை",
-    licenseFeatureReadonlyMode: "படிக்க மட்டும் இணைப்பு முறை",
-    licenseFeatureReadonlyConnectionsFlag: "படிக்க மட்டும் இணைப்புகள் (--readonly-connections/-r)",
-    licenseFeatureSsh: "SSH சுரங்கப்பாதை",
-    licenseFeatureCluster: "Cluster இணைப்புகள்",
-    licenseFeatureSentinel: "Sentinel இணைப்புகள்",
-    licenseFeatureReJSON: "ReJSON (JSON தரவு வகை)",
     keysSort: {
       on: "விசை வரிசைப்படுத்தல் இயக்கப்பட்டது",
       off: "விசை வரிசைப்படுத்தல் முடக்கப்பட்டது"
@@ -313,9 +279,6 @@ const strings = {
       on: "படிக்க மட்டும் இயக்கப்பட்டது",
       off: "படிக்க மட்டும் முடக்கப்பட்டது"
     },
-    proSshOnly: "SSH Pro அல்லது Enterprise இல் கிடைக்கும்.",
-    proReadonlyOnly: "படிக்க மட்டும் இணைப்பு முறை Pro அல்லது Enterprise இல் கிடைக்கும்.",
-    enterpriseClusterSentinelOnly: "Cluster மற்றும் Sentinel Enterprise இல் மட்டுமே கிடைக்கும்.",
     theme: {
       light: "ஒளி",
       dark: "இருள் enterprise",
@@ -357,16 +320,20 @@ const strings = {
     importConflict: "விசை ஏற்கனவே இருந்தால்:",
     noKeysToExport: "ஏற்றுமதி செய்ய விசைகள் இல்லை",
     time: "நேரம்",
+    type: "வகை",
+    format: "வடிவம்",
     loading: "ஏற்றுகிறது...",
     autoRefresh: "தானி",
     exportSearchHint: "தற்போதைய தேடலுடன் பொருந்தும் விசைகளை மட்டும் ஏற்றுமதி செய்கிறது",
     importSearchHint: "இறக்குமதி தேடல் முடிவுகளுக்கு மட்டுமல்ல, முழு தரவுத்தளத்திற்கும் பொருந்தும்",
+    deleteSearchHint: "சேவையகத்தில் தற்போதைய தேடலுடன் பொருந்தும் அனைத்து விசைகளையும் நீக்குகிறது",
+    deletingSearchKeys: "பொருந்தும் விசைகளை நீக்குகிறது...",
     importNoKeys: "கோப்பில் விசைகள் காணப்படவில்லை",
   },
   status: {
     dataCopied: "தரவு கிளிப்போர்டில் உள்ளது",
-    licenseSaved: "உரிமம் சேமிக்கப்பட்டது",
     exportDone: "ஏற்றுமதி முடிந்தது",
+    deletedSearchKeys: (opts) => `${opts.count} விசைகள் நீக்கப்பட்டன`,
     indexCreated: "குறியீடு உருவாக்கப்பட்டது",
     indexDropped: "குறியீடு நீக்கப்பட்டது",
     importDone: (opts) => `இறக்குமதி முடிந்தது: ${opts.created} உருவாக்கப்பட்டது, ${opts.skipped} தவிர்க்கப்பட்டது, ${opts.errors} பிழைகள்`,
@@ -414,35 +381,10 @@ const strings = {
     "readonly-connections": "இணைப்புகள் சேர்/சேமி/நீக்கு படிக்க மட்டுமே!",
     "readonly-connection-mode": "இந்த இணைப்பு படிக்க மட்டும் முறையில் உள்ளது!",
     "list-out-of-bounds": "இந்த பட்டியல் குறியீடு எல்லைக்கு அப்பாற்பட்டது",
-    "donation-ware-feature": "இந்த அம்சம் நன்கொடை பதிப்பில் உள்ளது.",
-    "feature-pro-readonly-required": "படிக்க மட்டும் இணைப்பு முறைக்கு Pro அல்லது Enterprise உரிமம் தேவை.",
-    "feature-pro-ssh-required": "SSH சுரங்கப்பாதைக்கு Pro அல்லது Enterprise உரிமம் தேவை.",
-    "feature-enterprise-cluster-sentinel-required": "Cluster மற்றும் Sentinel க்கு Enterprise உரிமம் தேவை.",
-    "feature-pro-json-binary-required": "JSON திருத்தம், பைனரி பதிவேற்றம் மற்றும் பைனரி பதிவிறக்கத்திற்கு Pro அல்லது Enterprise உரிமம் தேவை.",
-    "feature-pro-rejson-required": "ReJSON (JSON தரவு வகை) க்கு Pro அல்லது Enterprise உரிமம் தேவை.",
     "invalid-json-value": "மதிப்பு செல்லுபடியான JSON அல்ல.",
     "http_auth_required": "அங்கீகாரம் தேவை: தயவுசெய்து HTTP Basic Auth மூலம் அங்கீகரித்து மீளேற்றம் செய்யவும்.",
     "auto-connection-failed": "இணைப்பு அகற்றப்பட்டிருக்கலாம் மற்றும் தானியங்கி இணைப்பு இதனால் தோல்வியடைந்தது.",
     invalid_console_command: "இந்த கட்டளை GUI வழியாக வேலை செய்யாது."
-  },
-  licenseReason: {
-    LICENSE_VALID: "உரிமம் செல்லுபடியாகும்",
-    LICENSE_INVALID: "உரிமம் செல்லாது",
-    LICENSE_MISSING: "உரிம விசை அமைக்கப்படவில்லை",
-    LICENSE_DISABLED: "சேவையக உள்ளமைவில் உரிமம் முடக்கப்பட்டுள்ளது",
-    LICENSE_NOT_FOUND: "உரிமம் கண்டறியப்படவில்லை",
-    LICENSE_EXPIRED: "உரிமம் காலாவதியானது",
-    LICENSE_CLEARED: "உரிம விசை அழிக்கப்பட்டது",
-    LICENSE_MAX_DEVICES_REACHED: "அதிகபட்ச சாதன இடங்கள் எட்டப்பட்டது",
-    PRODUCT_MISMATCH: "உரிம தயாரிப்பு பொருந்தவில்லை"
-  },
-  licenseStatusValue: {
-    active: "செயலில்",
-    deleted: "நீக்கப்பட்டது",
-    all: "அனைத்தும்",
-    expired: "காலாவதியானது",
-    missing: "காணவில்லை",
-    inactive: "செயலற்றது"
   },
   form: {
     error: {
@@ -612,12 +554,49 @@ const strings = {
           field: "புலம்",
           value: "மதிப்பு"
         }
+      },
+      timeseries: {
+        chart: "வரைபடம்",
+        info: "தகவல்",
+        addPoint: "தரவுப் புள்ளியைச் சேர்",
+        from: "இருந்து (ms அல்லது -)",
+        to: "வரை (ms அல்லது +)",
+        aggregation: "தொகுப்பு",
+        timeBucket: "வாளி (ms)",
+        none: "எதுவுமில்லை",
+        dataPoints: "தரவுப் புள்ளிகள்",
+        labels: "லேபிள்கள்",
+        rules: "விதிகள்",
+        retention: "தக்கவைப்பு",
+        timestamp: "நேர முத்திரை",
+        value: "மதிப்பு",
+        retentionHint: "0 = காலாவதி இல்லை, அல்லது மில்லிவினாடிகள்",
+        duplicatePolicy: "நகல் கொள்கை",
+        labelsHint: "சாவி1 மதிப்பு1 சாவி2 மதிப்பு2",
+        timestampHint: "'*' தானாக உருவாக்கப்படும், அல்லது மில்லிவினாடி நேர முத்திரை",
+        editAllHint: "ஒவ்வொரு வரிக்கும் ஒரு தரவுப் புள்ளி: நேர_முத்திரை மதிப்பு (நேர முத்திரை தானியங்கிக்கு * ஆக இருக்கலாம்)",
+        autoSpread: "தானியங்கி * பரவல் இடைவெளி",
+        formula: "சூத்திரம்",
+        formulaLinear: "நேரியல்",
+        formulaRandom: "சீரற்ற",
+        formulaSawtooth: "ரம்பப் பல்",
+        formulaPoints: "புள்ளிகள்",
+        formulaAmplitude: "வீச்சு",
+        formulaOffset: "ஆஃப்செட்",
+        generate: "உருவாக்கு",
+        exportChart: "PNG ஏற்றுமதி",
+        overlay: "மேற்பொருத்து விசைகள்",
+        overlayHint: "கமாவால் பிரிக்கப்பட்ட விசைகள்",
+        mrangeFilter: "லேபிள் வடிகட்டி",
+        bulkMode: "மொத்த உருவாக்கம்",
+        mrangeHint: "எ.கா. sensor=temp"
       }
     },
     treeControls: {
       settings: "மர அமைப்புகள்",
       expandAll: "அனைத்தையும் விரிவாக்கு",
       collapseAll: "அனைத்தையும் சுருக்கு",
+      level: "நிdelays",
       search: {
         search: "விசைகளில் தேடு",
         clear: "தற்போதைய தேடலை காலியாக்க அழி",
@@ -636,13 +615,21 @@ const strings = {
     }
   },
   time: {
+    type: "வகை",
+    format: "வடிவம்",
     loading: "ஏற்றுகிறது...",
     years: "ஆண்டுகள்",
     months: "மாதங்கள்",
     days: "நாட்கள்",
     year: "ஆண்டு",
     month: "மாதம்",
-    day: "நாள்"
+    day: "நாள்",
+    second: "வினாடி",
+    seconds: "வினாடிகள்",
+    minute: "நிமிடம்",
+    minutes: "நிமிடங்கள்",
+    hour: "மணி நேரம்",
+    hours: "மணி நேரங்கள்"
   },
   redisTypes: {
     string: "String",
@@ -651,7 +638,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

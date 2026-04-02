@@ -14,6 +14,11 @@
                 [label]="serverInfoLabel()"
                 [mdIcon]="paused ? 'play_arrow' : 'pause'">
             </p3xr-ng-button>
+            <p3xr-ng-button
+                (click)="exportOverview(); $event.stopPropagation()"
+                [label]="strings().intention?.export || 'Export'"
+                mdIcon="download">
+            </p3xr-ng-button>
         </div>
         <div content>
             <mat-list>
@@ -115,6 +120,13 @@
 
     <!-- Charts -->
     <p3xr-ng-accordion [title]="(strings().page?.monitor?.memory || 'Memory') + ' (MB)'" accordionKey="monitor-chart-memory">
+        <div actions>
+            <p3xr-ng-button
+                (click)="exportChart(memoryChartRef, 'memory'); $event.stopPropagation()"
+                [label]="strings().intention?.export || 'Export'"
+                mdIcon="download">
+            </p3xr-ng-button>
+        </div>
         <div content>
             <div #memoryChart class="p3xr-monitoring-chart"></div>
         </div>
@@ -123,6 +135,13 @@
     <br />
 
     <p3xr-ng-accordion [title]="strings().page?.monitor?.opsPerSec || 'Ops/sec'" accordionKey="monitor-chart-ops">
+        <div actions>
+            <p3xr-ng-button
+                (click)="exportChart(opsChartRef, 'ops'); $event.stopPropagation()"
+                [label]="strings().intention?.export || 'Export'"
+                mdIcon="download">
+            </p3xr-ng-button>
+        </div>
         <div content>
             <div #opsChart class="p3xr-monitoring-chart"></div>
         </div>
@@ -131,6 +150,13 @@
     <br />
 
     <p3xr-ng-accordion [title]="strings().page?.monitor?.clients || 'Clients'" accordionKey="monitor-chart-clients">
+        <div actions>
+            <p3xr-ng-button
+                (click)="exportChart(clientsChartRef, 'clients'); $event.stopPropagation()"
+                [label]="strings().intention?.export || 'Export'"
+                mdIcon="download">
+            </p3xr-ng-button>
+        </div>
         <div content>
             <div #clientsChart class="p3xr-monitoring-chart"></div>
         </div>
@@ -139,6 +165,13 @@
     <br />
 
     <p3xr-ng-accordion [title]="(strings().page?.monitor?.networkIo || 'Network I/O') + ' (KB/s)'" accordionKey="monitor-chart-network">
+        <div actions>
+            <p3xr-ng-button
+                (click)="exportChart(networkChartRef, 'network'); $event.stopPropagation()"
+                [label]="strings().intention?.export || 'Export'"
+                mdIcon="download">
+            </p3xr-ng-button>
+        </div>
         <div content>
             <div #networkChart class="p3xr-monitoring-chart"></div>
         </div>
@@ -148,6 +181,13 @@
     @if (current.slowlog.length > 0) {
         <br />
         <p3xr-ng-accordion [title]="strings().page?.monitor?.slowLog || 'Slow Log'" accordionKey="monitor-slowlog">
+            <div actions>
+                <p3xr-ng-button
+                    (click)="exportSlowLog(); $event.stopPropagation()"
+                    [label]="strings().intention?.export || 'Export'"
+                    mdIcon="download">
+                </p3xr-ng-button>
+            </div>
             <div content>
                 <mat-list>
                     @for (entry of current.slowlog; track entry.id) {
@@ -180,6 +220,11 @@
                     mdIcon="refresh">
                 </p3xr-ng-button>
             }
+            <p3xr-ng-button
+                (click)="exportClientList(); $event.stopPropagation()"
+                [label]="strings().intention?.export || 'Export'"
+                mdIcon="download">
+            </p3xr-ng-button>
         </div>
         <div content>
             @if (clientList.length === 0 && clientListLoaded) {
@@ -229,6 +274,11 @@
                     mdIcon="refresh">
                 </p3xr-ng-button>
             }
+            <p3xr-ng-button
+                (click)="exportTopKeys(); $event.stopPropagation()"
+                [label]="strings().intention?.export || 'Export'"
+                mdIcon="download">
+            </p3xr-ng-button>
         </div>
         <div content>
             @if (topKeys.length === 0 && topKeysLoaded) {

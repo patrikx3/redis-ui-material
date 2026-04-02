@@ -5,44 +5,29 @@
 <div id="p3xr-layout-header-container">
     <mat-toolbar class="p3xr-mat-layout">
 
-        <!-- App name button: navigates to database or reloads on failure -->
-        @if (!state.failed()) {
-            @if (isWide) {
-                <button mat-button (click)="navigateTo('database.statistics')">
-                    <i class="fas fa-database"></i>
-                    <span>{{ i18n.strings().title?.name }}</span>
-                </button>
-            } @else {
-                <button mat-icon-button (click)="navigateTo('database.statistics')"
-                        [matTooltip]="i18n.strings().title?.name ?? ''"
-                        matTooltipPosition="below">
-                    <i class="fas fa-database"></i>
-                </button>
-            }
+        <!-- App name button: navigates to database -->
+        @if (isWide) {
+            <button mat-button (click)="navigateTo('database.statistics')">
+                <i class="fas fa-database"></i>
+                <span>{{ i18n.strings().title?.name }}</span>
+            </button>
         } @else {
-            @if (isWide) {
-                <button mat-button (click)="reloadPage()">
-                    <i class="fas fa-redo"></i>
-                    <span>{{ i18n.strings().title?.name }}</span>
-                </button>
-            } @else {
-                <button mat-icon-button (click)="reloadPage()"
-                        [matTooltip]="i18n.strings().title?.name ?? ''"
-                        matTooltipPosition="below">
-                    <i class="fas fa-redo"></i>
-                </button>
-            }
+            <button mat-icon-button (click)="navigateTo('database.statistics')"
+                    [matTooltip]="i18n.strings().title?.name ?? ''"
+                    matTooltipPosition="below">
+                <i class="fas fa-database"></i>
+            </button>
         }
 
         <!-- Database button — shown only when connected -->
         @if (currentConnection) {
             @if (isWide) {
-                <button mat-button (click)="navigateTo('database.statistics')">
+                <button mat-button (click)="navigateTo('database.statistics')" [class.p3xr-nav-active]="isActivePage('database')">
                     <mat-icon>storage</mat-icon>
                     <span>{{ i18n.strings().intention?.main }}</span>
                 </button>
             } @else {
-                <button mat-icon-button (click)="navigateTo('database.statistics')"
+                <button mat-icon-button (click)="navigateTo('database.statistics')" [class.p3xr-nav-active]="isActivePage('database')"
                         [matTooltip]="i18n.strings().intention?.main ?? ''"
                         matTooltipPosition="below">
                     <mat-icon>storage</mat-icon>
@@ -53,12 +38,12 @@
         <!-- Search button — shown only when connected and RediSearch module detected -->
         @if (currentConnection && hasRediSearch) {
             @if (isWide) {
-                <button mat-button (click)="navigateTo('search')">
+                <button mat-button (click)="navigateTo('search')" [class.p3xr-nav-active]="isActivePage('search')">
                     <mat-icon>search</mat-icon>
                     <span>{{ i18n.strings().page?.search?.title || 'Search' }}</span>
                 </button>
             } @else {
-                <button mat-icon-button (click)="navigateTo('search')"
+                <button mat-icon-button (click)="navigateTo('search')" [class.p3xr-nav-active]="isActivePage('search')"
                         [matTooltip]="i18n.strings().page?.search?.title ?? 'Search'"
                         matTooltipPosition="below">
                     <mat-icon>search</mat-icon>
@@ -69,12 +54,12 @@
         <!-- Monitoring button — shown only when connected -->
         @if (currentConnection) {
             @if (isWide) {
-                <button mat-button (click)="navigateTo('monitoring')">
+                <button mat-button (click)="navigateTo('monitoring')" [class.p3xr-nav-active]="isActivePage('monitoring')">
                     <mat-icon>monitor_heart</mat-icon>
                     <span>{{ i18n.strings().page?.monitor?.title || 'Monitoring' }}</span>
                 </button>
             } @else {
-                <button mat-icon-button (click)="navigateTo('monitoring')"
+                <button mat-icon-button (click)="navigateTo('monitoring')" [class.p3xr-nav-active]="isActivePage('monitoring')"
                         [matTooltip]="i18n.strings().page?.monitor?.title ?? 'Monitoring'"
                         matTooltipPosition="below">
                     <mat-icon>monitor_heart</mat-icon>
@@ -82,38 +67,35 @@
             }
         }
 
+
         <span class="p3xr-layout-spacer"></span>
 
         <!-- Info button -->
-        @if (!state.failed()) {
-            @if (isWide) {
-                <button mat-button (click)="navigateTo('info')">
-                    <mat-icon>info</mat-icon>
-                    <span>{{ i18n.strings().intention?.info || 'Info' }}</span>
-                </button>
-            } @else {
-                <button mat-icon-button (click)="navigateTo('info')"
-                        [matTooltip]="i18n.strings().intention?.info ?? 'Info'"
-                        matTooltipPosition="below">
-                    <mat-icon>info</mat-icon>
-                </button>
-            }
+        @if (isWide) {
+            <button mat-button (click)="navigateTo('info')" [class.p3xr-nav-active]="isActivePage('info')">
+                <mat-icon>info</mat-icon>
+                <span>{{ i18n.strings().intention?.info || 'Info' }}</span>
+            </button>
+        } @else {
+            <button mat-icon-button (click)="navigateTo('info')" [class.p3xr-nav-active]="isActivePage('info')"
+                    [matTooltip]="i18n.strings().intention?.info ?? 'Info'"
+                    matTooltipPosition="below">
+                <mat-icon>info</mat-icon>
+            </button>
         }
 
         <!-- Settings button -->
-        @if (!state.failed()) {
-            @if (isWide) {
-                <button mat-button (click)="navigateTo('settings')">
-                    <mat-icon>settings</mat-icon>
-                    <span>{{ i18n.strings().intention?.settings }}</span>
-                </button>
-            } @else {
-                <button mat-icon-button (click)="navigateTo('settings')"
-                        [matTooltip]="i18n.strings().intention?.settings ?? ''"
-                        matTooltipPosition="below">
-                    <mat-icon>settings</mat-icon>
-                </button>
-            }
+        @if (isWide) {
+            <button mat-button (click)="navigateTo('settings')" [class.p3xr-nav-active]="isActivePage('settings')">
+                <mat-icon>settings</mat-icon>
+                <span>{{ i18n.strings().intention?.settings }}</span>
+            </button>
+        } @else {
+            <button mat-icon-button (click)="navigateTo('settings')" [class.p3xr-nav-active]="isActivePage('settings')"
+                    [matTooltip]="i18n.strings().intention?.settings ?? ''"
+                    matTooltipPosition="below">
+                <mat-icon>settings</mat-icon>
+            </button>
         }
 
     </mat-toolbar>
@@ -121,9 +103,7 @@
 
 <!-- Version number: shown when not in Electron and a version is available -->
 @if (!isElectron && currentVersion && isWide) {
-    <div id="p3xr-layout-header-version-donated"
-         [class.p3xr-layout-version-free]="!state.donated()"
-         [class.p3xr-layout-version-donated]="state.donated()">
+    <div id="p3xr-layout-header-version">
         {{ currentVersion }}
     </div>
 }

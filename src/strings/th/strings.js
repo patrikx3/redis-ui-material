@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "ใบอนุญาตเคลียร์แล้ว",
-    invalid_license: "ใบอนุญาตไม่ถูกต้อง",
-    license_max_devices_reached: "ถึงจำนวนที่นั่งอุปกรณ์สูงสุดแล้ว",
-    license_readonly: "ใบอนุญาตสามารถเปลี่ยนแปลงได้จากเทอร์มินัลเซิร์ฟเวอร์เท่านั้น",
     server_error: "ข้อผิดพลาดของเซิร์ฟเวอร์ โปรดลองอีกครั้ง"
   },
   title: {
@@ -51,8 +47,12 @@ const strings = {
     deleteAllKeys: opts => {
       return `ลบแผนผังนี้และกุญแจทั้งหมด (${opts.key})?`;
     },
+    deleteSearchKeys: opts => {
+      return `คุณแน่ใจหรือไม่ว่าจะลบคีย์ทั้งหมดที่ตรงกับ "${opts.pattern}"? พบ ${opts.count} คีย์`;
+    },
     socketioConnectError: "Socket.IO ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้ คุณสามารถโหลดซ้ำและลองแ��้ไขข้อผิดพลาดในการเชื่อมต่อด้วยตนเอง ไคลเอ็นต์ไม่ทราบวิธีแก้ปัญหาด้วยตนเอง",
     socketioAuthRequired: "ต้องมีการอนุญาต Socket.IO โปรดตรวจสอบสิทธิ์ด้วย HTTP Basic Auth (ชื่อผู้ใช้/รหัสผ่าน) แล้วโหลดซ้ำ",
+    delete: "ลบ?",
     deleteKey: "คุณแน่ใจหรือว่าจะลบคีย์นี้",
     rename: {
       title: "คุณแน่ใจหรือว่าจะเปลี่ยนชื่อคีย์นี้",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "แปลงข้อความเป็นเวลา",
       convertTextToTimePlaceholder: "เช่น 1d จะเป็น 86400"
     },
-    license: {
-      title: "กำหนดใบอนุญาต",
-      textContent: "หากคุณต้องการใช้คุณสมบัติแบบชำระเงิน โปรดติดต่อ support@corifeus.com เพื่อขอใบอนุญาต ราคาคือ Pro 400 HUF/เดือน (€1/เดือน) หรือ 4,000 HUF/ปี (€10/ปี) และ Enterprise 1,200 HUF/เดือน (3 ยูโร/เดือน) หรือ 12,000 HUF/ปี (30 ยูโร/ปี) รายปีคือ 10x ต่อเดือน ด้วย 27% VAT ยอดรวมคือ Pro 500 HUF/เดือน (1.27 ยูโร/เดือน) หรือ 5,100 HUF/ปี (12.70 ยูโร/ปี), Enterprise 1,500 HUF/เดือน (3.81 ยูโร/เดือน) หรือ 15,200 HUF/ปี (€38.10/ปี) การตรวจสอบใบอนุญาตต้องมีการเข้าถึงอินเทอร์เน็ต ใบอนุญาตเริ่มต้นประกอบด้วย 5 ที่นั่ง หากต้องการที่นั่งเพิ่มเติม โปรดติดต่อเราที่ support@corifeus.com",
-      placeholder: "รหัสใบอนุญาต"
-    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -136,13 +131,17 @@ const strings = {
     exportKeys: "ส่งออกคีย์",
     exportAllKeys: (opts) => `ส่งออกคีย์ทั้งหมด ${opts.count} รายการ`,
     exportSearchResults: (opts) => `ส่งออก ${opts.count} ผลลัพธ์`,
+    deleteAllKeysMenu: (opts) => `ลบทั้งหมด ${opts.count}`,
     importKeys: "นำเข้าคีย์",
+    deleteSearchKeys: (opts) => `ลบคีย์ที่ตรงกัน ${opts.count} รายการ`,
     saveWithFormatJson: "บันทึกด้วยรูปแบบ",
     formatJson: "จัดรูปแบบ Json",
     wrap: "ห่อ",
     unwrap: "แกะห่อ",
     downloadJson: "ดาวน์โหลด JSON.dll",
-    pubsubMonitor: "มอนิเตอร์ PubSub",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "ภาษา",
@@ -183,7 +182,6 @@ const strings = {
     edit: "แก้ไข",
     save: "บันทึก",
     ttl: "ตั้งค่า TTL",
-    license: "กำหนดใบอนุญาต",
     delete: "ลบ",
     remove: "ลบ",
     sure: "แน่นอน",
@@ -262,38 +260,6 @@ const strings = {
     connectiondEdit: "แก้ไขการเชื่อมต่อ",
     connectiondView: "ดูการเชื่อมต่อ",
     connections: "การเชื่อมต่อ",
-    licenseInfo: "ใบอนุญาต",
-    licenseEditable: "ใบอนุญาตแก้ไขได้",
-    licenseEditableYes: "ใช่",
-    licenseEditableNo: "ไม่",
-    licenseTerminalOnly: "ใบอนุญาตสามารถกำหนดค่าได้จากเทอร์มินัลเซิร์ฟเวอร์เท่านั้น",
-    licenseTierPolicyTitle: "นโยบายระดับ",
-    licenseTierPolicyText: "<h4>Free</h4>core Redis UI เท่านั้น; ไม่มีช่องสัญญาณ SSH, ไม่มีโหมดการเชื่อมต่อแบบอ่านอย่างเดียว, ไม่มี Cluster/Sentinel, ไม่มีการแก้ไข JSON/อัปโหลดไบนารี/ไบนารีดาวน์โหลด, ไม่มี ReJSON.<br/><strong>ราคา: 0 HUF/เดือน (0 ยูโร/เดือน).</strong><br/><br/><h4>Pro</h4>SSH tunneling, โหมดการเชื่อมต่อแบบอ่านอย่างเดียว (รวมถึง --readonly-connections/-r), แก้ไข JSON, อัปโหลดไบนารี่, ดาวน์โหลดไบนารี, ReJSON.<br/><strong>ราคาพื้นฐาน: 400 HUF/เดือน (1 ยูโร/เดือน) หรือ 4,000 HUF/ปี (€10/ปี).</strong><br/><strong>รวมด้วย 27% VAT: 500 HUF/เดือน (1.27 ยูโร/เดือน) หรือ 5,100 HUF/ปี (€12.70/ปี).</strong><br/><br/><h4>Enterprise</h4>SSH tunneling, Cluster และ Sentinel รวมถึงแก้ไข JSON, อัปโหลดไบนารี, ดาวน์โหลดไบนารี, ReJSON; --readonly-connections/-r ยังใช้งานได้ <br/><strong>ราคาพื้นฐาน: 1,200 HUF/เดือน (3 ยูโร/เดือน) หรือ 12,000 HUF/ปี (€30/ปี).</strong><br/><strong>รวมด้วย 27% VAT: 1,500 HUF/เดือน (€3.81/เดือน) หรือ 15,200 HUF/ปี (€38.10/ปี).</strong><br/><br/><h4>Yกฎช่วงแรก</h4>Yราคาช่วงต้นคือ 10 เท่าของรายเดือน ราคา<br/><br/><h4>Seats</h4>ใบอนุญาตเริ่มต้นประกอบด้วย 5 ที่นั่ง หากคุณต้องการที่นั่งเพิ่ม โปรดติดต่อเราที่ <a href='mailto:mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><br/><h4>Enterprise ทดลองใช้</h4> ฟรี 10 วันสำหรับทุกคนที่มีที่อยู่อีเมลจริง (อีเมลที่ไม่ใช่การทดสอบ).<br/><hr/><h4>ข้อมูลการเรียกเก็บเงินในอีเมล</h4>Name, อีเมลการเรียกเก็บเงิน, รหัสประเทศ, รหัสไปรษณีย์, เมือง, ที่อยู่, VAT ID (ไม่จำเป็น).<br/><br/><h4>Payment</h4>PayPal การชำระเงินมีเฉพาะใน HUF (ฟอรินต์); หลังจากโอนเงินแล้ว @ <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> ฉันจะส่งใบแจ้งหนี้ไปให้คุณ การชำระเงินทั้งหมดไม่สามารถคืนเงินได้<br/><br/><h4>VAT</h4>VAT จะถูกเพิ่มเข้าไปในราคา (27% ใน ฮังการี).<br/><hr/><h4>ติดต่อ</h4>หากคุณต้องการทักทายหรือมีคำถาม โปรดติดต่อ <a href='mailto:mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><hr/><h4>Language</h4>ใบแจ้งหนี้และใบอนุญาต การสื่อสารทางอีเมลเป็นภาษาอังกฤษ สกุลเงินของใบแจ้งหนี้คือ HUF.<br/><hr/><h4>Note</h4>License การตรวจสอบความถูกต้องต้องมีการเข้าถึงอินเทอร์เน็ต",
-    licenseState: "รัฐ",
-    licenseStateActive: "ใช้งานอยู่",
-    licenseStateInactive: "ไม่ได้ใช้งาน",
-    licenseStateNoLicense: "ไม่มีใบอนุญาต",
-    licenseKeyMasked: "คีย์ที่บันทึกไว้",
-    licenseTier: "ชั้น",
-    licenseValid: "ถูกต้อง",
-    licenseStatus: "สถานะใบอนุญาต",
-    licenseReason: "เหตุผล",
-    licenseCheckedAt: "ตรวจที่",
-    licenseStartsAt: "เริ่มต้นที่",
-    licenseExpiresAt: "หมดอายุที่",
-    licenseDaysLeft: "เหลืออีกไม่กี่วัน",
-    licenseMaxDevices: "อุปกรณ์สูงสุด",
-    licenseActiveDevices: "อุปกรณ์ที่ใช้งานอยู่",
-    licenseActiveDevicesInfo: "หากไม่ได้ใช้งานอุปกรณ์อีกต่อไป ที่นั่งจะถูกปล่อยโดยอัตโนมัติหลังจากผ่านไป 75 นาที",
-    licenseCustomerEmail: "อีเมล์ลูกค้า",
-    licenseFeatures: "คุณสมบัติ",
-    licenseFeaturesEmpty: "ไม่มีคุณสมบัติพิเศษ",
-    licenseFeatureReadonlyMode: "โหมดการเชื่อมต่อแบบอ่านอย่างเดียว",
-    licenseFeatureReadonlyConnectionsFlag: "การเชื่อมต่อแบบอ่านอย่างเดียว (--readonly-connections/-r)",
-    licenseFeatureSsh: "การขุดอุโมงค์ SSH",
-    licenseFeatureCluster: "การเชื่อมต่อ Cluster",
-    licenseFeatureSentinel: "การเชื่อมต่อ Sentinel",
-    licenseFeatureReJSON: "ReJSON (ชนิดข้อมูล JSON)",
     keysSort: {
       on: "เปิดการเรียงลำดับคีย์",
       off: "การเรียงลำดับคีย์ออก"
@@ -311,9 +277,6 @@ const strings = {
       on: "เปิดอ่านอย่างเดียว",
       off: "ปิดอ่านอย่างเดียว"
     },
-    proSshOnly: "SSH มีให้ใช้งานในรุ่น Pro หรือ Enterprise",
-    proReadonlyOnly: "โหมดการเชื่อมต่อแบบอ่านอย่างเดียวมีให้ใช้งานในรุ่น Pro หรือ Enterprise",
-    enterpriseClusterSentinelOnly: "Cluster ��ละ Sentinel มีเฉพาะใน Enterprise เท่านั้น",
     theme: {
       light: "เบา",
       dark: "องค์กรแห่งความมืด",
@@ -355,16 +318,20 @@ const strings = {
     importConflict: "หากคีย์มีอยู่แล้ว:",
     noKeysToExport: "ไม่มีคีย์ที่จะส่งออก",
     time: "เวลา",
+    type: "ประเภท",
+    format: "รูปแบบ",
     loading: "กำลังโหลด...",
     autoRefresh: "อัตโนมัติ",
     exportSearchHint: "ส่งออกเฉพาะคีย์ที่ตรงกับการค้นหาปัจจุบัน",
     importSearchHint: "การนำเข้าจะใช้กับฐานข้อมูลทั้งหมด ไม่ใช่แค่ผลการค้นหา",
+    deleteSearchHint: "ลบคีย์ทั้งหมดที่ตรงกับการค้นหาปัจจุบันบนเซิร์ฟเวอร์",
+    deletingSearchKeys: "กำลังลบคีย์ที่ตรงกัน...",
     importNoKeys: "ไม่พบคีย์ในไฟล์",
   },
   status: {
     dataCopied: "ข้อมูลอยู่ในคลิปบอร์ด",
-    licenseSaved: "บันทึกใบอนุญาตแล้ว",
     exportDone: "ส่งออกเสร็จสิ้น",
+    deletedSearchKeys: (opts) => `ลบ ${opts.count} คีย์แล้ว`,
     indexCreated: "สร้างดัชนีแล้ว",
     indexDropped: "ลบดัชนีแล้ว",
     importDone: (opts) => `นำเข้าเสร็จสิ้น: ${opts.created} สร้างแล้ว, ${opts.skipped} ข้ามแล้ว, ${opts.errors} ข้อผิดพลาด`,
@@ -412,35 +379,10 @@ const strings = {
     "readonly-connections": "การเชื่อมต่อเพิ่ม/บันทึก/ลบเป็นแบบอ่านอย่างเดียวเท่านั้น!",
     "readonly-connection-mode": "การเชื่อมต่อนี้เป็นโหมดอ่านอย่างเดียว!",
     "list-out-of-bounds": "ดัชนีรายการนี้อยู่นอกขอบเขต",
-    "donation-ware-feature": "คุณลักษณะนี้มีอยู่ในเวอร์ชันบริจาค",
-    "feature-pro-readonly-required": "โหมดการเชื่อมต่อแบบอ่านอย่างเดียวต้องใช้ใบอนุญาต Pro หรือ Enterprise",
-    "feature-pro-ssh-required": "การทำทันเนล SSH จำเป็นต้องมีใบอนุญาต Pro หรือ Enterprise",
-    "feature-enterprise-cluster-sentinel-required": "Cluster และ Sentinel จำเป็นต้องมีใบอนุญาตระดับองค์กร",
-    "feature-pro-json-binary-required": "แก้ไข JSON อัปโหลดไบนารี่ และดาวน์โหลดไบนารี่ต้องใช้ใบอนุญาต Pro หรือ Enterprise",
-    "feature-pro-rejson-required": "ReJSON (ประเภทข้อมูล JSON) ต้องใช้ใบอนุญาต Pro หรือ Enterprise",
     "invalid-json-value": "ค่านี้ไม่ถูกต้อง JSON",
     "http_auth_required": "ต้องมีการอนุญาต: โปรดตรวจสอบสิทธิ์กับ HTTP Basic Auth และโหลดซ้ำ",
     "auto-connection-failed": "เป็นไปได้ การเชื่อมต่อถูกลบออก และการเชื่อมต่ออัตโนมัติล้มเหลวด้วยเหตุนี้",
     invalid_console_command: "คำสั่งนี้ใช้ไม่ได้กับ GUI"
-  },
-  licenseReason: {
-    LICENSE_VALID: "ใบอนุญาตถูกต้อง",
-    LICENSE_INVALID: "ใบอนุญาตไม่ถูกต้อง",
-    LICENSE_MISSING: "ไม่ม��การตั้งค่ารหัสใบอนุญาต",
-    LICENSE_DISABLED: "ใบอนุญาตถูกปิดใช้งานในการกำหนดค่าเซิร์ฟเวอร์",
-    LICENSE_NOT_FOUND: "ไม่พบใบอนุญาต",
-    LICENSE_EXPIRED: "ใบอนุญาตหมดอายุแล้ว",
-    LICENSE_CLEARED: "ล้างรหัสใบอนุญาตแล้ว",
-    LICENSE_MAX_DEVICES_REACHED: "ถึงจำนวนที่นั่งอุปกรณ์สูงสุดแล้ว",
-    PRODUCT_MISMATCH: "ผลิตภัณฑ์ลิขสิทธิ์ไม่ตรงกัน"
-  },
-  licenseStatusValue: {
-    active: "ใช้งานอยู่",
-    deleted: "ลบแล้ว",
-    all: "ทั้งหมด",
-    expired: "หมดอายุแล้ว",
-    missing: "หายไป",
-    inactive: "ไม่ได้ใช้งาน"
   },
   form: {
     error: {
@@ -610,12 +552,49 @@ const strings = {
           field: "สนาม",
           value: "ความคุ้มค่า"
         }
+      },
+      timeseries: {
+        chart: "แผนภูมิ",
+        info: "ข้อมูล",
+        addPoint: "เพิ่มจุดข้อมูล",
+        from: "จาก (ms หรือ -)",
+        to: "ถึง (ms หรือ +)",
+        aggregation: "การรวม",
+        timeBucket: "ถัง (ms)",
+        none: "ไม่มี",
+        dataPoints: "จุดข้อมูล",
+        labels: "ป้ายกำกับ",
+        rules: "กฎ",
+        retention: "การเก็บรักษา",
+        timestamp: "การประทับเวลา",
+        value: "ค่า",
+        retentionHint: "0 = ไม่หมดอายุ, หรือมิลลิวินาที",
+        duplicatePolicy: "นโยบายรายการซ้ำ",
+        labelsHint: "คีย์1 ค่า1 คีย์2 ค่า2",
+        timestampHint: "'*' หมายถึงสร้างอัตโนมัติ, หรือการประทับเวลาเป็นมิลลิวินาที",
+        editAllHint: "หนึ่งจุดข้อมูลต่อบรรทัด: การประทับเวลา ค่า (การประทับเวลาสามารถเป็น * สำหรับอัตโนมัติ)",
+        autoSpread: "ช่วงกระจายอัตโนมัติ *",
+        formula: "สูตร",
+        formulaLinear: "เชิงเส้น",
+        formulaRandom: "สุ่ม",
+        formulaSawtooth: "ฟันเลื่อย",
+        formulaPoints: "จุด",
+        formulaAmplitude: "แอมพลิจูด",
+        formulaOffset: "ออฟเซ็ต",
+        generate: "สร้าง",
+        exportChart: "ส่งออก PNG",
+        overlay: "ซ้อนทับคีย์",
+        overlayHint: "คีย์คั่นด้วยเครื่องหมายจุลภาค",
+        mrangeFilter: "ตัวกรองป้ายกำกับ",
+        bulkMode: "สร้างจำนวนมาก",
+        mrangeHint: "เช่น sensor=temp"
       }
     },
     treeControls: {
       settings: "การตั้งค่าต้นไม้",
       expandAll: "ขยายทั้งหมด",
       collapseAll: "ยุบทั้งหมด",
+      level: "ระดับ",
       search: {
         search: "ค้นหาในคีย์",
         clear: "ล้างการค้นหาปัจจุบันเพื่อตั้งค่าว่าง",
@@ -634,13 +613,21 @@ const strings = {
     }
   },
   time: {
+    type: "ประเภท",
+    format: "รูปแบบ",
     loading: "กำลังโหลด...",
     years: "ปี",
     months: "เดือน",
     days: "วัน",
     year: "ปี",
     month: "เดือน",
-    day: "วัน"
+    day: "วัน",
+    second: "วินาที",
+    seconds: "วินาที",
+    minute: "นาที",
+    minutes: "นาที",
+    hour: "ชั่วโมง",
+    hours: "ชั่วโมง"
   },
   redisTypes: {
     string: "String",
@@ -649,7 +636,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "Licencia eliminada",
-    invalid_license: "Licencia no válida",
-    license_max_devices_reached: "Se alcanzó el número máximo de puestos de dispositivos",
-    license_readonly: "La licencia solo puede cambiarse desde la terminal del servidor.",
     server_error: "Error del servidor, por favor inténtelo de nuevo"
   },
   title: {
@@ -48,8 +44,12 @@ const strings = {
     deleteConnection: "Confirmar",
     deleteConnectionText: "¿Está seguro de que desea eliminar esta conexión Redis?",
     deleteNode: "¿Está seguro de que desea eliminar este nodo Redis?",
+    delete: "¿Eliminar?",
     deleteAllKeys: opts => {
       return `¿Eliminar este árbol y todas sus claves (${opts.key})?`;
+    },
+    deleteSearchKeys: opts => {
+      return `¿Está seguro de eliminar todas las claves que coinciden con "${opts.pattern}"? Se encontraron ${opts.count} claves.`;
     },
     socketioConnectError: "Socket.IO no puede conectarse al servidor. Puede recargar e intentar resolver el error de conexión usted mismo, el cliente no sabe cómo resolverlo por sí solo.",
     socketioAuthRequired: "Se requiere autorización de Socket.IO. Por favor autentíquese con HTTP Basic Auth (usuario/contraseña) y recargue.",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "Convertir texto a tiempo",
       convertTextToTimePlaceholder: "Ej. 1d será 86400"
     },
-    license: {
-      title: "Establecer licencia",
-      textContent: "Si desea utilizar funciones de pago, contacte con support@corifeus.com para solicitar una licencia. Los precios son Pro 400 HUF/mes (€1/mes) o 4.000 HUF/año (€10/año), y Enterprise 1.200 HUF/mes (€3/mes) o 12.000 HUF/año (€30/año). El precio anual es 10x el mensual. Con 27% IVA, los totales son Pro 500 HUF/mes (€1,27/mes) o 5.100 HUF/año (€12,70/año), Enterprise 1.500 HUF/mes (€3,81/mes) o 15.200 HUF/año (€38,10/año). La validación de licencia requiere acceso a Internet. La licencia predeterminada incluye 5 puestos. Si necesita más puestos, contáctenos en support@corifeus.com.",
-      placeholder: "Clave de licencia"
-    }
   },
   language: {
     // When you translate the english name, keep the Language in English
@@ -138,13 +133,17 @@ const strings = {
     exportKeys: "Exportar claves",
     exportAllKeys: (opts) => `Exportar las ${opts.count} claves`,
     exportSearchResults: (opts) => `Exportar ${opts.count} resultados`,
+    deleteAllKeysMenu: (opts) => `Eliminar todo ${opts.count}`,
     importKeys: "Importar claves",
+    deleteSearchKeys: (opts) => `Eliminar ${opts.count} claves coincidentes`,
     saveWithFormatJson: "Guardar con formato",
     formatJson: "Formatear Json",
     wrap: "Ajustar",
     unwrap: "No ajustar",
     downloadJson: "Descargar JSON",
-    pubsubMonitor: "Monitor PubSub",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "Idioma / Language",
@@ -185,7 +184,6 @@ const strings = {
     edit: "Editar",
     save: "Guardar",
     ttl: "Establecer TTL",
-    license: "Establecer licencia",
     delete: "Eliminar",
     remove: "Quitar",
     sure: "Seguro",
@@ -264,38 +262,6 @@ const strings = {
     connectiondEdit: "Editar conexión",
     connectiondView: "Ver conexión",
     connections: "Conexiones",
-    licenseInfo: "Licencia",
-    licenseEditable: "Licencia editable",
-    licenseEditableYes: "Sí",
-    licenseEditableNo: "No",
-    licenseTerminalOnly: "La licencia solo puede configurarse desde la terminal del servidor.",
-    licenseTierPolicyTitle: "Política de niveles",
-    licenseTierPolicyText: "<h4>Gratis</h4>solo Redis UI básico; sin SSH tunneling, sin modo de conexión de solo lectura, sin Cluster/Sentinel, sin Editar JSON/Subir binario/Descargar binario, sin ReJSON.<br/><strong>Precio: 0 HUF/mes (€0/mes).</strong><br/><br/><h4>Pro</h4>SSH tunneling, modo de conexión de solo lectura (incluyendo --readonly-connections/-r), Editar JSON, Subir binario, Descargar binario, ReJSON.<br/><strong>Precio base: 400 HUF/mes (€1/mes) o 4.000 HUF/año (€10/año).</strong><br/><strong>Total con 27% IVA: 500 HUF/mes (€1,27/mes) o 5.100 HUF/año (€12,70/año).</strong><br/><br/><h4>Enterprise</h4>SSH tunneling, Cluster y Sentinel, además de Editar JSON, Subir binario, Descargar binario, ReJSON; --readonly-connections/-r también funciona.<br/><strong>Precio base: 1.200 HUF/mes (€3/mes) o 12.000 HUF/año (€30/año).</strong><br/><strong>Total con 27% IVA: 1.500 HUF/mes (€3,81/mes) o 15.200 HUF/año (€38,10/año).</strong><br/><br/><h4>Regla anual</h4>El precio anual es 10x el precio mensual.<br/><br/><h4>Puestos</h4>La licencia predeterminada incluye 5 puestos. Si necesita más puestos, contáctenos en <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><br/><h4>Prueba Enterprise</h4>10 días gratis para cualquiera con un correo electrónico real existente (correo no de prueba).<br/><hr/><h4>Información de facturación por e-mail</h4>Nombre, correo de facturación, código de país, código postal, ciudad, dirección, NIF (opcional).<br/><br/><h4>Pago</h4>El pago por PayPal está disponible solo en HUF (florín); después de enviar el dinero a <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> le enviaré una factura. Todos los pagos no son reembolsables.<br/><br/><h4>IVA</h4>El IVA se agrega al precio (27% en Hungría).<br/><hr/><h4>Contacto</h4>Si quiere saludar o tiene una pregunta, contacte con <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><hr/><h4>Idioma</h4>La comunicación de facturas y licencias por correo es en inglés. La moneda de facturación es HUF.<br/><hr/><h4>Nota</h4>La validación de licencia requiere acceso a Internet.",
-    licenseState: "Estado",
-    licenseStateActive: "Activa",
-    licenseStateInactive: "Inactiva",
-    licenseStateNoLicense: "Sin licencia",
-    licenseKeyMasked: "Clave guardada",
-    licenseTier: "Nivel",
-    licenseValid: "Válida",
-    licenseStatus: "Estado de licencia",
-    licenseReason: "Razón",
-    licenseCheckedAt: "Verificada el",
-    licenseStartsAt: "Inicia el",
-    licenseExpiresAt: "Expira el",
-    licenseDaysLeft: "Días restantes",
-    licenseMaxDevices: "Dispositivos máximos",
-    licenseActiveDevices: "Dispositivos activos",
-    licenseActiveDevicesInfo: "Si un dispositivo ya no se utiliza, su puesto se libera automáticamente después de 75 minutos.",
-    licenseCustomerEmail: "Correo del cliente",
-    licenseFeatures: "Características",
-    licenseFeaturesEmpty: "Sin características adicionales",
-    licenseFeatureReadonlyMode: "Modo de conexión de solo lectura",
-    licenseFeatureReadonlyConnectionsFlag: "Conexiones de solo lectura (--readonly-connections/-r)",
-    licenseFeatureSsh: "SSH tunneling",
-    licenseFeatureCluster: "Conexiones Cluster",
-    licenseFeatureSentinel: "Conexiones Sentinel",
-    licenseFeatureReJSON: "ReJSON (JSON data type)",
     keysSort: {
       on: "Ordenación de claves activada",
       off: "Ordenación de claves desactivada"
@@ -313,9 +279,6 @@ const strings = {
       on: "Solo lectura activado",
       off: "Solo lectura desactivado"
     },
-    proSshOnly: "SSH está disponible en Pro o Enterprise.",
-    proReadonlyOnly: "El modo de conexión de solo lectura está disponible en Pro o Enterprise.",
-    enterpriseClusterSentinelOnly: "Cluster y Sentinel están disponibles solo en Enterprise.",
     theme: {
       light: "Claro",
       dark: "Oscuro enterprise",
@@ -357,16 +320,20 @@ const strings = {
     importConflict: "Si la clave ya existe:",
     noKeysToExport: "No hay claves para exportar",
     time: "Tiempo",
+    type: "Tipo",
+    format: "Formato",
     loading: "Cargando...",
     autoRefresh: "Auto",
     exportSearchHint: "Exportando solo claves que coinciden con la búsqueda actual",
     importSearchHint: "La importación se aplica a toda la base de datos, no solo a los resultados de búsqueda",
+    deleteSearchHint: "Eliminar todas las claves que coinciden con la búsqueda actual",
+    deletingSearchKeys: "Eliminando claves coincidentes...",
     importNoKeys: "No se encontraron claves en el archivo",
   },
   status: {
     dataCopied: "Los datos están en el portapapeles",
-    licenseSaved: "Licencia guardada",
     exportDone: "Exportación completada",
+    deletedSearchKeys: (opts) => `${opts.count} claves eliminadas`,
     indexCreated: "Índice creado",
     indexDropped: "Índice eliminado",
     importDone: (opts) => `Importación completada: ${opts.created} creados, ${opts.skipped} omitidos, ${opts.errors} errores`,
@@ -414,35 +381,10 @@ const strings = {
     "readonly-connections": "¡Las operaciones de agregar/guardar/eliminar conexiones son de solo lectura!",
     "readonly-connection-mode": "¡Esta conexión está en modo de solo lectura!",
     "list-out-of-bounds": "Este índice de lista está fuera de límites",
-    "donation-ware-feature": "Esta función está presente en la versión de donación.",
-    "feature-pro-readonly-required": "El modo de conexión de solo lectura requiere licencia Pro o Enterprise.",
-    "feature-pro-ssh-required": "SSH tunneling requiere licencia Pro o Enterprise.",
-    "feature-enterprise-cluster-sentinel-required": "Cluster y Sentinel requieren licencia Enterprise.",
-    "feature-pro-json-binary-required": "Editar JSON, Subir binario y Descargar binario requieren licencia Pro o Enterprise.",
-    "feature-pro-rejson-required": "ReJSON (JSON data type) requires Pro or Enterprise license.",
     "invalid-json-value": "The value is not valid JSON.",
     "http_auth_required": "Autorización requerida: por favor autentíquese con HTTP Basic Auth y recargue.",
     "auto-connection-failed": "Es posible que la conexión fue eliminada y la conexión automática falló por esta razón.",
     invalid_console_command: "Este comando no funciona a través del GUI."
-  },
-  licenseReason: {
-    LICENSE_VALID: "La licencia es válida",
-    LICENSE_INVALID: "La licencia no es válida",
-    LICENSE_MISSING: "No se ha establecido clave de licencia",
-    LICENSE_DISABLED: "La licencia está deshabilitada en la configuración del servidor",
-    LICENSE_NOT_FOUND: "La licencia no fue encontrada",
-    LICENSE_EXPIRED: "La licencia ha expirado",
-    LICENSE_CLEARED: "La clave de licencia fue eliminada",
-    LICENSE_MAX_DEVICES_REACHED: "Se alcanzó el número máximo de puestos de dispositivos",
-    PRODUCT_MISMATCH: "El producto de la licencia no coincide"
-  },
-  licenseStatusValue: {
-    active: "Activa",
-    deleted: "Eliminada",
-    all: "Todas",
-    expired: "Expirada",
-    missing: "Ausente",
-    inactive: "Inactiva"
   },
   form: {
     error: {
@@ -612,12 +554,49 @@ const strings = {
           field: "Campo",
           value: "Valor"
         }
+      },
+      timeseries: {
+        chart: "Gráfico",
+        info: "Info",
+        addPoint: "Agregar punto",
+        from: "Desde (ms o -)",
+        to: "Hasta (ms o +)",
+        aggregation: "Agregación",
+        timeBucket: "Bucket (ms)",
+        none: "Ninguno",
+        dataPoints: "puntos de datos",
+        labels: "Etiquetas",
+        rules: "Reglas",
+        retention: "Retención",
+        timestamp: "Marca de tiempo",
+        value: "Valor",
+        retentionHint: "0 = sin expiración, o milisegundos",
+        duplicatePolicy: "Política de duplicados",
+        labelsHint: "clave1 valor1 clave2 valor2",
+        timestampHint: "'*' significa generado automáticamente, o marca de tiempo en milisegundos",
+        editAllHint: "Un punto de datos por línea: marca_de_tiempo valor (la marca de tiempo puede ser * para automático)",
+        autoSpread: "Intervalo de dispersión automático *",
+        formula: "Fórmula",
+        formulaLinear: "Lineal",
+        formulaRandom: "Aleatorio",
+        formulaSawtooth: "Diente de sierra",
+        formulaPoints: "Puntos",
+        formulaAmplitude: "Amplitud",
+        formulaOffset: "Desplazamiento",
+        generate: "Generar",
+        exportChart: "Exportar PNG",
+        overlay: "Superponer claves",
+        overlayHint: "Claves separadas por comas",
+        mrangeFilter: "Filtro de etiquetas",
+        bulkMode: "Generación masiva",
+        mrangeHint: "ej. sensor=temp"
       }
     },
     treeControls: {
       settings: "Configuración del árbol",
       expandAll: "Expandir todo",
       collapseAll: "Colapsar todo",
+      level: "Nivel",
       search: {
         search: "Buscar en las claves",
         clear: "Limpiar búsqueda actual",
@@ -636,13 +615,21 @@ const strings = {
     }
   },
   time: {
+    type: "Tipo",
+    format: "Formato",
     loading: "Cargando...",
     years: "años",
     months: "meses",
     days: "días",
     year: "año",
     month: "mes",
-    day: "día"
+    day: "día",
+    second: "segundo",
+    seconds: "segundos",
+    minute: "minuto",
+    minutes: "minutos",
+    hour: "hora",
+    hours: "horas"
   },
   redisTypes: {
     string: "String",
@@ -651,7 +638,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

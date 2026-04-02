@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "Licence vymazána",
-    invalid_license: "Neplatná licence",
-    license_max_devices_reached: "Dosažen maximální počet zařízení",
-    license_readonly: "Licenci lze změnit pouze ze serverového terminálu.",
     server_error: "Chyba serveru, zkuste to prosím znovu"
   },
   title: {
@@ -51,8 +47,12 @@ const strings = {
     deleteAllKeys: opts => {
       return `Smazat tento strom a všechny jeho klíče (${opts.key})?`;
     },
+    deleteSearchKeys: opts => {
+      return `Opravdu chcete smazat všechny klíče odpovídající "${opts.pattern}"? Nalezeno ${opts.count} klíčů.`;
+    },
     socketioConnectError: "Socket.IO se nemůže připojit k serveru, můžete stránku znovu načíst a pokusit se chybu připojení vyřešit sami, klient neví, jak ji vyřešit sám.",
     socketioAuthRequired: "Je vyžadována autorizace Socket.IO. Prosím ověřte se pomocí HTTP Basic Auth (uživatelské jméno/heslo) a znovu načtěte stránku.",
+    delete: "Smazat?",
     deleteKey: "Opravdu chcete smazat tento klíč?",
     rename: {
       title: "Opravdu chcete přejmenovat tento klíč?",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "Převést text na čas",
       convertTextToTimePlaceholder: "Např. 1d bude 86400"
     },
-    license: {
-      title: "Nastavit licenci",
-      textContent: "Pokud chcete používat placené funkce, kontaktujte prosím support@corifeus.com a požádejte o licenci. Ceny jsou Pro 400 HUF/měsíc (€1/měsíc) nebo 4,000 HUF/rok (€10/rok) a Enterprise 1,200 HUF/měsíc (€3/měsíc) nebo 12,000 HUF/rok (€30/rok). Roční cena je 10x měsíční. S 27% DPH jsou celkové ceny Pro 500 HUF/měsíc (€1.27/měsíc) nebo 5,100 HUF/rok (€12.70/rok), Enterprise 1,500 HUF/měsíc (€3.81/měsíc) nebo 15,200 HUF/rok (€38.10/rok). Ověření licence vyžaduje přístup k internetu. Výchozí licence zahrnuje 5 míst. Pokud potřebujete více míst, kontaktujte nás na support@corifeus.com.",
-      placeholder: "Licenční klíč"
-    }
   },
   language: {
     // When you translate the english name, keep the Language in English
@@ -138,13 +133,17 @@ const strings = {
     exportKeys: "Exportovat klíče",
     exportAllKeys: (opts) => `Exportovat všech ${opts.count} klíčů`,
     exportSearchResults: (opts) => `Exportovat ${opts.count} výsledků`,
+    deleteAllKeysMenu: (opts) => `Smazat vše ${opts.count}`,
     importKeys: "Importovat klíče",
+    deleteSearchKeys: (opts) => `Smazat ${opts.count} odpovídajících klíčů`,
     saveWithFormatJson: "Uložit s formátováním",
     formatJson: "Formátovat Json",
     wrap: "Zalamovat",
     unwrap: "Nezalamovat",
     downloadJson: "Stáhnout JSON",
-    pubsubMonitor: "PubSub Monitor",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "Jazyk / Language",
@@ -185,7 +184,6 @@ const strings = {
     edit: "Upravit",
     save: "Uložit",
     ttl: "Nastavit TTL",
-    license: "Nastavit licenci",
     delete: "Smazat",
     remove: "Odebrat",
     sure: "Jistě",
@@ -264,38 +262,6 @@ const strings = {
     connectiondEdit: "Upravit připojení",
     connectiondView: "Zobrazit připojení",
     connections: "Připojení",
-    licenseInfo: "Licence",
-    licenseEditable: "Licence upravitelná",
-    licenseEditableYes: "Ano",
-    licenseEditableNo: "Ne",
-    licenseTerminalOnly: "Licenci lze konfigurovat pouze ze serverového terminálu.",
-    licenseTierPolicyTitle: "Cenová politika",
-    licenseTierPolicyText: "<h4>Zdarma</h4>Pouze základní Redis UI; bez SSH tunelování, bez režimu Readonly připojení, bez Cluster/Sentinel, bez Úpravy JSON/Nahrání binárních souborů/Stažení binárních souborů, bez ReJSON.<br/><strong>Cena: 0 HUF/měsíc (€0/měsíc).</strong><br/><br/><h4>Pro</h4>SSH tunelování, režim Readonly připojení (včetně --readonly-connections/-r), Úprava JSON, Nahrání binárních souborů, Stažení binárních souborů, ReJSON.<br/><strong>Základní cena: 400 HUF/měsíc (€1/měsíc) nebo 4,000 HUF/rok (€10/rok).</strong><br/><strong>Celkem s 27% DPH: 500 HUF/měsíc (€1.27/měsíc) nebo 5,100 HUF/rok (€12.70/rok).</strong><br/><br/><h4>Enterprise</h4>SSH tunelování, Cluster a Sentinel, plus Úprava JSON, Nahrání binárních souborů, Stažení binárních souborů, ReJSON; --readonly-connections/-r také funguje.<br/><strong>Základní cena: 1,200 HUF/měsíc (€3/měsíc) nebo 12,000 HUF/rok (€30/rok).</strong><br/><strong>Celkem s 27% DPH: 1,500 HUF/měsíc (€3.81/měsíc) nebo 15,200 HUF/rok (€38.10/rok).</strong><br/><br/><h4>Roční pravidlo</h4>Roční cena je 10x měsíční cena.<br/><br/><h4>Místa</h4>Výchozí licence zahrnuje 5 míst. Pokud potřebujete více míst, kontaktujte nás na <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><br/><h4>Enterprise zkušební verze</h4>10 dní zdarma pro každého se skutečnou existující e-mailovou adresou (ne testovací e-mail).<br/><hr/><h4>Fakturační údaje e-mailem</h4>Jméno, Fakturační e-mail, Kód země, PSČ, Město, Adresa, DIČ (volitelné).<br/><br/><h4>Platba</h4>PayPal platba je k dispozici pouze v HUF (forinty); po odeslání peněz @ <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> vám zašlu fakturu. Všechny platby jsou nevratné.<br/><br/><h4>DPH</h4>K ceně se přidává DPH (27% v Maďarsku).<br/><hr/><h4>Kontakt</h4>Pokud se chcete pozdravit nebo máte dotaz, kontaktujte <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><hr/><h4>Jazyk</h4>Faktura a licenční e-mailová komunikace je v angličtině. Měna faktury je HUF.<br/><hr/><h4>Poznámka</h4>Ověření licence vyžaduje přístup k internetu.",
-    licenseState: "Stav",
-    licenseStateActive: "Aktivní",
-    licenseStateInactive: "Neaktivní",
-    licenseStateNoLicense: "Žádná licence",
-    licenseKeyMasked: "Uložený klíč",
-    licenseTier: "Úroveň",
-    licenseValid: "Platná",
-    licenseStatus: "Stav licence",
-    licenseReason: "Důvod",
-    licenseCheckedAt: "Zkontrolováno",
-    licenseStartsAt: "Začíná",
-    licenseExpiresAt: "Vyprší",
-    licenseDaysLeft: "Zbývající dny",
-    licenseMaxDevices: "Maximální počet zařízení",
-    licenseActiveDevices: "Aktivní zařízení",
-    licenseActiveDevicesInfo: "Pokud se zařízení již nepoužívá, jeho místo se automaticky uvolní po 75 minutách.",
-    licenseCustomerEmail: "E-mail zákazníka",
-    licenseFeatures: "Funkce",
-    licenseFeaturesEmpty: "Žádné další funkce",
-    licenseFeatureReadonlyMode: "Režim Readonly připojení",
-    licenseFeatureReadonlyConnectionsFlag: "Readonly připojení (--readonly-connections/-r)",
-    licenseFeatureSsh: "SSH tunelování",
-    licenseFeatureCluster: "Cluster připojení",
-    licenseFeatureSentinel: "Sentinel připojení",
-    licenseFeatureReJSON: "ReJSON (JSON data type)",
     keysSort: {
       on: "Řazení klíčů zapnuto",
       off: "Řazení klíčů vypnuto"
@@ -313,9 +279,6 @@ const strings = {
       on: "Readonly zapnuto",
       off: "Readonly vypnuto"
     },
-    proSshOnly: "SSH je dostupné v Pro nebo Enterprise.",
-    proReadonlyOnly: "Režim Readonly připojení je dostupný v Pro nebo Enterprise.",
-    enterpriseClusterSentinelOnly: "Cluster a Sentinel jsou dostupné pouze v Enterprise.",
     theme: {
       light: "Světlý",
       dark: "Tmavý enterprise",
@@ -357,16 +320,20 @@ const strings = {
     importConflict: "Pokud klíč již existuje:",
     noKeysToExport: "Žádné klíče k exportu",
     time: "Čas",
+    type: "Typ",
+    format: "Formát",
     loading: "Načítání...",
     autoRefresh: "Auto",
     exportSearchHint: "Exportují se pouze klíče odpovídající aktuálnímu vyhledávání",
     importSearchHint: "Import se vztahuje na celou databázi, nejen na výsledky vyhledávání",
+    deleteSearchHint: "Smaže všechny klíče odpovídající aktuálnímu vyhledávání na serveru",
+    deletingSearchKeys: "Mazání odpovídajících klíčů...",
     importNoKeys: "V souboru nebyly nalezeny žádné klíče",
   },
   status: {
     dataCopied: "Data jsou ve schránce",
-    licenseSaved: "Licence uložena",
     exportDone: "Export dokončen",
+    deletedSearchKeys: (opts) => `Smazáno ${opts.count} klíčů`,
     indexCreated: "Index vytvořen",
     indexDropped: "Index smazán",
     importDone: (opts) => `Import dokončen: ${opts.created} vytvořeno, ${opts.skipped} přeskočeno, ${opts.errors} chyb`,
@@ -414,35 +381,10 @@ const strings = {
     "readonly-connections": "Přidání/uložení/smazání připojení je pouze pro čtení!",
     "readonly-connection-mode": "Toto připojení je v režimu pouze pro čtení!",
     "list-out-of-bounds": "Index seznamu je mimo rozsah",
-    "donation-ware-feature": "Tato funkce je dostupná v placené verzi.",
-    "feature-pro-readonly-required": "Režim Readonly připojení vyžaduje licenci Pro nebo Enterprise.",
-    "feature-pro-ssh-required": "SSH tunelování vyžaduje licenci Pro nebo Enterprise.",
-    "feature-enterprise-cluster-sentinel-required": "Cluster a Sentinel vyžadují licenci Enterprise.",
-    "feature-pro-json-binary-required": "Úprava JSON, Nahrání binárních souborů a Stažení binárních souborů vyžadují licenci Pro nebo Enterprise.",
-    "feature-pro-rejson-required": "ReJSON (JSON data type) requires Pro or Enterprise license.",
     "invalid-json-value": "The value is not valid JSON.",
     "http_auth_required": "Je vyžadována autorizace: prosím ověřte se pomocí HTTP Basic Auth a znovu načtěte stránku.",
     "auto-connection-failed": "Je možné, že připojení bylo odstraněno a automatické připojení selhalo kvůli tomu.",
     invalid_console_command: "Tento příkaz nefunguje přes GUI."
-  },
-  licenseReason: {
-    LICENSE_VALID: "Licence je platná",
-    LICENSE_INVALID: "Licence je neplatná",
-    LICENSE_MISSING: "Licenční klíč není nastaven",
-    LICENSE_DISABLED: "Licence je zakázána v konfiguraci serveru",
-    LICENSE_NOT_FOUND: "Licence nebyla nalezena",
-    LICENSE_EXPIRED: "Licence vypršela",
-    LICENSE_CLEARED: "Licenční klíč byl vymazán",
-    LICENSE_MAX_DEVICES_REACHED: "Dosažen maximální počet zařízení",
-    PRODUCT_MISMATCH: "Produkt licence neodpovídá"
-  },
-  licenseStatusValue: {
-    active: "Aktivní",
-    deleted: "Smazaná",
-    all: "Vše",
-    expired: "Vypršelá",
-    missing: "Chybí",
-    inactive: "Neaktivní"
   },
   form: {
     error: {
@@ -612,12 +554,49 @@ const strings = {
           field: "Pole",
           value: "Hodnota"
         }
+      },
+      timeseries: {
+        chart: "Graf",
+        info: "Informace",
+        addPoint: "Přidat datový bod",
+        from: "Od (ms nebo -)",
+        to: "Do (ms nebo +)",
+        aggregation: "Agregace",
+        timeBucket: "Interval (ms)",
+        none: "Žádný",
+        dataPoints: "datové body",
+        labels: "Štítky",
+        rules: "Pravidla",
+        retention: "Retence",
+        timestamp: "Časová značka",
+        value: "Hodnota",
+        retentionHint: "0 = bez expirace, nebo milisekundy",
+        duplicatePolicy: "Politika duplikátů",
+        labelsHint: "klíč1 hodnota1 klíč2 hodnota2",
+        timestampHint: "'*' znamená automatické generování, nebo časová značka v milisekundách",
+        editAllHint: "Jeden datový bod na řádek: časová_značka hodnota (časová_značka může být * pro auto)",
+        autoSpread: "Automatický interval rozptylu *",
+        formula: "Vzorec",
+        formulaLinear: "Lineární",
+        formulaRandom: "Náhodný",
+        formulaSawtooth: "Pilovitý",
+        formulaPoints: "Body",
+        formulaAmplitude: "Amplituda",
+        formulaOffset: "Posun",
+        generate: "Generovat",
+        exportChart: "Exportovat PNG",
+        overlay: "Překryv klíčů",
+        overlayHint: "Klíče oddělené čárkou",
+        mrangeFilter: "Filtr štítků",
+        bulkMode: "Hromadné generování",
+        mrangeHint: "např. sensor=temp"
       }
     },
     treeControls: {
       settings: "Nastavení stromě",
       expandAll: "Rozbalit vše",
       collapseAll: "Sbalit vše",
+      level: "Úroveň",
       search: {
         search: "Hledat v klíčích",
         clear: "Vymazat aktuální vyhledávání",
@@ -636,13 +615,21 @@ const strings = {
     }
   },
   time: {
+    type: "Typ",
+    format: "Formát",
     loading: "Načítání...",
     years: "let",
     months: "měsíců",
     days: "dní",
     year: "rok",
     month: "měsíc",
-    day: "den"
+    day: "den",
+    second: "sekunda",
+    seconds: "sekundy",
+    minute: "minuta",
+    minutes: "minuty",
+    hour: "hodina",
+    hours: "hodiny"
   },
   redisTypes: {
     string: "String",
@@ -651,7 +638,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

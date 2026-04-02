@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "Təmizlənmiş lisenziya",
-    invalid_license: "Etibarsız lisenziya",
-    license_max_devices_reached: "Maksimum cihaz oturacaqlarına çatıldı",
-    license_readonly: "Lisenziya yalnız server terminalından dəyişdirilə bilər.",
     server_error: "Server xətası, yenidən cəhd edin"
   },
   title: {
@@ -48,8 +44,12 @@ const strings = {
     deleteConnection: "Təsdiq edin",
     deleteConnectionText: "Bu Redis bağlantısını siləcəyinizə əminsiniz?",
     deleteNode: "Bu Redis qovşağını siləcəyinizə əminsiniz?",
+    delete: "Silinsin?",
     deleteAllKeys: opts => {
       return `Bu ağacı və onun bütün açarlarını silin (${opts.key})?`;
+    },
+    deleteSearchKeys: opts => {
+      return `"${opts.pattern}" ilə uyğun gələn bütün açarları silmək istədiyinizə əminsiniz? ${opts.count} açar tapıldı.`;
     },
     socketioConnectError: "Socket.IO serverə qoşula bilmir, siz yenidən yükləyə və qoşulma xətasını özünüz həll etməyə cəhd edə bilərsiniz, müştəri özü bunu necə həll edəcəyini bilmir.",
     socketioAuthRequired: "Socket.IO icazəsi tələb olunur. HTTP Basic Auth (istifadəçi adı/parol) ilə autentifikasiya edin və yenidən yükləyin.",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "Mətni zamana çevirin",
       convertTextToTimePlaceholder: "Məs. 1d 86400 olacaq"
     },
-    license: {
-      title: "Lisenziya təyin edin",
-      textContent: "If you want to use paid features, please contact support@corifeus.com to request a license. Pricing is Pro 400 HUF/month (€1/month) or 4,000 HUF/year (€10/year), and Enterprise 1,200 HUF/month (€3/month) or 12,000 HUF/year (€30/year). Yearly is 10x monthly. With 27% VAT, totals are Pro 500 HUF/month (€1.27/month) or 5,100 HUF/year (€12.70/year), Enterprise 1,500 HUF/month (€3.81/month) or 15,200 HUF/year (€38.10/year). License validation requires internet access. Default license includes 5 seats. If you need more seats, contact us at support@corifeus.com.",
-      placeholder: "Lisenziya açarı"
-    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -136,13 +131,17 @@ const strings = {
     exportKeys: "Açarları ixrac et",
     exportAllKeys: (opts) => `Bütün ${opts.count} açarı ixrac et`,
     exportSearchResults: (opts) => `${opts.count} nəticəni ixrac et`,
+    deleteAllKeysMenu: (opts) => `Hamısını sil ${opts.count}`,
     importKeys: "Açarları idxal et",
+    deleteSearchKeys: (opts) => `${opts.count} uyğun açarı sil`,
     saveWithFormatJson: "Formatla yadda saxlayın",
     formatJson: "Json formatı",
     wrap: "Sarın",
     unwrap: "Açın",
     downloadJson: "JSON yükləyin",
-    pubsubMonitor: "PubSub Monitor",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "Dil",
@@ -183,7 +182,6 @@ const strings = {
     edit: "Redaktə et",
     save: "Saxla",
     ttl: "TTL təyin edin",
-    license: "Lisenziya təyin edin",
     delete: "Sil",
     remove: "Sil",
     sure: "Əlbəttə",
@@ -262,38 +260,6 @@ const strings = {
     connectiondEdit: "Bağlantını redaktə edin",
     connectiondView: "Bağlantıya baxın",
     connections: "Əlaqələr",
-    licenseInfo: "Lisenziya",
-    licenseEditable: "Lisenziya redaktə edilə bilər",
-    licenseEditableYes: "Bəli",
-    licenseEditableNo: "yox",
-    licenseTerminalOnly: "Lisenziya yalnız server terminalından konfiqurasiya edilə bilər.",
-    licenseTierPolicyTitle: "Səviyyə siyasəti",
-    licenseTierPolicyText: "<h4>Free</h4>core Redis UI only; no SSH tunneling, no Readonly connection mode, no Cluster/Sentinel, no Edit JSON/Upload binary/Download binary, no ReJSON.<br/><strong>Price: 0 HUF/month (€0/month).</strong><br/><br/><h4>Pro</h4>SSH tunneling, Readonly connection mode (including --readonly-connections/-r), Edit JSON, Upload binary, Download binary, ReJSON.<br/><strong>Base price: 400 HUF/month (€1/month) or 4,000 HUF/year (€10/year).</strong><br/><strong>Total with 27% VAT: 500 HUF/month (€1.27/month) or 5,100 HUF/year (€12.70/year).</strong><br/><br/><h4>Enterprise</h4>SSH tunneling, Cluster and Sentinel, plus Edit JSON, Upload binary, Download binary, ReJSON; --readonly-connections/-r also works.<br/><strong>Base price: 1,200 HUF/month (€3/month) or 12,000 HUF/year (€30/year).</strong><br/><strong>Total with 27% VAT: 1,500 HUF/month (€3.81/month) or 15,200 HUF/year (€38.10/year).</strong><br/><br/><h4>Yearly rule</h4>Yearly price is 10x the monthly price.<br/><br/><h4>Seats</h4>Default license includes 5 seats. If you need more seats, contact us at <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><br/><h4>Enterprise trial</h4>10 days free for anyone with a real existing email address (non-test email).<br/><hr/><h4>Billing info in e-mail</h4>Name, Billing e-mail, Country code, Postal code, City, Address, VAT ID (optional).<br/><br/><h4>Payment</h4>PayPal payment is available only in HUF (forint); after sending the money @ <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> I will send you an invoice. All payments are non-refundable.<br/><br/><h4>VAT</h4>VAT is added to the price (27% in Hungary).<br/><hr/><h4>Contact</h4>If you want to say hi or have a question, contact <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><hr/><h4>Language</h4>Invoice and license e-mail communication is in English. Invoice currency is HUF.<br/><hr/><h4>Note</h4>License validation requires internet access.",
-    licenseState: "dövlət",
-    licenseStateActive: "Aktiv",
-    licenseStateInactive: "Qeyri-aktiv",
-    licenseStateNoLicense: "Lisenziya yoxdur",
-    licenseKeyMasked: "Yadda saxlanan açar",
-    licenseTier: "Səviyyə",
-    licenseValid: "Etibarlıdır",
-    licenseStatus: "Lisenziya statusu",
-    licenseReason: "Səbəb",
-    licenseCheckedAt: "Yoxlanılıb",
-    licenseStartsAt: "Başlayır",
-    licenseExpiresAt: "Vaxtı bitir",
-    licenseDaysLeft: "Günlər qalıb",
-    licenseMaxDevices: "Maks cihazlar",
-    licenseActiveDevices: "Aktiv cihazlar",
-    licenseActiveDevicesInfo: "Əgər cihaz artıq istifadə edilmirsə, onun oturacağı 75 dəqiqədən sonra avtomatik olaraq buraxılır.",
-    licenseCustomerEmail: "Müştəri e-poçtu",
-    licenseFeatures: "Xüsusiyyətlər",
-    licenseFeaturesEmpty: "Əlavə funksiyalar yoxdur",
-    licenseFeatureReadonlyMode: "Yalnız oxumaq üçün əlaqə rejimi",
-    licenseFeatureReadonlyConnectionsFlag: "Yalnız oxumaq üçün bağlantılar (--readonly-connections/-r)",
-    licenseFeatureSsh: "SSH tunel",
-    licenseFeatureCluster: "Cluster əlaqələri",
-    licenseFeatureSentinel: "Sentinel əlaqələri",
-    licenseFeatureReJSON: "ReJSON (JSON məlumat növü)",
     keysSort: {
       on: "Açar çeşidlənməsi aktivdir",
       off: "Açarın çeşidlənməsi"
@@ -311,9 +277,6 @@ const strings = {
       on: "Yalnız oxumaq aktivdir",
       off: "Yalnız oxumaq deaktivdir"
     },
-    proSshOnly: "SSH Pro və ya Enterprise-da mövcuddur.",
-    proReadonlyOnly: "Yalnız oxumaq üçün əlaqə rejimi Pro və ya Enterprise-də mövcuddur.",
-    enterpriseClusterSentinelOnly: "Cluster və Sentinel yalnız Enterprise-də mövcuddur.",
     theme: {
       light: "İşıq",
       dark: "Qaranlıq müəssisə",
@@ -355,16 +318,20 @@ const strings = {
     importConflict: "Açar artıq mövcuddursa:",
     noKeysToExport: "İxrac üçün açar yoxdur",
     time: "Vaxt",
+    type: "Növ",
+    format: "Format",
     loading: "Yüklənir...",
     autoRefresh: "Avto",
     exportSearchHint: "Yalnız cari axtarışa uyğun açarlar ixrac edilir",
     importSearchHint: "İdxal bütün verilənlər bazasına tətbiq olunur, yalnız axtarış nəticələrinə deyil",
+    deleteSearchHint: "Serverdəki cari axtarışa uyğun bütün açarları silir",
+    deletingSearchKeys: "Uyğun açarlar silinir...",
     importNoKeys: "Faylda açar tapılmadı",
   },
   status: {
     dataCopied: "Məlumat mübadilə buferindədir",
-    licenseSaved: "Lisenziya saxlandı",
     exportDone: "İxrac tamamlandı",
+    deletedSearchKeys: (opts) => `${opts.count} açar silindi`,
     indexCreated: "İndeks yaradıldı",
     indexDropped: "İndeks silindi",
     importDone: (opts) => `İdxal tamamlandı: ${opts.created} yaradıldı, ${opts.skipped} keçildi, ${opts.errors} xəta`,
@@ -412,35 +379,10 @@ const strings = {
     "readonly-connections": "Əlavə etmək/saxlamaq/silmək əlaqələri yalnız oxunur!",
     "readonly-connection-mode": "Bu əlaqə yalnız oxumaq rejimidir!",
     "list-out-of-bounds": "Bu siyahı indeksi həddən kənardır",
-    "donation-ware-feature": "Bu xüsusiyyət ianə versiyasında mövcuddur.",
-    "feature-pro-readonly-required": "Yalnız oxumaq üçün əlaqə rejimi Pro və ya Enterprise lisenziyası tələb edir.",
-    "feature-pro-ssh-required": "SSH tunelləmə Pro və ya Enterprise lisenziyası tələb edir.",
-    "feature-enterprise-cluster-sentinel-required": "Cluster və Sentinel Müəssisə lisenziyası tələb edir.",
-    "feature-pro-json-binary-required": "JSON redaktə edin, ikili yükləyin və ikili faylı yükləyin Pro və ya Enterprise lisenziyası tələb olunur.",
-    "feature-pro-rejson-required": "ReJSON (JSON məlumat növü) Pro və ya Enterprise lisenziyası tələb edir.",
     "invalid-json-value": "Dəyər etibarlı deyil JSON.",
     "http_auth_required": "Avtorizasiya tələb olunur: HTTP Basic Auth ilə autentifikasiya edin və yenidən yükləyin.",
     "auto-connection-failed": "Mümkündür ki, bu səbəbdən əlaqə silindi və avtomatik qoşulma uğursuz oldu.",
     invalid_console_command: "Bu əmr GUI vasitəsilə işləmir."
-  },
-  licenseReason: {
-    LICENSE_VALID: "Lisenziya etibarlıdır",
-    LICENSE_INVALID: "Lisenziya etibarsızdır",
-    LICENSE_MISSING: "Lisenziya açarı təyin edilməyib",
-    LICENSE_DISABLED: "Lisenziya server konfiqurasiyasında deaktiv edilib",
-    LICENSE_NOT_FOUND: "Lisenziya tapılmadı",
-    LICENSE_EXPIRED: "Lisenziyanın müddəti bitib",
-    LICENSE_CLEARED: "Lisenziya açarı təmizləndi",
-    LICENSE_MAX_DEVICES_REACHED: "Maksimum cihaz oturacaqlarına çatıldı",
-    PRODUCT_MISMATCH: "Lisenziya məhsulu uyğun gəlmir"
-  },
-  licenseStatusValue: {
-    active: "Aktiv",
-    deleted: "Silindi",
-    all: "Hamısı",
-    expired: "İstifadə müddəti bitdi",
-    missing: "İtkin",
-    inactive: "Qeyri-aktiv"
   },
   form: {
     error: {
@@ -610,12 +552,49 @@ const strings = {
           field: "Sahə",
           value: "Dəyər"
         }
+      },
+      timeseries: {
+        chart: "Diaqram",
+        info: "Məlumat",
+        addPoint: "Məlumat Nöqtəsi Əlavə Et",
+        from: "Başlanğıc (ms və ya -)",
+        to: "Son (ms və ya +)",
+        aggregation: "Aqreqasiya",
+        timeBucket: "Vedrə (ms)",
+        none: "Heç biri",
+        dataPoints: "məlumat nöqtələri",
+        labels: "Etiketlər",
+        rules: "Qaydalar",
+        retention: "Saxlama",
+        timestamp: "Vaxt möhürü",
+        value: "Dəyər",
+        retentionHint: "0 = müddətsiz, və ya millisaniyə",
+        duplicatePolicy: "Dublikat siyasəti",
+        labelsHint: "key1 value1 key2 value2",
+        timestampHint: "'*' avtomatik yaradılma deməkdir, və ya millisaniyə vaxt möhürü",
+        editAllHint: "Hər sətirdə bir məlumat nöqtəsi: vaxt_möhürü dəyər (vaxt möhürü avtomatik üçün * ola bilər)",
+        autoSpread: "Avtomatik * yayılma intervalı",
+        formula: "Formula",
+        formulaLinear: "Xətti",
+        formulaRandom: "Təsadüfi",
+        formulaSawtooth: "Mişar dişi",
+        formulaPoints: "Nöqtələr",
+        formulaAmplitude: "Amplituda",
+        formulaOffset: "Ofset",
+        generate: "Yarat",
+        exportChart: "PNG ixrac et",
+        overlay: "Üst-üstə düşən açarlar",
+        overlayHint: "Vergüllə ayrılmış açarlar",
+        mrangeFilter: "Etiket filtri",
+        bulkMode: "Toplu yaratma",
+        mrangeHint: "məs. sensor=temp"
       }
     },
     treeControls: {
       settings: "Ağac parametrləri",
       expandAll: "Hamısını genişləndirin",
       collapseAll: "Hamısını yığışdırın",
+      level: "Səviyyə",
       search: {
         search: "Düymələrdə axtarın",
         clear: "Boş təyin etmək üçün cari axtarışı silin",
@@ -634,13 +613,21 @@ const strings = {
     }
   },
   time: {
+    type: "Növ",
+    format: "Format",
     loading: "Yüklənir...",
     years: "illər",
     months: "ay",
     days: "günlər",
     year: "il",
     month: "ay",
-    day: "gün"
+    day: "gün",
+    second: "saniyə",
+    seconds: "saniyə",
+    minute: "dəqiqə",
+    minutes: "dəqiqə",
+    hour: "saat",
+    hours: "saat"
   },
   redisTypes: {
     string: "String",
@@ -649,7 +636,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

@@ -70,3 +70,31 @@ body.p3xr-theme-light .p3xr-database-key-info-row-clickable:hover {
     font-size: 0.85em;
     font-weight: normal;
 }
+
+.p3xr-format-toggle {
+    border-radius: 4px !important;
+    overflow: hidden !important;
+
+    .mat-button-toggle {
+        height: 32px !important;
+        border-radius: 0 !important;
+
+        .mat-button-toggle-button {
+            height: 32px !important;
+            font-size: 13px !important;
+            padding: 0 12px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            border-radius: 0 !important;
+        }
+    }
+
+    .mat-button-toggle:first-child {
+        border-radius: 4px 0 0 4px !important;
+    }
+
+    .mat-button-toggle:last-child {
+        border-radius: 0 4px 4px 0 !important;
+    }
+}

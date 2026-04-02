@@ -23,16 +23,18 @@ import { I18nService } from '../services/i18n.service';
         <div class="p3xr-accordion-wrapper">
             <mat-toolbar class="p3xr-accordion-toolbar" [class.p3xr-collapsed]="!extended" [class.mat-elevation-z1]="!extended">
                 <div class="p3xr-accordion-toolbar-inner">
-                    <span class="p3xr-accordion-title" (click)="toggle()">
+                    <span class="p3xr-accordion-title" (click)="collapsible ? toggle() : null" [style.cursor]="collapsible ? 'pointer' : 'default'">
                         {{ title }}
                     </span>
                     <div class="p3xr-accordion-actions">
                         <ng-content select="[actions]"></ng-content>
                     </div>
-                    <button mat-icon-button (click)="toggle()" class="p3xr-accordion-toggle"
-                        [matTooltip]="extended ? (strings().intention?.collapse || 'Collapse') : (strings().intention?.extend || 'Extend')">
-                        <mat-icon>{{ extended ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
-                    </button>
+                    @if (collapsible) {
+                        <button mat-icon-button (click)="toggle()" class="p3xr-accordion-toggle"
+                            [matTooltip]="extended ? (strings().intention?.collapse || 'Collapse') : (strings().intention?.extend || 'Extend')">
+                            <mat-icon>{{ extended ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
+                        </button>
+                    }
                 </div>
             </mat-toolbar>
             @if (extended) {
@@ -98,6 +100,7 @@ import { I18nService } from '../services/i18n.service';
 export class P3xrAccordionComponent implements OnInit {
     @Input() title: string = '';
     @Input() accordionKey: string = '';
+    @Input() collapsible: boolean = true;
 
     readonly strings;
 

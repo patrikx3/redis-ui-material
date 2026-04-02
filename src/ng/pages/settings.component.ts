@@ -6,7 +6,6 @@ import { MatListModule } from '@angular/material/list';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatDialog } from '@angular/material/dialog';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { I18nService } from '../services/i18n.service';
@@ -15,7 +14,6 @@ import { CommonService } from '../services/common.service';
 import { SocketService } from '../services/socket.service';
 import { MainCommandService } from '../services/main-command.service';
 import { ConnectionDialogService } from '../dialogs/connection-dialog.service';
-import { createDialogPopupSettings } from '../dialogs/dialog-popup';
 import { TreecontrolSettingsDialogService } from '../dialogs/treecontrol-settings-dialog.service';
 import { AiSettingsDialogService } from '../dialogs/ai-settings-dialog.service';
 import { P3xrAccordionComponent } from '../components/p3xr-accordion.component';
@@ -275,154 +273,6 @@ declare const p3xr: any;
             </div>
         </p3xr-ng-accordion>
 
-        <!-- License Info — hidden, all features are free
-        <br />
-        <p3xr-ng-accordion [title]="strings().label?.licenseInfo || 'License'" accordionKey="license-info">
-            <div actions style="display: flex; align-items: center; gap: 4px;">
-                <button mat-icon-button (click)="showLicenseTierPolicy($event)"
-                    [matTooltip]="getLicenseTierPolicyTitle()">
-                    <mat-icon>info</mat-icon>
-                </button>
-                <p3xr-ng-button
-                    (click)="setLicense($event)"
-                    [disabled]="!isLicenseEditable()"
-                    [label]="strings().intention?.license || 'Set license'"
-                    mdIcon="vpn_key">
-                </p3xr-ng-button>
-            </div>
-            <div content>
-                <mat-list>
-                    <mat-list-item>
-                        <div class="p3xr-settings-pair-row">
-                            <div class="p3xr-settings-row-label">{{ strings().label?.licenseEditable }}</div>
-                            <div class="p3xr-settings-row-value">{{ getLicenseEditableText() }}</div>
-                        </div>
-                    </mat-list-item>
-                    <mat-divider></mat-divider>
-
-                    @if (!isLicenseEditable()) {
-                        <mat-list-item>
-                            <div class="p3xr-settings-wrap-text">{{ strings().label?.licenseTerminalOnly }}</div>
-                        </mat-list-item>
-                        <mat-divider></mat-divider>
-                    }
-
-                    <mat-list-item>
-                        <div class="p3xr-settings-pair-row">
-                            <div class="p3xr-settings-row-label">{{ strings().label?.licenseState }}</div>
-                            <div class="p3xr-settings-row-value">{{ getLicenseStateText() }}</div>
-                        </div>
-                    </mat-list-item>
-                    <mat-divider></mat-divider>
-
-                    <mat-list-item>
-                        <div class="p3xr-settings-pair-row">
-                            <div class="p3xr-settings-row-label">{{ strings().label?.licenseKeyMasked }}</div>
-                            <div class="p3xr-settings-row-value">{{ getLicenseKeyText() }}</div>
-                        </div>
-                    </mat-list-item>
-                    <mat-divider></mat-divider>
-
-                    <mat-list-item>
-                        <div class="p3xr-settings-pair-row">
-                            <div class="p3xr-settings-row-label">{{ strings().label?.licenseTier }}</div>
-                            <div class="p3xr-settings-row-value">{{ license.tier || 'free' }}</div>
-                        </div>
-                    </mat-list-item>
-                    <mat-divider></mat-divider>
-
-                    <mat-list-item>
-                        <div class="p3xr-settings-pair-row p3xr-settings-pair-row-valid">
-                            <div class="p3xr-settings-row-label">{{ strings().label?.licenseValid }}</div>
-                            <div class="p3xr-settings-row-value">
-                            @if (license.valid) {
-                                <i class="fa fa-check" style="color: #4caf50;"></i>
-                            } @else {
-                                <i class="fa fa-times" style="color: #f44336;"></i>
-                            }
-                            </div>
-                        </div>
-                    </mat-list-item>
-                    <mat-divider></mat-divider>
-
-                    <mat-list-item>
-                        <div class="p3xr-settings-pair-row">
-                            <div class="p3xr-settings-row-label">{{ strings().label?.licenseStatus }}</div>
-                            <div class="p3xr-settings-row-value">{{ getLicenseStatusText() }}</div>
-                        </div>
-                    </mat-list-item>
-                    <mat-divider></mat-divider>
-
-                    <mat-list-item>
-                        <div class="p3xr-settings-pair-row">
-                            <div class="p3xr-settings-row-label">{{ strings().label?.licenseReason }}</div>
-                            <div class="p3xr-settings-row-value">{{ getLicenseReasonText() }}</div>
-                        </div>
-                    </mat-list-item>
-                    <mat-divider></mat-divider>
-
-                    <mat-list-item>
-                        <div class="p3xr-settings-pair-row">
-                            <div class="p3xr-settings-row-label">{{ strings().label?.licenseCheckedAt }}</div>
-                            <div class="p3xr-settings-row-value">{{ license.checkedAt ? (license.checkedAt | date:'datetime') : '-' }}</div>
-                        </div>
-                    </mat-list-item>
-                    <mat-divider></mat-divider>
-
-                    <mat-list-item>
-                        <div class="p3xr-settings-pair-row">
-                            <div class="p3xr-settings-row-label">{{ strings().label?.licenseStartsAt }}</div>
-                            <div class="p3xr-settings-row-value">{{ license.startsAt ? (license.startsAt | date:'datetime') : '-' }}</div>
-                        </div>
-                    </mat-list-item>
-                    <mat-divider></mat-divider>
-
-                    <mat-list-item>
-                        <div class="p3xr-settings-pair-row">
-                            <div class="p3xr-settings-row-label">{{ strings().label?.licenseExpiresAt }}</div>
-                            <div class="p3xr-settings-row-value">{{ license.expiresAt ? (license.expiresAt | date:'datetime') : '-' }}</div>
-                        </div>
-                    </mat-list-item>
-                    <mat-divider></mat-divider>
-
-                    <mat-list-item>
-                        <div class="p3xr-settings-pair-row">
-                            <div class="p3xr-settings-row-label">{{ strings().label?.licenseDaysLeft }}</div>
-                            <div class="p3xr-settings-row-value">{{ license.daysLeft != null ? license.daysLeft : '-' }}</div>
-                        </div>
-                    </mat-list-item>
-                    <mat-divider></mat-divider>
-
-                    <mat-list-item>
-                        <div class="p3xr-settings-pair-row">
-                            <div class="p3xr-settings-row-label">{{ strings().label?.licenseMaxDevices }}</div>
-                            <div class="p3xr-settings-row-value">{{ getLicenseMaxDevicesText() }}</div>
-                        </div>
-                    </mat-list-item>
-                    <mat-divider></mat-divider>
-
-                    <mat-list-item class="p3xr-license-active-devices-item">
-                        <div class="p3xr-license-active-devices-content">
-                            <div class="p3xr-settings-pair-row">
-                                <div class="p3xr-settings-row-label">{{ strings().label?.licenseActiveDevices }}</div>
-                                <div class="p3xr-settings-row-value">{{ getLicenseActiveDevicesText() }}</div>
-                            </div>
-                            <div class="p3xr-license-active-devices-note">{{ strings().label?.licenseActiveDevicesInfo }}</div>
-                        </div>
-                    </mat-list-item>
-                    <mat-divider></mat-divider>
-
-                    <mat-list-item class="p3xr-license-features-item">
-                        <div class="p3xr-license-features-row">
-                            <div class="p3xr-settings-row-label">{{ strings().label?.licenseFeatures }}</div>
-                            <div class="p3xr-license-features-text">{{ getLicenseFeaturesText() }}</div>
-                        </div>
-                    </mat-list-item>
-                </mat-list>
-            </div>
-        </p3xr-ng-accordion>
-        -->
-
         <br />
 
         <!-- AI Settings -->
@@ -641,7 +491,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
     private static readonly GROUP_MODE_KEY = 'p3xr-connection-group-mode';
     readonlyConnections = false;
     currentConnectionId: string | undefined;
-    license: any = {};
     isXs = false;
     private electronUiStorage: Record<string, string> | null = null;
 
@@ -656,7 +505,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
         @Inject(ConnectionDialogService) private connectionDialog: ConnectionDialogService,
         @Inject(TreecontrolSettingsDialogService) private treeSettingsDialog: TreecontrolSettingsDialogService,
         @Inject(AiSettingsDialogService) private aiSettingsDialog: AiSettingsDialogService,
-        @Inject(MatDialog) private dialog: MatDialog,
         @Inject(BreakpointObserver) private breakpointObserver: BreakpointObserver,
         @Inject(ChangeDetectorRef) private cdr: ChangeDetectorRef,
     ) {
@@ -676,10 +524,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
         // Subscribe to socket events for reactive updates
         const sub1 = this.socket.connections$.subscribe(() => this.refreshState());
         const sub2 = this.socket.configuration$.subscribe(() => this.refreshState());
-        const sub3 = this.socket.licenseUpdate$.subscribe(() => this.refreshState());
-        const sub4 = this.socket.stateChanged$.subscribe(() => this.refreshState());
-        const sub5 = this.socket.redisStatus$.subscribe(() => this.refreshState());
-        this.unsubs.push(() => { sub1.unsubscribe(); sub2.unsubscribe(); sub3.unsubscribe(); sub4.unsubscribe(); sub5.unsubscribe(); });
+        const sub3 = this.socket.stateChanged$.subscribe(() => this.refreshState());
+        const sub4 = this.socket.redisStatus$.subscribe(() => this.refreshState());
+        this.unsubs.push(() => { sub1.unsubscribe(); sub2.unsubscribe(); sub3.unsubscribe(); sub4.unsubscribe(); });
     }
 
     ngOnDestroy(): void {
@@ -691,7 +538,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this.connectionsList = state.connections?.list || [];
         this.readonlyConnections = state.cfg?.readonlyConnections === true;
         this.currentConnectionId = state.connection?.id;
-        this.license = state.license || {};
         this.buildGroupedConnections();
         this.cdr.detectChanges();
     }
@@ -910,162 +756,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
             }
         }
         return results;
-    }
-
-    // --- License ---
-
-    getLicense(): any {
-        return this.license;
-    }
-
-    isLicenseEditable(): boolean {
-        const l = this.license;
-        if (typeof l.licenseEditable === 'boolean') return l.licenseEditable;
-        if (typeof l.editableActive === 'boolean') return l.editableActive;
-        if (typeof l.disabled === 'boolean') return !l.disabled;
-        return true;
-    }
-
-    getEffectiveLicenseTier(): string {
-        // All features are free — always return enterprise tier
-        return 'enterprise';
-    }
-
-    getLicenseEditableText(): string {
-        return this.isLicenseEditable()
-            ? (this.strings().label?.licenseEditableYes || 'Yes')
-            : (this.strings().label?.licenseEditableNo || 'No');
-    }
-
-    getLicenseStateText(): string {
-        const l = this.license;
-        if (l.hasLicenseKey !== true) return this.strings().label?.licenseStateNoLicense || 'No license';
-        if (l.valid === true && l.licenseStatus === 'active') return this.strings().label?.licenseStateActive || 'Active';
-        return this.strings().label?.licenseStateInactive || 'Inactive';
-    }
-
-    getLicenseKeyText(): string {
-        const l = this.license;
-        if (l.hasLicenseKey !== true) return '-';
-        return typeof l.licenseKeyMasked === 'string' && l.licenseKeyMasked.length > 0 ? l.licenseKeyMasked : '****';
-    }
-
-    getLicenseStatusText(): string {
-        const status = typeof this.license.licenseStatus === 'string' ? this.license.licenseStatus : '';
-        if (!status) return '-';
-        const map = this.strings().licenseStatusValue;
-        return map?.[status] || status;
-    }
-
-    getLicenseReasonText(): string {
-        const reason = typeof this.license.reason === 'string' ? this.license.reason : '';
-        if (!reason) return '-';
-        const map = this.strings().licenseReason;
-        return map?.[reason] || reason;
-    }
-
-    getLicenseMaxDevicesText(): string {
-        const l = this.license;
-        const max = typeof l.maxDevices === 'number' ? l.maxDevices : l.deviceLease?.maxDevices;
-        if (typeof max !== 'number' || !Number.isFinite(max) || max <= 0) return '-';
-        return `${Math.floor(max)}`;
-    }
-
-    getLicenseActiveDevicesText(): string {
-        const l = this.license;
-        const active = typeof l.activeDevices === 'number' ? l.activeDevices : l.deviceLease?.activeDevices;
-        if (typeof active !== 'number' || !Number.isFinite(active) || active < 0) return '-';
-        const max = typeof l.maxDevices === 'number' ? l.maxDevices : l.deviceLease?.maxDevices;
-        if (typeof max === 'number' && Number.isFinite(max) && max > 0) return `${Math.floor(active)} / ${Math.floor(max)}`;
-        return `${Math.floor(active)}`;
-    }
-
-    getLicenseFeaturesText(): string {
-        const s = this.strings();
-        const l = this.license;
-        const features: string[] = [];
-        if (Array.isArray(l.features)) {
-            for (const f of l.features) {
-                if (typeof f === 'string' && f.length > 0) features.push(f);
-            }
-        }
-        const tier = this.getEffectiveLicenseTier();
-        const derived: string[] = [];
-        if (tier === 'pro' || tier === 'enterprise') {
-            derived.push(s.label?.licenseFeatureSsh || 'SSH');
-            if (tier === 'enterprise') {
-                derived.push(s.label?.licenseFeatureCluster || 'Cluster');
-                derived.push(s.label?.licenseFeatureSentinel || 'Sentinel');
-            }
-            derived.push(s.label?.licenseFeatureReadonlyMode || 'Readonly');
-            derived.push(s.intention?.jsonViewEditor || 'JSON Editor');
-            derived.push(s.intention?.setBuffer || 'Buffer Upload');
-            derived.push(s.intention?.downloadBuffer || 'Buffer Download');
-            derived.push(s.label?.licenseFeatureReJSON || 'ReJSON');
-        }
-        for (const d of derived) {
-            if (d && !features.includes(d)) features.push(d);
-        }
-        return features.length === 0 ? (s.label?.licenseFeaturesEmpty || '-') : features.join(', ');
-    }
-
-    getLicenseTierPolicyTitle(): string {
-        return `${this.strings().label?.licenseTierPolicyTitle || 'License Policy'}: ${this.getEffectiveLicenseTier()}`;
-    }
-
-    async setLicense($event: any): Promise<void> {
-        if (!this.isLicenseEditable()) {
-            this.common.toast(this.strings().error?.license_readonly || 'License is read-only');
-            return;
-        }
-        try {
-            const { PromptDialogComponent } = await import(
-                /* webpackChunkName: "dialog-prompt" */
-                '../dialogs/prompt-dialog.component'
-            );
-            const s = this.strings();
-            const dialogRef = this.dialog.open(PromptDialogComponent, createDialogPopupSettings({
-                panelClass: 'p3xr-license-dialog',
-                data: {
-                    title: s.confirm?.license?.title || 'License',
-                    placeholder: s.confirm?.license?.placeholder || 'Enter license key',
-                    initialValue: '',
-                    okButton: s.intention?.license || 'Set License',
-                    cancelButton: s.intention?.cancel || 'Cancel',
-                },
-            }));
-            const licenseKey = await new Promise<string | undefined>((resolve) => {
-                dialogRef.afterClosed().subscribe(resolve);
-            });
-            if (licenseKey === undefined) return;
-
-            const response = await this.socket.request({
-                action: 'set-license',
-                payload: { license: licenseKey },
-            });
-            this.common.toast(
-                response.info !== 'ok'
-                    ? (this.strings().error?.[response.info] || response.info)
-                    : (this.strings().status?.licenseSaved || 'License saved')
-            );
-        } catch (e) {
-            if (e !== undefined) {
-                const msg = (e as any)?.message;
-                if (this.strings().error?.[msg]) {
-                    e = new Error(this.strings().error[msg]);
-                }
-                this.common.generalHandleError(e);
-            }
-        }
-    }
-
-    async showLicenseTierPolicy($event: any): Promise<void> {
-        await this.common.alert({
-            title: this.getLicenseTierPolicyTitle(),
-            message: this.strings().label?.licenseTierPolicyText || '',
-            panelClass: 'p3xr-license-tier-policy-dialog',
-            autoFocus: false,
-        });
     }
 
     // --- AI Settings ---

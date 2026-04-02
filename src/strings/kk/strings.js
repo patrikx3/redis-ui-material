@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "Тазартылған лицензия",
-    invalid_license: "Жарамсыз лицензия",
-    license_max_devices_reached: "Құрылғыдағы максималды орындарға жетті",
-    license_readonly: "Лицензияны тек сервер терминалынан өзгертуге болады.",
     server_error: "Сервер қатесі, әрекетті қайталаңыз"
   },
   title: {
@@ -47,9 +43,13 @@ const strings = {
     deleteZSetMember: "Осы сұрыпталған жиын мүшесін шынымен жою керек пе?",
     deleteConnection: "Растау",
     deleteConnectionText: "Осы Redis қосылымын жойғыңыз келетініне сенімдісіз бе?",
+    delete: "\u0416\u043e\u044e?",
     deleteNode: "Осы Redis түйінін жоюға сенімдісіз бе?",
     deleteAllKeys: opts => {
       return `Осы ағашты және оның барлық кілттерін жойыңыз (${opts.key})?`;
+    },
+    deleteSearchKeys: opts => {
+      return `"${opts.pattern}" сәйкес келетін барлық кілттерді жоюға сенімдісіз бе? ${opts.count} кілт табылды.`;
     },
     socketioConnectError: "Socket.IO серверге қосыла алмайды, сіз қайта жүктеп, қосылым қатесін өзіңіз шеше аласыз, клиент оны қалай шешу керектігін білмейді.",
     socketioAuthRequired: "Socket.IO авторизациясы қажет. HTTP Basic Auth (пайдаланушы аты/құпия сөз) көмегімен аутентификациядан өтіп, қайта жүктеңіз.",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "Мәтінді уақытқа түрлендіру",
       convertTextToTimePlaceholder: "Мысалы. 1d 86400 болады"
     },
-    license: {
-      title: "Лицензияны орнату",
-      textContent: "If you want to use paid features, please contact support@corifeus.com to request a license. Pricing is Pro 400 HUF/month (€1/month) or 4,000 HUF/year (€10/year), and Enterprise 1,200 HUF/month (€3/month) or 12,000 HUF/year (€30/year). Yearly is 10x monthly. With 27% VAT, totals are Pro 500 HUF/month (€1.27/month) or 5,100 HUF/year (€12.70/year), Enterprise 1,500 HUF/month (€3.81/month) or 15,200 HUF/year (€38.10/year). License validation requires internet access. Default license includes 5 seats. If you need more seats, contact us at support@corifeus.com.",
-      placeholder: "Лицензия кілті"
-    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -136,13 +131,17 @@ const strings = {
     exportKeys: "Кілттерді экспорттау",
     exportAllKeys: (opts) => `Барлық ${opts.count} кілтті экспорттау`,
     exportSearchResults: (opts) => `${opts.count} нәтижені экспорттау`,
+    deleteAllKeysMenu: (opts) => `Барлығын жою ${opts.count}`,
     importKeys: "Кілттерді импорттау",
+    deleteSearchKeys: (opts) => `${opts.count} сәйкес кілтті жою`,
     saveWithFormatJson: "Пішіммен сақтау",
     formatJson: "Json пішімі",
     wrap: "Орау",
     unwrap: "Орамды ашу",
     downloadJson: "JSON жүктеп алыңыз",
-    pubsubMonitor: "PubSub Монитор",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "Тіл",
@@ -183,7 +182,6 @@ const strings = {
     edit: "Өңдеу",
     save: "Сақтау",
     ttl: "TTL орнатыңыз",
-    license: "Лицензияны орнату",
     delete: "Жою",
     remove: "Жою",
     sure: "Әрине",
@@ -262,38 +260,6 @@ const strings = {
     connectiondEdit: "Қосылымды өңдеу",
     connectiondView: "Қосылымды көру",
     connections: "Қосылымдар",
-    licenseInfo: "Лицензия",
-    licenseEditable: "Лицензия өңделеді",
-    licenseEditableYes: "Иә",
-    licenseEditableNo: "Жоқ",
-    licenseTerminalOnly: "Лицензияны тек сервер терминалынан конфигурациялауға болады.",
-    licenseTierPolicyTitle: "Деңгейлік саясат",
-    licenseTierPolicyText: "<h4>Free</h4>core Redis UI only; no SSH tunneling, no Readonly connection mode, no Cluster/Sentinel, no Edit JSON/Upload binary/Download binary, no ReJSON.<br/><strong>Price: 0 HUF/month (€0/month).</strong><br/><br/><h4>Pro</h4>SSH tunneling, Readonly connection mode (including --readonly-connections/-r), Edit JSON, Upload binary, Download binary, ReJSON.<br/><strong>Base price: 400 HUF/month (€1/month) or 4,000 HUF/year (€10/year).</strong><br/><strong>Total with 27% VAT: 500 HUF/month (€1.27/month) or 5,100 HUF/year (€12.70/year).</strong><br/><br/><h4>Enterprise</h4>SSH tunneling, Cluster and Sentinel, plus Edit JSON, Upload binary, Download binary, ReJSON; --readonly-connections/-r also works.<br/><strong>Base price: 1,200 HUF/month (€3/month) or 12,000 HUF/year (€30/year).</strong><br/><strong>Total with 27% VAT: 1,500 HUF/month (€3.81/month) or 15,200 HUF/year (€38.10/year).</strong><br/><br/><h4>Yearly rule</h4>Yearly price is 10x the monthly price.<br/><br/><h4>Seats</h4>Default license includes 5 seats. If you need more seats, contact us at <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><br/><h4>Enterprise trial</h4>10 days free for anyone with a real existing email address (non-test email).<br/><hr/><h4>Billing info in e-mail</h4>Name, Billing e-mail, Country code, Postal code, City, Address, VAT ID (optional).<br/><br/><h4>Payment</h4>PayPal payment is available only in HUF (forint); after sending the money @ <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> I will send you an invoice. All payments are non-refundable.<br/><br/><h4>VAT</h4>VAT is added to the price (27% in Hungary).<br/><hr/><h4>Contact</h4>If you want to say hi or have a question, contact <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><hr/><h4>Language</h4>Invoice and license e-mail communication is in English. Invoice currency is HUF.<br/><hr/><h4>Note</h4>License validation requires internet access.",
-    licenseState: "Мемлекет",
-    licenseStateActive: "Белсенді",
-    licenseStateInactive: "Белсенді емес",
-    licenseStateNoLicense: "Лицензия жоқ",
-    licenseKeyMasked: "Сақталған кілт",
-    licenseTier: "Деңгей",
-    licenseValid: "Жарамды",
-    licenseStatus: "Лицензия күйі",
-    licenseReason: "Себеп",
-    licenseCheckedAt: "Тексерілді",
-    licenseStartsAt: "басталады",
-    licenseExpiresAt: "Мерзімі аяқталады",
-    licenseDaysLeft: "Күндер қалды",
-    licenseMaxDevices: "Максималды құрылғылар",
-    licenseActiveDevices: "Белсенді құрылғылар",
-    licenseActiveDevicesInfo: "Құрылғы бұдан былай пайдаланылмаса, оның орны 75 минуттан кейін автоматты түрде босатылады.",
-    licenseCustomerEmail: "Тұтынушының электрондық поштасы",
-    licenseFeatures: "Ерекшеліктер",
-    licenseFeaturesEmpty: "Қосымша мүмкіндіктер жоқ",
-    licenseFeatureReadonlyMode: "Тек оқуға арналған қосылым режимі",
-    licenseFeatureReadonlyConnectionsFlag: "Тек оқуға арналған қосылымдар (--readonly-connections/-r)",
-    licenseFeatureSsh: "SSH туннельдеу",
-    licenseFeatureCluster: "Cluster қосылымдары",
-    licenseFeatureSentinel: "Sentinel қосылымдары",
-    licenseFeatureReJSON: "ReJSON (JSON деректер түрі)",
     keysSort: {
       on: "Кілтті сұрыптау қосулы",
       off: "Кілтті сұрыптау"
@@ -311,9 +277,6 @@ const strings = {
       on: "Тек оқуға арналған",
       off: "Тек оқу үшін өшірулі"
     },
-    proSshOnly: "SSH Pro немесе Enterprise нұсқаларында қол жетімді.",
-    proReadonlyOnly: "Тек оқуға арналған қосылым режимі Pro немесе Enterprise жүйесінде қолжетімді.",
-    enterpriseClusterSentinelOnly: "Cluster және Sentinel тек Enterprise жүйесінде қолжетімді.",
     theme: {
       light: "Жарық",
       dark: "Қараңғы кәсіпорын",
@@ -355,16 +318,20 @@ const strings = {
     importConflict: "Кілт бұрыннан бар болса:",
     noKeysToExport: "Экспорттайтын кілттер жоқ",
     time: "Уақыт",
+    type: "Түрі",
+    format: "Формат",
     loading: "Жүктелуде...",
     autoRefresh: "Авто",
     exportSearchHint: "Тек ағымдағы іздеуге сәйкес кілттер экспортталады",
     importSearchHint: "Импорт іздеу нәтижелеріне ғана емес, бүкіл дерекқорға қолданылады",
+    deleteSearchHint: "Сервердегі ағымдағы іздеуге сәйкес барлық кілттерді жояды",
+    deletingSearchKeys: "Сәйкес кілттер жойылуда...",
     importNoKeys: "Файлдан кілттер табылмады",
   },
   status: {
     dataCopied: "Деректер алмасу буферінде",
-    licenseSaved: "Лицензия сақталды",
     exportDone: "Экспорт аяқталды",
+    deletedSearchKeys: (opts) => `${opts.count} кілт жойылды`,
     indexCreated: "Индекс жасалды",
     indexDropped: "Индекс жойылды",
     importDone: (opts) => `Импорт аяқталды: ${opts.created} жасалды, ${opts.skipped} өткізілді, ${opts.errors} қате`,
@@ -412,35 +379,10 @@ const strings = {
     "readonly-connections": "Қосылымдар қосу/сақтау/жою тек оқуға арналған!",
     "readonly-connection-mode": "Бұл қосылым тек оқуға арналған режим!",
     "list-out-of-bounds": "Бұл тізім индексі шектен тыс",
-    "donation-ware-feature": "Бұл мүмкіндік қайырымдылық нұсқасында бар.",
-    "feature-pro-readonly-required": "Тек оқуға арналған қосылым режимі Pro немесе Enterprise лицензиясын қажет етеді.",
-    "feature-pro-ssh-required": "SSH туннельдеу үшін Pro немесе Enterprise лицензиясы қажет.",
-    "feature-enterprise-cluster-sentinel-required": "Cluster және Sentinel Кәсіпорын лицензиясын қажет етеді.",
-    "feature-pro-json-binary-required": "JSON өңдеу, екілік жүктеу және екілік жүктеу Pro немесе Enterprise лицензиясын қажет етеді.",
-    "feature-pro-rejson-required": "ReJSON (JSON деректер түрі) Pro немесе Enterprise лицензиясын қажет етеді.",
     "invalid-json-value": "Мән жарамсыз JSON.",
     "http_auth_required": "Авторизация қажет: HTTP Basic Auth көмегімен аутентификациядан өтіп, қайта жүктеңіз.",
     "auto-connection-failed": "Мүмкін, осыған байланысты қосылым жойылды және автоматты қосылым сәтсіз аяқталды.",
     invalid_console_command: "Бұл пәрмен GUI арқылы жұмыс істемейді."
-  },
-  licenseReason: {
-    LICENSE_VALID: "Лицензия жарамды",
-    LICENSE_INVALID: "Лицензия жарамсыз",
-    LICENSE_MISSING: "Ешқандай лицензия кілті орнатылмаған",
-    LICENSE_DISABLED: "Лицензия сервер конфигурациясында өшірілген",
-    LICENSE_NOT_FOUND: "Лицензия табылмады",
-    LICENSE_EXPIRED: "Лицензияның мерзімі аяқталды",
-    LICENSE_CLEARED: "Лицензия кілті тазартылды",
-    LICENSE_MAX_DEVICES_REACHED: "Құрылғыдағы максималды орындарға жетті",
-    PRODUCT_MISMATCH: "Лицензия өнімі сәйкес келмейді"
-  },
-  licenseStatusValue: {
-    active: "Белсенді",
-    deleted: "Жойылды",
-    all: "Барлығы",
-    expired: "Мерзімі бітті",
-    missing: "Жоқ",
-    inactive: "Белсенді емес"
   },
   form: {
     error: {
@@ -610,12 +552,49 @@ const strings = {
           field: "Өріс",
           value: "Мән"
         }
+      },
+      timeseries: {
+        chart: "\u0414\u0438\u0430\u0433\u0440\u0430\u043c\u043c\u0430",
+        info: "\u0410\u049b\u043f\u0430\u0440\u0430\u0442",
+        addPoint: "\u0414\u0435\u0440\u0435\u043a\u0442\u0435\u0440 \u043d\u04af\u043a\u0442\u0435\u0441\u0456\u043d \u049b\u043e\u0441\u0443",
+        from: "\u0411\u0430\u0441\u0442\u0430\u043f (ms \u043d\u0435\u043c\u0435\u0441\u0435 -)",
+        to: "\u0410\u044f\u049b\u0442\u0430\u043b\u0443 (ms \u043d\u0435\u043c\u0435\u0441\u0435 +)",
+        aggregation: "\u0410\u0433\u0440\u0435\u0433\u0430\u0446\u0438\u044f",
+        timeBucket: "\u0428\u0435\u043b\u0435\u043a (ms)",
+        none: "\u0416\u043e\u049b",
+        dataPoints: "\u0434\u0435\u0440\u0435\u043a\u0442\u0435\u0440 \u043d\u04af\u043a\u0442\u0435\u043b\u0435\u0440\u0456",
+        labels: "\u0411\u0435\u043b\u0433\u0456\u043b\u0435\u0440",
+        rules: "\u0415\u0440\u0435\u0436\u0435\u043b\u0435\u0440",
+        retention: "\u0421\u0430\u049b\u0442\u0430\u0443",
+        timestamp: "\u0423\u0430\u049b\u044b\u0442 \u0431\u0435\u043b\u0433\u0456\u0441\u0456",
+        value: "\u041c\u04d9\u043d",
+        retentionHint: "0 = \u043c\u0435\u0440\u0437\u0456\u043c\u0456 \u0436\u043e\u049b, \u043d\u0435\u043c\u0435\u0441\u0435 \u043c\u0438\u043b\u043b\u0438\u0441\u0435\u043a\u0443\u043d\u0434",
+        duplicatePolicy: "\u041a\u04e9\u0448\u0456\u0440\u043c\u0435 \u0441\u0430\u044f\u0441\u0430\u0442\u044b",
+        labelsHint: "key1 value1 key2 value2",
+        timestampHint: "'*' \u0430\u0432\u0442\u043e\u043c\u0430\u0442\u0442\u044b \u0442\u04af\u0440\u0434\u0435 \u0436\u0430\u0441\u0430\u043b\u0430\u0434\u044b, \u043d\u0435\u043c\u0435\u0441\u0435 \u043c\u0438\u043b\u043b\u0438\u0441\u0435\u043a\u0443\u043d\u0434 \u0443\u0430\u049b\u044b\u0442 \u0431\u0435\u043b\u0433\u0456\u0441\u0456",
+        editAllHint: "\u04d8\u0440 \u0436\u043e\u043b\u0434\u0430 \u0431\u0456\u0440 \u0434\u0435\u0440\u0435\u043a\u0442\u0435\u0440 \u043d\u04af\u043a\u0442\u0435\u0441\u0456: \u0443\u0430\u049b\u044b\u0442_\u0431\u0435\u043b\u0433\u0456\u0441\u0456 \u043c\u04d9\u043d (\u0443\u0430\u049b\u044b\u0442 \u0431\u0435\u043b\u0433\u0456\u0441\u0456 \u0430\u0432\u0442\u043e\u043c\u0430\u0442\u0442\u044b \u04af\u0448\u0456\u043d * \u0431\u043e\u043b\u0443\u044b \u043c\u04af\u043c\u043a\u0456\u043d)",
+        autoSpread: "\u0410\u0432\u0442\u043e\u043c\u0430\u0442\u0442\u044b * \u0442\u0430\u0440\u0430\u043b\u0443 \u0430\u0440\u0430\u043b\u044b\u0493\u044b",
+        formula: "\u0424\u043e\u0440\u043c\u0443\u043b\u0430",
+        formulaLinear: "\u0421\u044b\u0437\u044b\u049b\u0442\u044b\u049b",
+        formulaRandom: "\u041a\u0435\u0437\u0434\u0435\u0439\u0441\u043e\u049b",
+        formulaSawtooth: "\u0410\u0440\u0430 \u0442\u0456\u0441\u0442\u0456",
+        formulaPoints: "\u041d\u04af\u043a\u0442\u0435\u043b\u0435\u0440",
+        formulaAmplitude: "\u0410\u043c\u043f\u043b\u0438\u0442\u0443\u0434\u0430",
+        formulaOffset: "\u042b\u0493\u044b\u0441\u0443",
+        generate: "\u0416\u0430\u0441\u0430\u0443",
+        exportChart: "PNG \u044d\u043a\u0441\u043f\u043e\u0440\u0442\u0442\u0430\u0443",
+        overlay: "\u04ae\u0441\u0442\u0456\u043d\u0435 \u049b\u043e\u044e \u043a\u0456\u043b\u0442\u0442\u0435\u0440",
+        overlayHint: "\u04ae\u0442\u0456\u0440\u043c\u0435\u043d \u0431\u04e9\u043b\u0456\u043d\u0433\u0435\u043d \u043a\u0456\u043b\u0442\u0442\u0435\u0440",
+        mrangeFilter: "\u0411\u0435\u043b\u0433\u0456\u043b\u0435\u0440 \u0441\u04af\u0437\u0433\u0456\u0441\u0456",
+        bulkMode: "Жаппай генерация",
+        mrangeHint: "\u043c\u044b\u0441. sensor=temp"
       }
     },
     treeControls: {
       settings: "Ағаш параметрлері",
       expandAll: "Барлығын кеңейту",
       collapseAll: "Барлығын жинаңыз",
+      level: "Деңгей",
       search: {
         search: "Пернелерден іздеңіз",
         clear: "Бос орнату үшін ағымдағы іздеуді өшіріңіз",
@@ -634,13 +613,21 @@ const strings = {
     }
   },
   time: {
+    type: "Түрі",
+    format: "Формат",
     loading: "Жүктелуде...",
     years: "жылдар",
     months: "айлар",
     days: "күндер",
     year: "жыл",
     month: "ай",
-    day: "күні"
+    day: "күні",
+    second: "\u0441\u0435\u043a\u0443\u043d\u0434",
+    seconds: "\u0441\u0435\u043a\u0443\u043d\u0434",
+    minute: "\u043c\u0438\u043d\u0443\u0442",
+    minutes: "\u043c\u0438\u043d\u0443\u0442",
+    hour: "\u0441\u0430\u0493\u0430\u0442",
+    hours: "\u0441\u0430\u0493\u0430\u0442"
   },
   redisTypes: {
     string: "String",
@@ -649,7 +636,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

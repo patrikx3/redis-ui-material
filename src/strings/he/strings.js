@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "רישיון מאושר",
-    invalid_license: "רישיון לא חוקי",
-    license_max_devices_reached: "הושגה מקסימום מושבים במכשיר",
-    license_readonly: "ניתן לשנות את הרישיון רק ממסוף השרת.",
     server_error: "שגיאת שרת, אנא נסה שוב"
   },
   title: {
@@ -48,8 +44,12 @@ const strings = {
     deleteConnection: "אשר",
     deleteConnectionText: "האם אתה בטוח שמחקת חיבור Redis זה?",
     deleteNode: "האם אתה בטוח שתמחק את צומת Redis זה?",
+    delete: "למחוק?",
     deleteAllKeys: opts => {
       return `מחק את העץ הזה ואת כל המפתחות שלו (${opts.key})?`;
+    },
+    deleteSearchKeys: opts => {
+      return `האם אתה בטוח שברצונך למחוק את כל המפתחות התואמים ל-"${opts.pattern}"? נמצאו ${opts.count} מפתחות.`;
     },
     socketioConnectError: "Socket.IO לא יכול להתחבר לשרת, אתה יכול לטעון מחדש ולנסות לפתור את שגיאת החיבור בעצמך, הלקוח לא יודע איך לפתור אותה בעצמו.",
     socketioAuthRequired: "נדרש אישור Socket.IO. נא לאמת באמצעות HTTP Basic Auth (שם משתמש/סיסמה) וטען מחדש.",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "המרת טקסט לזמן",
       convertTextToTimePlaceholder: "למשל 1d יהיה 86400"
     },
-    license: {
-      title: "הגדר רישיון",
-      textContent: "If you want to use paid features, please contact support@corifeus.com to request a license. Pricing is Pro 400 HUF/month (€1/month) or 4,000 HUF/year (€10/year), and Enterprise 1,200 HUF/month (€3/month) or 12,000 HUF/year (€30/year). Yearly is 10x monthly. With 27% VAT, totals are Pro 500 HUF/month (€1.27/month) or 5,100 HUF/year (€12.70/year), Enterprise 1,500 HUF/month (€3.81/month) or 15,200 HUF/year (€38.10/year). License validation requires internet access. Default license includes 5 seats. If you need more seats, contact us at support@corifeus.com.",
-      placeholder: "מפתח רישיון"
-    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -136,13 +131,17 @@ const strings = {
     exportKeys: "ייצוא מפתחות",
     exportAllKeys: (opts) => `ייצוא כל ${opts.count} המפתחות`,
     exportSearchResults: (opts) => `ייצוא ${opts.count} תוצאות`,
+    deleteAllKeysMenu: (opts) => `מחק הכל ${opts.count}`,
     importKeys: "ייבוא מפתחות",
+    deleteSearchKeys: (opts) => `מחק ${opts.count} מפתחות תואמים`,
     saveWithFormatJson: "שמור עם פורמט",
     formatJson: "פורמט Json",
     wrap: "לעטוף",
     unwrap: "פתח את העטיפה",
     downloadJson: "הורד את JSON",
-    pubsubMonitor: "צג PubSub",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "שפה",
@@ -183,7 +182,6 @@ const strings = {
     edit: "ערוך",
     save: "שמור",
     ttl: "הגדר TTL",
-    license: "הגדר רישיון",
     delete: "מחק",
     remove: "הסר",
     sure: "בטח",
@@ -262,38 +260,6 @@ const strings = {
     connectiondEdit: "ערוך חיבור",
     connectiondView: "צפה בחיבור",
     connections: "חיבורים",
-    licenseInfo: "רישיון",
-    licenseEditable: "רישיון ניתן לעריכה",
-    licenseEditableYes: "כן",
-    licenseEditableNo: "לא",
-    licenseTerminalOnly: "ניתן להגדיר רישיון רק ממסוף השרת.",
-    licenseTierPolicyTitle: "מדיניות שכבה",
-    licenseTierPolicyText: "<h4>Free</h4>core Redis UI only; no SSH tunneling, no Readonly connection mode, no Cluster/Sentinel, no Edit JSON/Upload binary/Download binary, no ReJSON.<br/><strong>Price: 0 HUF/month (€0/month).</strong><br/><br/><h4>Pro</h4>SSH tunneling, Readonly connection mode (including --readonly-connections/-r), Edit JSON, Upload binary, Download binary, ReJSON.<br/><strong>Base price: 400 HUF/month (€1/month) or 4,000 HUF/year (€10/year).</strong><br/><strong>Total with 27% VAT: 500 HUF/month (€1.27/month) or 5,100 HUF/year (€12.70/year).</strong><br/><br/><h4>Enterprise</h4>SSH tunneling, Cluster and Sentinel, plus Edit JSON, Upload binary, Download binary, ReJSON; --readonly-connections/-r also works.<br/><strong>Base price: 1,200 HUF/month (€3/month) or 12,000 HUF/year (€30/year).</strong><br/><strong>Total with 27% VAT: 1,500 HUF/month (€3.81/month) or 15,200 HUF/year (€38.10/year).</strong><br/><br/><h4>Yearly rule</h4>Yearly price is 10x the monthly price.<br/><br/><h4>Seats</h4>Default license includes 5 seats. If you need more seats, contact us at <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><br/><h4>Enterprise trial</h4>10 days free for anyone with a real existing email address (non-test email).<br/><hr/><h4>Billing info in e-mail</h4>Name, Billing e-mail, Country code, Postal code, City, Address, VAT ID (optional).<br/><br/><h4>Payment</h4>PayPal payment is available only in HUF (forint); after sending the money @ <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> I will send you an invoice. All payments are non-refundable.<br/><br/><h4>VAT</h4>VAT is added to the price (27% in Hungary).<br/><hr/><h4>Contact</h4>If you want to say hi or have a question, contact <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><hr/><h4>Language</h4>Invoice and license e-mail communication is in English. Invoice currency is HUF.<br/><hr/><h4>Note</h4>License validation requires internet access.",
-    licenseState: "מדינה",
-    licenseStateActive: "פעיל",
-    licenseStateInactive: "לא פעיל",
-    licenseStateNoLicense: "אין רישיון",
-    licenseKeyMasked: "מפתח שמור",
-    licenseTier: "שכבה",
-    licenseValid: "תקף",
-    licenseStatus: "מצב רישיון",
-    licenseReason: "סיבה",
-    licenseCheckedAt: "בדק ב",
-    licenseStartsAt: "מתחיל ב",
-    licenseExpiresAt: "יפוג בשעה",
-    licenseDaysLeft: "נותרו ימים",
-    licenseMaxDevices: "מקסימום מכשירים",
-    licenseActiveDevices: "מכשירים פעילים",
-    licenseActiveDevicesInfo: "אם מכשיר אינו בשימוש יותר, המושב שלו משתחרר אוטומטית לאחר 75 דקות.",
-    licenseCustomerEmail: "מייל לקוח",
-    licenseFeatures: "תכונות",
-    licenseFeaturesEmpty: "אין תכונות נוספות",
-    licenseFeatureReadonlyMode: "מצב חיבור לקריאה בלבד",
-    licenseFeatureReadonlyConnectionsFlag: "חיבורים לקריאה בלבד (--readonly-connections/-r)",
-    licenseFeatureSsh: "SSH מנהור",
-    licenseFeatureCluster: "חיבורי Cluster",
-    licenseFeatureSentinel: "חיבורי Sentinel",
-    licenseFeatureReJSON: "ReJSON (סוג נתונים JSON)",
     keysSort: {
       on: "מיון מפתחות על",
       off: "מיון מפתחות"
@@ -311,9 +277,6 @@ const strings = {
       on: "המשך לקריאה בלבד",
       off: "כבוי לקריאה בלבד"
     },
-    proSshOnly: "SSH זמין ב-Pro או Enterprise.",
-    proReadonlyOnly: "מצב חיבור לקריאה בלבד זמין ב-Pro או Enterprise.",
-    enterpriseClusterSentinelOnly: "Cluster ו-Sentinel זמינים ב-Enterprise בלבד.",
     theme: {
       light: "אור",
       dark: "מפעל אפל",
@@ -355,16 +318,20 @@ const strings = {
     importConflict: "אם המפתח כבר קיים:",
     noKeysToExport: "אין מפתחות לייצוא",
     time: "זמן",
+    type: "סוג",
+    format: "פורמט",
     loading: "טוען...",
     autoRefresh: "אוטומטי",
     exportSearchHint: "מייצא רק מפתחות התואמים לחיפוש הנוכחי",
     importSearchHint: "הייבוא חל על כל מסד הנתונים, לא רק על תוצאות החיפוש",
+    deleteSearchHint: "מוחק את כל המפתחות התואמים לחיפוש הנוכחי בשרת",
+    deletingSearchKeys: "מוחק מפתחות תואמים...",
     importNoKeys: "לא נמצאו מפתחות בקובץ",
   },
   status: {
     dataCopied: "הנתונים נמצאים בלוח",
-    licenseSaved: "הרישיון נשמר",
     exportDone: "הייצוא הושלם",
+    deletedSearchKeys: (opts) => `נמחקו ${opts.count} מפתחות`,
     indexCreated: "אינדקס נוצר",
     indexDropped: "אינדקס נמחק",
     importDone: (opts) => `ייבוא הושלם: ${opts.created} נוצרו, ${opts.skipped} דולגו, ${opts.errors} שגיאות`,
@@ -412,35 +379,10 @@ const strings = {
     "readonly-connections": "הוספה/שמירה/מחיקה של חיבורים הם לקריאה בלבד!",
     "readonly-connection-mode": "חיבור זה הוא במצב קריאה בלבד!",
     "list-out-of-bounds": "אינדקס רשימה זה מחוץ לתחום",
-    "donation-ware-feature": "תכונה זו קיימת בגרסת התרומה.",
-    "feature-pro-readonly-required": "מצב חיבור לקריאה בלבד דורש רישיון Pro או Enterprise.",
-    "feature-pro-ssh-required": "מנהור SSH דורש רישיון Pro או Enterprise.",
-    "feature-enterprise-cluster-sentinel-required": "Cluster ו-Sentinel דורשים רישיון Enterprise.",
-    "feature-pro-json-binary-required": "ערוך JSON, העלה בינארי והורד בינארי דורשים רישיון Pro או Enterprise.",
-    "feature-pro-rejson-required": "ReJSON (סוג נתונים JSON) דורש רישיון Pro או Enterprise.",
     "invalid-json-value": "הערך אינו חוקי JSON.",
     "http_auth_required": "נדרשת הרשאה: נא לאמת עם HTTP Basic Auth וטען מחדש.",
     "auto-connection-failed": "ייתכן, החיבור הוסר והחיבור האוטומטי נכשל, בגלל זה.",
     invalid_console_command: "פקודה זו אינה פועלת דרך ה-GUI."
-  },
-  licenseReason: {
-    LICENSE_VALID: "הרישיון תקף",
-    LICENSE_INVALID: "הרישיון אינו חוקי",
-    LICENSE_MISSING: "לא הוגדר מפתח רישיון",
-    LICENSE_DISABLED: "הרישיון מושבת בתצורת השרת",
-    LICENSE_NOT_FOUND: "הרישיון לא נמצא",
-    LICENSE_EXPIRED: "פג תוקף הרישיון",
-    LICENSE_CLEARED: "מפתח הרישיון נוקה",
-    LICENSE_MAX_DEVICES_REACHED: "הושגה מקסימום מושבים במכשיר",
-    PRODUCT_MISMATCH: "מוצר הרישיון אינו תואם"
-  },
-  licenseStatusValue: {
-    active: "פעיל",
-    deleted: "נמחק",
-    all: "הכל",
-    expired: "פג תוקף",
-    missing: "חסר",
-    inactive: "לא פעיל"
   },
   form: {
     error: {
@@ -610,12 +552,49 @@ const strings = {
           field: "שדה",
           value: "ערך"
         }
+      },
+      timeseries: {
+        chart: "תרשים",
+        info: "מידע",
+        addPoint: "הוסף נקודת נתונים",
+        from: "מ- (ms או -)",
+        to: "עד (ms או +)",
+        aggregation: "צבירה",
+        timeBucket: "דלי (ms)",
+        none: "ללא",
+        dataPoints: "נקודות נתונים",
+        labels: "תוויות",
+        rules: "כללים",
+        retention: "שמירה",
+        timestamp: "חותמת זמן",
+        value: "ערך",
+        retentionHint: "0 = ללא תפוגה, או מילישניות",
+        duplicatePolicy: "מדיניות כפילויות",
+        labelsHint: "key1 value1 key2 value2",
+        timestampHint: "'*' פירושו נוצר אוטומטית, או חותמת זמן במילישניות",
+        editAllHint: "נקודת נתונים אחת בכל שורה: חותמת_זמן ערך (חותמת הזמן יכולה להיות * לאוטומטי)",
+        autoSpread: "מרווח פיזור אוטומטי *",
+        formula: "נוסחה",
+        formulaLinear: "ליניארי",
+        formulaRandom: "אקראי",
+        formulaSawtooth: "שן מסור",
+        formulaPoints: "נקודות",
+        formulaAmplitude: "משרעת",
+        formulaOffset: "היסט",
+        generate: "צור",
+        exportChart: "ייצא PNG",
+        overlay: "שכבות מפתחות",
+        overlayHint: "מפתחות מופרדים בפסיק",
+        mrangeFilter: "סינון תוויות",
+        bulkMode: "יצירה המונית",
+        mrangeHint: "לדוגמה sensor=temp"
       }
     },
     treeControls: {
       settings: "הגדרות עץ",
       expandAll: "הרחב הכל",
       collapseAll: "כווץ הכל",
+      level: "רמה",
       search: {
         search: "חפש במפתחות",
         clear: "נקה את החיפוש הנוכחי כדי להגדיר ריק",
@@ -634,13 +613,21 @@ const strings = {
     }
   },
   time: {
+    type: "סוג",
+    format: "פורמט",
     loading: "טוען...",
     years: "שנים",
     months: "חודשים",
     days: "ימים",
     year: "שנה",
     month: "חודש",
-    day: "יום"
+    day: "יום",
+    second: "שנייה",
+    seconds: "שניות",
+    minute: "דקה",
+    minutes: "דקות",
+    hour: "שעה",
+    hours: "שעות"
   },
   redisTypes: {
     string: "String",
@@ -649,7 +636,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

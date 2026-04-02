@@ -1,26 +1,6 @@
 p3xr.state = {
     
     treeDividers: [],
-    // All features are free — always enterprise
-    donated: true,
-    // All features are free — always enterprise
-    hasProOrEnterpriseJsonBinary: true,
-    license: {
-        licenseEditable: true,
-        editableActive: true,
-        disabled: false,
-        hasLicenseKey: false,
-        licenseKeyMasked: '',
-        tier: 'free',
-        valid: false,
-        reason: 'LICENSE_MISSING',
-        licenseStatus: 'inactive',
-        maxDevices: null,
-        activeDevices: null,
-        deviceLease: null,
-        daysLeft: null,
-        features: [],
-    },
     theme: undefined,
     connection: undefined,
     currentDatabase: undefined,

@@ -107,11 +107,46 @@ export interface KeyNewOrSetDialogData {
                         </mat-form-field>
                         <div class="info-text">{{ strings().label?.streamTimestampId }}</div>
                     }
+                    @case ('timeseries') {
+                        @if (options.type === 'add') {
+                            <mat-form-field class="full-width">
+                                <mat-label>{{ strings().page?.key?.timeseries?.retention || 'Retention' }} (ms)</mat-label>
+                                <input matInput type="number" name="tsRetention" [(ngModel)]="model.tsRetention" />
+                                <mat-hint>{{ strings().page?.key?.timeseries?.retentionHint || '0 = no expiry, or milliseconds' }}</mat-hint>
+                            </mat-form-field>
+                            <mat-form-field class="full-width">
+                                <mat-label>{{ strings().page?.key?.timeseries?.duplicatePolicy || 'Duplicate policy' }}</mat-label>
+                                <mat-select name="tsDuplicatePolicy" [(ngModel)]="model.tsDuplicatePolicy">
+                                    <mat-option value="LAST">LAST</mat-option>
+                                    <mat-option value="FIRST">FIRST</mat-option>
+                                    <mat-option value="MIN">MIN</mat-option>
+                                    <mat-option value="MAX">MAX</mat-option>
+                                    <mat-option value="SUM">SUM</mat-option>
+                                    <mat-option value="BLOCK">BLOCK</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        }
+                        <mat-form-field class="full-width">
+                            <mat-label>{{ strings().page?.key?.timeseries?.labels || 'Labels' }}</mat-label>
+                            <input matInput name="tsLabels" [(ngModel)]="model.tsLabels" />
+                            <mat-hint>{{ strings().page?.key?.timeseries?.labelsHint || 'key1 value1 key2 value2' }}</mat-hint>
+                        </mat-form-field>
+                        @if (!model.tsBulkMode) {
+                            <mat-form-field class="full-width">
+                                <mat-label>{{ strings().page?.key?.timeseries?.timestamp || 'Timestamp' }}</mat-label>
+                                <input matInput name="tsTimestamp" [(ngModel)]="model.tsTimestamp" />
+                                <mat-hint>{{ strings().page?.key?.timeseries?.timestampHint || "'*' means auto generated, or milliseconds timestamp" }}</mat-hint>
+                            </mat-form-field>
+                        }
+                        <mat-slide-toggle [(ngModel)]="model.tsBulkMode" name="tsBulkMode" style="display: block; margin: 8px 0;">
+                            {{ strings().page?.key?.timeseries?.bulkMode || 'Bulk generate' }}
+                        </mat-slide-toggle>
+                    }
                 }
 
                 <!-- Buffer upload -->
                 <input type="file" #fileInput style="display: none" (change)="onFileSelected($event)" />
-                @if (model.type !== 'stream' && hasProOrEnterprise()) {
+                @if (model.type !== 'stream' && model.type !== 'timeseries') {
                     <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="fileInput.click()"
                         [matTooltip]="isWide ? '' : (strings().intention?.setBuffer || 'Upload Binary')">
                         <mat-icon>upload</mat-icon>
@@ -119,54 +154,125 @@ export interface KeyNewOrSetDialogData {
                     </button>
                 }
 
-                @if (hasProOrEnterprise()) {
+                @if (model.type !== 'timeseries') {
                     <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="openJsonEditor()"
                         [matTooltip]="isWide ? '' : (strings().intention?.jsonViewEditor || 'Edit JSON')">
                         <mat-icon>description</mat-icon>
                         @if (isWide) { <span>{{ strings().intention?.jsonViewEditor || 'Edit JSON' }}</span> }
                     </button>
+
+                    <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="formatJson()"
+                        [matTooltip]="isWide ? '' : (strings().intention?.formatJson || 'Format JSON')">
+                        <mat-icon>format_line_spacing</mat-icon>
+                        @if (isWide) { <span>{{ strings().intention?.formatJson || 'Format JSON' }}</span> }
+                    </button>
+
+                    <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="openJsonViewer()"
+                        [matTooltip]="isWide ? '' : (strings().intention?.jsonViewShow || 'Display JSON')">
+                        <mat-icon>table_chart</mat-icon>
+                        @if (isWide) { <span>{{ strings().intention?.jsonViewShow || 'Display JSON' }}</span> }
+                    </button>
                 }
 
-                <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="formatJson()"
-                    [matTooltip]="isWide ? '' : (strings().intention?.formatJson || 'Format JSON')">
-                    <mat-icon>format_line_spacing</mat-icon>
-                    @if (isWide) { <span>{{ strings().intention?.formatJson || 'Format JSON' }}</span> }
-                </button>
+                <div style="margin: 8px 0;">
+                    <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="copy()"
+                        [matTooltip]="isWide ? '' : (strings().intention?.copy || 'Copy')">
+                        <mat-icon>content_copy</mat-icon>
+                        @if (isWide) { <span>{{ strings().intention?.copy || 'Copy' }}</span> }
+                    </button>
+                </div>
 
-                <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="openJsonViewer()"
-                    [matTooltip]="isWide ? '' : (strings().intention?.jsonViewShow || 'Display JSON')">
-                    <mat-icon>table_chart</mat-icon>
-                    @if (isWide) { <span>{{ strings().intention?.jsonViewShow || 'Display JSON' }}</span> }
-                </button>
+                @if (model.type !== 'timeseries') {
+                    <mat-slide-toggle [(ngModel)]="validateJson" name="validateJson" style="display: block; margin: 8px 0;">
+                        {{ strings().label?.validateJson || 'Validate JSON' }}
+                    </mat-slide-toggle>
 
-                <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="copy()"
-                    [matTooltip]="isWide ? '' : (strings().intention?.copy || 'Copy')">
-                    <mat-icon>content_copy</mat-icon>
-                    @if (isWide) { <span>{{ strings().intention?.copy || 'Copy' }}</span> }
-                </button>
-
-                <mat-slide-toggle [(ngModel)]="validateJson" name="validateJson" style="display: block; margin: 8px 0;">
-                    {{ strings().label?.validateJson || 'Validate JSON' }}
-                </mat-slide-toggle>
-
-                @if (model.type === 'stream') {
-                    <div class="info-text">{{ strings().label?.streamValue }}</div>
-                }
-
-                @if (isBuffer) {
-                    <div class="info-text">
-                        {{ strings().label?.isBuffer?.({ maxValueAsBuffer: p3xr?.settings?.prettyBytes?.(p3xr?.settings?.maxValueAsBuffer) ?? '' }) }}
-                        {{ bufferDisplay(model.value) }}
-                    </div>
-                }
-
-                <mat-form-field class="full-width">
-                    <mat-label>{{ strings().form?.key?.field?.value || 'Value' }}</mat-label>
-                    <textarea matInput required name="value" [(ngModel)]="model.value" rows="5"></textarea>
-                    @if (keyForm.controls['value']?.invalid && keyForm.controls['value']?.touched) {
-                        <mat-error>{{ strings().form?.key?.error?.value }}</mat-error>
+                    @if (model.type === 'stream') {
+                        <div class="info-text">{{ strings().label?.streamValue }}</div>
                     }
-                </mat-form-field>
+
+                    @if (isBuffer) {
+                        <div class="info-text">
+                            {{ strings().label?.isBuffer?.({ maxValueAsBuffer: getMaxValueAsBufferText() }) }}
+                            {{ bufferDisplay(model.value) }}
+                        </div>
+                    }
+                }
+
+                @if (model.type === 'timeseries' && (model.tsEditAll || model.tsBulkMode)) {
+                    <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 8px;">
+                        <mat-form-field style="min-width: 140px; flex: 1;" subscriptSizing="dynamic">
+                            <mat-label>{{ strings().page?.key?.timeseries?.autoSpread || 'Auto * spread' }}</mat-label>
+                            <mat-select name="tsSpread" [(ngModel)]="model.tsSpread">
+                                <mat-option [value]="1000">1 {{ strings().time?.second || 'second' }}</mat-option>
+                                <mat-option [value]="30000">30 {{ strings().time?.seconds || 'seconds' }}</mat-option>
+                                <mat-option [value]="60000">1 {{ strings().time?.minute || 'minute' }}</mat-option>
+                                <mat-option [value]="1800000">30 {{ strings().time?.minutes || 'minutes' }}</mat-option>
+                                <mat-option [value]="3600000">1 {{ strings().time?.hour || 'hour' }}</mat-option>
+                                <mat-option [value]="86400000">24 {{ strings().time?.hours || 'hours' }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field style="min-width: 120px; flex: 1;" subscriptSizing="dynamic">
+                            <mat-label>{{ strings().page?.key?.timeseries?.formula || 'Formula' }}</mat-label>
+                            <mat-select name="tsFormula" [(ngModel)]="model.tsFormula">
+                                <mat-option value="">{{ strings().page?.key?.timeseries?.none || 'None' }}</mat-option>
+                                <mat-option value="sin">sin</mat-option>
+                                <mat-option value="cos">cos</mat-option>
+                                <mat-option value="linear">{{ strings().page?.key?.timeseries?.formulaLinear || 'Linear' }}</mat-option>
+                                <mat-option value="random">{{ strings().page?.key?.timeseries?.formulaRandom || 'Random' }}</mat-option>
+                                <mat-option value="sawtooth">{{ strings().page?.key?.timeseries?.formulaSawtooth || 'Sawtooth' }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    @if (model.tsFormula) {
+                        <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 8px;">
+                            <mat-form-field style="min-width: 80px; flex: 1;" subscriptSizing="dynamic">
+                                <mat-label>{{ strings().page?.key?.timeseries?.formulaPoints || 'Points' }}</mat-label>
+                                <input matInput type="number" name="tsFormulaPoints" [(ngModel)]="model.tsFormulaPoints" min="1" max="10000" />
+                            </mat-form-field>
+                            <mat-form-field style="min-width: 80px; flex: 1;" subscriptSizing="dynamic">
+                                <mat-label>{{ strings().page?.key?.timeseries?.formulaAmplitude || 'Amplitude' }}</mat-label>
+                                <input matInput type="number" name="tsFormulaAmplitude" [(ngModel)]="model.tsFormulaAmplitude" />
+                            </mat-form-field>
+                            <mat-form-field style="min-width: 80px; flex: 1;" subscriptSizing="dynamic">
+                                <mat-label>{{ strings().page?.key?.timeseries?.formulaOffset || 'Offset' }}</mat-label>
+                                <input matInput type="number" name="tsFormulaOffset" [(ngModel)]="model.tsFormulaOffset" />
+                            </mat-form-field>
+                            <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="generateFormula()">
+                                <mat-icon>auto_graph</mat-icon>
+                                @if (isWide) { <span>{{ strings().page?.key?.timeseries?.generate || 'Generate' }}</span> }
+                            </button>
+                        </div>
+                    }
+
+                    <mat-form-field class="full-width">
+                        <mat-label>{{ strings().page?.key?.timeseries?.dataPoints || 'data points' }}</mat-label>
+                        <textarea matInput required name="value" [(ngModel)]="model.value" rows="10"
+                                  style="font-family: 'Roboto Mono', monospace; font-size: 13px;"></textarea>
+                        <mat-hint>{{ strings().page?.key?.timeseries?.editAllHint || 'One data point per line: timestamp value (timestamp can be * for auto)' }}</mat-hint>
+                        @if (keyForm.controls['value']?.invalid && keyForm.controls['value']?.touched) {
+                            <mat-error>{{ strings().form?.key?.error?.value }}</mat-error>
+                        }
+                    </mat-form-field>
+                } @else if (model.type === 'timeseries' && !model.tsBulkMode) {
+                    <mat-form-field class="full-width">
+                        <mat-label>{{ strings().page?.key?.timeseries?.value || 'Value' }}</mat-label>
+                        <input matInput type="number" required name="value" [(ngModel)]="model.value" />
+                        @if (keyForm.controls['value']?.invalid && keyForm.controls['value']?.touched) {
+                            <mat-error>{{ strings().form?.key?.error?.value }}</mat-error>
+                        }
+                    </mat-form-field>
+                } @else {
+                    <mat-form-field class="full-width">
+                        <mat-label>{{ strings().form?.key?.field?.value || 'Value' }}</mat-label>
+                        <textarea matInput required name="value" [(ngModel)]="model.value" rows="5"></textarea>
+                        @if (keyForm.controls['value']?.invalid && keyForm.controls['value']?.touched) {
+                            <mat-error>{{ strings().form?.key?.error?.value }}</mat-error>
+                        }
+                    </mat-form-field>
+                }
             </mat-dialog-content>
 
             <mat-dialog-actions class="p3xr-dialog-actions">
@@ -192,7 +298,10 @@ export class KeyNewOrSetDialogComponent implements OnInit {
     options: KeyNewOrSetDialogData;
     get types(): string[] {
         const base = ['string', 'list', 'hash', 'set', 'zset', 'stream'];
-        if (p3xr?.state?.hasReJSON && p3xr?.state?.hasProOrEnterpriseJsonBinary) {
+        if (p3xr?.state?.hasTimeSeries) {
+            base.push('timeseries');
+        }
+        if (p3xr?.state?.hasReJSON) {
             base.push('json');
         }
         return base;
@@ -231,6 +340,16 @@ export class KeyNewOrSetDialogComponent implements OnInit {
             value: undefined,
             score: undefined,
             streamTimestamp: '*',
+            tsTimestamp: '*',
+            tsRetention: 0,
+            tsDuplicatePolicy: 'LAST',
+            tsLabels: '',
+            tsBulkMode: false,
+            tsSpread: 60000,
+            tsFormula: '',
+            tsFormulaPoints: 25,
+            tsFormulaAmplitude: 100,
+            tsFormulaOffset: 0,
             hashKey: undefined,
             index: undefined,
         };
@@ -249,8 +368,12 @@ export class KeyNewOrSetDialogComponent implements OnInit {
         return s.form?.key?.label?.formName?.add || 'Add Key';
     }
 
-    hasProOrEnterprise(): boolean {
-        return p3xr?.state?.hasProOrEnterpriseJsonBinary === true;
+    getMaxValueAsBufferText(): string {
+        try {
+            return p3xr.settings.prettyBytes(p3xr.settings.maxValueAsBuffer);
+        } catch {
+            return `${p3xr?.settings?.maxValueAsBuffer ?? 256000} bytes`;
+        }
     }
 
     bufferDisplay(value: any): string {
@@ -261,7 +384,11 @@ export class KeyNewOrSetDialogComponent implements OnInit {
     }
 
     async copy(): Promise<void> {
-        await p3xr.clipboard({ value: this.model.value });
+        let value = this.model.value;
+        if (this.model.type === 'timeseries') {
+            value = `TS.ADD ${this.model.key} ${this.model.tsTimestamp || '*'} ${this.model.value}`;
+        }
+        await p3xr.clipboard({ value });
         this.common.toast(this.strings().status?.dataCopied || 'Copied');
     }
 
@@ -338,6 +465,40 @@ export class KeyNewOrSetDialogComponent implements OnInit {
         } finally {
             p3xr.ui.overlay.hide();
         }
+    }
+
+    generateFormula(): void {
+        const points = Math.min(Math.max(parseInt(this.model.tsFormulaPoints) || 25, 1), 10000);
+        const amplitude = parseFloat(this.model.tsFormulaAmplitude) || 100;
+        const offset = parseFloat(this.model.tsFormulaOffset) || 0;
+        const formula = this.model.tsFormula;
+        const lines: string[] = [];
+
+        for (let i = 0; i < points; i++) {
+            const x = i / points;
+            let value: number;
+            switch (formula) {
+                case 'sin':
+                    value = Math.sin(x * Math.PI * 2) * amplitude + offset;
+                    break;
+                case 'cos':
+                    value = Math.cos(x * Math.PI * 2) * amplitude + offset;
+                    break;
+                case 'linear':
+                    value = x * amplitude + offset;
+                    break;
+                case 'random':
+                    value = Math.random() * amplitude + offset;
+                    break;
+                case 'sawtooth':
+                    value = (x % 0.25) * 4 * amplitude + offset;
+                    break;
+                default:
+                    value = offset;
+            }
+            lines.push(`* ${parseFloat(value.toFixed(4))}`);
+        }
+        this.model.value = lines.join('\n');
     }
 
     cancel(): void {

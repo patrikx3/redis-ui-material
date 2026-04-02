@@ -5,6 +5,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { FormsModule } from '@angular/forms';
 import { BreakpointObserver } from '@angular/cdk/layout';
 
 import { I18nService } from '../../services/i18n.service';
@@ -20,6 +22,7 @@ import { KeySetComponent } from './key/key-set.component';
 import { KeyZsetComponent } from './key/key-zset.component';
 import { KeyStreamComponent } from './key/key-stream.component';
 import { KeyJsonComponent } from './key/key-json.component';
+import { KeyTimeseriesComponent } from './key/key-timeseries.component';
 import { NavigationService } from '../../services/navigation.service';
 
 require('./database-key.component.scss');
@@ -32,10 +35,12 @@ declare const p3xr: any;
     standalone: true,
     imports: [
         CommonModule,
+        FormsModule,
         MatButtonModule,
         MatIconModule,
         MatTooltipModule,
         MatProgressSpinnerModule,
+        MatButtonToggleModule,
         KeyStringComponent,
         KeyHashComponent,
         KeyListComponent,
@@ -43,6 +48,7 @@ declare const p3xr: any;
         KeyZsetComponent,
         KeyStreamComponent,
         KeyJsonComponent,
+        KeyTimeseriesComponent,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     templateUrl: './database-key.component.html',
@@ -56,6 +62,7 @@ export class DatabaseKeyComponent implements OnInit, OnDestroy {
     key = '';
     isReadonly = false;
     isGtSm = true;
+    valueFormat: 'raw' | 'json' | 'hex' | 'base64' = 'raw';
     strings;
 
     private ttlInterval: any;
@@ -268,6 +275,14 @@ export class DatabaseKeyComponent implements OnInit, OnDestroy {
                     });
                 };
                 response.value = valueBuffer.map((entry: any) => decodeEntry(entry));
+                break;
+            case 'timeseries':
+                // valueBuffer is a JSON-encoded TS.INFO object
+                try {
+                    response.value = JSON.parse(td.decode(valueBuffer));
+                } catch {
+                    response.value = {};
+                }
                 break;
         }
     }

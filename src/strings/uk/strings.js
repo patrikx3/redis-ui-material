@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "Ліцензію очищено",
-    invalid_license: "Недійсна ліцензія",
-    license_max_devices_reached: "Досягнуто максимальну кількість місць для пристроїв",
-    license_readonly: "Ліцензію можна змінити лише з термінала сервера.",
     server_error: "Помилка сервера, будь ласка, спробуйте ще раз"
   },
   title: {
@@ -51,8 +47,12 @@ const strings = {
     deleteAllKeys: opts => {
       return `Видалити це дерево та всі його ключі (${opts.key})?`;
     },
+    deleteSearchKeys: opts => {
+      return `Ви впевнені, що хочете видалити всі ключі, які відповідають "${opts.pattern}"? Знайдено ${opts.count} ключів.`;
+    },
     socketioConnectError: "Socket.IO не може підключитися до сервера, ви можете перезавантажити та спробувати вирішити помилку підключення самостійно, клієнт не знає, як її вирішити.",
     socketioAuthRequired: "Потрібна авторизація Socket.IO. Будь ласка, автентифікуйтесь за допомогою HTTP Basic Auth (ім'я користувача/пароль) та перезавантажте.",
+    delete: "Видалити?",
     deleteKey: "Ви впевнені, що хочете видалити цей ключ?",
     rename: {
       title: "Ви впевнені, що хочете перейменувати цей ключ?",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "Конвертувати текст у час",
       convertTextToTimePlaceholder: "Напр. 1d буде 86400"
     },
-    license: {
-      title: "Встановити ліцензію",
-      textContent: "Якщо ви хочете використовувати платні функції, зверніться на support@corifeus.com для запиту ліцензії. Ціна Pro 400 HUF/місяць (€1/місяць) або 4 000 HUF/рік (€10/рік), та Enterprise 1 200 HUF/місяць (€3/місяць) або 12 000 HUF/рік (€30/рік). Річна ціна в 10 разів більша за місячну. З 27% ПДВ підсумки: Pro 500 HUF/місяць (€1,27/місяць) або 5 100 HUF/рік (€12,70/рік), Enterprise 1 500 HUF/місяць (€3,81/місяць) або 15 200 HUF/рік (€38,10/рік). Перевірка ліцензії потребує доступу до інтернету. Стандартна ліцензія включає 5 місць. Якщо потрібно більше місць, зверніться до нас на support@corifeus.com.",
-      placeholder: "Ліцензійний ключ"
-    }
   },
   language: {
     bg: "Български / Bulgarian",
@@ -136,13 +131,17 @@ const strings = {
     exportKeys: "Експорт ключів",
     exportAllKeys: (opts) => `Експорт усіх ${opts.count} ключів`,
     exportSearchResults: (opts) => `Експорт ${opts.count} результатів`,
+    deleteAllKeysMenu: (opts) => `Видалити все ${opts.count}`,
     importKeys: "Імпорт ключів",
+    deleteSearchKeys: (opts) => `Видалити ${opts.count} відповідних ключів`,
     saveWithFormatJson: "Зберегти з форматуванням",
     formatJson: "Форматувати Json",
     wrap: "Перенос",
     unwrap: "Без переносу",
     downloadJson: "Завантажити JSON",
-    pubsubMonitor: "PubSub-монітор",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     language: "Мова / Language",
     ok: "OK",
     addKey: "Додати до цього ключа",
@@ -181,7 +180,6 @@ const strings = {
     edit: "Редагувати",
     save: "Зберегти",
     ttl: "Встановити TTL",
-    license: "Встановити ліцензію",
     delete: "Видалити",
     remove: "Вилучити",
     sure: "Впевнені",
@@ -260,38 +258,6 @@ const strings = {
     connectiondEdit: "Редагувати з'єднання",
     connectiondView: "Переглянути з'єднання",
     connections: "З'єднання",
-    licenseInfo: "Ліцензія",
-    licenseEditable: "Ліцензія редагована",
-    licenseEditableYes: "Так",
-    licenseEditableNo: "Ні",
-    licenseTerminalOnly: "Ліцензію можна налаштувати лише з термінала сервера.",
-    licenseTierPolicyTitle: "Політика рівнів",
-    licenseTierPolicyText: "<h4>Безкоштовно</h4>Лише базовий Redis UI; без SSH-тунелювання, без режиму підключення лише для читання, без Cluster/Sentinel, без Редагування JSON/Завантаження бінарних файлів/Вивантаження бінарних файлів, без ReJSON.<br/><strong>Ціна: 0 HUF/місяць (€0/місяць).</strong><br/><br/><h4>Pro</h4>SSH-тунелювання, режим підключення лише для читання (включаючи --readonly-connections/-r), Редагування JSON, Завантаження бінарних файлів, Вивантаження бінарних файлів, ReJSON.<br/><strong>Базова ціна: 400 HUF/місяць (€1/місяць) або 4 000 HUF/рік (€10/рік).</strong><br/><strong>Разом з 27% ПДВ: 500 HUF/місяць (€1,27/місяць) або 5 100 HUF/рік (€12,70/рік).</strong><br/><br/><h4>Enterprise</h4>SSH-тунелювання, Cluster та Sentinel, плюс Редагування JSON, Завантаження бінарних файлів, Вивантаження бінарних файлів, ReJSON; --readonly-connections/-r також працює.<br/><strong>Базова ціна: 1 200 HUF/місяць (€3/місяць) або 12 000 HUF/рік (€30/рік).</strong><br/><strong>Разом з 27% ПДВ: 1 500 HUF/місяць (€3,81/місяць) або 15 200 HUF/рік (€38,10/рік).</strong><br/><br/><h4>Річне правило</h4>Річна ціна в 10 разів більша за місячну.<br/><br/><h4>Місця</h4>Стандартна ліцензія включає 5 місць. Якщо потрібно більше місць, зверніться до нас на <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><br/><h4>Пробна версія Enterprise</h4>10 днів безкоштовно для всіх з реальною існуючою електронною адресою (не тестова пошта).<br/><hr/><h4>Платіжна інформація в е-пошті</h4>Ім'я, Електронна адреса для рахунків, Код країни, Поштовий індекс, Місто, Адреса, ІПН (необов'язково).<br/><br/><h4>Оплата</h4>Оплата PayPal доступна лише в HUF (форинт); після надсилання грошей @ <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> я надішлю вам рахунок-фактуру. Усі платежі не підлягають поверненню.<br/><br/><h4>ПДВ</h4>ПДВ додається до ціни (27% в Угорщині).<br/><hr/><h4>Контакти</h4>Якщо ви хочете привітатися або маєте запитання, зверніться на <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><hr/><h4>Мова</h4>Рахунки та листування щодо ліцензії ведеться англійською мовою. Валюта рахунку — HUF.<br/><hr/><h4>Примітка</h4>Перевірка ліцензії потребує доступу до інтернету.",
-    licenseState: "Стан",
-    licenseStateActive: "Активна",
-    licenseStateInactive: "Неактивна",
-    licenseStateNoLicense: "Немає ліцензії",
-    licenseKeyMasked: "Збережений ключ",
-    licenseTier: "Рівень",
-    licenseValid: "Дійсна",
-    licenseStatus: "Статус ліцензії",
-    licenseReason: "Причина",
-    licenseCheckedAt: "Перевірено",
-    licenseStartsAt: "Починається",
-    licenseExpiresAt: "Закінчується",
-    licenseDaysLeft: "Днів залишилось",
-    licenseMaxDevices: "Макс. пристроїв",
-    licenseActiveDevices: "Активні пристрої",
-    licenseActiveDevicesInfo: "Якщо пристрій більше не використовується, його місце автоматично звільняється через 75 хвилин.",
-    licenseCustomerEmail: "Електронна пошта клієнта",
-    licenseFeatures: "Функції",
-    licenseFeaturesEmpty: "Немає додаткових функцій",
-    licenseFeatureReadonlyMode: "Режим підключення лише для читання",
-    licenseFeatureReadonlyConnectionsFlag: "Підключення лише для читання (--readonly-connections/-r)",
-    licenseFeatureSsh: "SSH-тунелювання",
-    licenseFeatureCluster: "Cluster-з'єднання",
-    licenseFeatureSentinel: "Sentinel-з'єднання",
-    licenseFeatureReJSON: "ReJSON (JSON data type)",
     keysSort: {
       on: "Сортування ключів увімкнено",
       off: "Сортування ключів вимкнено"
@@ -309,9 +275,6 @@ const strings = {
       on: "Лише для читання увімкнено",
       off: "Лише для читання вимкнено"
     },
-    proSshOnly: "SSH доступний у Pro або Enterprise.",
-    proReadonlyOnly: "Режим підключення лише для читання доступний у Pro або Enterprise.",
-    enterpriseClusterSentinelOnly: "Cluster та Sentinel доступні лише в Enterprise.",
     theme: {
       light: "Світла",
       dark: "Темна enterprise",
@@ -353,16 +316,20 @@ const strings = {
     importConflict: "Якщо ключ вже існує:",
     noKeysToExport: "Немає ключів для експорту",
     time: "Час",
+    type: "Тип",
+    format: "Формат",
     loading: "Завантаження...",
     autoRefresh: "Авто",
     exportSearchHint: "Експортуються лише ключі, що відповідають поточному пошуку",
     importSearchHint: "Імпорт застосовується до всієї бази даних, а не лише до результатів пошуку",
+    deleteSearchHint: "Видаляє всі ключі, що відповідають поточному пошуку на сервері",
+    deletingSearchKeys: "Видалення відповідних ключів...",
     importNoKeys: "Ключі не знайдено у файлі",
   },
   status: {
     dataCopied: "Дані скопійовано в буфер обміну",
-    licenseSaved: "Ліцензію збережено",
     exportDone: "Експорт завершено",
+    deletedSearchKeys: (opts) => `Видалено ${opts.count} ключів`,
     indexCreated: "Індекс створено",
     indexDropped: "Індекс видалено",
     importDone: (opts) => `Імпорт завершено: ${opts.created} створено, ${opts.skipped} пропущено, ${opts.errors} помилок`,
@@ -410,35 +377,10 @@ const strings = {
     "readonly-connections": "Додавання/збереження/видалення з'єднань доступне лише для читання!",
     "readonly-connection-mode": "Це з'єднання в режимі лише для читання!",
     "list-out-of-bounds": "Цей індекс списку виходить за межі",
-    "donation-ware-feature": "Ця функція доступна у версії з пожертвуванням.",
-    "feature-pro-readonly-required": "Режим підключення лише для читання потребує Pro або Enterprise ліцензії.",
-    "feature-pro-ssh-required": "SSH-тунелювання потребує Pro або Enterprise ліцензії.",
-    "feature-enterprise-cluster-sentinel-required": "Cluster та Sentinel потребують Enterprise ліцензії.",
-    "feature-pro-json-binary-required": "Редагування JSON, завантаження та вивантаження бінарних файлів потребують Pro або Enterprise ліцензії.",
-    "feature-pro-rejson-required": "ReJSON (JSON data type) requires Pro or Enterprise license.",
     "invalid-json-value": "The value is not valid JSON.",
     "http_auth_required": "Потрібна авторизація: будь ласка, автентифікуйтесь за допомогою HTTP Basic Auth та перезавантажте.",
     "auto-connection-failed": "Можливо, з'єднання було видалено і через це автоматичне підключення не вдалося.",
     invalid_console_command: "Ця команда не працює через GUI."
-  },
-  licenseReason: {
-    LICENSE_VALID: "Ліцензія дійсна",
-    LICENSE_INVALID: "Ліцензія недійсна",
-    LICENSE_MISSING: "Ліцензійний ключ не встановлено",
-    LICENSE_DISABLED: "Ліцензію вимкнено в конфігурації сервера",
-    LICENSE_NOT_FOUND: "Ліцензію не знайдено",
-    LICENSE_EXPIRED: "Термін дії ліцензії минув",
-    LICENSE_CLEARED: "Ліцензійний ключ очищено",
-    LICENSE_MAX_DEVICES_REACHED: "Досягнуто максимальну кількість місць для пристроїв",
-    PRODUCT_MISMATCH: "Продукт ліцензії не відповідає"
-  },
-  licenseStatusValue: {
-    active: "Активна",
-    deleted: "Видалена",
-    all: "Всі",
-    expired: "Прострочена",
-    missing: "Відсутня",
-    inactive: "Неактивна"
   },
   form: {
     error: {
@@ -608,12 +550,49 @@ const strings = {
           field: "Поле",
           value: "Значення"
         }
+      },
+      timeseries: {
+        chart: "Графік",
+        info: "Інформація",
+        addPoint: "Додати точку даних",
+        from: "Від (мс або -)",
+        to: "До (мс або +)",
+        aggregation: "Агрегація",
+        timeBucket: "Інтервал (мс)",
+        none: "Немає",
+        dataPoints: "точки даних",
+        labels: "Мітки",
+        rules: "Правила",
+        retention: "Зберігання",
+        timestamp: "Мітка часу",
+        value: "Значення",
+        retentionHint: "0 = без закінчення терміну, або мілісекунди",
+        duplicatePolicy: "Політика дублікатів",
+        labelsHint: "ключ1 значення1 ключ2 значення2",
+        timestampHint: "'*' означає автоматичне генерування, або мітка часу в мілісекундах",
+        editAllHint: "Один запис на рядок: мітка_часу значення (мітка_часу може бути * для авто)",
+        autoSpread: "Автоматичний інтервал розподілу *",
+        formula: "Формула",
+        formulaLinear: "Лінійна",
+        formulaRandom: "Випадкова",
+        formulaSawtooth: "Пилоподібна",
+        formulaPoints: "Точки",
+        formulaAmplitude: "Амплітуда",
+        formulaOffset: "Зміщення",
+        generate: "Згенерувати",
+        exportChart: "Експорт PNG",
+        overlay: "Накладання ключів",
+        overlayHint: "Ключі через кому",
+        mrangeFilter: "Фільтр міток",
+        bulkMode: "Масова генерація",
+        mrangeHint: "напр. sensor=temp"
       }
     },
     treeControls: {
       settings: "Налаштування дерева",
       expandAll: "Розгорнути все",
       collapseAll: "Згорнути все",
+      level: "Рівень",
       search: {
         search: "Пошук серед ключів",
         clear: "Очистити поточний пошук",
@@ -632,13 +611,21 @@ const strings = {
     }
   },
   time: {
+    type: "Тип",
+    format: "Формат",
     loading: "Завантаження...",
     years: "років",
     months: "місяців",
     days: "днів",
     year: "рік",
     month: "місяць",
-    day: "день"
+    day: "день",
+    second: "секунда",
+    seconds: "секунди",
+    minute: "хвилина",
+    minutes: "хвилини",
+    hour: "година",
+    hours: "години"
   },
   redisTypes: {
     string: "String",
@@ -647,7 +634,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

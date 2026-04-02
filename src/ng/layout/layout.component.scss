@@ -22,7 +22,7 @@
     margin-bottom: v.$toolbar-height;
 }
 
-#p3xr-layout-header-version-donated {
+#p3xr-layout-header-version {
     position: fixed;
     top: 35px;
     left: 20px;
@@ -43,6 +43,30 @@
     padding: v.$layout-padding;
     padding-bottom: 0px !important;
     margin-top: v.$toolbar-height;
+}
+
+// Active navigation button highlight
+.p3xr-nav-active.mat-mdc-button {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+// Toolbar icon buttons: fix icon centering and rectangular hover
+.mat-toolbar .mat-mdc-icon-button {
+    border-radius: 4px !important;
+
+    .mat-icon {
+        margin: 0 !important;
+    }
+
+    .mat-mdc-button-persistent-ripple {
+        border-radius: 4px !important;
+    }
+}
+
+// Active navigation button highlight
+.p3xr-nav-active {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 4px !important;
 }
 
 #p3xr-layout-header-container {
@@ -92,4 +116,3 @@
     min-width: 50px;
     font-size: 11px;
 }
-

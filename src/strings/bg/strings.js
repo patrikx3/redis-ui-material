@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "Лицензът е изчистен",
-    invalid_license: "Невалиден лиценз",
-    license_max_devices_reached: "Достигнат е максималният брой устройства",
-    license_readonly: "Лицензът може да бъде променен само от сървърния терминал.",
     server_error: "Грешка на сървъра, моля опитайте отново"
   },
   title: {
@@ -51,8 +47,12 @@ const strings = {
     deleteAllKeys: opts => {
       return `Изтриване на това дърво и всички негови ключове (${opts.key})?`;
     },
+    deleteSearchKeys: opts => {
+      return `Сигурни ли сте, че искате да изтриете всички ключове, съответстващи на "${opts.pattern}"? Намерени ${opts.count} ключа.`;
+    },
     socketioConnectError: "Socket.IO не може да се свърже със сървъра, можете да презаредите и да опитате да разрешите грешката при свързването сами, клиентът не знае как да я разреши сам.",
     socketioAuthRequired: "Необходима е оторизация чрез Socket.IO. Моля, удостоверете се с HTTP Basic Auth (потребителско име/парола) и презаредете.",
+    delete: "Изтриване?",
     deleteKey: "Сигурни ли сте, че искате да изтриете този ключ?",
     rename: {
       title: "Сигурни ли сте, че искате да преименувате този ключ?",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "Преобразуване на текст във време",
       convertTextToTimePlaceholder: "Напр. 1d ще бъде 86400"
     },
-    license: {
-      title: "Задаване на лиценз",
-      textContent: "Ако искате да използвате платени функции, моля свържете се с support@corifeus.com, за да заявите лиценз. Цените са Pro 400 HUF/месец (€1/месец) или 4,000 HUF/годишно (€10/годишно), и Enterprise 1,200 HUF/месец (€3/месец) или 12,000 HUF/годишно (€30/годишно). Годишната цена е 10 пъти месечната. С 27% ДДС общите суми са Pro 500 HUF/месец (€1.27/месец) или 5,100 HUF/годишно (€12.70/годишно), Enterprise 1,500 HUF/месец (€3.81/месец) или 15,200 HUF/годишно (€38.10/годишно). Валидирането на лиценза изисква достъп до интернет. Стандартният лиценз включва 5 места. Ако имате нужда от повече места, свържете се с нас на support@corifeus.com.",
-      placeholder: "Лицензен ключ"
-    }
   },
   language: {
     // When you translate the english name, keep the Language in English
@@ -138,13 +133,17 @@ const strings = {
     exportKeys: "Експортиране на ключове",
     exportAllKeys: (opts) => `Експорт на всички ${opts.count} ключа`,
     exportSearchResults: (opts) => `Експорт на ${opts.count} резултата`,
+    deleteAllKeysMenu: (opts) => `Изтрий всички ${opts.count}`,
     importKeys: "Импортиране на ключове",
+    deleteSearchKeys: (opts) => `Изтриване на ${opts.count} съвпадащи ключа`,
     saveWithFormatJson: "Запази с форматиране",
     formatJson: "Форматирай Json",
     wrap: "Обвиване",
     unwrap: "Развиване",
     downloadJson: "Изтегли JSON",
-    pubsubMonitor: "PubSub Монитор",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "Език / Language",
@@ -185,7 +184,6 @@ const strings = {
     edit: "Редактирай",
     save: "Запази",
     ttl: "Задай TTL",
-    license: "Задай лиценз",
     delete: "Изтрий",
     remove: "Премахни",
     sure: "Сигурен",
@@ -264,38 +262,6 @@ const strings = {
     connectiondEdit: "Редактирай връзка",
     connectiondView: "Преглед на връзка",
     connections: "Връзки",
-    licenseInfo: "Лиценз",
-    licenseEditable: "Лицензът е редактируем",
-    licenseEditableYes: "Да",
-    licenseEditableNo: "Не",
-    licenseTerminalOnly: "Лицензът може да бъде конфигуриран само от сървърния терминал.",
-    licenseTierPolicyTitle: "Политика на нивата",
-    licenseTierPolicyText: "<h4>Безплатен</h4>Само основен Redis UI; без SSH тунелиране, без режим Readonly за връзки, без Cluster/Sentinel, без Редактиране на JSON/Качване на двоични файлове/Изтегляне на двоични файлове, без ReJSON.<br/><strong>Цена: 0 HUF/месец (€0/месец).</strong><br/><br/><h4>Pro</h4>SSH тунелиране, режим Readonly за връзки (включително --readonly-connections/-r), Редактиране на JSON, Качване на двоични файлове, Изтегляне на двоични файлове, ReJSON.<br/><strong>Базова цена: 400 HUF/месец (€1/месец) или 4,000 HUF/годишно (€10/годишно).</strong><br/><strong>Общо с 27% ДДС: 500 HUF/месец (€1.27/месец) или 5,100 HUF/годишно (€12.70/годишно).</strong><br/><br/><h4>Enterprise</h4>SSH тунелиране, Cluster и Sentinel, плюс Редактиране на JSON, Качване на двоични файлове, Изтегляне на двоични файлове, ReJSON; --readonly-connections/-r също работи.<br/><strong>Базова цена: 1,200 HUF/месец (€3/месец) или 12,000 HUF/годишно (€30/годишно).</strong><br/><strong>Общо с 27% ДДС: 1,500 HUF/месец (€3.81/месец) или 15,200 HUF/годишно (€38.10/годишно).</strong><br/><br/><h4>Годишно правило</h4>Годишната цена е 10 пъти месечната цена.<br/><br/><h4>Места</h4>Стандартният лиценз включва 5 места. Ако имате нужда от повече места, свържете се с нас на <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><br/><h4>Enterprise пробен период</h4>10 дни безплатно за всеки с реален съществуващ имейл адрес (не тестов имейл).<br/><hr/><h4>Информация за фактуриране по имейл</h4>Име, Имейл за фактуриране, Код на държавата, Пощенски код, Град, Адрес, ДДС номер (по избор).<br/><br/><h4>Плащане</h4>PayPal плащане е достъпно само в HUF (форинти); след изпращане на сумата @ <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> ще ви изпратя фактура. Всички плащания са невъзвращаеми.<br/><br/><h4>ДДС</h4>ДДС се добавя към цената (27% в Унгария).<br/><hr/><h4>Контакт</h4>Ако искате да се свържете с нас или имате въпрос, пишете на <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><hr/><h4>Език</h4>Фактурата и лицензната имейл комуникация са на английски. Валутата на фактурата е HUF.<br/><hr/><h4>Забележка</h4>Валидирането на лиценза изисква достъп до интернет.",
-    licenseState: "Състояние",
-    licenseStateActive: "Активен",
-    licenseStateInactive: "Неактивен",
-    licenseStateNoLicense: "Няма лиценз",
-    licenseKeyMasked: "Запазен ключ",
-    licenseTier: "Ниво",
-    licenseValid: "Валиден",
-    licenseStatus: "Статус на лиценза",
-    licenseReason: "Причина",
-    licenseCheckedAt: "Проверен на",
-    licenseStartsAt: "Започва на",
-    licenseExpiresAt: "Изтича на",
-    licenseDaysLeft: "Оставащи дни",
-    licenseMaxDevices: "Максимален брой устройства",
-    licenseActiveDevices: "Активни устройства",
-    licenseActiveDevicesInfo: "Ако устройство вече не се използва, мястото му се освобождава автоматично след 75 минути.",
-    licenseCustomerEmail: "Имейл на клиента",
-    licenseFeatures: "Функции",
-    licenseFeaturesEmpty: "Няма допълнителни функции",
-    licenseFeatureReadonlyMode: "Режим Readonly за връзка",
-    licenseFeatureReadonlyConnectionsFlag: "Readonly връзки (--readonly-connections/-r)",
-    licenseFeatureSsh: "SSH тунелиране",
-    licenseFeatureCluster: "Клъстер връзки",
-    licenseFeatureSentinel: "Sentinel връзки",
-    licenseFeatureReJSON: "ReJSON (JSON data type)",
     keysSort: {
       on: "Сортиране на ключове включено",
       off: "Сортиране на ключове изключено"
@@ -313,9 +279,6 @@ const strings = {
       on: "Readonly включен",
       off: "Readonly изключен"
     },
-    proSshOnly: "SSH е достъпен в Pro или Enterprise.",
-    proReadonlyOnly: "Режимът Readonly за връзки е достъпен в Pro или Enterprise.",
-    enterpriseClusterSentinelOnly: "Cluster и Sentinel са достъпни само в Enterprise.",
     theme: {
       light: "Светла",
       dark: "Тъмна enterprise",
@@ -357,16 +320,20 @@ const strings = {
     importConflict: "Ако ключът вече съществува:",
     noKeysToExport: "Няма ключове за експортиране",
     time: "Време",
+    type: "Тип",
+    format: "Формат",
     loading: "Зареждане...",
     autoRefresh: "Авто",
     exportSearchHint: "Експортиране само на ключове, съвпадащи с текущото търсене",
     importSearchHint: "Импортът се прилага към цялата база данни, не само към резултатите от търсенето",
+    deleteSearchHint: "Изтрива всички ключове, съответстващи на текущото търсене на сървъра",
+    deletingSearchKeys: "Изтриване на съвпадащи ключове...",
     importNoKeys: "Не са намерени ключове във файла",
   },
   status: {
     dataCopied: "Данните са в клипборда",
-    licenseSaved: "Лицензът е запазен",
     exportDone: "Експортът е завършен",
+    deletedSearchKeys: (opts) => `Изтрити ${opts.count} ключа`,
     indexCreated: "Индексът е създаден",
     indexDropped: "Индексът е изтрит",
     importDone: (opts) => `Импортът завършен: ${opts.created} създадени, ${opts.skipped} пропуснати, ${opts.errors} грешки`,
@@ -414,35 +381,10 @@ const strings = {
     "readonly-connections": "Връзките за добавяне/запазване/изтриване са само за четене!",
     "readonly-connection-mode": "Тази връзка е в режим само за четене!",
     "list-out-of-bounds": "Индексът на списъка е извън обхвата",
-    "donation-ware-feature": "Тази функция е налична в платената версия.",
-    "feature-pro-readonly-required": "Режимът Readonly за връзки изисква Pro или Enterprise лиценз.",
-    "feature-pro-ssh-required": "SSH тунелирането изисква Pro или Enterprise лиценз.",
-    "feature-enterprise-cluster-sentinel-required": "Cluster и Sentinel изискват Enterprise лиценз.",
-    "feature-pro-json-binary-required": "Редактиране на JSON, Качване на двоични файлове и Изтегляне на двоични файлове изискват Pro или Enterprise лиценз.",
-    "feature-pro-rejson-required": "ReJSON (JSON data type) requires Pro or Enterprise license.",
     "invalid-json-value": "The value is not valid JSON.",
     "http_auth_required": "Необходима е оторизация: моля, удостоверете се с HTTP Basic Auth и презаредете.",
     "auto-connection-failed": "Възможно е връзката да е била премахната и автоматичното свързване е неуспешно поради това.",
     invalid_console_command: "Тази команда не работи чрез GUI."
-  },
-  licenseReason: {
-    LICENSE_VALID: "Лицензът е валиден",
-    LICENSE_INVALID: "Лицензът е невалиден",
-    LICENSE_MISSING: "Не е зададен лицензен ключ",
-    LICENSE_DISABLED: "Лицензът е деактивиран в конфигурацията на сървъра",
-    LICENSE_NOT_FOUND: "Лицензът не е намерен",
-    LICENSE_EXPIRED: "Лицензът е изтекъл",
-    LICENSE_CLEARED: "Лицензният ключ е изчистен",
-    LICENSE_MAX_DEVICES_REACHED: "Достигнат е максималният брой устройства",
-    PRODUCT_MISMATCH: "Продуктът на лиценза не съвпада"
-  },
-  licenseStatusValue: {
-    active: "Активен",
-    deleted: "Изтрит",
-    all: "Всички",
-    expired: "Изтекъл",
-    missing: "Липсващ",
-    inactive: "Неактивен"
   },
   form: {
     error: {
@@ -612,12 +554,49 @@ const strings = {
           field: "Поле",
           value: "Стойност"
         }
+      },
+      timeseries: {
+        chart: "Графика",
+        info: "Информация",
+        addPoint: "Добавяне на точка от данни",
+        from: "От (мс или -)",
+        to: "До (мс или +)",
+        aggregation: "Агрегация",
+        timeBucket: "Интервал (мс)",
+        none: "Няма",
+        dataPoints: "точки от данни",
+        labels: "Етикети",
+        rules: "Правила",
+        retention: "Задържане",
+        timestamp: "Времева марка",
+        value: "Стойност",
+        retentionHint: "0 = без изтичане, или милисекунди",
+        duplicatePolicy: "Политика за дубликати",
+        labelsHint: "ключ1 стойност1 ключ2 стойност2",
+        timestampHint: "'*' означава автоматично генериране, или времева марка в милисекунди",
+        editAllHint: "Една точка от данни на ред: времева_марка стойност (времева_марка може да е * за авто)",
+        autoSpread: "Автоматичен интервал на разпределение *",
+        formula: "Формула",
+        formulaLinear: "Линейна",
+        formulaRandom: "Случайна",
+        formulaSawtooth: "Трионовидна",
+        formulaPoints: "Точки",
+        formulaAmplitude: "Амплитуда",
+        formulaOffset: "Отместване",
+        generate: "Генериране",
+        exportChart: "Експорт PNG",
+        overlay: "Наслагване на ключове",
+        overlayHint: "Ключове, разделени със запетая",
+        mrangeFilter: "Филтър по етикети",
+        bulkMode: "Масово генериране",
+        mrangeHint: "напр. sensor=temp"
       }
     },
     treeControls: {
       settings: "Настройки на дървото",
       expandAll: "Разгъни всичко",
       collapseAll: "Свий всичко",
+      level: "Ниво",
       search: {
         search: "Търсене в ключовете",
         clear: "Изчисти текущото търсене",
@@ -636,13 +615,21 @@ const strings = {
     }
   },
   time: {
+    type: "Тип",
+    format: "Формат",
     loading: "Зареждане...",
     years: "години",
     months: "месеци",
     days: "дни",
     year: "година",
     month: "месец",
-    day: "ден"
+    day: "ден",
+    second: "секунда",
+    seconds: "секунди",
+    minute: "минута",
+    minutes: "минути",
+    hour: "час",
+    hours: "часа"
   },
   redisTypes: {
     string: "String",
@@ -651,7 +638,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

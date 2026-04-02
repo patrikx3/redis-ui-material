@@ -1,0 +1,20 @@
+<!-- Profiler (MONITOR) -->
+<p3xr-ng-accordion title="" accordionKey="profiler-monitor" [collapsible]="false">
+    <div actions>
+        <p3xr-ng-button
+            (click)="clearProfiler(); $event.stopPropagation()"
+            [label]="strings().intention?.clear || 'Clear'"
+            mdIcon="backspace">
+        </p3xr-ng-button>
+        <p3xr-ng-button
+            (click)="exportProfiler(); $event.stopPropagation()"
+            [label]="strings().intention?.export || 'Export'"
+            mdIcon="download">
+        </p3xr-ng-button>
+    </div>
+    <div content>
+        <div #profilerOutput class="p3xr-profiler-output"></div>
+    </div>
+</p3xr-ng-accordion>
+
+<div style="height: 64px;"></div>

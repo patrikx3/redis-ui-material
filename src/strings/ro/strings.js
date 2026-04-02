@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "Licenta a fost stearsa",
-    invalid_license: "Licenta invalida",
-    license_max_devices_reached: "Numarul maxim de locuri pentru dispozitive a fost atins",
-    license_readonly: "Licenta poate fi modificata doar din terminalul serverului.",
     server_error: "Eroare de server, va rugam incercati din nou"
   },
   title: {
@@ -51,8 +47,12 @@ const strings = {
     deleteAllKeys: opts => {
       return `Stergeti acest arbore si toate cheile sale (${opts.key})?`;
     },
+    deleteSearchKeys: opts => {
+      return `Sigur doriți să ștergeți toate cheile care corespund "${opts.pattern}"? S-au găsit ${opts.count} chei.`;
+    },
     socketioConnectError: "Socket.IO nu se poate conecta la server, puteti reincarca si incerca sa rezolvati eroarea de conexiune singur, clientul nu stie cum sa o rezolve.",
     socketioAuthRequired: "Autorizarea Socket.IO este necesara. Va rugam autentificati-va cu HTTP Basic Auth (utilizator/parola) si reincarcati.",
+    delete: "Stergeti?",
     deleteKey: "Sunteti sigur ca doriti sa stergeti aceasta cheie?",
     rename: {
       title: "Sunteti sigur ca doriti sa redenumiti aceasta cheie?",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "Convertire text in timp",
       convertTextToTimePlaceholder: "Ex. 1d va fi 86400"
     },
-    license: {
-      title: "Setare licenta",
-      textContent: "Daca doriti sa utilizati functii platite, va rugam contactati support@corifeus.com pentru a solicita o licenta. Pretul este Pro 400 HUF/luna (\u20AC1/luna) sau 4.000 HUF/an (\u20AC10/an), si Enterprise 1.200 HUF/luna (\u20AC3/luna) sau 12.000 HUF/an (\u20AC30/an). Anual este 10x lunar. Cu TVA 27%, totalurile sunt Pro 500 HUF/luna (\u20AC1,27/luna) sau 5.100 HUF/an (\u20AC12,70/an), Enterprise 1.500 HUF/luna (\u20AC3,81/luna) sau 15.200 HUF/an (\u20AC38,10/an). Validarea licentei necesita acces la internet. Licenta implicita include 5 locuri. Daca aveti nevoie de mai multe locuri, contactati-ne la support@corifeus.com.",
-      placeholder: "Cheie de licenta"
-    }
   },
   language: {
     bg: "\u0411\u044A\u043B\u0433\u0430\u0440\u0441\u043A\u0438 / Bulgarian",
@@ -136,13 +131,17 @@ const strings = {
     exportKeys: "Exportă chei",
     exportAllKeys: (opts) => `Exportă toate cele ${opts.count} chei`,
     exportSearchResults: (opts) => `Exportă ${opts.count} rezultate`,
+    deleteAllKeysMenu: (opts) => `Șterge tot ${opts.count}`,
     importKeys: "Importă chei",
+    deleteSearchKeys: (opts) => `Șterge ${opts.count} chei corespunzătoare`,
     saveWithFormatJson: "Salvare cu formatare",
     formatJson: "Formatare Json",
     wrap: "Încadrare",
     unwrap: "Fără încadrare",
     downloadJson: "Descarcă JSON",
-    pubsubMonitor: "Monitor PubSub",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "Limba / Language",
@@ -183,7 +182,6 @@ const strings = {
     edit: "Editare",
     save: "Salvare",
     ttl: "Setare TTL",
-    license: "Setare licenta",
     delete: "Stergere",
     remove: "Eliminare",
     sure: "Sigur",
@@ -262,38 +260,6 @@ const strings = {
     connectiondEdit: "Editare conexiune",
     connectiondView: "Vizualizare conexiune",
     connections: "Conexiuni",
-    licenseInfo: "Licenta",
-    licenseEditable: "Licenta editabila",
-    licenseEditableYes: "Da",
-    licenseEditableNo: "Nu",
-    licenseTerminalOnly: "Licenta poate fi configurata doar din terminalul serverului.",
-    licenseTierPolicyTitle: "Politica de niveluri",
-    licenseTierPolicyText: "<h4>Free</h4>doar Redis UI de baza; fara tunelare SSH, fara mod conexiune Readonly, fara Cluster/Sentinel, fara Edit JSON/Upload binary/Download binary, fara ReJSON.<br/><strong>Pret: 0 HUF/luna (\u20AC0/luna).</strong><br/><br/><h4>Pro</h4>tunelare SSH, mod conexiune Readonly (inclusiv --readonly-connections/-r), Edit JSON, Upload binary, Download binary, ReJSON.<br/><strong>Pret de baza: 400 HUF/luna (\u20AC1/luna) sau 4.000 HUF/an (\u20AC10/an).</strong><br/><strong>Total cu TVA 27%: 500 HUF/luna (\u20AC1,27/luna) sau 5.100 HUF/an (\u20AC12,70/an).</strong><br/><br/><h4>Enterprise</h4>tunelare SSH, Cluster si Sentinel, plus Edit JSON, Upload binary, Download binary, ReJSON; --readonly-connections/-r functioneaza de asemenea.<br/><strong>Pret de baza: 1.200 HUF/luna (\u20AC3/luna) sau 12.000 HUF/an (\u20AC30/an).</strong><br/><strong>Total cu TVA 27%: 1.500 HUF/luna (\u20AC3,81/luna) sau 15.200 HUF/an (\u20AC38,10/an).</strong><br/><br/><h4>Regula anuala</h4>Pretul anual este de 10x pretul lunar.<br/><br/><h4>Locuri</h4>Licenta implicita include 5 locuri. Daca aveti nevoie de mai multe locuri, contactati-ne la <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><br/><h4>Perioada de proba Enterprise</h4>10 zile gratuit pentru oricine cu o adresa de email reala existenta (nu email de test).<br/><hr/><h4>Informatii de facturare prin e-mail</h4>Nume, Email de facturare, Cod tara, Cod postal, Oras, Adresa, Cod TVA (optional).<br/><br/><h4>Plata</h4>Plata prin PayPal este disponibila doar in HUF (forint); dupa trimiterea banilor la <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> va voi trimite o factura. Toate platile sunt nerambursabile.<br/><br/><h4>TVA</h4>TVA-ul este adaugat la pret (27% in Ungaria).<br/><hr/><h4>Contact</h4>Daca doriti sa ne salutati sau aveti o intrebare, contactati <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><hr/><h4>Limba</h4>Comunicarea privind factura si licenta se face in limba engleza. Moneda facturii este HUF.<br/><hr/><h4>Nota</h4>Validarea licentei necesita acces la internet.",
-    licenseState: "Stare",
-    licenseStateActive: "Activa",
-    licenseStateInactive: "Inactiva",
-    licenseStateNoLicense: "Fara licenta",
-    licenseKeyMasked: "Cheie salvata",
-    licenseTier: "Nivel",
-    licenseValid: "Valida",
-    licenseStatus: "Starea licentei",
-    licenseReason: "Motiv",
-    licenseCheckedAt: "Verificata la",
-    licenseStartsAt: "Incepe la",
-    licenseExpiresAt: "Expira la",
-    licenseDaysLeft: "Zile ramase",
-    licenseMaxDevices: "Numar maxim de dispozitive",
-    licenseActiveDevices: "Dispozitive active",
-    licenseActiveDevicesInfo: "Daca un dispozitiv nu mai este utilizat, locul sau este eliberat automat dupa 75 de minute.",
-    licenseCustomerEmail: "Email client",
-    licenseFeatures: "Functionalitati",
-    licenseFeaturesEmpty: "Fara functionalitati suplimentare",
-    licenseFeatureReadonlyMode: "Mod conexiune doar citire",
-    licenseFeatureReadonlyConnectionsFlag: "Conexiuni doar citire (--readonly-connections/-r)",
-    licenseFeatureSsh: "Tunelare SSH",
-    licenseFeatureCluster: "Conexiuni Cluster",
-    licenseFeatureSentinel: "Conexiuni Sentinel",
-    licenseFeatureReJSON: "ReJSON (JSON data type)",
     keysSort: {
       on: "Sortare chei activata",
       off: "Sortare chei dezactivata"
@@ -311,9 +277,6 @@ const strings = {
       on: "Doar citire activat",
       off: "Doar citire dezactivat"
     },
-    proSshOnly: "SSH este disponibil in Pro sau Enterprise.",
-    proReadonlyOnly: "Modul conexiune doar citire este disponibil in Pro sau Enterprise.",
-    enterpriseClusterSentinelOnly: "Cluster si Sentinel sunt disponibile doar in Enterprise.",
     theme: {
       light: "Luminos",
       dark: "Inchis enterprise",
@@ -355,16 +318,20 @@ const strings = {
     importConflict: "Dacă cheia există deja:",
     noKeysToExport: "Nu există chei de exportat",
     time: "Timp",
+    type: "Tip",
+    format: "Format",
     loading: "Se încarcă...",
     autoRefresh: "Auto",
     exportSearchHint: "Se exportă doar cheile care corespund căutării curente",
     importSearchHint: "Importul se aplică întregii baze de date, nu doar rezultatelor căutării",
+    deleteSearchHint: "Șterge toate cheile care corespund căutării curente de pe server",
+    deletingSearchKeys: "Se șterg cheile corespunzătoare...",
     importNoKeys: "Nu s-au găsit chei în fișier",
   },
   status: {
     dataCopied: "Datele sunt in clipboard",
-    licenseSaved: "Licenta salvata",
     exportDone: "Export finalizat",
+    deletedSearchKeys: (opts) => `${opts.count} chei șterse`,
     indexCreated: "Index creat",
     indexDropped: "Index șters",
     importDone: (opts) => `Import finalizat: ${opts.created} create, ${opts.skipped} omise, ${opts.errors} erori`,
@@ -412,35 +379,10 @@ const strings = {
     "readonly-connections": "Adaugarea/salvarea/stergerea conexiunilor este doar in citire!",
     "readonly-connection-mode": "Aceasta conexiune este in mod doar citire!",
     "list-out-of-bounds": "Indexul acestei liste este in afara limitelor",
-    "donation-ware-feature": "Aceasta functie este disponibila in versiunea cu donatie.",
-    "feature-pro-readonly-required": "Modul conexiune doar citire necesita licenta Pro sau Enterprise.",
-    "feature-pro-ssh-required": "Tunelarea SSH necesita licenta Pro sau Enterprise.",
-    "feature-enterprise-cluster-sentinel-required": "Cluster si Sentinel necesita licenta Enterprise.",
-    "feature-pro-json-binary-required": "Edit JSON, Upload binary si Download binary necesita licenta Pro sau Enterprise.",
-    "feature-pro-rejson-required": "ReJSON (JSON data type) requires Pro or Enterprise license.",
     "invalid-json-value": "The value is not valid JSON.",
     "http_auth_required": "Autorizare necesara: va rugam autentificati-va cu HTTP Basic Auth si reincarcati.",
     "auto-connection-failed": "Posibil, conexiunea a fost eliminata si conectarea automata a esuat din aceasta cauza.",
     invalid_console_command: "Aceasta comanda nu functioneaza prin GUI."
-  },
-  licenseReason: {
-    LICENSE_VALID: "Licenta este valida",
-    LICENSE_INVALID: "Licenta este invalida",
-    LICENSE_MISSING: "Nicio cheie de licenta nu este setata",
-    LICENSE_DISABLED: "Licenta este dezactivata in configuratia serverului",
-    LICENSE_NOT_FOUND: "Licenta nu a fost gasita",
-    LICENSE_EXPIRED: "Licenta a expirat",
-    LICENSE_CLEARED: "Cheia de licenta a fost stearsa",
-    LICENSE_MAX_DEVICES_REACHED: "Numarul maxim de locuri pentru dispozitive a fost atins",
-    PRODUCT_MISMATCH: "Produsul licentei nu se potriveste"
-  },
-  licenseStatusValue: {
-    active: "Activa",
-    deleted: "Stearsa",
-    all: "Toate",
-    expired: "Expirata",
-    missing: "Lipsa",
-    inactive: "Inactiva"
   },
   form: {
     error: {
@@ -610,12 +552,49 @@ const strings = {
           field: "Camp",
           value: "Valoare"
         }
+      },
+      timeseries: {
+        chart: "Grafic",
+        info: "Informatii",
+        addPoint: "Adauga punct de date",
+        from: "De la (ms sau -)",
+        to: "Pana la (ms sau +)",
+        aggregation: "Agregare",
+        timeBucket: "Interval (ms)",
+        none: "Niciunul",
+        dataPoints: "puncte de date",
+        labels: "Etichete",
+        rules: "Reguli",
+        retention: "Retentie",
+        timestamp: "Marca temporala",
+        value: "Valoare",
+        retentionHint: "0 = fara expirare, sau milisecunde",
+        duplicatePolicy: "Politica de duplicate",
+        labelsHint: "cheie1 valoare1 cheie2 valoare2",
+        timestampHint: "'*' inseamna generare automata, sau marca temporala in milisecunde",
+        editAllHint: "Un punct de date pe linie: marca_temporala valoare (marca_temporala poate fi * pentru auto)",
+        autoSpread: "Interval de distribuire automata *",
+        formula: "Formula",
+        formulaLinear: "Liniar",
+        formulaRandom: "Aleatoriu",
+        formulaSawtooth: "Dinte de fierastrau",
+        formulaPoints: "Puncte",
+        formulaAmplitude: "Amplitudine",
+        formulaOffset: "Decalaj",
+        generate: "Genereaza",
+        exportChart: "Exporta PNG",
+        overlay: "Suprapunere chei",
+        overlayHint: "Chei separate prin virgula",
+        mrangeFilter: "Filtru etichete",
+        bulkMode: "Generare în masă",
+        mrangeHint: "ex. sensor=temp"
       }
     },
     treeControls: {
       settings: "Setari arbore",
       expandAll: "Extinde tot",
       collapseAll: "Restrange tot",
+      level: "Nivel",
       search: {
         search: "Cautare in chei",
         clear: "Curata cautarea curenta",
@@ -634,13 +613,21 @@ const strings = {
     }
   },
   time: {
+    type: "Tip",
+    format: "Format",
     loading: "Se încarcă...",
     years: "ani",
     months: "luni",
     days: "zile",
     year: "an",
     month: "luna",
-    day: "zi"
+    day: "zi",
+    second: "secunda",
+    seconds: "secunde",
+    minute: "minut",
+    minutes: "minute",
+    hour: "ora",
+    hours: "ore"
   },
   redisTypes: {
     string: "String",
@@ -649,7 +636,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "Đã xóa giấy phép",
-    invalid_license: "Giấy phép không hợp lệ",
-    license_max_devices_reached: "Đã đạt đến số lượng thiết bị tối đa",
-    license_readonly: "Giấy phép chỉ có thể được thay đổi từ thiết bị đầu cuối máy chủ.",
     server_error: "Lỗi máy chủ, vui lòng thử lại"
   },
   title: {
@@ -51,8 +47,12 @@ const strings = {
     deleteAllKeys: opts => {
       return `Xóa cây này và tất cả các khóa của nó (${opts.key})?`;
     },
+    deleteSearchKeys: opts => {
+      return `Bạn có chắc chắn muốn xóa tất cả các khóa khớp với "${opts.pattern}" không? Tìm thấy ${opts.count} khóa.`;
+    },
     socketioConnectError: "Socket.IO không kết nối được với máy chủ, bạn có thể tải lại và thử tự khắc phục lỗi kết nối, máy khách không biết tự giải quyết.",
     socketioAuthRequired: "Cần có ủy quyền Socket.IO. Vui lòng xác thực bằng HTTP Basic Auth (tên người dùng/mật khẩu) và tải lại.",
+    delete: "Xóa?",
     deleteKey: "Bạn có chắc chắn xóa khóa này không?",
     rename: {
       title: "Bạn có chắc chắn đổi tên khóa này không?",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "Chuyển đổi văn bản thành thời gian",
       convertTextToTimePlaceholder: "Ví dụ: 1d sẽ là 86400"
     },
-    license: {
-      title: "Đặt giấy phép",
-      textContent: "Nếu bạn muốn sử dụng các tính năng trả phí, vui lòng liên hệ support@corifeus.com để yêu cầu giấy phép. Giá là Pro 400 HUF/tháng (€1/tháng) hoặc 4.000 HUF/năm (€10/năm) và Enterprise 1.200 HUF/tháng (€3/tháng) hoặc 12.000 HUF/năm (€30/năm). Hàng năm là 10x hàng tháng. Với 27% VAT, tổng cộng là Pro 500 HUF/tháng (€1,27/tháng) hoặc 5.100 HUF/năm (€12,70/năm), Doanh nghiệp 1.500 HUF/tháng (€3,81/tháng) hoặc 15.200 HUF/năm (€38,10/năm). Xác thực giấy phép yêu cầu truy cập internet. Giấy phép mặc định bao gồm 5 chỗ. Nếu bạn cần thêm chỗ ngồi, hãy liên hệ với chúng tôi tại support@corifeus.com.",
-      placeholder: "Mã cấp phép"
-    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -136,13 +131,17 @@ const strings = {
     exportKeys: "Xuất khóa",
     exportAllKeys: (opts) => `Xuất tất cả ${opts.count} khóa`,
     exportSearchResults: (opts) => `Xuất ${opts.count} kết quả`,
+    deleteAllKeysMenu: (opts) => `Xóa tất cả ${opts.count}`,
     importKeys: "Nhập khóa",
+    deleteSearchKeys: (opts) => `Xóa ${opts.count} khóa khớp`,
     saveWithFormatJson: "Lưu với định dạng",
     formatJson: "Định dạng Json",
     wrap: "Bọc",
     unwrap: "Mở gói",
     downloadJson: "Tải xuống JSON",
-    pubsubMonitor: "Màn hình PubSub",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "Ngôn ngữ",
@@ -183,7 +182,6 @@ const strings = {
     edit: "Chỉnh sửa",
     save: "Lưu",
     ttl: "Đặt TTL",
-    license: "Đặt giấy phép",
     delete: "Xóa",
     remove: "Xóa",
     sure: "Chắc chắn rồi",
@@ -262,38 +260,6 @@ const strings = {
     connectiondEdit: "Chỉnh sửa kết nối",
     connectiondView: "Xem kết nối",
     connections: "Kết nối",
-    licenseInfo: "Giấy phép",
-    licenseEditable: "Giấy phép có thể chỉnh sửa",
-    licenseEditableYes: "Có",
-    licenseEditableNo: "Không",
-    licenseTerminalOnly: "Giấy phép chỉ có thể được cấu hình từ thiết bị đầu cuối của máy chủ.",
-    licenseTierPolicyTitle: "Chính sách cấp độ",
-    licenseTierPolicyText: "Chỉ giao diện người dùng <h4>Free</h4>core Redis; không có đường hầm SSH, không có chế độ kết nối Chỉ đọc, không có Cluster/Sentinel, không Chỉnh sửa JSON/Tải lên nhị phân/Tải xuống nhị phân, không ReJSON.<br/><strong>Giá: 0 HUF/tháng (€0/tháng).</strong><br/><br/><h4>Pro</h4>SSH, chế độ kết nối chỉ đọc (bao gồm --readonly-connections/-r), Chỉnh sửa JSON, Tải lên nhị phân, Tải xuống nhị phân, ReJSON.<br/><strong>Giá cơ bản: 400 HUF/tháng (€1/tháng) hoặc 4.000 HUF/năm (€10/năm).</strong><br/><strong>Tổng cộng với 27% VAT: 500 HUF/tháng (€1,27/tháng) hoặc 5.100 HUF/năm (€12,70/năm).</strong><br/><br/><h4>Enterprise</h4>SSH đào hầm, Cluster và Sentinel, cộng thêm Chỉnh sửa JSON, Tải lên nhị phân, Tải xuống nhị phân, ReJSON; --readonly-connections/-r cũng hoạt động.<br/><strong>Giá cơ bản: 1.200 HUF/tháng (€3/tháng) hoặc 12.000 HUF/năm (€30/năm).</strong><br/><strong>Tổng cộng với 27% VAT: 1.500 HUF/tháng (€3,81/tháng) hoặc 15.200 HUF/năm (€38,10/năm).</strong><br/><br/><h4>YQuy tắc sớm</h4>YGiá ban đầu là 10 lần giá hàng tháng price.<br/><br/><h4>Seats</h4>Giấy phép mặc định bao gồm 5 chỗ. Nếu bạn cần thêm chỗ ngồi, hãy liên hệ với chúng tôi tại <a href='mailto:mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><br/><h4>Bản dùng thử Enterprise</h4>10 ngày miễn phí cho bất kỳ ai có một địa chỉ email thực hiện có (email không kiểm tra).<br/><hr/><h4>Thông tin thanh toán trong e-mail</h4>Tên, e-mail thanh toán, Mã quốc gia, Mã bưu chính, Thành phố, Địa chỉ, VAT ID (tùy chọn).<br/><br/><h4>Payment</h4>PayPal thanh toán chỉ có sẵn bằng HUF (forint); sau khi gửi tiền @ <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> tôi sẽ gửi hóa đơn cho bạn. Tất cả các khoản thanh toán đều không được hoàn lại.<br/><br/><h4>VAT</h4>VAT được thêm vào giá (27% trong Hungary).<br/><hr/><h4>Liên hệ</h4>Nếu bạn muốn gửi lời chào hoặc có thắc mắc, hãy liên hệ <a href='mailto:mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><hr/><h4>Ngôn ngữ</h4>Giao tiếp qua e-mail hóa đơn và giấy phép bằng tiếng Anh. Đơn vị tiền tệ của hóa đơn là HUF.<br/><hr/><h4>Note</h4>Xác thực giấy phép yêu cầu truy cập internet.",
-    licenseState: "tiểu bang",
-    licenseStateActive: "Đang hoạt động",
-    licenseStateInactive: "Không hoạt động",
-    licenseStateNoLicense: "Không có giấy phép",
-    licenseKeyMasked: "Khóa đã lưu",
-    licenseTier: "cấp",
-    licenseValid: "hợp lệ",
-    licenseStatus: "Trạng thái giấy phép",
-    licenseReason: "Lý do",
-    licenseCheckedAt: "Đã kiểm tra tại",
-    licenseStartsAt: "Bắt đầu lúc",
-    licenseExpiresAt: "Hết hạn vào lúc",
-    licenseDaysLeft: "Số ngày còn lại",
-    licenseMaxDevices: "Số thiết bị tối đa",
-    licenseActiveDevices: "Thiết bị hoạt động",
-    licenseActiveDevicesInfo: "Nếu thiết bị không còn được sử dụng nữa, chỗ ngồi của thiết bị đó sẽ tự động được giải phóng sau 75 phút.",
-    licenseCustomerEmail: "Email khách hàng",
-    licenseFeatures: "Tính năng",
-    licenseFeaturesEmpty: "Không có tính năng bổ sung",
-    licenseFeatureReadonlyMode: "Chế độ kết nối chỉ đọc",
-    licenseFeatureReadonlyConnectionsFlag: "Kết nối chỉ đọc (--readonly-connections/-r)",
-    licenseFeatureSsh: "Đường hầm SSH",
-    licenseFeatureCluster: "Kết nối Cluster",
-    licenseFeatureSentinel: "K���t nối Sentinel",
-    licenseFeatureReJSON: "ReJSON (kiểu dữ liệu JSON)",
     keysSort: {
       on: "Sắp xếp khóa đang bật",
       off: "Sắp xếp chìa khóa"
@@ -311,9 +277,6 @@ const strings = {
       on: "Bật chế độ chỉ đọc",
       off: "Tắt chế độ chỉ đọc"
     },
-    proSshOnly: "SSH có sẵn ở phiên bản Pro hoặc Enterprise.",
-    proReadonlyOnly: "Chế độ kết nối chỉ đọc có sẵn trong Pro hoặc Enterprise.",
-    enterpriseClusterSentinelOnly: "Cluster và Sentinel chỉ có sẵn trong Enterprise.",
     theme: {
       light: "Ánh sáng",
       dark: "Doanh nghiệp đen tối",
@@ -355,16 +318,20 @@ const strings = {
     importConflict: "Nếu khóa đã tồn tại:",
     noKeysToExport: "Không có khóa để xuất",
     time: "Thời gian",
+    type: "Loại",
+    format: "Định dạng",
     loading: "Đang tải...",
     autoRefresh: "Tự động",
     exportSearchHint: "Chỉ xuất các khóa khớp với tìm kiếm hiện tại",
     importSearchHint: "Nhập áp dụng cho toàn bộ cơ sở dữ liệu, không chỉ kết quả tìm kiếm",
+    deleteSearchHint: "Xóa tất cả các khóa khớp với tìm kiếm hiện tại trên máy chủ",
+    deletingSearchKeys: "Đang xóa các khóa khớp...",
     importNoKeys: "Không tìm thấy khóa trong tệp",
   },
   status: {
     dataCopied: "Dữ liệu nằm trong clipboard",
-    licenseSaved: "Đã lưu giấy phép",
     exportDone: "Xuất hoàn tất",
+    deletedSearchKeys: (opts) => `Đã xóa ${opts.count} khóa`,
     indexCreated: "Đã tạo chỉ mục",
     indexDropped: "Đã xóa chỉ mục",
     importDone: (opts) => `Nhập hoàn tất: ${opts.created} đã tạo, ${opts.skipped} đã bỏ qua, ${opts.errors} lỗi`,
@@ -412,35 +379,10 @@ const strings = {
     "readonly-connections": "Các kết nối thêm/lưu/xóa chỉ ở chế độ đọc!",
     "readonly-connection-mode": "Kết nối này là chế độ chỉ đọc!",
     "list-out-of-bounds": "Chỉ mục danh sách này nằm ngoài giới hạn",
-    "donation-ware-feature": "Tính năng này có trong phiên bản quyên góp.",
-    "feature-pro-readonly-required": "Chế độ kết nối chỉ đọc yêu cầu giấy phép Pro hoặc Enterprise.",
-    "feature-pro-ssh-required": "Đường hầm SSH yêu cầu giấy phép Pro hoặc Enterprise.",
-    "feature-enterprise-cluster-sentinel-required": "Cluster và Sentinel yêu cầu giấy phép Doanh nghiệp.",
-    "feature-pro-json-binary-required": "Chỉnh sửa JSON, Tải lên nhị phân và Tải xuống nhị phân yêu cầu giấy phép Pro hoặc Enterprise.",
-    "feature-pro-rejson-required": "ReJSON (loại dữ liệu JSON) yêu cầu giấy phép Pro hoặc Enterprise.",
     "invalid-json-value": "Giá trị không hợp lệ JSON.",
     "http_auth_required": "Yêu cầu ủy quyền: vui lòng xác thực bằng HTTP Basic Auth và tải lại.",
     "auto-connection-failed": "Có thể kết nối đã bị xóa và kết nối tự động không thành công vì điều này.",
     invalid_console_command: "Lệnh này không hoạt động thông qua GUI."
-  },
-  licenseReason: {
-    LICENSE_VALID: "Giấy phép có hiệu lực",
-    LICENSE_INVALID: "Giấy phép không hợp lệ",
-    LICENSE_MISSING: "Không có mã cấp phép nào được đặt",
-    LICENSE_DISABLED: "Giấy phép bị vô hiệu hóa trong cấu hình máy chủ",
-    LICENSE_NOT_FOUND: "Không tìm thấy giấy phép",
-    LICENSE_EXPIRED: "Giấy phép đã hết hạn",
-    LICENSE_CLEARED: "Khóa cấp phép đã bị xóa",
-    LICENSE_MAX_DEVICES_REACHED: "Đã đạt đến số lượng thiết bị tối đa",
-    PRODUCT_MISMATCH: "Sản phẩm giấy phép không phù hợp"
-  },
-  licenseStatusValue: {
-    active: "Đang hoạt động",
-    deleted: "Đã xóa",
-    all: "Tất cả",
-    expired: "Đã hết hạn",
-    missing: "Thiếu",
-    inactive: "Không hoạt động"
   },
   form: {
     error: {
@@ -610,12 +552,49 @@ const strings = {
           field: "trường",
           value: "Giá trị"
         }
+      },
+      timeseries: {
+        chart: "Biểu đồ",
+        info: "Thông tin",
+        addPoint: "Thêm điểm dữ liệu",
+        from: "Từ (ms hoặc -)",
+        to: "Đến (ms hoặc +)",
+        aggregation: "Tổng hợp",
+        timeBucket: "Nhóm (ms)",
+        none: "Không có",
+        dataPoints: "điểm dữ liệu",
+        labels: "Nhãn",
+        rules: "Quy tắc",
+        retention: "Lưu giữ",
+        timestamp: "Dấu thời gian",
+        value: "Giá trị",
+        retentionHint: "0 = không hết hạn, hoặc mili giây",
+        duplicatePolicy: "Chính sách trùng lặp",
+        labelsHint: "khóa1 giá_trị1 khóa2 giá_trị2",
+        timestampHint: "'*' nghĩa là tự động tạo, hoặc dấu thời gian mili giây",
+        editAllHint: "Một điểm dữ liệu mỗi dòng: dấu_thời_gian giá_trị (dấu thời gian có thể là * để tự động)",
+        autoSpread: "Khoảng cách phân tán tự động *",
+        formula: "Công thức",
+        formulaLinear: "Tuyến tính",
+        formulaRandom: "Ngẫu nhiên",
+        formulaSawtooth: "Răng cưa",
+        formulaPoints: "Điểm",
+        formulaAmplitude: "Biên độ",
+        formulaOffset: "Độ lệch",
+        generate: "Tạo",
+        exportChart: "Xuất PNG",
+        overlay: "Chồng lấp khóa",
+        overlayHint: "Các khóa phân cách bằng dấu phẩy",
+        mrangeFilter: "Bộ lọc nhãn",
+        bulkMode: "Tạo hàng loạt",
+        mrangeHint: "vd. sensor=temp"
       }
     },
     treeControls: {
       settings: "Cài đặt cây",
       expandAll: "Mở rộng tất cả",
       collapseAll: "Thu gọn tất cả",
+      level: "Cấp",
       search: {
         search: "Tìm kiếm trong các phím",
         clear: "Xóa tìm kiếm hiện tại để đặt trống",
@@ -634,13 +613,21 @@ const strings = {
     }
   },
   time: {
+    type: "Loại",
+    format: "Định dạng",
     loading: "Đang tải...",
     years: "năm",
     months: "tháng",
     days: "ngày",
     year: "năm",
     month: "tháng",
-    day: "ngày"
+    day: "ngày",
+    second: "giây",
+    seconds: "giây",
+    minute: "phút",
+    minutes: "phút",
+    hour: "giờ",
+    hours: "giờ"
   },
   redisTypes: {
     string: "String",
@@ -649,7 +636,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

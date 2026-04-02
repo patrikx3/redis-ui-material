@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "Na-clear ang lisensya",
-    invalid_license: "Di-wastong lisensya",
-    license_max_devices_reached: "Naabot na ang maximum na upuan ng device",
-    license_readonly: "Maaari lamang baguhin ang lisensya mula sa terminal ng server.",
     server_error: "Error sa server, pakisubukang muli"
   },
   title: {
@@ -48,8 +44,12 @@ const strings = {
     deleteConnection: "Kumpirmahin",
     deleteConnectionText: "Sigurado ka bang tatanggalin ang koneksyong Redis na ito?",
     deleteNode: "Sigurado ka bang tatanggalin ang Redis node na ito?",
+    delete: "Tanggalin?",
     deleteAllKeys: opts => {
       return `Tanggalin ang punong ito at lahat ng susi nito (${opts.key})?`;
+    },
+    deleteSearchKeys: opts => {
+      return `Sigurado ka bang gusto mong tanggalin ang lahat ng key na tumutugma sa "${opts.pattern}"? Nahanap ang ${opts.count} key.`;
     },
     socketioConnectError: "Ang Socket.IO ay hindi makakonekta sa server, maaari mong i-reload at subukang lutasin ang error sa koneksyon sa iyong sarili, hindi alam ng kliyente kung paano lutasin ito mismo.",
     socketioAuthRequired: "Kinakailangan ang pahintulot ng Socket.IO. Paki-authenticate gamit ang HTTP Basic Auth (username/password) at i-reload.",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "I-convert ang teksto sa oras",
       convertTextToTimePlaceholder: "Hal. Ang 1d ay magiging 86400"
     },
-    license: {
-      title: "Itakda ang lisensya",
-      textContent: "If you want to use paid features, please contact support@corifeus.com to request a license. Pricing is Pro 400 HUF/month (\u20AC1/month) or 4,000 HUF/year (\u20AC10/year), and Enterprise 1,200 HUF/month (\u20AC3/month) or 12,000 HUF/year (\u20AC30/year). Yearly is 10x monthly. With 27% VAT, totals are Pro 500 HUF/month (\u20AC1.27/month) or 5,100 HUF/year (\u20AC12.70/year), Enterprise 1,500 HUF/month (\u20AC3.81/month) or 15,200 HUF/year (\u20AC38.10/year). License validation requires internet access. Default license includes 5 seats. If you need more seats, contact us at support@corifeus.com.",
-      placeholder: "Susi ng lisensya"
-    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -136,13 +131,17 @@ const strings = {
     exportKeys: "I-export ang mga key",
     exportAllKeys: (opts) => `I-export lahat ng ${opts.count} key`,
     exportSearchResults: (opts) => `I-export ${opts.count} resulta`,
+    deleteAllKeysMenu: (opts) => `Tanggalin lahat ${opts.count}`,
     importKeys: "I-import ang mga key",
+    deleteSearchKeys: (opts) => `Tanggalin ang ${opts.count} tumutugmang key`,
     saveWithFormatJson: "I-save gamit ang format",
     formatJson: "I-format si Json",
     wrap: "Balutin",
     unwrap: "I-unwrap",
     downloadJson: "I-download ang JSON",
-    pubsubMonitor: "PubSub Monitor",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "Wika",
@@ -183,7 +182,6 @@ const strings = {
     edit: "I-edit",
     save: "I-save",
     ttl: "Itakda ang TTL",
-    license: "Itakda ang lisensya",
     delete: "Tanggalin",
     remove: "Alisin",
     sure: "Oo naman",
@@ -262,38 +260,6 @@ const strings = {
     connectiondEdit: "I-edit ang koneksyon",
     connectiondView: "Tingnan ang koneksyon",
     connections: "Mga koneksyon",
-    licenseInfo: "Lisensya",
-    licenseEditable: "Mae-edit ang lisensya",
-    licenseEditableYes: "Oo",
-    licenseEditableNo: "Hindi",
-    licenseTerminalOnly: "Maaari lamang i-configure ang lisensya mula sa terminal ng server.",
-    licenseTierPolicyTitle: "Patakaran sa antas",
-    licenseTierPolicyText: "<h4>Free</h4>core Redis UI lang; walang SSH tunneling, walang Readonly connection mode, walang Cluster/Sentinel, walang Edit JSON/Upload binary/Download binary, no ReJSON.<br/><strong>Presyo: 0 HUF/buwan (€0/buwan) JSON, Mag-upload ng binary, Mag-download ng binary, ReJSON.<br/><strong>Base na presyo: 400 HUF/buwan (€1/buwan) o 9. (€10/taon).</strong><br/><strong>Kabuuan na may 27% VAT: 500 HUF/buwan (€1.27,1 buwan0) o HUF/taon (€12.70/taon) Cluster at Sentinel, kasama ang Edit JSON, Mag-upload ng binary, Mag-download ng binary, ReJSON; Gumagana din ang --readonly-connections/-r.<br/><strong>Base na presyo: 1,200 HUF/buwan (€3/buwan) o 12,000 HUF/taon (€30/taon).</strong><br/><strong>Kabuuan na may 27% VAT: 1,500 HUF/buwan (€3.81/buwan), o 3.81 €/buwan HUF/taon (€38.10/taon) presyo.<br/><br/><h4>Seats</h4>Default na lisensya ay may kasamang 5 upuan. Kung kailangan mo ng higit pang mga upuan, makipag-ugnayan sa amin sa <a href='mailto:mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><br/>support@corifeus.com</a>.<br/><br/><h4>XCenterprise trial OKZ0QP3X na araw na walang bayad para sa sinumang tunay na email address na may kasalukuyang email address para sa sinuman (hindi pagsubok na email).<br/><hr/><h4>Impormasyon sa pagsingil sa e-mail</h4>Name, Billing e-mail, Country code, Postal code, Lungsod, Address, VAT (opsyonal). pagkatapos ipadala ang pera @ <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> padadalhan kita ng invoice. Ang lahat ng mga pagbabayad ay hindi maibabalik.<br/><br/><h4>VAT</h4>VAT ay idinagdag sa presyo (27% Hungary).<br/><hr/><h4>Contact</h4>Kung gusto mong mag-hi o may tanong, makipag-ugnayan <a href='mailto:mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><hr/><h4>Language</h4>Invoice at lisensyang Ingles ang e-mail na Ingles. Ang currency ng invoice ay HUF.<br/><hr/><h4>Note</h4>Ang pagpapatunay ng lisensya ay nangangailangan ng internet access.",
-    licenseState: "Estado",
-    licenseStateActive: "Aktibo",
-    licenseStateInactive: "Hindi aktibo",
-    licenseStateNoLicense: "Walang lisensya",
-    licenseKeyMasked: "Naka-save na susi",
-    licenseTier: "Tier",
-    licenseValid: "Wasto",
-    licenseStatus: "Katayuan ng lisensya",
-    licenseReason: "Dahilan",
-    licenseCheckedAt: "Sinuri sa",
-    licenseStartsAt: "Nagsisimula sa",
-    licenseExpiresAt: "Mag-e-expire sa",
-    licenseDaysLeft: "Mga araw na natitira",
-    licenseMaxDevices: "Max na device",
-    licenseActiveDevices: "Mga aktibong device",
-    licenseActiveDevicesInfo: "Kung ang isang aparato ay hindi na ginagamit, ang upuan nito ay awtomatikong ilalabas pagkatapos ng 75 minuto.",
-    licenseCustomerEmail: "Email ng customer",
-    licenseFeatures: "Mga tampok",
-    licenseFeaturesEmpty: "Walang mga karagdagang tampok",
-    licenseFeatureReadonlyMode: "Readonly na connection mode",
-    licenseFeatureReadonlyConnectionsFlag: "Readonly na mga koneksyon (--readonly-connections/-r)",
-    licenseFeatureSsh: "SSH tunneling",
-    licenseFeatureCluster: "Cluster na mga koneksyon",
-    licenseFeatureSentinel: "Sentinel na mga koneksyon",
-    licenseFeatureReJSON: "ReJSON (JSON uri ng data)",
     keysSort: {
       on: "Naka-on ang pag-uuri ng susi",
       off: "Pag-uuri ng susi"
@@ -311,9 +277,6 @@ const strings = {
       on: "Readonly on",
       off: "Readonly off"
     },
-    proSshOnly: "Ang SSH ay available sa Pro o Enterprise.",
-    proReadonlyOnly: "Readonly connection mode ay available sa Pro o Enterprise.",
-    enterpriseClusterSentinelOnly: "Available lang sa Enterprise ang Cluster at Sentinel.",
     theme: {
       light: "Liwanag",
       dark: "Madilim na negosyo",
@@ -355,16 +318,20 @@ const strings = {
     importConflict: "Kung ang key ay mayroon na:",
     noKeysToExport: "Walang key na ie-export",
     time: "Oras",
+    type: "Uri",
+    format: "Format",
     loading: "Naglo-load...",
     autoRefresh: "Auto",
     exportSearchHint: "Nag-e-export lamang ng mga key na tumutugma sa kasalukuyang paghahanap",
     importSearchHint: "Ang import ay nalalapat sa buong database, hindi lamang sa mga resulta ng paghahanap",
+    deleteSearchHint: "Tinatanggal ang lahat ng key na tumutugma sa kasalukuyang paghahanap sa server",
+    deletingSearchKeys: "Tinatanggal ang mga tumutugmang key...",
     importNoKeys: "Walang nahanap na key sa file",
   },
   status: {
     dataCopied: "Ang data ay nasa clipboard",
-    licenseSaved: "Na-save ang lisensya",
     exportDone: "Kumpleto na ang export",
+    deletedSearchKeys: (opts) => `Natanggal ang ${opts.count} key`,
     indexCreated: "Index nilikha",
     indexDropped: "Index tinanggal",
     importDone: (opts) => `Kumpleto na ang import: ${opts.created} nilikha, ${opts.skipped} nilaktawan, ${opts.errors} mga error`,
@@ -412,35 +379,10 @@ const strings = {
     "readonly-connections": "Ang mga koneksyon na idinaragdag/i-save/tanggal ay readonly lamang!",
     "readonly-connection-mode": "Read only mode ang koneksyon na ito!",
     "list-out-of-bounds": "Ang listahan ng index na ito ay wala sa hangganan",
-    "donation-ware-feature": "Ang tampok na ito ay nasa bersyon ng donasyon.",
-    "feature-pro-readonly-required": "Ang read-only na connection mode ay nangangailangan ng Pro o Enterprise na lisensya.",
-    "feature-pro-ssh-required": "Ang SSH tunneling ay nangangailangan ng Pro o Enterprise na lisensya.",
-    "feature-enterprise-cluster-sentinel-required": "Ang Cluster at Sentinel ay nangangailangan ng lisensya ng Enterprise.",
-    "feature-pro-json-binary-required": "I-edit ang JSON, Mag-upload ng binary at Mag-download ng binary ay nangangailangan ng lisensya ng Pro o Enterprise.",
-    "feature-pro-rejson-required": "Ang ReJSON (JSON uri ng data) ay nangangailangan ng Pro o Enterprise na lisensya.",
     "invalid-json-value": "Ang halaga ay hindi wasto JSON.",
     "http_auth_required": "Kinakailangan ang pahintulot: mangyaring patotohanan gamit ang HTTP Basic Auth at i-reload.",
     "auto-connection-failed": "Posible, naalis ang koneksyon at nabigo ang awtomatikong koneksyon, dahil dito.",
     invalid_console_command: "Hindi gumagana ang command na ito sa pamamagitan ng GUI."
-  },
-  licenseReason: {
-    LICENSE_VALID: "May bisa ang lisensya",
-    LICENSE_INVALID: "Di-wasto ang lisensya",
-    LICENSE_MISSING: "Walang nakatakdang susi ng lisensya",
-    LICENSE_DISABLED: "Hindi pinagana ang lisensya sa config ng server",
-    LICENSE_NOT_FOUND: "Hindi nakita ang lisensya",
-    LICENSE_EXPIRED: "Nag-expire na ang lisensya",
-    LICENSE_CLEARED: "Na-clear ang susi ng lisensya",
-    LICENSE_MAX_DEVICES_REACHED: "Naabot na ang maximum na upuan ng device",
-    PRODUCT_MISMATCH: "Ang produkto ng lisensya ay hindi tumutugma"
-  },
-  licenseStatusValue: {
-    active: "Aktibo",
-    deleted: "Tinanggal",
-    all: "Lahat",
-    expired: "Nag-expire na",
-    missing: "Nawawala",
-    inactive: "Hindi aktibo"
   },
   form: {
     error: {
@@ -610,12 +552,49 @@ const strings = {
           field: "Patlang",
           value: "Halaga"
         }
+      },
+      timeseries: {
+        chart: "Tsart",
+        info: "Impormasyon",
+        addPoint: "Magdagdag ng Data Point",
+        from: "Mula (ms o -)",
+        to: "Hanggang (ms o +)",
+        aggregation: "Pagsasama-sama",
+        timeBucket: "Timba (ms)",
+        none: "Wala",
+        dataPoints: "mga data point",
+        labels: "Mga Label",
+        rules: "Mga Panuntunan",
+        retention: "Pagpapanatili",
+        timestamp: "Timestamp",
+        value: "Halaga",
+        retentionHint: "0 = walang expiry, o milliseconds",
+        duplicatePolicy: "Patakaran sa duplicate",
+        labelsHint: "key1 value1 key2 value2",
+        timestampHint: "'*' ay nangangahulugang auto generated, o milliseconds timestamp",
+        editAllHint: "Isang data point bawat linya: timestamp halaga (timestamp ay maaaring * para sa auto)",
+        autoSpread: "Auto * spread interval",
+        formula: "Formula",
+        formulaLinear: "Linear",
+        formulaRandom: "Random",
+        formulaSawtooth: "Sawtooth",
+        formulaPoints: "Mga Punto",
+        formulaAmplitude: "Amplitude",
+        formulaOffset: "Offset",
+        generate: "I-generate",
+        exportChart: "I-export ang PNG",
+        overlay: "I-overlay ang mga susi",
+        overlayHint: "Mga susi na pinaghihiwalay ng kuwit",
+        mrangeFilter: "Filter ng label",
+        bulkMode: "Bulk generate",
+        mrangeHint: "hal. sensor=temp"
       }
     },
     treeControls: {
       settings: "Mga setting ng puno",
       expandAll: "Palawakin lahat",
       collapseAll: "I-collapse lahat",
+      level: "Antas",
       search: {
         search: "Maghanap sa mga susi",
         clear: "I-clear ang kasalukuyang paghahanap upang itakdang walang laman",
@@ -634,13 +613,21 @@ const strings = {
     }
   },
   time: {
+    type: "Uri",
+    format: "Format",
     loading: "Naglo-load...",
     years: "taon",
     months: "buwan",
     days: "araw",
     year: "taon",
     month: "buwan",
-    day: "araw"
+    day: "araw",
+    second: "segundo",
+    seconds: "mga segundo",
+    minute: "minuto",
+    minutes: "mga minuto",
+    hour: "oras",
+    hours: "mga oras"
   },
   redisTypes: {
     string: "String",
@@ -649,7 +636,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

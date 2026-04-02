@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "බලපත්\u200dරය ඉවත් කරන ලදී",
-    invalid_license: "අවලංගු බලපත්\u200dරය",
-    license_max_devices_reached: "උපරිම උපාංග ආසන සීමාවට ළඟා විය",
-    license_readonly: "බලපත්\u200dරය සේවාදායක පර්යන්තයෙන් පමණක් වෙනස් කළ හැක.",
     server_error: "සේවාදායක දෝෂයක්, කරුණාකර නැවත උත්සාහ කරන්න"
   },
   title: {
@@ -51,8 +47,12 @@ const strings = {
     deleteAllKeys: opts => {
       return `මෙම ගස සහ එහි සියලුම යතුරු මකන්නද (${opts.key})?`;
     },
+    deleteSearchKeys: opts => {
+      return `"${opts.pattern}" සමඟ ගැළපෙන සියලුම යතුරු මකා දැමීමට අවශ්‍ය බව විශ්වාසද? යතුරු ${opts.count}ක් හමු විය.`;
+    },
     socketioConnectError: "Socket.IO සේවාදායකයට සම්බන්ධ විය නොහැක, ඔබට නැවත පූරණය කර සම්බන්ධතා දෝෂය විසඳීමට උත්සාහ කළ හැක, සේවාලාභියාට එය තනිවම විසඳන්නේ කෙසේදැයි නොදනී.",
     socketioAuthRequired: "Socket.IO අවසරය අවශ්\u200dයයි. කරුණාකර HTTP Basic Auth (පරිශීලක නාමය/මුරපදය) සමඟ සත්\u200dයාපනය කර නැවත පූරණය කරන්න.",
+    delete: "මකන්නද?",
     deleteKey: "ඔබට මෙම යතුර මකා දැමීමට අවශ්\u200dය බව විශ්වාසද?",
     rename: {
       title: "ඔබට මෙම යතුර නැවත නම් කිරීමට අවශ්\u200dය බව විශ්වාසද?",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "පෙළ කාලයට පරිවර්තනය කරන්න",
       convertTextToTimePlaceholder: "උදා. 1d 86400 වනු ඇත"
     },
-    license: {
-      title: "බලපත්\u200dරය සකසන්න",
-      textContent: "If you want to use paid features, please contact support@corifeus.com to request a license. Pricing is Pro 400 HUF/month (\u20ac1/month) or 4,000 HUF/year (\u20ac10/year), and Enterprise 1,200 HUF/month (\u20ac3/month) or 12,000 HUF/year (\u20ac30/year). Yearly is 10x monthly. With 27% VAT, totals are Pro 500 HUF/month (\u20ac1.27/month) or 5,100 HUF/year (\u20ac12.70/year), Enterprise 1,500 HUF/month (\u20ac3.81/month) or 15,200 HUF/year (\u20ac38.10/year). License validation requires internet access. Default license includes 5 seats. If you need more seats, contact us at support@corifeus.com.",
-      placeholder: "බලපත්\u200dර යතුර"
-    }
   },
   language: {
     // When you translate the english name, keep the Language in English
@@ -138,13 +133,17 @@ const strings = {
     exportKeys: "යතුරු අපනයනය",
     exportAllKeys: (opts) => `සියලුම ${opts.count} යතුරු අපනයනය`,
     exportSearchResults: (opts) => `${opts.count} ප්‍රතිඵල අපනයනය`,
+    deleteAllKeysMenu: (opts) => `සියල්ල මකන්න ${opts.count}`,
     importKeys: "යතුරු ආනයනය",
+    deleteSearchKeys: (opts) => `ගැළපෙන යතුරු ${opts.count}ක් මකන්න`,
     saveWithFormatJson: "ආකෘතිය සමඟ සුරකින්න",
     formatJson: "Json ආකෘතිකරණය",
     wrap: "ඔතන්න",
     unwrap: "ලිහන්න",
     downloadJson: "JSON බාගත කරන්න",
-    pubsubMonitor: "PubSub නිරීක්ෂකය",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "භාෂාව / Language",
@@ -185,7 +184,6 @@ const strings = {
     edit: "සංස්කරණය කරන්න",
     save: "සුරකින්න",
     ttl: "TTL සකසන්න",
-    license: "බලපත්\u200dරය සකසන්න",
     delete: "මකන්න",
     remove: "ඉවත් කරන්න",
     sure: "විශ්වාසයි",
@@ -264,38 +262,6 @@ const strings = {
     connectiondEdit: "සම්බන්ධතාවය සංස්කරණය කරන්න",
     connectiondView: "සම්බන්ධතාවය බලන්න",
     connections: "සම්බන්ධතා",
-    licenseInfo: "බලපත්\u200dරය",
-    licenseEditable: "බලපත්\u200dරය සංස්කරණය කළ හැක",
-    licenseEditableYes: "ඔව්",
-    licenseEditableNo: "නැත",
-    licenseTerminalOnly: "බලපත්\u200dරය සේවාදායක පර්යන්තයෙන් පමණක් වින්\u200dයාස කළ හැක.",
-    licenseTierPolicyTitle: "මට්ටම් ප්\u200dරතිපත්තිය",
-    licenseTierPolicyText: "<h4>නොමිලේ</h4>මූලික Redis UI පමණි; SSH උමගක් නැත, කියවීම පමණක් සම්බන්ධතා ප්\u200dරකාරය නැත, Cluster/Sentinel නැත, JSON සංස්කරණය/ද්විමය උඩුගත/ද්විමය බාගත නැත, ReJSON නැත.<br/><strong>මිල: 0 HUF/මාසය (\u20ac0/මාසය).</strong><br/><br/><h4>Pro</h4>SSH උමගක්, කියවීම පමණක් සම්බන්ධතා ප්\u200dරකාරය (--readonly-connections/-r ඇතුළුව), JSON සංස්කරණය, ද්විමය උඩුගත, ද්විමය බාගත, ReJSON.<br/><strong>මූලික මිල: 400 HUF/මාසය (\u20ac1/මාසය) හෝ 4,000 HUF/වසරකට (\u20ac10/වසරකට).</strong><br/><strong>27% VAT සමඟ මුළු: 500 HUF/මාසය (\u20ac1.27/මාසය) හෝ 5,100 HUF/වසරකට (\u20ac12.70/වසරකට).</strong><br/><br/><h4>Enterprise</h4>SSH උමගක්, Cluster සහ Sentinel, තවද JSON සංස්කරණය, ද්විමය උඩුගත, ද්විමය බාගත, ReJSON; --readonly-connections/-r ද ක්\u200dරියා කරයි.<br/><strong>මූලික මිල: 1,200 HUF/මාසය (\u20ac3/මාසය) හෝ 12,000 HUF/වසරකට (\u20ac30/වසරකට).</strong><br/><strong>27% VAT සමඟ මුළු: 1,500 HUF/මාසය (\u20ac3.81/මාසය) හෝ 15,200 HUF/වසරකට (\u20ac38.10/වසරකට).</strong><br/><br/><h4>වාර්ෂික නියමය</h4>වාර්ෂික මිල මාසික මිලේ 10x වේ.<br/><br/><h4>ආසන</h4>පෙරනිමි බලපත්\u200dරයට ආසන 5ක් ඇතුළත් වේ. ඔබට තවත් ආසන අවශ්\u200dය නම්, <a href='mailto:support@corifeus.com'>support@corifeus.com</a> හරහා අපව සම්බන්ධ කර ගන්න.<br/><br/><h4>Enterprise අත්හදා බැලීම</h4>සැබෑ විද්\u200dයුත් තැපැල් ලිපිනයක් ඇති ඕනෑම කෙනෙකුට දින 10ක් නොමිලේ (පරීක්ෂණ විද්\u200dයුත් තැපෑල නොවේ).<br/><hr/><h4>විද්\u200dයුත් තැපෑලෙන් බිල්පත් තොරතුරු</h4>නම, බිල්පත් විද්\u200dයුත් තැපෑල, රට කේතය, තැපැල් කේතය, නගරය, ලිපිනය, VAT ID (විකල්ප).<br/><br/><h4>ගෙවීම</h4>PayPal ගෙවීම HUF (forint) වලින් පමණක් ලබා ගත හැක; <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> @ මුදල් යැවීමෙන් පසු මම ඔබට ඉන්වොයිසියක් එවන්නෙමි. සියලුම ගෙවීම් ආපසු නොගෙවේ.<br/><br/><h4>VAT</h4>VAT මිලට එකතු වේ (හංගේරියාවේ 27%).<br/><hr/><h4>සම්බන්ධ වන්න</h4>ඔබට ආයුබෝවන් කීමට හෝ ප්\u200dරශ්නයක් ඇත්නම්, <a href='mailto:support@corifeus.com'>support@corifeus.com</a> අමතන්න.<br/><hr/><h4>භාෂාව</h4>ඉන්වොයිසිය සහ බලපත්\u200dර විද්\u200dයුත් තැපැල් සන්නිවේදනය ඉංග්\u200dරීසියෙන්. ඉන්වොයිසි මුදල් HUF.<br/><hr/><h4>සටහන</h4>බලපත්\u200dර වලංගුකරණයට අන්තර්ජාල ප්\u200dරවේශය අවශ්\u200dයයි.",
-    licenseState: "තත්ත්වය",
-    licenseStateActive: "සක්\u200dරීය",
-    licenseStateInactive: "අක්\u200dරීය",
-    licenseStateNoLicense: "බලපත්\u200dරයක් නැත",
-    licenseKeyMasked: "සුරකින ලද යතුර",
-    licenseTier: "මට්ටම",
-    licenseValid: "වලංගු",
-    licenseStatus: "බලපත්\u200dර තත්ත්වය",
-    licenseReason: "හේතුව",
-    licenseCheckedAt: "පරීක්ෂා කළ වේලාව",
-    licenseStartsAt: "ආරම්භ වේලාව",
-    licenseExpiresAt: "කල් ඉකුත් වන වේලාව",
-    licenseDaysLeft: "ඉතිරි දින",
-    licenseMaxDevices: "උපරිම උපාංග",
-    licenseActiveDevices: "සක්\u200dරීය උපාංග",
-    licenseActiveDevicesInfo: "උපාංගයක් තවදුරටත් භාවිතා නොකරන්නේ නම්, එහි ආසනය මිනිත්තු 75කට පසු ස්වයංක්\u200dරීයව මුදා හරිනු ලැබේ.",
-    licenseCustomerEmail: "පාරිභෝගික විද්\u200dයුත් තැපෑල",
-    licenseFeatures: "විශේෂාංග",
-    licenseFeaturesEmpty: "අමතර විශේෂාංග නැත",
-    licenseFeatureReadonlyMode: "කියවීම පමණක් සම්බන්ධතා ප්\u200dරකාරය",
-    licenseFeatureReadonlyConnectionsFlag: "කියවීම පමණක් සම්බන්ධතා (--readonly-connections/-r)",
-    licenseFeatureSsh: "SSH උමගක්",
-    licenseFeatureCluster: "Cluster සම්බන්ධතා",
-    licenseFeatureSentinel: "Sentinel සම්බන්ධතා",
-    licenseFeatureReJSON: "ReJSON (JSON දත්ත වර්ගය)",
     keysSort: {
       on: "යතුරු වර්ග කිරීම සක්\u200dරීයයි",
       off: "යතුරු වර්ග කිරීම අක්\u200dරීයයි"
@@ -313,9 +279,6 @@ const strings = {
       on: "කියවීම පමණක් සක්\u200dරීයයි",
       off: "කියවීම පමණක් අක්\u200dරීයයි"
     },
-    proSshOnly: "SSH Pro හෝ Enterprise වලින් ලබා ගත හැක.",
-    proReadonlyOnly: "කියවීම පමණක් සම්බන්ධතා ප්\u200dරකාරය Pro හෝ Enterprise වලින් ලබා ගත හැක.",
-    enterpriseClusterSentinelOnly: "Cluster සහ Sentinel Enterprise වලින් පමණක් ලබා ගත හැක.",
     theme: {
       light: "ලා",
       dark: "අඳුරු enterprise",
@@ -357,16 +320,20 @@ const strings = {
     importConflict: "යතුර දැනටමත් පවතී නම්:",
     noKeysToExport: "අපනයනය කිරීමට යතුරු නැත",
     time: "කාලය",
+    type: "වර්ගය",
+    format: "ආකෘතිය",
     loading: "පූරණය වෙමින්...",
     autoRefresh: "ස්වයං",
     exportSearchHint: "වත්මන් සෙවීමට ගැළපෙන යතුරු පමණක් අපනයනය කරයි",
     importSearchHint: "ආනයනය සෙවුම් ප්‍රතිඵලවලට පමණක් නොව සම්පූර්ණ දත්ත සමුදායට අදාළ වේ",
+    deleteSearchHint: "සේවාදායකයේ වත්මන් සෙවීමට ගැළපෙන සියලුම යතුරු මකා දමයි",
+    deletingSearchKeys: "ගැළපෙන යතුරු මකා දමමින්...",
     importNoKeys: "ගොනුවේ යතුරු හමු නොවීය",
   },
   status: {
     dataCopied: "දත්ත පසුරු පුවරුවේ ඇත",
-    licenseSaved: "බලපත්\u200dරය සුරකින ලදී",
     exportDone: "අපනයනය සම්පූර්ණයි",
+    deletedSearchKeys: (opts) => `යතුරු ${opts.count}ක් මකා දමන ලදී`,
     indexCreated: "සුචිය සාදන ලදී",
     indexDropped: "සුචිය මකා දමන ලදී",
     importDone: (opts) => `ආනයනය සම්පූර්ණයි: ${opts.created} සාදන ලදී, ${opts.skipped} මඟ හැරිණි, ${opts.errors} දෝෂ`,
@@ -414,35 +381,10 @@ const strings = {
     "readonly-connections": "සම්බන්ධතා එක් කිරීම/සුරැකීම/මකා දැමීම කියවීම පමණි!",
     "readonly-connection-mode": "මෙම සම්බන්ධතාවය කියවීම පමණක් ප්\u200dරකාරයකි!",
     "list-out-of-bounds": "මෙම ලැයිස්තු දර්ශකය සීමාවෙන් පිටතය",
-    "donation-ware-feature": "මෙම විශේෂාංගය පරිත්\u200dයාග අනුවාදයේ ඇත.",
-    "feature-pro-readonly-required": "කියවීම පමණක් සම්බන්ධතා ප්\u200dරකාරයට Pro හෝ Enterprise බලපත්\u200dරයක් අවශ්\u200dයයි.",
-    "feature-pro-ssh-required": "SSH උමගට Pro හෝ Enterprise බලපත්\u200dරයක් අවශ්\u200dයයි.",
-    "feature-enterprise-cluster-sentinel-required": "Cluster සහ Sentinel සඳහා Enterprise බලපත්\u200dරයක් අවශ්\u200dයයි.",
-    "feature-pro-json-binary-required": "JSON සංස්කරණය, ද්විමය උඩුගත සහ ද්විමය බාගත කිරීමට Pro හෝ Enterprise බලපත්\u200dරයක් අවශ්\u200dයයි.",
-    "feature-pro-rejson-required": "ReJSON (JSON දත්ත වර්ගය) සඳහා Pro හෝ Enterprise බලපත්\u200dරයක් අවශ්\u200dයයි.",
     "invalid-json-value": "අගය වලංගු JSON නොවේ.",
     "http_auth_required": "අවසරය අවශ්\u200dයයි: කරුණාකර HTTP Basic Auth සමඟ සත්\u200dයාපනය කර නැවත පූරණය කරන්න.",
     "auto-connection-failed": "සම්බන්ධතාවය ඉවත් කර ඇති විය හැකි අතර ස්වයංක්\u200dරීය සම්බන්ධතාවය මේ නිසා අසාර්ථක විය.",
     invalid_console_command: "මෙම විධානය GUI හරහා ක්\u200dරියා නොකරයි."
-  },
-  licenseReason: {
-    LICENSE_VALID: "බලපත්\u200dරය වලංගුයි",
-    LICENSE_INVALID: "බලපත්\u200dරය අවලංගුයි",
-    LICENSE_MISSING: "බලපත්\u200dර යතුරක් සකසා නැත",
-    LICENSE_DISABLED: "සේවාදායක වින්\u200dයාසයේ බලපත්\u200dරය අක්\u200dරීය කර ඇත",
-    LICENSE_NOT_FOUND: "බලපත්\u200dරය හමු නොවීය",
-    LICENSE_EXPIRED: "බලපත්\u200dරය කල් ඉකුත් වී ඇත",
-    LICENSE_CLEARED: "බලපත්\u200dර යතුර ඉවත් කරන ලදී",
-    LICENSE_MAX_DEVICES_REACHED: "උපරිම උපාංග ආසන සීමාවට ළඟා විය",
-    PRODUCT_MISMATCH: "බලපත්\u200dර නිෂ්පාදනය නොගැළපේ"
-  },
-  licenseStatusValue: {
-    active: "සක්\u200dරීය",
-    deleted: "මකන ලදී",
-    all: "සියල්ල",
-    expired: "කල් ඉකුත් වී ඇත",
-    missing: "අතුරුදහන්",
-    inactive: "අක්\u200dරීය"
   },
   form: {
     error: {
@@ -612,12 +554,49 @@ const strings = {
           field: "ක්ෂේත්\u200dරය",
           value: "අගය"
         }
+      },
+      timeseries: {
+        chart: "ප්\u200dරස්තාරය",
+        info: "තොරතුරු",
+        addPoint: "දත්ත ලක්ෂ්\u200dයක් එක් කරන්න",
+        from: "සිට (ms හෝ -)",
+        to: "දක්වා (ms හෝ +)",
+        aggregation: "එකතු කිරීම",
+        timeBucket: "බාල්දිය (ms)",
+        none: "කිසිවක් නැත",
+        dataPoints: "දත්ත ලක්ෂ්\u200dය",
+        labels: "ලේබල",
+        rules: "නීති",
+        retention: "රඳවා තබා ගැනීම",
+        retentionHint: "0 = කල් ඉකුත් වීමක් නැත, හෝ මිලිතත්පර",
+        duplicatePolicy: "අනුපිටපත් ප්‍රතිපත්තිය",
+        labelsHint: "යතුර1 අගය1 යතුර2 අගය2",
+        timestampHint: "'*' යනු ස්වයංක්‍රීයව ජනනය වූ, හෝ මිලිතත්පර කාල මුද්‍රාව",
+        editAllHint: "පේළියකට එක දත්ත ලක්ෂ්‍යයක්: කාල_මුද්‍රාව අගය (කාල මුද්‍රාව ස්වයංක්‍රීය සඳහා * විය හැක)",
+        autoSpread: "ස්වයංක්‍රීය * පැතිරීමේ පරතරය",
+        formula: "සූත්‍රය",
+        formulaLinear: "රේඛීය",
+        formulaRandom: "අහඹු",
+        formulaSawtooth: "කියත් දත්",
+        formulaPoints: "ලක්ෂ්‍ය",
+        formulaAmplitude: "විස්තාරය",
+        formulaOffset: "ඕෆ්සෙට්",
+        generate: "ජනනය කරන්න",
+        exportChart: "PNG අපනයනය",
+        overlay: "අතිච්ඡාදනය යතුරු",
+        overlayHint: "කොමාවෙන් වෙන් කළ යතුරු",
+        mrangeFilter: "ලේබල පෙරහන",
+        bulkMode: "තොග ජනනය",
+        mrangeHint: "උදා. sensor=temp",
+        timestamp: "කාල මුද්\u200dරාව",
+        value: "අගය"
       }
     },
     treeControls: {
       settings: "ගස් සැකසුම්",
       expandAll: "සියල්ල පුළුල් කරන්න",
       collapseAll: "සියල්ල හකුළන්න",
+      level: "මටdelays",
       search: {
         search: "යතුරු තුළ සොයන්න",
         clear: "වත්මන් සෙවුම හිස් කිරීමට මකන්න",
@@ -636,13 +615,21 @@ const strings = {
     }
   },
   time: {
+    type: "වර්ගය",
+    format: "ආකෘතිය",
     loading: "පූරණය වෙමින්...",
     years: "අවුරුදු",
     months: "මාස",
     days: "දින",
     year: "අවුරුද්ද",
     month: "මාසය",
-    day: "දිනය"
+    day: "දිනය",
+    second: "තත්පරය",
+    seconds: "තත්පර",
+    minute: "මිනිත්තුව",
+    minutes: "මිනිත්තු",
+    hour: "පැය",
+    hours: "පැය"
   },
   redisTypes: {
     string: "String",
@@ -651,7 +638,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

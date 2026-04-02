@@ -1,9 +1,8 @@
-import { Component, Input, Inject, OnInit, OnDestroy, AfterViewInit, NgZone, ElementRef, ViewEncapsulation, ChangeDetectionStrategy, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, Input, Inject, OnInit, OnDestroy, AfterViewInit, NgZone, ElementRef, ViewEncapsulation, ChangeDetectionStrategy, ChangeDetectorRef, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
@@ -34,7 +33,6 @@ let actionHistoryPosition = -1;
         FormsModule,
         ReactiveFormsModule,
         MatToolbarModule,
-        MatCheckboxModule,
         MatTooltipModule,
         MatAutocompleteModule,
         MatInputModule,
@@ -52,10 +50,8 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
 
     searchText = '';
     searchControl = new FormControl('');
-    monitorEnabled = false;
-    monitorPattern = '*';
-    showMonitorPopup = false;
     filteredCommands: string[] = [];
+
 
     aiLoading = false;
 
@@ -64,8 +60,6 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
     private contentClicked = false;
     private readonly unsubs: Array<() => void> = [];
     private index = 0;
-    private monitorPopupTimeout: any = null;
-    private monitorPatternDebounce: any = null;
 
     // DOM references
     private containerEl: HTMLElement | null = null;
@@ -94,9 +88,6 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.monitorEnabled = p3xr.state.monitor ?? false;
-        this.monitorPattern = p3xr.state.monitorPattern ?? '*';
-
         // Filter commands as user types
         this.searchControl.valueChanges.subscribe((value: string | null) => {
             this.searchText = value || '';
@@ -131,9 +122,6 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
 
         window.removeEventListener('resize', this.resizeFn);
 
-        this.socket.getClient()?.removeListener?.('pubsub-message', this.onPubSubMessage);
-        if (this.monitorPopupTimeout) clearTimeout(this.monitorPopupTimeout);
-        if (this.monitorPatternDebounce) clearTimeout(this.monitorPatternDebounce);
         this.unsubs.forEach(fn => fn());
     }
 
@@ -162,6 +150,7 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
     activate(): void {
         if (this.embedded) {
             this.emitToAngularJS('p3xr-console-activate');
+            this.forceScrollToBottom();
         }
     }
 
@@ -176,16 +165,19 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
 
     async actionEnter(): Promise<void> {
         const enter = (this.searchText || '').trim();
-        if (!enter || this.aiLoading) return;
+        if (!enter) return;
 
         // Explicit ai: prefix — go straight to AI (if enabled)
         if (p3xr.state.cfg?.aiEnabled !== false && /^ai:\s*/i.test(enter)) {
+            if (this.aiLoading) return;
             const prompt = enter.replace(/^ai:\s*/i, '').trim();
             if (prompt) {
                 await this.handleAiQuery(prompt, enter);
             }
             return;
         }
+
+        if (this.aiLoading) return;
 
         let response: any;
         try {
@@ -218,7 +210,8 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
 
             // If Redis doesn't recognize the command, silently try AI (if enabled)
             if (p3xr.state.cfg?.aiEnabled !== false && this.looksLikeNaturalLanguage(enter, errorMsg)) {
-                const aiSuccess = await this.handleAiQuery(enter, enter);
+                let aiSuccess = false;
+                aiSuccess = await this.handleAiQuery(enter, enter);
                 if (aiSuccess) return;
                 // AI also failed — show the original Redis error
                 this.outputAppend(`${htmlEncode(enter)}<br/><pre>${this.i18n.strings().code?.[errorMsg] || errorMsg}</pre>`);
@@ -227,13 +220,13 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
 
             this.outputAppend(`${htmlEncode(enter)}<br/><pre>${this.i18n.strings().code?.[errorMsg] || errorMsg}</pre>`);
         } finally {
-            const history = response?.generatedCommand ?? enter;
-            this.updateCommandHistory(history);
-            this.scrollOutputToBottom();
+            this.updateCommandHistory(enter);
+            this.forceScrollToBottom();
 
             if (this.type === 'quick' || this.embedded) {
                 this.cmd.refresh({ withoutParent: true });
             }
+            (this.inputEl as HTMLElement)?.focus();
         }
     }
 
@@ -242,12 +235,8 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
         const isUnknownCmd = /unknown command|wrong number of arguments|ERR unknown/i.test(errorMsg);
         if (!isUnknownCmd) return false;
 
-        // Check if input looks like natural language (contains spaces and isn't a known Redis pattern)
-        const words = input.trim().split(/\s+/);
-        if (words.length < 2) return false;
-
         // If the first word is a known Redis command, it's probably a syntax error, not natural language
-        const firstWord = words[0].toUpperCase();
+        const firstWord = input.trim().split(/\s+/)[0].toUpperCase();
         if (p3xr.state.commands?.includes(firstWord)) return false;
 
         return true;
@@ -255,6 +244,7 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
 
     private async handleAiQuery(prompt: string, originalInput: string): Promise<boolean> {
         this.aiLoading = true;
+        (this.inputEl as HTMLElement)?.focus();
 
         try {
             // Gather RediSearch indexes for context
@@ -288,26 +278,17 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
             const explanation = response.explanation || '';
 
             this.outputAppend(htmlEncode(originalInput));
+            this.updateCommandHistory(originalInput);
+
             if (command) {
                 let aiLine = `<strong style="color: var(--mat-sys-primary);">AI &rarr;</strong> <code>${htmlEncode(command)}</code>`;
                 if (explanation) {
                     aiLine += `<br/><span style="opacity: 0.7; font-size: 0.9em;">${htmlEncode(explanation)}</span>`;
                 }
-                this.outputAppend(aiLine);
-            }
-            this.updateCommandHistory(originalInput);
-
-            // Auto-execute the generated command
-            if (command) {
+                this.outputAppend(aiLine + '<br/>');
                 this.searchText = command;
-                this.searchControl.setValue(command);
-                this.aiLoading = false;
-                this.aiExecuting = true;
-                try {
-                    await this.actionEnter();
-                } finally {
-                    this.aiExecuting = false;
-                }
+                this.searchControl.setValue(command, { emitEvent: false });
+                this.filteredCommands = [];
             }
             return true;
         } catch (e: any) {
@@ -315,7 +296,7 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
             return false;
         } finally {
             this.aiLoading = false;
-            this.scrollOutputToBottom();
+            this.forceScrollToBottom();
             (this.inputEl as HTMLElement)?.focus();
         }
     }
@@ -361,63 +342,10 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
         this.outputAppend('<strong>' + (this.i18n.strings().label?.welcomeConsole ?? 'Welcome to the Redis Console') + '</strong>');
         this.outputAppend((this.i18n.strings().label?.welcomeConsoleInfo ?? 'Cursor UP or DOWN history is enabled') + '<br/>');
         this.persistConsoleOutputNow();
-        this.scrollOutputToBottom();
+        this.forceScrollToBottom();
         (this.inputEl as HTMLElement)?.focus();
     }
 
-    async setMonitorState(): Promise<void> {
-        try {
-            p3xr.state.monitor = this.monitorEnabled;
-            await this.socket.request({
-                action: 'set-subscription',
-                payload: {
-                    subscription: this.monitorEnabled,
-                    subscriberPattern: p3xr.state.monitorPattern,
-                },
-            });
-        } catch (e) {
-            this.common.generalHandleError(e);
-            this.monitorEnabled = false;
-            p3xr.state.monitor = false;
-        }
-    }
-
-    toggleMonitor(): void {
-        // checkbox ngModelChange handles the state
-    }
-
-    onMonitorMouseEnter(): void {
-        if (this.embedded && this.elementRef.nativeElement.classList.contains('p3xr-console-embedded-collapsed')) {
-            return;
-        }
-        if (this.monitorPopupTimeout) {
-            clearTimeout(this.monitorPopupTimeout);
-            this.monitorPopupTimeout = null;
-        }
-        this.showMonitorPopup = true;
-    }
-
-    onMonitorMouseLeave(): void {
-        if (this.monitorPopupTimeout) {
-            clearTimeout(this.monitorPopupTimeout);
-        }
-        this.monitorPopupTimeout = setTimeout(() => {
-            this.showMonitorPopup = false;
-            this.monitorPopupTimeout = null;
-        }, 1000);
-    }
-
-    onMonitorPatternChange(value: string): void {
-        this.monitorPattern = value;
-        p3xr.state.monitorPattern = value;
-        if (this.monitorPatternDebounce) {
-            clearTimeout(this.monitorPatternDebounce);
-        }
-        this.monitorPatternDebounce = setTimeout(() => {
-            this.setMonitorState();
-            this.monitorPatternDebounce = null;
-        }, 1000);
-    }
 
     openCommands(event: Event): void {
         window.open('https://redis.io/docs/latest/commands/', '_blank');
@@ -457,9 +385,6 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.persistOutputDebounced = debounce(() => this.persistConsoleOutputNow(), p3xr.settings.debounce);
 
-        // PubSub listener
-        this.socket.getClient()?.on?.('pubsub-message', this.onPubSubMessage);
-
         // Listen for resize events from main component
         const resizeSub = this.cmd.consoleEmbeddedResize$.subscribe(() => {
             if (this.embedded) this.rawResize();
@@ -474,7 +399,7 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
             if (!this.restoreConsoleOutput()) {
                 this.clearConsole();
             } else {
-                this.scrollOutputToBottom();
+                this.forceScrollToBottom();
             }
             this.rawResize();
 
@@ -505,13 +430,6 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
             }
         });
     }
-
-    private onPubSubMessage = (data: any): void => {
-        if (p3xr.state.monitor === false) return;
-        const message = htmlEncode(String(data.message));
-        this.outputAppend(`<strong>PubSub channel:</strong> ${data.channel}<br/><pre>${message}</pre>`);
-        if (this.scrollers) this.scrollers.scrollTop = this.scrollers.scrollHeight;
-    };
 
     private setInputTheme(): void {
         if (!this.inputEl) return;
@@ -570,6 +488,19 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private scrollOutputToBottom(): void {
+        setTimeout(() => {
+            if (!this.scrollers) return;
+            // Only auto-scroll if user is near the bottom (within 100px)
+            const threshold = 100;
+            const isNearBottom = this.scrollers.scrollHeight - this.scrollers.scrollTop - this.scrollers.clientHeight < threshold;
+            if (isNearBottom) {
+                this.scrollers.scrollTop = this.scrollers.scrollHeight;
+                if (this.outputEl) this.outputEl.scrollTop = this.outputEl.scrollHeight;
+            }
+        }, 0);
+    }
+
+    private forceScrollToBottom(): void {
         setTimeout(() => {
             if (!this.scrollers) return;
             this.scrollers.scrollTop = this.scrollers.scrollHeight;

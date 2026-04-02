@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "Licentie gewist",
-    invalid_license: "Ongeldige licentie",
-    license_max_devices_reached: "Maximaal aantal apparaatplaatsen bereikt",
-    license_readonly: "De licentie kan alleen worden gewijzigd vanuit de serverterminal.",
     server_error: "Serverfout, probeer het opnieuw"
   },
   title: {
@@ -48,8 +44,12 @@ const strings = {
     deleteConnection: "Bevestigen",
     deleteConnectionText: "Weet u zeker dat u deze Redis-verbinding wilt verwijderen?",
     deleteNode: "Weet u zeker dat u dit Redis-knooppunt wilt verwijderen?",
+    delete: "Verwijderen?",
     deleteAllKeys: opts => {
       return `Deze boom en al zijn sleutels verwijderen (${opts.key})?`;
+    },
+    deleteSearchKeys: opts => {
+      return `Weet u zeker dat u alle sleutels wilt verwijderen die overeenkomen met "${opts.pattern}"? ${opts.count} sleutels gevonden.`;
     },
     socketioConnectError: "Socket.IO kan geen verbinding maken met de server. U kunt herladen en proberen de verbindingsfout zelf op te lossen; de client weet niet hoe het zelf op te lossen.",
     socketioAuthRequired: "Socket.IO-autorisatie is vereist. Authenticeer met HTTP Basic Auth (gebruikersnaam/wachtwoord) en herlaad.",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "Tekst omzetten naar tijd",
       convertTextToTimePlaceholder: "Bijv. 1d wordt 86400"
     },
-    license: {
-      title: "Licentie instellen",
-      textContent: "Als u betaalde functies wilt gebruiken, neem dan contact op met support@corifeus.com om een licentie aan te vragen. De prijs is Pro 400 HUF/maand (€1/maand) of 4.000 HUF/jaar (€10/jaar), en Enterprise 1.200 HUF/maand (€3/maand) of 12.000 HUF/jaar (€30/jaar). Jaarlijks is 10x maandelijks. Met 27% BTW zijn de totalen Pro 500 HUF/maand (€1,27/maand) of 5.100 HUF/jaar (€12,70/jaar), Enterprise 1.500 HUF/maand (€3,81/maand) of 15.200 HUF/jaar (€38,10/jaar). Licentieverificatie vereist internettoegang. De standaardlicentie bevat 5 plaatsen. Als u meer plaatsen nodig hebt, neem dan contact met ons op via support@corifeus.com.",
-      placeholder: "Licentiesleutel"
-    }
   },
   language: {
     bg: "Български / Bulgarian",
@@ -136,13 +131,17 @@ const strings = {
     exportKeys: "Sleutels exporteren",
     exportAllKeys: (opts) => `Alle ${opts.count} sleutels exporteren`,
     exportSearchResults: (opts) => `${opts.count} resultaten exporteren`,
+    deleteAllKeysMenu: (opts) => `Alles verwijderen ${opts.count}`,
     importKeys: "Sleutels importeren",
+    deleteSearchKeys: (opts) => `${opts.count} overeenkomende sleutels verwijderen`,
     saveWithFormatJson: "Opslaan met opmaak",
     formatJson: "Json opmaken",
     wrap: "Terugloop",
     unwrap: "Geen terugloop",
     downloadJson: "JSON downloaden",
-    pubsubMonitor: "PubSub Monitor",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "Taal / Language",
@@ -183,7 +182,6 @@ const strings = {
     edit: "Bewerken",
     save: "Opslaan",
     ttl: "TTL instellen",
-    license: "Licentie instellen",
     delete: "Verwijderen",
     remove: "Verwijderen",
     sure: "Zeker",
@@ -262,38 +260,6 @@ const strings = {
     connectiondEdit: "Verbinding bewerken",
     connectiondView: "Verbinding bekijken",
     connections: "Verbindingen",
-    licenseInfo: "Licentie",
-    licenseEditable: "Licentie bewerkbaar",
-    licenseEditableYes: "Ja",
-    licenseEditableNo: "Nee",
-    licenseTerminalOnly: "De licentie kan alleen worden geconfigureerd vanuit de serverterminal.",
-    licenseTierPolicyTitle: "Tariefbeleid",
-    licenseTierPolicyText: "<h4>Free</h4>alleen basis Redis UI; geen SSH-tunneling, geen Readonly-verbindingsmodus, geen Cluster/Sentinel, geen Edit JSON/Upload binary/Download binary, geen ReJSON.<br/><strong>Prijs: 0 HUF/maand (€0/maand).</strong><br/><br/><h4>Pro</h4>SSH-tunneling, Readonly-verbindingsmodus (inclusief --readonly-connections/-r), Edit JSON, Upload binary, Download binary, ReJSON.<br/><strong>Basisprijs: 400 HUF/maand (€1/maand) of 4.000 HUF/jaar (€10/jaar).</strong><br/><strong>Totaal met 27% BTW: 500 HUF/maand (€1,27/maand) of 5.100 HUF/jaar (€12,70/jaar).</strong><br/><br/><h4>Enterprise</h4>SSH-tunneling, Cluster en Sentinel, plus Edit JSON, Upload binary, Download binary, ReJSON; --readonly-connections/-r werkt ook.<br/><strong>Basisprijs: 1.200 HUF/maand (€3/maand) of 12.000 HUF/jaar (€30/jaar).</strong><br/><strong>Totaal met 27% BTW: 1.500 HUF/maand (€3,81/maand) of 15.200 HUF/jaar (€38,10/jaar).</strong><br/><br/><h4>Jaarregel</h4>De jaarprijs is 10x de maandprijs.<br/><br/><h4>Plaatsen</h4>De standaardlicentie bevat 5 plaatsen. Als u meer plaatsen nodig hebt, neem dan contact met ons op via <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><br/><h4>Enterprise-proefversie</h4>10 dagen gratis voor iedereen met een bestaand e-mailadres (geen test-e-mail).<br/><hr/><h4>Facturatiegegevens per e-mail</h4>Naam, Facturatie-e-mail, Landcode, Postcode, Stad, Adres, BTW-nummer (optioneel).<br/><br/><h4>Betaling</h4>PayPal-betaling is alleen beschikbaar in HUF (forint); na het verzenden van het geld via <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> stuur ik u een factuur. Alle betalingen zijn niet-restitueerbaar.<br/><br/><h4>BTW</h4>BTW wordt toegevoegd aan de prijs (27% in Hongarije).<br/><hr/><h4>Contact</h4>Als u hallo wilt zeggen of een vraag hebt, neem dan contact op met <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><hr/><h4>Taal</h4>Facturen en licentie-e-mailcommunicatie zijn in het Engels. Factuurvaluta is HUF.<br/><hr/><h4>Opmerking</h4>Licentieverificatie vereist internettoegang.",
-    licenseState: "Status",
-    licenseStateActive: "Actief",
-    licenseStateInactive: "Inactief",
-    licenseStateNoLicense: "Geen licentie",
-    licenseKeyMasked: "Opgeslagen sleutel",
-    licenseTier: "Tarief",
-    licenseValid: "Geldig",
-    licenseStatus: "Licentiestatus",
-    licenseReason: "Reden",
-    licenseCheckedAt: "Gecontroleerd op",
-    licenseStartsAt: "Start op",
-    licenseExpiresAt: "Verloopt op",
-    licenseDaysLeft: "Resterende dagen",
-    licenseMaxDevices: "Max. apparaten",
-    licenseActiveDevices: "Actieve apparaten",
-    licenseActiveDevicesInfo: "Als een apparaat niet meer wordt gebruikt, wordt de plaats automatisch na 75 minuten vrijgegeven.",
-    licenseCustomerEmail: "E-mail van klant",
-    licenseFeatures: "Functies",
-    licenseFeaturesEmpty: "Geen extra functies",
-    licenseFeatureReadonlyMode: "Alleen-lezen verbindingsmodus",
-    licenseFeatureReadonlyConnectionsFlag: "Alleen-lezen verbindingen (--readonly-connections/-r)",
-    licenseFeatureSsh: "SSH-tunneling",
-    licenseFeatureCluster: "Cluster-verbindingen",
-    licenseFeatureSentinel: "Sentinel-verbindingen",
-    licenseFeatureReJSON: "ReJSON (JSON data type)",
     keysSort: {
       on: "Sleutelsortering aan",
       off: "Sleutelsortering uit"
@@ -311,9 +277,6 @@ const strings = {
       on: "Alleen-lezen aan",
       off: "Alleen-lezen uit"
     },
-    proSshOnly: "SSH is beschikbaar in Pro of Enterprise.",
-    proReadonlyOnly: "Alleen-lezen verbindingsmodus is beschikbaar in Pro of Enterprise.",
-    enterpriseClusterSentinelOnly: "Cluster en Sentinel zijn alleen beschikbaar in Enterprise.",
     theme: {
       light: "Licht",
       dark: "Donker enterprise",
@@ -355,16 +318,20 @@ const strings = {
     importConflict: "Als de sleutel al bestaat:",
     noKeysToExport: "Geen sleutels om te exporteren",
     time: "Tijd",
+    type: "Type",
+    format: "Formaat",
     loading: "Laden...",
     autoRefresh: "Auto",
     exportSearchHint: "Alleen sleutels die overeenkomen met de huidige zoekopdracht worden geëxporteerd",
     importSearchHint: "Import is van toepassing op de gehele database, niet alleen op zoekresultaten",
+    deleteSearchHint: "Alle sleutels verwijderen die overeenkomen met de huidige zoekopdracht",
+    deletingSearchKeys: "Overeenkomende sleutels worden verwijderd...",
     importNoKeys: "Geen sleutels gevonden in bestand",
   },
   status: {
     dataCopied: "De gegevens staan op het klembord",
-    licenseSaved: "Licentie opgeslagen",
     exportDone: "Export voltooid",
+    deletedSearchKeys: (opts) => `${opts.count} sleutels verwijderd`,
     indexCreated: "Index aangemaakt",
     indexDropped: "Index verwijderd",
     importDone: (opts) => `Import voltooid: ${opts.created} aangemaakt, ${opts.skipped} overgeslagen, ${opts.errors} fouten`,
@@ -412,35 +379,10 @@ const strings = {
     "readonly-connections": "Verbindingen toevoegen/opslaan/verwijderen is alleen-lezen!",
     "readonly-connection-mode": "Deze verbinding is alleen-lezen!",
     "list-out-of-bounds": "Deze lijstindex valt buiten het bereik",
-    "donation-ware-feature": "Deze functie is beschikbaar in de donatieversie.",
-    "feature-pro-readonly-required": "Alleen-lezen verbindingsmodus vereist een Pro- of Enterprise-licentie.",
-    "feature-pro-ssh-required": "SSH-tunneling vereist een Pro- of Enterprise-licentie.",
-    "feature-enterprise-cluster-sentinel-required": "Cluster en Sentinel vereisen een Enterprise-licentie.",
-    "feature-pro-json-binary-required": "Edit JSON, Upload binary en Download binary vereisen een Pro- of Enterprise-licentie.",
-    "feature-pro-rejson-required": "ReJSON (JSON data type) requires Pro or Enterprise license.",
     "invalid-json-value": "The value is not valid JSON.",
     "http_auth_required": "Autorisatie vereist: authenticeer met HTTP Basic Auth en herlaad.",
     "auto-connection-failed": "Mogelijk is de verbinding verwijderd en is de automatische verbinding om die reden mislukt.",
     invalid_console_command: "Deze opdracht werkt niet via de GUI."
-  },
-  licenseReason: {
-    LICENSE_VALID: "Licentie is geldig",
-    LICENSE_INVALID: "Licentie is ongeldig",
-    LICENSE_MISSING: "Geen licentiesleutel ingesteld",
-    LICENSE_DISABLED: "Licentie is uitgeschakeld in de serverconfiguratie",
-    LICENSE_NOT_FOUND: "Licentie niet gevonden",
-    LICENSE_EXPIRED: "Licentie is verlopen",
-    LICENSE_CLEARED: "Licentiesleutel is gewist",
-    LICENSE_MAX_DEVICES_REACHED: "Maximaal aantal apparaatplaatsen bereikt",
-    PRODUCT_MISMATCH: "Licentieproduct komt niet overeen"
-  },
-  licenseStatusValue: {
-    active: "Actief",
-    deleted: "Verwijderd",
-    all: "Alle",
-    expired: "Verlopen",
-    missing: "Ontbreekt",
-    inactive: "Inactief"
   },
   form: {
     error: {
@@ -610,12 +552,49 @@ const strings = {
           field: "Veld",
           value: "Waarde"
         }
+      },
+      timeseries: {
+        chart: "Grafiek",
+        info: "Info",
+        addPoint: "Punt toevoegen",
+        from: "Van (ms of -)",
+        to: "Tot (ms of +)",
+        aggregation: "Aggregatie",
+        timeBucket: "Bucket (ms)",
+        none: "Geen",
+        dataPoints: "datapunten",
+        labels: "Labels",
+        rules: "Regels",
+        retention: "Bewaring",
+        timestamp: "Tijdstempel",
+        value: "Waarde",
+        retentionHint: "0 = geen vervaldatum, of milliseconden",
+        duplicatePolicy: "Duplicaatbeleid",
+        labelsHint: "sleutel1 waarde1 sleutel2 waarde2",
+        timestampHint: "'*' betekent automatisch gegenereerd, of tijdstempel in milliseconden",
+        editAllHint: "Eén datapunt per regel: tijdstempel waarde (tijdstempel kan * zijn voor automatisch)",
+        autoSpread: "Automatisch * spreidingsinterval",
+        formula: "Formule",
+        formulaLinear: "Lineair",
+        formulaRandom: "Willekeurig",
+        formulaSawtooth: "Zaagtand",
+        formulaPoints: "Punten",
+        formulaAmplitude: "Amplitude",
+        formulaOffset: "Offset",
+        generate: "Genereren",
+        exportChart: "PNG exporteren",
+        overlay: "Sleutels overlappen",
+        overlayHint: "Door komma's gescheiden sleutels",
+        mrangeFilter: "Labelfilter",
+        bulkMode: "Bulk genereren",
+        mrangeHint: "bijv. sensor=temp"
       }
     },
     treeControls: {
       settings: "Boominstellingen",
       expandAll: "Alles uitvouwen",
       collapseAll: "Alles invouwen",
+      level: "Niveau",
       search: {
         search: "Zoeken in de sleutels",
         clear: "Huidige zoekopdracht wissen",
@@ -634,13 +613,21 @@ const strings = {
     }
   },
   time: {
+    type: "Type",
+    format: "Formaat",
     loading: "Laden...",
     years: "jaren",
     months: "maanden",
     days: "dagen",
     year: "jaar",
     month: "maand",
-    day: "dag"
+    day: "dag",
+    second: "seconde",
+    seconds: "seconden",
+    minute: "minuut",
+    minutes: "minuten",
+    hour: "uur",
+    hours: "uren"
   },
   redisTypes: {
     string: "String",
@@ -649,7 +636,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

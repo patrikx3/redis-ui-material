@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "Täytetty lisenssi",
-    invalid_license: "Virheellinen lisenssi",
-    license_max_devices_reached: "Laitepaikkojen enimmäismäärä saavutettu",
-    license_readonly: "Lisenssi voidaan vaihtaa vain palvelinpäätteestä.",
     server_error: "Palvelinvirhe, yritä uudelleen"
   },
   title: {
@@ -51,8 +47,12 @@ const strings = {
     deleteAllKeys: opts => {
       return `Poista tämä puu ja kaikki sen avaimet (${opts.key})?`;
     },
+    deleteSearchKeys: opts => {
+      return `Haluatko varmasti poistaa kaikki hakua "${opts.pattern}" vastaavat avaimet? Löytyi ${opts.count} avainta.`;
+    },
     socketioConnectError: "Socket.IO ei voi muodostaa yhteyttä palvelimeen, voit ladata uudelleen ja yrittää ratkaista yhteysvirheen itse, asiakas ei osaa ratkaista sitä itse.",
     socketioAuthRequired: "Socket.IO-valtuutus vaaditaan. Todennus komennolla HTTP Basic Auth (käyttäjänimi/salasana) ja lataa uudelleen.",
+    delete: "Poista?",
     deleteKey: "Haluatko varmasti poistaa tämän avaimen?",
     rename: {
       title: "Haluatko varmasti nimetä tämän avaimen uudelleen?",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "Muunna teksti aikaan",
       convertTextToTimePlaceholder: "Esim. 1d on 86400"
     },
-    license: {
-      title: "Aseta lisenssi",
-      textContent: "If you want to use paid features, please contact support@corifeus.com to request a license. Pricing is Pro 400 HUF/month (€1/month) or 4,000 HUF/year (€10/year), and Enterprise 1,200 HUF/month (€3/month) or 12,000 HUF/year (€30/year). Yearly is 10x monthly. With 27% VAT, totals are Pro 500 HUF/month (€1.27/month) or 5,100 HUF/year (€12.70/year), Enterprise 1,500 HUF/month (€3.81/month) or 15,200 HUF/year (€38.10/year). License validation requires internet access. Default license includes 5 seats. If you need more seats, contact us at support@corifeus.com.",
-      placeholder: "Lisenssiavain"
-    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -136,13 +131,17 @@ const strings = {
     exportKeys: "Vie avaimet",
     exportAllKeys: (opts) => `Vie kaikki ${opts.count} avainta`,
     exportSearchResults: (opts) => `Vie ${opts.count} tulosta`,
+    deleteAllKeysMenu: (opts) => `Poista kaikki ${opts.count}`,
     importKeys: "Tuo avaimet",
+    deleteSearchKeys: (opts) => `Poista ${opts.count} vastaavaa avainta`,
     saveWithFormatJson: "Tallenna muodossa",
     formatJson: "Muotoile Json",
     wrap: "Kääri",
     unwrap: "Avaa pakkaus",
     downloadJson: "Lataa JSON",
-    pubsubMonitor: "PubSub näyttö",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "Kieli",
@@ -183,7 +182,6 @@ const strings = {
     edit: "Muokkaa",
     save: "Tallenna",
     ttl: "Aseta TTL",
-    license: "Aseta lisenssi",
     delete: "Poista",
     remove: "Poista",
     sure: "Toki",
@@ -262,38 +260,6 @@ const strings = {
     connectiondEdit: "Muokkaa yhteyttä",
     connectiondView: "Näytä yhteys",
     connections: "Liitännät",
-    licenseInfo: "Lisenssi",
-    licenseEditable: "Lisenssi muokattavissa",
-    licenseEditableYes: "Kyllä",
-    licenseEditableNo: "Ei",
-    licenseTerminalOnly: "Lisenssi voidaan määrittää vain palvelinpäätteestä.",
-    licenseTierPolicyTitle: "Tasopolitiikka",
-    licenseTierPolicyText: "<h4>Free</h4>core Redis UI only; no SSH tunneling, no Readonly connection mode, no Cluster/Sentinel, no Edit JSON/Upload binary/Download binary, no ReJSON.<br/><strong>Price: 0 HUF/month (€0/month).</strong><br/><br/><h4>Pro</h4>SSH tunneling, Readonly connection mode (including --readonly-connections/-r), Edit JSON, Upload binary, Download binary, ReJSON.<br/><strong>Base price: 400 HUF/month (€1/month) or 4,000 HUF/year (€10/year).</strong><br/><strong>Total with 27% VAT: 500 HUF/month (€1.27/month) or 5,100 HUF/year (€12.70/year).</strong><br/><br/><h4>Enterprise</h4>SSH tunneling, Cluster and Sentinel, plus Edit JSON, Upload binary, Download binary, ReJSON; --readonly-connections/-r also works.<br/><strong>Base price: 1,200 HUF/month (€3/month) or 12,000 HUF/year (€30/year).</strong><br/><strong>Total with 27% VAT: 1,500 HUF/month (€3.81/month) or 15,200 HUF/year (€38.10/year).</strong><br/><br/><h4>Yearly rule</h4>Yearly price is 10x the monthly price.<br/><br/><h4>Seats</h4>Default license includes 5 seats. If you need more seats, contact us at <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><br/><h4>Enterprise trial</h4>10 days free for anyone with a real existing email address (non-test email).<br/><hr/><h4>Billing info in e-mail</h4>Name, Billing e-mail, Country code, Postal code, City, Address, VAT ID (optional).<br/><br/><h4>Payment</h4>PayPal payment is available only in HUF (forint); after sending the money @ <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> I will send you an invoice. All payments are non-refundable.<br/><br/><h4>VAT</h4>VAT is added to the price (27% in Hungary).<br/><hr/><h4>Contact</h4>If you want to say hi or have a question, contact <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><hr/><h4>Language</h4>Invoice and license e-mail communication is in English. Invoice currency is HUF.<br/><hr/><h4>Note</h4>License validation requires internet access.",
-    licenseState: "osavaltio",
-    licenseStateActive: "Aktiivinen",
-    licenseStateInactive: "Ei-aktiivinen",
-    licenseStateNoLicense: "Ei lisenssiä",
-    licenseKeyMasked: "Avain tallennettu",
-    licenseTier: "Taso",
-    licenseValid: "Voimassa",
-    licenseStatus: "Lisenssin tila",
-    licenseReason: "Syy",
-    licenseCheckedAt: "Tarkastettu klo",
-    licenseStartsAt: "Alkaa klo",
-    licenseExpiresAt: "Päättyy klo",
-    licenseDaysLeft: "Päiviä jäljellä",
-    licenseMaxDevices: "Max laitteet",
-    licenseActiveDevices: "Aktiiviset laitteet",
-    licenseActiveDevicesInfo: "Jos laitetta ei enää käytetä, sen istuin vapautuu automaattisesti 75 minuutin kuluttua.",
-    licenseCustomerEmail: "Asiakkaan sähköposti",
-    licenseFeatures: "Ominaisuudet",
-    licenseFeaturesEmpty: "Ei lisäominaisuuksia",
-    licenseFeatureReadonlyMode: "Vain luku -yhteystila",
-    licenseFeatureReadonlyConnectionsFlag: "Vain luku -liitännät (--readonly-connections/-r)",
-    licenseFeatureSsh: "SSH tunnelointi",
-    licenseFeatureCluster: "Cluster liitännät",
-    licenseFeatureSentinel: "Sentinel liitännät",
-    licenseFeatureReJSON: "ReJSON (JSON tietotyyppi)",
     keysSort: {
       on: "Avainten lajittelu päällä",
       off: "Avainten lajittelu pois"
@@ -311,9 +277,6 @@ const strings = {
       on: "Vain luku päällä",
       off: "Vain luku pois päältä"
     },
-    proSshOnly: "SSH on saatavilla Pro- tai Enterprise-versiossa.",
-    proReadonlyOnly: "Vain luku -yhteystila on käytettävissä Prossa tai Enterprisessa.",
-    enterpriseClusterSentinelOnly: "Cluster ja Sentinel ovat saatavilla vain Enterprisessa.",
     theme: {
       light: "Kevyt",
       dark: "Pimeä yritys",
@@ -355,16 +318,20 @@ const strings = {
     importConflict: "Jos avain on jo olemassa:",
     noKeysToExport: "Ei avaimia vietäväksi",
     time: "Aika",
+    type: "Tyyppi",
+    format: "Muoto",
     loading: "Ladataan...",
     autoRefresh: "Auto",
     exportSearchHint: "Viedään vain nykyistä hakua vastaavat avaimet",
     importSearchHint: "Tuonti koskee koko tietokantaa, ei vain hakutuloksia",
+    deleteSearchHint: "Poistaa kaikki palvelimen nykyistä hakua vastaavat avaimet",
+    deletingSearchKeys: "Poistetaan vastaavia avaimia...",
     importNoKeys: "Tiedostosta ei löytynyt avaimia",
   },
   status: {
     dataCopied: "Tiedot ovat leikepöydällä",
-    licenseSaved: "Lisenssi tallennettu",
     exportDone: "Vienti valmis",
+    deletedSearchKeys: (opts) => `${opts.count} avainta poistettu`,
     indexCreated: "Indeksi luotu",
     indexDropped: "Indeksi poistettu",
     importDone: (opts) => `Tuonti valmis: ${opts.created} luotu, ${opts.skipped} ohitettu, ${opts.errors} virhettä`,
@@ -412,35 +379,10 @@ const strings = {
     "readonly-connections": "Lisää/tallenna/poista yhteydet ovat vain luku -tilassa!",
     "readonly-connection-mode": "Tämä yhteys on vain luku -tilassa!",
     "list-out-of-bounds": "Tämä luettelohakemisto on rajojen ulkopuolella",
-    "donation-ware-feature": "Tämä ominaisuus on mukana lahjoitusversiossa.",
-    "feature-pro-readonly-required": "Vain luku -yhteystila vaatii Pro- tai Enterprise-lisenssin.",
-    "feature-pro-ssh-required": "SSH tunnelointi vaatii Pro- tai Enterprise-lisenssin.",
-    "feature-enterprise-cluster-sentinel-required": "Cluster ja Sentinel vaativat Enterprise-lisenssin.",
-    "feature-pro-json-binary-required": "Muokkaa JSON, lataa binaari ja lataa binaari vaatii Pro- tai Enterprise-lisenssin.",
-    "feature-pro-rejson-required": "ReJSON (JSON-tietotyyppi) vaatii Pro- tai Enterprise-lisenssin.",
     "invalid-json-value": "Arvo ei ole kelvollinen JSON.",
     "http_auth_required": "Valtuutus vaaditaan: todenna HTTP Basic Auth ja lataa uudelleen.",
     "auto-connection-failed": "Mahdollisesti yhteys katkesi ja automaattinen yhteys epäonnistui tämän vuoksi.",
     invalid_console_command: "Tämä komento ei toimi GUI:n kautta."
-  },
-  licenseReason: {
-    LICENSE_VALID: "Lisenssi on voimassa",
-    LICENSE_INVALID: "Lisenssi on virheellinen",
-    LICENSE_MISSING: "Lisenssiavainta ei ole asetettu",
-    LICENSE_DISABLED: "Lisenssi on poistettu käytöstä palvelimen asetuksissa",
-    LICENSE_NOT_FOUND: "Lisenssiä ei löytynyt",
-    LICENSE_EXPIRED: "Lisenssi on vanhentunut",
-    LICENSE_CLEARED: "Lisenssiavain tyhjennettiin",
-    LICENSE_MAX_DEVICES_REACHED: "Laitepaikkojen enimmäismäärä saavutettu",
-    PRODUCT_MISMATCH: "Lisenssituote ei täsmää"
-  },
-  licenseStatusValue: {
-    active: "Aktiivinen",
-    deleted: "Poistettu",
-    all: "Kaikki",
-    expired: "Vanhentunut",
-    missing: "Puuttuu",
-    inactive: "Ei-aktiivinen"
   },
   form: {
     error: {
@@ -610,12 +552,49 @@ const strings = {
           field: "Kenttä",
           value: "Arvo"
         }
+      },
+      timeseries: {
+        chart: "Kaavio",
+        info: "Tiedot",
+        addPoint: "Lisää datapiste",
+        from: "Alkaen (ms tai -)",
+        to: "Asti (ms tai +)",
+        aggregation: "Aggregointi",
+        timeBucket: "Aikaväli (ms)",
+        none: "Ei mitään",
+        dataPoints: "datapistettä",
+        labels: "Tunnisteet",
+        rules: "Säännöt",
+        retention: "Säilytys",
+        timestamp: "Aikaleima",
+        value: "Arvo",
+        retentionHint: "0 = ei vanhene, tai millisekunteja",
+        duplicatePolicy: "Duplikaattikäytäntö",
+        labelsHint: "avain1 arvo1 avain2 arvo2",
+        timestampHint: "'*' tarkoittaa automaattista luontia, tai aikaleima millisekunteina",
+        editAllHint: "Yksi datapiste per rivi: aikaleima arvo (aikaleima voi olla * automaattiselle)",
+        autoSpread: "Automaattinen * hajontaväli",
+        formula: "Kaava",
+        formulaLinear: "Lineaarinen",
+        formulaRandom: "Satunnainen",
+        formulaSawtooth: "Sahalaita",
+        formulaPoints: "Pisteet",
+        formulaAmplitude: "Amplitudi",
+        formulaOffset: "Siirtymä",
+        generate: "Luo",
+        exportChart: "Vie PNG",
+        overlay: "Päällekkäiset avaimet",
+        overlayHint: "Pilkuilla erotetut avaimet",
+        mrangeFilter: "Tunnistesuodatin",
+        bulkMode: "Massagenerointi",
+        mrangeHint: "esim. sensor=temp"
       }
     },
     treeControls: {
       settings: "Puun asetukset",
       expandAll: "Laajenna kaikki",
       collapseAll: "Kutista kaikki",
+      level: "Taso",
       search: {
         search: "Etsi avaimista",
         clear: "Tyhjennä nykyinen haku tyhjäksi",
@@ -634,13 +613,21 @@ const strings = {
     }
   },
   time: {
+    type: "Tyyppi",
+    format: "Muoto",
     loading: "Ladataan...",
     years: "vuotta",
     months: "kuukautta",
     days: "päivää",
     year: "vuosi",
     month: "kuukausi",
-    day: "päivä"
+    day: "päivä",
+    second: "sekunti",
+    seconds: "sekuntia",
+    minute: "minuutti",
+    minutes: "minuuttia",
+    hour: "tunti",
+    hours: "tuntia"
   },
   redisTypes: {
     string: "String",
@@ -649,7 +636,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

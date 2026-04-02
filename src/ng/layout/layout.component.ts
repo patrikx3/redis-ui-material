@@ -318,6 +318,18 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
     // --- Actions ---
 
+    isActivePage(page: string): boolean {
+        const url = this.nav.currentUrl;
+        switch (page) {
+            case 'database': return url.startsWith('/database');
+            case 'search': return url === '/search';
+            case 'monitoring': return url.startsWith('/monitoring');
+            case 'info': return url === '/info';
+            case 'settings': return url === '/settings';
+            default: return false;
+        }
+    }
+
     navigateTo(stateName: string, params?: any): void {
         this.nav.navigateTo(stateName, params);
     }
@@ -400,7 +412,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
                 st.modules = modules;
                 st.hasReJSON = modules.some((m: any) => m.name === 'ReJSON');
                 st.hasRediSearch = modules.some((m: any) => m.name === 'search');
-                st.hasTimeSeries = modules.some((m: any) => m.name === 'timeseries');
+                st.hasTimeSeries = modules.some((m: any) => m.name === 'timeseries' || m.name === 'Timeseries');
             }
 
             await this.common.loadRedisInfoResponse({ response });
@@ -495,16 +507,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
             this.nav.navigateTo('settings');
             this.cdr.markForCheck();
         });
-        const sub2 = this.socket.socketError$.subscribe((error: any) => {
-            this.removeStorageItem(p3xr?.settings?.connectInfo?.storageKey);
-            this.common.generalHandleError(error);
-            this.nav.navigateTo('socketio-error');
-            const isHttpAuth = error?.message === 'http_auth_required' || error?.code === 'http_auth_required';
-            const strings = this.i18n.strings();
-            const msg = isHttpAuth ? strings.confirm?.socketioAuthRequired : strings.confirm?.socketioConnectError;
-            this.common.confirm({ disableCancel: false, message: msg ?? 'Connection error' }).then(() => {
-                location.reload();
-            }).catch(() => {});
+        const sub2 = this.socket.socketError$.subscribe(() => {
             this.cdr.markForCheck();
         });
         const sub3 = this.socket.connections$.subscribe(() => {
@@ -515,12 +518,8 @@ export class LayoutComponent implements OnInit, OnDestroy {
             this.state.syncFromGlobal();
             this.cdr.markForCheck();
         });
-        const sub5 = this.socket.licenseUpdate$.subscribe(() => {
-            this.state.syncFromGlobal();
-            this.cdr.markForCheck();
-        });
         this.unsubFns.push(
-            () => { sub1.unsubscribe(); sub2.unsubscribe(); sub3.unsubscribe(); sub4.unsubscribe(); sub5.unsubscribe(); }
+            () => { sub1.unsubscribe(); sub2.unsubscribe(); sub3.unsubscribe(); sub4.unsubscribe(); }
         );
     }
 

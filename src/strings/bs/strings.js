@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "Licenca je obrisana",
-    invalid_license: "Nevažeća licenca",
-    license_max_devices_reached: "Dostignut maksimalan broj mjesta za uređaje",
-    license_readonly: "Licenca se može promijeniti samo sa serverskog terminala.",
     server_error: "Greška servera, molimo pokušajte ponovo"
   },
   title: {
@@ -48,8 +44,12 @@ const strings = {
     deleteConnection: "Potvrdi",
     deleteConnectionText: "Jeste li sigurni da želite obrisati ovu Redis konekciju?",
     deleteNode: "Jeste li sigurni da želite obrisati ovaj Redis čvor?",
+    delete: "Obrisati?",
     deleteAllKeys: opts => {
       return `Obrisati ovo stablo i sve njegove ključeve (${opts.key})?`;
+    },
+    deleteSearchKeys: opts => {
+      return `Jeste li sigurni da želite obrisati sve ključeve koji odgovaraju "${opts.pattern}"? Pronađeno ${opts.count} ključeva.`;
     },
     socketioConnectError: "Socket.IO ne može se povezati sa serverom, možete ponovo učitati i pokušati riješiti grešku konekcije sami, klijent ne zna kako to riješiti sam.",
     socketioAuthRequired: "Socket.IO autorizacija je potrebna. Molimo autentificirajte se sa HTTP Basic Auth (korisničko ime/lozinka) i ponovo učitajte.",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "Pretvori tekst u vrijeme",
       convertTextToTimePlaceholder: "Npr. 1d će biti 86400"
     },
-    license: {
-      title: "Postavi licencu",
-      textContent: "If you want to use paid features, please contact support@corifeus.com to request a license. Pricing is Pro 400 HUF/month (\u20ac1/month) or 4,000 HUF/year (\u20ac10/year), and Enterprise 1,200 HUF/month (\u20ac3/month) or 12,000 HUF/year (\u20ac30/year). Yearly is 10x monthly. With 27% VAT, totals are Pro 500 HUF/month (\u20ac1.27/month) or 5,100 HUF/year (\u20ac12.70/year), Enterprise 1,500 HUF/month (\u20ac3.81/month) or 15,200 HUF/year (\u20ac38.10/year). License validation requires internet access. Default license includes 5 seats. If you need more seats, contact us at support@corifeus.com.",
-      placeholder: "Ključ licence"
-    }
   },
   language: {
     // When you translate the english name, keep the Language in English
@@ -138,13 +133,17 @@ const strings = {
     exportKeys: "Izvezi ključeve",
     exportAllKeys: (opts) => `Izvezi svih ${opts.count} ključeva`,
     exportSearchResults: (opts) => `Izvezi ${opts.count} rezultata`,
+    deleteAllKeysMenu: (opts) => `Obriši sve ${opts.count}`,
     importKeys: "Uvezi ključeve",
+    deleteSearchKeys: (opts) => `Obriši ${opts.count} odgovarajućih ključeva`,
     saveWithFormatJson: "Sačuvaj sa formatom",
     formatJson: "Formatiraj Json",
     wrap: "Prelomi",
     unwrap: "Raspakuj",
     downloadJson: "Preuzmi JSON",
-    pubsubMonitor: "PubSub Monitor",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "Jezik / Language",
@@ -185,7 +184,6 @@ const strings = {
     edit: "Uredi",
     save: "Sačuvaj",
     ttl: "Postavi TTL",
-    license: "Postavi licencu",
     delete: "Obriši",
     remove: "Ukloni",
     sure: "Sigurno",
@@ -264,38 +262,6 @@ const strings = {
     connectiondEdit: "Uredi konekciju",
     connectiondView: "Pregled konekcije",
     connections: "Konekcije",
-    licenseInfo: "Licenca",
-    licenseEditable: "Licenca se može uređivati",
-    licenseEditableYes: "Da",
-    licenseEditableNo: "Ne",
-    licenseTerminalOnly: "Licenca se može konfigurisati samo sa serverskog terminala.",
-    licenseTierPolicyTitle: "Politika nivoa",
-    licenseTierPolicyText: "<h4>Besplatno</h4>samo osnovni Redis UI; bez SSH tuneliranja, bez načina rada samo za čitanje, bez Cluster/Sentinel, bez uređivanja JSON/učitavanja binarnog/preuzimanja binarnog, bez ReJSON.<br/><strong>Cijena: 0 HUF/mjesec (\u20ac0/mjesec).</strong><br/><br/><h4>Pro</h4>SSH tuneliranje, način rada samo za čitanje (uključujući --readonly-connections/-r), uređivanje JSON, učitavanje binarnog, preuzimanje binarnog, ReJSON.<br/><strong>Osnovna cijena: 400 HUF/mjesec (\u20ac1/mjesec) ili 4.000 HUF/godišnje (\u20ac10/godišnje).</strong><br/><strong>Ukupno sa 27% PDV-a: 500 HUF/mjesec (\u20ac1,27/mjesec) ili 5.100 HUF/godišnje (\u20ac12,70/godišnje).</strong><br/><br/><h4>Enterprise</h4>SSH tuneliranje, Cluster i Sentinel, plus uređivanje JSON, učitavanje binarnog, preuzimanje binarnog, ReJSON; --readonly-connections/-r takođe radi.<br/><strong>Osnovna cijena: 1.200 HUF/mjesec (\u20ac3/mjesec) ili 12.000 HUF/godišnje (\u20ac30/godišnje).</strong><br/><strong>Ukupno sa 27% PDV-a: 1.500 HUF/mjesec (\u20ac3,81/mjesec) ili 15.200 HUF/godišnje (\u20ac38,10/godišnje).</strong><br/><br/><h4>Godišnje pravilo</h4>Godišnja cijena je 10x mjesečne cijene.<br/><br/><h4>Mjesta</h4>Podrazumijevana licenca uključuje 5 mjesta. Ako vam treba više mjesta, kontaktirajte nas na <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><br/><h4>Enterprise probni period</h4>10 dana besplatno za sve sa pravom postojećom email adresom (ne test email).<br/><hr/><h4>Informacije o naplati putem emaila</h4>Ime, email za naplatu, kod zemlje, poštanski broj, grad, adresa, PDV ID (opciono).<br/><br/><h4>Plaćanje</h4>PayPal plaćanje dostupno samo u HUF (forint); nakon slanja novca @ <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> poslat ću vam fakturu. Sva plaćanja su nepovratna.<br/><br/><h4>PDV</h4>PDV se dodaje na cijenu (27% u Mađarskoj).<br/><hr/><h4>Kontakt</h4>Ako želite pozdraviti ili imate pitanje, kontaktirajte <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><hr/><h4>Jezik</h4>Faktura i komunikacija putem emaila o licenci su na engleskom. Valuta fakture je HUF.<br/><hr/><h4>Napomena</h4>Validacija licence zahtijeva pristup internetu.",
-    licenseState: "Stanje",
-    licenseStateActive: "Aktivna",
-    licenseStateInactive: "Neaktivna",
-    licenseStateNoLicense: "Nema licence",
-    licenseKeyMasked: "Sačuvani ključ",
-    licenseTier: "Nivo",
-    licenseValid: "Važeća",
-    licenseStatus: "Status licence",
-    licenseReason: "Razlog",
-    licenseCheckedAt: "Provjereno u",
-    licenseStartsAt: "Počinje u",
-    licenseExpiresAt: "Ističe u",
-    licenseDaysLeft: "Preostalo dana",
-    licenseMaxDevices: "Maksimalno uređaja",
-    licenseActiveDevices: "Aktivni uređaji",
-    licenseActiveDevicesInfo: "Ako se uređaj više ne koristi, njegovo mjesto se automatski oslobađa nakon 75 minuta.",
-    licenseCustomerEmail: "Email korisnika",
-    licenseFeatures: "Funkcije",
-    licenseFeaturesEmpty: "Nema dodatnih funkcija",
-    licenseFeatureReadonlyMode: "Način rada samo za čitanje",
-    licenseFeatureReadonlyConnectionsFlag: "Konekcije samo za čitanje (--readonly-connections/-r)",
-    licenseFeatureSsh: "SSH tuneliranje",
-    licenseFeatureCluster: "Cluster konekcije",
-    licenseFeatureSentinel: "Sentinel konekcije",
-    licenseFeatureReJSON: "ReJSON (JSON tip podataka)",
     keysSort: {
       on: "Sortiranje ključeva uključeno",
       off: "Sortiranje ključeva isključeno"
@@ -313,9 +279,6 @@ const strings = {
       on: "Samo za čitanje uključeno",
       off: "Samo za čitanje isključeno"
     },
-    proSshOnly: "SSH je dostupan u Pro ili Enterprise.",
-    proReadonlyOnly: "Način rada samo za čitanje je dostupan u Pro ili Enterprise.",
-    enterpriseClusterSentinelOnly: "Cluster i Sentinel su dostupni samo u Enterprise.",
     theme: {
       light: "Svijetla",
       dark: "Tamna enterprise",
@@ -357,16 +320,20 @@ const strings = {
     importConflict: "Ako ključ već postoji:",
     noKeysToExport: "Nema ključeva za izvoz",
     time: "Vrijeme",
+    type: "Tip",
+    format: "Format",
     loading: "Učitavanje...",
     autoRefresh: "Auto",
     exportSearchHint: "Izvoz samo ključeva koji odgovaraju trenutnom pretraživanju",
     importSearchHint: "Uvoz se primjenjuje na cijelu bazu podataka, ne samo na rezultate pretrage",
+    deleteSearchHint: "Briše sve ključeve koji odgovaraju trenutnom pretraživanju na serveru",
+    deletingSearchKeys: "Brisanje odgovarajućih ključeva...",
     importNoKeys: "Nisu pronađeni ključevi u datoteci",
   },
   status: {
     dataCopied: "Podaci su u međuspremniku",
-    licenseSaved: "Licenca je sačuvana",
     exportDone: "Izvoz završen",
+    deletedSearchKeys: (opts) => `Obrisano ${opts.count} ključeva`,
     indexCreated: "Indeks kreiran",
     indexDropped: "Indeks obrisan",
     importDone: (opts) => `Uvoz završen: ${opts.created} kreirano, ${opts.skipped} preskočeno, ${opts.errors} grešaka`,
@@ -414,35 +381,10 @@ const strings = {
     "readonly-connections": "Konekcije dodaj/sačuvaj/obriši su samo za čitanje!",
     "readonly-connection-mode": "Ova konekcija je u načinu rada samo za čitanje!",
     "list-out-of-bounds": "Ovaj indeks liste je izvan granica",
-    "donation-ware-feature": "Ova funkcija je prisutna u verziji za donacije.",
-    "feature-pro-readonly-required": "Način rada samo za čitanje zahtijeva Pro ili Enterprise licencu.",
-    "feature-pro-ssh-required": "SSH tuneliranje zahtijeva Pro ili Enterprise licencu.",
-    "feature-enterprise-cluster-sentinel-required": "Cluster i Sentinel zahtijevaju Enterprise licencu.",
-    "feature-pro-json-binary-required": "Uređivanje JSON, učitavanje binarnog i preuzimanje binarnog zahtijevaju Pro ili Enterprise licencu.",
-    "feature-pro-rejson-required": "ReJSON (JSON tip podataka) zahtijeva Pro ili Enterprise licencu.",
     "invalid-json-value": "Vrijednost nije validan JSON.",
     "http_auth_required": "Autorizacija je potrebna: molimo autentificirajte se sa HTTP Basic Auth i ponovo učitajte.",
     "auto-connection-failed": "Moguće je da je konekcija uklonjena i automatska konekcija je zbog toga neuspjela.",
     invalid_console_command: "Ova komanda ne radi putem GUI-ja."
-  },
-  licenseReason: {
-    LICENSE_VALID: "Licenca je važeća",
-    LICENSE_INVALID: "Licenca je nevažeća",
-    LICENSE_MISSING: "Ključ licence nije postavljen",
-    LICENSE_DISABLED: "Licenca je onemogućena u konfiguraciji servera",
-    LICENSE_NOT_FOUND: "Licenca nije pronađena",
-    LICENSE_EXPIRED: "Licenca je istekla",
-    LICENSE_CLEARED: "Ključ licence je obrisan",
-    LICENSE_MAX_DEVICES_REACHED: "Dostignut maksimalan broj mjesta za uređaje",
-    PRODUCT_MISMATCH: "Proizvod licence se ne podudara"
-  },
-  licenseStatusValue: {
-    active: "Aktivna",
-    deleted: "Obrisana",
-    all: "Sve",
-    expired: "Istekla",
-    missing: "Nedostaje",
-    inactive: "Neaktivna"
   },
   form: {
     error: {
@@ -612,12 +554,49 @@ const strings = {
           field: "Polje",
           value: "Vrijednost"
         }
+      },
+      timeseries: {
+        chart: "Grafikon",
+        info: "Informacije",
+        addPoint: "Dodaj tačku podataka",
+        from: "Od (ms ili -)",
+        to: "Do (ms ili +)",
+        aggregation: "Agregacija",
+        timeBucket: "Kanta (ms)",
+        none: "Nema",
+        dataPoints: "tačke podataka",
+        labels: "Oznake",
+        rules: "Pravila",
+        retention: "Zadržavanje",
+        timestamp: "Vremenski pečat",
+        value: "Vrijednost",
+        retentionHint: "0 = bez isteka, ili milisekunde",
+        duplicatePolicy: "Politika duplikata",
+        labelsHint: "key1 value1 key2 value2",
+        timestampHint: "'*' znači automatski generisano, ili vremenski pečat u milisekundama",
+        editAllHint: "Jedna tačka podataka po liniji: vremenski_pečat vrijednost (vremenski pečat može biti * za automatsko)",
+        autoSpread: "Automatski * interval širenja",
+        formula: "Formula",
+        formulaLinear: "Linearno",
+        formulaRandom: "Nasumično",
+        formulaSawtooth: "Pilasti",
+        formulaPoints: "Tačke",
+        formulaAmplitude: "Amplituda",
+        formulaOffset: "Pomak",
+        generate: "Generiši",
+        exportChart: "Izvezi PNG",
+        overlay: "Preklapanje ključeva",
+        overlayHint: "Ključevi odvojeni zarezom",
+        mrangeFilter: "Filter oznaka",
+        bulkMode: "Masovno generisanje",
+        mrangeHint: "npr. sensor=temp"
       }
     },
     treeControls: {
       settings: "Postavke stabla",
       expandAll: "Proširi sve",
       collapseAll: "Skupi sve",
+      level: "Nivo",
       search: {
         search: "Pretraži ključeve",
         clear: "Obriši trenutnu pretragu za prazno",
@@ -636,13 +615,21 @@ const strings = {
     }
   },
   time: {
+    type: "Tip",
+    format: "Format",
     loading: "Učitavanje...",
     years: "godina",
     months: "mjeseci",
     days: "dana",
     year: "godina",
     month: "mjesec",
-    day: "dan"
+    day: "dan",
+    second: "sekunda",
+    seconds: "sekunde",
+    minute: "minuta",
+    minutes: "minute",
+    hour: "sat",
+    hours: "sati"
   },
   redisTypes: {
     string: "String",
@@ -651,7 +638,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

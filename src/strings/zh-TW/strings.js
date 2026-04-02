@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "已獲得許可",
-    invalid_license: "許可證無效",
-    license_max_devices_reached: "已達到最大設備席次數",
-    license_readonly: "許可證只能從伺服器終端更改。",
     server_error: "伺服器錯誤，請重試"
   },
   title: {
@@ -48,10 +44,14 @@ const strings = {
     deleteConnection: "確認",
     deleteConnectionText: "您確定刪除此 Redis 連線嗎？",
     deleteNode: "您確定要刪除這個Redis節點嗎？",
+    delete: "刪除？",
     deleteAllKeys: opts => {
       return `刪除這棵樹及其所有鍵（${opts.key}）？`;
     },
-    socketioConnectError: "Socket.IO 無��連接伺服器，您可以重新載入並嘗試自行解決連線錯誤，用戶端不知道如何解決。",
+    deleteSearchKeys: opts => {
+      return `確定要刪除所有符合 "${opts.pattern}" 的金鑰嗎？找到 ${opts.count} 個金鑰。`;
+    },
+    socketioConnectError: "Socket.IO 無法連接伺服器，您可以重新載入並嘗試自行解決連線錯誤，用戶端不知道如何解決。",
     socketioAuthRequired: "需要Socket.IO授權。請使用 HTTP Basic Auth（使用者名稱/密碼）進行身份驗證並重新載入。",
     deleteKey: "您確定要刪除該密鑰嗎？",
     rename: {
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "將文字轉換為時間",
       convertTextToTimePlaceholder: "例如。 1d 將是 86400"
     },
-    license: {
-      title: "設定許可證",
-      textContent: "If you want to use paid features, please contact support@corifeus.com to request a license. Pricing is Pro 400 HUF/month (€1/month) or 4,000 HUF/year (€10/year), and Enterprise 1,200 HUF/month (€3/month) or 12,000 HUF/year (€30/year). Yearly is 10x monthly. With 27% VAT, totals are Pro 500 HUF/month (€1.27/month) or 5,100 HUF/year (€12.70/year), Enterprise 1,500 HUF/month (€3.81/month) or 15,200 HUF/year (€38.10/year). License validation requires internet access. Default license includes 5 seats. If you need more seats, contact us at support@corifeus.com.",
-      placeholder: "許可證密鑰"
-    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -136,13 +131,17 @@ const strings = {
     exportKeys: "匯出金鑰",
     exportAllKeys: (opts) => `匯出全部 ${opts.count} 個金鑰`,
     exportSearchResults: (opts) => `匯出 ${opts.count} 個結果`,
+    deleteAllKeysMenu: (opts) => `刪除全部 ${opts.count}`,
     importKeys: "匯入金鑰",
+    deleteSearchKeys: (opts) => `刪除 ${opts.count} 個符合的金鑰`,
     saveWithFormatJson: "以格式儲存",
     formatJson: "格式化Json",
     wrap: "包裹",
     unwrap: "展開",
     downloadJson: "��載JSON",
-    pubsubMonitor: "PubSub 監視器",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "語言",
@@ -183,7 +182,6 @@ const strings = {
     edit: "編輯",
     save: "儲存",
     ttl: "設定 TTL",
-    license: "設定許可證",
     delete: "刪除",
     remove: "刪除",
     sure: "當然可以",
@@ -262,38 +260,6 @@ const strings = {
     connectiondEdit: "編輯連接",
     connectiondView: "查看連接",
     connections: "連接",
-    licenseInfo: "許可證",
-    licenseEditable: "許可證可編輯",
-    licenseEditableYes: "是的",
-    licenseEditableNo: "否",
-    licenseTerminalOnly: "許可證只能從伺服器終端配置。",
-    licenseTierPolicyTitle: "分級政策",
-    licenseTierPolicyText: "<h4>Free</h4>core Redis UI only; no SSH tunneling, no Readonly connection mode, no Cluster/Sentinel, no Edit JSON/Upload binary/Download binary, no ReJSON.<br/><strong>Price: 0 HUF/month (€0/month).</strong><br/><br/><h4>Pro</h4>SSH tunneling, Readonly connection mode (including --readonly-connections/-r), Edit JSON, Upload binary, Download binary, ReJSON.<br/><strong>Base price: 400 HUF/month (€1/month) or 4,000 HUF/year (€10/year).</strong><br/><strong>Total with 27% VAT: 500 HUF/month (€1.27/month) or 5,100 HUF/year (€12.70/year).</strong><br/><br/><h4>Enterprise</h4>SSH tunneling, Cluster and Sentinel, plus Edit JSON, Upload binary, Download binary, ReJSON; --readonly-connections/-r also works.<br/><strong>Base price: 1,200 HUF/month (€3/month) or 12,000 HUF/year (€30/year).</strong><br/><strong>Total with 27% VAT: 1,500 HUF/month (€3.81/month) or 15,200 HUF/year (€38.10/year).</strong><br/><br/><h4>Yearly rule</h4>Yearly price is 10x the monthly price.<br/><br/><h4>Seats</h4>Default license includes 5 seats. If you need more seats, contact us at <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><br/><h4>Enterprise trial</h4>10 days free for anyone with a real existing email address (non-test email).<br/><hr/><h4>Billing info in e-mail</h4>Name, Billing e-mail, Country code, Postal code, City, Address, VAT ID (optional).<br/><br/><h4>Payment</h4>PayPal payment is available only in HUF (forint); after sending the money @ <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> I will send you an invoice. All payments are non-refundable.<br/><br/><h4>VAT</h4>VAT is added to the price (27% in Hungary).<br/><hr/><h4>Contact</h4>If you want to say hi or have a question, contact <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><hr/><h4>Language</h4>Invoice and license e-mail communication is in English. Invoice currency is HUF.<br/><hr/><h4>Note</h4>License validation requires internet access.",
-    licenseState: "狀態",
-    licenseStateActive: "活躍",
-    licenseStateInactive: "不活躍",
-    licenseStateNoLicense: "無執照",
-    licenseKeyMasked: "已儲存的密鑰",
-    licenseTier: "等級",
-    licenseValid: "有效",
-    licenseStatus: "許可證狀態",
-    licenseReason: "原因",
-    licenseCheckedAt: "檢查於",
-    licenseStartsAt: "開始於",
-    licenseExpiresAt: "到期日",
-    licenseDaysLeft: "剩餘天數",
-    licenseMaxDevices: "最大設備數",
-    licenseActiveDevices: "有源設備",
-    licenseActiveDevicesInfo: "如果不再使用某個設備，其座位將在 75 分鐘後自動釋放。",
-    licenseCustomerEmail: "客戶信箱",
-    licenseFeatures: "特點",
-    licenseFeaturesEmpty: "沒有額外的功能",
-    licenseFeatureReadonlyMode: "唯讀連線模式",
-    licenseFeatureReadonlyConnectionsFlag: "只讀連接 (--readonly-connections/-r)",
-    licenseFeatureSsh: "SSH 隧道",
-    licenseFeatureCluster: "Cluster 連接",
-    licenseFeatureSentinel: "Sentinel 連接",
-    licenseFeatureReJSON: "ReJSON（JSON 資料類型）",
     keysSort: {
       on: "鍵排序開啟",
       off: "鑰匙分類"
@@ -311,9 +277,6 @@ const strings = {
       on: "唯讀開啟",
       off: "只讀關閉"
     },
-    proSshOnly: "SSH 適用於專業版或企業版。",
-    proReadonlyOnly: "只讀連線模式可在專業版或企業版中使用。",
-    enterpriseClusterSentinelOnly: "Cluster 和 Sentinel 僅在企業版中可用。",
     theme: {
       light: "光",
       dark: "黑暗企業",
@@ -355,16 +318,20 @@ const strings = {
     importConflict: "如果金鑰已存在：",
     noKeysToExport: "沒有金鑰可匯出",
     time: "時間",
+    type: "類型",
+    format: "格式",
     loading: "載入中...",
     autoRefresh: "自動",
     exportSearchHint: "僅匯出與當前搜尋匹配的金鑰",
     importSearchHint: "匯入適用於整個資料庫，而不僅僅是搜尋結果",
+    deleteSearchHint: "刪除所有符合當前搜尋的金鑰",
+    deletingSearchKeys: "正在刪除符合的金鑰...",
     importNoKeys: "檔案中未找到金鑰",
   },
   status: {
     dataCopied: "資料在剪貼簿中",
-    licenseSaved: "許可證已儲存",
     exportDone: "匯出完成",
+    deletedSearchKeys: (opts) => `已刪除 ${opts.count} 個金鑰`,
     indexCreated: "索引已建立",
     indexDropped: "索引已刪除",
     importDone: (opts) => `匯入完成：${opts.created} 已建立，${opts.skipped} 已跳過，${opts.errors} 個錯誤`,
@@ -412,35 +379,10 @@ const strings = {
     "readonly-connections": "連接新增/儲存/刪除是唯讀的！",
     "readonly-connection-mode": "此連接是唯讀模式！",
     "list-out-of-bounds": "此列表索引超出範圍",
-    "donation-ware-feature": "此功能存在於捐贈版本中。",
-    "feature-pro-readonly-required": "只讀連線模式需要專業版或企業版授權。",
-    "feature-pro-ssh-required": "SSH 隧道需要專業版或企業版授權。",
-    "feature-enterprise-cluster-sentinel-required": "Cluster 和 Sentinel 需要企業授權。",
-    "feature-pro-json-binary-required": "編輯 JSON、上傳二進位檔案和下載二進位檔案需要專業版或企業版授權。",
-    "feature-pro-rejson-required": "ReJSON（JSON 資料類型）需要 Pro 或 Enterprise 授權。",
     "invalid-json-value": "該值無效 JSON。",
     "http_auth_required": "需要授權：請使用HTTP Basic Auth進行身份驗證並重新載入。",
     "auto-connection-failed": "可能是因為這個原因，連線被刪除並且自動連線失敗。",
     invalid_console_command: "該命令無法透過 GUI 運行。"
-  },
-  licenseReason: {
-    LICENSE_VALID: "許可證有效",
-    LICENSE_INVALID: "許可證無效",
-    LICENSE_MISSING: "未設定許可證密鑰",
-    LICENSE_DISABLED: "伺服器配置中禁用了許可證",
-    LICENSE_NOT_FOUND: "未找到許可證",
-    LICENSE_EXPIRED: "許可證已過期",
-    LICENSE_CLEARED: "許可證密鑰已清除",
-    LICENSE_MAX_DEVICES_REACHED: "已達到最大設備席次數",
-    PRODUCT_MISMATCH: "授權產品不匹配"
-  },
-  licenseStatusValue: {
-    active: "活躍",
-    deleted: "已刪除",
-    all: "全部",
-    expired: "已過期",
-    missing: "失蹤",
-    inactive: "不活躍"
   },
   form: {
     error: {
@@ -610,12 +552,49 @@ const strings = {
           field: "領域",
           value: "價值"
         }
+      },
+      timeseries: {
+        chart: "圖表",
+        info: "資訊",
+        addPoint: "新增資料點",
+        from: "起始 (ms 或 -)",
+        to: "結束 (ms 或 +)",
+        aggregation: "聚合",
+        timeBucket: "桶 (ms)",
+        none: "無",
+        dataPoints: "資料點",
+        labels: "標籤",
+        rules: "規則",
+        retention: "保留",
+        timestamp: "時間戳",
+        value: "值",
+        retentionHint: "0 = 不過期，或毫秒",
+        duplicatePolicy: "重複策略",
+        labelsHint: "鍵1 值1 鍵2 值2",
+        timestampHint: "'*' 表示自動產生，或毫秒時間戳",
+        editAllHint: "每行一個資料點：時間戳 值（時間戳可以用 * 表示自動）",
+        autoSpread: "自動 * 分散間隔",
+        formula: "公式",
+        formulaLinear: "線性",
+        formulaRandom: "隨機",
+        formulaSawtooth: "鋸齒波",
+        formulaPoints: "點數",
+        formulaAmplitude: "振幅",
+        formulaOffset: "偏移",
+        generate: "產生",
+        exportChart: "匯出 PNG",
+        overlay: "疊加鍵",
+        overlayHint: "逗號分隔的鍵",
+        mrangeFilter: "標籤篩選器",
+        bulkMode: "批量生成",
+        mrangeHint: "例如 sensor=temp"
       }
     },
     treeControls: {
       settings: "樹設定",
       expandAll: "全部展開",
       collapseAll: "全部折疊",
+      level: "層級",
       search: {
         search: "在鍵中搜尋",
         clear: "清除目前搜尋以設定為空",
@@ -634,13 +613,21 @@ const strings = {
     }
   },
   time: {
+    type: "類型",
+    format: "格式",
     loading: "載入中...",
     years: "年",
     months: "月",
     days: "天",
     year: "年",
     month: "月",
-    day: "日"
+    day: "日",
+    second: "秒",
+    seconds: "秒",
+    minute: "分鐘",
+    minutes: "分鐘",
+    hour: "小時",
+    hours: "小時"
   },
   redisTypes: {
     string: "String",
@@ -649,7 +636,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

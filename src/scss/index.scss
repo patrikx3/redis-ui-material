@@ -8,6 +8,10 @@ body {
     color: var(--mat-app-text-color, rgba(255, 255, 255, 0.87));
 }
 
+body.p3xr-no-main-scroll {
+    overflow: hidden;
+}
+
 // Scrollbar theming — color-scheme tells the browser to use native dark/light scrollbars
 body.p3xr-theme-dark {
     color-scheme: dark;
@@ -84,31 +88,6 @@ md-toast {
 
 md-dialog.fullscreen-dialog {
     width: 75%;
-}
-
-md-dialog.p3xr-license-dialog {
-    width: 50%;
-    max-width: 50%;
-}
-
-md-dialog.p3xr-license-tier-policy-dialog {
-    .md-title {
-        font-size: 165%;
-        line-height: 1.2;
-        font-weight: 700;
-    }
-
-    .md-dialog-content-body h4 {
-        font-size: 125%;
-        line-height: 1.2;
-        margin: 0 0 2px 0;
-        font-weight: 700;
-    }
-
-    .md-dialog-content-body hr {
-        opacity: 0.25;
-        margin: 8px 0;
-    }
 }
 
 @media (max-width:959px) {

@@ -33,14 +33,6 @@ export class RedisStateService {
     readonly commands = signal<string[]>([]);
     readonly cfg = signal<any>(this.p3xrState?.cfg);
     readonly version = signal<string | undefined>(this.p3xrState?.version);
-    readonly donated = signal<boolean>(this.p3xrState?.donated ?? false);
-    readonly hasProOrEnterpriseJsonBinary = signal<boolean>(this.p3xrState?.hasProOrEnterpriseJsonBinary ?? false);
-    readonly license = signal<any>(this.p3xrState?.license ?? {
-        tier: 'free',
-        valid: false,
-        reason: 'LICENSE_MISSING',
-        features: [],
-    });
 
     // --- Computed values ---
 
@@ -115,9 +107,6 @@ export class RedisStateService {
         this.monitor.set(state.monitor ?? false);
         this.cfg.set(state.cfg);
         this.version.set(state.version);
-        this.donated.set(state.donated ?? false);
-        this.hasProOrEnterpriseJsonBinary.set(state.hasProOrEnterpriseJsonBinary ?? false);
-        this.license.set(state.license);
     }
 
     /**

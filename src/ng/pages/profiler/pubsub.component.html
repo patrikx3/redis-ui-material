@@ -1,0 +1,26 @@
+<!-- PubSub Monitor (PSUBSCRIBE) -->
+<p3xr-ng-accordion title="" accordionKey="profiler-pubsub" [collapsible]="false">
+    <div actions>
+        <p3xr-ng-button
+            (click)="clearPubSub(); $event.stopPropagation()"
+            [label]="strings().intention?.clear || 'Clear'"
+            mdIcon="backspace">
+        </p3xr-ng-button>
+        <p3xr-ng-button
+            (click)="exportPubSub(); $event.stopPropagation()"
+            [label]="strings().intention?.export || 'Export'"
+            mdIcon="download">
+        </p3xr-ng-button>
+    </div>
+    <div content>
+        <div class="p3xr-pubsub-pattern">
+            <mat-form-field style="width: 100%;" subscriptSizing="dynamic">
+                <mat-label>Pattern</mat-label>
+                <input matInput [(ngModel)]="pubsubPattern" placeholder="*" />
+            </mat-form-field>
+        </div>
+        <div #pubsubOutput class="p3xr-pubsub-output"></div>
+    </div>
+</p3xr-ng-accordion>
+
+<div style="height: 64px;"></div>

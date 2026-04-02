@@ -109,37 +109,53 @@
                 }
             </span>
         </div>
+
+        @if (response.type !== 'timeseries') {
+            <div class="p3xr-database-key-info-row" style="display: flex; align-items: center;">
+                <strong style="flex: 1;">{{ strings()?.label?.format || 'Format' }}:</strong>
+                <mat-button-toggle-group [(ngModel)]="valueFormat" hideSingleSelectionIndicator class="p3xr-format-toggle">
+                    <mat-button-toggle value="raw">Raw</mat-button-toggle>
+                    <mat-button-toggle value="json">JSON</mat-button-toggle>
+                    <mat-button-toggle value="hex">Hex</mat-button-toggle>
+                    <mat-button-toggle value="base64">Base64</mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+        }
     </div>
 
     <!-- Type-specific renderer (pure Angular v21 components) -->
     @switch (response.type) {
         @case ('string') {
             <p3xr-key-string [p3xrResponse]="response" [p3xrValue]="response.value"
-                [p3xrValueBuffer]="response.valueBuffer" [p3xrKey]="key"></p3xr-key-string>
+                [p3xrValueBuffer]="response.valueBuffer" [p3xrKey]="key" [valueFormat]="valueFormat"></p3xr-key-string>
         }
         @case ('list') {
             <p3xr-key-list [p3xrResponse]="response" [p3xrValue]="response.value"
-                [p3xrValueBuffer]="response.valueBuffer" [p3xrKey]="key"></p3xr-key-list>
+                [p3xrValueBuffer]="response.valueBuffer" [p3xrKey]="key" [valueFormat]="valueFormat"></p3xr-key-list>
         }
         @case ('hash') {
             <p3xr-key-hash [p3xrResponse]="response" [p3xrValue]="response.value"
-                [p3xrValueBuffer]="response.valueBuffer" [p3xrKey]="key"></p3xr-key-hash>
+                [p3xrValueBuffer]="response.valueBuffer" [p3xrKey]="key" [valueFormat]="valueFormat"></p3xr-key-hash>
         }
         @case ('set') {
             <p3xr-key-set [p3xrResponse]="response" [p3xrValue]="response.value"
-                [p3xrValueBuffer]="response.valueBuffer" [p3xrKey]="key"></p3xr-key-set>
+                [p3xrValueBuffer]="response.valueBuffer" [p3xrKey]="key" [valueFormat]="valueFormat"></p3xr-key-set>
         }
         @case ('zset') {
             <p3xr-key-zset [p3xrResponse]="response" [p3xrValue]="response.value"
-                [p3xrValueBuffer]="response.valueBuffer" [p3xrKey]="key"></p3xr-key-zset>
+                [p3xrValueBuffer]="response.valueBuffer" [p3xrKey]="key" [valueFormat]="valueFormat"></p3xr-key-zset>
         }
         @case ('stream') {
             <p3xr-key-stream [p3xrResponse]="response" [p3xrValue]="response.value"
-                [p3xrValueBuffer]="response.valueBuffer" [p3xrKey]="key"></p3xr-key-stream>
+                [p3xrValueBuffer]="response.valueBuffer" [p3xrKey]="key" [valueFormat]="valueFormat"></p3xr-key-stream>
         }
         @case ('json') {
             <p3xr-key-json [p3xrResponse]="response" [p3xrValue]="response.value"
-                [p3xrValueBuffer]="response.valueBuffer" [p3xrKey]="key"></p3xr-key-json>
+                [p3xrValueBuffer]="response.valueBuffer" [p3xrKey]="key" [valueFormat]="valueFormat"></p3xr-key-json>
+        }
+        @case ('timeseries') {
+            <p3xr-key-timeseries [p3xrResponse]="response" [p3xrValue]="response.value"
+                [p3xrValueBuffer]="response.valueBuffer" [p3xrKey]="key" [valueFormat]="valueFormat"></p3xr-key-timeseries>
         }
     }
 }

@@ -1,21 +1,32 @@
 <div class="p3xr-database-treecontrol-controls-leading">
-    <button class="p3xr-database-treecontrol-icon-button p3xr-database-treecontrol-icon-primary" type="button" (click)="treeExpandAll()"
-        [matTooltip]="strings().page?.treeControls?.expandAll || 'Expand all'" matTooltipPosition="below">
+    <button class="p3xr-database-treecontrol-icon-button p3xr-database-treecontrol-icon-primary" type="button"
+        [matMenuTriggerFor]="expandMenu"
+        [matTooltip]="strings().intention?.extend || 'Expand'" matTooltipPosition="above">
         <span class="material-icons" aria-hidden="true">keyboard_arrow_down</span>
     </button>
 
+    <mat-menu #expandMenu="matMenu">
+        <button mat-menu-item (click)="treeExpandToLevel(1)">{{ strings().page?.treeControls?.level || 'Level' }} 1</button>
+        <button mat-menu-item (click)="treeExpandToLevel(2)">{{ strings().page?.treeControls?.level || 'Level' }} 2</button>
+        <button mat-menu-item (click)="treeExpandToLevel(3)">{{ strings().page?.treeControls?.level || 'Level' }} 3</button>
+        <button mat-menu-item (click)="treeExpandToLevel(4)">{{ strings().page?.treeControls?.level || 'Level' }} 4</button>
+        <button mat-menu-item (click)="treeExpandToLevel(5)">{{ strings().page?.treeControls?.level || 'Level' }} 5</button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="treeExpandAll()">{{ strings().page?.treeControls?.expandAll || 'Expand all' }}</button>
+    </mat-menu>
+
     <button class="p3xr-database-treecontrol-icon-button" type="button" id="p3xr-database-treecontrol-controls-collapse-all"
-        (click)="treeCollapseAll()" [matTooltip]="strings().page?.treeControls?.collapseAll || 'Collapse all'" matTooltipPosition="below">
+        (click)="treeCollapseAll()" [matTooltip]="strings().page?.treeControls?.collapseAll || 'Collapse all'" matTooltipPosition="above">
         <span class="material-icons" aria-hidden="true">keyboard_arrow_up</span>
     </button>
 
     <button class="p3xr-database-treecontrol-icon-button" type="button" (click)="refreshTree()"
-        [matTooltip]="strings().intention?.refresh || 'Refresh'" matTooltipPosition="below">
+        [matTooltip]="strings().intention?.refresh || 'Refresh'" matTooltipPosition="above">
         <span class="material-icons" aria-hidden="true">refresh</span>
     </button>
 
     <button class="p3xr-database-treecontrol-icon-button" type="button" (click)="openTreeSettingDialog($event)"
-        [matTooltip]="strings().form?.treeSettings?.label?.formName || 'Tree settings'" matTooltipPosition="below">
+        [matTooltip]="strings().form?.treeSettings?.label?.formName || 'Tree settings'" matTooltipPosition="above">
         <span class="material-icons" aria-hidden="true">settings</span>
     </button>
 
@@ -23,13 +34,13 @@
         class="p3xr-database-treecontrol-divider-input"
         [ngModel]="redisTreeDivider"
         (ngModelChange)="onDividerInputChange($event)"
-        [matTooltip]="strings().form?.treeSettings?.field?.treeSeparator || 'Tree separator'" matTooltipPosition="below">
+        [matTooltip]="strings().form?.treeSettings?.field?.treeSeparator || 'Tree separator'" matTooltipPosition="above">
     </p3xr-ng-input>
 
     @if (treeDividers.length > 0) {
         <button class="p3xr-database-treecontrol-divider-trigger" type="button"
             [matMenuTriggerFor]="dividerMenu"
-            [matTooltip]="strings().form?.treeSettings?.field?.treeSeparatorSelector || 'Tree separator selector'" matTooltipPosition="below">
+            [matTooltip]="strings().form?.treeSettings?.field?.treeSeparatorSelector || 'Tree separator selector'" matTooltipPosition="above">
             <span class="material-icons" aria-hidden="true">arrow_drop_down</span>
         </button>
 
@@ -88,20 +99,20 @@
     </p3xr-ng-input>
 
     <button class="p3xr-database-treecontrol-icon-button p3xr-database-treecontrol-icon-primary" type="button" (click)="onSearchChange()"
-        [matTooltip]="strings().page?.treeControls?.search?.search || 'Search'" matTooltipPosition="below">
+        [matTooltip]="strings().page?.treeControls?.search?.search || 'Search'" matTooltipPosition="above">
         <span class="material-icons" aria-hidden="true">search</span>
     </button>
 
     @if (search.length > 0) {
         <button class="p3xr-database-treecontrol-icon-button p3xr-database-treecontrol-icon-primary" type="button" (click)="clearSearch()"
-            [matTooltip]="strings().page?.treeControls?.search?.clear || 'Clear'" matTooltipPosition="below">
+            [matTooltip]="strings().page?.treeControls?.search?.clear || 'Clear'" matTooltipPosition="above">
             <span class="material-icons" aria-hidden="true">clear</span>
         </button>
     }
 
     @if (!isReadonly) {
         <span class="material-icons p3xr-database-treecontrol-root-add" (click)="addRootKey($event)"
-            [matTooltip]="strings().intention?.addKeyRoot || 'Add key'" matTooltipPosition="below">add</span>
+            [matTooltip]="strings().intention?.addKeyRoot || 'Add key'" matTooltipPosition="above">add</span>
     }
 
     <button class="p3xr-database-treecontrol-icon-button" type="button" [matMenuTriggerFor]="actionsMenu">
@@ -123,6 +134,16 @@
             </button>
             @if (search.length > 0) {
                 <div class="p3xr-menu-hint">{{ strings().label?.importSearchHint || 'Import applies to the full database, not just search results' }}</div>
+            }
+        }
+        @if (!isReadonly) {
+            <mat-divider></mat-divider>
+            <button mat-menu-item (click)="deleteSearchKeys()">
+                <mat-icon>delete_sweep</mat-icon>
+                <span>{{ deleteSearchLabel() }}</span>
+            </button>
+            @if (search.length > 0) {
+                <div class="p3xr-menu-hint">{{ strings().label?.deleteSearchHint || 'Deletes all keys matching the current search on the server' }}</div>
             }
         }
     </mat-menu>

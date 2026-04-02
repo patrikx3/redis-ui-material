@@ -10,28 +10,6 @@
                 <span class="p3xr-toolbar-spacer"></span>
 
                 <span class="p3xr-console-toolbar-actions">
-                    <span class="p3xr-console-monitor-wrap"
-                          (mouseenter)="onMonitorMouseEnter()" (mouseleave)="onMonitorMouseLeave()">
-                        <span (click)="toggleMonitor()">
-                            <mat-checkbox [(ngModel)]="monitorEnabled" (ngModelChange)="setMonitorState()">
-                                <span class="p3xr-console-monitor-label">{{ strings().intention?.pubsubMonitor || 'PubSub Monitor' }}</span>
-                            </mat-checkbox>
-                        </span>
-                        @if (showMonitorPopup) {
-                            <div class="p3xr-monitor-input">
-                                <div class="p3xr-monitor-input-toolbar p3xr-mat-layout-strong">
-                                    <input class="p3xr-input p3xr-monitor-pattern-input"
-                                           type="text" maxlength="255"
-                                           [ngModel]="monitorPattern"
-                                           (ngModelChange)="onMonitorPatternChange($event)"
-                                           [style.background]="'var(--p3xr-input-bg)'"
-                                           [style.color]="'var(--p3xr-input-color)'"
-                                           [style.border-color]="'var(--p3xr-input-border-color, var(--p3xr-border-color))'" />
-                                </div>
-                            </div>
-                        }
-                    </span>
-
                     <p3xr-ng-button [label]="strings().label?.redisCommandsReference || 'Redis Commands'" mdIcon="terminal"
                         (click)="openCommands($event)"></p3xr-ng-button>
                     <p3xr-ng-button [label]="strings().intention?.clear || 'Clear'" mdIcon="backspace"
@@ -42,28 +20,6 @@
                 <span class="p3xr-toolbar-spacer"></span>
 
                 <span class="p3xr-console-toolbar-actions">
-                    <span class="p3xr-console-monitor-wrap"
-                          (mouseenter)="onMonitorMouseEnter()" (mouseleave)="onMonitorMouseLeave()">
-                        <span (click)="toggleMonitor()">
-                            <mat-checkbox [(ngModel)]="monitorEnabled" (ngModelChange)="setMonitorState()">
-                                <span class="p3xr-console-monitor-label">{{ strings().intention?.pubsubMonitor || 'PubSub Monitor' }}</span>
-                            </mat-checkbox>
-                        </span>
-                        @if (showMonitorPopup) {
-                            <div class="p3xr-monitor-input">
-                                <div class="p3xr-monitor-input-toolbar p3xr-mat-layout-strong">
-                                    <input class="p3xr-input p3xr-monitor-pattern-input"
-                                           type="text" maxlength="255"
-                                           [ngModel]="monitorPattern"
-                                           (ngModelChange)="onMonitorPatternChange($event)"
-                                           [style.background]="'var(--p3xr-input-bg)'"
-                                           [style.color]="'var(--p3xr-input-color)'"
-                                           [style.border-color]="'var(--p3xr-input-border-color, var(--p3xr-border-color))'" />
-                                </div>
-                            </div>
-                        }
-                    </span>
-
                     <p3xr-ng-button [label]="strings().label?.redisCommandsReference || 'Redis Commands'" mdIcon="terminal"
                         (click)="openCommands($event)"></p3xr-ng-button>
                     <p3xr-ng-button [label]="strings().intention?.clear || 'Clear'" mdIcon="backspace"
@@ -105,7 +61,6 @@
                (keydown)="onKeyDown($event)"
                [matAutocomplete]="auto"
                autocomplete="off"
-               [disabled]="aiLoading"
                [placeholder]="aiLoading ? (strings().label?.aiTranslating || 'Translating...') : ''"
                [style.background]="'var(--p3xr-input-bg)'"
                [style.color]="'var(--p3xr-input-color)'"

@@ -55,7 +55,7 @@
             <mat-icon>{{ treeWrap ? 'wrap_text' : 'notes' }}</mat-icon>
         </button>
     }
-    @if (!isReadonly && hasProOrEnterprise) {
+    @if (!isReadonly) {
         @if (isGtSm) {
             <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="jsonEditor()">
                 <mat-icon>edit</mat-icon>

@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "Licenc törölve",
-    invalid_license: "Érvénytelen licenc",
-    license_max_devices_reached: "Maximális eszközhelyek elérve",
-    license_readonly: "A licenc csak a szerver terminálból módosítható.",
     server_error: "Szerverhiba, kérjük próbálja újra"
   },
   title: {
@@ -51,8 +47,12 @@ const strings = {
     deleteAllKeys: opts => {
       return `Törli ezt a fát és az összes kulcsát (${opts.key})?`;
     },
+    deleteSearchKeys: opts => {
+      return `Biztosan törölni szeretné az összes "${opts.pattern}" mintának megfelelő kulcsot? ${opts.count} kulcs található.`;
+    },
     socketioConnectError: "A Socket.IO nem tud csatlakozni a szerverhez. Újratöltéssel megpróbálhatja megoldani a kapcsolódási hibát, a kliens nem tudja önállóan megoldani.",
     socketioAuthRequired: "Socket.IO hitelesítés szükséges. Kérjük, hitelesítsen HTTP Basic Auth (felhasználónév/jelszó) segítségével, majd töltse újra.",
+    delete: "Törlés?",
     deleteKey: "Biztosan törli ezt a kulcsot?",
     rename: {
       title: "Biztosan átnevezi ezt a kulcsot?",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "Szöveg átalakítása idővé",
       convertTextToTimePlaceholder: "Pl. 1d = 86400"
     },
-    license: {
-      title: "Licenc beállítása",
-      textContent: "Ha fizetős funkciókat szeretne használni, kérjük lépjen kapcsolatba a support@corifeus.com címmel licenc igényléséhez. Az árak: Pro 400 HUF/hó (€1/hó) vagy 4,000 HUF/év (€10/év), Enterprise 1,200 HUF/hó (€3/hó) vagy 12,000 HUF/év (€30/év). Az éves ár a havi 10-szerese. 27% ÁFÁ-val a végösszegek: Pro 500 HUF/hó (€1.27/hó) vagy 5,100 HUF/év (€12.70/év), Enterprise 1,500 HUF/hó (€3.81/hó) vagy 15,200 HUF/év (€38.10/év). A licenc érvényesítéshez internetkapcsolat szükséges. Az alapértelmezett licenc 5 helyet tartalmaz. Ha több helyre van szüksége, lépjen kapcsolatba velünk a support@corifeus.com címen.",
-      placeholder: "Licenckulcs"
-    }
   },
   language: {
     bg: "Български / Bulgarian",
@@ -136,13 +131,17 @@ const strings = {
     exportKeys: "Kulcsok exportálása",
     exportAllKeys: (opts) => `Mind a ${opts.count} kulcs exportálása`,
     exportSearchResults: (opts) => `${opts.count} eredmény exportálása`,
+    deleteAllKeysMenu: (opts) => `Összes törlése ${opts.count}`,
     importKeys: "Kulcsok importálása",
+    deleteSearchKeys: (opts) => `${opts.count} egyező kulcs törlése`,
     saveWithFormatJson: "Mentés formázással",
     formatJson: "JSON formázása",
     wrap: "Tördelés",
     unwrap: "Nem tördelés",
     downloadJson: "JSON letöltése",
-    pubsubMonitor: "PubSub Monitor",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     language: "Nyelv / Language",
     ok: "OK",
     addKey: "Hozzáadás ehhez a kulcshoz",
@@ -181,7 +180,6 @@ const strings = {
     edit: "Szerkesztés",
     save: "Mentés",
     ttl: "TTL beállítása",
-    license: "Licenc beállítása",
     delete: "Törlés",
     remove: "Eltávolítás",
     sure: "Biztos",
@@ -260,38 +258,6 @@ const strings = {
     connectiondEdit: "Kapcsolat szerkesztése",
     connectiondView: "Kapcsolat megtekintése",
     connections: "Kapcsolatok",
-    licenseInfo: "Licenc",
-    licenseEditable: "Licenc szerkeszthető",
-    licenseEditableYes: "Igen",
-    licenseEditableNo: "Nem",
-    licenseTerminalOnly: "A licenc csak a szerver terminálból konfigurálható.",
-    licenseTierPolicyTitle: "Szintszabályzat",
-    licenseTierPolicyText: "<h4>Ingyenes</h4>Csak alap Redis UI; nincs SSH alagút, nincs Csak olvasható kapcsolat mód, nincs Klaszter/Sentinel, nincs JSON szerkesztés/Bináris feltöltés/Bináris letöltés, nincs ReJSON.<br/><strong>Ár: 0 HUF/hó (€0/hó).</strong><br/><br/><h4>Pro</h4>SSH alagút, Csak olvasható kapcsolat mód (beleértve --readonly-connections/-r), JSON szerkesztés, Bináris feltöltés, Bináris letöltés, ReJSON.<br/><strong>Alapár: 400 HUF/hó (€1/hó) vagy 4,000 HUF/év (€10/év).</strong><br/><strong>Összesen 27% ÁFÁ-val: 500 HUF/hó (€1.27/hó) vagy 5,100 HUF/év (€12.70/év).</strong><br/><br/><h4>Enterprise</h4>SSH alagút, Klaszter és Sentinel, valamint JSON szerkesztés, Bináris feltöltés, Bináris letöltés, ReJSON; --readonly-connections/-r szintén működik.<br/><strong>Alapár: 1,200 HUF/hó (€3/hó) vagy 12,000 HUF/év (€30/év).</strong><br/><strong>Összesen 27% ÁFÁ-val: 1,500 HUF/hó (€3.81/hó) vagy 15,200 HUF/év (€38.10/év).</strong><br/><br/><h4>Éves szabály</h4>Az éves ár a havi ár 10-szerese.<br/><br/><h4>Helyek</h4>Az alapértelmezett licenc 5 helyet tartalmaz. Ha több helyre van szüksége, lépjen kapcsolatba velünk a <a href='mailto:support@corifeus.com'>support@corifeus.com</a> címen.<br/><br/><h4>Enterprise próba</h4>10 nap ingyenes próba bármely valós e-mail címmel (nem teszt e-mail).<br/><hr/><h4>Számlázási adatok e-mailben</h4>Név, Számlázási e-mail, Országkód, Irányítószám, Város, Cím, Adószám (opcionális).<br/><br/><h4>Fizetés</h4>PayPal fizetés csak HUF-ban (forint) érhető el; a pénz elküldése után a <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> címen küldök egy számlát. Minden fizetés visszatéríthetetlen.<br/><br/><h4>ÁFA</h4>Az ÁFA hozzáadódik az árhoz (27% Magyarországon).<br/><hr/><h4>Kapcsolat</h4>Ha üdvözölni szeretne vagy kérdése van, írjon a <a href='mailto:support@corifeus.com'>support@corifeus.com</a> címre.<br/><hr/><h4>Nyelv</h4>A számla és a licenc e-mail kommunikáció angol nyelven történik. A számla pénzneme HUF.<br/><hr/><h4>Megjegyzés</h4>A licenc érvényesítéshez internetkapcsolat szükséges.",
-    licenseState: "Állapot",
-    licenseStateActive: "Aktív",
-    licenseStateInactive: "Inaktív",
-    licenseStateNoLicense: "Nincs licenc",
-    licenseKeyMasked: "Mentett kulcs",
-    licenseTier: "Szint",
-    licenseValid: "Érvényes",
-    licenseStatus: "Licenc állapot",
-    licenseReason: "Ok",
-    licenseCheckedAt: "Ellenőrizve",
-    licenseStartsAt: "Kezdődik",
-    licenseExpiresAt: "Lejár",
-    licenseDaysLeft: "Hátralévő napok",
-    licenseMaxDevices: "Max eszközök",
-    licenseActiveDevices: "Aktív eszközök",
-    licenseActiveDevicesInfo: "Ha egy eszköz már nincs használatban, a helye automatikusan felszabadul 75 perc után.",
-    licenseCustomerEmail: "Ügyfél e-mail",
-    licenseFeatures: "Funkciók",
-    licenseFeaturesEmpty: "Nincs extra funkció",
-    licenseFeatureReadonlyMode: "Csak olvasható kapcsolat mód",
-    licenseFeatureReadonlyConnectionsFlag: "Csak olvasható kapcsolatok (--readonly-connections/-r)",
-    licenseFeatureSsh: "SSH alagút",
-    licenseFeatureCluster: "Klaszter kapcsolatok",
-    licenseFeatureSentinel: "Sentinel kapcsolatok",
-    licenseFeatureReJSON: "ReJSON (JSON data type)",
     keysSort: {
       on: "Kulcsrendezés be",
       off: "Kulcsrendezés ki"
@@ -309,9 +275,6 @@ const strings = {
       on: "Csak olvasható be",
       off: "Csak olvasható ki"
     },
-    proSshOnly: "Az SSH a Pro vagy Enterprise verzióban érhető el.",
-    proReadonlyOnly: "A csak olvasható kapcsolat mód a Pro vagy Enterprise verzióban érhető el.",
-    enterpriseClusterSentinelOnly: "A Klaszter és Sentinel csak az Enterprise verzióban érhető el.",
     theme: {
       light: "Világos",
       dark: "Sötét enterprise",
@@ -353,16 +316,20 @@ const strings = {
     importConflict: "Ha a kulcs már létezik:",
     noKeysToExport: "Nincs exportálandó kulcs",
     time: "Idő",
+    type: "Típus",
+    format: "Formátum",
     loading: "Betöltés...",
     autoRefresh: "Auto",
     exportSearchHint: "Csak az aktuális keresésnek megfelelő kulcsok exportálása",
     importSearchHint: "Az importálás a teljes adatbázisra vonatkozik, nem csak a keresési eredményekre",
+    deleteSearchHint: "Törli az összes kulcsot, amely megfelel az aktuális keresésnek a szerveren",
+    deletingSearchKeys: "Egyező kulcsok törlése...",
     importNoKeys: "Nem található kulcs a fájlban",
   },
   status: {
     dataCopied: "Az adat a vágólapon van",
-    licenseSaved: "Licenc mentve",
     exportDone: "Exportálás kész",
+    deletedSearchKeys: (opts) => `${opts.count} kulcs törölve`,
     indexCreated: "Index létrehozva",
     indexDropped: "Index törölve",
     importDone: (opts) => `Importálás kész: ${opts.created} létrehozva, ${opts.skipped} kihagyva, ${opts.errors} hiba`,
@@ -410,35 +377,10 @@ const strings = {
     "readonly-connections": "A kapcsolatok hozzáadása/mentése/törlése csak olvasható!",
     "readonly-connection-mode": "Ez a kapcsolat csak olvasható módban van!",
     "list-out-of-bounds": "Ez a listaindex határon kívül van",
-    "donation-ware-feature": "Ez a funkció az adományos verzióban érhető el.",
-    "feature-pro-readonly-required": "A csak olvasható kapcsolat mód Pro vagy Enterprise licencet igényel.",
-    "feature-pro-ssh-required": "Az SSH alagút Pro vagy Enterprise licencet igényel.",
-    "feature-enterprise-cluster-sentinel-required": "A Klaszter és Sentinel Enterprise licencet igényel.",
-    "feature-pro-json-binary-required": "A JSON szerkesztés, Bináris feltöltés és Bináris letöltés Pro vagy Enterprise licencet igényel.",
-    "feature-pro-rejson-required": "ReJSON (JSON data type) requires Pro or Enterprise license.",
     "invalid-json-value": "The value is not valid JSON.",
     "http_auth_required": "Hitelesítés szükséges: kérjük hitelesítsen HTTP Basic Auth segítségével és töltse újra.",
     "auto-connection-failed": "Lehetséges, hogy a kapcsolat eltávolításra került és az automatikus csatlakozás emiatt sikertelen volt.",
     invalid_console_command: "Ez a parancs nem működik a GUI-n keresztül."
-  },
-  licenseReason: {
-    LICENSE_VALID: "A licenc érvényes",
-    LICENSE_INVALID: "A licenc érvénytelen",
-    LICENSE_MISSING: "Nincs licenckulcs beállítva",
-    LICENSE_DISABLED: "A licenc le van tiltva a szerver konfigurációban",
-    LICENSE_NOT_FOUND: "A licenc nem található",
-    LICENSE_EXPIRED: "A licenc lejárt",
-    LICENSE_CLEARED: "A licenckulcs törölve lett",
-    LICENSE_MAX_DEVICES_REACHED: "Maximális eszközhelyek elérve",
-    PRODUCT_MISMATCH: "A licenc termék nem egyezik"
-  },
-  licenseStatusValue: {
-    active: "Aktív",
-    deleted: "Törölt",
-    all: "Összes",
-    expired: "Lejárt",
-    missing: "Hiányzó",
-    inactive: "Inaktív"
   },
   form: {
     error: {
@@ -608,12 +550,49 @@ const strings = {
           field: "Mező",
           value: "Érték"
         }
+      },
+      timeseries: {
+        chart: "Diagram",
+        info: "Információ",
+        addPoint: "Adatpont hozzáadása",
+        from: "Ettől (ms vagy -)",
+        to: "Eddig (ms vagy +)",
+        aggregation: "Aggregáció",
+        timeBucket: "Időszelet (ms)",
+        none: "Nincs",
+        dataPoints: "adatpontok",
+        labels: "Címkék",
+        rules: "Szabályok",
+        retention: "Megőrzés",
+        timestamp: "Időbélyeg",
+        value: "Érték",
+        retentionHint: "0 = nincs lejárat, vagy ezredmásodperc",
+        duplicatePolicy: "Duplikátum-kezelés",
+        labelsHint: "kulcs1 érték1 kulcs2 érték2",
+        timestampHint: "'*' automatikus generálást jelent, vagy ezredmásodperc időbélyeg",
+        editAllHint: "Soronként egy adatpont: időbélyeg érték (az időbélyeg lehet * az automatikushoz)",
+        autoSpread: "Automatikus * szórási intervallum",
+        formula: "Képlet",
+        formulaLinear: "Lineáris",
+        formulaRandom: "Véletlenszerű",
+        formulaSawtooth: "Fűrészfog",
+        formulaPoints: "Pontok",
+        formulaAmplitude: "Amplitúdó",
+        formulaOffset: "Eltolás",
+        generate: "Generálás",
+        exportChart: "Exportálás PNG",
+        overlay: "Kulcsok átfedése",
+        overlayHint: "Vesszővel elválasztott kulcsok",
+        mrangeFilter: "Címke szűrő",
+        bulkMode: "Tömeges generálás",
+        mrangeHint: "pl. sensor=temp"
       }
     },
     treeControls: {
       settings: "Fa beállítások",
       expandAll: "Összes kibontása",
       collapseAll: "Összes összecsukása",
+      level: "Szint",
       search: {
         search: "Keresés a kulcsok között",
         clear: "Jelenlegi keresés törlése",
@@ -637,7 +616,13 @@ const strings = {
     days: "nap",
     year: "év",
     month: "hónap",
-    day: "nap"
+    day: "nap",
+    second: "másodperc",
+    seconds: "másodperc",
+    minute: "perc",
+    minutes: "perc",
+    hour: "óra",
+    hours: "óra"
   },
   redisTypes: {
     string: "String",
@@ -646,7 +631,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

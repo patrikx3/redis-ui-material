@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "رخصة مسح",
-    invalid_license: "ترخيص غير صالح",
-    license_max_devices_reached: "تم الوصول إلى الحد الأقصى لعدد مقاعد الجهاز",
-    license_readonly: "لا يمكن تغيير الترخيص إلا من محطة الخادم.",
     server_error: "خطأ في الخادم، يرجى المحاولة مرة أخرى"
   },
   title: {
@@ -48,8 +44,12 @@ const strings = {
     deleteConnection: "تأكيد",
     deleteConnectionText: "هل أنت متأكد من حذف اتصال Redis هذا؟",
     deleteNode: "هل أنت متأكد من حذف عقدة Redis هذه؟",
+    delete: "حذف؟",
     deleteAllKeys: opts => {
       return `احذف هذه الشجرة وكل مفاتيحها (${opts.key})؟`;
+    },
+    deleteSearchKeys: opts => {
+      return `هل أنت متأكد من حذف جميع المفاتيح المطابقة لـ "${opts.pattern}"؟ تم العثور على ${opts.count} مفتاح.`;
     },
     socketioConnectError: "لا يمكن لـ Socket.IO الاتصال بالخادم، يمكنك إعادة التحميل ومحاولة حل خطأ الاتصال بنفسك، ولا يعرف العميل كيفية حل المشكلة بنفسه.",
     socketioAuthRequired: "مطلوب إذن Socket.IO. يرجى المصادقة باستخدام HTTP Basic Auth (اسم المستخدم/كلمة المرور) وإعادة التحميل.",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "تحويل النص إلى وقت",
       convertTextToTimePlaceholder: "على سبيل المثال. 1d سيكون 86400"
     },
-    license: {
-      title: "تعيين الترخيص",
-      textContent: "إذا كنت ترغب في استخدام الميزات المدفوعة، يرجى الاتصال بـ support@corifeus.com لطلب الترخيص. السعر هو Pro 400 HUF/شهر (1 يورو/شهر) أو 4000 HUF/سنة (10 يورو/سنة)، وEnterprise 1200 HUF/شهر (3 يورو/شهر) أو 12000 HUF/سنة (30 يورو/سنة). سنويا هو 10x شهريا. مع 27% VAT، يكون الإجمالي Pro 500 HUF/الشهر (1.27 يورو/الشهر) أو 5,100 HUF/السنة (12.70 يورو/السنة)، Enterprise 1,500 HUF/الشهر (3.81 يورو/الشهر) أو 15,200 HUF/سنة (38.10 يورو/سنة). يتطلب التحقق من الترخيص الوصول إلى الإنترنت. يتضمن الترخيص الافتراضي 5 مقاعد. إذا كنت بحاجة إلى المزيد من المقاعد، اتصل بنا على support@corifeus.com.",
-      placeholder: "مفتاح الترخيص"
-    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -136,13 +131,17 @@ const strings = {
     exportKeys: "تصدير المفاتيح",
     exportAllKeys: (opts) => `تصدير جميع المفاتيح (${opts.count})`,
     exportSearchResults: (opts) => `تصدير ${opts.count} نتيجة`,
+    deleteAllKeysMenu: (opts) => `حذف جميع ${opts.count}`,
     importKeys: "استيراد المفاتيح",
+    deleteSearchKeys: (opts) => `حذف ${opts.count} مفتاح مطابق`,
     saveWithFormatJson: "حفظ مع التنسيق",
     formatJson: "تنسيق جيسون",
     wrap: "التفاف",
     unwrap: "بسط",
     downloadJson: "تحميل JSON",
-    pubsubMonitor: "شاشة PubSub",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "اللغة",
@@ -183,7 +182,6 @@ const strings = {
     edit: "تحرير",
     save: "حفظ",
     ttl: "قم بتعيين TTL",
-    license: "تعيين الترخيص",
     delete: "حذف",
     remove: "إزالة",
     sure: "بالتأكيد",
@@ -262,38 +260,6 @@ const strings = {
     connectiondEdit: "تحرير الاتصال",
     connectiondView: "عرض الاتصال",
     connections: "اتصالات",
-    licenseInfo: "الترخيص",
-    licenseEditable: "الترخيص قابل للتحرير",
-    licenseEditableYes: "نعم",
-    licenseEditableNo: "لا",
-    licenseTerminalOnly: "لا يمكن تكوين الترخيص إلا من محطة الخادم.",
-    licenseTierPolicyTitle: "سياسة الطبقة",
-    licenseTierPolicyText: "<h4>Free</h4>core Redis واجهة المستخدم فقط؛ لا يوجد نفق SSH، لا يوجد وضع اتصال للقراءة فقط، لا يوجد Cluster/Sentinel، لا يوجد تحرير JSON/تحميل ثنائي/تنزيل ثنائي، لا ReJSON.<br/><strong>السعر: 0 HUF/شهر (0 يورو/شهر).</strong><br/><br/><h4>Pro</h4>SSH النفق، وضع الاتصال للقراءة فقط (بما في ذلك --readonly-connections/-r)، تحرير JSON، تحميل ثنائي، تنزيل ثنائي، ReJSON.<br/><strong> السعر الأساسي: 400 HUF/شهر (1 يورو/شهر) أو 4000 HUF/سنة (10 يورو في السنة).</strong><br/><strong>الإجمالي بنسبة 27% VAT: 500 HUF/شهر (1.27 يورو/شهر) أو 5,100 HUF/السنة (12.70 يورو/السنة).</strong><br/><br/><h4>Enterprise</h4>SSH حفر الأنفاق، Cluster وSentinel، بالإضافة إلى تحرير JSON، تحميل ثنائي، تنزيل ثنائي، ReJSON؛ --readonly-connections/-r يعمل أيضًا.<br/><strong> السعر الأساسي: 1200 HUF/الشهر (3 يورو/الشهر) أو 12000 HUF/السنة (30 يورو في السنة).</strong><br/><strong>الإجمالي بنسبة 27% VAT: 1,500 HUF/شهر (3.81 يورو/شهر) أو 15,200 HUF/سنة (38.10 يورو/سنة).</strong><br/><br/><h4>القاعدة السنوية</h4>السعر السنوي هو 10 أضعاف الشهري السعر.<br/><br/><h4>Seats</h4> الترخيص الافتراضي يتضمن 5 مقاعد. إذا كنت بحاجة إلى المزيد من المقاعد، فاتصل بنا على <a href='mailto:mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><br/><h4>الإصدار التجريبي </h4> 10 أيام مجانًا أي شخص لديه عنوان بريد إلكتروني حقيقي (بريد إلكتروني غير اختباري).<br/><hr/><h4> معلومات الفواتير في البريد الإلكتروني</h4>الاسم، البريد الإلكتروني للفوترة، رمز البلد، الرمز البريدي، المدينة، العنوان، معرف VAT (اختياري).<br/><br/><h4>Payment</h4>PayPal متاح فقط في HUF (فورنت)؛ بعد إرسال الأموال @ <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> سأرسل لك فاتورة. كافة المدفوعات غير قابلة للاسترداد. المجر).<br/><hr/><h4>Contact</h4>إذا كنت تريد أن تقول مرحبًا أو لد��ك سؤال، فاتصل <a href='mailto:mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><hr/><h4>Language</h4> يتم التواصل عبر البريد الإلكتروني الخاص بالفاتورة والترخيص باللغة الإنجليزية. عملة الفاتورة هي HUF.<br/><hr/><h4>Note</h4> يتطلب التحقق من صحة الترخيص الوصول إلى الإنترنت.",
-    licenseState: "الدولة",
-    licenseStateActive: "نشط",
-    licenseStateInactive: "غير نشط",
-    licenseStateNoLicense: "لا يوجد ترخيص",
-    licenseKeyMasked: "المفتاح المحفوظ",
-    licenseTier: "الطبقة",
-    licenseValid: "صالح",
-    licenseStatus: "حالة الترخيص",
-    licenseReason: "السبب",
-    licenseCheckedAt: "تم التحقق في",
-    licenseStartsAt: "يبدأ في",
-    licenseExpiresAt: "تنتهي عند",
-    licenseDaysLeft: "الأيام المتبقية",
-    licenseMaxDevices: "أجهزة ماكس",
-    licenseActiveDevices: "الأجهزة النشطة",
-    licenseActiveDevicesInfo: "إذا لم يعد الجهاز مستخدمًا، فسيتم تحرير مقعده تلقائيًا بعد 75 دقيقة.",
-    licenseCustomerEmail: "البريد الإلكتروني للعميل",
-    licenseFeatures: "الميزات",
-    licenseFeaturesEmpty: "لا توجد ميزات إضافية",
-    licenseFeatureReadonlyMode: "وضع الاتصال للقراءة فقط",
-    licenseFeatureReadonlyConnectionsFlag: "اتصالات للقراءة فقط (--readonly-connections/-r)",
-    licenseFeatureSsh: "SSH نفق",
-    licenseFeatureCluster: "اتصالات Cluster",
-    licenseFeatureSentinel: "اتصالات Sentinel",
-    licenseFeatureReJSON: "ReJSON (نوع البيانات JSON)",
     keysSort: {
       on: "تشغيل فرز المفاتيح",
       off: "فرز المفاتيح"
@@ -311,9 +277,6 @@ const strings = {
       on: "تشغيل للقراءة فقط",
       off: "إيقاف للقراءة فقط"
     },
-    proSshOnly: "SSH متاح في Pro أو Enterprise.",
-    proReadonlyOnly: "يتوفر وضع الاتصال للقراءة فقط في Pro أو Enterprise.",
-    enterpriseClusterSentinelOnly: "يتوفر Cluster وSentinel في المؤسسات فقط.",
     theme: {
       light: "ضوء",
       dark: "مؤسسة مظلمة",
@@ -355,16 +318,20 @@ const strings = {
     importConflict: "إذا كان المفتاح موجودًا بالفعل:",
     noKeysToExport: "لا توجد مفاتيح للتصدير",
     time: "الوقت",
+    type: "النوع",
+    format: "التنسيق",
     loading: "جارٍ التحميل...",
     autoRefresh: "تلقائي",
     exportSearchHint: "تصدير المفاتيح المطابقة للبحث الحالي فقط",
     importSearchHint: "الاستيراد يطبق على قاعدة البيانات بالكامل وليس نتائج البحث فقط",
+    deleteSearchHint: "يحذف جميع المفاتيح المطابقة للبحث الحالي على الخادم",
+    deletingSearchKeys: "جارٍ حذف المفاتيح المطابقة...",
     importNoKeys: "لم يتم العثور على مفاتيح في الملف",
   },
   status: {
     dataCopied: "البيانات موجودة في الحافظة",
-    licenseSaved: "تم حفظ الترخيص",
     exportDone: "اكتمل التصدير",
+    deletedSearchKeys: (opts) => `تم حذف ${opts.count} مفتاح`,
     indexCreated: "تم إنشاء الفهرس",
     indexDropped: "تم حذف الفهرس",
     importDone: (opts) => `اكتمل الاستيراد: ${opts.created} تم إنشاؤه، ${opts.skipped} تم تخطيه، ${opts.errors} أخطاء`,
@@ -412,35 +379,10 @@ const strings = {
     "readonly-connections": "اتصالات إضافة/حفظ/حذف للقراءة فقط!",
     "readonly-connection-mode": "يتم قراءة هذا الاتصال فقط الوضع!",
     "list-out-of-bounds": "فهرس القائمة هذا خارج الحدود",
-    "donation-ware-feature": "هذه الميزة موجودة في نسخة التبرع.",
-    "feature-pro-readonly-required": "يتطلب وضع الاتصال للقراءة فقط ترخيص Pro أو Enterprise.",
-    "feature-pro-ssh-required": "يتطلب الاتصال النفقي SSH ترخيص Pro أو Enterprise.",
-    "feature-enterprise-cluster-sentinel-required": "يتطلب Cluster وSentinel ترخيصًا مؤسسيًا.",
-    "feature-pro-json-binary-required": "يتطلب تحرير JSON وتحميل الملف الثنائي وتنزيل الملف الثنائي ترخيص Pro أو Enterprise.",
-    "feature-pro-rejson-required": "يتطلب ReJSON (نوع البيانات JSON) ترخيص Pro أو Enterprise.",
     "invalid-json-value": "القيمة غير صالحة JSON.",
     "http_auth_required": "التفويض مطلوب: يرجى المصادقة باستخدام HTTP Basic Auth وإعادة التحميل.",
     "auto-connection-failed": "ممكن تم حذف الاتصال وفشل الاتصال التلقائي لهذا السبب.",
     invalid_console_command: "هذا الأمر لا يعمل عبر GUI."
-  },
-  licenseReason: {
-    LICENSE_VALID: "الترخيص ساري المفعول",
-    LICENSE_INVALID: "الترخيص غير صالح",
-    LICENSE_MISSING: "لم يتم تعيين مفتاح الترخيص",
-    LICENSE_DISABLED: "تم تعطيل الترخيص في تكوين الخادم",
-    LICENSE_NOT_FOUND: "لم يتم العثور على الترخيص",
-    LICENSE_EXPIRED: "انتهت صلاحية الترخيص",
-    LICENSE_CLEARED: "تم مسح مفتاح الترخيص",
-    LICENSE_MAX_DEVICES_REACHED: "تم الوصول إلى الحد الأقصى لعدد مقاعد الجهاز",
-    PRODUCT_MISMATCH: "منتج الترخيص غير متطابق"
-  },
-  licenseStatusValue: {
-    active: "نشط",
-    deleted: "تم الحذف",
-    all: "الكل",
-    expired: "انتهت صلاحيتها",
-    missing: "مفقود",
-    inactive: "غير نشط"
   },
   form: {
     error: {
@@ -610,12 +552,49 @@ const strings = {
           field: "الميدان",
           value: "القيمة"
         }
+      },
+      timeseries: {
+        chart: "مخطط",
+        info: "معلومات",
+        addPoint: "إضافة نقطة بيانات",
+        from: "من (ms أو -)",
+        to: "إلى (ms أو +)",
+        aggregation: "تجميع",
+        timeBucket: "دلو (ms)",
+        none: "لا شيء",
+        dataPoints: "نقاط البيانات",
+        labels: "التسميات",
+        rules: "القواعد",
+        retention: "الاحتفاظ",
+        timestamp: "الطابع الزمني",
+        value: "القيمة",
+        retentionHint: "0 = بدون انتهاء صلاحية، أو بالمللي ثانية",
+        duplicatePolicy: "سياسة التكرار",
+        labelsHint: "key1 value1 key2 value2",
+        timestampHint: "'*' يعني توليد تلقائي، أو طابع زمني بالمللي ثانية",
+        editAllHint: "نقطة بيانات واحدة لكل سطر: طابع_زمني قيمة (الطابع الزمني يمكن أن يكون * للتوليد التلقائي)",
+        autoSpread: "فاصل الانتشار التلقائي *",
+        formula: "صيغة",
+        formulaLinear: "خطي",
+        formulaRandom: "عشوائي",
+        formulaSawtooth: "سن المنشار",
+        formulaPoints: "النقاط",
+        formulaAmplitude: "السعة",
+        formulaOffset: "الإزاحة",
+        generate: "توليد",
+        exportChart: "تصدير PNG",
+        overlay: "تراكب المفاتيح",
+        overlayHint: "مفاتيح مفصولة بفاصلة",
+        mrangeFilter: "فلتر التسميات",
+        bulkMode: "إنشاء مجمع",
+        mrangeHint: "مثال sensor=temp"
       }
     },
     treeControls: {
       settings: "إعدادات الشجرة",
       expandAll: "قم بتوسيع الكل",
       collapseAll: "طي الكل",
+      level: "المستوى",
       search: {
         search: "ابحث في المفاتيح",
         clear: "مسح البحث الحالي لتعيينه فارغا",
@@ -634,13 +613,21 @@ const strings = {
     }
   },
   time: {
+    type: "النوع",
+    format: "التنسيق",
     loading: "جارٍ التحميل...",
     years: "سنوات",
     months: "أشهر",
     days: "أيام",
     year: "سنة",
     month: "شهر",
-    day: "يوم"
+    day: "يوم",
+    second: "ثانية",
+    seconds: "ثوانٍ",
+    minute: "دقيقة",
+    minutes: "دقائق",
+    hour: "ساعة",
+    hours: "ساعات"
   },
   redisTypes: {
     string: "String",
@@ -649,7 +636,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

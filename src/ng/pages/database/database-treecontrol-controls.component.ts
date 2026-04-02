@@ -108,6 +108,10 @@ export class DatabaseTreecontrolControlsComponent implements OnInit, OnDestroy {
         this.common.treeExpandAll$.next();
     }
 
+    treeExpandToLevel(level: number): void {
+        this.common.treeExpandToLevel$.next(level);
+    }
+
     treeCollapseAll(): void {
         this.common.treeCollapseAll$.next();
     }
@@ -326,6 +330,66 @@ export class DatabaseTreecontrolControlsComponent implements OnInit, OnDestroy {
             reader.readAsText(file);
         };
         input.click();
+    }
+
+    deleteSearchLabel(): string {
+        const strings = this.strings();
+        if (this.search.length > 0) {
+            const fn = strings.intention?.deleteSearchKeys;
+            return typeof fn === 'function' ? fn({ count: this.keyCount }) : `Delete ${this.keyCount} matching keys`;
+        }
+        const fn = strings.intention?.deleteAllKeysMenu;
+        return typeof fn === 'function' ? fn({ count: this.keyCount }) : `Delete all ${this.keyCount} keys`;
+    }
+
+    async deleteSearchKeys(): Promise<void> {
+        let match: string;
+        if (this.search.length > 0) {
+            if (p3xr.settings?.searchStartsWith) {
+                match = this.search + '*';
+            } else {
+                match = '*' + this.search + '*';
+            }
+        } else {
+            match = '*';
+        }
+
+        try {
+            const confirmFn = this.strings().confirm?.deleteSearchKeys;
+            const confirmMsg = typeof confirmFn === 'function'
+                ? confirmFn({ count: this.keyCount, pattern: match })
+                : `Are you sure to delete all keys matching "${match}"? Found ${this.keyCount} keys.`;
+
+            await this.common.confirm({ message: confirmMsg });
+
+            p3xr?.ui?.overlay?.show({
+                message: this.strings().label?.deletingSearchKeys || 'Deleting matching keys...',
+            });
+
+            const response = await this.socket.request({
+                action: 'delete-search-keys',
+                payload: { match },
+            });
+
+            const deletedCount = response.deletedCount || 0;
+            const statusFn = this.strings().status?.deletedSearchKeys;
+            const message = typeof statusFn === 'function'
+                ? statusFn({ count: deletedCount })
+                : `Deleted ${deletedCount} keys`;
+            this.common.toast({ message });
+
+            await this.cmd.refresh();
+            this.ngZone.run(() => {
+                this.syncFromGlobal();
+                this.requestViewRefresh();
+            });
+        } catch (e: any) {
+            if (e !== undefined && e !== null) {
+                this.common.generalHandleError(e);
+            }
+        } finally {
+            p3xr?.ui?.overlay?.hide();
+        }
     }
 
     searchInputClass(): string {

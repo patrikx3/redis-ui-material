@@ -28,7 +28,7 @@ export interface ConnectionDialogData {
 /**
  * Connection dialog -- Angular replacement for p3xrDialogConnection.
  * Allows creating/editing Redis connections with support for SSH, TLS,
- * cluster, and sentinel modes. License tier gating controls feature availability.
+ * cluster, and sentinel modes.
  */
 @Component({
     selector: 'p3xr-connection-dialog',
@@ -98,16 +98,11 @@ export interface ConnectionDialogData {
                     <!-- SSH toggle -->
                     <span>
                         <mat-slide-toggle name="ssh" [(ngModel)]="model.ssh"
-                                          [disabled]="readonlyConnections || !isReadonlyTier()"
+                                          [disabled]="readonlyConnections"
                                           (change)="scheduleTextareaResize()"
                                           style="margin: 0;">
                             {{ model.ssh ? strings().label?.ssh?.on : strings().label?.ssh?.off }}
                         </mat-slide-toggle>
-                        @if (!isReadonlyTier()) {
-                            <div class="p3xr-md-input-container-bottom-info">
-                                {{ strings().label?.proSshOnly }}
-                            </div>
-                        }
 
                         @if (model.ssh) {
                             <fieldset>
@@ -229,15 +224,10 @@ export interface ConnectionDialogData {
                     <!-- Readonly toggle -->
                     <span>
                         <mat-slide-toggle name="readonly" [(ngModel)]="model.readonly"
-                                          [disabled]="readonlyConnections || !isReadonlyTier()"
+                                          [disabled]="readonlyConnections"
                                           style="margin: 0;">
                             {{ model.readonly ? strings().label?.readonly?.on : strings().label?.readonly?.off }}
                         </mat-slide-toggle>
-                        @if (!isReadonlyTier()) {
-                            <div class="p3xr-md-input-container-bottom-info">
-                                {{ strings().label?.proReadonlyOnly }}
-                            </div>
-                        }
                     </span>
 
                     <br/>
@@ -246,7 +236,7 @@ export interface ConnectionDialogData {
                     <div style="display: flex; flex-direction: row; align-items: center;">
                         <div>
                             <mat-slide-toggle name="cluster" [(ngModel)]="model.cluster"
-                                              [disabled]="readonlyConnections || !isEnterpriseTier()"
+                                              [disabled]="readonlyConnections"
                                               (change)="onClusterChange()"
                                               style="margin: 0;">
                                 {{ model.cluster ? strings().label?.cluster?.on : strings().label?.cluster?.off }}
@@ -255,7 +245,7 @@ export interface ConnectionDialogData {
 
                         <div style="margin-left: 15px;">
                             <mat-slide-toggle name="sentinel" [(ngModel)]="model.sentinel"
-                                              [disabled]="readonlyConnections || !isEnterpriseTier()"
+                                              [disabled]="readonlyConnections"
                                               (change)="onSentinelChange()"
                                               style="margin: 0;">
                                 {{ model.sentinel ? strings().label?.sentinel?.on : strings().label?.sentinel?.off }}
@@ -264,7 +254,7 @@ export interface ConnectionDialogData {
 
                         <span style="flex: 1;"></span>
 
-                        @if (isEnterpriseTier() && (model.cluster === true || model.sentinel === true) && !readonlyConnections) {
+                        @if ((model.cluster === true || model.sentinel === true) && !readonlyConnections) {
                             <div class="p3xr-connection-node-add" (click)="addNode()">
                                 {{ strings().label?.addNode }}
                                 <button mat-mini-fab class="btn-primary" type="button">
@@ -274,14 +264,8 @@ export interface ConnectionDialogData {
                         }
                     </div>
 
-                    @if (!isEnterpriseTier()) {
-                        <div class="p3xr-md-input-container-bottom-info">
-                            {{ strings().label?.enterpriseClusterSentinelOnly }}
-                        </div>
-                    }
-
                     <!-- Sentinel name -->
-                    @if (isEnterpriseTier() && model.sentinel === true) {
+                    @if (model.sentinel === true) {
                         <mat-form-field class="md-block p3xr-md-input-container-no-bottom">
                             <mat-label>{{ strings().label?.sentinel?.name }}</mat-label>
                             <input matInput required name="sentinelName" [(ngModel)]="model.sentinelName"
@@ -293,7 +277,7 @@ export interface ConnectionDialogData {
                     }
 
                     <!-- Dynamic nodes -->
-                    @if (isEnterpriseTier() && (model.cluster === true || model.sentinel === true)) {
+                    @if (model.cluster === true || model.sentinel === true) {
                         <div>
                             @for (node of model.nodes; track node.id; let idx = $index; let last = $last) {
                                 <fieldset>
@@ -595,22 +579,6 @@ export class ConnectionDialogComponent implements AfterViewInit {
         return model;
     }
 
-    // --- License tier helpers ---
-
-    private getActiveTier(): string {
-        // All features are free — always return enterprise tier
-        return 'enterprise';
-    }
-
-    isReadonlyTier(): boolean {
-        const tier = this.getActiveTier();
-        return tier === 'pro' || tier === 'enterprise';
-    }
-
-    isEnterpriseTier(): boolean {
-        return this.getActiveTier() === 'enterprise';
-    }
-
     // --- Cluster/Sentinel mutual exclusion ---
 
     onClusterChange(): void {
@@ -755,23 +723,6 @@ export class ConnectionDialogComponent implements AfterViewInit {
             // Trim group name to avoid inconsistencies
             if (typeof saveModel.group === 'string') {
                 saveModel.group = saveModel.group.trim() || undefined;
-            }
-
-            // Strip features by license tier
-            if (!this.isReadonlyTier()) {
-                saveModel.readonly = false;
-                saveModel.ssh = false;
-                saveModel.sshHost = undefined;
-                saveModel.sshPort = 22;
-                saveModel.sshUsername = undefined;
-                saveModel.sshPassword = undefined;
-                saveModel.sshPrivateKey = undefined;
-            }
-            if (!this.isEnterpriseTier()) {
-                saveModel.cluster = false;
-                saveModel.sentinel = false;
-                saveModel.sentinelName = undefined;
-                saveModel.nodes = [];
             }
 
             await this.socketService.request({

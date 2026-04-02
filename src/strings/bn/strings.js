@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "ক্লিয়ার লাইসেন্স",
-    invalid_license: "অবৈধ লাইসেন্স",
-    license_max_devices_reached: "ডিভাইসের সর্বোচ্চ আসন পৌঁছেছে",
-    license_readonly: "লাইসেন্স শুধুমাত্র সার্ভার টার্মিনাল থেকে পরিবর্তন করা যাবে.",
     server_error: "সার্ভার ত্রুটি, আবার চেষ্টা করুন"
   },
   title: {
@@ -48,8 +44,12 @@ const strings = {
     deleteConnection: "নিশ্চিত করুন",
     deleteConnectionText: "আপনি কি এই Redis সংযোগ মুছে ফেলার বিষয়ে নিশ্চিত?",
     deleteNode: "আপনি কি এই Redis নোড মুছে ফেলার বিষয়ে নিশ্চিত?",
+    delete: "মুছে ফেলবেন?",
     deleteAllKeys: opts => {
       return `এই গাছ এবং এর সমস্ত কীগুলি মুছুন (${opts.key})?`;
+    },
+    deleteSearchKeys: opts => {
+      return `আপনি কি "${opts.pattern}" এর সাথে মিলে যাওয়া সমস্ত কী মুছে ফেলতে চান? ${opts.count} টি কী পাওয়া গেছে।`;
     },
     socketioConnectError: "Socket.IO সার্ভারের সাথে সংযোগ করতে পারে না, আপনি পুনরায় লোড করতে পারেন এবং সংযোগ ত্রুটি নিজেই সমাধান করার চেষ্টা করতে পারেন, ক্লায়েন্ট নিজেই জানেন না কিভাবে এটি সমাধান করতে হয়।",
     socketioAuthRequired: "Socket.IO অনুমোদন প্রয়োজন৷ অনুগ্রহ করে HTTP Basic Auth (ব্যবহারকারীর নাম/পাসওয়ার্ড) দিয়ে প্রমাণীকরণ করুন এবং পুনরায় লোড করুন।",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "পাঠ্যকে সময়ে রূপান্তর করুন",
       convertTextToTimePlaceholder: "যেমন 1d হবে 86400"
     },
-    license: {
-      title: "লাইসেন্স সেট করু��",
-      textContent: "If you want to use paid features, please contact support@corifeus.com to request a license. Pricing is Pro 400 HUF/month (€1/month) or 4,000 HUF/year (€10/year), and Enterprise 1,200 HUF/month (€3/month) or 12,000 HUF/year (€30/year). Yearly is 10x monthly. With 27% VAT, totals are Pro 500 HUF/month (€1.27/month) or 5,100 HUF/year (€12.70/year), Enterprise 1,500 HUF/month (€3.81/month) or 15,200 HUF/year (€38.10/year). License validation requires internet access. Default license includes 5 seats. If you need more seats, contact us at support@corifeus.com.",
-      placeholder: "লাইসেন্স কী"
-    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -136,13 +131,17 @@ const strings = {
     exportKeys: "কী রপ্তানি করুন",
     exportAllKeys: (opts) => `সমস্ত ${opts.count} কী রপ্তানি করুন`,
     exportSearchResults: (opts) => `${opts.count} ফলাফল রপ্তানি করুন`,
+    deleteAllKeysMenu: (opts) => `সব মুছুন ${opts.count}`,
     importKeys: "কী আমদানি করুন",
+    deleteSearchKeys: (opts) => `${opts.count} টি মিলে যাওয়া কী মুছুন`,
     saveWithFormatJson: "বিন্যাস সঙ্গে সংরক্ষণ করুন",
     formatJson: "ফরম্যাট Json",
     wrap: "মোড়ানো",
     unwrap: "মোড়ক খুলুন",
     downloadJson: "JSON ডাউনলোড করুন",
-    pubsubMonitor: "PubSub মনিটর",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "ভাষা",
@@ -183,7 +182,6 @@ const strings = {
     edit: "সম্পাদনা করুন",
     save: "সংরক্ষণ করুন",
     ttl: "TTL সেট করুন",
-    license: "লাইসেন্স সেট করু��",
     delete: "মুছে দিন",
     remove: "সরান",
     sure: "নিশ্চিত",
@@ -262,38 +260,6 @@ const strings = {
     connectiondEdit: "সংযোগ সম্পাদনা করুন",
     connectiondView: "সংযোগ দেখুন",
     connections: "সংযোগ",
-    licenseInfo: "লাইসেন্স",
-    licenseEditable: "লাইসেন্স সম্পাদনাযোগ্য",
-    licenseEditableYes: "হ্যাঁ",
-    licenseEditableNo: "না",
-    licenseTerminalOnly: "লাইসেন্স শুধুমাত্র সার্ভার টার্মিনাল থেকে ���নফিগার করা যাবে.",
-    licenseTierPolicyTitle: "স্তর নীতি",
-    licenseTierPolicyText: "<h4>Free</h4>core Redis UI only; no SSH tunneling, no Readonly connection mode, no Cluster/Sentinel, no Edit JSON/Upload binary/Download binary, no ReJSON.<br/><strong>Price: 0 HUF/month (€0/month).</strong><br/><br/><h4>Pro</h4>SSH tunneling, Readonly connection mode (including --readonly-connections/-r), Edit JSON, Upload binary, Download binary, ReJSON.<br/><strong>Base price: 400 HUF/month (€1/month) or 4,000 HUF/year (€10/year).</strong><br/><strong>Total with 27% VAT: 500 HUF/month (€1.27/month) or 5,100 HUF/year (€12.70/year).</strong><br/><br/><h4>Enterprise</h4>SSH tunneling, Cluster and Sentinel, plus Edit JSON, Upload binary, Download binary, ReJSON; --readonly-connections/-r also works.<br/><strong>Base price: 1,200 HUF/month (€3/month) or 12,000 HUF/year (€30/year).</strong><br/><strong>Total with 27% VAT: 1,500 HUF/month (€3.81/month) or 15,200 HUF/year (€38.10/year).</strong><br/><br/><h4>Yearly rule</h4>Yearly price is 10x the monthly price.<br/><br/><h4>Seats</h4>Default license includes 5 seats. If you need more seats, contact us at <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><br/><h4>Enterprise trial</h4>10 days free for anyone with a real existing email address (non-test email).<br/><hr/><h4>Billing info in e-mail</h4>Name, Billing e-mail, Country code, Postal code, City, Address, VAT ID (optional).<br/><br/><h4>Payment</h4>PayPal payment is available only in HUF (forint); after sending the money @ <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> I will send you an invoice. All payments are non-refundable.<br/><br/><h4>VAT</h4>VAT is added to the price (27% in Hungary).<br/><hr/><h4>Contact</h4>If you want to say hi or have a question, contact <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><hr/><h4>Language</h4>Invoice and license e-mail communication is in English. Invoice currency is HUF.<br/><hr/><h4>Note</h4>License validation requires internet access.",
-    licenseState: "রাজ্য",
-    licenseStateActive: "���ক্রিয়",
-    licenseStateInactive: "নিষ্ক্রিয়",
-    licenseStateNoLicense: "লাইসেন্স নেই",
-    licenseKeyMasked: "সংরক্ষিত কী",
-    licenseTier: "স্তর",
-    licenseValid: "বৈধ",
-    licenseStatus: "লাইসেন্সের অবস্থা",
-    licenseReason: "কারণ",
-    licenseCheckedAt: "চেক করা হয়েছে",
-    licenseStartsAt: "এ শুরু হয়",
-    licenseExpiresAt: "মেয়াদ শেষ হবে",
-    licenseDaysLeft: "দিন বাকি",
-    licenseMaxDevices: "সর্বোচ্চ ডিভাইস",
-    licenseActiveDevices: "সক্রিয় ডিভাইস",
-    licenseActiveDevicesInfo: "যদি একটি ডিভাইস আর ব্যবহার না করা হয়, তবে 75 মিনিটের পরে তার আসন স্বয়ংক্রিয়ভাবে ছেড়ে দেওয়া হয়।",
-    licenseCustomerEmail: "গ্রাহক ইমেল",
-    licenseFeatures: "বৈশিষ্ট্য",
-    licenseFeaturesEmpty: "কোনো অতিরিক্ত বৈশিষ্ট্য নেই",
-    licenseFeatureReadonlyMode: "শুধুমাত্র পাঠযোগ্য সংযোগ মোড",
-    licenseFeatureReadonlyConnectionsFlag: "শুধুমাত্র পঠনযোগ্য সংযোগ (--readonly-connections/-r)",
-    licenseFeatureSsh: "SSH টানেলিং",
-    licenseFeatureCluster: "Cluster সংযোগ",
-    licenseFeatureSentinel: "Sentinel সংযোগ",
-    licenseFeatureReJSON: "ReJSON (JSON ডেটা টাইপ)",
     keysSort: {
       on: "কি বাছাই উপর",
       off: "কী বাছাই বন্ধ"
@@ -311,9 +277,6 @@ const strings = {
       on: "শুধুমাত্র পঠনযোগ্য",
       off: "শুধুমাত্র পঠন বন্ধ"
     },
-    proSshOnly: "SSH প্রো বা এন্টারপ্রাইজে উপলব্ধ।",
-    proReadonlyOnly: "শুধুমাত্র পঠনযোগ্য সংযোগ মোড প্রো বা এন্টারপ্রাইজে উপলব্ধ।",
-    enterpriseClusterSentinelOnly: "Cluster এবং Sentinel শুধুমাত্র এন্টারপ্রাইজে উপলব্ধ।",
     theme: {
       light: "আলো",
       dark: "অন্ধকার এন্টারপ্রাইজ",
@@ -355,16 +318,20 @@ const strings = {
     importConflict: "কী ইতিমধ্যে বিদ্যমান থাকলে:",
     noKeysToExport: "রপ্তানির জন্য কোনো কী নেই",
     time: "সময়",
+    type: "ধরন",
+    format: "ফরম্যাট",
     loading: "লোড হচ্ছে...",
     autoRefresh: "স্বয়ংক্রিয়",
     exportSearchHint: "শুধুমাত্র বর্তমান অনুসন্ধানের সাথে মিলে যাওয়া কী রপ্তানি হচ্ছে",
     importSearchHint: "আমদানি সম্পূর্ণ ডাটাবেসে প্রযোজ্য, শুধু অনুসন্ধান ফলাফলে নয়",
+    deleteSearchHint: "সার্ভারে বর্তমান অনুসন্ধানের সাথে মিলে যাওয়া সমস্ত কী মুছে ফেলে",
+    deletingSearchKeys: "মিলে যাওয়া কী মুছে ফেলা হচ্ছে...",
     importNoKeys: "ফাইলে কোনো কী পাওয়া যায়নি",
   },
   status: {
     dataCopied: "ডেটা ক্লিপবোর্ডে রয়েছে",
-    licenseSaved: "লাইসেন্স সংরক্ষিত",
     exportDone: "রপ্তানি সম্পন্ন",
+    deletedSearchKeys: (opts) => `${opts.count} টি কী মুছে ফেলা হয়েছে`,
     indexCreated: "ইনডেক্স তৈরি হয়েছে",
     indexDropped: "ইনডেক্স মুছে ফেলা হয়েছে",
     importDone: (opts) => `আমদানি সম্পন্ন: ${opts.created} তৈরি, ${opts.skipped} এড়িয়ে গেছে, ${opts.errors} ত্রুটি`,
@@ -412,35 +379,10 @@ const strings = {
     "readonly-connections": "সংযোগ যোগ/সংরক্ষণ/মুছুন শুধুমাত্র পঠনযোগ্য!",
     "readonly-connection-mode": "এই সংযোগ শুধুমাত্র পঠন মোড!",
     "list-out-of-bounds": "এই তালিকা সূচক সীমার বাইরে",
-    "donation-ware-feature": "এই বৈশিষ্ট্যটি অনুদান সংস্করণে উপস্থিত রয়েছে।",
-    "feature-pro-readonly-required": "শুধুমাত্র পঠনযোগ্য সংযোগ মোডের জন্য প্রো বা এন্টারপ্রাইজ লাইসেন্স প্রয়োজন।",
-    "feature-pro-ssh-required": "SSH টানেলিং প্রো বা এন্টারপ্রাইজ লাইসেন্স প্রয়োজন।",
-    "feature-enterprise-cluster-sentinel-required": "Cluster এবং Sentinel এন্টারপ্রাইজ লাইসেন্স প্রয়োজন৷",
-    "feature-pro-json-binary-required": "JSON সম্পাদনা করুন, বাইনারি আপলোড করুন এবং বাইনারি ডাউনলোড করুন প্রো বা এন্টারপ্রাইজ ল���ইসেন্স প্রয়োজন৷",
-    "feature-pro-rejson-required": "ReJSON (JSON ডেটা টাইপ) প্রো বা এন্টারপ্রাইজ লাইসেন্স প্রয়োজন৷",
     "invalid-json-value": "মানটি বৈধ নয় JSON৷",
     "http_auth_required": "অনুমোদন প্রয়োজন: অনুগ্রহ করে HTTP Basic Auth দিয়ে প্রমাণীকরণ করুন এ��ং পুনরায় লোড করুন।",
     "auto-connection-failed": "সম্ভব, সংযোগ সরানো হয়েছে এবং স্বয়ংক্রিয় সংযোগ ব্যর্থ হয়েছে, এই কারণে।",
     invalid_console_command: "এই কমান্ডটি GUI এর মাধ্যমে কাজ করছে না।"
-  },
-  licenseReason: {
-    LICENSE_VALID: "লাইসেন্স বৈধ",
-    LICENSE_INVALID: "লাইসেন্স অবৈধ",
-    LICENSE_MISSING: "লাইসেন্স কী সেট করা নেই",
-    LICENSE_DISABLED: "সার্ভার কনফিগারেশনে লাইসেন্স নিষ্ক্রিয় করা হয়েছে",
-    LICENSE_NOT_FOUND: "লাইসেন্স পাওয়া যায়নি",
-    LICENSE_EXPIRED: "লাইসেন্সের মেয়াদ শেষ",
-    LICENSE_CLEARED: "লাইসেন্স কী সাফ করা হয়েছে",
-    LICENSE_MAX_DEVICES_REACHED: "ডিভাইসের সর্বোচ্চ আসন পৌঁছেছে",
-    PRODUCT_MISMATCH: "লাইসেন্স পণ্য মেলে না"
-  },
-  licenseStatusValue: {
-    active: "���ক্রিয়",
-    deleted: "মুছে ফেলা হয়েছে",
-    all: "সব",
-    expired: "মেয়াদ শেষ",
-    missing: "অনুপস্থিত",
-    inactive: "নিষ্ক্রিয়"
   },
   form: {
     error: {
@@ -610,12 +552,49 @@ const strings = {
           field: "মাঠ",
           value: "মান"
         }
+      },
+      timeseries: {
+        chart: "চার্ট",
+        info: "তথ্য",
+        addPoint: "ডেটা পয়েন্ট যোগ করুন",
+        from: "থেকে (ms বা -)",
+        to: "পর্যন্ত (ms বা +)",
+        aggregation: "সমষ্টি",
+        timeBucket: "বালতি (ms)",
+        none: "কিছুই না",
+        dataPoints: "ডেটা পয়েন্ট",
+        labels: "লেবেল",
+        rules: "নিয়ম",
+        retention: "ধারণ",
+        timestamp: "টাইমস্ট্যাম্প",
+        value: "মান",
+        retentionHint: "0 = মেয়াদোত্তীর্ণ হবে না, অথবা মিলিসেকেন্ড",
+        duplicatePolicy: "ডুপ্লিকেট নীতি",
+        labelsHint: "key1 value1 key2 value2",
+        timestampHint: "'*' মানে স্বয়ংক্রিয়ভাবে তৈরি, অথবা মিলিসেকেন্ড টাইমস্ট্যাম্প",
+        editAllHint: "প্রতি লাইনে একটি ডেটা পয়েন্ট: টাইমস্ট্যাম্প মান (টাইমস্ট্যাম্প স্বয়ংক্রিয়ের জন্য * হতে পারে)",
+        autoSpread: "স্বয়ংক্রিয় * বিস্তার ব্যবধান",
+        formula: "সূত্র",
+        formulaLinear: "রৈখিক",
+        formulaRandom: "এলোমেলো",
+        formulaSawtooth: "করাতের দাঁত",
+        formulaPoints: "পয়েন্ট",
+        formulaAmplitude: "প্রশস্ততা",
+        formulaOffset: "অফসেট",
+        generate: "তৈরি করুন",
+        exportChart: "PNG রপ্তানি করুন",
+        overlay: "ওভারলে কী",
+        overlayHint: "কমা-বিভক্ত কী",
+        mrangeFilter: "লেবেল ফিল্টার",
+        bulkMode: "বাল্ক জেনারেট",
+        mrangeHint: "যেমন sensor=temp"
       }
     },
     treeControls: {
       settings: "গাছের সেটিংস",
       expandAll: "সব প্রসারিত",
       collapseAll: "সব সঙ্কুচিত করুন",
+      level: "স্তর",
       search: {
         search: "কীগুলিতে অনুসন্ধান করুন",
         clear: "খালি সেট করতে বর্তমান অনুসন্ধান সাফ করুন",
@@ -634,13 +613,21 @@ const strings = {
     }
   },
   time: {
+    type: "ধরন",
+    format: "ফরম্যাট",
     loading: "লোড হচ্ছে...",
     years: "বছর",
     months: "মাস",
     days: "দিন",
     year: "বছর",
     month: "মাস",
-    day: "দিন"
+    day: "দিন",
+    second: "সেকেন্ড",
+    seconds: "সেকেন্ড",
+    minute: "মিনিট",
+    minutes: "মিনিট",
+    hour: "ঘন্টা",
+    hours: "ঘন্টা"
   },
   redisTypes: {
     string: "String",
@@ -649,7 +636,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

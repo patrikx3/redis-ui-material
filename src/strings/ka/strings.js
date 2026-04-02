@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "გასუფთავებული ლიცენზია",
-    invalid_license: "არასწორი ლიცენზია",
-    license_max_devices_reached: "მიღწეულია მოწყობილობის ადგილების მაქსიმალური რაოდენობა",
-    license_readonly: "ლიცენზიის შეცვლა შესაძლებელია მხოლოდ სერვერის ტერმინალიდან.",
     server_error: "სერვერის შეცდომა, გთხოვთ სცადოთ ხელახლა"
   },
   title: {
@@ -47,9 +43,13 @@ const strings = {
     deleteZSetMember: "დარწმუნებული ხართ, რომ წაშლით ამ დალაგებული ნაკრების წევრს?",
     deleteConnection: "დაადასტურეთ",
     deleteConnectionText: "დარწმუნებული ხართ, რომ წაშალეთ ეს Redis კავშირი?",
+    delete: "\u10ec\u10d0\u10e8\u10da\u10d0?",
     deleteNode: "დარწმუნებული ხართ, რომ წაშლით ამ Redis კვანძს?",
     deleteAllKeys: opts => {
       return `წაშალე ეს ხე და მისი ყველა გასაღები (${opts.key})?`;
+    },
+    deleteSearchKeys: opts => {
+      return `დარწმუნებული ხართ, რომ წაშლით ყველა გასაღებს, რომლებიც ემთხვევა "${opts.pattern}"-ს? ნაპოვნია ${opts.count} გასაღები.`;
     },
     socketioConnectError: "Socket.IO ვერ დაუკავშირდება სერვერს, შეგიძლიათ გადატვირთოთ და თავად სცადოთ კავშირის შეცდომის მოგვარება, კლიენტმა არ იცის როგორ მოაგვაროს იგი.",
     socketioAuthRequired: "საჭიროა Socket.IO ავტორიზაცია. გთხოვთ, გადაამოწმოთ ავტორიზაცია HTTP Basic Auth (მომხმარებლის სახელი/პაროლი) და გადატვირთეთ.",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "ტექსტის დროში გადაყვანა",
       convertTextToTimePlaceholder: "მაგ. 1d იქნება 86400"
     },
-    license: {
-      title: "ლიცენზიის დაყენება",
-      textContent: "If you want to use paid features, please contact support@corifeus.com to request a license. Pricing is Pro 400 HUF/month (€1/month) or 4,000 HUF/year (€10/year), and Enterprise 1,200 HUF/month (€3/month) or 12,000 HUF/year (€30/year). Yearly is 10x monthly. With 27% VAT, totals are Pro 500 HUF/month (€1.27/month) or 5,100 HUF/year (€12.70/year), Enterprise 1,500 HUF/month (€3.81/month) or 15,200 HUF/year (€38.10/year). License validation requires internet access. Default license includes 5 seats. If you need more seats, contact us at support@corifeus.com.",
-      placeholder: "ლიცენზიის გასაღები"
-    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -136,13 +131,17 @@ const strings = {
     exportKeys: "გასაღებების ექსპორტი",
     exportAllKeys: (opts) => `ყველა ${opts.count} გასაღების ექსპორტი`,
     exportSearchResults: (opts) => `${opts.count} შედეგის ექსპორტი`,
+    deleteAllKeysMenu: (opts) => `ყველას წაშლა ${opts.count}`,
     importKeys: "გასაღებების იმპორტი",
+    deleteSearchKeys: (opts) => `${opts.count} შესაბამისი გასაღების წაშლა`,
     saveWithFormatJson: "შეინახეთ ფორმატით",
     formatJson: "ფორმატი Json",
     wrap: "შეფუთვა",
     unwrap: "გაშალეთ",
     downloadJson: "ჩამოტვირთეთ JSON",
-    pubsubMonitor: "PubSub მონიტორი",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "ენა",
@@ -183,7 +182,6 @@ const strings = {
     edit: "რედაქტირება",
     save: "შენახვა",
     ttl: "დააყენეთ TTL",
-    license: "ლიცენზიის დაყენება",
     delete: "წაშლა",
     remove: "ამოღება",
     sure: "რა თქმა უნდა",
@@ -262,38 +260,6 @@ const strings = {
     connectiondEdit: "კავშირის რედაქტირება",
     connectiondView: "კავშირის ნახვა",
     connections: "კავშირები",
-    licenseInfo: "ლიცენზია",
-    licenseEditable: "ლიცენზიის რედაქტირებადი",
-    licenseEditableYes: "დიახ",
-    licenseEditableNo: "არა",
-    licenseTerminalOnly: "ლიცენზიის კონფიგურაცია შესაძლებელია მხოლოდ სერვერის ტერმინალიდან.",
-    licenseTierPolicyTitle: "დონის პოლიტიკა",
-    licenseTierPolicyText: "<h4>Free</h4>core Redis UI only; no SSH tunneling, no Readonly connection mode, no Cluster/Sentinel, no Edit JSON/Upload binary/Download binary, no ReJSON.<br/><strong>Price: 0 HUF/month (€0/month).</strong><br/><br/><h4>Pro</h4>SSH tunneling, Readonly connection mode (including --readonly-connections/-r), Edit JSON, Upload binary, Download binary, ReJSON.<br/><strong>Base price: 400 HUF/month (€1/month) or 4,000 HUF/year (€10/year).</strong><br/><strong>Total with 27% VAT: 500 HUF/month (€1.27/month) or 5,100 HUF/year (€12.70/year).</strong><br/><br/><h4>Enterprise</h4>SSH tunneling, Cluster and Sentinel, plus Edit JSON, Upload binary, Download binary, ReJSON; --readonly-connections/-r also works.<br/><strong>Base price: 1,200 HUF/month (€3/month) or 12,000 HUF/year (€30/year).</strong><br/><strong>Total with 27% VAT: 1,500 HUF/month (€3.81/month) or 15,200 HUF/year (€38.10/year).</strong><br/><br/><h4>Yearly rule</h4>Yearly price is 10x the monthly price.<br/><br/><h4>Seats</h4>Default license includes 5 seats. If you need more seats, contact us at <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><br/><h4>Enterprise trial</h4>10 days free for anyone with a real existing email address (non-test email).<br/><hr/><h4>Billing info in e-mail</h4>Name, Billing e-mail, Country code, Postal code, City, Address, VAT ID (optional).<br/><br/><h4>Payment</h4>PayPal payment is available only in HUF (forint); after sending the money @ <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> I will send you an invoice. All payments are non-refundable.<br/><br/><h4>VAT</h4>VAT is added to the price (27% in Hungary).<br/><hr/><h4>Contact</h4>If you want to say hi or have a question, contact <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><hr/><h4>Language</h4>Invoice and license e-mail communication is in English. Invoice currency is HUF.<br/><hr/><h4>Note</h4>License validation requires internet access.",
-    licenseState: "სახელ���წიფო",
-    licenseStateActive: "აქტიური",
-    licenseStateInactive: "არააქტიური",
-    licenseStateNoLicense: "არანაირი ლიცენზია",
-    licenseKeyMasked: "შენახული გასაღები",
-    licenseTier: "იარუსი",
-    licenseValid: "მოქმედებს",
-    licenseStatus: "ლიცენზიის სტატუსი",
-    licenseReason: "მიზეზი",
-    licenseCheckedAt: "შემოწმებულია",
-    licenseStartsAt: "იწყება",
-    licenseExpiresAt: "ვადა იწურება",
-    licenseDaysLeft: "დარჩენილია დღეები",
-    licenseMaxDevices: "მაქსიმალური მოწყობილობები",
-    licenseActiveDevices: "აქტიური მოწყობილობები",
-    licenseActiveDevicesInfo: "თუ მოწყობილობა აღარ გამოიყენება, მისი სავარძელი ავტომატურად იხსნება 75 წუთის შემდეგ.",
-    licenseCustomerEmail: "მომხმარებლის ელ.წერილი",
-    licenseFeatures: "მახასიათებლები",
-    licenseFeaturesEmpty: "არანაირი დამატებითი ფუნქციები",
-    licenseFeatureReadonlyMode: "მხ��ლოდ წაკითხვის კავშირის რეჟიმი",
-    licenseFeatureReadonlyConnectionsFlag: "მხოლოდ წაკითხვადი კავშირები (--readonly-connections/-r)",
-    licenseFeatureSsh: "SSH გვირაბი",
-    licenseFeatureCluster: "Cluster კავშირები",
-    licenseFeatureSentinel: "Sentinel კავშირები",
-    licenseFeatureReJSON: "ReJSON (JSON მონაცემთა ტიპი)",
     keysSort: {
       on: "გასაღების დახარისხება ჩართულია",
       off: "გასაღების დახარისხება"
@@ -311,9 +277,6 @@ const strings = {
       on: "მხოლოდ წაკითხვაზე",
       off: "მხოლოდ წასაკითხად გამორთულია"
     },
-    proSshOnly: "SSH ხელმისაწვდომია Pro ან Enterprise-ში.",
-    proReadonlyOnly: "მხოლოდ წაკითხვის კავშირის რეჟიმი ხელმისაწვდომია Pro ან Enterprise-ში.",
-    enterpriseClusterSentinelOnly: "Cluster და Sentinel ხელმისაწვდომია მხოლოდ Enterprise-ში.",
     theme: {
       light: "სინათლე",
       dark: "ბნელი საწარმო",
@@ -355,16 +318,20 @@ const strings = {
     importConflict: "თუ გასაღები უკვე არსებobs:",
     noKeysToExport: "არ არის გასაღebebi ექსპორტისთვის",
     time: "დრო",
+    type: "ტიპი",
+    format: "ფორმატი",
     loading: "იტvirtheba...",
     autoRefresh: "ავტო",
     exportSearchHint: "ექსპორტი მხოლოდ მიმდინარე ძიებას შესაბამისი გასაღebebis",
     importSearchHint: "იმპორტი ვრცeldeba მთელ მონაცემთა ბაზაზე",
+    deleteSearchHint: "სერვერზე მიმდინარე ძიების შესაბამისი ყველა გასაღების წაშლა",
+    deletingSearchKeys: "შესაბამისი გასაღebebis წdelays...",
     importNoKeys: "ფაილში გასაღebebi ვერ მოიძებna",
   },
   status: {
     dataCopied: "მონაცემები ბუფერშია",
-    licenseSaved: "ლიცენზია შენახულია",
     exportDone: "ექსპორტი დასრულda",
+    deletedSearchKeys: (opts) => `წაშლილია ${opts.count} გასაღები`,
     indexCreated: "ინდექსი შეიქმნა",
     indexDropped: "ინდექსი წაიშალა",
     importDone: (opts) => `იმპორტი დასრულda: ${opts.created} შეიქმნა, ${opts.skipped} გამოტოვda, ${opts.errors} შეცdomna`,
@@ -412,35 +379,10 @@ const strings = {
     "readonly-connections": "კავშირების დამატება/შენახვა/წაშლა მხოლოდ წაკი���ხულია!",
     "readonly-connection-mode": "ეს კავშირი მხოლოდ წაკითხვის რეჟიმშია!",
     "list-out-of-bounds": "ეს სიის ინდექსი საზღვრებს გარეთაა",
-    "donation-ware-feature": "ეს ფუნქცია წარმოდგენილია შემოწირულობის ვერსიაში.",
-    "feature-pro-readonly-required": "მხოლოდ წაკითხული კავშირის რეჟიმი მოითხოვს Pro ან Enterprise ლიცენზიას.",
-    "feature-pro-ssh-required": "SSH გვირაბისთვის საჭიროა Pro ან Enterprise ლიცენზია.",
-    "feature-enterprise-cluster-sentinel-required": "Cluster და Sentinel საჭიროებენ Enterprise ლიცენზიას.",
-    "feature-pro-json-binary-required": "JSON-ის რედაქტირება, ბინარის ატვირთვა და ორობითი ჩამოტვირთვა მოითხოვს Pro ან Enterprise ლიცენზიას.",
-    "feature-pro-rejson-required": "ReJSON (JSON მონაცემთა ტიპი) მოითხოვს Pro ან Enterprise ლიცენზიას.",
     "invalid-json-value": "მნიშვნელობა არ არის სწორი JSON.",
     "http_auth_required": "საჭიროა ავტორიზაცია: გთხოვთ, გადაამოწმოთ ავთენტიფიკაცია HTTP Basic Auth-ით და გადატვირთეთ.",
     "auto-connection-failed": "შესაძლებელია, კავშირი წაიშალა და ავტომატური კავშირი ვერ მოხერხდა ამის გამო.",
     invalid_console_command: "ეს ბრძანება არ მუშაობს GUI-ით."
-  },
-  licenseReason: {
-    LICENSE_VALID: "ლიცენზია მოქმედებს",
-    LICENSE_INVALID: "ლიცენზია არასწორია",
-    LICENSE_MISSING: "ლიცენზიის გასაღები არ არის დაყენებული",
-    LICENSE_DISABLED: "ლიცენზია გამორთულია სერვერის კონფიგურაციაში",
-    LICENSE_NOT_FOUND: "ლიცენზია ვერ მოიძებნა",
-    LICENSE_EXPIRED: "ლიცენზიას ვადა გაუვიდა",
-    LICENSE_CLEARED: "ლიცენზიის გასაღები გასუფთავდა",
-    LICENSE_MAX_DEVICES_REACHED: "მიღწეულია მოწყობილობის ადგილების მაქსიმალური რაოდენობა",
-    PRODUCT_MISMATCH: "სალიცენზიო პროდუქტი არ ემთხვევა"
-  },
-  licenseStatusValue: {
-    active: "აქტიური",
-    deleted: "წაშლილია",
-    all: "ყველა",
-    expired: "ვადა გაუვიდა",
-    missing: "დაკარგული",
-    inactive: "არააქტიური"
   },
   form: {
     error: {
@@ -610,12 +552,49 @@ const strings = {
           field: "ველი",
           value: "��ირებულება"
         }
+      },
+      timeseries: {
+        chart: "\u10d3\u10d8\u10d0\u10d2\u10e0\u10d0\u10db\u10d0",
+        info: "\u10d8\u10dc\u10e4\u10dd\u10e0\u10db\u10d0\u10ea\u10d8\u10d0",
+        addPoint: "\u10db\u10dd\u10dc\u10d0\u10ea\u10d4\u10db\u10d7\u10d0 \u10ec\u10d4\u10e0\u10e2\u10d8\u10da\u10d8\u10e1 \u10d3\u10d0\u10db\u10d0\u10e2\u10d4\u10d1\u10d0",
+        from: "\u10e1\u10d0\u10d8\u10d3\u10d0\u10dc (ms \u10d0\u10dc -)",
+        to: "\u10db\u10d3\u10d4 (ms \u10d0\u10dc +)",
+        aggregation: "\u10d0\u10d2\u10e0\u10d4\u10d2\u10d0\u10ea\u10d8\u10d0",
+        timeBucket: "\u10d7\u10d0\u10e1\u10d8 (ms)",
+        none: "\u10d0\u10e0\u10ea\u10d4\u10e0\u10d7\u10d8",
+        dataPoints: "\u10db\u10dd\u10dc\u10d0\u10ea\u10d4\u10db\u10d7\u10d0 \u10ec\u10d4\u10e0\u10e2\u10d8\u10da\u10d4\u10d1\u10d8",
+        labels: "\u10d8\u10d0\u10e0\u10da\u10d8\u10e7\u10d4\u10d1\u10d8",
+        rules: "\u10ec\u10d4\u10e1\u10d4\u10d1\u10d8",
+        retention: "\u10e8\u10d4\u10dc\u10d0\u10ee\u10d5\u10d0",
+        timestamp: "\u10d3\u10e0\u10dd\u10d8\u10e1 \u10d0\u10dc\u10d0\u10d1\u10d4\u10ed\u10d3\u10d8",
+        value: "\u10e6\u10d8\u10e0\u10d4\u10d1\u10e3\u10da\u10d4\u10d1\u10d0",
+        retentionHint: "0 = \u10d5\u10d0\u10d3\u10d8\u10e1 \u10d2\u10d0\u10e0\u10d4\u10e8\u10d4, \u10d0\u10dc \u10db\u10d8\u10da\u10d8\u10ec\u10d0\u10db\u10d4\u10d1\u10d8",
+        duplicatePolicy: "\u10d3\u10e3\u10d1\u10da\u10d8\u10e0\u10d4\u10d1\u10d8\u10e1 \u10de\u10dd\u10da\u10d8\u10e2\u10d8\u10d9\u10d0",
+        labelsHint: "key1 value1 key2 value2",
+        timestampHint: "'*' \u10dc\u10d8\u10e8\u10dc\u10d0\u10d5\u10e1 \u10d0\u10d5\u10e2\u10dd\u10db\u10d0\u10e2\u10e3\u10e0\u10d0\u10d3 \u10d2\u10d4\u10dc\u10d4\u10e0\u10d8\u10e0\u10d4\u10d1\u10e3\u10da\u10e1, \u10d0\u10dc \u10db\u10d8\u10da\u10d8\u10ec\u10d0\u10db\u10d4\u10d1\u10d8\u10e1 \u10d3\u10e0\u10dd\u10d8\u10e1 \u10d0\u10dc\u10d0\u10d1\u10d4\u10ed\u10d3\u10d8",
+        editAllHint: "\u10d4\u10e0\u10d7\u10d8 \u10db\u10dd\u10dc\u10d0\u10ea\u10d4\u10db\u10d7\u10d0 \u10ec\u10d4\u10e0\u10e2\u10d8\u10da\u10d8 \u10d7\u10d8\u10d7\u10dd \u10ee\u10d0\u10d6\u10d6\u10d4: \u10d3\u10e0\u10dd\u10d8\u10e1_\u10d0\u10dc\u10d0\u10d1\u10d4\u10ed\u10d3\u10d8 \u10e6\u10d8\u10e0\u10d4\u10d1\u10e3\u10da\u10d4\u10d1\u10d0 (\u10d3\u10e0\u10dd\u10d8\u10e1 \u10d0\u10dc\u10d0\u10d1\u10d4\u10ed\u10d3\u10d8 \u10e8\u10d4\u10d8\u10eb\u10da\u10d4\u10d1\u10d0 \u10d8\u10e7\u10dd\u10e1 * \u10d0\u10d5\u10e2\u10dd\u10db\u10d0\u10e2\u10e3\u10e0\u10d8\u10e1\u10d7\u10d5\u10d8\u10e1)",
+        autoSpread: "\u10d0\u10d5\u10e2\u10dd\u10db\u10d0\u10e2\u10e3\u10e0\u10d8 * \u10d2\u10d0\u10dc\u10d0\u10ec\u10d8\u10da\u10d4\u10d1\u10d8\u10e1 \u10d8\u10dc\u10e2\u10d4\u10e0\u10d5\u10d0\u10da\u10d8",
+        formula: "\u10e4\u10dd\u10e0\u10db\u10e3\u10da\u10d0",
+        formulaLinear: "\u10ec\u10e0\u10e4\u10d8\u10d5\u10d8",
+        formulaRandom: "\u10e8\u10d4\u10db\u10d7\u10ee\u10d5\u10d4\u10d5\u10d8\u10d7\u10d8",
+        formulaSawtooth: "\u10ee\u10d4\u10e0\u10ee\u10d8\u10e1\u10db\u10d0\u10d2\u10d5\u10d0\u10e0\u10d8",
+        formulaPoints: "\u10ec\u10d4\u10e0\u10e2\u10d8\u10da\u10d4\u10d1\u10d8",
+        formulaAmplitude: "\u10d0\u10db\u10de\u10da\u10d8\u10e2\u10e3\u10d3\u10d0",
+        formulaOffset: "\u10ec\u10d0\u10dc\u10d0\u10ea\u10d5\u10da\u10d4\u10d1\u10d0",
+        generate: "\u10d2\u10d4\u10dc\u10d4\u10e0\u10d8\u10e0\u10d4\u10d1\u10d0",
+        exportChart: "PNG \u10d4\u10e5\u10e1\u10de\u10dd\u10e0\u10e2\u10d8",
+        overlay: "\u10d2\u10d0\u10e1\u10d0\u10e6\u10d4\u10d1\u10d4\u10d1\u10d8\u10e1 \u10d2\u10d0\u10d3\u10d0\u10e4\u10d0\u10e0\u10d5\u10d0",
+        overlayHint: "\u10db\u10eb\u10d8\u10db\u10d8\u10d7 \u10d2\u10d0\u10db\u10dd\u10e7\u10dd\u10e4\u10d8\u10da\u10d8 \u10d2\u10d0\u10e1\u10d0\u10e6\u10d4\u10d1\u10d4\u10d1\u10d8",
+        mrangeFilter: "\u10d8\u10d0\u10e0\u10da\u10d8\u10e7\u10d4\u10d1\u10d8\u10e1 \u10e4\u10d8\u10da\u10e2\u10e0\u10d8",
+        bulkMode: "მასიური გენერაცია",
+        mrangeHint: "\u10db\u10d0\u10d2. sensor=temp"
       }
     },
     treeControls: {
       settings: "ხის პარამეტრები",
       expandAll: "გააფართოვეთ ყველა",
       collapseAll: "ყველა ჩაშალე",
+      level: "დონე",
       search: {
         search: "ძიება გასაღებებში",
         clear: "წაშალეთ მიმდინარე ძიება ცარიელის დასაყენებლად",
@@ -634,13 +613,21 @@ const strings = {
     }
   },
   time: {
+    type: "ტიპი",
+    format: "ფორმატი",
     loading: "იტvirtheba...",
     years: "წლები",
     months: "თვეების",
     days: "დღეები",
     year: "წელიწადი",
     month: "თვე",
-    day: "დღე"
+    day: "დღე",
+    second: "\u10ec\u10d0\u10db\u10d8",
+    seconds: "\u10ec\u10d0\u10db\u10d4\u10d1\u10d8",
+    minute: "\u10ec\u10e3\u10d7\u10d8",
+    minutes: "\u10ec\u10e3\u10d7\u10d4\u10d1\u10d8",
+    hour: "\u10e1\u10d0\u10d0\u10d7\u10d8",
+    hours: "\u10e1\u10d0\u10d0\u10d7\u10d4\u10d1\u10d8"
   },
   redisTypes: {
     string: "String",
@@ -649,7 +636,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

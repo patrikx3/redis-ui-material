@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "Lisensi yang sudah dibersihkan",
-    invalid_license: "Lisensi tidak valid",
-    license_max_devices_reached: "Kursi perangkat maksimum telah tercapai",
-    license_readonly: "Lisensi hanya dapat diubah dari terminal server.",
     server_error: "Kesalahan server, silakan coba lagi"
   },
   title: {
@@ -48,8 +44,12 @@ const strings = {
     deleteConnection: "Konfirmasikan",
     deleteConnectionText: "Apakah Anda yakin akan menghapus koneksi Redis ini?",
     deleteNode: "Apakah Anda yakin akan menghapus simpul Redis ini?",
+    delete: "Hapus?",
     deleteAllKeys: opts => {
       return `Hapus pohon ini dan semua kuncinya (${opts.key})?`;
+    },
+    deleteSearchKeys: opts => {
+      return `Apakah Anda yakin ingin menghapus semua kunci yang cocok dengan "${opts.pattern}"? Ditemukan ${opts.count} kunci.`;
     },
     socketioConnectError: "Socket.IO tidak dapat terhubung ke server, Anda dapat memuat ulang dan mencoba mengatasi sendiri kesalahan koneksi, klien tidak tahu cara menyelesaikannya sendiri.",
     socketioAuthRequired: "Diperlukan otorisasi Socket.IO. Harap autentikasi dengan HTTP Basic Auth (nama pengguna/kata sandi) dan muat ulang.",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "Ubah teks menjadi waktu",
       convertTextToTimePlaceholder: "Misalnya. 1 hari akan menjadi 86400"
     },
-    license: {
-      title: "Tetapkan lisensi",
-      textContent: "Jika Anda ingin menggunakan fitur berbayar, silakan hubungi support@corifeus.com untuk meminta lisensi. Harganya adalah Pro 400 HUF/bulan (€1/bulan) atau 4.000 HUF/tahun (€10/tahun), dan Enterprise 1.200 HUF/bulan (€3/bulan) atau 12.000 HUF/tahun (€30/tahun). Tahunan adalah 10x bulanan. Dengan 27% VAT, totalnya adalah Pro 500 HUF/bulan (€1,27/bulan) atau 5.100 HUF/tahun (€12,70/tahun), Enterprise 1,500 HUF/bulan (€3,81/bulan) atau 15.200 HUF/tahun (€38,10/tahun). Validasi lisensi memerlukan akses internet. Lisensi default mencakup 5 kursi. Jika Anda membutuhkan lebih banyak kursi, hubungi kami di support@corifeus.com.",
-      placeholder: "Kunci lisensi"
-    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -136,13 +131,17 @@ const strings = {
     exportKeys: "Ekspor kunci",
     exportAllKeys: (opts) => `Ekspor semua ${opts.count} kunci`,
     exportSearchResults: (opts) => `Ekspor ${opts.count} hasil`,
+    deleteAllKeysMenu: (opts) => `Hapus semua ${opts.count}`,
     importKeys: "Impor kunci",
+    deleteSearchKeys: (opts) => `Hapus ${opts.count} kunci yang cocok`,
     saveWithFormatJson: "Simpan dengan format",
     formatJson: "Format JSON",
     wrap: "Bungkus",
     unwrap: "Buka bungkusnya",
     downloadJson: "Unduh JSON",
-    pubsubMonitor: "Monitor PubSub",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "Bahasa",
@@ -183,7 +182,6 @@ const strings = {
     edit: "Sunting",
     save: "Simpan",
     ttl: "Setel TTL",
-    license: "Tetapkan lisensi",
     delete: "Hapus",
     remove: "Hapus",
     sure: "Tentu",
@@ -262,38 +260,6 @@ const strings = {
     connectiondEdit: "Sunting koneksi",
     connectiondView: "Lihat koneksi",
     connections: "Koneksi",
-    licenseInfo: "Lisensi",
-    licenseEditable: "Lisensi dapat diedit",
-    licenseEditableYes: "Ya",
-    licenseEditableNo: "Tidak",
-    licenseTerminalOnly: "Lisensi hanya dapat dikonfigurasi dari terminal server.",
-    licenseTierPolicyTitle: "Kebijakan tingkat",
-    licenseTierPolicyText: "<h4>Gratis</h4>core Redis UI saja; tidak ada terowongan SSH, tidak ada mode koneksi Readonly, tidak ada Cluster/Sentinel, tidak ada Edit JSON/Unggah biner/Unduh biner, tidak ada ReJSON.<br/><strong>Harga: 0 HUF/bulan (€0/bulan).</strong><br/><br/><h4>Pro</h4>SSH tunneling, mode koneksi Readonly (termasuk --readonly-connections/-r), Edit JSON, Unggah biner, Unduh biner, ReJSON.<br/><strong>Harga dasar: 400 HUF/bulan (€1/bulan) atau 4.000 HUF/tahun (€10/tahun).</strong><br/><strong>Total dengan 27% VAT: 500 HUF/bulan (€1,27/bulan) atau 5.100 HUF/tahun (€12,70/tahun) Cluster dan Sentinel, ditambah Edit JSON, Unggah biner, Unduh biner, ReJSON; --readonly-connections/-r juga berfungsi.<br/><strong>Harga dasar: 1.200 HUF/bulan (€3/bulan) atau 12.000 HUF/tahun (€30/tahun).</strong><br/><strong>Total dengan 27% VAT: 1.500 HUF/bulan (€3,81/bulan) atau 15.200 HUF/tahun (€38,10/tahun).</strong><br/><br/><h4>Aturan tahunan</h4>Harga tahunan adalah 10x bulanan price.<br/><br/><h4>Seats</h4>Lisensi default mencakup 5 kursi. Jika Anda memerlukan lebih banyak kursi, hubungi kami di <a href='mailto:mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><br/><h4>Uji coba perusahaan</h4>10 hari gratis bagi siapa pun yang memiliki alamat email asli (email non-tes).<br/><hr/><h4>Info penagihan dalam email</h4>Nama, Email penagihan, Kode negara, Kode pos, Kota, Alamat, VAT ID (opsional).<br/><br/><h4>Pembayaran</h4>PayPal pembayaran hanya tersedia di HUF (forint); setelah mengirimkan uang @ <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> saya akan mengirimkan invoice kepada Anda. Semua pembayaran tidak dapat dikembalikan.<br/><br/><h4>VAT</h4>VAT ditambahkan ke harga (27% dalam Hongaria).<br/><hr/><h4>Kontak</h4>Jika Anda ingin menyapa atau memiliki pertanyaan, hubungi <a href='mailto:mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><hr/><h4>Bahasa</h4>Komunikasi email faktur dan lisensi dalam bahasa Inggris. Mata uang faktur adalah HUF.<br/><hr/><h4>Note</h4>Validasi lisensi memerlukan akses internet.",
-    licenseState: "Negara",
-    licenseStateActive: "Aktif",
-    licenseStateInactive: "Tidak aktif",
-    licenseStateNoLicense: "Tidak ada lisensi",
-    licenseKeyMasked: "Kunci tersimpan",
-    licenseTier: "Tingkat",
-    licenseValid: "Sah",
-    licenseStatus: "Status lisensi",
-    licenseReason: "Alasan",
-    licenseCheckedAt: "Diperiksa di",
-    licenseStartsAt: "Dimulai pada",
-    licenseExpiresAt: "Berakhir pada",
-    licenseDaysLeft: "Tinggal beberapa hari lagi",
-    licenseMaxDevices: "Perangkat maksimal",
-    licenseActiveDevices: "Perangkat aktif",
-    licenseActiveDevicesInfo: "Jika perangkat tidak digunakan lagi, dudukannya akan dilepas secara otomatis setelah 75 menit.",
-    licenseCustomerEmail: "Email pelanggan",
-    licenseFeatures: "Fitur",
-    licenseFeaturesEmpty: "Tidak ada fitur tambahan",
-    licenseFeatureReadonlyMode: "Mode koneksi hanya baca",
-    licenseFeatureReadonlyConnectionsFlag: "Koneksi hanya baca (--readonly-connections/-r)",
-    licenseFeatureSsh: "Penerowongan SSH",
-    licenseFeatureCluster: "Koneksi Cluster",
-    licenseFeatureSentinel: "Koneksi Sentinel",
-    licenseFeatureReJSON: "ReJSON (tipe data JSON)",
     keysSort: {
       on: "Penyortiran kunci aktif",
       off: "Penyortiran kunci"
@@ -311,9 +277,6 @@ const strings = {
       on: "Hanya baca aktif",
       off: "Hanya baca mati"
     },
-    proSshOnly: "SSH tersedia dalam Pro atau Perusahaan.",
-    proReadonlyOnly: "Mode koneksi hanya baca tersedia di Pro atau Perusahaan.",
-    enterpriseClusterSentinelOnly: "Cluster dan Sentinel hanya tersedia di Perusahaan.",
     theme: {
       light: "Ringan",
       dark: "Perusahaan gelap",
@@ -355,16 +318,20 @@ const strings = {
     importConflict: "Jika kunci sudah ada:",
     noKeysToExport: "Tidak ada kunci untuk diekspor",
     time: "Waktu",
+    type: "Tipe",
+    format: "Format",
     loading: "Memuat...",
     autoRefresh: "Otomatis",
     exportSearchHint: "Mengekspor hanya kunci yang cocok dengan pencarian saat ini",
     importSearchHint: "Impor berlaku untuk seluruh database, bukan hanya hasil pencarian",
+    deleteSearchHint: "Menghapus semua kunci yang cocok dengan pencarian saat ini di server",
+    deletingSearchKeys: "Menghapus kunci yang cocok...",
     importNoKeys: "Tidak ditemukan kunci dalam file",
   },
   status: {
     dataCopied: "Datanya ada di clipboard",
-    licenseSaved: "Lisensi disimpan",
     exportDone: "Ekspor selesai",
+    deletedSearchKeys: (opts) => `${opts.count} kunci dihapus`,
     indexCreated: "Indeks dibuat",
     indexDropped: "Indeks dihapus",
     importDone: (opts) => `Impor selesai: ${opts.created} dibuat, ${opts.skipped} dilewati, ${opts.errors} kesalahan`,
@@ -412,35 +379,10 @@ const strings = {
     "readonly-connections": "Koneksi tambah/simpan/hapus hanya dapat dibaca!",
     "readonly-connection-mode": "Koneksi ini adalah mode hanya baca!",
     "list-out-of-bounds": "Indeks daftar ini di luar batas",
-    "donation-ware-feature": "Fitur ini hadir pada versi donasi.",
-    "feature-pro-readonly-required": "Mode koneksi hanya baca memerlukan lisensi Pro atau Perusahaan.",
-    "feature-pro-ssh-required": "Penerowongan SSH memerlukan lisensi Pro atau Perusahaan.",
-    "feature-enterprise-cluster-sentinel-required": "Cluster dan Sentinel memerlukan lisensi Perusahaan.",
-    "feature-pro-json-binary-required": "Edit JSON, Unggah biner dan Unduh biner memerlukan lisensi Pro atau Perusahaan.",
-    "feature-pro-rejson-required": "ReJSON (tipe data JSON) memerlukan lisensi Pro atau Perusahaan.",
     "invalid-json-value": "Nilai JSON tidak valid.",
     "http_auth_required": "Diperlukan otorisasi: harap autentikasi dengan HTTP Basic Auth dan muat ulang.",
     "auto-connection-failed": "Kemungkinan, koneksi terputus dan koneksi otomatis gagal, karena hal ini.",
     invalid_console_command: "Perintah ini tidak berfungsi melalui GUI."
-  },
-  licenseReason: {
-    LICENSE_VALID: "Lisensi valid",
-    LICENSE_INVALID: "Lisensi tidak valid",
-    LICENSE_MISSING: "Tidak ada kunci lisensi yang disetel",
-    LICENSE_DISABLED: "Lisensi dinonaktifkan di konfigurasi server",
-    LICENSE_NOT_FOUND: "Lisensi tidak ditemukan",
-    LICENSE_EXPIRED: "Lisensi sudah habis masa berlakunya",
-    LICENSE_CLEARED: "Kunci lisensi telah dihapus",
-    LICENSE_MAX_DEVICES_REACHED: "Kursi perangkat maksimum telah tercapai",
-    PRODUCT_MISMATCH: "Produk lisensi tidak cocok"
-  },
-  licenseStatusValue: {
-    active: "Aktif",
-    deleted: "Dihapus",
-    all: "Semua",
-    expired: "Kedaluwarsa",
-    missing: "Hilang",
-    inactive: "Tidak aktif"
   },
   form: {
     error: {
@@ -610,12 +552,49 @@ const strings = {
           field: "Bidang",
           value: "Nilai"
         }
+      },
+      timeseries: {
+        chart: "Grafik",
+        info: "Info",
+        addPoint: "Tambah Titik Data",
+        from: "Dari (ms atau -)",
+        to: "Ke (ms atau +)",
+        aggregation: "Agregasi",
+        timeBucket: "Ember (ms)",
+        none: "Tidak ada",
+        dataPoints: "titik data",
+        labels: "Label",
+        rules: "Aturan",
+        retention: "Retensi",
+        timestamp: "Stempel waktu",
+        value: "Nilai",
+        retentionHint: "0 = tidak kedaluwarsa, atau milidetik",
+        duplicatePolicy: "Kebijakan duplikat",
+        labelsHint: "key1 value1 key2 value2",
+        timestampHint: "'*' berarti dibuat otomatis, atau stempel waktu milidetik",
+        editAllHint: "Satu titik data per baris: stempel_waktu nilai (stempel waktu bisa * untuk otomatis)",
+        autoSpread: "Interval penyebaran otomatis *",
+        formula: "Rumus",
+        formulaLinear: "Linier",
+        formulaRandom: "Acak",
+        formulaSawtooth: "Gigi gergaji",
+        formulaPoints: "Titik",
+        formulaAmplitude: "Amplitudo",
+        formulaOffset: "Offset",
+        generate: "Hasilkan",
+        exportChart: "Ekspor PNG",
+        overlay: "Overlay kunci",
+        overlayHint: "Kunci dipisahkan koma",
+        mrangeFilter: "Filter label",
+        bulkMode: "Pembuatan massal",
+        mrangeHint: "mis. sensor=temp"
       }
     },
     treeControls: {
       settings: "Pengaturan pohon",
       expandAll: "Perluas semuanya",
       collapseAll: "Ciutkan semuanya",
+      level: "Tingkat",
       search: {
         search: "Cari di kunci",
         clear: "Hapus pencarian saat ini untuk mengosongkannya",
@@ -634,13 +613,21 @@ const strings = {
     }
   },
   time: {
+    type: "Tipe",
+    format: "Format",
     loading: "Memuat...",
     years: "tahun",
     months: "bulan",
     days: "hari",
     year: "tahun",
     month: "bulan",
-    day: "hari"
+    day: "hari",
+    second: "detik",
+    seconds: "detik",
+    minute: "menit",
+    minutes: "menit",
+    hour: "jam",
+    hours: "jam"
   },
   redisTypes: {
     string: "String",
@@ -649,7 +636,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

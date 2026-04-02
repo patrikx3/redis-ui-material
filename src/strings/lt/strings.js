@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "Išvalyta licencija",
-    invalid_license: "Neteisinga licencija",
-    license_max_devices_reached: "Pasiektas maksimalus įrenginio vietų skaičius",
-    license_readonly: "Licenciją galima pakeisti tik iš serverio terminalo.",
     server_error: "Serverio klaida, bandykite dar kartą"
   },
   title: {
@@ -51,8 +47,12 @@ const strings = {
     deleteAllKeys: opts => {
       return `Ištrinti šį medį ir visus jo raktus (${opts.key})?`;
     },
+    deleteSearchKeys: opts => {
+      return `Ar tikrai norite ištrinti visus raktus, atitinkančius "${opts.pattern}"? Rasta ${opts.count} raktų.`;
+    },
     socketioConnectError: "Socket.IO negali prisijungti prie serverio, galite perkrauti ir patys bandyti išspręsti ryšio klaidą, klientas pats nežino, kaip ją išspręsti.",
     socketioAuthRequired: "Reikalingas Socket.IO leidimas. Autentifikuokite naudodami HTTP Basic Auth (naudotojo vardą / slaptažodį) ir įkelkite iš naujo.",
+    delete: "Ištrinti?",
     deleteKey: "Ar tikrai ištrinsite šį raktą?",
     rename: {
       title: "Ar tikrai pervardysite šį raktą?",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "Konvertuoti tekstą į laiką",
       convertTextToTimePlaceholder: "Pvz. 1d bus 86400"
     },
-    license: {
-      title: "Nustatyti licenciją",
-      textContent: "If you want to use paid features, please contact support@corifeus.com to request a license. Pricing is Pro 400 HUF/month (€1/month) or 4,000 HUF/year (€10/year), and Enterprise 1,200 HUF/month (€3/month) or 12,000 HUF/year (€30/year). Yearly is 10x monthly. With 27% VAT, totals are Pro 500 HUF/month (€1.27/month) or 5,100 HUF/year (€12.70/year), Enterprise 1,500 HUF/month (€3.81/month) or 15,200 HUF/year (€38.10/year). License validation requires internet access. Default license includes 5 seats. If you need more seats, contact us at support@corifeus.com.",
-      placeholder: "Licencijos raktas"
-    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -136,13 +131,17 @@ const strings = {
     exportKeys: "Eksportuoti raktus",
     exportAllKeys: (opts) => `Eksportuoti visus ${opts.count} raktus`,
     exportSearchResults: (opts) => `Eksportuoti ${opts.count} rezultatų`,
+    deleteAllKeysMenu: (opts) => `Ištrinti viską ${opts.count}`,
     importKeys: "Importuoti raktus",
+    deleteSearchKeys: (opts) => `Ištrinti ${opts.count} atitinkančių raktų`,
     saveWithFormatJson: "Išsaugoti naudojant formatą",
     formatJson: "Json formatas",
     wrap: "Apvyniokite",
     unwrap: "Išvynioti",
     downloadJson: "Atsisiųskite JSON",
-    pubsubMonitor: "PubSub monitorius",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "Kalba",
@@ -183,7 +182,6 @@ const strings = {
     edit: "Redaguoti",
     save: "Išsaugoti",
     ttl: "Nustatyti TTL",
-    license: "Nustatyti licenciją",
     delete: "Ištrinti",
     remove: "Pašalinti",
     sure: "Žinoma",
@@ -262,38 +260,6 @@ const strings = {
     connectiondEdit: "Redaguoti ryšį",
     connectiondView: "Žiūrėti ryšį",
     connections: "Jungtys",
-    licenseInfo: "Licencija",
-    licenseEditable: "Licencija redaguojama",
-    licenseEditableYes: "Taip",
-    licenseEditableNo: "Nr",
-    licenseTerminalOnly: "Licenciją galima konfigūruoti tik iš serverio terminalo.",
-    licenseTierPolicyTitle: "Pakopų politika",
-    licenseTierPolicyText: "<h4>Free</h4>core Redis UI only; no SSH tunneling, no Readonly connection mode, no Cluster/Sentinel, no Edit JSON/Upload binary/Download binary, no ReJSON.<br/><strong>Price: 0 HUF/month (€0/month).</strong><br/><br/><h4>Pro</h4>SSH tunneling, Readonly connection mode (including --readonly-connections/-r), Edit JSON, Upload binary, Download binary, ReJSON.<br/><strong>Base price: 400 HUF/month (€1/month) or 4,000 HUF/year (€10/year).</strong><br/><strong>Total with 27% VAT: 500 HUF/month (€1.27/month) or 5,100 HUF/year (€12.70/year).</strong><br/><br/><h4>Enterprise</h4>SSH tunneling, Cluster and Sentinel, plus Edit JSON, Upload binary, Download binary, ReJSON; --readonly-connections/-r also works.<br/><strong>Base price: 1,200 HUF/month (€3/month) or 12,000 HUF/year (€30/year).</strong><br/><strong>Total with 27% VAT: 1,500 HUF/month (€3.81/month) or 15,200 HUF/year (€38.10/year).</strong><br/><br/><h4>Yearly rule</h4>Yearly price is 10x the monthly price.<br/><br/><h4>Seats</h4>Default license includes 5 seats. If you need more seats, contact us at <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><br/><h4>Enterprise trial</h4>10 days free for anyone with a real existing email address (non-test email).<br/><hr/><h4>Billing info in e-mail</h4>Name, Billing e-mail, Country code, Postal code, City, Address, VAT ID (optional).<br/><br/><h4>Payment</h4>PayPal payment is available only in HUF (forint); after sending the money @ <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> I will send you an invoice. All payments are non-refundable.<br/><br/><h4>VAT</h4>VAT is added to the price (27% in Hungary).<br/><hr/><h4>Contact</h4>If you want to say hi or have a question, contact <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><hr/><h4>Language</h4>Invoice and license e-mail communication is in English. Invoice currency is HUF.<br/><hr/><h4>Note</h4>License validation requires internet access.",
-    licenseState: "valstybė",
-    licenseStateActive: "Aktyvus",
-    licenseStateInactive: "Neaktyvus",
-    licenseStateNoLicense: "Licencijos nėra",
-    licenseKeyMasked: "Išsaugotas raktas",
-    licenseTier: "Pakopa",
-    licenseValid: "Galioja",
-    licenseStatus: "Licencijos būsena",
-    licenseReason: "Priežastis",
-    licenseCheckedAt: "Patikrintas adresu",
-    licenseStartsAt: "Prasideda val",
-    licenseExpiresAt: "Galiojimas baigiasi val",
-    licenseDaysLeft: "Liko dienos",
-    licenseMaxDevices: "Max įrenginiai",
-    licenseActiveDevices: "Aktyvūs įrenginiai",
-    licenseActiveDevicesInfo: "Jei prietaisas nebenaudojamas, jo sėdynė automatiškai atleidžiama po 75 minučių.",
-    licenseCustomerEmail: "Kliento el",
-    licenseFeatures: "Savybės",
-    licenseFeaturesEmpty: "Jokių papildomų funkcijų",
-    licenseFeatureReadonlyMode: "Tik skaitymo ryšio režimas",
-    licenseFeatureReadonlyConnectionsFlag: "Tik skaitymo jungtys (--readonly-connections/-r)",
-    licenseFeatureSsh: "SSH tuneliavimas",
-    licenseFeatureCluster: "Cluster jungtys",
-    licenseFeatureSentinel: "Sentinel jungtys",
-    licenseFeatureReJSON: "ReJSON (duomenų tipas JSON)",
     keysSort: {
       on: "Raktų rūšiavimas įjungtas",
       off: "Raktų rūšiavimas"
@@ -311,9 +277,6 @@ const strings = {
       on: "Tik skaityti",
       off: "Tik skaitymui išjungtas"
     },
-    proSshOnly: "„SSH“ yra „Pro“ arba „Enterprise“.",
-    proReadonlyOnly: "Tik skaitymo ryšio režimas galimas „Pro“ arba „Enterprise“.",
-    enterpriseClusterSentinelOnly: "Cluster ir Sentinel pasiekiami tik įmonėje.",
     theme: {
       light: "Šviesa",
       dark: "Tamsi įmonė",
@@ -355,16 +318,20 @@ const strings = {
     importConflict: "Jei raktas jau egzistuoja:",
     noKeysToExport: "Nėra raktų eksportavimui",
     time: "Laikas",
+    type: "Tipas",
+    format: "Formatas",
     loading: "Kraunama...",
     autoRefresh: "Auto",
     exportSearchHint: "Eksportuojami tik raktai, atitinkantys dabartinę paiešką",
     importSearchHint: "Importas taikomas visai duomenų bazei, ne tik paieškos rezultatams",
+    deleteSearchHint: "Ištrina visus raktus, atitinkančius dabartinę paiešką serveryje",
+    deletingSearchKeys: "Trinami atitinkantys raktai...",
     importNoKeys: "Faile nerasta raktų",
   },
   status: {
     dataCopied: "Duomenys yra iškarpinėje",
-    licenseSaved: "Licencija išsaugota",
     exportDone: "Eksportas baigtas",
+    deletedSearchKeys: (opts) => `Ištrinta ${opts.count} raktų`,
     indexCreated: "Indeksas sukurtas",
     indexDropped: "Indeksas ištrintas",
     importDone: (opts) => `Importas baigtas: ${opts.created} sukurta, ${opts.skipped} praleista, ${opts.errors} klaidų`,
@@ -412,35 +379,10 @@ const strings = {
     "readonly-connections": "Ryšiai pridėti / išsaugoti / ištrinti yra tik skaitomi!",
     "readonly-connection-mode": "Šis ryšys yra tik skaitymo režimas!",
     "list-out-of-bounds": "Šis sąrašo indeksas viršija ribas",
-    "donation-ware-feature": "Ši funkcija yra donorystės versijoje.",
-    "feature-pro-readonly-required": "Tik skaitymo ryšio režimui reikalinga Pro arba Enterprise licencija.",
-    "feature-pro-ssh-required": "SSH tuneliavimui reikalinga Pro arba Enterprise licencija.",
-    "feature-enterprise-cluster-sentinel-required": "Cluster ir Sentinel reikalinga įmonės licencija.",
-    "feature-pro-json-binary-required": "Redaguoti JSON, įkelti dvejetainį ir atsisiųsti dvejetainį failą reikalauja Pro arba Enterprise licencijos.",
-    "feature-pro-rejson-required": "ReJSON (duomenų tipas JSON) reikalinga Pro arba Enterprise licencija.",
     "invalid-json-value": "Vertė neteisinga JSON.",
     "http_auth_required": "Reikalingas įgaliojimas: patvirtinkite tapatybę naudodami HTTP Basic Auth ir įkelkite iš naujo.",
     "auto-connection-failed": "Gali būti, kad ryšys buvo pašalintas ir dėl to nepavyko prisijungti.",
     invalid_console_command: "Ši komanda neveikia naudojant GUI."
-  },
-  licenseReason: {
-    LICENSE_VALID: "Licencija galioja",
-    LICENSE_INVALID: "Licencija negalioja",
-    LICENSE_MISSING: "Licencijos raktas nenustatytas",
-    LICENSE_DISABLED: "Licencija išjungta serverio konfigūracijoje",
-    LICENSE_NOT_FOUND: "Licencija nerasta",
-    LICENSE_EXPIRED: "Licencija pasibaigė",
-    LICENSE_CLEARED: "Licencijos raktas buvo išvalytas",
-    LICENSE_MAX_DEVICES_REACHED: "Pasiektas maksimalus įrenginio vietų skaičius",
-    PRODUCT_MISMATCH: "Licencijuotas produktas neatitinka"
-  },
-  licenseStatusValue: {
-    active: "Aktyvus",
-    deleted: "Ištrinta",
-    all: "Visi",
-    expired: "Baigėsi galiojimo laikas",
-    missing: "Trūksta",
-    inactive: "Neaktyvus"
   },
   form: {
     error: {
@@ -610,12 +552,49 @@ const strings = {
           field: "Laukas",
           value: "Vertė"
         }
+      },
+      timeseries: {
+        chart: "Diagrama",
+        info: "Informacija",
+        addPoint: "Pridėti duomenų tašką",
+        from: "Nuo (ms arba -)",
+        to: "Iki (ms arba +)",
+        aggregation: "Agregavimas",
+        timeBucket: "Grupė (ms)",
+        none: "Nėra",
+        dataPoints: "duomenų taškai",
+        labels: "Etiketės",
+        rules: "Taisyklės",
+        retention: "Saugojimas",
+        timestamp: "Laiko žyma",
+        value: "Reikšmė",
+        retentionHint: "0 = nėra galiojimo pabaigos, arba milisekundės",
+        duplicatePolicy: "Dublikatų politika",
+        labelsHint: "raktas1 reikšmė1 raktas2 reikšmė2",
+        timestampHint: "'*' reiškia automatiškai sugeneruota, arba milisekundžių laiko žyma",
+        editAllHint: "Vienas duomenų taškas per eilutę: laiko_žyma reikšmė (laiko žyma gali būti * automatiniam)",
+        autoSpread: "Automatinis * sklaidos intervalas",
+        formula: "Formulė",
+        formulaLinear: "Tiesinė",
+        formulaRandom: "Atsitiktinė",
+        formulaSawtooth: "Pjūklinė",
+        formulaPoints: "Taškai",
+        formulaAmplitude: "Amplitudė",
+        formulaOffset: "Poslinkis",
+        generate: "Generuoti",
+        exportChart: "Eksportuoti PNG",
+        overlay: "Perdangos raktai",
+        overlayHint: "Kableliais atskirti raktai",
+        mrangeFilter: "Etiketės filtras",
+        bulkMode: "Masinis generavimas",
+        mrangeHint: "pvz. sensor=temp"
       }
     },
     treeControls: {
       settings: "Medžio nustatymai",
       expandAll: "Išskleisti viską",
       collapseAll: "Sutraukti viską",
+      level: "Lygis",
       search: {
         search: "Ieškokite raktuose",
         clear: "Išvalykite dabartinę paiešką, kad nustatytumėte tuščią",
@@ -634,13 +613,21 @@ const strings = {
     }
   },
   time: {
+    type: "Tipas",
+    format: "Formatas",
     loading: "Kraunama...",
     years: "metų",
     months: "mėnesių",
     days: "dienų",
     year: "metų",
     month: "mėnuo",
-    day: "dieną"
+    day: "dieną",
+    second: "sekundė",
+    seconds: "sekundės",
+    minute: "minutė",
+    minutes: "minutės",
+    hour: "valanda",
+    hours: "valandos"
   },
   redisTypes: {
     string: "String",
@@ -649,7 +636,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

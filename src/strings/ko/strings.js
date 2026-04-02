@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "허가증 취득",
-    invalid_license: "유효하지 않은 라이센스",
-    license_max_devices_reached: "최대 장치 좌석에 도달했습니다.",
-    license_readonly: "라이센스 변경은 서버 단말기에서만 가능합니다.",
     server_error: "서버 오류입니다. 다시 시도해 주세요."
   },
   title: {
@@ -48,8 +44,12 @@ const strings = {
     deleteConnection: "확인",
     deleteConnectionText: "이 Redis 연결을 삭제하시겠습니까?",
     deleteNode: "이 Redis 노드를 삭제하시겠습니까?",
+    delete: "삭제하시겠습니까?",
     deleteAllKeys: opts => {
       return `이 트리와 모든 키를 삭제합니다(${opts.key})?`;
+    },
+    deleteSearchKeys: opts => {
+      return `"${opts.pattern}"와 일치하는 모든 키를 삭제하시겠습니까? ${opts.count}개의 키가 발견되었습니다.`;
     },
     socketioConnectError: "Socket.IO는 서버에 연결할 수 없습니다. 다시 로드하여 연결 오류를 직접 해결할 수 있습니다. 클라이언트는 자체적으로 문제를 해결하는 방법을 모릅니다.",
     socketioAuthRequired: "Socket.IO 인증이 필요합니다. HTTP Basic Auth(사용자 이름/비밀번호)로 인증하고 다시 로드하세요.",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "텍스트를 시간으로 변환",
       convertTextToTimePlaceholder: "예. 1d는 86400이 됩니다."
     },
-    license: {
-      title: "라이센스 설정",
-      textContent: "유료 기능을 사용하려면 support@corifeus.com에 문의하여 라이선스를 요청하세요. 가격은 Pro 400 HUF/월(€1/월) 또는 4,000 HUF/년(€10/년), Enterprise 1,200 HUF/월(€3/월) 또는 12,000 HUF/년입니다. (€30/년). 연간은 월 10배입니다. 27% VAT를 사용하면 총 금액은 Pro 500 HUF/월(€1.27/월) 또는 5,100 HUF/년(€12.70/년), Enterprise 1,500 HUF/월(€3.81/월) 또는 15,200 HUF/년(€38.10/년). 라이센스 검증에는 인터넷 접속이 필요합니다. 기본 라이센스에는 5개의 시트가 포함됩니다. 더 많은 좌석이 필요한 경우 support@corifeus.com로 문의하세요.",
-      placeholder: "라이센스 키"
-    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -136,13 +131,17 @@ const strings = {
     exportKeys: "키 내보내기",
     exportAllKeys: (opts) => `전체 ${opts.count} 키 내보내기`,
     exportSearchResults: (opts) => `${opts.count} 결과 내보내기`,
+    deleteAllKeysMenu: (opts) => `모두 삭제 ${opts.count}`,
     importKeys: "키 가져오기",
+    deleteSearchKeys: (opts) => `일치하는 ${opts.count}개 키 삭제`,
     saveWithFormatJson: "형식으로 저장",
     formatJson: "JSON 형식",
     wrap: "랩",
     unwrap: "포장 풀기",
     downloadJson: "JSON 다운로드",
-    pubsubMonitor: "PubSub 모니터",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "언어",
@@ -183,7 +182,6 @@ const strings = {
     edit: "편집",
     save: "저장",
     ttl: "TTL 설정",
-    license: "라이센스 설정",
     delete: "삭제",
     remove: "제거",
     sure: "물론이죠",
@@ -262,38 +260,6 @@ const strings = {
     connectiondEdit: "연결 수정",
     connectiondView: "연결 보기",
     connections: "연결",
-    licenseInfo: "라이센스",
-    licenseEditable: "라이센스 편집 가능",
-    licenseEditableYes: "예",
-    licenseEditableNo: "아니요",
-    licenseTerminalOnly: "라이센스는 서버 터미널에서만 구성할 수 있습니다.",
-    licenseTierPolicyTitle: "등급 정책",
-    licenseTierPolicyText: "<h4>Free</h4>core Redis UI 전용; SSH 터널링 없음, 읽기 전용 연결 모드 없음, Cluster/Sentinel, 없음 JSON 편집/바이너리 업로드/바이너리 다운로드, 없음 ReJSON.<br/><strong>가격: 0 HUF/월 (€0/월).</strong><br/><br/><h4>Pro</h4>SSH 터널링, 읽기 전용 연결 모드(--readonly-connections/-r 포함), 편집 JSON, 바이너리 업로드, 바이너리 다운로드, ReJSON.<br/><strong>기본 가격: 400 HUF/월(€1/월) 또는 4,000 HUF/년 (€10/년).</strong><br/><strong>총액 27% VAT: 500 HUF/월(€1.27/월) 또는 5,100 HUF/년 (€12.70/년).</strong><br/><br/><h4>Enterprise</h4>SSH 터널링, Cluster 및 Sentinel, JSON 편집, 바이너리 업로드, 바이너리 다운로드, ReJSON; --readonly-connections/-r도 작동합니다.<br/><strong>기본 가격: 1,200 HUF/월(€3/월) 또는 12,000 HUF/년 (€30/년).</strong><br/><strong>총액 27% VAT: 1,500 HUF/월(€3.81/월) 또는 15,200 HUF/년 (€38.10/년).</strong><br/><br/><h4>연간 규칙</h4>연간 가격은 월별 10배입니다. 가격.<br/><br/><h4>Seats</h4>기본 라이센스에는 시트 5개가 포함되어 있습니다. 더 많은 좌석이 필요한 경우 <a href='mailto:mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><br/><h4>Enterprise 평가판</h4>누구나 10일 무료로 문의하세요. 실제 기존 이메일 주소(비테스트 이메일) 사용.<br/><hr/><h4>이메일의 청구 정보</h4>이름, 청구 이메일, 국가 코드, 우편번호, 도시, 주소, VAT ID (선택 사항).<br/><br/><h4>Payment</h4>PayPal 결제는 HUF(포린트)에서만 가능합니다. @<a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> 돈을 보낸 후 청구서를 보내드리겠습니다. 모든 결제 금액은 환불되지 않습니다. <br/><br/><h4>VAT</h4>VAT가 가격에 추가됩니다(27% 헝가리).<br/><hr/><h4>Contact</h4>안녕하고 싶거나 질문이 있는 경우 문의하세요. <a href='mailto:mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><hr/><h4>Language</h4>청구서 및 라이센스 이메일 통신은 영어로 되어 있습니다. 송장 통화는 HUF.<br/><hr/><h4>Note</h4>입니다. 라이센스 확인에는 인터넷 액세스가 필요합니다.",
-    licenseState: "상태",
-    licenseStateActive: "활성",
-    licenseStateInactive: "비활성",
-    licenseStateNoLicense: "라이센스 없음",
-    licenseKeyMasked: "저장된 키",
-    licenseTier: "계층",
-    licenseValid: "유효",
-    licenseStatus: "라이센스 상태",
-    licenseReason: "이유",
-    licenseCheckedAt: "확인 시간",
-    licenseStartsAt: "시작 시간",
-    licenseExpiresAt: "만료 시간:",
-    licenseDaysLeft: "남은 일수",
-    licenseMaxDevices: "최대 장치",
-    licenseActiveDevices: "활성 장치",
-    licenseActiveDevicesInfo: "장치를 더 이상 사용하지 않으면 75분 후에 좌석이 자동으로 해제됩니다.",
-    licenseCustomerEmail: "고객 이메일",
-    licenseFeatures: "특징",
-    licenseFeaturesEmpty: "추가 기능 없음",
-    licenseFeatureReadonlyMode: "읽기 전용 연결 모드",
-    licenseFeatureReadonlyConnectionsFlag: "읽기 전용 연결(--readonly-connections/-r)",
-    licenseFeatureSsh: "SSH 터널링",
-    licenseFeatureCluster: "Cluster 연결",
-    licenseFeatureSentinel: "Sentinel 연결",
-    licenseFeatureReJSON: "ReJSON(JSON 데이터 유형)",
     keysSort: {
       on: "키 정렬 켜짐",
       off: "키 정렬 꺼짐"
@@ -311,9 +277,6 @@ const strings = {
       on: "읽기 전용",
       off: "읽기 전용 꺼짐"
     },
-    proSshOnly: "SSH는 Pro 또는 Enterprise에서 사용할 수 있습니다.",
-    proReadonlyOnly: "읽기 전용 연결 모드는 Pro 또는 Enterprise에서 사용할 수 있습니다.",
-    enterpriseClusterSentinelOnly: "Cluster 및 Sentinel는 Enterprise에서만 사용할 수 있습니다.",
     theme: {
       light: "빛",
       dark: "어둠의 기업",
@@ -355,16 +318,20 @@ const strings = {
     importConflict: "키가 이미 있는 경우:",
     noKeysToExport: "내보낼 키가 없습니다",
     time: "시간",
+    type: "유형",
+    format: "형식",
     loading: "로딩 중...",
     autoRefresh: "자동",
     exportSearchHint: "현재 검색과 일치하는 키만 내보내기",
     importSearchHint: "가져오기는 검색 결과뿐만 아니라 전체 데이터베이스에 적용됩니다",
+    deleteSearchHint: "현재 검색과 일치하는 모든 키 삭제",
+    deletingSearchKeys: "일치하는 키 삭제 중...",
     importNoKeys: "파일에서 키를 찾을 수 없습니다",
   },
   status: {
     dataCopied: "데이터가 클립보드에 있습니다.",
-    licenseSaved: "라이선스가 저장되었습니다",
     exportDone: "내보내기 완료",
+    deletedSearchKeys: (opts) => `${opts.count}개 키 삭제됨`,
     indexCreated: "인덱스 생성됨",
     indexDropped: "인덱스 삭제됨",
     importDone: (opts) => `가져오기 완료: ${opts.created} 생성, ${opts.skipped} 건너뜀, ${opts.errors} 오류`,
@@ -412,35 +379,10 @@ const strings = {
     "readonly-connections": "연결 추가/저장/삭제는 읽기 전용입니다!",
     "readonly-connection-mode": "이 연결은 읽기 전용 모드입니다!",
     "list-out-of-bounds": "이 목록 색인은 범위를 벗어났습니다.",
-    "donation-ware-feature": "이 기능은 기부 버전에 있습니다.",
-    "feature-pro-readonly-required": "읽기 전용 연결 모드에는 Pro 또는 Enterprise 라이선스가 필요합니다.",
-    "feature-pro-ssh-required": "SSH 터널링에는 Pro 또는 Enterprise 라이센스가 필요합니다.",
-    "feature-enterprise-cluster-sentinel-required": "Cluster 및 Sentinel에는 Enterprise 라이선스가 필요합니다.",
-    "feature-pro-json-binary-required": "JSON 편집, 바이너리 업로드 및 바이너리 다운로드에는 Pro 또는 Enterprise 라이센스가 필요합니다.",
-    "feature-pro-rejson-required": "ReJSON(JSON 데이터 유형)에는 Pro 또는 Enterprise 라이선스가 필요합니다.",
     "invalid-json-value": "값이 유효한 JSON가 아닙니다.",
     "http_auth_required": "승인 필요: HTTP Basic Auth로 인증하고 다시 로드하세요.",
     "auto-connection-failed": "이로 인해 연결이 제거되고 자동 연결이 실패했을 수도 있습니다.",
     invalid_console_command: "이 명령은 GUI를 통해 작동하지 않습니다."
-  },
-  licenseReason: {
-    LICENSE_VALID: "라이센스가 유효합니다",
-    LICENSE_INVALID: "라이센스가 유효하지 않습니다",
-    LICENSE_MISSING: "라이센스 키가 설정되지 않았습니다",
-    LICENSE_DISABLED: "서버 구성에서 라이선스가 비활성화되었습니다.",
-    LICENSE_NOT_FOUND: "라이센스를 찾을 수 없습니다",
-    LICENSE_EXPIRED: "라이센스가 만료되었습니다",
-    LICENSE_CLEARED: "라이센스 키가 삭제되었습니다",
-    LICENSE_MAX_DEVICES_REACHED: "최대 장치 좌석에 도달했습니다.",
-    PRODUCT_MISMATCH: "라이센스 제품이 일치하지 않습니다"
-  },
-  licenseStatusValue: {
-    active: "활성",
-    deleted: "삭제됨",
-    all: "모두",
-    expired: "만료됨",
-    missing: "누락",
-    inactive: "비활성"
   },
   form: {
     error: {
@@ -610,12 +552,49 @@ const strings = {
           field: "필드",
           value: "가치"
         }
+      },
+      timeseries: {
+        chart: "차트",
+        info: "정보",
+        addPoint: "포인트 추가",
+        from: "시작 (ms 또는 -)",
+        to: "종료 (ms 또는 +)",
+        aggregation: "집계",
+        timeBucket: "버킷 (ms)",
+        none: "없음",
+        dataPoints: "데이터 포인트",
+        labels: "레이블",
+        rules: "규칙",
+        retention: "보존",
+        timestamp: "타임스탬프",
+        value: "값",
+        retentionHint: "0 = 만료 없음, 또는 밀리초",
+        duplicatePolicy: "중복 정책",
+        labelsHint: "키1 값1 키2 값2",
+        timestampHint: "'*'는 자동 생성, 또는 밀리초 타임스탬프",
+        editAllHint: "한 줄에 하나의 데이터 포인트: 타임스탬프 값 (타임스탬프는 자동의 경우 * 사용)",
+        autoSpread: "자동 * 분산 간격",
+        formula: "수식",
+        formulaLinear: "선형",
+        formulaRandom: "랜덤",
+        formulaSawtooth: "톱니파",
+        formulaPoints: "포인트",
+        formulaAmplitude: "진폭",
+        formulaOffset: "오프셋",
+        generate: "생성",
+        exportChart: "PNG 내보내기",
+        overlay: "키 오버레이",
+        overlayHint: "쉼표로 구분된 키",
+        mrangeFilter: "레이블 필터",
+        bulkMode: "대량 생성",
+        mrangeHint: "예: sensor=temp"
       }
     },
     treeControls: {
       settings: "트리 설정",
       expandAll: "모두 펼치기",
       collapseAll: "모두 접기",
+      level: "레벨",
       search: {
         search: "키에서 검색",
         clear: "비워두려면 현재 검색을 삭제하세요.",
@@ -634,13 +613,21 @@ const strings = {
     }
   },
   time: {
+    type: "유형",
+    format: "형식",
     loading: "로딩 중...",
     years: "년",
     months: "개월",
     days: "일",
     year: "년",
     month: "달",
-    day: "일"
+    day: "일",
+    second: "초",
+    seconds: "초",
+    minute: "분",
+    minutes: "분",
+    hour: "시간",
+    hours: "시간"
   },
   redisTypes: {
     string: "String",
@@ -649,7 +636,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;

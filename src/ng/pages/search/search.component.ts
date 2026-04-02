@@ -199,6 +199,8 @@ export class SearchComponent implements OnInit, OnDestroy {
             const label = this.strings().intention?.delete || 'Delete';
             await this.common.confirm({ message: label + '?' });
             this.newIndexFields.splice(index, 1);
+            this.newIndexFields = [...this.newIndexFields];
+            this.cdr.markForCheck();
         } catch (e) {
             if (e !== undefined) this.common.generalHandleError(e);
         }
@@ -242,7 +244,12 @@ export class SearchComponent implements OnInit, OnDestroy {
         } catch (e: any) {
             // If search failed and query looks like natural language, try AI
             if (q.length > 2 && q !== '*' && /\s/.test(q)) {
-                await this.handleAiQuery(q);
+                p3xr.ui.overlay.show();
+                try {
+                    await this.handleAiQuery(q);
+                } finally {
+                    p3xr.ui.overlay.hide();
+                }
             }
         }
     }

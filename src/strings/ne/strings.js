@@ -1,9 +1,5 @@
 const strings = {
   error: {
-    cleared_license: "लाइसेन्स खाली गरियो",
-    invalid_license: "अवैध इजाजतपत्र",
-    license_max_devices_reached: "अधिकतम उपकरण सिट पुग्यो",
-    license_readonly: "सर्भर टर्मिनलबाट मात्र इजाजतपत्र परिवर्तन गर्न सकिन्छ।",
     server_error: "सर्भर त्रुटि, कृपया पुन: प्रयास गर्नुहोस्"
   },
   title: {
@@ -51,8 +47,12 @@ const strings = {
     deleteAllKeys: opts => {
       return `यो रूख र यसका सबै कुञ्जीहरू मेटाउनुहोस् (${opts.key})?`;
     },
+    deleteSearchKeys: opts => {
+      return `"${opts.pattern}" सँग मिल्ने सबै कुञ्जीहरू मेटाउन निश्चित हुनुहुन्छ? ${opts.count} कुञ्जीहरू फेला परे।`;
+    },
     socketioConnectError: "Socket.IO सर्भरमा जडान हुन सक्दैन, तपाइँ पुन: लोड गर्न सक्नुहुन्छ र जडान त्रुटि आफैं समाधान गर्न प्रयास गर्न सक्नुहुन्छ, ग्राहकलाई थाहा छैन कि यसलाई कसरी समाधान गर्ने।",
     socketioAuthRequired: "Socket.IO प्राधिकरण आवश्यक छ। कृपया HTTP Basic Auth (प्रयोगकर्ता नाम/पासवर्ड) को साथ प्रमाणीकरण गर्नुहोस् र पुन: लोड गर्नुहोस्।",
+    delete: "मेटाउने?",
     deleteKey: "के तपाइँ यो कुञ्जी मेटाउन निश्चित हुनुहुन्छ?",
     rename: {
       title: "के तपाइँ यो कुञ्जी पुन: नामाकरण गर्न निश्चित हुनुहुन्छ?",
@@ -67,11 +67,6 @@ const strings = {
       convertTextToTime: "पाठलाई समयमा रूपान्तरण गर्नुहोस्",
       convertTextToTimePlaceholder: "जस्तै। 1d 86400 हुनेछ"
     },
-    license: {
-      title: "लाइसेन्स सेट गर्नुहोस्",
-      textContent: "If you want to use paid features, please contact support@corifeus.com to request a license. Pricing is Pro 400 HUF/month (€1/month) or 4,000 HUF/year (€10/year), and Enterprise 1,200 HUF/month (€3/month) or 12,000 HUF/year (€30/year). Yearly is 10x monthly. With 27% VAT, totals are Pro 500 HUF/month (€1.27/month) or 5,100 HUF/year (€12.70/year), Enterprise 1,500 HUF/month (€3.81/month) or 15,200 HUF/year (€38.10/year). License validation requires internet access. Default license includes 5 seats. If you need more seats, contact us at support@corifeus.com.",
-      placeholder: "इजाजतपत्र कुञ्जी"
-    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -136,13 +131,17 @@ const strings = {
     exportKeys: "कुञ्जीहरू निर्यात गर्नुहोस्",
     exportAllKeys: (opts) => `सबै ${opts.count} कुञ्जीहरू निर्यात`,
     exportSearchResults: (opts) => `${opts.count} परिणामहरू निर्यात`,
+    deleteAllKeysMenu: (opts) => `सबै मेटाउनुहोस् ${opts.count}`,
     importKeys: "कुञ्जीहरू आयात गर्नुहोस्",
+    deleteSearchKeys: (opts) => `${opts.count} मिल्ने कुञ्जीहरू मेटाउनुहोस्`,
     saveWithFormatJson: "ढाँचा संग बचत गर्नुहोस्",
     formatJson: "ढाँचा Json",
     wrap: "लपेट्���ुहोस्",
     unwrap: "खोल्नुहोस्",
     downloadJson: "JSON डाउनलोड गर्नुहोस्",
-    pubsubMonitor: "PubSub मनिटर",
+    pubsubMonitor: "PubSub",
+    pulse: "Pulse",
+    profiler: "Profiler",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "भाषा",
@@ -183,7 +182,6 @@ const strings = {
     edit: "सम्पादन गर्नुहोस्",
     save: "बचत गर्नुहोस्",
     ttl: "TTL सेट गर्नुहोस्",
-    license: "लाइसेन्स सेट गर्नुहोस्",
     delete: "मेट्नुहोस्",
     remove: "हटाउनुहोस्",
     sure: "पक्का",
@@ -262,38 +260,6 @@ const strings = {
     connectiondEdit: "जडान सम्पादन गर्नुहोस्",
     connectiondView: "जडान हेर्नुहोस्",
     connections: "जडानहरू",
-    licenseInfo: "इजाजतपत्र",
-    licenseEditable: "लाइसेन्स सम्पादन योग्य",
-    licenseEditableYes: "हो",
-    licenseEditableNo: "छैन",
-    licenseTerminalOnly: "इजाजतपत्र सर्भर टर्मिनलबाट मात्र कन्फिगर गर्न सकिन्छ।",
-    licenseTierPolicyTitle: "स्तरीय नीति",
-    licenseTierPolicyText: "<h4>Free</h4>core Redis UI only; no SSH tunneling, no Readonly connection mode, no Cluster/Sentinel, no Edit JSON/Upload binary/Download binary, no ReJSON.<br/><strong>Price: 0 HUF/month (€0/month).</strong><br/><br/><h4>Pro</h4>SSH tunneling, Readonly connection mode (including --readonly-connections/-r), Edit JSON, Upload binary, Download binary, ReJSON.<br/><strong>Base price: 400 HUF/month (€1/month) or 4,000 HUF/year (€10/year).</strong><br/><strong>Total with 27% VAT: 500 HUF/month (€1.27/month) or 5,100 HUF/year (€12.70/year).</strong><br/><br/><h4>Enterprise</h4>SSH tunneling, Cluster and Sentinel, plus Edit JSON, Upload binary, Download binary, ReJSON; --readonly-connections/-r also works.<br/><strong>Base price: 1,200 HUF/month (€3/month) or 12,000 HUF/year (€30/year).</strong><br/><strong>Total with 27% VAT: 1,500 HUF/month (€3.81/month) or 15,200 HUF/year (€38.10/year).</strong><br/><br/><h4>Yearly rule</h4>Yearly price is 10x the monthly price.<br/><br/><h4>Seats</h4>Default license includes 5 seats. If you need more seats, contact us at <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><br/><h4>Enterprise trial</h4>10 days free for anyone with a real existing email address (non-test email).<br/><hr/><h4>Billing info in e-mail</h4>Name, Billing e-mail, Country code, Postal code, City, Address, VAT ID (optional).<br/><br/><h4>Payment</h4>PayPal payment is available only in HUF (forint); after sending the money @ <a href='https://paypal.me/corifeus'>https://paypal.me/corifeus</a> I will send you an invoice. All payments are non-refundable.<br/><br/><h4>VAT</h4>VAT is added to the price (27% in Hungary).<br/><hr/><h4>Contact</h4>If you want to say hi or have a question, contact <a href='mailto:support@corifeus.com'>support@corifeus.com</a>.<br/><hr/><h4>Language</h4>Invoice and license e-mail communication is in English. Invoice currency is HUF.<br/><hr/><h4>Note</h4>License validation requires internet access.",
-    licenseState: "राज्य",
-    licenseStateActive: "सक्रिय",
-    licenseStateInactive: "निष्क्रिय",
-    licenseStateNoLicense: "लाइसेन्स छैन",
-    licenseKeyMasked: "बचत गरिएको कुञ्जी",
-    licenseTier: "टियर",
-    licenseValid: "मान्य",
-    licenseStatus: "लाइसेन्स स्थिति",
-    licenseReason: "कारण",
-    licenseCheckedAt: "मा जाँच गरियो",
-    licenseStartsAt: "मा सुरु हुन्छ",
-    licenseExpiresAt: "मा म्याद सकिन्छ",
-    licenseDaysLeft: "दिन बाँकी",
-    licenseMaxDevices: "अधिकतम उपकरणहरू",
-    licenseActiveDevices: "सक्रिय उपकरणहरू",
-    licenseActiveDevicesInfo: "यदि कुनै उपकरण अब प्रयोग गरिएन भने, यसको सीट 75 मिनेट पछि स्वचालित रूपमा रिलिज हुन्छ।",
-    licenseCustomerEmail: "ग्राहक इमेल",
-    licenseFeatures: "सुविधाहरू",
-    licenseFeaturesEmpty: "कुनै अतिरिक्त सुविधाहरू छैन",
-    licenseFeatureReadonlyMode: "पढ्ने मात्र जडान मोड",
-    licenseFeatureReadonlyConnectionsFlag: "पढ्ने मात्र जडानहरू (--readonly-connections/-r)",
-    licenseFeatureSsh: "SSH टनेलिङ",
-    licenseFeatureCluster: "Cluster जडानहरू",
-    licenseFeatureSentinel: "Sentinel जडानहरू",
-    licenseFeatureReJSON: "ReJSON (JSON डाटा प्रकार)",
     keysSort: {
       on: "कुञ्जी क्रमबद्ध गर्दै",
       off: "कुञ्जी क्रमबद्ध बन्द"
@@ -311,9 +277,6 @@ const strings = {
       on: "पढ्न मात्र",
       off: "पढ्ने मात्र बन्द"
     },
-    proSshOnly: "SSH प्रो वा इन्टरप्राइजमा उपलब्ध छ।",
-    proReadonlyOnly: "केवल पढ्ने जडान मोड प्रो वा इन्टरप्राइजमा उपलब्ध छ।",
-    enterpriseClusterSentinelOnly: "Cluster र Sentinel इन्टरप्राइजमा मात्र उपलब्ध छन्।",
     theme: {
       light: "उज्यालो",
       dark: "अँध्यारो उद्यम",
@@ -355,16 +318,20 @@ const strings = {
     importConflict: "कुञ्जी पहिले नै अवस्थित छ भने:",
     noKeysToExport: "निर्यात गर्न कुञ्जीहरू छैनन्",
     time: "समय",
+    type: "प्रकार",
+    format: "ढाँचा",
     loading: "लोड हुँदैछ...",
     autoRefresh: "स्वचालित",
     exportSearchHint: "हालको खोजसँग मिल्ने कुञ्जीहरू मात्र निर्यात हुँदैछ",
     importSearchHint: "आयात सम्पूर्ण डाटाबेसमा लागू हुन्छ, खोज परिणामहरूमा मात्र होइन",
+    deleteSearchHint: "सर्भरमा हालको खोजसँग मिल्ने सबै कुञ्जीहरू मेटाउँछ",
+    deletingSearchKeys: "मिल्ने कुञ्जीहरू मेटाउँदै...",
     importNoKeys: "फाइलमा कुञ्जीहरू फेला परेनन्",
   },
   status: {
     dataCopied: "डाटा क्लिपबोर्डमा छ",
-    licenseSaved: "इजाजतपत्र बचत गरियो",
     exportDone: "निर्यात पूरा भयो",
+    deletedSearchKeys: (opts) => `${opts.count} कुञ्जीहरू मेटाइयो`,
     indexCreated: "इन्डेक्स सिर्जना भयो",
     indexDropped: "इन्डेक्स हटाइयो",
     importDone: (opts) => `आयात पूरा: ${opts.created} सिर्जित, ${opts.skipped} छोडिएको, ${opts.errors} त्रुटि`,
@@ -412,35 +379,10 @@ const strings = {
     "readonly-connections": "जडानहरू थप्नुहोस्/बचत गर्नुहोस्/मेटाउनुहोस् केवल पढ्ने मात्र हो!",
     "readonly-connection-mode": "यो जडान पढ्ने मात्र मोड हो!",
     "list-out-of-bounds": "यो सूची सूचकांक सीमा बाहिर छ",
-    "donation-ware-feature": "यो सुविधा दान संस्करणमा अवस्थित छ।",
-    "feature-pro-readonly-required": "पढ्ने मात्र जडान मोडलाई प्रो वा इन्टरप्राइज इजाजतपत्र चाहिन्छ।",
-    "feature-pro-ssh-required": "SSH टनेलिङलाई प्रो वा इन्टरप्राइज इजाजतपत्र चाहिन्छ।",
-    "feature-enterprise-cluster-sentinel-required": "Cluster र Sentinel लाई इन्टरप्राइज इजाजतपत्र चाहिन्छ।",
-    "feature-pro-json-binary-required": "JSON सम्पादन गर्नुहोस्, बाइनरी अपलोड गर्नुहोस् र बाइनरी डाउनलोड गर्नुहोस् प्रो वा इन्टरप्राइज इजाजतपत्र चाहिन्छ।",
-    "feature-pro-rejson-required": "ReJSON (JSON डाटा प्रकार) लाई प्रो वा इन्टरप्राइज इजाजतपत्र चाहिन्छ।",
     "invalid-json-value": "मान मान्य छैन JSON।",
     "http_auth_required": "प्राधिकरण आवश्यक छ: कृपया HTTP Basic Auth को साथ प्रमाणीकरण गर्नुहोस् र पुन: लोड गर्नुहोस्।",
     "auto-connection-failed": "सम्भव छ, जडान हटाइयो र स्वत जडान असफल भयो, यस कारण।",
     invalid_console_command: "यो आदेश GUI मार्फत काम गरिरहेको छैन।"
-  },
-  licenseReason: {
-    LICENSE_VALID: "इजाजतपत्र मान्य छ",
-    LICENSE_INVALID: "इजाजतपत्र अवैध छ",
-    LICENSE_MISSING: "कुनै इजाजतपत्र कुञ्जी सेट गरिएको छैन",
-    LICENSE_DISABLED: "सर्भर कन्फिगरेसनमा इजाजतपत्र असक्षम पारिएको छ",
-    LICENSE_NOT_FOUND: "लाइसेन्स फेला परेन",
-    LICENSE_EXPIRED: "इजाजतपत्रको म्याद सकिएको छ",
-    LICENSE_CLEARED: "इजाजतपत्र कुञ्जी खाली गरियो",
-    LICENSE_MAX_DEVICES_REACHED: "अधिकतम उपकरण सिट पुग्यो",
-    PRODUCT_MISMATCH: "लाइसेन्स उत्पादन मेल खाँदैन"
-  },
-  licenseStatusValue: {
-    active: "सक्रिय",
-    deleted: "मेटाइयो",
-    all: "सबै",
-    expired: "म्याद सकियो",
-    missing: "हराइरहेको छ",
-    inactive: "निष्क्रिय"
   },
   form: {
     error: {
@@ -610,12 +552,49 @@ const strings = {
           field: "क्षेत्र",
           value: "मूल्य"
         }
+      },
+      timeseries: {
+        chart: "चार्ट",
+        info: "जानकारी",
+        addPoint: "डाटा बिन्दु थप्नुहोस्",
+        from: "देखि (ms वा -)",
+        to: "सम्म (ms वा +)",
+        aggregation: "एकत्रीकरण",
+        timeBucket: "बाल्टी (ms)",
+        none: "कुनै पनि छैन",
+        dataPoints: "डाटा बिन्दुहरू",
+        labels: "लेबलहरू",
+        rules: "नियमहरू",
+        retention: "धारण",
+        timestamp: "टाइमस्ट्याम्प",
+        value: "मान",
+        retentionHint: "0 = म्याद सकिँदैन, वा मिलिसेकेन्ड",
+        duplicatePolicy: "नक्कल नीति",
+        labelsHint: "कुञ्जी1 मान1 कुञ्जी2 मान2",
+        timestampHint: "'*' स्वचालित रूपमा उत्पन्न हुन्छ, वा मिलिसेकेन्ड टाइमस्ट्याम्प",
+        editAllHint: "प्रति पंक्ति एउटा डाटा बिन्दु: टाइमस्ट्याम्प मान (टाइमस्ट्याम्प स्वचालितको लागि * हुन सक्छ)",
+        autoSpread: "स्वचालित * फैलावट अन्तराल",
+        formula: "सूत्र",
+        formulaLinear: "रैखिक",
+        formulaRandom: "अनियमित",
+        formulaSawtooth: "करौंती दाँत",
+        formulaPoints: "बिन्दुहरू",
+        formulaAmplitude: "आयाम",
+        formulaOffset: "अफसेट",
+        generate: "उत्पन्न गर्नुहोस्",
+        exportChart: "PNG निर्यात गर्नुहोस्",
+        overlay: "ओभरले कुञ्जीहरू",
+        overlayHint: "अल्पविरामले छुट्याइएका कुञ्जीहरू",
+        mrangeFilter: "लेबल फिल्टर",
+        bulkMode: "बल्क जेनरेट",
+        mrangeHint: "उदा. sensor=temp"
       }
     },
     treeControls: {
       settings: "रूख सेटिङहरू",
       expandAll: "सबै विस्तार गर्नुहोस्",
       collapseAll: "सबै संक्षिप्त गर्नुहोस्",
+      level: "स्तर",
       search: {
         search: "कुञ्जीहरूमा खोज्नुहोस्",
         clear: "खाली सेट गर्न हालको खोज खाली गर्नुहोस्",
@@ -634,13 +613,21 @@ const strings = {
     }
   },
   time: {
+    type: "प्रकार",
+    format: "ढाँचा",
     loading: "लोड हुँदैछ...",
     years: "वर्ष",
     months: "महिना",
     days: "दिनहरू",
     year: "वर्ष",
     month: "महिना",
-    day: "दिन"
+    day: "दिन",
+    second: "सेकेन्ड",
+    seconds: "सेकेन्ड",
+    minute: "मिनेट",
+    minutes: "मिनेट",
+    hour: "घण्टा",
+    hours: "घण्टा"
   },
   redisTypes: {
     string: "String",
@@ -649,7 +636,8 @@ const strings = {
     set: "Set",
     zset: "Sorted set - zset",
     stream: "Stream",
-    json: "JSON"
+    json: "JSON",
+    timeseries: "Time Series"
   }
 };
 module.exports = strings;
