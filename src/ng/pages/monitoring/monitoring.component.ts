@@ -6,7 +6,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 
-import dayjs from 'dayjs';
+const timeFormatter = new Intl.DateTimeFormat(undefined, { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+const formatTime = (ms: number) => timeFormatter.format(new Date(ms));
 import { I18nService } from '../../services/i18n.service';
 import { SocketService } from '../../services/socket.service';
 import { CommonService } from '../../services/common.service';
@@ -14,8 +15,6 @@ import { P3xrAccordionComponent } from '../../components/p3xr-accordion.componen
 import { P3xrButtonComponent } from '../../components/p3xr-button.component';
 import { RedisStateService } from '../../services/redis-state.service';
 import { MonitoringDataService } from './monitoring-data.service';
-
-declare const p3xr: any;
 
 require('./monitoring.component.scss');
 
@@ -87,14 +86,14 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     ngOnInit(): void {
-        this.isReadonly = p3xr?.state?.connection?.readonly === true;
+        this.isReadonly = this.state.connection()?.readonly === true;
         this.fetchData();
         this.loadClientList();
         this.loadTopKeys();
 
         // Reload all data when connection changes
         const sub = this.socket.stateChanged$.subscribe(() => {
-            this.isReadonly = p3xr?.state?.connection?.readonly === true;
+            this.isReadonly = this.state.connection()?.readonly === true;
             this.history = [];
             this.chartsInitialized = false;
             this.memoryPlot?.destroy();
@@ -975,7 +974,7 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
                     grid: { stroke: colors.grid, width: 1 },
                     ticks: { stroke: colors.grid },
                     font: '11px Roboto',
-                    values: (_: any, ticks: number[]) => ticks.map(t => dayjs(t * 1000).format('HH:mm:ss')),
+                    values: (_: any, ticks: number[]) => ticks.map(t => formatTime(t * 1000)),
                 },
                 {
                     stroke: colors.text,
@@ -986,7 +985,7 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
                 },
             ],
             series: [
-                { label: this.strings().label?.time || 'Time', value: (_: any, rawValue: number) => rawValue ? dayjs(rawValue * 1000).format('HH:mm:ss') : '' },
+                { label: this.strings().label?.time || 'Time', value: (_: any, rawValue: number) => rawValue ? formatTime(rawValue * 1000) : '' },
                 ...seriesConfig,
             ],
         };

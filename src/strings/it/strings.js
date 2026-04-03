@@ -404,8 +404,8 @@ const strings = {
       maxValueDisplayInfo: "Se impostato a 0, mostra i valori completi. Se maggiore di 0, tronca a questa lunghezza. Se -1: per le stringhe, nasconde il valore fino alla modifica; per gli altri tipi, mostra il contenuto completo.",
       maxKeys: "Numero massimo di chiavi",
       maxKeysInfo: "Per evitare che la GUI si blocchi, limitiamo il numero massimo di chiavi.",
-      keyCount: () => {
-        return `Numero di chiavi: ${p3xr.state.keysRaw.length}`;
+      keyCount: (opts) => {
+        return `Numero di chiavi: ${opts?.keyCount ?? 0}`;
       },
       label: {
         animation: "Usa animazione",
@@ -549,6 +549,9 @@ const strings = {
       label: {
         key: "Chiave",
         encoding: "Codifica",
+        compression: "Compressione",
+        aiRateLimited: "Limite di richieste AI raggiunto. Riprova più tardi o usa la tua chiave API Groq nelle Impostazioni.",
+        aiError: "Query AI fallita",
         length: "Dimensione",
         ttl: "TTL",
         ttlTitle: "Tempo di vita",
@@ -635,7 +638,7 @@ const strings = {
         clear: "Cancella la ricerca corrente",
         placeholderClient: "Ricerca lato client",
         placeholderServer: "Ricerca lato server",
-        info: "La ricerca lato client significa che corrisponde al testo nell'input di ricerca. La ricerca lato server significa che cerca nei pattern delle chiavi come *{testo-di-ricerca}*. Per grandi set di ricerca, è meglio usare la ricerca lato server. Per set più piccoli, è meglio usare la ricerca lato client." + ` Se il conteggio delle chiavi supera ${p3xr.settings.maxLightKeysCount}, puoi cercare solo lato server.`,
+        info: (opts) => "La ricerca lato client significa che corrisponde al testo nell'input di ricerca. La ricerca lato server significa che cerca nei pattern delle chiavi come *{testo-di-ricerca}*. Per grandi set di ricerca, è meglio usare la ricerca lato server. Per set più piccoli, è meglio usare la ricerca lato client." + ` Se il conteggio delle chiavi supera ${opts?.maxLightKeysCount ?? 110000}, puoi cercare solo lato server.`,
         largeSetInfo: "In un set grande, la ricerca lato client è disabilitata, quindi al momento è possibile solo la ricerca lato server.",
         infoDetails: "Per scoprire come funziona la ricerca, consulta le impostazioni"
       },

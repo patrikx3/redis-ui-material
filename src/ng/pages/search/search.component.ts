@@ -16,8 +16,8 @@ import { SocketService } from '../../services/socket.service';
 import { CommonService } from '../../services/common.service';
 import { P3xrAccordionComponent } from '../../components/p3xr-accordion.component';
 import { P3xrButtonComponent } from '../../components/p3xr-button.component';
-
-declare const p3xr: any;
+import { RedisStateService } from '../../services/redis-state.service';
+import { OverlayService } from '../../services/overlay.service';
 
 require('./search.component.scss');
 
@@ -68,12 +68,14 @@ export class SearchComponent implements OnInit, OnDestroy {
         @Inject(ChangeDetectorRef) private cdr: ChangeDetectorRef,
         @Inject(NgZone) private ngZone: NgZone,
         @Inject(BreakpointObserver) private breakpointObserver: BreakpointObserver,
+        @Inject(RedisStateService) private state: RedisStateService,
+        @Inject(OverlayService) private overlay: OverlayService,
     ) {
         this.strings = this.i18n.strings;
     }
 
     ngOnInit(): void {
-        this.isReadonly = p3xr?.state?.connection?.readonly === true;
+        this.isReadonly = this.state.connection()?.readonly === true;
         const sub960 = this.breakpointObserver.observe('(min-width: 960px)').subscribe(r => {
             this.isGtSm = r.matches;
             this.cdr.markForCheck();
@@ -82,7 +84,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         this.loadIndexes();
 
         const sub = this.socket.stateChanged$.subscribe(() => {
-            this.isReadonly = p3xr?.state?.connection?.readonly === true;
+            this.isReadonly = this.state.connection()?.readonly === true;
             this.loadIndexes();
         });
         this.unsubs.push(() => sub.unsubscribe());
@@ -246,11 +248,11 @@ export class SearchComponent implements OnInit, OnDestroy {
         } catch (e: any) {
             // If search failed and query looks like natural language, try AI
             if (q.length > 2 && q !== '*' && /\s/.test(q)) {
-                p3xr.ui.overlay.show();
+                this.overlay.show();
                 try {
                     await this.handleAiQuery(q);
                 } finally {
-                    p3xr.ui.overlay.hide();
+                    this.overlay.hide();
                 }
             }
         }

@@ -408,8 +408,8 @@ const strings = {
       maxValueDisplayInfo: "If set to 0, show full values. If greater than 0, truncate to this length. If -1: for strings, hide the value until edit; for other types, show full content.",
       maxKeys: "The max key count",
       maxKeysInfo: "So that the GUI does not crash, we limit the max key count.",
-      keyCount: () => {
-        return `Number of keys: ${p3xr.state.keysRaw.length}`;
+      keyCount: (opts) => {
+        return `Number of keys: ${opts?.keyCount ?? 0}`;
       },
       label: {
         animation: "Use animation",
@@ -552,6 +552,9 @@ const strings = {
       label: {
         key: "Key",
         encoding: "Encoding",
+        compression: "Compression",
+        aiRateLimited: "AI rate limit reached. Try again later or use your own Groq API key in Settings.",
+        aiError: "AI query failed",
         length: "Size",
         ttl: "TTL",
         ttlTitle: "Time To Live",
@@ -638,7 +641,7 @@ const strings = {
         clear: "Clear current search to set empty",
         placeholderClient: "Search client side",
         placeholderServer: "Search server side",
-        info: "The client side search means, that it matches the text in the search input. The server side search means, that is it like search in the keys patterns as *{search-text}*. For large search sets, it is better to use server side searching. For smaller search sets, it is better to use client side search mode." + ` If the keys count is over ${p3xr.settings.maxLightKeysCount}, you can only search on server side.`,
+        info: (opts) => "The client side search means, that it matches the text in the search input. The server side search means, that is it like search in the keys patterns as *{search-text}*. For large search sets, it is better to use server side searching. For smaller search sets, it is better to use client side search mode." + ` If the keys count is over ${opts?.maxLightKeysCount ?? 110000}, you can only search on server side.`,
         largeSetInfo: "In a large set, client side searching is disabled. so right now only server side searching is possible.",
         infoDetails: "To find out how the search works, please check out the settings"
       },

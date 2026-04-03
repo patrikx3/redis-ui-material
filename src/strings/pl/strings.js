@@ -406,8 +406,8 @@ const strings = {
       maxValueDisplayInfo: "Jeśli ustawiono na 0, wyświetlane są pełne wartości. Jeśli większe niż 0, obcinane do tej długości. Jeśli -1: dla stringów wartość jest ukryta do edycji; dla innych typów wyświetlana jest pełna zawartość.",
       maxKeys: "Maksymalna liczba kluczy",
       maxKeysInfo: "Aby GUI się nie zawieszał, ograniczamy maksymalną liczbę kluczy.",
-      keyCount: () => {
-        return `Liczba kluczy: ${p3xr.state.keysRaw.length}`;
+      keyCount: (opts) => {
+        return `Liczba kluczy: ${opts?.keyCount ?? 0}`;
       },
       label: {
         animation: "Użyj animacji",
@@ -551,6 +551,9 @@ const strings = {
       label: {
         key: "Klucz",
         encoding: "Kodowanie",
+        compression: "Kompresja",
+        aiRateLimited: "Osiągnięto limit zapytań AI. Spróbuj ponownie później lub użyj własnego klucza API Groq w Ustawieniach.",
+        aiError: "Zapytanie AI nie powiodło się",
         length: "Rozmiar",
         ttl: "TTL",
         ttlTitle: "Time To Live",
@@ -637,7 +640,7 @@ const strings = {
         clear: "Wyczyść bieżące wyszukiwanie",
         placeholderClient: "Szukaj po stronie klienta",
         placeholderServer: "Szukaj po stronie serwera",
-        info: "Wyszukiwanie po stronie klienta oznacza dopasowanie tekstu w polu wyszukiwania. Wyszukiwanie po stronie serwera oznacza wyszukiwanie we wzorcach kluczy jako *{szukany-tekst}*. Dla dużych zbiorów lepiej jest używać wyszukiwania po stronie serwera. Dla mniejszych zbiorów lepiej jest używać wyszukiwania po stronie klienta." + ` Jeśli liczba kluczy przekracza ${p3xr.settings.maxLightKeysCount}, możesz wyszukiwać tylko po stronie serwera.`,
+        info: (opts) => "Wyszukiwanie po stronie klienta oznacza dopasowanie tekstu w polu wyszukiwania. Wyszukiwanie po stronie serwera oznacza wyszukiwanie we wzorcach kluczy jako *{szukany-tekst}*. Dla dużych zbiorów lepiej jest używać wyszukiwania po stronie serwera. Dla mniejszych zbiorów lepiej jest używać wyszukiwania po stronie klienta." + ` Jeśli liczba kluczy przekracza ${opts?.maxLightKeysCount ?? 110000}, możesz wyszukiwać tylko po stronie serwera.`,
         largeSetInfo: "W dużym zbiorze wyszukiwanie po stronie klienta jest wyłączone, więc obecnie możliwe jest tylko wyszukiwanie po stronie serwera.",
         infoDetails: "Aby dowiedzieć się, jak działa wyszukiwanie, sprawdź ustawienia"
       },

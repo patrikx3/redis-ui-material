@@ -10,6 +10,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { I18nService } from '../services/i18n.service';
 import { SettingsService } from '../services/settings.service';
+import { RedisStateService } from '../services/redis-state.service';
 import { CommonService } from '../services/common.service';
 import { SocketService } from '../services/socket.service';
 import { MainCommandService } from '../services/main-command.service';
@@ -20,7 +21,6 @@ import { P3xrAccordionComponent } from '../components/p3xr-accordion.component';
 import { P3xrButtonComponent } from '../components/p3xr-button.component';
 // import { DatePipe } from '../pipes/date.pipe';
 
-declare const p3xr: any;
 
 /**
  * Settings page — Angular replacement for AngularJS p3xrSettings.
@@ -499,6 +499,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     constructor(
         @Inject(I18nService) private i18n: I18nService,
         @Inject(SettingsService) public settings: SettingsService,
+        @Inject(RedisStateService) private state: RedisStateService,
         @Inject(CommonService) private common: CommonService,
         @Inject(SocketService) private socket: SocketService,
         @Inject(MainCommandService) private cmd: MainCommandService,
@@ -534,10 +535,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
     }
 
     private refreshState(): void {
-        const state = p3xr.state;
-        this.connectionsList = state.connections?.list || [];
-        this.readonlyConnections = state.cfg?.readonlyConnections === true;
-        this.currentConnectionId = state.connection?.id;
+        this.connectionsList = this.state.connections()?.list || [];
+        this.readonlyConnections = this.state.cfg()?.readonlyConnections === true;
+        this.currentConnectionId = this.state.connection()?.id;
         this.buildGroupedConnections();
         this.cdr.detectChanges();
     }
@@ -602,11 +602,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
             return this.electronUiStorage;
         }
 
-        // Read from p3xr.electronUiStorageBootstrap which was captured in main.js
+        // Read from __p3xr_electron_bootstrap which was captured in main.js
         // BEFORE Angular's router stripped the query params.
         let storage: Record<string, string> = {};
         try {
-            const bootstrap = p3xr?.electronUiStorageBootstrap;
+            const bootstrap = (globalThis as any).__p3xr_electron_bootstrap;
             if (bootstrap && typeof bootstrap === 'object' && !Array.isArray(bootstrap)) {
                 storage = this.normalizeElectronUiStorage(bootstrap);
             }
@@ -748,7 +748,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     }
 
     getConnectionClients(connection: any): { key: string; clients: number }[] {
-        const redisConnections = p3xr.state.redisConnections || {};
+        const redisConnections = this.state.redisConnections() || {};
         const results: { key: string; clients: number }[] = [];
         for (const key of Object.keys(redisConnections)) {
             if (redisConnections[key].connection?.name === connection.name) {
@@ -761,7 +761,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     // --- AI Settings ---
 
     isAiEnabled(): boolean {
-        return p3xr.state.cfg?.aiEnabled !== false;
+        return this.state.cfg()?.aiEnabled !== false;
     }
 
     async toggleAiEnabled(enabled: boolean): Promise<void> {
@@ -769,11 +769,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
             await this.socket.request({
                 action: 'set-groq-api-key',
                 payload: {
-                    apiKey: p3xr.state.cfg?.groqApiKey || '',
+                    apiKey: this.state.cfg()?.groqApiKey || '',
                     aiEnabled: enabled,
                 },
             });
-            p3xr.state.cfg.aiEnabled = enabled;
+            const cfg = { ...this.state.cfg(), aiEnabled: enabled };
+            this.state.cfg.set(cfg);
             this.cdr.markForCheck();
         } catch (e) {
             this.common.generalHandleError(e);
@@ -781,13 +782,13 @@ export class SettingsComponent implements OnInit, OnDestroy {
     }
 
     hasGroqApiKey(): boolean {
-        const key = p3xr.state.cfg?.groqApiKey || '';
+        const key = this.state.cfg()?.groqApiKey || '';
         return key.startsWith('gsk_') && key.length > 20;
     }
 
     isUseOwnKey(): boolean {
         // Can only use own key if one is actually set
-        return p3xr.state.cfg?.aiUseOwnKey === true && this.hasGroqApiKey();
+        return this.state.cfg()?.aiUseOwnKey === true && this.hasGroqApiKey();
     }
 
     async toggleUseOwnKey(useOwn: boolean): Promise<void> {
@@ -799,12 +800,13 @@ export class SettingsComponent implements OnInit, OnDestroy {
             await this.socket.request({
                 action: 'set-groq-api-key',
                 payload: {
-                    apiKey: p3xr.state.cfg?.groqApiKey || '',
-                    aiEnabled: p3xr.state.cfg?.aiEnabled !== false,
+                    apiKey: this.state.cfg()?.groqApiKey || '',
+                    aiEnabled: this.state.cfg()?.aiEnabled !== false,
                     aiUseOwnKey: useOwn,
                 },
             });
-            p3xr.state.cfg.aiUseOwnKey = useOwn;
+            const cfg = { ...this.state.cfg(), aiUseOwnKey: useOwn };
+            this.state.cfg.set(cfg);
             this.cdr.markForCheck();
         } catch (e) {
             this.common.generalHandleError(e);
@@ -812,11 +814,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
     }
 
     isAiReadonly(): boolean {
-        return this.readonlyConnections || p3xr.state.cfg?.groqApiKeyReadonly === true;
+        return this.readonlyConnections || this.state.cfg()?.groqApiKeyReadonly === true;
     }
 
     isGroqApiKeyReadonly(): boolean {
-        return p3xr.state.cfg?.groqApiKeyReadonly === true;
+        return this.state.cfg()?.groqApiKeyReadonly === true;
     }
 
     async openAiSettings($event: any): Promise<void> {
@@ -825,7 +827,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     }
 
     getGroqApiKeyDisplay(): string {
-        const key = p3xr.state.cfg?.groqApiKey || '';
+        const key = this.state.cfg()?.groqApiKey || '';
         if (!key) return this.strings().label?.aiGroqApiKeyNotSet || 'Not set';
         if (key.length <= 8) return '****';
         return `${key.slice(0, 4)}...${key.slice(-4)}`;

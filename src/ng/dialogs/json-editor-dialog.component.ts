@@ -10,8 +10,8 @@ import { I18nService } from '../services/i18n.service';
 import { ThemeService } from '../services/theme.service';
 import { CommonService } from '../services/common.service';
 import { DialogCancelButtonComponent } from '../components/dialog-cancel-button.component';
-
-declare const p3xr: any;
+import { RedisStateService } from '../services/redis-state.service';
+import { SettingsService } from '../services/settings.service';
 
 export interface JsonEditorDialogData {
     value: string;
@@ -105,6 +105,8 @@ export class JsonEditorDialogComponent implements OnInit, AfterViewInit, OnDestr
         @Inject(ThemeService) private theme: ThemeService,
         @Inject(CommonService) private common: CommonService,
         @Inject(BreakpointObserver) private breakpointObserver: BreakpointObserver,
+        @Inject(RedisStateService) private state: RedisStateService,
+        @Inject(SettingsService) private settings: SettingsService,
     ) {
         this.strings = this.i18n.strings;
     }
@@ -118,7 +120,7 @@ export class JsonEditorDialogComponent implements OnInit, AfterViewInit, OnDestr
             this.isJson = false;
         }
 
-        this.isReadonly = p3xr?.state?.connection?.readonly === true;
+        this.isReadonly = this.state.connection()?.readonly === true;
         this.hideFormatSave = this.data.hideFormatSave === true;
         this.updateMinHeight();
     }
@@ -176,7 +178,7 @@ export class JsonEditorDialogComponent implements OnInit, AfterViewInit, OnDestr
             themeExtension = githubLight;
         }
 
-        const doc = JSON.stringify(this.obj, null, p3xr?.settings?.jsonFormat ?? 2);
+        const doc = JSON.stringify(this.obj, null, this.settings.jsonFormat() ?? 2);
 
         this.EditorViewClass = EditorView;
         this.editorView = new EditorView({
@@ -264,7 +266,7 @@ export class JsonEditorDialogComponent implements OnInit, AfterViewInit, OnDestr
         try {
             const text = this.editorView.state.doc.toString();
             const parsed = JSON.parse(text);
-            const result = JSON.stringify(parsed, null, format ? (p3xr?.settings?.jsonFormat ?? 2) : 0);
+            const result = JSON.stringify(parsed, null, format ? (this.settings.jsonFormat() ?? 2) : 0);
             this.dialogRef.close({ obj: result });
         } catch (e) {
             this.common.generalHandleError(e);

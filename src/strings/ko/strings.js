@@ -406,8 +406,8 @@ const strings = {
       maxValueDisplayInfo: "0으로 설정하면 전체 값이 표시됩니다. 0보다 크면 이 길이로 자릅니다. -1인 경우: 문자열의 경우 편집할 때까지 값을 숨깁니다. 다른 유형의 경우 전체 콘텐츠를 표시하세요.",
       maxKeys: "최대 키 수",
       maxKeysInfo: "GUI가 충돌하지 않도록 최대 키 수를 제한합니다.",
-      keyCount: () => {
-        return `키 수: ${p3xr.state.keysRaw.length}`;
+      keyCount: (opts) => {
+        return `키 수: ${opts?.keyCount ?? 0}`;
       },
       label: {
         animation: "애니메이션 사용",
@@ -551,6 +551,9 @@ const strings = {
       label: {
         key: "열쇠",
         encoding: "인코딩",
+        compression: "압축",
+        aiRateLimited: "AI 요청 한도에 도달했습니다. 나중에 다시 시도하거나 설정에서 자신의 Groq API 키를 사용하세요.",
+        aiError: "AI 쿼리 실패",
         length: "크기",
         ttl: "TTL",
         ttlTitle: "생존 시간",
@@ -637,7 +640,7 @@ const strings = {
         clear: "비워두려면 현재 검색을 삭제하세요.",
         placeholderClient: "클라이언트 측 검색",
         placeholderServer: "검색 서버 측",
-        info: "클라이언트 측 검색은 검색 입력의 텍스트와 일치함을 의미합니다. 서버 측 검색은 *{search-text}*와 같은 키 패턴 검색과 유사함을 의미합니다. 대규모 검색 세트의 경우 서버 측 검색을 사용하는 것이 좋습니다. 더 작은 검색 세트의 경우 클라이언트측 검색 모드를 사용하는 것이 좋습니다." + ` 열쇠 개수가 초과된 경우 ${p3xr.settings.maxLightKeysCount}, 서버 측에서만 검색할 수 있습니다.`,
+        info: (opts) => "클라이언트 측 검색은 검색 입력의 텍스트와 일치함을 의미합니다. 서버 측 검색은 *{search-text}*와 같은 키 패턴 검색과 유사함을 의미합니다. 대규모 검색 세트의 경우 서버 측 검색을 사용하는 것이 좋습니다. 더 작은 검색 세트의 경우 클라이언트측 검색 모드를 사용하는 것이 좋습니다." + ` 열쇠 개수가 초과된 경우 ${opts?.maxLightKeysCount ?? 110000}, 서버 측에서만 검색할 수 있습니다.`,
         largeSetInfo: "대규모 세트에서는 클라이언트 측 검색이 비활성화됩니다. 그래서 지금은 서버 측 검색만 가능합니다.",
         infoDetails: "검색이 어떻게 작동하는지 알아보려면 설정을 확인하세요."
       },

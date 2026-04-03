@@ -404,8 +404,8 @@ const strings = {
       maxValueDisplayInfo: "0 olarak ayarlanırsa tam değerleri gösterir. 0'dan büyükse bu uzunluğa kısaltır. -1 ise: dizeler için düzenlemeye kadar değeri gizler; diğer türler için tam içeriği gösterir.",
       maxKeys: "Maksimum anahtar sayısı",
       maxKeysInfo: "GUI'nin çökmemesi için maksimum anahtar sayısını sınırlıyoruz.",
-      keyCount: () => {
-        return `Anahtar sayısı: ${p3xr.state.keysRaw.length}`;
+      keyCount: (opts) => {
+        return `Anahtar sayısı: ${opts?.keyCount ?? 0}`;
       },
       label: {
         animation: "Animasyon kullan",
@@ -549,6 +549,9 @@ const strings = {
       label: {
         key: "Anahtar",
         encoding: "Kodlama",
+        compression: "Sıkıştırma",
+        aiRateLimited: "AI istek sınırına ulaşıldı. Daha sonra tekrar deneyin veya Ayarlarda kendi Groq API anahtarınızı kullanın.",
+        aiError: "AI sorgusu başarısız oldu",
         length: "Boyut",
         ttl: "TTL",
         ttlTitle: "Yaşam Süresi",
@@ -635,7 +638,7 @@ const strings = {
         clear: "Mevcut aramayı temizle",
         placeholderClient: "İstemci tarafında ara",
         placeholderServer: "Sunucu tarafında ara",
-        info: "İstemci tarafı araması, arama girişindeki metni eşleştirmek anlamına gelir. Sunucu tarafı araması, anahtar kalıplarında *{arama-metni}* gibi arama yapmak anlamına gelir. Büyük arama kümeleri için sunucu tarafı araması kullanmak daha iyidir. Küçük arama kümeleri için istemci tarafı arama modu kullanmak daha iyidir." + ` Anahtar sayısı ${p3xr.settings.maxLightKeysCount} üzerindeyse yalnızca sunucu tarafında arama yapabilirsiniz.`,
+        info: (opts) => "İstemci tarafı araması, arama girişindeki metni eşleştirmek anlamına gelir. Sunucu tarafı araması, anahtar kalıplarında *{arama-metni}* gibi arama yapmak anlamına gelir. Büyük arama kümeleri için sunucu tarafı araması kullanmak daha iyidir. Küçük arama kümeleri için istemci tarafı arama modu kullanmak daha iyidir." + ` Anahtar sayısı ${opts?.maxLightKeysCount ?? 110000} üzerindeyse yalnızca sunucu tarafında arama yapabilirsiniz.`,
         largeSetInfo: "Büyük bir veri kümesinde istemci tarafı araması devre dışıdır, şu anda yalnızca sunucu tarafı araması yapılabilir.",
         infoDetails: "Aramanın nasıl çalıştığını öğrenmek için lütfen ayarları kontrol edin"
       },

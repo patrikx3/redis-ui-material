@@ -12,12 +12,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { DialogCancelButtonComponent } from '../components/dialog-cancel-button.component';
 import { I18nService } from '../services/i18n.service';
 import { SettingsService } from '../services/settings.service';
+import { RedisStateService } from '../services/redis-state.service';
 import { CommonService } from '../services/common.service';
 import { MainCommandService } from '../services/main-command.service';
 import { SocketService } from '../services/socket.service';
 import { TreeBuilderService } from '../services/tree-builder.service';
-
-declare const p3xr: any;
 
 /**
  * Tree control settings dialog — Angular replacement for p3xrDialogTreecontrolSettings.
@@ -47,7 +46,7 @@ declare const p3xr: any;
                 <div class="p3xr-padding">
                     @if (reducedFunctions) {
                         <div class="p3xr-tree-settings-reduced-functions">
-                            <div>{{ strings().form?.treeSettings?.keyCount?.() }}</div>
+                            <div>{{ strings().form?.treeSettings?.keyCount?.({ keyCount: keysRawLength }) }}</div>
                             <div class="p3xr-tree-settings-reduced-functions-note">
                                 {{ strings().label?.tooManyKeys?.({ count: keysRawLength, maxLightKeysCount: settings.maxLightKeysCount }) }}
                             </div>
@@ -134,7 +133,7 @@ declare const p3xr: any;
                                 }}
                             </mat-slide-toggle>
                             <div class="p3xr-md-input-container-bottom-info">
-                                {{ strings().page?.treeControls?.search?.info }}
+                                {{ strings().page?.treeControls?.search?.info?.({ maxLightKeysCount: settings.maxLightKeysCount }) }}
                                 @if (dbsize > settings.maxLightKeysCount) {
                                     <div class="p3xr-tree-settings-extra-info">
                                         {{ strings().page?.treeControls?.search?.largeSetInfo }}
@@ -229,6 +228,7 @@ export class TreecontrolSettingsDialogComponent implements OnInit, AfterViewInit
         @Inject(MatDialogRef) private dialogRef: MatDialogRef<TreecontrolSettingsDialogComponent>,
         @Inject(I18nService) private i18n: I18nService,
         @Inject(SettingsService) public settings: SettingsService,
+        @Inject(RedisStateService) private state: RedisStateService,
         @Inject(CommonService) private common: CommonService,
         @Inject(MainCommandService) private cmd: MainCommandService,
         @Inject(SocketService) private socket: SocketService,
@@ -252,11 +252,10 @@ export class TreecontrolSettingsDialogComponent implements OnInit, AfterViewInit
             animation: this.settings.animation(),
         };
 
-        // Read state from global p3xr
-        const state = p3xr?.state;
-        this.reducedFunctions = state?.reducedFunctions ?? false;
-        this.keysRawLength = state?.keysRaw?.length ?? 0;
-        this.dbsize = state?.dbsize ?? 0;
+        // Read state from signals (with fallback to global)
+        this.reducedFunctions = this.state.reducedFunctions() ?? false;
+        this.keysRawLength = this.state.keysRaw()?.length ?? 0;
+        this.dbsize = this.state.dbsize() ?? 0;
     }
 
     ngAfterViewInit(): void {
@@ -352,23 +351,8 @@ export class TreecontrolSettingsDialogComponent implements OnInit, AfterViewInit
         this.settings.jsonFormat.set(this.model.jsonFormat ? 2 : 4);
         this.settings.animation.set(this.model.animation);
 
-        // Update global p3xr settings and trigger tree refresh
-        if (p3xr?.settings) {
-            p3xr.settings.redisTreeDivider = this.model.treeSeparator;
-            p3xr.settings.pageCount = this.model.pageCount;
-            p3xr.settings.keyPageCount = this.model.keyPageCount;
-            p3xr.settings.keysSort = this.model.keysSort;
-            p3xr.settings.searchClientSide = this.model.searchClientSide;
-            p3xr.settings.searchStartsWith = this.model.searchStartsWith;
-            p3xr.settings.maxValueDisplay = this.model.maxValueDisplay;
-            p3xr.settings.maxKeys = this.model.maxKeys;
-            p3xr.settings.jsonFormat = this.model.jsonFormat ? 2 : 4;
-            p3xr.settings.animation = this.model.animation ? 1 : 0;
-        }
-        if (p3xr?.state) {
-            p3xr.state.page = 1;
-            p3xr.state.redisChanged = true;
-        }
+        this.state.page.set(1);
+        this.state.redisChanged.set(true);
 
         // Always refresh from server — settings like sort, page size, max keys affect the data
         this.cmd.refresh().then(() => {

@@ -406,8 +406,8 @@ const strings = {
       maxValueDisplayInfo: "Daca este setat la 0, afiseaza valorile complete. Daca este mai mare de 0, trunchiaza la aceasta lungime. Daca este -1: pentru siruri, ascunde valoarea pana la editare; pentru alte tipuri, afiseaza continutul complet.",
       maxKeys: "Numarul maxim de chei",
       maxKeysInfo: "Pentru ca GUI-ul sa nu se blocheze, limitam numarul maxim de chei.",
-      keyCount: () => {
-        return `Numarul de chei: ${p3xr.state.keysRaw.length}`;
+      keyCount: (opts) => {
+        return `Numarul de chei: ${opts?.keyCount ?? 0}`;
       },
       label: {
         animation: "Foloseste animatie",
@@ -551,6 +551,9 @@ const strings = {
       label: {
         key: "Cheie",
         encoding: "Codificare",
+        compression: "Compresie",
+        aiRateLimited: "Limita de solicitări AI a fost atinsă. Încercați din nou mai târziu sau utilizați propria cheie API Groq în Setări.",
+        aiError: "Interogarea AI a eșuat",
         length: "Dimensiune",
         ttl: "TTL",
         ttlTitle: "Durata de viata",
@@ -637,7 +640,7 @@ const strings = {
         clear: "Curata cautarea curenta",
         placeholderClient: "Cautare pe client",
         placeholderServer: "Cautare pe server",
-        info: "Cautarea pe client inseamna potrivirea textului din campul de cautare. Cautarea pe server inseamna cautare cu modele in chei ca *{text-cautat}*. Pentru seturi mari de cautare, este mai bine sa folositi cautarea pe server. Pentru seturi mai mici, este mai bine sa folositi cautarea pe client." + ` Daca numarul de chei depaseste ${p3xr.settings.maxLightKeysCount}, puteti cauta doar pe server.`,
+        info: (opts) => "Cautarea pe client inseamna potrivirea textului din campul de cautare. Cautarea pe server inseamna cautare cu modele in chei ca *{text-cautat}*. Pentru seturi mari de cautare, este mai bine sa folositi cautarea pe server. Pentru seturi mai mici, este mai bine sa folositi cautarea pe client." + ` Daca numarul de chei depaseste ${opts?.maxLightKeysCount ?? 110000}, puteti cauta doar pe server.`,
         largeSetInfo: "Intr-un set mare, cautarea pe client este dezactivata, asa ca in acest moment doar cautarea pe server este posibila.",
         infoDetails: "Pentru a afla cum functioneaza cautarea, verificati setarile"
       },

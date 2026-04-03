@@ -1,7 +1,10 @@
 import { Injectable, Inject, ApplicationRef } from '@angular/core';
 import { Subject } from 'rxjs';
+import { RedisStateService } from './redis-state.service';
+import { SettingsService } from './settings.service';
+import { OverlayService } from './overlay.service';
+import { I18nService } from './i18n.service';
 
-declare const p3xr: any;
 declare const io: any;
 
 /**
@@ -23,7 +26,13 @@ export class SocketService {
     readonly socketError$ = new Subject<any>();
     readonly stateChanged$ = new Subject<void>();
 
-    constructor(@Inject(ApplicationRef) private appRef: ApplicationRef) {
+    constructor(
+        @Inject(ApplicationRef) private appRef: ApplicationRef,
+        @Inject(RedisStateService) private state: RedisStateService,
+        @Inject(SettingsService) private settings: SettingsService,
+        @Inject(OverlayService) private overlay: OverlayService,
+        @Inject(I18nService) private i18n: I18nService,
+    ) {
         this.initConnection();
     }
 
@@ -48,7 +57,7 @@ export class SocketService {
             ioOptions.transports = ['websocket'];
         }
 
-        this.ioClient = io.connect(p3xr.api.host, ioOptions);
+        this.ioClient = io.connect(this.state.apiHost, ioOptions);
 
 
         this.ioClient.on('connect', async () => {
@@ -70,7 +79,7 @@ export class SocketService {
 
         this.ioClient.on('disconnect', () => {
             this.disconnected = true;
-            try { p3xr.ui.overlay.show(); } catch {}
+            try { this.overlay.show(); } catch {}
         });
 
         this.ioClient.on('error', (error: any) => {
@@ -83,25 +92,27 @@ export class SocketService {
 
         this.ioClient.on('connections', (data: any) => {
             if (data.status === 'error') {
-                p3xr.connectionsReset();
+                this.state.resetConnections();
                 this.tick();
                 return;
             }
-            p3xr.state.connections = data.connections;
+            this.state.connections.set(data.connections);
             this.connections$.next(data);
             this.tick();
         });
 
         this.ioClient.on('redis-disconnected', (data: any) => {
-            if (p3xr.state.connection !== undefined && p3xr.state.connection.id === data.connectionId) {
-                p3xr.state.monitor = false;
-                p3xr.state.connection = undefined;
+            if (this.state.connection() !== undefined && this.state.connection().id === data.connectionId) {
+                this.state.monitor.set(false);
+                this.state.connection.set(undefined);
 
                 if (data.status === 'error') {
-                    const msg = p3xr.strings?.status?.redisDisconnected?.(data) ?? 'Redis disconnected';
+                    const strings = this.i18n.strings();
+                    const msg = strings?.status?.redisDisconnected?.(data) ?? 'Redis disconnected';
                     this.showToast(msg);
                 } else if (data.status === 'code') {
-                    const codes = p3xr.strings?.code ?? {};
+                    const strings = this.i18n.strings();
+                    const codes = strings?.code ?? {};
                     const msg = codes[data.code] ?? `unknown redis disconnect code: ${data.code}`;
                     this.showToast(msg);
                 }
@@ -113,23 +124,23 @@ export class SocketService {
         });
 
         this.ioClient.on('redis-status', (data: any) => {
-            p3xr.state.redisConnections = data.redisConnections;
+            this.state.redisConnections.set(data.redisConnections);
             this.redisStatus$.next(data);
             this.tick();
         });
 
         let receivedVersion = false;
         this.ioClient.on('configuration', (data: any) => {
-            p3xr.state.cfg = data;
+            this.state.cfg.set(data);
             if (data.snapshot === true) {
-                p3xr.state.version = 'SNAPSHOT';
+                this.state.version.set('SNAPSHOT');
             } else {
-                p3xr.state.version = 'v' + data.version;
+                this.state.version.set('v' + data.version);
                 if (!receivedVersion) {
                     receivedVersion = true;
                     try {
-                        (window as any).gtag?.('config', p3xr.settings.googleAnalytics, {
-                            page_path: '/version/' + p3xr.state.version
+                        (window as any).gtag?.('config', this.settings.googleAnalytics, {
+                            page_path: '/version/' + this.state.version()
                         });
                     } catch { /* noop */ }
                 }
@@ -140,7 +151,7 @@ export class SocketService {
     }
 
     private handleSocketError(error: any): void {
-        try { p3xr.ui.overlay.show(); } catch {}
+        try { this.overlay.show(); } catch {}
         if (!this.connectErrorWas) {
             this.connectErrorWas = true;
             this.socketError$.next(error);
@@ -176,7 +187,7 @@ export class SocketService {
             options.payload = {};
         }
 
-        options.payload.maxKeys = parseInt(p3xr.settings?.maxKeys ?? '10000');
+        options.payload.maxKeys = parseInt(String(this.settings.maxKeys() ?? '10000'));
 
         const enableResponse = options.enableResponse !== false;
 
@@ -186,7 +197,7 @@ export class SocketService {
         }
 
         return new Promise((resolve, reject) => {
-            const requestId = p3xr.nextId();
+            const requestId = this.settings.generateId();
             (options as any).requestId = requestId;
             const responseEvent = `p3xr-response-${requestId}`;
 
@@ -216,11 +227,12 @@ export class SocketService {
 
             timeout = setTimeout(() => {
                 this.ioClient.off(responseEvent, response);
-                const msg = p3xr.strings?.label?.socketIoTimeout?.({ timeout: p3xr.settings.socket.timeout })
-                    ?? `Socket.IO request timeout (${p3xr.settings.socket.timeout}ms)`;
+                const strings = this.i18n.strings();
+                const msg = strings?.label?.socketIoTimeout?.({ timeout: this.settings.socketTimeout })
+                    ?? `Socket.IO request timeout (${this.settings.socketTimeout}ms)`;
                 reject(new Error(msg));
                 this.tick();
-            }, p3xr.settings.socket.timeout);
+            }, this.settings.socketTimeout);
 
             this.ioClient.on(responseEvent, response);
             this.ioClient.emit('p3xr-request', options);

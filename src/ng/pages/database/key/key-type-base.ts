@@ -6,8 +6,8 @@ import { CommonService } from '../../../services/common.service';
 import { MainCommandService } from '../../../services/main-command.service';
 import { JsonViewDialogService } from '../../../dialogs/json-view-dialog.service';
 import { KeyNewOrSetDialogService } from '../../../dialogs/key-new-or-set-dialog.service';
-
-declare const p3xr: any;
+import { RedisStateService } from '../../../services/redis-state.service';
+import { SettingsService } from '../../../services/settings.service';
 
 /**
  * Shared base for all key type renderers.
@@ -38,6 +38,8 @@ export abstract class KeyTypeBase {
         protected readonly breakpointObserver: BreakpointObserver,
         protected readonly cmd: MainCommandService,
         protected readonly cdr: ChangeDetectorRef,
+        protected readonly redisState: RedisStateService,
+        protected readonly settingsService: SettingsService,
     ) {
         const sub = this.breakpointObserver.observe('(min-width: 960px)').subscribe(r => {
             this.isGtSm = r.matches;
@@ -51,12 +53,12 @@ export abstract class KeyTypeBase {
     }
 
     get strings() { return this.i18n.strings(); }
-    get isReadonly(): boolean { return p3xr?.state?.connection?.readonly === true; }
-    get maxValueDisplay(): number { return p3xr?.settings?.maxValueDisplay ?? 1024; }
-    get maxValueAsBuffer(): number { return p3xr?.settings?.maxValueAsBuffer ?? 1024; }
+    get isReadonly(): boolean { return this.redisState.connection()?.readonly === true; }
+    get maxValueDisplay(): number { return this.settingsService.maxValueDisplay() ?? 1024; }
+    get maxValueAsBuffer(): number { return this.settingsService.maxValueAsBuffer; }
 
     async copy(value: any): Promise<void> {
-        await p3xr.clipboard({ value });
+        await this.settingsService.clipboard(value);
         this.common.toast(this.strings?.status?.dataCopied || 'Copied');
     }
 
@@ -83,7 +85,7 @@ export abstract class KeyTypeBase {
     protected gtag(page: string): void {
         try {
             if (typeof (window as any).gtag === 'function') {
-                (window as any).gtag('config', p3xr?.settings?.googleAnalytics, { page_path: page });
+                (window as any).gtag('config', this.settingsService.googleAnalytics, { page_path: page });
             }
         } catch { /* noop */ }
     }
@@ -144,6 +146,6 @@ export abstract class KeyTypeBase {
     }
 
     protected prettyBytes(length: number): string {
-        return p3xr?.settings?.prettyBytes?.(length) ?? `${length} bytes`;
+        return this.settingsService.prettyBytes(length) ?? `${length} bytes`;
     }
 }

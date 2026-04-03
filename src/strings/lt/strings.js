@@ -406,8 +406,8 @@ const strings = {
       maxValueDisplayInfo: "Jei nustatyta į 0, rodyti visas vertes. Jei didesnis nei 0, sutrumpinkite iki šio ilgio. Jei -1: eilutėms, slėpkite reikšmę iki redagavimo; kitiems tipams rodyti visą turinį.",
       maxKeys: "Maksimalus raktų skaičius",
       maxKeysInfo: "Kad GUI nesudužtų, apribojame maksimalų raktų skaičių.",
-      keyCount: () => {
-        return `Raktų skaičius: ${p3xr.state.keysRaw.length}`;
+      keyCount: (opts) => {
+        return `Raktų skaičius: ${opts?.keyCount ?? 0}`;
       },
       label: {
         animation: "Naudokite animaciją",
@@ -551,6 +551,9 @@ const strings = {
       label: {
         key: "Raktas",
         encoding: "Kodavimas",
+        compression: "Glaudinimas",
+        aiRateLimited: "Pasiektas AI užklausų limitas. Bandykite vėliau arba naudokite savo Groq API raktą Nustatymuose.",
+        aiError: "AI užklausa nepavyko",
         length: "Dydis",
         ttl: "TTL",
         ttlTitle: "Laikas gyventi",
@@ -637,7 +640,7 @@ const strings = {
         clear: "Išvalykite dabartinę paiešką, kad nustatytumėte tuščią",
         placeholderClient: "Ieškokite kliento pusėje",
         placeholderServer: "Ieškoti serverio pusėje",
-        info: "Kliento pusės paieška reiškia, kad ji atitinka tekstą paieškos įvestyje. Serverio pusės paieška reiškia, kad tai yra kaip paieška raktų šablonuose kaip *{search-text}*. Dideliems paieškos rinkiniams geriau naudoti paiešką serverio pusėje. Mažesniems paieškos rinkiniams geriau naudoti kliento pusės paieškos režimą." + ` Jei klavišų skaičiavimas baigėsi ${p3xr.settings.maxLightKeysCount}, galite ieškoti tik serverio pusėje.`,
+        info: (opts) => "Kliento pusės paieška reiškia, kad ji atitinka tekstą paieškos įvestyje. Serverio pusės paieška reiškia, kad tai yra kaip paieška raktų šablonuose kaip *{search-text}*. Dideliems paieškos rinkiniams geriau naudoti paiešką serverio pusėje. Mažesniems paieškos rinkiniams geriau naudoti kliento pusės paieškos režimą." + ` Jei klavišų skaičiavimas baigėsi ${opts?.maxLightKeysCount ?? 110000}, galite ieškoti tik serverio pusėje.`,
         largeSetInfo: "Dideliame rinkinyje kliento pusės paieška išjungta. taigi šiuo metu galima tik paieška serverio pusėje.",
         infoDetails: "Norėdami sužinoti, kaip veikia paieška, peržiūrėkite nustatymus"
       },

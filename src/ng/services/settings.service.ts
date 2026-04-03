@@ -1,6 +1,7 @@
 import { Injectable, signal, computed, effect } from '@angular/core';
 
-declare const p3xr: any;
+const prettyBytesModule = require('pretty-bytes');
+const prettyBytesFn = prettyBytesModule.default || prettyBytesModule;
 
 /**
  * LocalStorage-backed settings service using Angular signals.
@@ -25,10 +26,69 @@ export class SettingsService {
     readonly keyPageCount = signal<number>(this.getStorageInt('p3xr-main-key-page-size', 5));
     readonly language = signal<string>(this.getStorage('p3xr-language', 'en'));
 
-    // --- Computed values ---
+    // --- Static config ---
 
     readonly maxKeysMax = 100000;
     readonly maxLightKeysCount = 110000;
+    readonly resizeMinWidth = 315;
+    readonly debounce = 100;
+    readonly debounceSearch = 2000;
+    readonly googleAnalytics = 'G-8M2CK7993T';
+    readonly maxValueAsBuffer = 1000 * 256;
+    readonly socketTimeout = 300000;
+    readonly connectInfoStorageKey = 'p3xr-connect-info';
+    readonly currentDatabaseStorageKeyPrefix = 'p3xr-main-current-database';
+
+    // --- Utility methods ---
+
+    prettyBytes(value: number): string {
+        return prettyBytesFn(value, { locale: this.language() });
+    }
+
+    getStorageKeyCurrentDatabase(connectionId: string): string {
+        return this.currentDatabaseStorageKeyPrefix + '-' + connectionId;
+    }
+
+    generateId(): string {
+        return Date.now().toString(36) + '-' + Math.random().toString(36).substring(2, 10);
+    }
+
+    async clipboard(value: string): Promise<boolean> {
+        try {
+            await navigator.clipboard.writeText(value);
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
+    // Custom humanize-duration languages for unsupported locales
+    private readonly humanizeDurationCustomLanguages: Record<string, any> = {
+        az: { y: () => 'il', mo: () => 'ay', w: () => 'həftə', d: () => 'gün', h: () => 'saat', m: () => 'dəqiqə', s: () => 'saniyə', ms: () => 'millisaniyə' },
+        be: { y: (c: number) => c === 1 ? 'год' : 'гадоў', mo: (c: number) => c === 1 ? 'месяц' : 'месяцаў', w: (c: number) => c === 1 ? 'тыдзень' : 'тыдняў', d: (c: number) => c === 1 ? 'дзень' : 'дзён', h: (c: number) => c === 1 ? 'гадзіна' : 'гадзін', m: (c: number) => c === 1 ? 'хвіліна' : 'хвілін', s: (c: number) => c === 1 ? 'секунда' : 'секунд', ms: (c: number) => c === 1 ? 'мілісекунда' : 'мілісекунд' },
+        bs: { y: () => 'godina', mo: () => 'mjeseci', w: () => 'sedmica', d: () => 'dana', h: () => 'sati', m: () => 'minuta', s: () => 'sekundi', ms: () => 'milisekundi' },
+        fil: { y: () => 'taon', mo: () => 'buwan', w: () => 'linggo', d: () => 'araw', h: () => 'oras', m: () => 'minuto', s: () => 'segundo', ms: () => 'millisegundo' },
+        hy: { y: () => 'տարի', mo: () => ' delays', w: () => 'շաբdelays', d: () => 'օdelays', h: () => 'ժdelays', m: () => 'delays', s: () => 'delays', ms: () => 'delays' },
+        ka: { y: () => 'წელი', mo: () => 'თვე', w: () => 'კვირა', d: () => 'დღე', h: () => 'საათი', m: () => 'წუთი', s: () => 'წამი', ms: () => 'მილიწამი' },
+        kk: { y: () => 'жыл', mo: () => 'ай', w: () => 'апта', d: () => 'күн', h: () => 'сағат', m: () => 'минут', s: () => 'секунд', ms: () => 'миллисекунд' },
+        ky: { y: () => 'жыл', mo: () => 'ай', w: () => 'апта', d: () => 'күн', h: () => 'саат', m: () => 'мүнөт', s: () => 'секунд', ms: () => 'миллисекунд' },
+        ne: { y: () => 'वर्ष', mo: () => 'महिना', w: () => 'हप्ता', d: () => 'दिन', h: () => 'घण्टा', m: () => 'मिनेट', s: () => 'सेकेन्ड', ms: () => 'मिलिसेकेन्ड' },
+        si: { y: () => 'වසර', mo: () => 'මාස', w: () => 'සති', d: () => 'දින', h: () => 'පැය', m: () => 'මිනිත්තු', s: () => 'තත්පර', ms: () => 'මිලි තත්පර' },
+        tg: { y: () => 'сол', mo: () => 'моҳ', w: () => 'ҳафта', d: () => 'рӯз', h: () => 'соат', m: () => 'дақиқа', s: () => 'сония', ms: () => 'миллисония' },
+        nb: { y: (c: number) => c === 1 ? 'år' : 'år', mo: (c: number) => c === 1 ? 'måned' : 'måneder', w: (c: number) => c === 1 ? 'uke' : 'uker', d: (c: number) => c === 1 ? 'dag' : 'dager', h: (c: number) => c === 1 ? 'time' : 'timer', m: (c: number) => c === 1 ? 'minutt' : 'minutter', s: (c: number) => c === 1 ? 'sekund' : 'sekunder', ms: () => 'millisekund' },
+    };
+
+    private readonly humanizeDurationLanguageMap: Record<string, string> = {
+        'pt-BR': 'pt', 'zn': 'zh_CN', 'zh-HK': 'zh_TW', 'zh-TW': 'zh_TW', 'pt-PT': 'pt',
+    };
+
+    getHumanizeDurationOptions(): { language: string; languages: Record<string, any> } {
+        const lang = this.language();
+        return {
+            language: this.humanizeDurationLanguageMap[lang] || lang || 'en',
+            languages: this.humanizeDurationCustomLanguages,
+        };
+    }
 
     constructor() {
         // Persist signal changes back to localStorage

@@ -1,27 +1,30 @@
+import { SettingsService } from '../../../services/settings.service';
+
 /**
  * Shared pagination logic for key type renderers.
  * Replaces AngularJS p3xrKeyPaging factory.
  */
-declare const p3xr: any;
 
 export class KeyPaging {
     page = 1;
     pages = 1;
     private zsetMode: boolean;
+    private settingsService?: SettingsService;
 
-    constructor(options?: { zsetMode?: boolean }) {
+    constructor(options?: { zsetMode?: boolean; settingsService?: SettingsService }) {
         this.zsetMode = options?.zsetMode ?? false;
+        this.settingsService = options?.settingsService;
     }
 
     figurePaging(valueLength: number): void {
-        const pageCount = p3xr?.settings?.keyPageCount ?? 50;
+        const pageCount = this.settingsService?.keyPageCount() ?? 50;
         const itemCount = this.zsetMode ? Math.ceil(valueLength / 2) : valueLength;
         this.pages = Math.max(Math.ceil(itemCount / pageCount), 1);
         this.page = 1;
     }
 
     get pageCount(): number {
-        return p3xr?.settings?.keyPageCount ?? 50;
+        return this.settingsService?.keyPageCount() ?? 50;
     }
 
     get startIndex(): number {

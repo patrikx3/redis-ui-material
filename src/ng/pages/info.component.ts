@@ -8,8 +8,7 @@ import { I18nService } from '../services/i18n.service';
 import { ShortcutsService } from '../services/shortcuts.service';
 import { SocketService } from '../services/socket.service';
 import { P3xrAccordionComponent } from '../components/p3xr-accordion.component';
-
-declare const p3xr: any;
+import { RedisStateService } from '../services/redis-state.service';
 
 @Component({
     selector: 'p3xr-info',
@@ -131,10 +130,10 @@ export class InfoComponent implements OnInit, OnDestroy {
     isElectron: boolean;
     shortcutsList: Array<{ key: string; description: string }> = [];
 
-    get version(): string { return p3xr?.state?.version || p3xr?.pkg?.version || ''; }
-    get isConnected(): boolean { return !!p3xr?.state?.connection; }
-    get redisVersion(): string { return p3xr?.state?.info?.server?.redis_version || '-'; }
-    get modules(): string[] { return (p3xr?.state?.modules || []).map((m: any) => m.name); }
+    get version(): string { return this.state.version() || ''; }
+    get isConnected(): boolean { return !!this.state.connection(); }
+    get redisVersion(): string { return this.state.info()?.server?.redis_version || '-'; }
+    get modules(): string[] { return (this.state.modules() || []).map((m: any) => m.name); }
 
     get languageList(): Array<{ code: string; name: string }> {
         const langObj = this.strings()?.language || {};
@@ -149,6 +148,7 @@ export class InfoComponent implements OnInit, OnDestroy {
         @Inject(I18nService) private i18n: I18nService,
         @Inject(ShortcutsService) private shortcutsService: ShortcutsService,
         @Inject(SocketService) private socket: SocketService,
+        @Inject(RedisStateService) private state: RedisStateService,
     ) {
         this.strings = this.i18n.strings;
         this.isElectron = this.shortcutsService.isEnabled();

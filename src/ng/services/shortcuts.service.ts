@@ -5,8 +5,7 @@ import { MainCommandService } from './main-command.service';
 import { SocketService } from './socket.service';
 import { CommonService } from './common.service';
 import { CommandPaletteDialogService } from '../dialogs/command-palette-dialog.service';
-
-declare const p3xr: any;
+import { RedisStateService } from './redis-state.service';
 
 export interface ShortcutDef {
     key: string;
@@ -31,6 +30,7 @@ export class ShortcutsService {
         @Inject(SocketService) private socket: SocketService,
         @Inject(CommonService) private common: CommonService,
         @Inject(CommandPaletteDialogService) private commandPalette: CommandPaletteDialogService,
+        @Inject(RedisStateService) private state: RedisStateService,
     ) {
         this.isElectron = /electron/i.test(navigator.userAgent);
         if (this.isElectron) {
@@ -39,7 +39,7 @@ export class ShortcutsService {
     }
 
     private get isConnected(): boolean {
-        return !!p3xr?.state?.connection;
+        return !!this.state.connection();
     }
 
     private requireConnection(action: () => void): void {

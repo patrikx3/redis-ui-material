@@ -1,6 +1,5 @@
-import { Injectable, signal, computed, effect } from '@angular/core';
-
-declare const p3xr: any;
+import { Injectable, Inject, signal, computed, effect } from '@angular/core';
+import { RedisStateService } from './redis-state.service';
 
 /**
  * Theme management service using Angular signals.
@@ -81,7 +80,7 @@ export class ThemeService {
     /** Whether the current mode is auto (follows system) */
     readonly isAuto: ReturnType<typeof signal<boolean>>;
 
-    constructor() {
+    constructor(@Inject(RedisStateService) private state: RedisStateService) {
         const initial = this.getInitialTheme();
         const isAutoMode = initial === ThemeService.AUTO_THEME;
         this.isAuto = signal<boolean>(isAutoMode);
@@ -181,9 +180,7 @@ export class ThemeService {
             } catch (e) { /* not in iframe or cross-origin */ }
         }
 
-        if (p3xr?.state) {
-            p3xr.state.theme = themeName;
-        }
+        this.state.theme.set(themeName);
     }
 
     private readStorageItem(name: string): string | null {

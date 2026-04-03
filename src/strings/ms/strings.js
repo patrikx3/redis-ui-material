@@ -406,8 +406,8 @@ const strings = {
       maxValueDisplayInfo: "Jika ditetapkan kepada 0, tunjukkan nilai penuh. Jika lebih daripada 0, potong ke panjang ini. Jika -1: untuk rentetan, sembunyikan nilai sehingga mengedit; untuk jenis lain, tunjukkan kandungan penuh.",
       maxKeys: "Kiraan kunci maks",
       maxKeysInfo: "Supaya GUI tidak ranap, kami mengehadkan kiraan kunci maks.",
-      keyCount: () => {
-        return `Bilangan kunci: ${p3xr.state.keysRaw.length}`;
+      keyCount: (opts) => {
+        return `Bilangan kunci: ${opts?.keyCount ?? 0}`;
       },
       label: {
         animation: "Gunakan animasi",
@@ -551,6 +551,9 @@ const strings = {
       label: {
         key: "kunci",
         encoding: "Pengekodan",
+        compression: "Pemampatan",
+        aiRateLimited: "Had permintaan AI dicapai. Cuba lagi kemudian atau gunakan kunci API Groq anda sendiri dalam Tetapan.",
+        aiError: "Pertanyaan AI gagal",
         length: "Saiz",
         ttl: "TTL",
         ttlTitle: "Masa Untuk Hidup",
@@ -637,7 +640,7 @@ const strings = {
         clear: "Kosongkan carian semasa untuk ditetapkan kosong",
         placeholderClient: "Cari bahagian pelanggan",
         placeholderServer: "Cari bahagian pelayan",
-        info: "Carian sebelah klien bermaksud, ia sepadan dengan teks dalam input carian. Carian sisi pelayan bermaksud, ia seperti carian dalam corak kunci sebagai *{teks carian}*. Untuk set carian yang besar, lebih baik menggunakan carian sisi pelayan. Untuk set carian yang lebih kecil, lebih baik menggunakan mod carian sisi klien." + ` Jika kiraan kunci sudah tamat ${p3xr.settings.maxLightKeysCount}, anda hanya boleh mencari di sebelah pelayan.`,
+        info: (opts) => "Carian sebelah klien bermaksud, ia sepadan dengan teks dalam input carian. Carian sisi pelayan bermaksud, ia seperti carian dalam corak kunci sebagai *{teks carian}*. Untuk set carian yang besar, lebih baik menggunakan carian sisi pelayan. Untuk set carian yang lebih kecil, lebih baik menggunakan mod carian sisi klien." + ` Jika kiraan kunci sudah tamat ${opts?.maxLightKeysCount ?? 110000}, anda hanya boleh mencari di sebelah pelayan.`,
         largeSetInfo: "Dalam set besar, carian sebelah pelanggan dilumpuhkan. jadi buat masa ini hanya carian sebelah pelayan boleh dilakukan.",
         infoDetails: "Untuk mengetahui cara carian berfungsi, sila semak tetapan"
       },

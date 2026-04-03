@@ -404,8 +404,8 @@ const strings = {
       maxValueDisplayInfo: "Om satt till 0, visa fullständiga värden. Om större än 0, korta av till denna längd. Om -1: för strängar, dölj värdet tills redigering; för andra typer, visa fullständigt innehåll.",
       maxKeys: "Max antal nycklar",
       maxKeysInfo: "För att GUI:t inte ska krascha begränsar vi max antal nycklar.",
-      keyCount: () => {
-        return `Antal nycklar: ${p3xr.state.keysRaw.length}`;
+      keyCount: (opts) => {
+        return `Antal nycklar: ${opts?.keyCount ?? 0}`;
       },
       label: {
         animation: "Använd animation",
@@ -549,6 +549,9 @@ const strings = {
       label: {
         key: "Nyckel",
         encoding: "Kodning",
+        compression: "Komprimering",
+        aiRateLimited: "AI-förfrågningsgränsen har nåtts. Försök igen senare eller använd din egen Groq API-nyckel i Inställningar.",
+        aiError: "AI-förfrågan misslyckades",
         length: "Storlek",
         ttl: "TTL",
         ttlTitle: "Livstid",
@@ -635,7 +638,7 @@ const strings = {
         clear: "Rensa aktuell sökning",
         placeholderClient: "Sök på klientsidan",
         placeholderServer: "Sök på serversidan",
-        info: "Klientsidessökning innebär att den matchar texten i sökfältet. Serversidessökning innebär att den söker i nyckelmönster som *{sök-text}*. För stora sökuppsättningar är det bättre att använda serversidessökning. För mindre sökuppsättningar är det bättre att använda klientsidessökning." + ` Om nyckelantalet överstiger ${p3xr.settings.maxLightKeysCount} kan du bara söka på serversidan.`,
+        info: (opts) => "Klientsidessökning innebär att den matchar texten i sökfältet. Serversidessökning innebär att den söker i nyckelmönster som *{sök-text}*. För stora sökuppsättningar är det bättre att använda serversidessökning. För mindre sökuppsättningar är det bättre att använda klientsidessökning." + ` Om nyckelantalet överstiger ${opts?.maxLightKeysCount ?? 110000} kan du bara söka på serversidan.`,
         largeSetInfo: "I en stor uppsättning är klientsidessökning inaktiverad, så just nu är bara serversidessökning möjlig.",
         infoDetails: "För att ta reda på hur sökningen fungerar, kontrollera inställningarna"
       },

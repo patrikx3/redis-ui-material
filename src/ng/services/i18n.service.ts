@@ -1,18 +1,16 @@
 import { Injectable, signal, computed, effect } from '@angular/core';
 
-declare const p3xr: any;
-
 const merge = require('lodash/merge');
+const { getTranslations, loadTranslation: loadTranslationChunk } = require('../../core/translation-loader');
 
 /**
- * i18n service wrapping the existing custom translation system.
+ * i18n service — Angular-native translation management.
  *
- * The existing system uses function-valued translations (e.g. arrow functions
- * that accept params), which no standard i18n library supports. This service
- * wraps the existing p3xr.settings.language.translation object with Angular
- * signals for reactive language switching.
+ * Uses function-valued translations (e.g. arrow functions that accept params),
+ * which no standard i18n library supports. Translation storage and lazy loading
+ * are provided by the standalone translation-loader module.
  *
- * Language changes are persisted to localStorage using the same key as the translation system.
+ * Language changes are persisted to localStorage.
  */
 @Injectable({ providedIn: 'root' })
 export class I18nService {
@@ -77,13 +75,6 @@ export class I18nService {
                 }
             } catch { /* not in iframe */ }
 
-            // Update dayjs locale
-            try {
-                const dayjs = require('dayjs');
-                const localeMap = p3xr?.settings?.language?.momentDateMap || { en: 'en', zn: 'zh-cn', ru: 'ru' };
-                dayjs.locale(localeMap[lang] || 'en');
-            } catch (e) { /* noop */ }
-
             // Log missing keys in development
             const missing = this.missingKeys();
             if (missing.length > 0) {
@@ -98,16 +89,10 @@ export class I18nService {
      */
     setLanguage(lang: string): void {
         const nextLanguage = lang || 'en';
-        const loader: ((l: string) => Promise<any>) | undefined =
-            (p3xr as any)?.settings?.language?.loadTranslation;
-        const doSwitch = () => {
-            this.currentLang.set(nextLanguage);
-        };
-        if (loader) {
-            loader(nextLanguage).then(doSwitch, doSwitch);
-        } else {
-            doSwitch();
-        }
+        loadTranslationChunk(nextLanguage).then(
+            () => this.currentLang.set(nextLanguage),
+            () => this.currentLang.set(nextLanguage),
+        );
     }
 
     /**
@@ -120,7 +105,7 @@ export class I18nService {
     // --- Private helpers ---
 
     private getTranslations(): Record<string, any> {
-        return p3xr?.settings?.language?.translation || {};
+        return getTranslations();
     }
 
     private detectInitialLanguage(): string {

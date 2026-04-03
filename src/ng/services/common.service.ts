@@ -10,8 +10,6 @@ import { RedisStateService } from './redis-state.service';
 import { SettingsService } from './settings.service';
 import { TreeBuilderService } from './tree-builder.service';
 
-declare const p3xr: any;
-
 /**
  * Common service — Angular replacement for AngularJS p3xrCommon factory.
  *
@@ -203,7 +201,7 @@ export class CommonService {
 
             // Handle connection closed
             if (error?.message === 'Connection is closed.') {
-                p3xr.state.connection = undefined;
+                this.state.connection.set(undefined);
             }
 
             this.alert({
@@ -234,17 +232,11 @@ export class CommonService {
             ? await this.treeBuilder.sortKeys(response.keys)
             : response.keys;
 
-        // Update global p3xr.state
-        if (p3xr?.state) {
-            p3xr.state.info = info;
-            p3xr.state.keysRaw = keys;
-            p3xr.state.keysInfo = response.keysInfo;
-        }
-
-        // Update Angular signals
+        // Update signals
         this.state.info.set(info);
         this.state.keysRaw.set(keys);
         this.state.keysInfo.set(response.keysInfo);
+        this.state.keysInfoFetchedAt.set(response.keysInfoFetchedAt || Date.now());
 
         console.timeEnd('loadRedisInfoResponse');
     }

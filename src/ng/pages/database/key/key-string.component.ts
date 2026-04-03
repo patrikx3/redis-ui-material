@@ -17,9 +17,10 @@ import { CommonService } from '../../../services/common.service';
 import { JsonViewDialogService } from '../../../dialogs/json-view-dialog.service';
 import { JsonEditorDialogService } from '../../../dialogs/json-editor-dialog.service';
 import { KeyNewOrSetDialogService } from '../../../dialogs/key-new-or-set-dialog.service';
+import { RedisStateService } from '../../../services/redis-state.service';
+import { SettingsService } from '../../../services/settings.service';
 import { KeyTypeBase } from './key-type-base';
-
-declare const p3xr: any;
+import { OverlayService } from '../../../services/overlay.service';
 
 @Component({
     selector: 'p3xr-key-string',
@@ -45,8 +46,11 @@ export class KeyStringComponent extends KeyTypeBase implements OnInit {
         @Inject(MainCommandService) cmd: MainCommandService,
         @Inject(JsonEditorDialogService) private jsonEditorDialog: JsonEditorDialogService,
         @Inject(ChangeDetectorRef) cdr: ChangeDetectorRef,
+        @Inject(RedisStateService) redisState: RedisStateService,
+        @Inject(SettingsService) settingsService: SettingsService,
+        @Inject(OverlayService) private overlay: OverlayService,
     ) {
-        super(i18n, socket, common, jsonViewDialog, keyNewOrSetDialog, breakpointObserver, cmd, cdr);
+        super(i18n, socket, common, jsonViewDialog, keyNewOrSetDialog, breakpointObserver, cmd, cdr, redisState, settingsService);
     }
 
     ngOnInit(): void {}
@@ -55,10 +59,10 @@ export class KeyStringComponent extends KeyTypeBase implements OnInit {
         const value = this.p3xrValue;
         if (typeof value === 'string' && value.length >= this.maxValueAsBuffer) {
             this.buffer = true;
-            this.originalValue = p3xr?.clone?.(this.p3xrValueBuffer) ?? this.p3xrValueBuffer;
+            this.originalValue = structuredClone(this.p3xrValueBuffer);
         } else {
             this.buffer = false;
-            this.originalValue = p3xr?.clone?.(this.p3xrValue) ?? this.p3xrValue;
+            this.originalValue = structuredClone(this.p3xrValue);
         }
         this.editable = true;
     }
@@ -79,7 +83,7 @@ export class KeyStringComponent extends KeyTypeBase implements OnInit {
             if (this.validateJson) {
                 JSON.parse(valueToSave);
             }
-            p3xr.ui.overlay.show({ message: this.strings?.intention?.save ?? 'Saving...' });
+            this.overlay.show({ message: this.strings?.intention?.save ?? 'Saving...' });
             await this.socket.request({
                 action: 'key-set',
                 payload: {
@@ -95,7 +99,7 @@ export class KeyStringComponent extends KeyTypeBase implements OnInit {
         } catch (e) {
             this.common.generalHandleError(e);
         } finally {
-            p3xr.ui.overlay.hide();
+            this.overlay.hide();
         }
     }
 
@@ -123,7 +127,7 @@ export class KeyStringComponent extends KeyTypeBase implements OnInit {
                         return;
                     }
                     await this.common.confirm({ message: this.i18n.strings().confirm?.uploadBuffer });
-                    p3xr.ui.overlay.show();
+                    this.overlay.show();
                     await this.socket.request({
                         action: 'key-set',
                         payload: {
@@ -138,7 +142,7 @@ export class KeyStringComponent extends KeyTypeBase implements OnInit {
                 } catch (e) {
                     this.common.generalHandleError(e);
                 } finally {
-                    p3xr.ui.overlay.hide();
+                    this.overlay.hide();
                 }
             };
             reader.readAsArrayBuffer(file);
@@ -160,7 +164,7 @@ export class KeyStringComponent extends KeyTypeBase implements OnInit {
 
     async formatJson(): Promise<void> {
         try {
-            this.p3xrValue = JSON.stringify(JSON.parse(this.p3xrValue), null, p3xr?.settings?.jsonFormat ?? 2);
+            this.p3xrValue = JSON.stringify(JSON.parse(this.p3xrValue), null, this.settingsService.jsonFormat() ?? 2);
             await this.save();
         } catch {
             this.common.toast(this.strings?.label?.jsonViewNotParsable ?? 'Not valid JSON');

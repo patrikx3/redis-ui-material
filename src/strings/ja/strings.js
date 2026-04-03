@@ -404,8 +404,8 @@ const strings = {
       maxValueDisplayInfo: "0の場合、完全な値を表示します。0より大きい場合、この長さに切り詰めます。-1の場合：文字列は編集するまで値を非表示にし、その他の型は完全なコンテンツを表示します。",
       maxKeys: "最大キー数",
       maxKeysInfo: "GUIがクラッシュしないように、最大キー数を制限しています。",
-      keyCount: () => {
-        return `キー数: ${p3xr.state.keysRaw.length}`;
+      keyCount: (opts) => {
+        return `キー数: ${opts?.keyCount ?? 0}`;
       },
       label: {
         animation: "アニメーションを使用",
@@ -549,6 +549,9 @@ const strings = {
       label: {
         key: "キー",
         encoding: "エンコーディング",
+        compression: "圧縮",
+        aiRateLimited: "AIリクエストの制限に達しました。後でもう一度お試しいただくか、設定で独自のGroq APIキーを使用してください。",
+        aiError: "AIクエリが失敗しました",
         length: "サイズ",
         ttl: "TTL",
         ttlTitle: "有効期限",
@@ -635,7 +638,7 @@ const strings = {
         clear: "現在の検索をクリア",
         placeholderClient: "クライアント側で検索",
         placeholderServer: "サーバー側で検索",
-        info: "クライアント側検索は、検索入力のテキストに一致します。サーバー側検索は、*{検索テキスト}*のようなキーパターンで検索します。大きな検索セットではサーバー側検索が適しています。小さな検索セットではクライアント側検索が適しています。" + ` キー数が${p3xr.settings.maxLightKeysCount}を超える場合、サーバー側でのみ検索できます。`,
+        info: (opts) => "クライアント側検索は、検索入力のテキストに一致します。サーバー側検索は、*{検索テキスト}*のようなキーパターンで検索します。大きな検索セットではサーバー側検索が適しています。小さな検索セットではクライアント側検索が適しています。" + ` キー数が${opts?.maxLightKeysCount ?? 110000}を超える場合、サーバー側でのみ検索できます。`,
         largeSetInfo: "大きなデータセットでは、クライアント側検索は無効になっており、現在サーバー側検索のみ可能です。",
         infoDetails: "検索の仕組みについては、設定を確認してください"
       },

@@ -406,8 +406,8 @@ const strings = {
       maxValueDisplayInfo: "Se definido como 0, mostra valores completos. Se for maior que 0, trunque para esse comprimento. Se -1: para strings, oculta o valor até editar; para outros tipos, mostre o conteúdo completo.",
       maxKeys: "A contagem máxima de chaves",
       maxKeysInfo: "Para que GUI não trave, limitamos a contagem máxima de chaves.",
-      keyCount: () => {
-        return `Número de chaves: ${p3xr.state.keysRaw.length}`;
+      keyCount: (opts) => {
+        return `Número de chaves: ${opts?.keyCount ?? 0}`;
       },
       label: {
         animation: "Usar animação",
@@ -551,6 +551,9 @@ const strings = {
       label: {
         key: "Chave",
         encoding: "Codificação",
+        compression: "Compressão",
+        aiRateLimited: "Limite de solicitações de IA atingido. Tente novamente mais tarde ou use sua própria chave de API do Groq nas Configurações.",
+        aiError: "A consulta de IA falhou",
         length: "Tamanho",
         ttl: "TTL",
         ttlTitle: "Hora de viver",
@@ -637,7 +640,7 @@ const strings = {
         clear: "Limpe a pesquisa atual para definir como vazia",
         placeholderClient: "Pesquisar no lado do cliente",
         placeholderServer: "Lado do servidor de pesquisa",
-        info: "A pesquisa do lado do cliente significa que ela corresponde ao texto na entrada de pesquisa. A pesquisa no lado do servidor significa que é como pesquisar nos padrões de chaves como *{search-text}*. Para conjuntos de pesquisa grandes, é melhor usar a pesquisa no lado do servidor. Para conjuntos de pesquisa menores, é melhor usar o modo de pesquisa do lado do cliente." + ` Se a contagem de chaves acabar ${p3xr.settings.maxLightKeysCount}, você só poderá pesquisar no lado do servidor.`,
+        info: (opts) => "A pesquisa do lado do cliente significa que ela corresponde ao texto na entrada de pesquisa. A pesquisa no lado do servidor significa que é como pesquisar nos padrões de chaves como *{search-text}*. Para conjuntos de pesquisa grandes, é melhor usar a pesquisa no lado do servidor. Para conjuntos de pesquisa menores, é melhor usar o modo de pesquisa do lado do cliente." + ` Se a contagem de chaves acabar ${opts?.maxLightKeysCount ?? 110000}, você só poderá pesquisar no lado do servidor.`,
         largeSetInfo: "Em um conjunto grande, a pesquisa do lado do cliente está desativada. então, no momento, apenas a pesquisa no lado do servidor é possível.",
         infoDetails: "Para saber como funciona a pesquisa, verifique as configurações"
       },

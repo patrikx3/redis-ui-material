@@ -1,16 +1,15 @@
 import { Pipe, PipeTransform, Inject } from '@angular/core';
 import { I18nService } from '../services/i18n.service';
-declare const p3xr: any;
 
 /**
- * Locale-aware date pipe backed by dayjs.
+ * Locale-aware date pipe using native Intl.DateTimeFormat.
  *
  * Named presets:
- *   {{ value | date:'date' }}        — date only        (ll)
- *   {{ value | date:'datetime' }}    — date + time      (lll) ← default
- *   {{ value | date:'timestamp' }}   — date + time + s
+ *   {{ value | date:'date' }}        — date only
+ *   {{ value | date:'datetime' }}    — date + time (default)
+ *   {{ value | date:'timestamp' }}   — date + time + seconds
+ *   {{ value | date:'time' }}        — time only (HH:mm:ss)
  *
- * Raw dayjs format tokens also accepted (L, LL, LLL, LLLL, LT, LTS, …).
  * Returns '-' for falsy or invalid values.
  * Impure so Angular re-evaluates on language changes.
  */
@@ -25,21 +24,34 @@ export class DatePipe implements PipeTransform {
 
     transform(value: any, format: string = 'datetime'): string {
         const lang = this.i18n.currentLang();
-
         if (!value) return '-';
 
-        const dayjs = (globalThis as any).dayjs || require('dayjs');
-        const localeMap = p3xr?.settings?.language?.momentDateMap || {};
-        dayjs.locale(localeMap[lang] || lang);
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return '-';
 
-        const d = dayjs(value);
-        if (!d.isValid()) return '-';
+        const locale = localeMap[lang] || lang;
 
         switch (format) {
-            case 'date':      return d.format('ll');
-            case 'datetime':  return d.format('lll');
-            case 'timestamp': return d.format('ll') + ' ' + d.format('LTS');
-            default:          return d.format(format);
+            case 'date':
+                return date.toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' });
+            case 'datetime':
+                return date.toLocaleString(locale, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+            case 'timestamp':
+                return date.toLocaleString(locale, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            case 'time':
+                return date.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+            default:
+                return date.toLocaleString(locale);
         }
     }
 }
+
+/**
+ * Map app language codes to Intl-compatible locale tags
+ * where they differ from the app's internal code.
+ */
+const localeMap: Record<string, string> = {
+    'zn': 'zh-CN',
+    'no': 'nb',
+    'fil': 'tl',
+};

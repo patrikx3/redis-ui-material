@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-declare const p3xr: any;
 
 /**
  * Angular service that mirrors the AngularJS p3xrRedisParser factory.
@@ -107,8 +106,8 @@ export class RedisParserService {
         savedExpandedNodes?: any[];
     }): { nodes: any[]; expandedNodes: any[] } {
         const { keys } = options;
-        const divider = options.divider ?? p3xr?.settings?.redisTreeDivider ?? ':';
-        const keysInfo = options.keysInfo ?? p3xr?.state?.keysInfo ?? {};
+        const divider = options.divider ?? ':';
+        const keysInfo = options.keysInfo ?? {};
         const savedExpandedNodes = options.savedExpandedNodes ?? [];
 
         const mainNodes: any[] = [];

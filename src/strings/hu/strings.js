@@ -404,8 +404,8 @@ const strings = {
       maxValueDisplayInfo: "Ha 0, a teljes értéket mutatja. Ha nagyobb mint 0, erre a hosszra vágja. Ha -1: karakterláncoknál elrejti az értéket szerkesztésig; más típusoknál teljes tartalmat mutat.",
       maxKeys: "Maximális kulcsszám",
       maxKeysInfo: "Hogy a GUI ne fagyjon le, korlátozzuk a maximális kulcsszámot.",
-      keyCount: () => {
-        return `Kulcsok száma: ${p3xr.state.keysRaw.length}`;
+      keyCount: (opts) => {
+        return `Kulcsok száma: ${opts?.keyCount ?? 0}`;
       },
       label: {
         animation: "Animáció használata",
@@ -549,6 +549,9 @@ const strings = {
       label: {
         key: "Kulcs",
         encoding: "Kódolás",
+        compression: "Tömörítés",
+        aiRateLimited: "AI kéréslimit elérve. Próbálja újra később, vagy használja saját Groq API kulcsát a Beállításokban.",
+        aiError: "AI lekérdezés sikertelen",
         length: "Méret",
         ttl: "TTL",
         ttlTitle: "Élettartam",
@@ -635,7 +638,7 @@ const strings = {
         clear: "Jelenlegi keresés törlése",
         placeholderClient: "Keresés kliens oldalon",
         placeholderServer: "Keresés szerver oldalon",
-        info: "A kliens oldali keresés azt jelenti, hogy a keresőmezőben lévő szöveget egyezteti. A szerver oldali keresés azt jelenti, hogy a kulcsmintákban keres, mint *{keresett-szöveg}*. Nagy adathalmazoknál jobb a szerver oldali keresés. Kisebb halmazoknál jobb a kliens oldali keresés." + ` Ha a kulcsok száma meghaladja a ${p3xr.settings.maxLightKeysCount} értéket, csak szerver oldalon kereshet.`,
+        info: (opts) => "A kliens oldali keresés azt jelenti, hogy a keresőmezőben lévő szöveget egyezteti. A szerver oldali keresés azt jelenti, hogy a kulcsmintákban keres, mint *{keresett-szöveg}*. Nagy adathalmazoknál jobb a szerver oldali keresés. Kisebb halmazoknál jobb a kliens oldali keresés." + ` Ha a kulcsok száma meghaladja a ${opts?.maxLightKeysCount ?? 110000} értéket, csak szerver oldalon kereshet.`,
         largeSetInfo: "Nagy adathalmaz esetén a kliens oldali keresés le van tiltva, jelenleg csak szerver oldali keresés lehetséges.",
         infoDetails: "A keresés működésének megismeréséhez tekintse meg a beállításokat"
       },

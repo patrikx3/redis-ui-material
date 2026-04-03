@@ -13,8 +13,6 @@ import { I18nService } from '../services/i18n.service';
 import { SocketService } from '../services/socket.service';
 import { CommonService } from '../services/common.service';
 
-declare const p3xr: any;
-
 @Component({
     selector: 'p3xr-key-import-dialog',
     standalone: true,

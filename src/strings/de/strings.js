@@ -408,8 +408,8 @@ const strings = {
       maxValueDisplayInfo: "Bei 0 werden vollständige Werte angezeigt. Bei größer als 0 wird auf diese Länge gekürzt. Bei -1: Für Zeichenketten wird der Wert bis zur Bearbeitung ausgeblendet; für andere Typen wird der vollständige Inhalt angezeigt.",
       maxKeys: "Maximale Schlüsselanzahl",
       maxKeysInfo: "Damit die GUI nicht abstürzt, begrenzen wir die maximale Schlüsselanzahl.",
-      keyCount: () => {
-        return `Anzahl der Schlüssel: ${p3xr.state.keysRaw.length}`;
+      keyCount: (opts) => {
+        return `Anzahl der Schlüssel: ${opts?.keyCount ?? 0}`;
       },
       label: {
         animation: "Animation verwenden",
@@ -553,6 +553,9 @@ const strings = {
       label: {
         key: "Schlüssel",
         encoding: "Kodierung",
+        compression: "Komprimierung",
+        aiRateLimited: "AI-Anfragelimit erreicht. Versuchen Sie es später erneut oder verwenden Sie Ihren eigenen Groq-API-Schlüssel in den Einstellungen.",
+        aiError: "AI-Abfrage fehlgeschlagen",
         length: "Größe",
         ttl: "TTL",
         ttlTitle: "Lebensdauer",
@@ -639,7 +642,7 @@ const strings = {
         clear: "Aktuelle Suche leeren",
         placeholderClient: "Clientseitig suchen",
         placeholderServer: "Serverseitig suchen",
-        info: "Die clientseitige Suche bedeutet, dass der Text im Suchfeld abgeglichen wird. Die serverseitige Suche bedeutet, dass in den Schlüsselmustern wie *{Suchtext}* gesucht wird. Für große Datensätze ist es besser, die serverseitige Suche zu verwenden. Für kleinere Datensätze ist es besser, den clientseitigen Suchmodus zu verwenden." + ` Wenn die Schlüsselanzahl über ${p3xr.settings.maxLightKeysCount} liegt, können Sie nur serverseitig suchen.`,
+        info: (opts) => "Die clientseitige Suche bedeutet, dass der Text im Suchfeld abgeglichen wird. Die serverseitige Suche bedeutet, dass in den Schlüsselmustern wie *{Suchtext}* gesucht wird. Für große Datensätze ist es besser, die serverseitige Suche zu verwenden. Für kleinere Datensätze ist es besser, den clientseitigen Suchmodus zu verwenden." + ` Wenn die Schlüsselanzahl über ${opts?.maxLightKeysCount ?? 110000} liegt, können Sie nur serverseitig suchen.`,
         largeSetInfo: "Bei einem großen Datensatz ist die clientseitige Suche deaktiviert, daher ist derzeit nur die serverseitige Suche möglich.",
         infoDetails: "Um herauszufinden, wie die Suche funktioniert, überprüfen Sie bitte die Einstellungen"
       },

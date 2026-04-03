@@ -408,8 +408,8 @@ const strings = {
       maxValueDisplayInfo: "Si défini à 0, affiche les valeurs complètes. Si supérieur à 0, tronque à cette longueur. Si -1 : pour les chaînes, masque la valeur jusqu'à la modification ; pour les autres types, affiche le contenu complet.",
       maxKeys: "Nombre maximum de clés",
       maxKeysInfo: "Pour éviter que le GUI ne plante, nous limitons le nombre maximum de clés.",
-      keyCount: () => {
-        return `Nombre de clés : ${p3xr.state.keysRaw.length}`;
+      keyCount: (opts) => {
+        return `Nombre de clés : ${opts?.keyCount ?? 0}`;
       },
       label: {
         animation: "Utiliser l'animation",
@@ -553,6 +553,9 @@ const strings = {
       label: {
         key: "Clé",
         encoding: "Encodage",
+        compression: "Compression",
+        aiRateLimited: "Limite de requêtes AI atteinte. Réessayez plus tard ou utilisez votre propre clé API Groq dans les Paramètres.",
+        aiError: "La requête AI a échoué",
         length: "Taille",
         ttl: "TTL",
         ttlTitle: "Durée de vie",
@@ -639,7 +642,7 @@ const strings = {
         clear: "Effacer la recherche actuelle",
         placeholderClient: "Recherche côté client",
         placeholderServer: "Recherche côté serveur",
-        info: "La recherche côté client signifie qu'elle correspond au texte dans le champ de recherche. La recherche côté serveur signifie qu'elle recherche dans les modèles de clés comme *{texte-de-recherche}*. Pour les grands ensembles de recherche, il est préférable d'utiliser la recherche côté serveur. Pour les ensembles plus petits, il est préférable d'utiliser la recherche côté client." + ` Si le nombre de clés dépasse ${p3xr.settings.maxLightKeysCount}, vous ne pouvez rechercher que côté serveur.`,
+        info: (opts) => "La recherche côté client signifie qu'elle correspond au texte dans le champ de recherche. La recherche côté serveur signifie qu'elle recherche dans les modèles de clés comme *{texte-de-recherche}*. Pour les grands ensembles de recherche, il est préférable d'utiliser la recherche côté serveur. Pour les ensembles plus petits, il est préférable d'utiliser la recherche côté client." + ` Si le nombre de clés dépasse ${opts?.maxLightKeysCount ?? 110000}, vous ne pouvez rechercher que côté serveur.`,
         largeSetInfo: "Dans un grand ensemble, la recherche côté client est désactivée, donc seule la recherche côté serveur est actuellement possible.",
         infoDetails: "Pour savoir comment la recherche fonctionne, veuillez consulter les paramètres"
       },

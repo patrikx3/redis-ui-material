@@ -50,9 +50,17 @@
                     <span class="p3xr-database-tree-node-count">({{ node.keysInfo.length }})</span>
                 }
 
-                <!-- TTL indicator -->
 
             </label>
+
+            <!-- TTL indicator (outside label to avoid tooltip conflict) -->
+            @if (node.type !== 'folder' && getRemainingTtl(node) > 0) {
+                <span class="p3xr-tree-ttl-badge" [class]="getTtlClass(node)"
+                      [matTooltip]="'TTL: ' + formatTtl(node)" matTooltipPosition="right"
+                      matTooltipClass="p3xr-tree-node-tooltip">
+                    <span class="material-icons p3xr-tree-ttl-icon">schedule</span>
+                </span>
+            }
         </span>
 
         <!-- Action buttons (shown on row hover via CSS, hidden in readonly) -->

@@ -7,10 +7,9 @@ import { I18nService } from '../../services/i18n.service';
 import { SocketService } from '../../services/socket.service';
 import { CommonService } from '../../services/common.service';
 import { MonitoringDataService } from './monitoring-data.service';
+import { RedisStateService } from '../../services/redis-state.service';
 
 require('./monitoring-shell.component.scss');
-
-declare const p3xr: any;
 
 @Component({
     selector: 'p3xr-monitoring-shell',
@@ -42,6 +41,7 @@ export class MonitoringShellComponent implements OnInit, OnDestroy {
         @Inject(SocketService) private readonly socket: SocketService,
         @Inject(CommonService) private readonly common: CommonService,
         @Inject(MonitoringDataService) private readonly data: MonitoringDataService,
+        @Inject(RedisStateService) private readonly state: RedisStateService,
     ) {
         this.strings = this.i18n.strings;
     }
@@ -58,11 +58,11 @@ export class MonitoringShellComponent implements OnInit, OnDestroy {
         }));
 
         // If connected, start immediately; otherwise wait for connection
-        if (p3xr?.state?.connection) {
+        if (this.state.connection()) {
             this.initServices();
         } else {
             this.subs.push(this.socket.stateChanged$.subscribe(() => {
-                if (p3xr?.state?.connection && !this.servicesStarted) {
+                if (this.state.connection() && !this.servicesStarted) {
                     this.initServices();
                 }
             }));

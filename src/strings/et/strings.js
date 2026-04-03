@@ -406,8 +406,8 @@ const strings = {
       maxValueDisplayInfo: "Kui see on 0, kuvage täisväärtusi. Kui see on suurem kui 0, kärbige selle pikkuseni. Kui -1: stringide puhul peida väärtus kuni muutmiseni; muude tüüpide puhul kuva kogu sisu.",
       maxKeys: "Maksimaalne võtmete arv",
       maxKeysInfo: "Selleks, et GUI ei jookseks kokku, piirame maksimaalset võtmete arvu.",
-      keyCount: () => {
-        return `Võtmete arv: ${p3xr.state.keysRaw.length}`;
+      keyCount: (opts) => {
+        return `Võtmete arv: ${opts?.keyCount ?? 0}`;
       },
       label: {
         animation: "Kasutage animatsiooni",
@@ -551,6 +551,9 @@ const strings = {
       label: {
         key: "Võti",
         encoding: "Kodeerimine",
+        compression: "Tihendamine",
+        aiRateLimited: "AI päringute limiit on saavutatud. Proovige hiljem uuesti või kasutage oma Groq API võtit Seadetes.",
+        aiError: "AI päring ebaõnnestus",
         length: "Suurus",
         ttl: "TTL",
         ttlTitle: "Aeg Elada",
@@ -637,7 +640,7 @@ const strings = {
         clear: "Tühjendamiseks tühjenda praegune otsing",
         placeholderClient: "Otsige kliendi poolelt",
         placeholderServer: "Otsi serveri poolelt",
-        info: "Kliendipoolne otsing tähendab, et see vastab otsingusisendis olevale tekstile. Serveripoolne otsing tähendab, et see on nagu otsing võtmemustrites *{otsingutekst}*. Suurte otsingukomplektide puhul on parem kasutada serveripoolset otsingut. Väiksemate otsingukomplektide jaoks on parem kasutada kliendipoolset otsingurežiimi." + ` Kui klahvide arv on lõppenud ${p3xr.settings.maxLightKeysCount}, saate otsida ainult serveri poolel.`,
+        info: (opts) => "Kliendipoolne otsing tähendab, et see vastab otsingusisendis olevale tekstile. Serveripoolne otsing tähendab, et see on nagu otsing võtmemustrites *{otsingutekst}*. Suurte otsingukomplektide puhul on parem kasutada serveripoolset otsingut. Väiksemate otsingukomplektide jaoks on parem kasutada kliendipoolset otsingurežiimi." + ` Kui klahvide arv on lõppenud ${opts?.maxLightKeysCount ?? 110000}, saate otsida ainult serveri poolel.`,
         largeSetInfo: "Suures komplektis on kliendipoolne otsing keelatud. nii et praegu on võimalik ainult serveripoolne otsing.",
         infoDetails: "Et teada saada, kuidas otsing töötab, vaadake palun seadeid"
       },

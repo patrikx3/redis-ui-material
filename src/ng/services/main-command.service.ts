@@ -8,7 +8,6 @@ import { SettingsService } from './settings.service';
 import { I18nService } from './i18n.service';
 import { NavigationService } from './navigation.service';
 
-declare const p3xr: any;
 
 /**
  * Main command service — encapsulates Redis operations previously in AngularJS p3xrMain controller.
@@ -50,7 +49,7 @@ export class MainCommandService {
     ) {}
 
     get currentDatabase(): number {
-        let db = p3xr.state?.currentDatabase;
+        let db: number | string | undefined | null = this.state.currentDatabase();
         if (db === undefined) {
             db = this.readStorageItem(this.getStorageKey());
         }
@@ -61,7 +60,7 @@ export class MainCommandService {
     }
 
     set currentDatabase(value: number) {
-        p3xr.state.currentDatabase = value;
+        this.state.currentDatabase.set(value);
         const storageKey = this.getStorageKey();
         if (storageKey) {
             try { localStorage.setItem(storageKey, String(value)); } catch {}
@@ -72,7 +71,7 @@ export class MainCommandService {
         this.currentDatabase = dbIndex;
         this.socket.stateChanged$.next();
         try {
-            p3xr.state.page = 1;
+            this.state.page.set(1);
             await this.socket.request({
                 action: 'console',
                 payload: { command: `select ${dbIndex}` }
@@ -93,7 +92,6 @@ export class MainCommandService {
         try {
             const response = await this.socket.request({ action: 'save' });
             const info = this.redisParser.info(response.info);
-            p3xr.state.info = info;
             this.state.info.set(info);
             const strings = this.i18n.strings();
             this.common.toast({
@@ -113,7 +111,14 @@ export class MainCommandService {
         }
     }
 
+    private lastRefreshAt = 0;
+
     async refresh(options: { withoutParent?: boolean } = {}): Promise<void> {
+        // Throttle: skip if last refresh was less than 2s ago
+        const now = Date.now();
+        if (now - this.lastRefreshAt < 2000) return;
+        this.lastRefreshAt = now;
+
         const { withoutParent = false } = options;
 
         console.time('refresh');
@@ -121,13 +126,14 @@ export class MainCommandService {
         try {
             const payload: any = {};
 
-            if (!p3xr.settings?.searchClientSide &&
-                typeof p3xr.state?.search === 'string' &&
-                p3xr.state.search.length > 0) {
-                if (p3xr.settings?.searchStartsWith) {
-                    payload.match = p3xr.state.search + '*';
+            const searchValue = this.state.search();
+            if (!this.settings.searchClientSide() &&
+                typeof searchValue === 'string' &&
+                searchValue.length > 0) {
+                if (this.settings.searchStartsWith()) {
+                    payload.match = searchValue + '*';
                 } else {
-                    payload.match = '*' + p3xr.state.search + '*';
+                    payload.match = '*' + searchValue + '*';
                 }
             }
 
@@ -136,9 +142,8 @@ export class MainCommandService {
                 payload
             });
 
-            p3xr.state.dbsize = response.dbsize;
-            p3xr.state.redisChanged = true;
             this.state.dbsize.set(response.dbsize);
+            this.state.redisChanged.set(true);
 
             await this.common.loadRedisInfoResponse({ response });
 
@@ -163,18 +168,16 @@ export class MainCommandService {
     }
 
     async disconnect(): Promise<void> {
-        const conn = p3xr.state?.connection;
-        const storageKey = p3xr.settings?.connectInfo?.storageKey;
+        const conn = this.state.connection();
+        const storageKey = this.settings.connectInfoStorageKey;
 
         // Clear state + storage immediately for instant UI feedback
         if (storageKey) {
             try { localStorage.removeItem(storageKey); } catch {}
         }
-        p3xr.state.connection = undefined;
-        p3xr.state.redisConnections = {};
-        p3xr.state.monitor = false;
         this.state.connection.set(undefined);
         this.state.redisConnections.set({});
+        this.state.monitor.set(false);
         this.socket.stateChanged$.next();
 
         try {
@@ -197,7 +200,7 @@ export class MainCommandService {
 
     private getStorageKey(): string {
         try {
-            return p3xr.settings?.connection?.getStorageKeyCurrentDatabase?.(p3xr.state?.connection?.id) ?? '';
+            return this.settings.getStorageKeyCurrentDatabase(this.state.connection()?.id) ?? '';
         } catch {
             return '';
         }

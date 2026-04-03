@@ -28,6 +28,17 @@ bootstrapApplication(LayoutComponent, {
     ],
 }).then((appRef) => {
     (globalThis as any).__p3xr_snackbar = appRef.injector.get(MatSnackBar);
+
+    // Expose state for Playwright E2E tests
+    const { RedisStateService } = require('./services/redis-state.service');
+    const { SettingsService } = require('./services/settings.service');
+    const stateService = appRef.injector.get(RedisStateService);
+    const settingsService = appRef.injector.get(SettingsService);
+    (globalThis as any).__p3xr_test = {
+        state: stateService,
+        settings: settingsService,
+    };
+
     console.info('Angular bootstrap complete');
 }).catch(err => {
     console.error('Angular bootstrap error:', err);

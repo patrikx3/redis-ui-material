@@ -406,8 +406,8 @@ const strings = {
       maxValueDisplayInfo: "Indien ingesteld op 0, worden volledige waarden getoond. Indien groter dan 0, wordt afgekapt tot deze lengte. Indien -1: voor strings wordt de waarde verborgen tot bewerking; voor andere typen wordt de volledige inhoud getoond.",
       maxKeys: "Maximaal aantal sleutels",
       maxKeysInfo: "Om te voorkomen dat de GUI vastloopt, beperken we het maximale aantal sleutels.",
-      keyCount: () => {
-        return `Aantal sleutels: ${p3xr.state.keysRaw.length}`;
+      keyCount: (opts) => {
+        return `Aantal sleutels: ${opts?.keyCount ?? 0}`;
       },
       label: {
         animation: "Animatie gebruiken",
@@ -551,6 +551,9 @@ const strings = {
       label: {
         key: "Sleutel",
         encoding: "Codering",
+        compression: "Compressie",
+        aiRateLimited: "AI-aanvraaglimiet bereikt. Probeer het later opnieuw of gebruik uw eigen Groq API-sleutel in Instellingen.",
+        aiError: "AI-query mislukt",
         length: "Grootte",
         ttl: "TTL",
         ttlTitle: "Time To Live",
@@ -637,7 +640,7 @@ const strings = {
         clear: "Huidige zoekopdracht wissen",
         placeholderClient: "Zoeken aan clientzijde",
         placeholderServer: "Zoeken aan serverzijde",
-        info: "Zoeken aan de clientzijde betekent dat het overeenkomt met de tekst in het zoekveld. Zoeken aan de serverzijde betekent dat het zoekt in de sleutelpatronen als *{zoektekst}*. Voor grote zoeksets is het beter om aan de serverzijde te zoeken. Voor kleinere zoeksets is het beter om aan de clientzijde te zoeken." + ` Als het aantal sleutels meer is dan ${p3xr.settings.maxLightKeysCount}, kunt u alleen aan de serverzijde zoeken.`,
+        info: (opts) => "Zoeken aan de clientzijde betekent dat het overeenkomt met de tekst in het zoekveld. Zoeken aan de serverzijde betekent dat het zoekt in de sleutelpatronen als *{zoektekst}*. Voor grote zoeksets is het beter om aan de serverzijde te zoeken. Voor kleinere zoeksets is het beter om aan de clientzijde te zoeken." + ` Als het aantal sleutels meer is dan ${opts?.maxLightKeysCount ?? 110000}, kunt u alleen aan de serverzijde zoeken.`,
         largeSetInfo: "In een grote set is zoeken aan de clientzijde uitgeschakeld, dus momenteel is alleen zoeken aan de serverzijde mogelijk.",
         infoDetails: "Om te weten hoe het zoeken werkt, bekijk de instellingen"
       },

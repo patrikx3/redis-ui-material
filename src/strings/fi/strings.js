@@ -406,8 +406,8 @@ const strings = {
       maxValueDisplayInfo: "Jos asetettu arvoon 0, näytä täydet arvot. Jos suurempi kuin 0, lyhennä tähän pituuteen. Jos -1: merkkijonoille, piilota arvo, kunnes muokkaa; muille tyypeille, näytä koko sisältö.",
       maxKeys: "Avainten enimmäismäärä",
       maxKeysInfo: "Jotta GUI ei kaatuisi, rajoitamme avainten enimmäismäärää.",
-      keyCount: () => {
-        return `Avainten määrä: ${p3xr.state.keysRaw.length}`;
+      keyCount: (opts) => {
+        return `Avainten määrä: ${opts?.keyCount ?? 0}`;
       },
       label: {
         animation: "Käytä animaatiota",
@@ -551,6 +551,9 @@ const strings = {
       label: {
         key: "Avain",
         encoding: "Koodaus",
+        compression: "Pakkaus",
+        aiRateLimited: "AI-pyyntöjen raja saavutettu. Yritä myöhemmin uudelleen tai käytä omaa Groq API -avainta Asetuksissa.",
+        aiError: "AI-kysely epäonnistui",
         length: "Koko",
         ttl: "TTL",
         ttlTitle: "Aika elää",
@@ -637,7 +640,7 @@ const strings = {
         clear: "Tyhjennä nykyinen haku tyhjäksi",
         placeholderClient: "Haku asiakkaan puolelta",
         placeholderServer: "Haku palvelimen puolelta",
-        info: "Asiakaspuolen haku tarkoittaa, että se vastaa hakusyötteen tekstiä. Palvelinpuolen haku tarkoittaa, että se on kuin haku näppäinmalleissa *{search-text}*. Suurille hakusarjoille on parempi käyttää palvelinpuolen hakua. Pienemmille hakusarjoille on parempi käyttää asiakaspuolen hakutilaa." + ` Jos avainten määrä on ohi ${p3xr.settings.maxLightKeysCount}, voit etsiä vain palvelimen puolelta.`,
+        info: (opts) => "Asiakaspuolen haku tarkoittaa, että se vastaa hakusyötteen tekstiä. Palvelinpuolen haku tarkoittaa, että se on kuin haku näppäinmalleissa *{search-text}*. Suurille hakusarjoille on parempi käyttää palvelinpuolen hakua. Pienemmille hakusarjoille on parempi käyttää asiakaspuolen hakutilaa." + ` Jos avainten määrä on ohi ${opts?.maxLightKeysCount ?? 110000}, voit etsiä vain palvelimen puolelta.`,
         largeSetInfo: "Suuressa joukossa asiakaspuolen haku on poistettu käytöstä. joten tällä hetkellä vain palvelinpuolen haku on mahdollista.",
         infoDetails: "Jos haluat tietää, miten haku toimii, tarkista asetukset"
       },

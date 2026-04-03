@@ -10,8 +10,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { DialogCancelButtonComponent } from '../components/dialog-cancel-button.component';
 import { I18nService } from '../services/i18n.service';
 import { CommonService } from '../services/common.service';
-
-declare const p3xr: any;
+import { SettingsService } from '../services/settings.service';
 
 const timestring = require('timestring');
 const humanizeDuration = require('humanize-duration');
@@ -88,6 +87,7 @@ export class TtlDialogComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) private data: TtlDialogData,
         @Inject(I18nService) private i18n: I18nService,
         @Inject(CommonService) private common: CommonService,
+        @Inject(SettingsService) private settingsService: SettingsService,
     ) {
         this.strings = this.i18n.strings;
     }
@@ -96,7 +96,7 @@ export class TtlDialogComponent implements OnInit {
         this.model = { ...this.data.model };
         if (typeof this.model.ttl === 'number' && this.model.ttl > 0) {
             try {
-                const hdOpts = p3xr?.settings?.getHumanizeDurationOptions?.() ?? {};
+                const hdOpts = this.settingsService.getHumanizeDurationOptions();
                 this.convertTextToTime = humanizeDuration(this.model.ttl * 1000, {
                     ...hdOpts,
                     delimiter: ' ',

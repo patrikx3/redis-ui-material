@@ -406,8 +406,8 @@ const strings = {
       maxValueDisplayInfo: "Nếu được đặt thành 0, hiển thị giá trị đầy đủ. Nếu lớn hơn 0, hãy cắt bớt độ dài này. Nếu -1: đối với chuỗi, ẩn giá trị cho đến khi chỉnh sửa; đối với các loại khác, hiển thị nội dung đầy đủ.",
       maxKeys: "Số lượng phím tối đa",
       maxKeysInfo: "Để GUI không gặp sự cố, chúng tôi giới hạn số lượng khóa tối đa.",
-      keyCount: () => {
-        return `Số lượng phím: ${p3xr.state.keysRaw.length}`;
+      keyCount: (opts) => {
+        return `Số lượng phím: ${opts?.keyCount ?? 0}`;
       },
       label: {
         animation: "Sử dụng hoạt ảnh",
@@ -551,6 +551,9 @@ const strings = {
       label: {
         key: "Chìa khóa",
         encoding: "Mã hóa",
+        compression: "Nén",
+        aiRateLimited: "Đã đạt giới hạn yêu cầu AI. Thử lại sau hoặc sử dụng khóa API Groq của riêng bạn trong Cài đặt.",
+        aiError: "Truy vấn AI thất bại",
         length: "Kích thước",
         ttl: "TTL",
         ttlTitle: "Thời gian để sống",
@@ -637,7 +640,7 @@ const strings = {
         clear: "Xóa tìm kiếm hiện tại để đặt trống",
         placeholderClient: "Tìm kiếm phía khách hàng",
         placeholderServer: "Phía máy chủ tìm kiếm",
-        info: "Tìm kiếm phía máy khách có nghĩa là nó khớp với văn bản trong đầu vào tìm kiếm. Tìm kiếm phía máy chủ có nghĩa là nó giống như tìm kiếm trong c��c mẫu khóa dưới dạng *{search-text}*. Đối với các tập hợp tìm kiếm lớn, tốt hơn nên sử dụng tìm kiếm phía máy chủ. Đối với các tập hợp tìm kiếm nhỏ hơn, tốt hơn nên sử dụng chế độ tìm kiếm phía máy khách." + ` Nếu số lượng phím kết thúc ${p3xr.settings.maxLightKeysCount}, bạn chỉ có thể tìm kiếm ở phía máy chủ.`,
+        info: (opts) => "Tìm kiếm phía máy khách có nghĩa là nó khớp với văn bản trong đầu vào tìm kiếm. Tìm kiếm phía máy chủ có nghĩa là nó giống như tìm kiếm trong c��c mẫu khóa dưới dạng *{search-text}*. Đối với các tập hợp tìm kiếm lớn, tốt hơn nên sử dụng tìm kiếm phía máy chủ. Đối với các tập hợp tìm kiếm nhỏ hơn, tốt hơn nên sử dụng chế độ tìm kiếm phía máy khách." + ` Nếu số lượng phím kết thúc ${opts?.maxLightKeysCount ?? 110000}, bạn chỉ có thể tìm kiếm ở phía máy chủ.`,
         largeSetInfo: "Trong một tập hợp lớn, tìm kiếm phía máy khách bị vô hiệu hóa. vì vậy hiện tại chỉ có thể tìm kiếm phía máy chủ.",
         infoDetails: "Để tìm hiểu cách hoạt động của tìm kiếm, vui lòng kiểm tra cài đặt"
       },

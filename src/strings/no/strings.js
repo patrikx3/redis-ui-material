@@ -406,8 +406,8 @@ const strings = {
       maxValueDisplayInfo: "Hvis satt til 0, vis hele verdiene. Hvis større enn 0, avkort til denne lengden. Hvis -1: for strenger, skjul verdien til du redigerer; for andre typer, vis fullt innhold.",
       maxKeys: "Maks nøkkeltall",
       maxKeysInfo: "For at GUI ikke skal krasje, begrenser vi maks nøkkeltall.",
-      keyCount: () => {
-        return `Antall nøkler: ${p3xr.state.keysRaw.length}`;
+      keyCount: (opts) => {
+        return `Antall nøkler: ${opts?.keyCount ?? 0}`;
       },
       label: {
         animation: "Bruk animasjon",
@@ -551,6 +551,9 @@ const strings = {
       label: {
         key: "Nøkkel",
         encoding: "Koding",
+        compression: "Komprimering",
+        aiRateLimited: "AI-forespørselsgrensen er nådd. Prøv igjen senere eller bruk din egen Groq API-nøkkel i Innstillinger.",
+        aiError: "AI-spørring mislyktes",
         length: "Størrelse",
         ttl: "TTL",
         ttlTitle: "Tid å leve",
@@ -637,7 +640,7 @@ const strings = {
         clear: "Slett gjeldende søk for å sette tomt",
         placeholderClient: "Søk på klientsiden",
         placeholderServer: "Søk på serversiden",
-        info: "Søket på klientsiden betyr at det samsvarer med teksten i søkeinndataene. Søket på serversiden betyr at det er som å søke i nøkkelmønstrene som *{søk-tekst}*. For store søkesett er det bedre å bruke søk på serversiden. For mindre søkesett er det bedre å bruke søkemodus på klientsiden." + ` Hvis nøklene er over ${p3xr.settings.maxLightKeysCount}, kan du bare søke på serversiden.`,
+        info: (opts) => "Søket på klientsiden betyr at det samsvarer med teksten i søkeinndataene. Søket på serversiden betyr at det er som å søke i nøkkelmønstrene som *{søk-tekst}*. For store søkesett er det bedre å bruke søk på serversiden. For mindre søkesett er det bedre å bruke søkemodus på klientsiden." + ` Hvis nøklene er over ${opts?.maxLightKeysCount ?? 110000}, kan du bare søke på serversiden.`,
         largeSetInfo: "I et stort sett er søk på klientsiden deaktivert. så akkurat nå er det bare søk på serversiden som er mulig.",
         infoDetails: "For å finne ut hvordan søket fungerer, sjekk innstillingene"
       },

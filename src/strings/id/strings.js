@@ -406,8 +406,8 @@ const strings = {
       maxValueDisplayInfo: "Jika disetel ke 0, tampilkan nilai penuh. Jika lebih besar dari 0, potong sepanjang ini. Jika -1: untuk string, sembunyikan nilainya hingga diedit; untuk tipe lainnya, tampilkan konten lengkap.",
       maxKeys: "Jumlah kunci maksimal",
       maxKeysInfo: "Agar GUI tidak crash, kami membatasi jumlah kunci maksimal.",
-      keyCount: () => {
-        return `Jumlah kunci: ${p3xr.state.keysRaw.length}`;
+      keyCount: (opts) => {
+        return `Jumlah kunci: ${opts?.keyCount ?? 0}`;
       },
       label: {
         animation: "Gunakan animasi",
@@ -551,6 +551,9 @@ const strings = {
       label: {
         key: "Kunci",
         encoding: "Pengkodean",
+        compression: "Kompresi",
+        aiRateLimited: "Batas permintaan AI tercapai. Coba lagi nanti atau gunakan kunci API Groq Anda sendiri di Pengaturan.",
+        aiError: "Kueri AI gagal",
         length: "Ukuran",
         ttl: "TTL",
         ttlTitle: "Saatnya Hidup",
@@ -637,7 +640,7 @@ const strings = {
         clear: "Hapus pencarian saat ini untuk mengosongkannya",
         placeholderClient: "Cari sisi klien",
         placeholderServer: "Sisi server pencarian",
-        info: "Pencarian sisi klien berarti cocok dengan teks dalam input pencarian. Maksudnya pencarian sisi server, seperti pencarian dalam pola kunci sebagai *{teks-pencarian}*. Untuk kumpulan pencarian yang besar, lebih baik menggunakan pencarian sisi server. Untuk kumpulan pencarian yang lebih kecil, lebih baik menggunakan mode pencarian sisi klien." + ` Jika penghitungan kunci sudah selesai ${p3xr.settings.maxLightKeysCount}, Anda hanya dapat mencari di sisi server.`,
+        info: (opts) => "Pencarian sisi klien berarti cocok dengan teks dalam input pencarian. Maksudnya pencarian sisi server, seperti pencarian dalam pola kunci sebagai *{teks-pencarian}*. Untuk kumpulan pencarian yang besar, lebih baik menggunakan pencarian sisi server. Untuk kumpulan pencarian yang lebih kecil, lebih baik menggunakan mode pencarian sisi klien." + ` Jika penghitungan kunci sudah selesai ${opts?.maxLightKeysCount ?? 110000}, Anda hanya dapat mencari di sisi server.`,
         largeSetInfo: "Dalam kumpulan besar, pencarian sisi klien dinonaktifkan. jadi saat ini hanya pencarian sisi server yang dimungkinkan.",
         infoDetails: "Untuk mengetahui cara kerja pencarian, silakan periksa pengaturannya"
       },

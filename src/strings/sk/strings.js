@@ -406,8 +406,8 @@ const strings = {
       maxValueDisplayInfo: "Ak je nastavene na 0, zobrazi uplne hodnoty. Ak je vacsie ako 0, skrati na tuto dlzku. Ak je -1: pre retazce skryje hodnotu az do upravy; pre ostatne typy zobrazi uplny obsah.",
       maxKeys: "Maximalny pocet klucov",
       maxKeysInfo: "Aby GUI nespadlo, obmedzujeme maximalny pocet klucov.",
-      keyCount: () => {
-        return `Pocet klucov: ${p3xr.state.keysRaw.length}`;
+      keyCount: (opts) => {
+        return `Pocet klucov: ${opts?.keyCount ?? 0}`;
       },
       label: {
         animation: "Pouzit animaciu",
@@ -551,6 +551,9 @@ const strings = {
       label: {
         key: "Kluc",
         encoding: "Kodovanie",
+        compression: "Kompresia",
+        aiRateLimited: "Dosiahnutý limit AI požiadaviek. Skúste to neskôr alebo použite vlastný Groq API kľúč v Nastaveniach.",
+        aiError: "AI dotaz zlyhal",
         length: "Velkost",
         ttl: "TTL",
         ttlTitle: "Doba zivotnosti",
@@ -637,7 +640,7 @@ const strings = {
         clear: "Vymazat aktualne vyhladavanie",
         placeholderClient: "Hladat na strane klienta",
         placeholderServer: "Hladat na strane servera",
-        info: "Vyhladavanie na strane klienta znamena, ze sa text porovnava so vstupom vyhladavania. Vyhladavanie na strane servera znamena, ze sa hladaju vzory v klucoch ako *{hladany-text}*. Pre velke sady vyhladavania je lepsie pouzit vyhladavanie na serveri. Pre mensie sady je lepsie pouzit vyhladavanie na klientovi." + ` Ak pocet klucov presahuje ${p3xr.settings.maxLightKeysCount}, mozete hladat iba na serveri.`,
+        info: (opts) => "Vyhladavanie na strane klienta znamena, ze sa text porovnava so vstupom vyhladavania. Vyhladavanie na strane servera znamena, ze sa hladaju vzory v klucoch ako *{hladany-text}*. Pre velke sady vyhladavania je lepsie pouzit vyhladavanie na serveri. Pre mensie sady je lepsie pouzit vyhladavanie na klientovi." + ` Ak pocet klucov presahuje ${opts?.maxLightKeysCount ?? 110000}, mozete hladat iba na serveri.`,
         largeSetInfo: "Vo velkej sade je vyhladavanie na strane klienta vypnute, takze momentalne je mozne iba vyhladavanie na serveri.",
         infoDetails: "Ak chcete zistit ako vyhladavanie funguje, skontrolujte nastavenia"
       },

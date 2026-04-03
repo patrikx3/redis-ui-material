@@ -7,12 +7,12 @@ import { I18nService } from '../../services/i18n.service';
 import { MainCommandService } from '../../services/main-command.service';
 import { NavigationService } from '../../services/navigation.service';
 import { SocketService } from '../../services/socket.service';
+import { RedisStateService } from '../../services/redis-state.service';
+import { SettingsService } from '../../services/settings.service';
 import { DatabaseHeaderComponent } from './database-header.component';
 import { DatabaseTreecontrolControlsComponent } from './database-treecontrol-controls.component';
 import { DatabaseTreeComponent } from './database-tree.component';
 import { ConsoleComponent } from '../console/console.component';
-
-declare const p3xr: any;
 
 require('./database.component.scss');
 const debounce = require('lodash/debounce');
@@ -60,7 +60,7 @@ export class DatabaseComponent implements OnInit, OnDestroy {
 
     private readonly unsubs: Array<() => void> = [];
 
-    private readonly resizeMinWidth = p3xr.settings.resizeMinWidth;
+    private readonly resizeMinWidth: number;
     private get bottomConsoleCollapsedHeight(): number {
         const panel = document.getElementById('p3xr-database-bottom-console-panel');
         if (panel) {
@@ -82,8 +82,11 @@ export class DatabaseComponent implements OnInit, OnDestroy {
         @Inject(NavigationService) private readonly nav: NavigationService,
         @Inject(SocketService) private readonly socket: SocketService,
         @Inject(ChangeDetectorRef) private readonly cdr: ChangeDetectorRef,
+        @Inject(RedisStateService) private readonly state: RedisStateService,
+        @Inject(SettingsService) private readonly settings: SettingsService,
     ) {
         this.strings = this.i18n.strings;
+        this.resizeMinWidth = this.settings.resizeMinWidth;
     }
 
     ngOnInit(): void {
@@ -107,7 +110,7 @@ export class DatabaseComponent implements OnInit, OnDestroy {
             this.isXs = result.matches;
             if (!this.isXs && wasSmall) {
                 clearTimeout(this.resizeTimeoutId);
-                this.resizeTimeoutId = setTimeout(() => this.rawResize(), 4 * p3xr.settings.debounce);
+                this.resizeTimeoutId = setTimeout(() => this.rawResize(), 4 * this.settings.debounce);
             }
             this.screenSizeIsSmall = this.isXs;
             this.cdr.markForCheck();
@@ -139,7 +142,7 @@ export class DatabaseComponent implements OnInit, OnDestroy {
     readonly resize = debounce(() => {
         this.resizeLeft = undefined;
         this.rawResize();
-    }, p3xr.settings.debounce);
+    }, 100);
 
     private readonly boundRawResize = () => this.rawResize();
     private readonly boundOnDocumentMouseDown = (e: MouseEvent) => this.onDocumentMouseDown(e);
@@ -159,14 +162,14 @@ export class DatabaseComponent implements OnInit, OnDestroy {
             this.nav.navigateTo('database.statistics');
         }
 
-        if (p3xr.state.redisChanged) {
-            p3xr.state.redisChanged = false;
-            if (p3xr.state.connection) {
+        if (this.state.redisChanged()) {
+            this.state.redisChanged.set(false);
+            if (this.state.connection()) {
                 this.cmd.refresh();
             }
         }
 
-        p3xr.state.page = 1;
+        this.state.page.set(1);
 
         setTimeout(() => this.rawResize(), 250);
 
@@ -213,7 +216,7 @@ export class DatabaseComponent implements OnInit, OnDestroy {
         const bottomConsolePanel = document.getElementById('p3xr-database-bottom-console-panel');
         const isDesktop = !this.isXs;
         let bottomConsoleHeight = 0;
-        const hasDesktopConsole = isDesktop && p3xr.state?.connection !== undefined;
+        const hasDesktopConsole = isDesktop && this.state.connection() !== undefined;
         const availableHeight = Math.max(windowHeight - minus - outputPositionMinus, 100);
         if (hasDesktopConsole) {
             bottomConsoleHeight = this.getBottomConsoleHeight(availableHeight);
@@ -222,7 +225,7 @@ export class DatabaseComponent implements OnInit, OnDestroy {
         this.containerEl.style.height = containerHeight + 'px';
         this.containerEl.style.maxHeight = containerHeight + 'px';
 
-        const containerPosition = p3xr.dom.getPosition(this.containerEl);
+        const containerPosition = this.containerEl.getBoundingClientRect();
         if (!containerPosition || !Number.isFinite(containerPosition.height) || !Number.isFinite(containerPosition.width)) {
             return;
         }
@@ -253,7 +256,7 @@ export class DatabaseComponent implements OnInit, OnDestroy {
                 this.destroyResizer();
                 return;
             }
-            const treeControlControlsPosition = p3xr.dom.getPosition(treeControlControls);
+            const treeControlControlsPosition = treeControlControls.getBoundingClientRect();
 
             treeControl.style.top = (containerPosition.top + treeControlControlsPosition.height) + 'px';
             treeControl.style.left = containerPosition.left + 'px';
@@ -267,7 +270,7 @@ export class DatabaseComponent implements OnInit, OnDestroy {
             }
             treeControl.style.minWidth = this.resizeMinWidth + 'px';
 
-            const treeControlPosition = p3xr.dom.getPosition(treeControl);
+            const treeControlPosition = treeControl.getBoundingClientRect();
 
             if (!this.resizerEl) {
                 this.decorateResizer();
@@ -352,7 +355,7 @@ export class DatabaseComponent implements OnInit, OnDestroy {
 
     private documentMousemove(event: MouseEvent): void {
         if (!this.resizeClicked || !this.containerEl) return;
-        const containerPosition = p3xr.dom.getPosition(this.containerEl);
+        const containerPosition = this.containerEl.getBoundingClientRect();
         if (event.clientX < containerPosition.left + this.resizeMinWidth || event.clientX > window.innerWidth - this.resizeMinWidth) {
             document.documentElement.style.cursor = 'not-allowed';
         } else {
@@ -416,7 +419,7 @@ export class DatabaseComponent implements OnInit, OnDestroy {
         if (this.observedElement) {
             this.resizeObserver.unobserve(this.observedElement);
         }
-        if (!p3xr.state?.connection) return;
+        if (!this.state.connection()) return;
         if (this.isXs) {
             this.rawResize();
             return;
@@ -435,8 +438,8 @@ export class DatabaseComponent implements OnInit, OnDestroy {
     // --- State sync ---
 
     private syncFromGlobal(): void {
-        this.hasConnection = p3xr?.state?.connection !== undefined;
-        this.hasConnections = (p3xr?.state?.connections?.list?.length ?? 0) > 0;
+        this.hasConnection = this.state.connection() !== undefined;
+        this.hasConnections = (this.state.connections()?.list?.length ?? 0) > 0;
     }
 
 }

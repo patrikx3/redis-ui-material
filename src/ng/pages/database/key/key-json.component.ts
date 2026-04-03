@@ -12,10 +12,11 @@ import { CommonService } from '../../../services/common.service';
 import { JsonViewDialogService } from '../../../dialogs/json-view-dialog.service';
 import { JsonEditorDialogService } from '../../../dialogs/json-editor-dialog.service';
 import { KeyNewOrSetDialogService } from '../../../dialogs/key-new-or-set-dialog.service';
+import { RedisStateService } from '../../../services/redis-state.service';
+import { SettingsService } from '../../../services/settings.service';
 import { JsonTreeComponent } from '../../../components/json-tree.component';
 import { KeyTypeBase } from './key-type-base';
-
-declare const p3xr: any;
+import { OverlayService } from '../../../services/overlay.service';
 
 @Component({
     selector: 'p3xr-key-json',
@@ -41,8 +42,11 @@ export class KeyJsonComponent extends KeyTypeBase implements OnInit, OnDestroy, 
         @Inject(JsonEditorDialogService) private jsonEditorDialog: JsonEditorDialogService,
         @Inject(MainCommandService) cmd: MainCommandService,
         @Inject(ChangeDetectorRef) cdr: ChangeDetectorRef,
+        @Inject(RedisStateService) redisState: RedisStateService,
+        @Inject(SettingsService) settingsService: SettingsService,
+        @Inject(OverlayService) private overlay: OverlayService,
     ) {
-        super(i18n, socket, common, jsonViewDialog, keyNewOrSetDialog, breakpointObserver, cmd, cdr);
+        super(i18n, socket, common, jsonViewDialog, keyNewOrSetDialog, breakpointObserver, cmd, cdr, redisState, settingsService);
     }
 
     ngOnInit(): void {
@@ -93,7 +97,7 @@ export class KeyJsonComponent extends KeyTypeBase implements OnInit, OnDestroy, 
             const result = await this.jsonEditorDialog.show({ value: this.p3xrValue, hideFormatSave: true });
             const value = typeof result.obj === 'string' ? result.obj : JSON.stringify(result.obj);
 
-            p3xr.ui.overlay.show();
+            this.overlay.show();
             await this.socket.request({
                 action: 'key-json-set',
                 payload: {
@@ -110,7 +114,7 @@ export class KeyJsonComponent extends KeyTypeBase implements OnInit, OnDestroy, 
                 this.common.generalHandleError(e);
             }
         } finally {
-            p3xr.ui.overlay.hide();
+            this.overlay.hide();
         }
     }
 

@@ -7,7 +7,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-declare const p3xr: any;
 
 import { P3xrInputComponent } from '../../components/p3xr-input.component';
 import { I18nService } from '../../services/i18n.service';
@@ -16,6 +15,9 @@ import { MainCommandService } from '../../services/main-command.service';
 import { SocketService } from '../../services/socket.service';
 import { TreecontrolSettingsDialogService } from '../../dialogs/treecontrol-settings-dialog.service';
 import { KeyImportDialogService } from '../../dialogs/key-import-dialog.service';
+import { RedisStateService } from '../../services/redis-state.service';
+import { SettingsService } from '../../services/settings.service';
+import { OverlayService } from '../../services/overlay.service';
 
 require('./database-treecontrol-controls.component.scss');
 
@@ -62,6 +64,9 @@ export class DatabaseTreecontrolControlsComponent implements OnInit, OnDestroy {
         @Inject(KeyImportDialogService) private readonly keyImportDialog: KeyImportDialogService,
         @Inject(SocketService) private readonly socket: SocketService,
         @Inject(ChangeDetectorRef) private readonly cdr: ChangeDetectorRef,
+        @Inject(RedisStateService) private readonly state: RedisStateService,
+        @Inject(SettingsService) private readonly settings: SettingsService,
+        @Inject(OverlayService) private readonly overlay: OverlayService,
     ) {
         this.strings = this.i18n.strings;
     }
@@ -132,9 +137,7 @@ export class DatabaseTreecontrolControlsComponent implements OnInit, OnDestroy {
 
     onDividerInputChange(value: string): void {
         this.redisTreeDivider = value ?? '';
-        if (p3xr?.settings) {
-            p3xr.settings.redisTreeDivider = this.redisTreeDivider;
-        }
+        this.settings.redisTreeDivider.set(this.redisTreeDivider);
         this.dividerChange$.next(this.redisTreeDivider);
     }
 
@@ -144,41 +147,37 @@ export class DatabaseTreecontrolControlsComponent implements OnInit, OnDestroy {
     }
 
     private applyDivider(value: string): void {
-        if (p3xr?.settings) {
-            p3xr.settings.redisTreeDivider = value;
-        }
+        this.settings.redisTreeDivider.set(value);
 
-        if (p3xr?.state) {
-            p3xr.state.redisChanged = true;
-        }
+        this.state.redisChanged.set(true);
         this.cmd.treeRefresh$.next();
 
         this.syncFromGlobal();
     }
 
     pageAction(page: 'first' | 'prev' | 'next' | 'last'): void {
-        const state = p3xr?.state;
-        if (!state) {
-            return;
-        }
+        const currentPage = this.state.page() ?? 1;
+        const totalPages = this.pages;
 
         switch (page) {
             case 'prev':
-                if (state.page - 1 >= 1) {
-                    state.page = state.page - 1;
+                if (currentPage - 1 >= 1) {
+                    this.state.page.set(currentPage - 1);
                 }
                 break;
             case 'next':
-                if (state.page + 1 <= state.pages) {
-                    state.page = state.page + 1;
+                if (currentPage + 1 <= totalPages) {
+                    this.state.page.set(currentPage + 1);
                 }
                 break;
-            case 'last':
-                state.page = state.pages;
+            case 'last': {
+                this.state.page.set(totalPages);
                 break;
-            case 'first':
-                state.page = 1;
+            }
+            case 'first': {
+                this.state.page.set(1);
                 break;
+            }
         }
 
         this.syncFromGlobal();
@@ -186,44 +185,35 @@ export class DatabaseTreecontrolControlsComponent implements OnInit, OnDestroy {
 
     onPageInputChange(value: any): void {
         const parsed = parseInt(value, 10);
-        const state = p3xr?.state;
-        if (!state) {
-            return;
-        }
-        state.page = isNaN(parsed) ? 1 : parsed;
+        const newPage = isNaN(parsed) ? 1 : parsed;
+        this.state.page.set(newPage);
         this.pageChange();
     }
 
     pageChange(): void {
-        const state = p3xr?.state;
-        if (!state) {
-            return;
+        let currentPage = this.state.page() ?? 1;
+        const totalPages = this.pages;
+        if (currentPage < 1) {
+            currentPage = 1;
+        } else if (currentPage > totalPages) {
+            currentPage = totalPages;
         }
-        if (state.page < 1) {
-            state.page = 1;
-        } else if (state.page > state.pages) {
-            state.page = state.pages;
-        }
+        this.state.page.set(currentPage);
         this.syncFromGlobal();
     }
 
     onSearchModelChange(value: string): void {
         this.search = value ?? '';
-        if (p3xr?.state) {
-            p3xr.state.search = this.search;
-        }
+        this.state.search.set(this.search);
     }
 
     async onSearchChange(): Promise<void> {
-        if (!p3xr?.state) {
-            return;
-        }
+        this.state.search.set(this.search);
 
-        p3xr.state.search = this.search;
-        p3xr.state.page = 1;
+        this.state.page.set(1);
 
-        if (p3xr.settings?.searchClientSide) {
-            p3xr.state.redisChanged = true;
+        if (this.settings.searchClientSide()) {
+            this.state.redisChanged.set(true);
         }
 
         await this.cmd.refresh();
@@ -238,14 +228,14 @@ export class DatabaseTreecontrolControlsComponent implements OnInit, OnDestroy {
     }
 
     async exportKeys(): Promise<void> {
-        const keys = p3xr?.state?.keysRaw;
+        const keys = this.state.keysRaw();
         if (!Array.isArray(keys) || keys.length === 0) {
             this.common.toast({ message: this.strings().label?.noKeysToExport || 'No keys to export' });
             return;
         }
 
         try {
-            p3xr?.ui?.overlay?.show({
+            this.overlay.show({
                 message: this.strings().label?.exportProgress || 'Exporting keys...',
             });
 
@@ -259,8 +249,8 @@ export class DatabaseTreecontrolControlsComponent implements OnInit, OnDestroy {
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            const connName = p3xr?.state?.connection?.name || 'redis';
-            const db = p3xr?.state?.currentDatabase ?? 0;
+            const connName = this.state.connection()?.name || 'redis';
+            const db = this.state.currentDatabase() ?? 0;
             a.download = `${connName}-db${db}-export.json`;
             a.click();
             URL.revokeObjectURL(url);
@@ -269,7 +259,7 @@ export class DatabaseTreecontrolControlsComponent implements OnInit, OnDestroy {
         } catch (e) {
             this.common.generalHandleError(e);
         } finally {
-            p3xr?.ui?.overlay?.hide();
+            this.overlay.hide();
         }
     }
 
@@ -295,7 +285,7 @@ export class DatabaseTreecontrolControlsComponent implements OnInit, OnDestroy {
                     if (result?.pending) {
                         // Dialog closed, now show overlay and do import
                         try {
-                            p3xr?.ui?.overlay?.show({
+                            this.overlay.show({
                                 message: this.strings().label?.importProgress || 'Importing keys...',
                             });
                             const response = await this.socket.request({
@@ -312,7 +302,7 @@ export class DatabaseTreecontrolControlsComponent implements OnInit, OnDestroy {
                                 : `Import complete: ${data.created} created, ${data.skipped} skipped, ${data.errors} errors`;
                             this.common.toast({ message });
                         } finally {
-                            p3xr?.ui?.overlay?.hide();
+                            this.overlay.hide();
                         }
                         // Refresh tree after import
                         await this.cmd.refresh();
@@ -345,7 +335,7 @@ export class DatabaseTreecontrolControlsComponent implements OnInit, OnDestroy {
     async deleteSearchKeys(): Promise<void> {
         let match: string;
         if (this.search.length > 0) {
-            if (p3xr.settings?.searchStartsWith) {
+            if (this.settings.searchStartsWith()) {
                 match = this.search + '*';
             } else {
                 match = '*' + this.search + '*';
@@ -362,7 +352,7 @@ export class DatabaseTreecontrolControlsComponent implements OnInit, OnDestroy {
 
             await this.common.confirm({ message: confirmMsg });
 
-            p3xr?.ui?.overlay?.show({
+            this.overlay.show({
                 message: this.strings().label?.deletingSearchKeys || 'Deleting matching keys...',
             });
 
@@ -388,7 +378,7 @@ export class DatabaseTreecontrolControlsComponent implements OnInit, OnDestroy {
                 this.common.generalHandleError(e);
             }
         } finally {
-            p3xr?.ui?.overlay?.hide();
+            this.overlay.hide();
         }
     }
 
@@ -415,17 +405,17 @@ export class DatabaseTreecontrolControlsComponent implements OnInit, OnDestroy {
     }
 
     private syncFromGlobal(): void {
-        // Access state.keys to trigger the computed getter that updates globalKeysRaw
-        // (pages getter depends on globalKeysRaw which is set inside the keys getter)
-        const _keys = p3xr?.state?.keys;
-        this.page = Number(p3xr?.state?.page ?? 1);
-        this.pages = Number(p3xr?.state?.pages ?? 0);
-        this.search = p3xr?.state?.search ?? '';
-        this.keyCount = Array.isArray(p3xr?.state?.keysRaw) ? p3xr.state.keysRaw.length : 0;
-        this.redisTreeDivider = p3xr?.settings?.redisTreeDivider ?? ':';
-        this.treeDividers = Array.isArray(p3xr?.state?.cfg?.treeDividers) ? p3xr.state.cfg.treeDividers.slice() : [];
-        this.searchClientSide = !!p3xr?.settings?.searchClientSide;
-        this.isReadonly = p3xr?.state?.connection?.readonly === true;
+        // Access state.filteredKeys() to trigger the computed getter
+        const _keys = this.state.filteredKeys();
+        this.page = Number(this.state.page() ?? 1);
+        this.pages = Number(this.state.pages() ?? 0);
+        this.search = this.state.search() ?? '';
+        const keysRaw = this.state.keysRaw();
+        this.keyCount = Array.isArray(keysRaw) ? keysRaw.length : 0;
+        this.redisTreeDivider = this.settings.redisTreeDivider() ?? ':';
+        this.treeDividers = Array.isArray(this.state.cfg()?.treeDividers) ? this.state.cfg().treeDividers.slice() : [];
+        this.searchClientSide = !!this.settings.searchClientSide();
+        this.isReadonly = this.state.connection()?.readonly === true;
     }
 
     private requestViewRefresh(): void {

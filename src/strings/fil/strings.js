@@ -406,8 +406,8 @@ const strings = {
       maxValueDisplayInfo: "Kung nakatakda sa 0, ipakita ang buong halaga. Kung mas malaki sa 0, putulin ang haba na ito. Kung -1: para sa mga string, itago ang halaga hanggang sa i-edit; para sa iba pang mga uri, ipakita ang buong nilalaman.",
       maxKeys: "Ang max na bilang ng susi",
       maxKeysInfo: "Para hindi mag-crash ang GUI, nililimitahan namin ang max key count.",
-      keyCount: () => {
-        return `Bilang ng mga susi: ${p3xr.state.keysRaw.length}`;
+      keyCount: (opts) => {
+        return `Bilang ng mga susi: ${opts?.keyCount ?? 0}`;
       },
       label: {
         animation: "Gumamit ng animation",
@@ -551,6 +551,9 @@ const strings = {
       label: {
         key: "Susi",
         encoding: "Encoding",
+        compression: "Compression",
+        aiRateLimited: "Naabot na ang limitasyon ng AI. Subukan muli mamaya o gamitin ang iyong sariling Groq API key sa Mga Setting.",
+        aiError: "Nabigo ang AI query",
         length: "Sukat",
         ttl: "TTL",
         ttlTitle: "Oras Para Mabuhay",
@@ -637,7 +640,7 @@ const strings = {
         clear: "I-clear ang kasalukuyang paghahanap upang itakdang walang laman",
         placeholderClient: "Maghanap sa panig ng kliyente",
         placeholderServer: "Maghanap sa gilid ng server",
-        info: "Ang ibig sabihin ng paghahanap sa panig ng kliyente, na tumutugma ito sa teksto sa input ng paghahanap. Ang ibig sabihin ng paghahanap sa gilid ng server, iyon ay tulad ng paghahanap sa mga pattern ng key bilang *{search-text}*. Para sa malalaking hanay ng paghahanap, mas mainam na gumamit ng paghahanap sa gilid ng server. Para sa mas maliliit na hanay ng paghahanap, mas mainam na gamitin ang client side search mode." + ` Kung ang bilang ng mga susi ay tapos na ${p3xr.settings.maxLightKeysCount}, maaari ka lamang maghanap sa gilid ng server.`,
+        info: (opts) => "Ang ibig sabihin ng paghahanap sa panig ng kliyente, na tumutugma ito sa teksto sa input ng paghahanap. Ang ibig sabihin ng paghahanap sa gilid ng server, iyon ay tulad ng paghahanap sa mga pattern ng key bilang *{search-text}*. Para sa malalaking hanay ng paghahanap, mas mainam na gumamit ng paghahanap sa gilid ng server. Para sa mas maliliit na hanay ng paghahanap, mas mainam na gamitin ang client side search mode." + ` Kung ang bilang ng mga susi ay tapos na ${opts?.maxLightKeysCount ?? 110000}, maaari ka lamang maghanap sa gilid ng server.`,
         largeSetInfo: "Sa isang malaking hanay, hindi pinagana ang paghahanap sa panig ng kliyente. kaya sa ngayon tanging server side searching lang ang posible.",
         infoDetails: "Upang malaman kung paano gumagana ang paghahanap, pakitingnan ang mga setting"
       },

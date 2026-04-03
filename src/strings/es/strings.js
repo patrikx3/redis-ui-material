@@ -408,8 +408,8 @@ const strings = {
       maxValueDisplayInfo: "Si se establece en 0, muestra valores completos. Si es mayor que 0, trunca a esta longitud. Si -1: para cadenas, oculta el valor hasta editar; para otros tipos, muestra contenido completo.",
       maxKeys: "Número máximo de claves",
       maxKeysInfo: "Para que el GUI no se bloquee, limitamos el número máximo de claves.",
-      keyCount: () => {
-        return `Número de claves: ${p3xr.state.keysRaw.length}`;
+      keyCount: (opts) => {
+        return `Número de claves: ${opts?.keyCount ?? 0}`;
       },
       label: {
         animation: "Usar animación",
@@ -553,6 +553,9 @@ const strings = {
       label: {
         key: "Clave",
         encoding: "Codificación",
+        compression: "Compresión",
+        aiRateLimited: "Límite de solicitudes de AI alcanzado. Inténtelo de nuevo más tarde o use su propia clave de API de Groq en Configuración.",
+        aiError: "La consulta de AI falló",
         length: "Tamaño",
         ttl: "TTL",
         ttlTitle: "Tiempo de vida",
@@ -639,7 +642,7 @@ const strings = {
         clear: "Limpiar búsqueda actual",
         placeholderClient: "Buscar en el cliente",
         placeholderServer: "Buscar en el servidor",
-        info: "La búsqueda del lado del cliente significa que coincide con el texto en la entrada de búsqueda. La búsqueda del lado del servidor significa que busca en los patrones de claves como *{texto-de-búsqueda}*. Para conjuntos de búsqueda grandes, es mejor usar la búsqueda del lado del servidor. Para conjuntos más pequeños, es mejor usar la búsqueda del lado del cliente." + ` Si el número de claves supera ${p3xr.settings.maxLightKeysCount}, solo puede buscar en el servidor.`,
+        info: (opts) => "La búsqueda del lado del cliente significa que coincide con el texto en la entrada de búsqueda. La búsqueda del lado del servidor significa que busca en los patrones de claves como *{texto-de-búsqueda}*. Para conjuntos de búsqueda grandes, es mejor usar la búsqueda del lado del servidor. Para conjuntos más pequeños, es mejor usar la búsqueda del lado del cliente." + ` Si el número de claves supera ${opts?.maxLightKeysCount ?? 110000}, solo puede buscar en el servidor.`,
         largeSetInfo: "En un conjunto grande, la búsqueda del lado del cliente está deshabilitada, así que ahora solo es posible la búsqueda del lado del servidor.",
         infoDetails: "Para descubrir cómo funciona la búsqueda, consulte la configuración"
       },

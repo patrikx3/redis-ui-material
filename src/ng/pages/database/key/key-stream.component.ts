@@ -11,12 +11,13 @@ import { CommonService } from '../../../services/common.service';
 import { JsonViewDialogService } from '../../../dialogs/json-view-dialog.service';
 import { KeyNewOrSetDialogService } from '../../../dialogs/key-new-or-set-dialog.service';
 import { MainCommandService } from '../../../services/main-command.service';
+import { RedisStateService } from '../../../services/redis-state.service';
+import { SettingsService } from '../../../services/settings.service';
 import { KeyTypeBase } from './key-type-base';
 import { KeyPaging } from './key-paging';
 import { KeyPagerInlineComponent } from './key-pager-inline.component';
 
-declare const p3xr: any;
-const dayjs = require('dayjs');
+const intlLocaleMap: Record<string, string> = { 'zn': 'zh-CN', 'no': 'nb', 'fil': 'tl' };
 
 @Component({
     selector: 'p3xr-key-stream',
@@ -27,7 +28,7 @@ const dayjs = require('dayjs');
     encapsulation: ViewEncapsulation.None,
 })
 export class KeyStreamComponent extends KeyTypeBase implements OnInit, OnChanges {
-    paging = new KeyPaging();
+    paging: KeyPaging;
     pagedEntries: Array<{ id: string; fields: Array<[string, string]>; data: any; displayData: any; hasDuplicateFields: boolean }> = [];
     private allEntries: Array<{ id: string; fields: Array<[string, string]>; data: any; displayData: any; hasDuplicateFields: boolean }> = [];
 
@@ -38,8 +39,11 @@ export class KeyStreamComponent extends KeyTypeBase implements OnInit, OnChanges
         @Inject(BreakpointObserver) breakpointObserver: BreakpointObserver,
         @Inject(MainCommandService) cmd: MainCommandService,
         @Inject(ChangeDetectorRef) cdr: ChangeDetectorRef,
+        @Inject(RedisStateService) redisState: RedisStateService,
+        @Inject(SettingsService) settingsService: SettingsService,
     ) {
-        super(i18n, socket, common, jsonViewDialog, keyNewOrSetDialog, breakpointObserver, cmd, cdr);
+        super(i18n, socket, common, jsonViewDialog, keyNewOrSetDialog, breakpointObserver, cmd, cdr, redisState, settingsService);
+        this.paging = new KeyPaging({ settingsService });
 
         effect(() => {
             this.i18n.strings();
@@ -89,9 +93,10 @@ export class KeyStreamComponent extends KeyTypeBase implements OnInit, OnChanges
     showTimestamp(id: string): string {
         try {
             const ms = parseInt(id.slice(0, id.indexOf('-')));
-            const localeMap = p3xr?.settings?.language?.momentDateMap || {};
-            const lang = p3xr?.settings?.language?.current || 'en';
-            return dayjs(new Date(ms)).locale(localeMap[lang] || lang).format('L LTS');
+            const lang = this.i18n.currentLang() || 'en';
+            const locale = intlLocaleMap[lang] || lang;
+            const date = new Date(ms);
+            return date.toLocaleString(locale, { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' });
         } catch { return id; }
     }
 
@@ -109,7 +114,7 @@ export class KeyStreamComponent extends KeyTypeBase implements OnInit, OnChanges
 
     formatJsonValue(value: string): string {
         try {
-            return JSON.stringify(JSON.parse(value), null, p3xr?.settings?.jsonFormat ?? 2);
+            return JSON.stringify(JSON.parse(value), null, this.settingsService.jsonFormat() ?? 2);
         } catch {
             return value;
         }

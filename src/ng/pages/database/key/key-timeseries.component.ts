@@ -17,11 +17,11 @@ import { CommonService } from '../../../services/common.service';
 import { JsonViewDialogService } from '../../../dialogs/json-view-dialog.service';
 import { KeyNewOrSetDialogService } from '../../../dialogs/key-new-or-set-dialog.service';
 import { MainCommandService } from '../../../services/main-command.service';
+import { RedisStateService } from '../../../services/redis-state.service';
+import { SettingsService } from '../../../services/settings.service';
 import { KeyTypeBase } from './key-type-base';
 import { P3xrAccordionComponent } from '../../../components/p3xr-accordion.component';
 import { P3xrButtonComponent } from '../../../components/p3xr-button.component';
-
-declare const p3xr: any;
 
 @Component({
     selector: 'p3xr-key-timeseries',
@@ -83,8 +83,10 @@ export class KeyTimeseriesComponent extends KeyTypeBase implements OnInit, OnCha
         @Inject(BreakpointObserver) breakpointObserver: BreakpointObserver,
         @Inject(MainCommandService) cmd: MainCommandService,
         @Inject(ChangeDetectorRef) cdr: ChangeDetectorRef,
+        @Inject(RedisStateService) redisState: RedisStateService,
+        @Inject(SettingsService) settingsService: SettingsService,
     ) {
-        super(i18n, socket, common, jsonViewDialog, keyNewOrSetDialog, breakpointObserver, cmd, cdr);
+        super(i18n, socket, common, jsonViewDialog, keyNewOrSetDialog, breakpointObserver, cmd, cdr, redisState, settingsService);
     }
 
     ngOnInit(): void {

@@ -10,6 +10,7 @@ import { MatListModule } from '@angular/material/list';
 import { I18nService } from '../../services/i18n.service';
 import { SocketService } from '../../services/socket.service';
 import { CommonService } from '../../services/common.service';
+import { SettingsService } from '../../services/settings.service';
 import { P3xrAccordionComponent } from '../../components/p3xr-accordion.component';
 import { P3xrButtonComponent } from '../../components/p3xr-button.component';
 import { P3xrInputComponent } from '../../components/p3xr-input.component';
@@ -53,6 +54,7 @@ export class MemoryAnalysisComponent implements OnInit, OnDestroy, AfterViewInit
         @Inject(NgZone) private ngZone: NgZone,
         @Inject(ElementRef) private elementRef: ElementRef,
         @Inject(RedisStateService) private state: RedisStateService,
+        @Inject(SettingsService) private settings: SettingsService,
     ) {
         this.strings = this.i18n.strings;
     }
@@ -150,7 +152,7 @@ export class MemoryAnalysisComponent implements OnInit, OnDestroy, AfterViewInit
         if (!seconds || seconds <= 0) return '-';
         try {
             const humanizeDuration = require('humanize-duration');
-            const hdOpts = (window as any).p3xr?.settings?.getHumanizeDurationOptions?.() ?? {};
+            const hdOpts = this.settings.getHumanizeDurationOptions();
             return humanizeDuration(seconds * 1000, { ...hdOpts, delimiter: ' ' });
         } catch {
             if (seconds < 60) return seconds + 's';

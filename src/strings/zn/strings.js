@@ -404,8 +404,8 @@ const strings = {
       maxValueDisplayInfo: "如果最大值显示为零，则显示所有内容，如果大于0，则将截断。 如果它是-1，它将不显示没有编辑字符串的值，对于其他人，它显示所有内容。",
       maxKeys: "最大密钥数",
       maxKeysInfo: "为了避免GUI崩溃，我们限制了最大密钥数。",
-      keyCount: () => {
-        return `键数: ${p3xr.state.keysRaw.length}`;
+      keyCount: (opts) => {
+        return `键数: ${opts?.keyCount ?? 0}`;
       },
       label: {
         animation: "使用动画",
@@ -549,6 +549,9 @@ const strings = {
       label: {
         key: "键",
         encoding: "编码",
+        compression: "压缩",
+        aiRateLimited: "已达到 AI 请求限制。请稍后重试或在设置中使用您自己的 Groq API 密钥。",
+        aiError: "AI 查询失败",
         length: "大小",
         ttl: "TTL",
         ttlTitle: "生存时间",
@@ -635,7 +638,7 @@ const strings = {
         clear: "清空当前搜索结果",
         placeholderClient: "客户端搜索",
         placeholderServer: "服务端搜索",
-        info: `客户端搜索是匹配输入的文本,服务端搜索则遵循*{search-text}*模式搜索.对于大量数据的搜索最好在服务端进行搜索,而较小数据量可以考虑客户端搜索。如果键数超过  ${p3xr.settings.maxLightKeysCount}个的则只能在服务端搜索`,
+        info: (opts) => `客户端搜索是匹配输入的文本,服务端搜索则遵循*{search-text}*模式搜索.对于大量数据的搜索最好在服务端进行搜索,而较小数据量可以考虑客户端搜索。如果键数超过  ${opts?.maxLightKeysCount ?? 110000}个的则只能在服务端搜索`,
         largeSetInfo: "在大型集合中，禁用客户端搜索。 所以现在只能进行服务器端搜索。",
         infoDetails: "要了解搜索的工作原理，请查看设置"
       },

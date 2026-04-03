@@ -11,8 +11,7 @@ import { DialogCancelButtonComponent } from '../components/dialog-cancel-button.
 import { I18nService } from '../services/i18n.service';
 import { SocketService } from '../services/socket.service';
 import { CommonService } from '../services/common.service';
-
-declare const p3xr: any;
+import { RedisStateService } from '../services/redis-state.service';
 
 @Component({
     selector: 'p3xr-ai-settings-dialog',
@@ -72,6 +71,7 @@ export class AiSettingsDialogComponent {
         @Inject(SocketService) private socket: SocketService,
         @Inject(CommonService) private common: CommonService,
         @Inject(ChangeDetectorRef) private cdr: ChangeDetectorRef,
+        @Inject(RedisStateService) private state: RedisStateService,
     ) {
         this.strings = this.i18n.strings;
     }
@@ -99,9 +99,10 @@ export class AiSettingsDialogComponent {
 
             await this.socket.request({
                 action: 'set-groq-api-key',
-                payload: { apiKey: key, aiEnabled: p3xr.state.cfg?.aiEnabled !== false, aiUseOwnKey: p3xr.state.cfg?.aiUseOwnKey === true },
+                payload: { apiKey: key, aiEnabled: this.state.cfg()?.aiEnabled !== false, aiUseOwnKey: this.state.cfg()?.aiUseOwnKey === true },
             });
-            p3xr.state.cfg.groqApiKey = key || '';
+            const cfg = { ...this.state.cfg(), groqApiKey: key || '' };
+            this.state.cfg.set(cfg);
             this.common.toast({ message: this.strings().label?.aiGroqApiKeySaved || 'AI settings saved' });
             this.dialogRef.close();
         } catch (e: any) {

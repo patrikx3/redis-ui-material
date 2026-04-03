@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { decode as msgpackDecode } from '@msgpack/msgpack';
 
 export interface ProfilerEntry {
     displayTime: string;
@@ -121,6 +122,18 @@ export class MonitoringDataService {
         this.debounceSaveProfiler();
     };
 
+    private decodePubsubMessage(message: any): string {
+        if (message instanceof ArrayBuffer) {
+            try {
+                const decoded = msgpackDecode(new Uint8Array(message));
+                return JSON.stringify(decoded, null, 2);
+            } catch {
+                return new TextDecoder().decode(message);
+            }
+        }
+        return String(message);
+    }
+
     private onPubSubMessage = (data: any) => {
         const lang = this.langFn() || 'en';
         const date = new Date();
@@ -129,7 +142,7 @@ export class MonitoringDataService {
             displayTime,
             fullTimestamp: date.toISOString(),
             channel: data.channel,
-            message: String(data.message),
+            message: this.decodePubsubMessage(data.message),
         };
         this.pubsubEntries.push(entry);
         if (this.pubsubEntries.length > MAX_ENTRIES) {

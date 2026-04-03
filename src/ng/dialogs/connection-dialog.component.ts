@@ -17,8 +17,9 @@ import { I18nService } from '../services/i18n.service';
 import { SocketService } from '../services/socket.service';
 import { CommonService } from '../services/common.service';
 import { AskAuthorizationDialogService } from './ask-authorization-dialog.service';
-
-declare const p3xr: any;
+import { RedisStateService } from '../services/redis-state.service';
+import { SettingsService } from '../services/settings.service';
+import { OverlayService } from '../services/overlay.service';
 
 export interface ConnectionDialogData {
     type: 'new' | 'edit';
@@ -467,7 +468,7 @@ export class ConnectionDialogComponent implements AfterViewInit {
 
     // Readonly connections mode from global state
     get readonlyConnections(): boolean {
-        return !!p3xr?.state?.cfg?.readonlyConnections;
+        return !!this.state.cfg()?.readonlyConnections;
     }
 
     constructor(
@@ -478,13 +479,16 @@ export class ConnectionDialogComponent implements AfterViewInit {
         @Inject(CommonService) private commonService: CommonService,
         @Inject(AskAuthorizationDialogService) private askAuthDialogService: AskAuthorizationDialogService,
         @Inject(NgZone) private ngZone: NgZone,
+        @Inject(RedisStateService) private state: RedisStateService,
+        @Inject(SettingsService) private settings: SettingsService,
+        @Inject(OverlayService) private overlay: OverlayService,
     ) {
         this.strings = this.i18n.strings;
         this.options = data;
         this.model = this.initModel(data);
 
         // Collect existing group names for autocomplete
-        const connections = p3xr?.state?.connections?.list || [];
+        const connections = this.state.connections()?.list || [];
         const groups = new Set<string>();
         for (const conn of connections) {
             if (conn.group && typeof conn.group === 'string' && conn.group.trim()) {
@@ -520,7 +524,7 @@ export class ConnectionDialogComponent implements AfterViewInit {
         let model: any;
 
         if (data.model !== undefined) {
-            model = p3xr.clone(data.model);
+            model = structuredClone(data.model);
             // For existing connections, set sensitive fields to the model id
             // (server-side resolves these by id)
             model.password = data.model.id;
@@ -601,7 +605,7 @@ export class ConnectionDialogComponent implements AfterViewInit {
             port: undefined,
             password: undefined,
             username: undefined,
-            id: p3xr.nextId(),
+            id: this.settings.generateId(),
         };
         if (index === undefined) {
             this.model.nodes.push(newNode);
@@ -655,7 +659,7 @@ export class ConnectionDialogComponent implements AfterViewInit {
         }
 
         try {
-            const authModel = p3xr.clone(this.model);
+            const authModel = structuredClone(this.model);
 
             if (this.model.askAuth === true) {
                 const auth = await this.askAuthDialogService.show({
@@ -671,7 +675,7 @@ export class ConnectionDialogComponent implements AfterViewInit {
                 }
             }
 
-            p3xr.ui.overlay.show({
+            this.overlay.show({
                 message: this.strings().title?.connectingRedis,
             });
 
@@ -688,7 +692,7 @@ export class ConnectionDialogComponent implements AfterViewInit {
         } catch (e) {
             this.commonService.generalHandleError(e);
         } finally {
-            p3xr.ui.overlay.hide();
+            this.overlay.hide();
         }
     }
 
@@ -706,19 +710,19 @@ export class ConnectionDialogComponent implements AfterViewInit {
             this.model.port = 6379;
         }
         if (this.options.type === 'new') {
-            this.model.id = p3xr.nextId();
+            this.model.id = this.settings.generateId();
         }
         for (const node of this.model.nodes) {
             if (node.host === undefined) {
                 node.host = 'localhost';
             }
             if (node.id === undefined) {
-                node.id = p3xr.nextId();
+                node.id = this.settings.generateId();
             }
         }
 
         try {
-            const saveModel = p3xr.clone(this.model);
+            const saveModel = structuredClone(this.model);
 
             // Trim group name to avoid inconsistencies
             if (typeof saveModel.group === 'string') {

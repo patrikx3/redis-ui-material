@@ -406,8 +406,8 @@ const strings = {
       maxValueDisplayInfo: "Ako je postavljeno na 0, prikaži pune vrijednosti. Ako je veći od 0, skrati na ovu duljinu. Ako je -1: za nizove, sakrijte vrijednost do uređivanja; za ostale vrste, prikaži puni sadržaj.",
       maxKeys: "Maksimalni broj ključeva",
       maxKeysInfo: "Kako se GUI ne bi srušio, ograničavamo maksimalan broj ključeva.",
-      keyCount: () => {
-        return `Broj tipki: ${p3xr.state.keysRaw.length}`;
+      keyCount: (opts) => {
+        return `Broj tipki: ${opts?.keyCount ?? 0}`;
       },
       label: {
         animation: "Koristite animaciju",
@@ -551,6 +551,9 @@ const strings = {
       label: {
         key: "Ključ",
         encoding: "Kodiranje",
+        compression: "Kompresija",
+        aiRateLimited: "Dosegnuto je ograničenje AI zahtjeva. Pokušajte ponovno kasnije ili koristite vlastiti Groq API ključ u Postavkama.",
+        aiError: "AI upit nije uspio",
         length: "Veličina",
         ttl: "TTL",
         ttlTitle: "Vrijeme za život",
@@ -637,7 +640,7 @@ const strings = {
         clear: "Izbrišite trenutno pretraživanje da biste ga postavili praznim",
         placeholderClient: "Pretraži klijentsku stranu",
         placeholderServer: "Pretraživanje na strani poslužitelja",
-        info: "Pretraživanje na strani klijenta znači da odgovara tekstu u unosu pretraživanja. Pretraživanje na strani poslužitelja znači da je to poput pretraživanja u uzorcima ključeva kao *{search-text}*. Za velike skupove pretraživanja bolje je koristiti pretraživanje na strani poslužitelja. Za manje skupove pretraživanja, bolje je koristiti način pretraživanja na strani klijenta." + ` Ako je brojanje ključeva gotovo ${p3xr.settings.maxLightKeysCount}, možete pretraživati samo na strani poslužitelja.`,
+        info: (opts) => "Pretraživanje na strani klijenta znači da odgovara tekstu u unosu pretraživanja. Pretraživanje na strani poslužitelja znači da je to poput pretraživanja u uzorcima ključeva kao *{search-text}*. Za velike skupove pretraživanja bolje je koristiti pretraživanje na strani poslužitelja. Za manje skupove pretraživanja, bolje je koristiti način pretraživanja na strani klijenta." + ` Ako je brojanje ključeva gotovo ${opts?.maxLightKeysCount ?? 110000}, možete pretraživati samo na strani poslužitelja.`,
         largeSetInfo: "U velikom skupu, pretraživanje na strani klijenta je onemogućeno. tako da je trenutno moguće samo pretraživanje na strani poslužitelja.",
         infoDetails: "Da biste saznali kako pretraživanje radi, pogledajte postavke"
       },

@@ -143,11 +143,10 @@ For more information about all licenses, please see ${webpackBanner}
 
 }
 
-// Auto-inject p3xr module reference for every bare `p3xr` variable access.
-// This replaces the global window.p3xr with a webpack module — invisible in browser console.
+// Inject API port for test/dev override (P3XR_API_PORT env var)
 plugins.push(
-    new webpack.ProvidePlugin({
-        p3xr: path.resolve(__dirname, '../core/p3xr.js'),
+    new webpack.DefinePlugin({
+        P3XR_API_PORT: JSON.stringify(parseInt(process.env.P3XR_API_PORT || '7843')),
     })
 )
 

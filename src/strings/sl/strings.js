@@ -406,8 +406,8 @@ const strings = {
       maxValueDisplayInfo: "Če je nastavljeno na 0, prikaži celotne vrednosti. Če je večji od 0, ga skrajšajte na to dolžino. Če -1: za nize skrije vrednost do urejanja; za druge vrste pokaži celotno vsebino.",
       maxKeys: "Največje število ključev",
       maxKeysInfo: "Da se GUI ne zruši, omejimo največje število ključev.",
-      keyCount: () => {
-        return `Število ključev: ${p3xr.state.keysRaw.length}`;
+      keyCount: (opts) => {
+        return `Število ključev: ${opts?.keyCount ?? 0}`;
       },
       label: {
         animation: "Uporabite animacijo",
@@ -551,6 +551,9 @@ const strings = {
       label: {
         key: "Ključ",
         encoding: "Kodiranje",
+        compression: "Stiskanje",
+        aiRateLimited: "Dosežena je omejitev AI zahtev. Poskusite znova pozneje ali uporabite lasten Groq API ključ v Nastavitvah.",
+        aiError: "AI poizvedba ni uspela",
         length: "Velikost",
         ttl: "TTL",
         ttlTitle: "Čas za življenje",
@@ -637,7 +640,7 @@ const strings = {
         clear: "Počistite trenutno iskanje, da nastavite prazno",
         placeholderClient: "Iskanje na strani odjemalca",
         placeholderServer: "Iskanje na strani strežnika",
-        info: "Iskanje na strani odjemalca pomeni, da se ujema z besedilom v iskalnem vnosu. Iskanje na strani strežnika pomeni, da je podobno iskanju v vzorcih ključev kot *{search-text}*. Za velike iskalne nize je bolje uporabiti iskanje na strani strežnika. Za manjše iskalne nize je bolje uporabiti način iskanja na strani odjemalca." + ` Če je štetja ključev konec ${p3xr.settings.maxLightKeysCount}, lahko iš��ete samo na strani strežnika.`,
+        info: (opts) => "Iskanje na strani odjemalca pomeni, da se ujema z besedilom v iskalnem vnosu. Iskanje na strani strežnika pomeni, da je podobno iskanju v vzorcih ključev kot *{search-text}*. Za velike iskalne nize je bolje uporabiti iskanje na strani strežnika. Za manjše iskalne nize je bolje uporabiti način iskanja na strani odjemalca." + ` Če je štetja ključev konec ${opts?.maxLightKeysCount ?? 110000}, lahko iš��ete samo na strani strežnika.`,
         largeSetInfo: "V velikem nizu je iskanje na strani odjemalca onemogočeno. tako da je trenutno možno samo iskanje na strani strežnika.",
         infoDetails: "Če želite izvedeti, kako iskanje deluje, preverite nastavitve"
       },

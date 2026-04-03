@@ -71,6 +71,40 @@ body.p3xr-theme-light .p3xr-database-key-info-row-clickable:hover {
     font-weight: normal;
 }
 
+// Compression badge
+.p3xr-compression-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.p3xr-compression-algorithm {
+    background-color: var(--p3xr-btn-accent-bg);
+    color: var(--p3xr-btn-accent-color);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+.p3xr-compression-ratio-badge {
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.p3xr-compression-good {
+    background-color: var(--mat-sys-primary, #4caf50);
+    color: var(--p3xr-btn-primary-color);
+}
+
+.p3xr-compression-bad {
+    background-color: var(--p3xr-btn-warn-bg, #f44336);
+    color: var(--p3xr-btn-warn-color);
+}
+
 .p3xr-format-toggle {
     border-radius: 4px !important;
     overflow: hidden !important;

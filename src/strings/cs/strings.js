@@ -408,8 +408,8 @@ const strings = {
       maxValueDisplayInfo: "Pokud je nastaveno na 0, zobrazí úplné hodnoty. Pokud je větší než 0, zkrátí na tuto délku. Pokud je -1: pro řetězce skryje hodnotu do úpravy; pro ostatní typy zobrazí úplný obsah.",
       maxKeys: "Maximální počet klíčů",
       maxKeysInfo: "Aby GUI nespadlo, omezujeme maximální počet klíčů.",
-      keyCount: () => {
-        return `Počet klíčů: ${p3xr.state.keysRaw.length}`;
+      keyCount: (opts) => {
+        return `Počet klíčů: ${opts?.keyCount ?? 0}`;
       },
       label: {
         animation: "Použít animaci",
@@ -553,6 +553,9 @@ const strings = {
       label: {
         key: "Klíč",
         encoding: "Kódování",
+        compression: "Komprese",
+        aiRateLimited: "Dosažen limit AI požadavků. Zkuste to později nebo použijte vlastní Groq API klíč v Nastavení.",
+        aiError: "AI dotaz selhal",
         length: "Velikost",
         ttl: "TTL",
         ttlTitle: "Doba životnosti",
@@ -639,7 +642,7 @@ const strings = {
         clear: "Vymazat aktuální vyhledávání",
         placeholderClient: "Hledat na straně klienta",
         placeholderServer: "Hledat na straně serveru",
-        info: "Hledání na straně klienta znamená, že odpovídá textu ve vyhledávacím poli. Hledání na straně serveru znamená, že vyhledává ve vzorcích klíčů jako *{hledaný-text}*. Pro velké sady dat je lepší použít vyhledávání na straně serveru. Pro menší sady dat je lepší použít režim vyhledávání na straně klienta." + ` Pokud je počet klíčů nad ${p3xr.settings.maxLightKeysCount}, můžete vyhledávat pouze na straně serveru.`,
+        info: (opts) => "Hledání na straně klienta znamená, že odpovídá textu ve vyhledávacím poli. Hledání na straně serveru znamená, že vyhledává ve vzorcích klíčů jako *{hledaný-text}*. Pro velké sady dat je lepší použít vyhledávání na straně serveru. Pro menší sady dat je lepší použít režim vyhledávání na straně klienta." + ` Pokud je počet klíčů nad ${opts?.maxLightKeysCount ?? 110000}, můžete vyhledávat pouze na straně serveru.`,
         largeSetInfo: "Ve velké sadě dat je vyhledávání na straně klienta zakázáno, takže v tuto chvíli je možné pouze vyhledávání na straně serveru.",
         infoDetails: "Chcete-li zjistit, jak vyhledávání funguje, podívejte se do nastavení"
       },

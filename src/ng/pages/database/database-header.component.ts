@@ -12,8 +12,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { I18nService } from '../../services/i18n.service';
 import { MainCommandService } from '../../services/main-command.service';
 import { SocketService } from '../../services/socket.service';
-
-declare const p3xr: any;
+import { RedisStateService } from '../../services/redis-state.service';
 
 @Component({
     selector: 'p3xr-database-header',
@@ -212,6 +211,7 @@ export class DatabaseHeaderComponent implements OnInit, OnDestroy {
         @Inject(MainCommandService) private readonly cmd: MainCommandService,
         @Inject(SocketService) private readonly socket: SocketService,
         @Inject(ChangeDetectorRef) private readonly cdr: ChangeDetectorRef,
+        @Inject(RedisStateService) private readonly state: RedisStateService,
     ) {
         this.strings = this.i18n.strings;
     }
@@ -268,12 +268,12 @@ export class DatabaseHeaderComponent implements OnInit, OnDestroy {
     }
 
     private syncFromGlobal(): void {
-        const state = p3xr?.state;
-        this.hasConnection = state?.connection !== undefined;
-        this.isCluster = state?.connection?.cluster === true;
-        this.isReadonly = state?.connection?.readonly === true;
-        this.databaseIndexes = state?.databaseIndexes ?? [];
-        this.keyspaceDatabases = state?.info?.keyspaceDatabases ?? {};
+        const conn = this.state.connection();
+        this.hasConnection = conn !== undefined;
+        this.isCluster = conn?.cluster === true;
+        this.isReadonly = conn?.readonly === true;
+        this.databaseIndexes = this.state.databaseIndexes() ?? [];
+        this.keyspaceDatabases = this.state.info()?.keyspaceDatabases ?? {};
         this.currentDatabase = this.cmd.currentDatabase;
         this.cdr.detectChanges();
     }

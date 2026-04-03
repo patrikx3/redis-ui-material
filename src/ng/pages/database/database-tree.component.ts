@@ -11,10 +11,10 @@ import { KeyNewOrSetDialogService } from '../../dialogs/key-new-or-set-dialog.se
 import { NavigationService } from '../../services/navigation.service';
 import { MainCommandService } from '../../services/main-command.service';
 import { TreeBuilderService } from '../../services/tree-builder.service';
+import { RedisStateService } from '../../services/redis-state.service';
+import { SettingsService } from '../../services/settings.service';
 
 require('./database-tree.component.scss');
-
-declare const p3xr: any;
 
 export interface FlatTreeNode {
     label: string;
@@ -52,6 +52,7 @@ export class DatabaseTreeComponent implements OnInit, OnDestroy {
     divider = ':';
     readonly strings;
     private expandedKeys = new Set<string>();
+    private expandedNodeObjects: any[] = [];
     private hierarchicalNodes: any[] = [];
     private readonly unsubs: Array<() => void> = [];
 
@@ -67,6 +68,8 @@ export class DatabaseTreeComponent implements OnInit, OnDestroy {
         @Inject(MainCommandService) private readonly cmd: MainCommandService,
         @Inject(ChangeDetectorRef) private readonly cdr: ChangeDetectorRef,
         @Inject(TreeBuilderService) private readonly treeBuilder: TreeBuilderService,
+        @Inject(RedisStateService) private readonly state: RedisStateService,
+        @Inject(SettingsService) private readonly settingsService: SettingsService,
     ) {
         this.strings = this.i18n.strings;
         effect(() => {
@@ -79,6 +82,7 @@ export class DatabaseTreeComponent implements OnInit, OnDestroy {
         this.syncGlobalState();
         this.attachWindowFocusListener();
         this.startPolling();
+        this.startTtlRepaint();
 
         // Subscribe to MainCommandService events
         const subDelete = this.cmd.keyDelete$.subscribe((arg) => {
@@ -165,9 +169,76 @@ export class DatabaseTreeComponent implements OnInit, OnDestroy {
         this.unsubs.forEach(fn => fn());
     }
 
-    // --- TTL indicator removed: tree TTL is fetched once and becomes stale,
-    // causing mismatch with the fresh TTL in key view. See feature-03 docs.
-    // The server still includes TTL in keysInfo for potential future use.
+    // --- TTL (computed on-the-fly from fetchedAt, single 30s repaint) ---
+
+    private ttlRepaintTimer: any;
+
+    private startTtlRepaint(): void {
+        const tick = () => {
+            this.cdr.markForCheck();
+            let minTtl = Infinity;
+            let hasExpired = false;
+            for (const node of this.dataSource) {
+                if (node.type === 'folder') continue;
+                const serverTtl = node.keysInfo?.ttl;
+                if (!serverTtl || serverTtl <= 0) continue;
+                const remaining = this.getRemainingTtl(node);
+                if (remaining <= 0) {
+                    hasExpired = true;
+                } else if (remaining < minTtl) {
+                    minTtl = remaining;
+                }
+            }
+            if (hasExpired) {
+                this.cmd.refresh();
+                // Retry soon in case refresh was throttled
+                this.ttlRepaintTimer = setTimeout(tick, 3000);
+                return;
+            }
+            let interval: number;
+            if (minTtl <= 30) {
+                interval = 1000;
+            } else if (minTtl <= 300) {
+                interval = 5000;
+            } else {
+                interval = 30000;
+            }
+            this.ttlRepaintTimer = setTimeout(tick, interval);
+        };
+        this.ttlRepaintTimer = setTimeout(tick, 30000);
+        this.unsubs.push(() => clearTimeout(this.ttlRepaintTimer));
+    }
+
+    getRemainingTtl(node: FlatTreeNode): number {
+        const ttl = node.keysInfo?.ttl;
+        if (!ttl || ttl <= 0) return -1;
+        const fetchedAt = this.state.keysInfoFetchedAt() ?? Date.now();
+        const elapsed = Math.floor((Date.now() - fetchedAt) / 1000);
+        const remaining = ttl - elapsed;
+        return remaining > 0 ? remaining : -1;
+    }
+
+    formatTtl(node: FlatTreeNode): string {
+        const remaining = this.getRemainingTtl(node);
+        if (remaining <= 0) return '';
+        const humanizeDuration = require('humanize-duration');
+        const hdOpts = this.settingsService.getHumanizeDurationOptions();
+        return humanizeDuration(remaining * 1000, {
+            ...hdOpts,
+            largest: 2,
+            round: true,
+            delimiter: ' ',
+        });
+    }
+
+    getTtlClass(node: FlatTreeNode): string {
+        const remaining = this.getRemainingTtl(node);
+        if (remaining <= 0) return '';
+        if (remaining < 30) return 'p3xr-tree-ttl-red p3xr-tree-ttl-pulse';
+        if (remaining < 300) return 'p3xr-tree-ttl-red';
+        if (remaining < 3600) return 'p3xr-tree-ttl-yellow';
+        return 'p3xr-tree-ttl-green';
+    }
 
     // --- Tree data ---
 
@@ -212,7 +283,7 @@ export class DatabaseTreeComponent implements OnInit, OnDestroy {
             });
 
             if (typeof window['gtag'] === 'function') {
-                window['gtag']('config', p3xr.settings.googleAnalytics, { page_path: '/delete' });
+                window['gtag']('config', this.settingsService.googleAnalytics, { page_path: '/delete' });
             }
 
             this.navigateTo('database.statistics');
@@ -243,7 +314,7 @@ export class DatabaseTreeComponent implements OnInit, OnDestroy {
             });
 
             if (typeof window['gtag'] === 'function') {
-                window['gtag']('config', p3xr.settings.googleAnalytics, { page_path: '/rename' });
+                window['gtag']('config', this.settingsService.googleAnalytics, { page_path: '/rename' });
             }
 
             this.navigateTo('database.key', {
@@ -266,11 +337,12 @@ export class DatabaseTreeComponent implements OnInit, OnDestroy {
                 message: this.i18n.strings().confirm.deleteAllKeys({ key: node.key }),
             });
 
+            const divider = this.settingsService.redisTreeDivider();
             await this.socket.request({
                 action: 'key-del-tree',
                 payload: {
                     key: node.key,
-                    redisTreeDivider: p3xr.settings.redisTreeDivider,
+                    redisTreeDivider: divider,
                 },
             });
 
@@ -280,7 +352,7 @@ export class DatabaseTreeComponent implements OnInit, OnDestroy {
             const currentPath = location.pathname;
             if (currentPath.startsWith('/database/key/')) {
                 const currentKey = decodeURIComponent(currentPath.slice('/database/key/'.length).replace(/~/g, '%'));
-                if (currentKey.startsWith(node.key + p3xr.settings.redisTreeDivider)) {
+                if (currentKey.startsWith(node.key + divider)) {
                     this.navigateTo('database.statistics');
                 }
             }
@@ -318,9 +390,9 @@ export class DatabaseTreeComponent implements OnInit, OnDestroy {
     extractNodeTooltip(node: FlatTreeNode): string {
         if (node.type !== 'folder' && node.keysInfo) {
             const strings = this.i18n.strings();
-            return p3xr.ui.htmlEncode((strings.redisTypes?.[node.keysInfo.type] ?? node.keysInfo.type) + ' - ' + node.key);
+            return (globalThis as any).htmlEncode((strings.redisTypes?.[node.keysInfo.type] ?? node.keysInfo.type) + ' - ' + node.key);
         }
-        return p3xr.ui.htmlEncode(node.key);
+        return (globalThis as any).htmlEncode(node.key);
     }
 
     deleteTreeTooltip(node: FlatTreeNode): string {
@@ -330,16 +402,11 @@ export class DatabaseTreeComponent implements OnInit, OnDestroy {
     // --- Tree rebuild ---
 
     private rebuildTree(): void {
-        const state = p3xr?.state;
-        if (!state) {
-            return;
-        }
+        this.divider = this.settingsService.redisTreeDivider() ?? ':';
+        this.isReadonly = this.state.connection()?.readonly === true;
 
-        this.divider = p3xr.settings?.redisTreeDivider ?? ':';
-        this.isReadonly = state.connection?.readonly === true;
-
-        const keys: string[] = state.keysRaw ?? [];
-        const keysInfo: any = state.keysInfo ?? {};
+        const keys: string[] = this.state.keysRaw() ?? [];
+        const keysInfo: any = this.state.keysInfo() ?? {};
 
         this.treeBuilder.keysToTreeControl({
             keys,
@@ -393,12 +460,13 @@ export class DatabaseTreeComponent implements OnInit, OnDestroy {
         };
         collectExpanded(this.hierarchicalNodes);
 
-        p3xr.state.expandedNodes = expandedNodeObjects;
+        // Keep expanded nodes locally
+        this.expandedNodeObjects = expandedNodeObjects;
     }
 
     private syncGlobalState(): void {
-        this.divider = p3xr?.settings?.redisTreeDivider ?? ':';
-        this.isReadonly = p3xr?.state?.connection?.readonly === true;
+        this.divider = this.settingsService.redisTreeDivider() ?? ':';
+        this.isReadonly = this.state.connection()?.readonly === true;
     }
 
     // --- Polling for change detection ---
@@ -407,9 +475,9 @@ export class DatabaseTreeComponent implements OnInit, OnDestroy {
         let lastSnapshot = '';
         const id = setInterval(() => {
             const snapshot = JSON.stringify({
-                keysLength: p3xr?.state?.keysRaw?.length,
-                divider: p3xr?.settings?.redisTreeDivider,
-                readonly: p3xr?.state?.connection?.readonly,
+                keysLength: this.state.keysRaw()?.length,
+                divider: this.settingsService.redisTreeDivider(),
+                readonly: this.state.connection()?.readonly,
             });
             if (snapshot !== lastSnapshot) {
                 lastSnapshot = snapshot;

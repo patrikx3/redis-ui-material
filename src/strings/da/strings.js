@@ -406,8 +406,8 @@ const strings = {
       maxValueDisplayInfo: "Vis fulde værdier, hvis den er sat til 0. Hvis større end 0, afkortes til denne længde. Hvis -1: for strenge, skjul værdien indtil edit; for andre typer, vis det fulde indhold.",
       maxKeys: "Det maksimale nøgletal",
       maxKeysInfo: "For at GUI ikke går ned, begrænser vi det maksimale nøgletal.",
-      keyCount: () => {
-        return `Antal nøgler: ${p3xr.state.keysRaw.length}`;
+      keyCount: (opts) => {
+        return `Antal nøgler: ${opts?.keyCount ?? 0}`;
       },
       label: {
         animation: "Brug animation",
@@ -551,6 +551,9 @@ const strings = {
       label: {
         key: "Nøgle",
         encoding: "Kodning",
+        compression: "Komprimering",
+        aiRateLimited: "AI-anmodningsgrænsen er nået. Prøv igen senere eller brug din egen Groq API-nøgle i Indstillinger.",
+        aiError: "AI-forespørgsel mislykkedes",
         length: "Størrelse",
         ttl: "TTL",
         ttlTitle: "Tid til at leve",
@@ -637,7 +640,7 @@ const strings = {
         clear: "Ryd den aktuelle søgning for at angive tom",
         placeholderClient: "Søg på klientsiden",
         placeholderServer: "Søg på serversiden",
-        info: "Klientsidens søgning betyder, at den matcher teksten i søgeinputtet. Søgning på serversiden betyder, det vil sige at søge i nøglemønstrene som *{søgetekst}*. For store søgesæt er det bedre at bruge søgning på serversiden. For mindre søgesæt er det bedre at bruge søgetilstand på klientsiden." + ` Hvis nøgletal er slut ${p3xr.settings.maxLightKeysCount}, du kan kun søge på serversiden.`,
+        info: (opts) => "Klientsidens søgning betyder, at den matcher teksten i søgeinputtet. Søgning på serversiden betyder, det vil sige at søge i nøglemønstrene som *{søgetekst}*. For store søgesæt er det bedre at bruge søgning på serversiden. For mindre søgesæt er det bedre at bruge søgetilstand på klientsiden." + ` Hvis nøgletal er slut ${opts?.maxLightKeysCount ?? 110000}, du kan kun søge på serversiden.`,
         largeSetInfo: "I et stort sæt er søgning på klientsiden deaktiveret. så lige nu er kun søgning på serversiden mulig.",
         infoDetails: "For at finde ud af, hvordan søgningen fungerer, tjek venligst indstillingerne"
       },

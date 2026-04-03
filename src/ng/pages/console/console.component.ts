@@ -14,10 +14,9 @@ import { CommonService } from '../../services/common.service';
 import { SocketService } from '../../services/socket.service';
 import { RedisParserService } from '../../services/redis-parser.service';
 import { MainCommandService } from '../../services/main-command.service';
+import { RedisStateService } from '../../services/redis-state.service';
 
 require('./console.component.scss');
-
-declare const p3xr: any;
 
 const htmlEncode = (globalThis as any).htmlEncode;
 const consoleOutputStorageKey = 'p3xr-console-output-v1';
@@ -50,10 +49,18 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
 
     searchText = '';
     searchControl = new FormControl('');
-    filteredCommands: string[] = [];
+    filteredCommands: { group: string; commands: { name: string; syntax: string }[] }[] = [];
+    currentHint = '';
 
 
     aiLoading = false;
+
+    get aiAutoDetect(): boolean {
+        try { return localStorage.getItem('p3xr-ai-auto-detect') !== 'false'; } catch { return true; }
+    }
+    set aiAutoDetect(value: boolean) {
+        try { localStorage.setItem('p3xr-ai-auto-detect', String(value)); } catch {}
+    }
 
     readonly strings;
 
@@ -86,20 +93,43 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
         @Inject(SocketService) private readonly socket: SocketService,
         @Inject(RedisParserService) private readonly redisParser: RedisParserService,
         @Inject(MainCommandService) private readonly cmd: MainCommandService,
+        @Inject(RedisStateService) private readonly state: RedisStateService,
     ) {
         this.strings = this.i18n.strings;
     }
 
     ngOnInit(): void {
-        // Filter commands as user types
+        // Filter commands as user types, grouped by category with syntax hints
         this.searchControl.valueChanges.subscribe((value: string | null) => {
             this.searchText = value || '';
             this.autoResizeTextarea();
-            if (value && value.length > 0 && p3xr.state.commands?.length > 0) {
+            const commands = this.state.commands();
+            const meta = this.state.commandsMeta();
+
+            // Show argument hint for a fully typed command
+            const firstWord = (value || '').trim().split(/\s+/)[0]?.toUpperCase();
+            if (firstWord && meta[firstWord]?.syntax) {
+                this.currentHint = firstWord + ' ' + meta[firstWord].syntax;
+            } else {
+                this.currentHint = '';
+            }
+
+            if (value && value.length > 0 && commands?.length > 0) {
                 const text = value.toUpperCase();
-                this.filteredCommands = p3xr.state.commands
+                const matched = commands
                     .filter((cmd: string) => cmd.toUpperCase().includes(text))
-                    .slice(0, 15);
+                    .slice(0, 20);
+
+                // Group by category
+                const groups = new Map<string, { name: string; syntax: string }[]>();
+                for (const cmd of matched) {
+                    const info = meta[cmd.toUpperCase()];
+                    const group = info?.group || 'Other';
+                    const syntax = info?.syntax || '';
+                    if (!groups.has(group)) groups.set(group, []);
+                    groups.get(group)!.push({ name: cmd, syntax });
+                }
+                this.filteredCommands = Array.from(groups.entries()).map(([group, cmds]) => ({ group, commands: cmds }));
             } else {
                 this.filteredCommands = [];
             }
@@ -153,6 +183,10 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
 
+    isAiGloballyEnabled(): boolean {
+        return this.state.cfg()?.aiEnabled !== false;
+    }
+
     // --- Actions ---
 
     activate(): void {
@@ -195,6 +229,7 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
         } finally {
             this.updateCommandHistory(fullInput);
             // Don't clear input if AI placed a command for the user to review/execute
+            this.currentHint = '';
             if (this.aiCommandPending) {
                 this.aiCommandPending = false;
             } else {
@@ -215,8 +250,8 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
         const enter = command.trim();
         if (!enter) return;
 
-        // Explicit ai: prefix — go straight to AI (if enabled)
-        if (p3xr.state.cfg?.aiEnabled !== false && /^ai:\s*/i.test(enter)) {
+        // Explicit ai: prefix — works when AI is globally enabled in settings
+        if (this.state.cfg()?.aiEnabled !== false && /^ai:\s*/i.test(enter)) {
             const prompt = enter.replace(/^ai:\s*/i, '').trim();
             if (prompt) {
                 await this.handleAiQuery(prompt, enter);
@@ -242,16 +277,16 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
             }
 
             if (response.hasOwnProperty('database')) {
-                p3xr.state.currentDatabase = response.database;
-                p3xr.state.redisChanged = true;
+                this.state.currentDatabase.set(response.database);
+                this.state.redisChanged.set(true);
                 this.socket.stateChanged$.next();
             }
         } catch (e: any) {
             console.error(e);
             const errorMsg = e.message || '';
 
-            // If Redis doesn't recognize the command, silently try AI (if enabled)
-            if (p3xr.state.cfg?.aiEnabled !== false && this.looksLikeNaturalLanguage(enter, errorMsg)) {
+            // Auto-detect: only when AI is globally enabled AND console toggle is on
+            if (this.state.cfg()?.aiEnabled !== false && this.aiAutoDetect && this.looksLikeNaturalLanguage(enter, errorMsg)) {
                 const aiSuccess = await this.handleAiQuery(enter, enter);
                 if (aiSuccess) return;
                 this.outputAppend(`${htmlEncode(enter)}<br/><pre>${this.i18n.strings().code?.[errorMsg] || errorMsg}</pre>`);
@@ -269,7 +304,7 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
 
         // If the first word is a known Redis command, it's probably a syntax error, not natural language
         const firstWord = input.trim().split(/\s+/)[0].toUpperCase();
-        if (p3xr.state.commands?.includes(firstWord)) return false;
+        if (this.state.commands()?.includes(firstWord)) return false;
 
         return true;
     }
@@ -287,7 +322,7 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
             } catch { /* no search module, ignore */ }
 
             // Gather Redis server info for context
-            const info = p3xr.state.info || {};
+            const info = this.state.info() || {};
             const redisContext: any = { indexes };
             if (info.redis_version) redisContext.redisVersion = info.redis_version;
             if (info.redis_mode) redisContext.redisMode = info.redis_mode;
@@ -327,6 +362,13 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
             return true;
         } catch (e: any) {
             console.error('ai-redis-query failed', e);
+            const errMsg = e.message || String(e);
+            // Show user-friendly error for rate limits
+            if (errMsg.includes('429') || errMsg.includes('rate_limit') || errMsg.includes('Rate limit')) {
+                this.common.toast(this.i18n.strings().page?.key?.label?.aiRateLimited || 'AI rate limit reached. Try again later or use your own Groq API key in Settings.');
+            } else {
+                this.common.toast((this.i18n.strings().page?.key?.label?.aiError || 'AI query failed') + ': ' + errMsg);
+            }
             return false;
         } finally {
             this.aiLoading = false;
@@ -432,11 +474,11 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
         this.autocompleteEl = rootEl.querySelector('#p3xr-console-autocomplete');
         this.scrollers = this.containerEl;
 
-        this.resizeFn = debounce(() => this.rawResize(), p3xr.settings.debounce);
+        this.resizeFn = debounce(() => this.rawResize(), 100);
         window.addEventListener('resize', this.resizeFn);
         this.rawResize();
 
-        this.persistOutputDebounced = debounce(() => this.persistConsoleOutputNow(), p3xr.settings.debounce);
+        this.persistOutputDebounced = debounce(() => this.persistConsoleOutputNow(), 100);
 
         // Listen for resize events from main component
         const resizeSub = this.cmd.consoleEmbeddedResize$.subscribe(() => {

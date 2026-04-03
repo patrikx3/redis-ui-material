@@ -408,8 +408,8 @@ const strings = {
       maxValueDisplayInfo: "Ako je postavljeno na 0, prikaži pune vrijednosti. Ako je veće od 0, skrati na ovu dužinu. Ako je -1: za stringove, sakrij vrijednost do uređivanja; za ostale tipove, prikaži puni sadržaj.",
       maxKeys: "Maksimalni broj ključeva",
       maxKeysInfo: "Da GUI ne padne, ograničavamo maksimalni broj ključeva.",
-      keyCount: () => {
-        return `Broj ključeva: ${p3xr.state.keysRaw.length}`;
+      keyCount: (opts) => {
+        return `Broj ključeva: ${opts?.keyCount ?? 0}`;
       },
       label: {
         animation: "Koristi animaciju",
@@ -553,6 +553,9 @@ const strings = {
       label: {
         key: "Ključ",
         encoding: "Kodiranje",
+        compression: "Kompresija",
+        aiRateLimited: "AI ograničenje zahtjeva je dostignuto. Pokušajte ponovo kasnije ili koristite vlastiti Groq API ključ u Postavkama.",
+        aiError: "AI upit nije uspio",
         length: "Veličina",
         ttl: "TTL",
         ttlTitle: "Vrijeme života",
@@ -639,7 +642,7 @@ const strings = {
         clear: "Obriši trenutnu pretragu za prazno",
         placeholderClient: "Pretraga na strani klijenta",
         placeholderServer: "Pretraga na strani servera",
-        info: "Pretraga na strani klijenta znači da se podudara tekst u polju za pretragu. Pretraga na strani servera znači da pretražuje po obrascima ključeva kao *{search-text}*. Za velike skupove pretrage, bolje je koristiti pretragu na strani servera. Za manje skupove pretrage, bolje je koristiti način pretrage na strani klijenta." + ` Ako je broj ključeva preko ${p3xr.settings.maxLightKeysCount}, možete pretraživati samo na strani servera.`,
+        info: (opts) => "Pretraga na strani klijenta znači da se podudara tekst u polju za pretragu. Pretraga na strani servera znači da pretražuje po obrascima ključeva kao *{search-text}*. Za velike skupove pretrage, bolje je koristiti pretragu na strani servera. Za manje skupove pretrage, bolje je koristiti način pretrage na strani klijenta." + ` Ako je broj ključeva preko ${opts?.maxLightKeysCount ?? 110000}, možete pretraživati samo na strani servera.`,
         largeSetInfo: "U velikom skupu, pretraga na strani klijenta je onemogućena. Trenutno je moguća samo pretraga na strani servera.",
         infoDetails: "Da saznate kako pretraga radi, molimo provjerite postavke"
       },

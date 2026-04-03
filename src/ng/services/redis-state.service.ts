@@ -1,38 +1,44 @@
 import { Injectable, Inject, signal, computed } from '@angular/core';
 import { SettingsService } from './settings.service';
 
-declare const p3xr: any;
+declare const P3XR_API_PORT: number;
 
 /**
  * Runtime state service using Angular signals.
  *
- * Reads from the global p3xr.state object and exposes it through signals
- * for reactive Angular components.
+ * Single source of truth for all Redis UI runtime state. No global object dependency.
  */
 @Injectable({ providedIn: 'root' })
 export class RedisStateService {
 
     // --- Writable signals for runtime state ---
 
-    readonly theme = signal<string | undefined>(this.p3xrState?.theme);
-    readonly connection = signal<any>(this.p3xrState?.connection);
-    readonly currentDatabase = signal<number | undefined>(this.p3xrState?.currentDatabase);
-    readonly databaseIndexes = signal<number[]>(this.p3xrState?.databaseIndexes ?? [0]);
-    readonly connections = signal<any>(this.p3xrState?.connections ?? { list: [] });
-    readonly redisConnections = signal<Record<string, any>>(this.p3xrState?.redisConnections ?? {});
-    readonly keysRaw = signal<string[]>(this.p3xrState?.keysRaw ?? []);
-    readonly keysInfo = signal<any>(this.p3xrState?.keysInfo);
-    readonly search = signal<string>(this.p3xrState?.search ?? '');
+    readonly theme = signal<string | undefined>(undefined);
+    readonly connection = signal<any>(undefined);
+    readonly currentDatabase = signal<number | undefined>(undefined);
+    readonly databaseIndexes = signal<number[]>([0]);
+    readonly connections = signal<any>({ list: [] });
+    readonly redisConnections = signal<Record<string, any>>({});
+    readonly keysRaw = signal<string[]>([]);
+    readonly keysInfo = signal<any>(undefined);
+    readonly search = signal<string>(this.getStoredSearch());
     readonly page = signal<number>(1);
-    readonly info = signal<any>(this.p3xrState?.info);
-    readonly dbsize = signal<number | undefined>(this.p3xrState?.dbsize);
+    readonly info = signal<any>(undefined);
+    readonly dbsize = signal<number | undefined>(undefined);
     readonly redisChanged = signal<boolean>(false);
     readonly failed = signal<boolean>(false);
     readonly monitor = signal<boolean>(false);
     readonly monitorPattern = signal<string>('*');
     readonly commands = signal<string[]>([]);
-    readonly cfg = signal<any>(this.p3xrState?.cfg);
-    readonly version = signal<string | undefined>(this.p3xrState?.version);
+    readonly commandsMeta = signal<Record<string, { syntax: string; group: string }>>({});
+    readonly cfg = signal<any>(undefined);
+    readonly version = signal<string | undefined>(undefined);
+    readonly modules = signal<any[]>([]);
+    readonly hasRediSearch = signal<boolean>(false);
+    readonly hasReJSON = signal<boolean>(false);
+    readonly hasTimeSeries = signal<boolean>(false);
+    readonly reducedFunctions = signal<boolean>(false);
+    readonly keysInfoFetchedAt = signal<number>(Date.now());
 
     // --- Computed values ---
 
@@ -76,43 +82,30 @@ export class RedisStateService {
         return Math.ceil(this.filteredKeys().length / this.settings.pageCount());
     });
 
+    // --- API host (computed once at startup) ---
+    readonly apiHost: string = (() => {
+        const apiUrl = new URL(location.toString());
+        if ((globalThis as any).p3xrDevMode === true) {
+            const apiPort = typeof P3XR_API_PORT !== 'undefined' ? P3XR_API_PORT : 7843;
+            return `http://${apiUrl.hostname}:${apiPort}`;
+        }
+        return `${apiUrl.protocol}//${apiUrl.host}`;
+    })();
+
     constructor(@Inject(SettingsService) private settings: SettingsService) {}
-
-    // --- Helper to access global p3xr.state during hybrid mode ---
-
-    private get p3xrState(): any {
-        return p3xr?.state;
-    }
-
-    /**
-     * Syncs the signals from the global p3xr.state object.
-     * Call this after AngularJS modifies p3xr.state (e.g. after a socket response)
-     * to keep Angular components up-to-date during hybrid mode.
-     */
-    syncFromGlobal(): void {
-        const state = this.p3xrState;
-        if (!state) return;
-
-        this.theme.set(state.theme);
-        this.connection.set(state.connection);
-        this.currentDatabase.set(state.currentDatabase);
-        this.databaseIndexes.set(state.databaseIndexes ?? [0]);
-        this.connections.set(state.connections);
-        this.redisConnections.set(state.redisConnections ?? {});
-        this.keysRaw.set(state.keysRaw ?? []);
-        this.keysInfo.set(state.keysInfo);
-        this.info.set(state.info);
-        this.dbsize.set(state.dbsize);
-        this.failed.set(state.failed ?? false);
-        this.monitor.set(state.monitor ?? false);
-        this.cfg.set(state.cfg);
-        this.version.set(state.version);
-    }
 
     /**
      * Resets connections to default state.
      */
     resetConnections(): void {
         this.connections.set({ list: [] });
+    }
+
+    private getStoredSearch(): string {
+        try {
+            return localStorage.getItem('p3xr-state-search') ?? '';
+        } catch {
+            return '';
+        }
     }
 }

@@ -406,8 +406,8 @@ const strings = {
       maxValueDisplayInfo: "如果設定為 0，則顯示完整值。如果大於 0，則截斷至此長度。如果-1：對於字串，隱藏該值直到編輯；對於其他類型，顯示完整內容。",
       maxKeys: "最大按鍵數",
       maxKeysInfo: "為了讓 GUI 不會崩潰，我們限制了最大按鍵數。",
-      keyCount: () => {
-        return `鑰匙數量：${p3xr.state.keysRaw.length}`;
+      keyCount: (opts) => {
+        return `鑰匙數量：${opts?.keyCount ?? 0}`;
       },
       label: {
         animation: "使用動畫",
@@ -551,6 +551,9 @@ const strings = {
       label: {
         key: "鑰匙",
         encoding: "編碼",
+        compression: "壓縮",
+        aiRateLimited: "已達到 AI 請求限制。請稍後再試或在設定中使用您自己的 Groq API 金鑰。",
+        aiError: "AI 查詢失敗",
         length: "尺寸",
         ttl: "TTL",
         ttlTitle: "生存時間",
@@ -637,7 +640,7 @@ const strings = {
         clear: "清除目前搜尋以設定為空",
         placeholderClient: "搜尋客戶端",
         placeholderServer: "搜尋伺服器端",
-        info: "客戶端搜尋意味著它與搜尋輸入中的文字相符。伺服器端搜尋意味著，就像在 *{search-text}* 這樣的鍵模式中進行搜尋。對於大型搜尋集，最好使用伺服器端搜尋。對於較小的搜尋集，最好使用客戶端搜尋模式。" + ` 如果鑰匙數已結束${p3xr.settings.maxLightKeysCount}，只能在伺服器端搜尋。`,
+        info: (opts) => "客戶端搜尋意味著它與搜尋輸入中的文字相符。伺服器端搜尋意味著，就像在 *{search-text}* 這樣的鍵模式中進行搜尋。對於大型搜尋集，最好使用伺服器端搜尋。對於較小的搜尋集，最好使用客戶端搜尋模式。" + ` 如果鑰匙數已結束${opts?.maxLightKeysCount ?? 110000}，只能在伺服器端搜尋。`,
         largeSetInfo: "在大型集合中，停用客戶端搜尋。所以現在只能進行伺服器端搜尋。",
         infoDetails: "要了解搜尋的工作原理，請檢查設置"
       },

@@ -15,10 +15,11 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { I18nService } from '../services/i18n.service';
 import { CommonService } from '../services/common.service';
 import { SocketService } from '../services/socket.service';
+import { RedisStateService } from '../services/redis-state.service';
+import { SettingsService } from '../services/settings.service';
 import { JsonViewDialogService } from './json-view-dialog.service';
 import { JsonEditorDialogService } from './json-editor-dialog.service';
-
-declare const p3xr: any;
+import { OverlayService } from '../services/overlay.service';
 
 export interface KeyNewOrSetDialogData {
     type: 'add' | 'edit' | 'append';
@@ -298,10 +299,10 @@ export class KeyNewOrSetDialogComponent implements OnInit {
     options: KeyNewOrSetDialogData;
     get types(): string[] {
         const base = ['string', 'list', 'hash', 'set', 'zset', 'stream'];
-        if (p3xr?.state?.hasTimeSeries) {
+        if (this.state.hasTimeSeries()) {
             base.push('timeseries');
         }
-        if (p3xr?.state?.hasReJSON) {
+        if (this.state.hasReJSON()) {
             base.push('json');
         }
         return base;
@@ -322,13 +323,16 @@ export class KeyNewOrSetDialogComponent implements OnInit {
         @Inject(JsonEditorDialogService) private jsonEditorDialog: JsonEditorDialogService,
         @Inject(BreakpointObserver) private breakpointObserver: BreakpointObserver,
         @Inject(ChangeDetectorRef) private cdr: ChangeDetectorRef,
+        @Inject(RedisStateService) private state: RedisStateService,
+        @Inject(SettingsService) private settings: SettingsService,
+        @Inject(OverlayService) private overlay: OverlayService,
     ) {
         this.strings = this.i18n.strings;
         this.options = data;
     }
 
     ngOnInit(): void {
-        this.isReadonly = p3xr?.state?.connection?.readonly === true;
+        this.isReadonly = this.state.connection()?.readonly === true;
         this.breakpointObserver.observe('(min-width: 720px)').subscribe(r => {
             this.isWide = r.matches;
             this.cdr.markForCheck();
@@ -336,7 +340,7 @@ export class KeyNewOrSetDialogComponent implements OnInit {
 
         this.model = {
             type: 'string',
-            key: this.data.node?.key ? this.data.node.key + (p3xr?.settings?.redisTreeDivider ?? ':') : '',
+            key: this.data.node?.key ? this.data.node.key + (this.settings.redisTreeDivider() ?? ':') : '',
             value: undefined,
             score: undefined,
             streamTimestamp: '*',
@@ -370,15 +374,15 @@ export class KeyNewOrSetDialogComponent implements OnInit {
 
     getMaxValueAsBufferText(): string {
         try {
-            return p3xr.settings.prettyBytes(p3xr.settings.maxValueAsBuffer);
+            return this.settings.prettyBytes(this.settings.maxValueAsBuffer);
         } catch {
-            return `${p3xr?.settings?.maxValueAsBuffer ?? 256000} bytes`;
+            return `${this.settings.maxValueAsBuffer} bytes`;
         }
     }
 
     bufferDisplay(value: any): string {
         if (value?.byteLength !== undefined) {
-            return '(' + p3xr?.settings?.prettyBytes(value.byteLength) + ')';
+            return '(' + this.settings.prettyBytes(value.byteLength) + ')';
         }
         return '';
     }
@@ -388,7 +392,7 @@ export class KeyNewOrSetDialogComponent implements OnInit {
         if (this.model.type === 'timeseries') {
             value = `TS.ADD ${this.model.key} ${this.model.tsTimestamp || '*'} ${this.model.value}`;
         }
-        await p3xr.clipboard({ value });
+        await this.settings.clipboard(value);
         this.common.toast(this.strings().status?.dataCopied || 'Copied');
     }
 
@@ -405,7 +409,7 @@ export class KeyNewOrSetDialogComponent implements OnInit {
 
     formatJson(): void {
         try {
-            this.model.value = JSON.stringify(JSON.parse(this.model.value), null, p3xr?.settings?.jsonFormat ?? 2);
+            this.model.value = JSON.stringify(JSON.parse(this.model.value), null, this.settings.jsonFormat() ?? 2);
         } catch (e) {
             this.common.toast(this.strings().label?.jsonViewNotParsable || 'Not valid JSON');
         }
@@ -443,19 +447,19 @@ export class KeyNewOrSetDialogComponent implements OnInit {
         }
 
         try {
-            p3xr.ui.overlay.show();
+            this.overlay.show();
             const response = await this.socket.request({
                 action: 'key-new-or-set',
                 payload: {
                     type: this.options.type,
                     originalValue: this.data.model?.value,
                     originalHashKey: this.data.model?.hashKey,
-                    model: p3xr.clone(this.model),
+                    model: structuredClone(this.model),
                 },
             });
 
             if (typeof window['gtag'] === 'function') {
-                window['gtag']('config', p3xr?.settings?.googleAnalytics, { page_path: '/key-new-or-set' });
+                window['gtag']('config', this.settings.googleAnalytics, { page_path: '/key-new-or-set' });
             }
 
             this.common.toast(this.strings().status?.set || 'Saved');
@@ -463,7 +467,7 @@ export class KeyNewOrSetDialogComponent implements OnInit {
         } catch (e) {
             this.common.generalHandleError(e);
         } finally {
-            p3xr.ui.overlay.hide();
+            this.overlay.hide();
         }
     }
 

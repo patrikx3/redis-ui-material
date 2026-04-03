@@ -406,8 +406,8 @@ const strings = {
       maxValueDisplayInfo: "0-a təyin edilərsə, tam dəyərləri göstərin. 0-dan böyükdürsə, bu uzunluğa qədər kəsin. Əgər -1: sətirlər üçün, redaktəyə qədər dəyəri gizlədin; digər növlər üçün tam məzmunu göstərin.",
       maxKeys: "Maksimum açar sayı",
       maxKeysInfo: "GUI qəzaya uğramaması üçün maksimum açar sayını məhdudlaşdırırıq.",
-      keyCount: () => {
-        return `Açarların sayı: ${p3xr.state.keysRaw.length}`;
+      keyCount: (opts) => {
+        return `Açarların sayı: ${opts?.keyCount ?? 0}`;
       },
       label: {
         animation: "Animasiyadan istifadə edin",
@@ -551,6 +551,9 @@ const strings = {
       label: {
         key: "Açar",
         encoding: "Kodlaşdırma",
+        compression: "Sıxışdırma",
+        aiRateLimited: "AI sorğu limiti aşıldı. Daha sonra yenidən cəhd edin və ya Ayarlarda öz Groq API açarınızı istifadə edin.",
+        aiError: "AI sorğusu uğursuz oldu",
         length: "Ölçü",
         ttl: "TTL",
         ttlTitle: "Yaşamaq Zamanı",
@@ -637,7 +640,7 @@ const strings = {
         clear: "Boş təyin etmək üçün cari axtarışı silin",
         placeholderClient: "Müştəri tərəfini axtarın",
         placeholderServer: "Axtarış server tərəfi",
-        info: "Müştəri tərəfi axtarışı o deməkdir ki, axtarış girişindəki mətnə uyğun gəlir. Server tərəfində axtarış o deməkdir ki, bu, *{search-text}* kimi açar nümunələrində axtarışa bənzəyir. Böyük axtarış dəstləri üçün server tərəfində axtarışdan istifadə etmək daha yaxşıdır. Daha kiçik axtarış dəstləri üçün müştəri tərəfi axtarış rejimindən istifadə etmək daha yaxşıdır." + ` Əgər açarların sayı bitibsə ${p3xr.settings.maxLightKeysCount}, yalnız server tərəfində axtarış edə bilərsiniz.`,
+        info: (opts) => "Müştəri tərəfi axtarışı o deməkdir ki, axtarış girişindəki mətnə uyğun gəlir. Server tərəfində axtarış o deməkdir ki, bu, *{search-text}* kimi açar nümunələrində axtarışa bənzəyir. Böyük axtarış dəstləri üçün server tərəfində axtarışdan istifadə etmək daha yaxşıdır. Daha kiçik axtarış dəstləri üçün müştəri tərəfi axtarış rejimindən istifadə etmək daha yaxşıdır." + ` Əgər açarların sayı bitibsə ${opts?.maxLightKeysCount ?? 110000}, yalnız server tərəfində axtarış edə bilərsiniz.`,
         largeSetInfo: "Böyük dəstdə müştəri tərəfində axtarış deaktiv edilib. belə ki, hazırda yalnız server tərəfində axtarış mümkündür.",
         infoDetails: "Axtarışın necə işlədiyini öyrənmək üçün parametrləri yoxlayın"
       },

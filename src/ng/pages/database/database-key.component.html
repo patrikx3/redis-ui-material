@@ -99,6 +99,20 @@
             <span>{{ response.encoding }}</span>
         </div>
 
+        @if (response.compression) {
+            <div class="p3xr-database-key-info-row p3xr-database-key-compression-row">
+                <strong>{{ strings()?.page?.key?.label?.compression || 'Compression' }}:</strong>
+                <span class="p3xr-compression-badge">
+                    <span class="p3xr-compression-algorithm">{{ response.compression.algorithm.toUpperCase() }}</span>
+                    @if (response.compression.ratio >= 0) {
+                        <span class="p3xr-compression-ratio-badge p3xr-compression-good">{{ response.compression.ratio }}%</span>
+                    } @else {
+                        <span class="p3xr-compression-ratio-badge p3xr-compression-bad">{{ -response.compression.ratio }}%</span>
+                    }
+                </span>
+            </div>
+        }
+
         <div class="p3xr-database-key-info-row">
             <strong>{{ strings()?.page?.key?.label?.length }}:</strong>
             <span>

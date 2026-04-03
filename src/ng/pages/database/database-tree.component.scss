@@ -57,7 +57,9 @@ p3xr-database-tree {
 // Node label container
 .p3xr-database-tree-node {
     cursor: pointer;
-    line-height: 28px;
+    display: inline-flex;
+    align-items: center;
+    height: 28px;
     white-space: nowrap;
 }
 
@@ -96,16 +98,17 @@ p3xr-database-tree {
 .p3xr-tree-ttl-badge {
     display: inline-flex;
     align-items: center;
-    gap: 3px;
-    font-size: 11px;
-    margin-left: 6px;
-    opacity: 0.7;
-    white-space: nowrap;
+    margin-left: 4px;
+    cursor: default;
 }
-.p3xr-tree-ttl-icon { font-size: 11px; margin-left: 6px; padding: 4px; cursor: default; }
-.p3xr-tree-ttl-green { color: #4caf50; }
-.p3xr-tree-ttl-yellow { color: #ff9800; }
-.p3xr-tree-ttl-red { color: #f44336; }
+.p3xr-tree-ttl-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+}
+.p3xr-tree-ttl-green .p3xr-tree-ttl-icon { color: var(--mat-sys-primary, #4caf50); }
+.p3xr-tree-ttl-yellow .p3xr-tree-ttl-icon { color: var(--mat-sys-tertiary, #ff9800); }
+.p3xr-tree-ttl-red .p3xr-tree-ttl-icon { color: var(--mat-sys-error, #f44336); }
 .p3xr-tree-ttl-pulse { animation: p3xr-ttl-pulse 1s infinite; }
 @keyframes p3xr-ttl-pulse {
     0%, 100% { opacity: 0.7; }

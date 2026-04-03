@@ -9,7 +9,6 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { filter } from 'rxjs/operators';
-declare const p3xr: any;
 
 import { ThemeService } from '../services/theme.service';
 import { I18nService } from '../services/i18n.service';
@@ -20,6 +19,8 @@ import { NavigationService } from '../services/navigation.service';
 import { AskAuthorizationDialogService } from '../dialogs/ask-authorization-dialog.service';
 import { MainCommandService } from '../services/main-command.service';
 import { ShortcutsService } from '../services/shortcuts.service';
+import { OverlayService } from '../services/overlay.service';
+import { SettingsService } from '../services/settings.service';
 
 // Side-effect: webpack processes the SCSS through sass-loader → css-loader → MiniCssExtractPlugin
 require('./layout.component.scss');
@@ -81,6 +82,8 @@ export class LayoutComponent implements OnInit, OnDestroy {
         @Inject(MainCommandService) private readonly cmd: MainCommandService,
         @Inject(ChangeDetectorRef) private readonly cdr: ChangeDetectorRef,
         @Inject(ShortcutsService) readonly shortcuts: ShortcutsService,
+        @Inject(OverlayService) private readonly overlay: OverlayService,
+        @Inject(SettingsService) private readonly settings: SettingsService,
     ) {}
 
     @HostListener('document:keydown', ['$event'])
@@ -173,11 +176,11 @@ export class LayoutComponent implements OnInit, OnDestroy {
     }
 
     get hasRediSearch(): boolean {
-        return !!p3xr?.state?.hasRediSearch;
+        return !!this.state.hasRediSearch();
     }
 
     get reducedFunctions(): boolean {
-        return !!p3xr?.state?.reducedFunctions;
+        return !!this.state.reducedFunctions();
     }
 
     get currentVersion(): string | undefined {
@@ -348,11 +351,6 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
     async setLanguage(key: string): Promise<void> {
         try {
-            // Load translation chunk before switching (lazy loading support)
-            const loader = p3xr?.settings?.language?.loadTranslation;
-            if (typeof loader === 'function') {
-                await loader(key);
-            }
             this.i18n.setLanguage(key);
             if (this.isElectron) {
                 await this.socket.request({ action: 'set-language', payload: { key } });
@@ -370,8 +368,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
         connection = this.cloneConnection(connection);
         try {
 
-            const dbStorageKey = p3xr?.settings?.connection
-                ?.getStorageKeyCurrentDatabase?.(connection.id);
+            const dbStorageKey = this.settings.getStorageKeyCurrentDatabase(connection.id);
             const db = this.getStorageString(dbStorageKey);
 
             if (connection.askAuth === true) {
@@ -381,7 +378,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
             }
 
             const strings = this.i18n.strings();
-            p3xr?.ui?.overlay?.show({
+            this.overlay.show({
                 message: strings?.title?.connectingRedis ?? 'Connecting...',
             });
 
@@ -390,49 +387,46 @@ export class LayoutComponent implements OnInit, OnDestroy {
                 payload: { connection, db },
             });
 
-            // Update global p3xr.state
-            const st = p3xr?.state;
-            if (st) {
-                st.page = 1;
-                st.monitor = false;
-                st.dbsize = response.dbsize;
-                const databaseIndexes: number[] = [];
-                let i = 0;
-                while (i < response.databases) databaseIndexes.push(i++);
-                st.databaseIndexes = databaseIndexes;
-                st.connection = connection;
-                st.commands = [];
-                Object.keys(response.commands ?? {}).forEach(k => {
-                    st.commands.push(response.commands[k][0]);
-                });
-                st.commands.sort();
+            // Update state signals directly
+            this.state.page.set(1);
+            this.state.monitor.set(false);
+            this.state.dbsize.set(response.dbsize);
+            const databaseIndexes: number[] = [];
+            let i = 0;
+            while (i < response.databases) databaseIndexes.push(i++);
+            this.state.databaseIndexes.set(databaseIndexes);
+            this.state.connection.set(connection);
 
-                // Detect loaded Redis modules
-                const modules = Array.isArray(response.modules) ? response.modules : [];
-                st.modules = modules;
-                st.hasReJSON = modules.some((m: any) => m.name === 'ReJSON');
-                st.hasRediSearch = modules.some((m: any) => m.name === 'search');
-                st.hasTimeSeries = modules.some((m: any) => m.name === 'timeseries' || m.name === 'Timeseries');
-            }
+            const commands: string[] = [];
+            Object.keys(response.commands ?? {}).forEach(k => {
+                commands.push(response.commands[k][0]);
+            });
+            commands.sort();
+            this.state.commands.set(commands);
+            this.state.commandsMeta.set(response.commandsMeta ?? {});
+
+            // Detect loaded Redis modules
+            const modules = Array.isArray(response.modules) ? response.modules : [];
+            this.state.modules.set(modules);
+            this.state.hasReJSON.set(modules.some((m: any) => m.name === 'ReJSON'));
+            this.state.hasRediSearch.set(modules.some((m: any) => m.name === 'search'));
+            this.state.hasTimeSeries.set(modules.some((m: any) => m.name === 'timeseries' || m.name === 'Timeseries'));
 
             await this.common.loadRedisInfoResponse({ response });
-            this.state.syncFromGlobal();
             this.socket.stateChanged$.next();
 
             this.setStorageObject(
-                p3xr?.settings?.connectInfo?.storageKey,
+                this.settings.connectInfoStorageKey,
                 connection,
             );
 
             // No navigation — just refresh the current view in place
         } catch (error) {
-            this.removeStorageItem(p3xr?.settings?.connectInfo?.storageKey);
-            const st = p3xr?.state;
-            if (st) st.connection = undefined;
+            this.removeStorageItem(this.settings.connectInfoStorageKey);
             this.state.connection.set(undefined);
             this.common.generalHandleError(error);
         } finally {
-            p3xr?.ui?.overlay?.hide();
+            this.overlay.hide();
             this.cdr.markForCheck();
         }
         console.timeEnd('connect');
@@ -445,12 +439,11 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
     reducedFunctionality(): void {
         const strings = this.i18n.strings();
-        const st = p3xr?.state;
         const fn = strings?.label?.tooManyKeys;
         const message = typeof fn === 'function'
             ? fn({
-                count: st?.keysRaw?.length ?? 0,
-                maxLightKeysCount: p3xr?.settings?.maxLightKeysCount ?? 0,
+                count: this.state.keysRaw()?.length ?? 0,
+                maxLightKeysCount: this.settings.maxLightKeysCount,
             })
             : '';
         this.common.confirm({ disableCancel: true, message }).catch(() => {});
@@ -469,14 +462,12 @@ export class LayoutComponent implements OnInit, OnDestroy {
     // --- Private helpers ---
 
     private cloneConnection(connection: any): any {
-        return typeof p3xr?.clone === 'function'
-            ? p3xr.clone(connection)
-            : JSON.parse(JSON.stringify(connection));
+        return structuredClone(connection);
     }
 
     private readConnectionFromStorage(): any {
         return this.getStorageObject(
-            p3xr?.settings?.connectInfo?.storageKey,
+            this.settings.connectInfoStorageKey,
         );
     }
 
@@ -511,11 +502,9 @@ export class LayoutComponent implements OnInit, OnDestroy {
             this.cdr.markForCheck();
         });
         const sub3 = this.socket.connections$.subscribe(() => {
-            this.state.syncFromGlobal();
             this.cdr.markForCheck();
         });
         const sub4 = this.socket.configuration$.subscribe(() => {
-            this.state.syncFromGlobal();
             this.cdr.markForCheck();
         });
         this.unsubFns.push(
@@ -524,7 +513,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
     }
 
     private setupRouteTracking(): void {
-        if (p3xr?.isBot?.()) return;
+        if (/spider|bot|yahoo|bing|google|yandex|crawl|slurp|curl/i.test(navigator.userAgent)) return;
 
         const sub = this.router.events.pipe(
             filter((event): event is NavigationEnd => event instanceof NavigationEnd)
@@ -534,7 +523,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
                     ? '/database/key'
                     : event.urlAfterRedirects;
                 (globalThis as any).gtag?.('config',
-                    p3xr?.settings?.googleAnalytics,
+                    this.settings.googleAnalytics,
                     { page_path: path },
                 );
             } catch { /* noop */ }

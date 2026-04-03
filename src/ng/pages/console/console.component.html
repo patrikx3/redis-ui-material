@@ -10,6 +10,13 @@
                 <span class="p3xr-toolbar-spacer"></span>
 
                 <span class="p3xr-console-toolbar-actions">
+                    @if (isAiGloballyEnabled()) {
+                        <span class="p3xr-console-ai-toggle" (click)="aiAutoDetect = !aiAutoDetect"
+                              [matTooltip]="'Auto AI'">
+                            <span class="material-icons">{{ aiAutoDetect ? 'check_box' : 'check_box_outline_blank' }}</span>
+                            <span>Auto AI</span>
+                        </span>
+                    }
                     <p3xr-ng-button [label]="strings().label?.redisCommandsReference || 'Redis Commands'" mdIcon="terminal"
                         (click)="openCommands($event)"></p3xr-ng-button>
                     <p3xr-ng-button [label]="strings().intention?.clear || 'Clear'" mdIcon="backspace"
@@ -20,6 +27,13 @@
                 <span class="p3xr-toolbar-spacer"></span>
 
                 <span class="p3xr-console-toolbar-actions">
+                    @if (isAiGloballyEnabled()) {
+                        <span class="p3xr-console-ai-toggle" (click)="aiAutoDetect = !aiAutoDetect"
+                              [matTooltip]="'Auto AI'">
+                            <span class="material-icons">{{ aiAutoDetect ? 'check_box' : 'check_box_outline_blank' }}</span>
+                            <span>Auto AI</span>
+                        </span>
+                    }
                     <p3xr-ng-button [label]="strings().label?.redisCommandsReference || 'Redis Commands'" mdIcon="terminal"
                         (click)="openCommands($event)"></p3xr-ng-button>
                     <p3xr-ng-button [label]="strings().intention?.clear || 'Clear'" mdIcon="backspace"
@@ -64,12 +78,24 @@
                [style.background]="'var(--p3xr-input-bg)'"
                [style.color]="'var(--p3xr-input-color)'"
                [style.border-color]="aiLoading ? 'var(--mat-sys-primary, var(--p3xr-input-border-color))' : 'var(--p3xr-input-border-color, var(--p3xr-border-color))'"></textarea>
+        @if (currentHint) {
+            <div class="p3xr-console-hint">{{ currentHint }}</div>
+        }
         <mat-autocomplete #auto="matAutocomplete"
                           (optionSelected)="onAutocompleteSelected($event)"
                           class="p3xr-console-autocomplete-panel"
                           position="above">
-            @for (cmd of filteredCommands; track cmd) {
-                <mat-option [value]="cmd">{{ cmd }}</mat-option>
+            @for (group of filteredCommands; track group.group) {
+                <mat-optgroup [label]="group.group">
+                    @for (cmd of group.commands; track cmd.name) {
+                        <mat-option [value]="cmd.name">
+                            <span class="p3xr-autocomplete-cmd">{{ cmd.name }}</span>
+                            @if (cmd.syntax) {
+                                <span class="p3xr-autocomplete-syntax">{{ cmd.syntax }}</span>
+                            }
+                        </mat-option>
+                    }
+                </mat-optgroup>
             }
         </mat-autocomplete>
     </div>

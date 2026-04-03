@@ -408,8 +408,8 @@ const strings = {
       maxValueDisplayInfo: "Ikiwa imewekwa 0, onyesha thamani kamili. Ikiwa kubwa kuliko 0, punguza hadi urefu huu. Ikiwa -1: kwa herufi, ficha thamani hadi kuhariri; kwa aina nyingine, onyesha maudhui kamili.",
       maxKeys: "Idadi ya juu ya funguo",
       maxKeysInfo: "Ili GUI isishindwe, tunapunguza idadi ya juu ya funguo.",
-      keyCount: () => {
-        return `Idadi ya funguo: ${p3xr.state.keysRaw.length}`;
+      keyCount: (opts) => {
+        return `Idadi ya funguo: ${opts?.keyCount ?? 0}`;
       },
       label: {
         animation: "Tumia uhuishaji",
@@ -553,6 +553,9 @@ const strings = {
       label: {
         key: "Ufunguo",
         encoding: "Usimbaji",
+        compression: "Ubanaji",
+        aiRateLimited: "Kikomo cha maombi ya AI kimefikiwa. Jaribu tena baadaye au tumia ufunguo wako wa Groq API katika Mipangilio.",
+        aiError: "Swali la AI limeshindwa",
         length: "Ukubwa",
         ttl: "TTL",
         ttlTitle: "Muda wa Kuishi",
@@ -639,7 +642,7 @@ const strings = {
         clear: "Futa utafutaji wa sasa ili kuweka tupu",
         placeholderClient: "Tafuta upande wa mteja",
         placeholderServer: "Tafuta upande wa seva",
-        info: "Utafutaji wa upande wa mteja unamaanisha kuwa unalingana na maandishi kwenye ingizo la utafutaji. Utafutaji wa upande wa seva unamaanisha kuwa ni utafutaji kama katika mifumo ya funguo kama *{search-text}*. Kwa seti kubwa za utafutaji, ni bora kutumia utafutaji wa upande wa seva. Kwa seti ndogo za utafutaji, ni bora kutumia hali ya utafutaji wa upande wa mteja." + ` Ikiwa idadi ya funguo ni zaidi ya ${p3xr.settings.maxLightKeysCount}, unaweza kutafuta tu upande wa seva.`,
+        info: (opts) => "Utafutaji wa upande wa mteja unamaanisha kuwa unalingana na maandishi kwenye ingizo la utafutaji. Utafutaji wa upande wa seva unamaanisha kuwa ni utafutaji kama katika mifumo ya funguo kama *{search-text}*. Kwa seti kubwa za utafutaji, ni bora kutumia utafutaji wa upande wa seva. Kwa seti ndogo za utafutaji, ni bora kutumia hali ya utafutaji wa upande wa mteja." + ` Ikiwa idadi ya funguo ni zaidi ya ${opts?.maxLightKeysCount ?? 110000}, unaweza kutafuta tu upande wa seva.`,
         largeSetInfo: "Katika seti kubwa, utafutaji wa upande wa mteja umezimwa. kwa hivyo sasa hivi utafutaji wa upande wa seva pekee ndio unaowezekana.",
         infoDetails: "Ili kujua jinsi utafutaji unavyofanya kazi, tafadhali angalia mipangilio"
       },

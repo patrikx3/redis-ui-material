@@ -24,11 +24,12 @@ import { KeyStreamComponent } from './key/key-stream.component';
 import { KeyJsonComponent } from './key/key-json.component';
 import { KeyTimeseriesComponent } from './key/key-timeseries.component';
 import { NavigationService } from '../../services/navigation.service';
+import { RedisStateService } from '../../services/redis-state.service';
+import { SettingsService } from '../../services/settings.service';
 
 require('./database-key.component.scss');
 require('./key/key-types.scss');
 
-declare const p3xr: any;
 
 @Component({
     selector: 'p3xr-database-key',
@@ -81,6 +82,8 @@ export class DatabaseKeyComponent implements OnInit, OnDestroy {
         @Inject(NavigationService) private readonly nav: NavigationService,
         @Inject(ActivatedRoute) private readonly route: ActivatedRoute,
         @Inject(ChangeDetectorRef) private readonly cdr: ChangeDetectorRef,
+        @Inject(RedisStateService) private readonly state: RedisStateService,
+        @Inject(SettingsService) private readonly settings: SettingsService,
     ) {
         this.strings = this.i18n.strings;
 
@@ -96,7 +99,7 @@ export class DatabaseKeyComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.key = this.getStateParam('key') || '';
-        this.isReadonly = p3xr?.state?.connection?.readonly === true;
+        this.isReadonly = this.state.connection()?.readonly === true;
 
         const sub = this.breakpointObserver.observe('(min-width: 960px)').subscribe(r => {
             this.isGtSm = r.matches;
@@ -185,7 +188,7 @@ export class DatabaseKeyComponent implements OnInit, OnDestroy {
 
     charactersPrettyBytes(length: number): string {
         if (!length || length < 1024) return '';
-        return '(' + (p3xr?.settings?.prettyBytes?.(length) ?? '') + ')';
+        return '(' + (this.settings.prettyBytes(length) ?? '') + ')';
     }
 
     // --- Private ---
@@ -213,10 +216,11 @@ export class DatabaseKeyComponent implements OnInit, OnDestroy {
         } catch (e) {
             hadError = e;
             console.error(e);
-            if (!p3xr?.settings?.handleConnectionIsClosed?.(e)) {
-                this.common.alert(this.i18n.strings().label.unableToLoadKey({ key: this.key }));
-            } else {
+            if ((e as any)?.message === 'Connection is closed.') {
+                this.state.connection.set(undefined);
                 this.common.alert((e as any)?.message ?? String(e));
+            } else {
+                this.common.alert(this.i18n.strings().label.unableToLoadKey({ key: this.key }));
             }
         } finally {
             if (hadError) {
@@ -261,7 +265,7 @@ export class DatabaseKeyComponent implements OnInit, OnDestroy {
                     const parsed = JSON.parse(rawJson);
                     // JSONPath $ returns array wrapper, unwrap it
                     const unwrapped = Array.isArray(parsed) ? parsed[0] : parsed;
-                    response.value = JSON.stringify(unwrapped, null, p3xr?.settings?.jsonFormat ?? 2);
+                    response.value = JSON.stringify(unwrapped, null, this.settings.jsonFormat() ?? 2);
                 } catch {
                     response.value = rawJson;
                 }
@@ -318,7 +322,7 @@ export class DatabaseKeyComponent implements OnInit, OnDestroy {
         const humanizeDuration = require('humanize-duration');
         const updateTtl = () => {
             if (!this.checkTtl()) { this.clearTtlInterval(); return; }
-            const hdOpts = p3xr?.settings?.getHumanizeDurationOptions?.() ?? {};
+            const hdOpts = this.settings.getHumanizeDurationOptions();
             const parsed = ' ' + humanizeDuration(this.response.ttl * 1000, {
                 ...hdOpts,
                 delimiter: ' ',
@@ -328,11 +332,12 @@ export class DatabaseKeyComponent implements OnInit, OnDestroy {
         };
         updateTtl();
 
-        if (!p3xr?.state?.reducedFunctions) {
+        if (!this.state.reducedFunctions()) {
             this.clearTtlInterval();
             this.ttlInterval = setInterval(() => {
                 this.response.ttl--;
                 updateTtl();
+                this.cdr.markForCheck();
             }, 1000);
         }
     }
@@ -341,7 +346,7 @@ export class DatabaseKeyComponent implements OnInit, OnDestroy {
         if (this.response.ttl < -1 || (this.wasExpiring && this.response.ttl < 1)) {
             this.common.toast(this.i18n.strings().status.keyIsNotExisting);
             this.clearTtlInterval();
-            p3xr.state.redisChanged = true;
+            this.state.redisChanged.set(true);
             this.navigateTo('database.statistics');
             return false;
         }
@@ -354,12 +359,13 @@ export class DatabaseKeyComponent implements OnInit, OnDestroy {
 
     private generateHighlight(): void {
         this.removeHighlight();
-        const isDark = p3xr?.state?.theme?.includes?.('Dark') || p3xr?.state?.theme?.includes?.('Matrix');
+        const currentTheme = this.theme.currentTheme() ?? '';
+        const isDark = currentTheme.includes('Dark') || currentTheme.includes('Matrix');
         const bg = isDark ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.15)';
         const color = isDark ? 'white' : 'black';
         const style = document.createElement('style');
         style.id = 'p3xr-theme-styles-tree-key';
-        style.textContent = `[data-p3xr-tree-key="${p3xr?.ui?.htmlEncode?.(this.key) ?? ''}"] .p3xr-database-tree-node-label {
+        style.textContent = `[data-p3xr-tree-key="${(globalThis as any).htmlEncode?.(this.key) ?? ''}"] .p3xr-database-tree-node-label {
             background-color: ${bg} !important;
             color: ${color} !important;
             padding: 2px;
@@ -384,7 +390,7 @@ export class DatabaseKeyComponent implements OnInit, OnDestroy {
     private gtag(page: string): void {
         try {
             if (typeof (window as any).gtag === 'function') {
-                (window as any).gtag('config', p3xr?.settings?.googleAnalytics, { page_path: page });
+                (window as any).gtag('config', this.settings.googleAnalytics, { page_path: page });
             }
         } catch { /* noop */ }
     }

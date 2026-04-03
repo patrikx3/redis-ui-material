@@ -12,11 +12,11 @@ import { CommonService } from '../../../services/common.service';
 import { JsonViewDialogService } from '../../../dialogs/json-view-dialog.service';
 import { KeyNewOrSetDialogService } from '../../../dialogs/key-new-or-set-dialog.service';
 import { MainCommandService } from '../../../services/main-command.service';
+import { RedisStateService } from '../../../services/redis-state.service';
+import { SettingsService } from '../../../services/settings.service';
 import { KeyTypeBase } from './key-type-base';
 import { KeyPaging } from './key-paging';
 import { KeyPagerInlineComponent } from './key-pager-inline.component';
-
-declare const p3xr: any;
 
 @Component({
     selector: 'p3xr-key-hash',
@@ -27,7 +27,7 @@ declare const p3xr: any;
     encapsulation: ViewEncapsulation.None,
 })
 export class KeyHashComponent extends KeyTypeBase implements OnInit, OnChanges {
-    paging = new KeyPaging();
+    paging: KeyPaging;
     pagedItems: Array<{ key: string; value: any }> = [];
 
     constructor(
@@ -39,8 +39,11 @@ export class KeyHashComponent extends KeyTypeBase implements OnInit, OnChanges {
         @Inject(BreakpointObserver) breakpointObserver: BreakpointObserver,
         @Inject(MainCommandService) cmd: MainCommandService,
         @Inject(ChangeDetectorRef) cdr: ChangeDetectorRef,
+        @Inject(RedisStateService) redisState: RedisStateService,
+        @Inject(SettingsService) settingsService: SettingsService,
     ) {
-        super(i18n, socket, common, jsonViewDialog, keyNewOrSetDialog, breakpointObserver, cmd, cdr);
+        super(i18n, socket, common, jsonViewDialog, keyNewOrSetDialog, breakpointObserver, cmd, cdr, redisState, settingsService);
+        this.paging = new KeyPaging({ settingsService });
     }
 
     ngOnInit(): void { this.updatePaging(); }
