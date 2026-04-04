@@ -128,14 +128,14 @@ export default function SettingsPage() {
     const toggleGroupMode = () => {
         const next = !groupModeEnabled
         setGroupModeEnabled(next)
-        try { localStorage.setItem('p3xr-connection-group-mode', String(next)) } catch {}
+        setPersistentItem('p3xr-connection-group-mode', String(next))
     }
 
     const toggleGroup = (name: string) => {
         setCollapsedGroups(prev => {
             const next = new Set(prev)
             next.has(name) ? next.delete(name) : next.add(name)
-            try { localStorage.setItem('p3xr-collapsed-connection-groups', JSON.stringify([...next])) } catch {}
+            setPersistentItem('p3xr-collapsed-connection-groups', JSON.stringify([...next]))
             return next
         })
     }

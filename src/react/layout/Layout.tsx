@@ -183,6 +183,13 @@ export default function Layout() {
     const [highlightedLangIdx, setHighlightedLangIdx] = useState(0)
     const languageInputRef = useRef<HTMLInputElement>(null)
 
+    // Close language menu on resize to avoid stale positioning
+    useEffect(() => {
+        const onResize = () => { if (languageAnchor) setLanguageAnchor(null) }
+        window.addEventListener('resize', onResize)
+        return () => window.removeEventListener('resize', onResize)
+    }, [languageAnchor])
+
     const availableLanguages = useMemo(() =>
         Object.keys(strings?.language ?? {}), [strings])
 
@@ -473,13 +480,15 @@ export default function Layout() {
                         anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
                         transformOrigin={{ vertical: 'bottom', horizontal: 'left' }}
                         slotProps={{
-                            paper: { sx: { minWidth: 320, maxHeight: 400 } },
-                            list: { sx: { pt: 0 } },
+                            paper: { sx: { minWidth: 320, maxWidth: '90vw', maxHeight: 400, overflow: 'hidden' } },
+                            list: { sx: { pt: 0, overflow: 'auto', maxHeight: 400 } },
                         }}>
                         <Box
                             sx={{
                                 position: 'sticky', top: 0, zIndex: 1,
-                                bgcolor: 'inherit', py: 1,
+                                background: 'inherit',
+                                px: 1, py: 1,
+                                overflow: 'hidden',
                             }}
                             onClick={e => e.stopPropagation()}
                             onKeyDown={onLanguageKeyDown}
@@ -495,13 +504,14 @@ export default function Layout() {
                                 }}
                                 autoComplete="off"
                                 sx={{
-                                    display: 'block', width: 'calc(100% - 20px)', mx: 'auto',
-                                    p: 1, borderStyle: 'solid', borderWidth: 2,
+                                    display: 'block', width: '100%', mx: 'auto',
+                                    px: 1, py: 1, borderStyle: 'solid', borderWidth: 2,
                                     borderColor: 'rgba(255,255,255,0.25)',
                                     borderRadius: '4px', fontSize: 14,
                                     bgcolor: 'transparent',
                                     color: 'text.primary',
                                     outline: 'none', boxSizing: 'border-box',
+                                    overflow: 'hidden', textOverflow: 'ellipsis',
                                     '&:focus': {
                                         borderWidth: 3,
                                         borderColor: 'primary.main',

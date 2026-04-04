@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import merge from 'lodash/merge'
+import { getPersistentItem } from './electron-bridge'
 
 // Vite glob import: lazily load all translation files
 const translationModules = import.meta.glob('../../strings/*/strings.js')
@@ -7,10 +8,8 @@ const translationModules = import.meta.glob('../../strings/*/strings.js')
 const STORAGE_KEY = 'p3xr-language'
 
 function detectLanguage(): string {
-    try {
-        const stored = localStorage.getItem(STORAGE_KEY)
-        if (stored) return stored
-    } catch {}
+    const stored = getPersistentItem(STORAGE_KEY)
+    if (stored) return stored
     const nav = navigator.language?.toLowerCase() || ''
     if (nav.startsWith('zh')) return 'zn'
     if (nav.startsWith('ru')) return 'ru'

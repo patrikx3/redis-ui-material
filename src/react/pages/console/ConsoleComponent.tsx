@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
-import { Box, Toolbar, Tooltip, Popper, Paper } from '@mui/material'
+import { Box, Toolbar, Tooltip, Popper, Paper, ClickAwayListener } from '@mui/material'
 import { CheckBox, CheckBoxOutlineBlank, Terminal, Backspace } from '@mui/icons-material'
 import { useTheme } from '@mui/material'
 import P3xrButton from '../../components/P3xrButton'
@@ -234,12 +234,27 @@ export default function ConsoleComponent({ embedded = false, collapsed = false }
         }
     }, [])
 
+    const autocompleteListRef = useRef<HTMLDivElement>(null)
+
     useEffect(() => { setAutocompleteHighlight(0) }, [flatOptions.length])
+
+    // Scroll highlighted autocomplete item into view
+    useEffect(() => {
+        const list = autocompleteListRef.current
+        if (!list) return
+        const item = list.querySelector(`[data-ac-idx="${autocompleteHighlight}"]`) as HTMLElement
+        if (item) item.scrollIntoView({ block: 'nearest' })
+    }, [autocompleteHighlight])
 
     const selectAutocomplete = useCallback((cmdName: string) => {
         setSearchText(cmdName)
+        setAutocompleteDismissed(true)
         setTimeout(() => { inputRef.current?.focus(); autoResize() }, 0)
     }, [autoResize])
+
+    const dismissAutocomplete = useCallback(() => {
+        setAutocompleteDismissed(true)
+    }, [])
 
     // --- Natural language detection ---
     const looksLikeNaturalLanguage = useCallback((input: string, errorMsg: string): boolean => {
@@ -349,17 +364,30 @@ export default function ConsoleComponent({ embedded = false, collapsed = false }
     }, [commandsMeta, autoResize])
 
     // --- Key handler ---
+    const autocompleteOpen = flatOptions.length > 0 && !autocompleteDismissed
+
     const onKeyDown = useCallback((e: React.KeyboardEvent) => {
+        // Tab — select highlighted autocomplete item
+        if (e.key === 'Tab' && autocompleteOpen) {
+            e.preventDefault()
+            const opt = flatOptions[autocompleteHighlight]
+            if (opt) selectAutocomplete(opt.name)
+            return
+        }
         if (e.key === 'Enter') {
             if (e.shiftKey) { setTimeout(() => autoResize(), 0); return }
             e.preventDefault()
-            // Dismiss autocomplete and execute command directly
+            // If user navigated autocomplete, Enter selects the item
+            if (autocompleteOpen && autocompleteNavigated) {
+                const opt = flatOptions[autocompleteHighlight]
+                if (opt) { selectAutocomplete(opt.name); return }
+            }
             setAutocompleteDismissed(true)
             actionEnter()
             return
         }
-        // Autocomplete navigation — only marks as navigated when user scrolls
-        if (flatOptions.length > 0 && !autocompleteDismissed && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
+        // Arrow keys — autocomplete navigation (without Shift)
+        if (autocompleteOpen && !e.shiftKey && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
             e.preventDefault()
             setAutocompleteNavigated(true)
             setAutocompleteHighlight(prev => {
@@ -388,7 +416,7 @@ export default function ConsoleComponent({ embedded = false, collapsed = false }
         const value = history[actionHistoryPosition] ?? ''
         setSearchText(value)
         setTimeout(() => { const el = inputRef.current; if (el) { el.blur(); el.focus() }; autoResize() }, 0)
-    }, [actionEnter, autoResize, flatOptions, autocompleteHighlight, selectAutocomplete, autocompleteDismissed, autocompleteNavigated, searchText])
+    }, [actionEnter, autoResize, flatOptions, autocompleteHighlight, selectAutocomplete, autocompleteDismissed, autocompleteNavigated, autocompleteOpen])
 
     // --- Auto-resize when searchText changes (AI, history, etc.) ---
     useEffect(() => {
@@ -491,44 +519,47 @@ export default function ConsoleComponent({ embedded = false, collapsed = false }
             </Box>
 
             {/* Autocomplete dropdown — opens ABOVE input via Popper */}
-            {flatOptions.length > 0 && !autocompleteDismissed && inputRef.current && (
-                <Popper open anchorEl={inputRef.current} placement="top-start"
-                    sx={{ zIndex: 1300, width: inputRef.current?.offsetWidth || '100%' }}>
-                    <Paper sx={{
-                        maxHeight: 350, overflow: 'auto',
-                        fontFamily: "'Roboto Mono', monospace", fontSize: 13,
-                        bgcolor: 'background.paper', backgroundImage: 'none',
-                    }}>
-                        {filteredCommands.map(group => (
-                            <Box key={group.group}>
-                                <Box sx={{
-                                    fontSize: 11, fontWeight: 'bold', textTransform: 'uppercase',
-                                    letterSpacing: '0.5px', minHeight: 28, lineHeight: '28px',
-                                    opacity: 0.7, px: 2,
-                                }}>
-                                    {group.group}
+            {autocompleteOpen && inputRef.current && (
+                <ClickAwayListener onClickAway={dismissAutocomplete}>
+                    <Popper open anchorEl={inputRef.current} placement="top-start"
+                        sx={{ zIndex: 1300, width: inputRef.current?.offsetWidth || '100%' }}>
+                        <Paper ref={autocompleteListRef} sx={{
+                            maxHeight: 350, overflow: 'auto',
+                            fontFamily: "'Roboto Mono', monospace", fontSize: 13,
+                            bgcolor: 'background.paper', backgroundImage: 'none',
+                        }}>
+                            {filteredCommands.map(group => (
+                                <Box key={group.group}>
+                                    <Box sx={{
+                                        fontSize: 11, fontWeight: 'bold', textTransform: 'uppercase',
+                                        letterSpacing: '0.5px', minHeight: 28, lineHeight: '28px',
+                                        opacity: 0.7, px: 2,
+                                    }}>
+                                        {group.group}
+                                    </Box>
+                                    {group.commands.map(cmd => {
+                                        const idx = flatOptions.indexOf(cmd)
+                                        return (
+                                            <Box key={cmd.name}
+                                                data-ac-idx={idx}
+                                                onClick={() => selectAutocomplete(cmd.name)}
+                                                sx={{
+                                                    minHeight: 32, lineHeight: '32px', px: 2,
+                                                    cursor: 'pointer', fontSize: 13,
+                                                    fontFamily: "'Roboto Mono', monospace",
+                                                    bgcolor: idx === autocompleteHighlight ? 'action.hover' : 'transparent',
+                                                    '&:hover': { bgcolor: 'action.hover' },
+                                                }}>
+                                                <Box component="span" sx={{ fontWeight: 'bold', mr: 1 }}>{cmd.name}</Box>
+                                                {cmd.syntax && <Box component="span" sx={{ opacity: 0.5, fontSize: 11 }}>{cmd.syntax}</Box>}
+                                            </Box>
+                                        )
+                                    })}
                                 </Box>
-                                {group.commands.map(cmd => {
-                                    const idx = flatOptions.indexOf(cmd)
-                                    return (
-                                        <Box key={cmd.name}
-                                            onClick={() => selectAutocomplete(cmd.name)}
-                                            sx={{
-                                                minHeight: 32, lineHeight: '32px', px: 2,
-                                                cursor: 'pointer', fontSize: 13,
-                                                fontFamily: "'Roboto Mono', monospace",
-                                                bgcolor: idx === autocompleteHighlight ? 'action.hover' : 'transparent',
-                                                '&:hover': { bgcolor: 'action.hover' },
-                                            }}>
-                                            <Box component="span" sx={{ fontWeight: 'bold', mr: 1 }}>{cmd.name}</Box>
-                                            {cmd.syntax && <Box component="span" sx={{ opacity: 0.5, fontSize: 11 }}>{cmd.syntax}</Box>}
-                                        </Box>
-                                    )
-                                })}
-                            </Box>
-                        ))}
-                    </Paper>
-                </Popper>
+                            ))}
+                        </Paper>
+                    </Popper>
+                </ClickAwayListener>
             )}
 
             {/* Input area */}
