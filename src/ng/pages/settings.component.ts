@@ -881,6 +881,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
     switchToReact(): void {
         try { localStorage.setItem('p3xr-frontend', 'react'); } catch {}
+        try {
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage({ type: 'p3x-ui-storage-set', key: 'p3xr-frontend', value: 'react' }, '*');
+            }
+        } catch {}
         location.href = '/react/settings';
     }
 }

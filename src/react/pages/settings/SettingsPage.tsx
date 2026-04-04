@@ -437,8 +437,8 @@ export default function SettingsPage() {
                     }}>
                         <Box component="span"
                             onClick={() => {
-                                try { localStorage.setItem('p3xr-frontend', 'ng') } catch {}
-                                location.href = '/ng/settings'
+                                setPersistentItem('p3xr-frontend', 'ng')
+                                location.href = '/settings'
                             }}
                             sx={{
                                 px: 3, py: 1, cursor: 'pointer', fontWeight: 500,

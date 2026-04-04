@@ -273,9 +273,11 @@ export default function ConsoleComponent({ embedded = false, collapsed = false }
             try { const r = await request({ action: 'search-list', payload: {} }); indexes = r.data || [] } catch {}
             const info = useRedisStateStore.getState().info || {}
             const ctx: any = { indexes }
-            if (info.server?.redis_version) ctx.redisVersion = info.server.redis_version
-            if (info.server?.redis_mode) ctx.redisMode = info.server.redis_mode
-            if (info.server?.os) ctx.os = info.server.os
+            if (info.redis_version) ctx.redisVersion = info.redis_version
+            if (info.redis_mode) ctx.redisMode = info.redis_mode
+            if (info.os) ctx.os = info.os
+            if (info.connected_clients) ctx.connectedClients = info.connected_clients
+            if (info.used_memory_human) ctx.usedMemory = info.used_memory_human
             ctx.uiLanguage = useI18nStore.getState().currentLang
 
             const response = await request({ action: 'ai-redis-query', payload: { prompt, context: ctx } })
