@@ -101,8 +101,8 @@
     </mat-toolbar>
 </div>
 
-<!-- Version number: shown when not in Electron and a version is available -->
-@if (!isElectron && currentVersion && isWide) {
+<!-- Version number -->
+@if (currentVersion && isWide) {
     <div id="p3xr-layout-header-version">
         {{ currentVersion }}
     </div>
