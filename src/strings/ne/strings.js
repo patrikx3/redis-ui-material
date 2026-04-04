@@ -185,6 +185,7 @@ const strings = {
     ttl: "TTL सेट गर्नुहोस्",
     delete: "मेट्नुहोस्",
     remove: "हटाउनुहोस्",
+    areYouSure: "के तपाईं पक्का हुनुहुन्छ?",
     sure: "पक्का",
     testConnection: "परीक्षण जडान",
     getKey: "Redis कुञ्जी र सम्बन्धित डाटा लोड गर्दै...",

@@ -16,13 +16,17 @@ require('./monitoring-shell.component.scss');
     standalone: true,
     imports: [RouterOutlet, MatTabsModule],
     template: `
-        <mat-tab-group class="p3xr-monitoring-tabs" [selectedIndex]="selectedTab" (selectedIndexChange)="onTabChange($event)">
-            <mat-tab [label]="strings().intention?.pulse || 'Pulse'"></mat-tab>
-            <mat-tab [label]="strings().intention?.profiler || 'Profiler'"></mat-tab>
-            <mat-tab [label]="strings().intention?.pubsubMonitor || 'PubSub'"></mat-tab>
-            <mat-tab [label]="strings().intention?.memoryAnalysis || 'Analysis'"></mat-tab>
-        </mat-tab-group>
-        <router-outlet></router-outlet>
+        <div class="p3xr-monitoring-shell-container">
+            <mat-tab-group class="p3xr-monitoring-tabs" [selectedIndex]="selectedTab" (selectedIndexChange)="onTabChange($event)">
+                <mat-tab [label]="strings().intention?.pulse || 'Pulse'"></mat-tab>
+                <mat-tab [label]="strings().intention?.profiler || 'Profiler'"></mat-tab>
+                <mat-tab [label]="strings().intention?.pubsubMonitor || 'PubSub'"></mat-tab>
+                <mat-tab [label]="strings().intention?.memoryAnalysis || 'Analysis'"></mat-tab>
+            </mat-tab-group>
+            <div class="p3xr-monitoring-shell-content">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
     `,
     encapsulation: ViewEncapsulation.None,
 })

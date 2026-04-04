@@ -185,6 +185,7 @@ const strings = {
     ttl: "TTL орнатыңыз",
     delete: "Жою",
     remove: "Жою",
+    areYouSure: "Сенімдісіз бе?",
     sure: "Әрине",
     testConnection: "Сынақ қосылымы",
     getKey: "Redis кілті мен байланысты деректер жүктелуде ...",

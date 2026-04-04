@@ -124,7 +124,7 @@
             </span>
         </div>
 
-        @if (response.type !== 'timeseries') {
+        @if (response.type !== 'timeseries' && response.type !== 'json') {
             <div class="p3xr-database-key-info-row" style="display: flex; align-items: center;">
                 <strong style="flex: 1;">{{ strings()?.label?.format || 'Format' }}:</strong>
                 <mat-button-toggle-group [(ngModel)]="valueFormat" hideSingleSelectionIndicator class="p3xr-format-toggle">
@@ -137,7 +137,7 @@
         }
     </div>
 
-    <!-- Type-specific renderer (pure Angular v21 components) -->
+    <!-- Type-specific renderer -->
     @switch (response.type) {
         @case ('string') {
             <p3xr-key-string [p3xrResponse]="response" [p3xrValue]="response.value"

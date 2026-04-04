@@ -185,6 +185,7 @@ const strings = {
     ttl: "កំណត់ TTL",
     delete: "លុប",
     remove: "ដកចេញ",
+    areYouSure: "តើអ្នកប្រាកដទេ?",
     sure: "ប្រាកដ",
     testConnection: "ការភ្ជាប់សាកល្បង",
     getKey: "កំពុងផ្ទុកគ្រាប់ចុច Redis និងទិន្នន័យដែលពាក់ព័ន្ធ...",

@@ -79,14 +79,11 @@ export class MemoryAnalysisComponent implements OnInit, OnDestroy, AfterViewInit
     ngAfterViewInit(): void {
         this.ngZone.runOutsideAngular(() => {
             this.boundRecalcHost = () => {
-                this.recalcHostHeight();
                 clearTimeout(this.resizeTimer);
                 this.resizeTimer = setTimeout(() => { if (this.data) this.drawCharts(); }, 150);
             };
             window.addEventListener('resize', this.boundRecalcHost);
         });
-        document.body.classList.add('p3xr-no-main-scroll');
-        this.recalcHostHeight();
 
         this.ngZone.runOutsideAngular(() => {
             this.themeObserver = new MutationObserver(() => {
@@ -97,7 +94,6 @@ export class MemoryAnalysisComponent implements OnInit, OnDestroy, AfterViewInit
     }
 
     ngOnDestroy(): void {
-        document.body.classList.remove('p3xr-no-main-scroll');
         this.themeObserver?.disconnect();
         if (this.boundRecalcHost) {
             window.removeEventListener('resize', this.boundRecalcHost);

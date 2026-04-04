@@ -185,6 +185,7 @@ const strings = {
     ttl: "Setare TTL",
     delete: "Stergere",
     remove: "Eliminare",
+    areYouSure: "Ești sigur?",
     sure: "Sigur",
     testConnection: "Testare conexiune",
     getKey: "Se incarca cheia Redis si datele asociate ...",

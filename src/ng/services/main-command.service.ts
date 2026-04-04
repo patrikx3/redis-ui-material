@@ -105,7 +105,7 @@ export class MainCommandService {
     async statistics(): Promise<void> {
         try {
             this.navigateTo('database.statistics');
-            await this.refresh();
+            await this.refresh({ force: true });
         } catch (e) {
             this.common.generalHandleError(e);
         }
@@ -113,10 +113,10 @@ export class MainCommandService {
 
     private lastRefreshAt = 0;
 
-    async refresh(options: { withoutParent?: boolean } = {}): Promise<void> {
+    async refresh(options: { withoutParent?: boolean; force?: boolean } = {}): Promise<void> {
         // Throttle: skip if last refresh was less than 2s ago
         const now = Date.now();
-        if (now - this.lastRefreshAt < 2000) return;
+        if (!options.force && now - this.lastRefreshAt < 2000) return;
         this.lastRefreshAt = now;
 
         const { withoutParent = false } = options;

@@ -1,8 +1,8 @@
 <p3xr-key-pager-inline [paging]="paging" (pageChanged)="updatePagedItems()"></p3xr-key-pager-inline>
 <div class="p3xr-key-type-table">
     <div class="p3xr-key-type-header">
-        <span style="flex: 20%">{{ strings?.page?.key?.label?.score || 'Score' }}</span>
-        <span style="flex: 60%">{{ strings?.page?.key?.label?.value || 'Value' }}</span>
+        <span style="flex: 20%">{{ strings?.page?.key?.zset?.table?.score || 'Score' }}</span>
+        <span style="flex: 60%">{{ strings?.page?.key?.zset?.table?.value || 'Member' }}</span>
         <span style="flex: 20%; text-align: right">
             @if (!isReadonly) {
                 <button mat-icon-button (click)="addZSet($event)" matTooltip="Add">

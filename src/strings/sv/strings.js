@@ -183,6 +183,7 @@ const strings = {
     ttl: "Ange TTL",
     delete: "Radera",
     remove: "Ta bort",
+    areYouSure: "Är du säker?",
     sure: "Säker",
     testConnection: "Testa anslutning",
     getKey: "Laddar Redis-nyckel och tillhörande data ...",

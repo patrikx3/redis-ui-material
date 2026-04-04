@@ -187,6 +187,7 @@ const strings = {
     ttl: "TTL அமை",
     delete: "நீக்கு",
     remove: "அகற்று",
+    areYouSure: "நீங்கள் உறுதியா?",
     sure: "உறுதி",
     testConnection: "இணைப்பை சோதி",
     getKey: "Redis விசை மற்றும் தொடர்புடைய தரவை ஏற்றுகிறது ...",

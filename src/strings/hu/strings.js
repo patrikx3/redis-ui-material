@@ -183,6 +183,7 @@ const strings = {
     ttl: "TTL beállítása",
     delete: "Törlés",
     remove: "Eltávolítás",
+    areYouSure: "Biztos vagy benne?",
     sure: "Biztos",
     testConnection: "Kapcsolat tesztelése",
     getKey: "Redis kulcs és kapcsolódó adatok betöltése ...",

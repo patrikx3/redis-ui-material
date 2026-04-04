@@ -187,6 +187,7 @@ const strings = {
     ttl: "Nastavit TTL",
     delete: "Smazat",
     remove: "Odebrat",
+    areYouSure: "Jste si jistí?",
     sure: "Jistě",
     testConnection: "Otestovat připojení",
     getKey: "Načítání Redis klíče a přidružených dat ...",

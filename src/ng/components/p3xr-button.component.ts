@@ -1,4 +1,4 @@
-import { Component, Input, Inject, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, Inject, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -56,7 +56,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
         :host button { margin: 0 !important; }
     `]
 })
-export class P3xrButtonComponent {
+export class P3xrButtonComponent implements OnInit, OnDestroy {
     @Input() label: string = '';
     @Input() mdIcon: string | undefined;
     @Input() faIcon: string | undefined;
@@ -64,17 +64,26 @@ export class P3xrButtonComponent {
     @Input() classes: string = '';
     @Input() disabled = false;
     @Input() raised = false;
+    @Input() breakpoint = 720;
 
     isWide = true;
+
+    private bpSub: any;
 
     constructor(
         @Inject(BreakpointObserver) private breakpointObserver: BreakpointObserver,
         @Inject(ChangeDetectorRef) private cdr: ChangeDetectorRef,
-    ) {
-        this.breakpointObserver.observe('(min-width: 720px)').subscribe(result => {
+    ) {}
+
+    ngOnInit(): void {
+        this.bpSub = this.breakpointObserver.observe(`(min-width: ${this.breakpoint}px)`).subscribe(result => {
             this.isWide = result.matches;
             this.cdr.markForCheck();
         });
+    }
+
+    ngOnDestroy(): void {
+        this.bpSub?.unsubscribe();
     }
 
     get tooltipPosition(): TooltipPosition {

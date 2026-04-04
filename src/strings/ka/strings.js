@@ -185,6 +185,7 @@ const strings = {
     ttl: "დააყენეთ TTL",
     delete: "წაშლა",
     remove: "ამოღება",
+    areYouSure: "დარწმუნებული ხართ?",
     sure: "რა თქმა უნდა",
     testConnection: "ტესტი კავშირი",
     getKey: "იტვირთება Redis გასაღები და მასთან დაკავშირებული მონაცემები...",

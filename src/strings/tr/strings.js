@@ -183,6 +183,7 @@ const strings = {
     ttl: "TTL Ayarla",
     delete: "Sil",
     remove: "Kaldır",
+    areYouSure: "Emin misiniz?",
     sure: "Emin",
     testConnection: "Bağlantıyı test et",
     getKey: "Redis anahtarı ve ilgili veriler yükleniyor ...",

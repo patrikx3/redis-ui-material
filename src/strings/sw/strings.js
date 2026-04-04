@@ -187,6 +187,7 @@ const strings = {
     ttl: "Weka TTL",
     delete: "Futa",
     remove: "Ondoa",
+    areYouSure: "Je, una uhakika?",
     sure: "Hakika",
     testConnection: "Jaribu muunganisho",
     getKey: "Inapakia ufunguo wa Redis na data inayohusiana ...",

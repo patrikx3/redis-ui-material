@@ -183,6 +183,7 @@ const strings = {
     ttl: "TTLを設定",
     delete: "削除",
     remove: "除去",
+    areYouSure: "本当にいいですか？",
     sure: "確認",
     testConnection: "接続テスト",
     getKey: "Redisキーと関連データを読み込み中 ...",

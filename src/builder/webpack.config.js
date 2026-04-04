@@ -175,7 +175,7 @@ const rules = [
     },
     {
         test: /\.[jt]sx?$/,
-        exclude: /node_modules/,
+        exclude: [/node_modules/, /src\/react/],
         loader: '@ngtools/webpack',
     },
     {
@@ -256,7 +256,7 @@ const webpackConfig = {
         filename: `${filenamePrefix}.js`,
         // chunkFilename: `${filenamePrefix}.js`,
 //        publicPath: '{{ app.url_subdir }}/webpack/',
-        publicPath: ``,
+        publicPath: `/`,
         assetModuleFilename: 'assets/[hash][ext]',
     },
     resolve: {
@@ -283,7 +283,7 @@ const webpackConfig = {
         host: '0.0.0.0',
         historyApiFallback: {
             rewrites: [
-                {from: /.*\..*/, to: '/index.html'}
+                {from: /.*/, to: '/index.html'},
             ]
         },
         // hotOnly: true,
@@ -295,5 +295,13 @@ const webpackConfig = {
 }
 
 webpackConfig.ignoreWarnings = [/Failed to parse source map/];
+
+// Ignore the React/MUI port directory to prevent hot-reload loops when Vite is running
+webpackConfig.watchOptions = {
+    ignored: [
+        '**/src/react/**',
+        path.resolve(top, 'dist-react') + '/**',
+    ],
+};
 
 module.exports = webpackConfig

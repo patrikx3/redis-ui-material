@@ -405,7 +405,7 @@ export class DatabaseTreeComponent implements OnInit, OnDestroy {
         this.divider = this.settingsService.redisTreeDivider() ?? ':';
         this.isReadonly = this.state.connection()?.readonly === true;
 
-        const keys: string[] = this.state.keysRaw() ?? [];
+        const keys: string[] = this.state.paginatedKeys() ?? [];
         const keysInfo: any = this.state.keysInfo() ?? {};
 
         this.treeBuilder.keysToTreeControl({
@@ -475,7 +475,8 @@ export class DatabaseTreeComponent implements OnInit, OnDestroy {
         let lastSnapshot = '';
         const id = setInterval(() => {
             const snapshot = JSON.stringify({
-                keysLength: this.state.keysRaw()?.length,
+                keysLength: this.state.paginatedKeys()?.length,
+                page: this.state.page(),
                 divider: this.settingsService.redisTreeDivider(),
                 readonly: this.state.connection()?.readonly,
             });

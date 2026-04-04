@@ -138,21 +138,11 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        document.body.classList.add('p3xr-no-main-scroll');
-        this.recalcHostHeight();
-        this.ngZone.runOutsideAngular(() => {
-            this.boundRecalcHost = () => this.recalcHostHeight();
-            window.addEventListener('resize', this.boundRecalcHost);
-        });
         // Delay chart init to ensure DOM has layout
         setTimeout(() => this.loadUPlot(), 500);
     }
 
     ngOnDestroy(): void {
-        document.body.classList.remove('p3xr-no-main-scroll');
-        if (this.boundRecalcHost) {
-            window.removeEventListener('resize', this.boundRecalcHost);
-        }
         if (this.intervalId) clearInterval(this.intervalId);
         this.unsubFns.forEach(fn => fn());
         this.themeObserver?.disconnect();
@@ -161,16 +151,6 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
         this.opsPlot?.destroy();
         this.clientsPlot?.destroy();
         this.networkPlot?.destroy();
-    }
-
-    private recalcHostHeight(): void {
-        const el = this.elementRef.nativeElement as HTMLElement;
-        if (!el) return;
-        const rect = el.getBoundingClientRect();
-        const footerHeight = document.getElementById('p3xr-layout-footer-container')?.offsetHeight || 48;
-        const available = window.innerHeight - rect.top - footerHeight;
-        el.style.height = Math.max(available, 100) + 'px';
-        el.style.overflowY = 'auto';
     }
 
     serverInfoLabel(): string {

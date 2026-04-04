@@ -338,7 +338,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
     }
 
     reloadPage(): void {
-        location.href = '/';
+        location.href = '/ng/';
     }
 
     setTheme(key: string): void {

@@ -8,11 +8,11 @@ module.exports = (grunt) => {
     const loader = new builder.loader(grunt);
     loader.js({
 
-      
+
     });
 
     grunt.registerTask('default', ['cory-npm', 'clean', 'cory-replace', 'cory:license', 'publish']);
-  
+
     grunt.registerTask('build', ['publish']);
 
 
@@ -22,20 +22,34 @@ module.exports = (grunt) => {
 
         try {
 
- 
+            // Build Angular (webpack) and React (vite) in parallel
+            await Promise.all([
+                // Angular → dist/
+                gruntUtil.spawn({
+                    grunt: grunt,
+                    gruntThis: this,
+                }, {
+                    cmd: `${cwd}/node_modules/.bin/webpack${gruntUtil.commandAddon}`,
+                    args: [
+                        '--config',
+                        './src/builder/webpack.config.js',
+                        '--mode=production'
+                    ]
+                }),
 
-            await gruntUtil.spawn({
-                grunt: grunt,
-                gruntThis: this,
-
-            }, {
-                cmd: `${cwd}/node_modules/.bin/webpack${gruntUtil.commandAddon}`,
-                args: [
-                    '--config',
-                    './src/builder/webpack.config.js',
-                    '--mode=production'
-                ]
-            });
+                // React → dist-react/
+                gruntUtil.spawn({
+                    grunt: grunt,
+                    gruntThis: this,
+                }, {
+                    cmd: `${cwd}/node_modules/.bin/vite${gruntUtil.commandAddon}`,
+                    args: [
+                        'build',
+                        '--config',
+                        './src/react/vite.config.ts',
+                    ]
+                }),
+            ])
 
             done()
         } catch(e) {

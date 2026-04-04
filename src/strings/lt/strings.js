@@ -185,6 +185,7 @@ const strings = {
     ttl: "Nustatyti TTL",
     delete: "Ištrinti",
     remove: "Pašalinti",
+    areYouSure: "Ar esate tikri?",
     sure: "Žinoma",
     testConnection: "Bandomasis ryšys",
     getKey: "Įkeliamas Redis raktas ir susiję duomenys...",

@@ -185,6 +185,7 @@ const strings = {
     ttl: "Itakda ang TTL",
     delete: "Tanggalin",
     remove: "Alisin",
+    areYouSure: "Sigurado ka ba?",
     sure: "Oo naman",
     testConnection: "Subukan ang koneksyon",
     getKey: "Nilo-load ang Redis key at nauugnay na data ...",

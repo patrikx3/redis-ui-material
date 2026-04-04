@@ -188,6 +188,7 @@ const strings = {
     delete: "Delete",
     remove: "Remove",
     sure: "Sure",
+    areYouSure: "Are you sure?",
     testConnection: "Test connection",
     getKey: "Loading Redis key and associated data ...",
     jsonViewShow: "Display JSON",

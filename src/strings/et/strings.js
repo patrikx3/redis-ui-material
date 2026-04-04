@@ -185,6 +185,7 @@ const strings = {
     ttl: "Komplekt TTL",
     delete: "Kustuta",
     remove: "Eemalda",
+    areYouSure: "Kas olete kindel?",
     sure: "Muidugi",
     testConnection: "Katsetage ühendust",
     getKey: "Võtme Redis ja seotud andmete laadimine ...",

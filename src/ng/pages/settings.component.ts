@@ -19,8 +19,6 @@ import { TreecontrolSettingsDialogService } from '../dialogs/treecontrol-setting
 import { AiSettingsDialogService } from '../dialogs/ai-settings-dialog.service';
 import { P3xrAccordionComponent } from '../components/p3xr-accordion.component';
 import { P3xrButtonComponent } from '../components/p3xr-button.component';
-// import { DatePipe } from '../pipes/date.pipe';
-
 
 /**
  * Settings page — Angular replacement for AngularJS p3xrSettings.
@@ -35,7 +33,6 @@ import { P3xrButtonComponent } from '../components/p3xr-button.component';
     selector: 'p3xr-ng-settings',
     standalone: true,
     imports: [
-        // DatePipe,
         MatToolbarModule, MatButtonModule, MatIconModule, MatListModule, MatSlideToggleModule,
         MatTooltipModule, MatDividerModule, DragDropModule,
         P3xrAccordionComponent, P3xrButtonComponent,
@@ -275,6 +272,20 @@ import { P3xrButtonComponent } from '../components/p3xr-button.component';
 
         <br />
 
+        <!-- GUI Framework -->
+        <p3xr-ng-accordion title="GUI" accordionKey="gui-framework">
+            <div content>
+                <div style="display: flex; justify-content: flex-end; padding: 16px;">
+                    <div class="p3xr-gui-toggle">
+                        <span class="p3xr-gui-toggle-active">Angular</span>
+                        <span class="p3xr-gui-toggle-item" (click)="switchToReact()">React</span>
+                    </div>
+                </div>
+            </div>
+        </p3xr-ng-accordion>
+
+        <br />
+
         <!-- AI Settings -->
         <p3xr-ng-accordion [title]="strings().label?.aiSettings || 'AI Settings'" accordionKey="ai-settings">
             <div actions>
@@ -297,6 +308,7 @@ import { P3xrButtonComponent } from '../components/p3xr-button.component';
                         </div>
                     </mat-list-item>
                     @if (isAiEnabled() && hasGroqApiKey()) {
+                        <mat-divider></mat-divider>
                         <mat-list-item (click)="$event.stopPropagation()">
                             <div style="width: 100%;">
                                 <div class="p3xr-settings-pair-row">
@@ -313,6 +325,7 @@ import { P3xrButtonComponent } from '../components/p3xr-button.component';
                                 </div>
                             </div>
                         </mat-list-item>
+                        <mat-divider></mat-divider>
                         <mat-list-item>
                             <div class="p3xr-settings-pair-row">
                                 <div class="p3xr-settings-row-label">{{ strings().label?.aiGroqApiKey || 'Groq API Key' }}</div>
@@ -406,6 +419,31 @@ import { P3xrButtonComponent } from '../components/p3xr-button.component';
             font-size: 12px;
             color: var(--mat-app-text-color, rgba(0, 0, 0, 0.54));
             opacity: 0.7;
+        }
+        /* GUI toggle */
+        .p3xr-gui-toggle {
+            display: inline-flex;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid var(--p3xr-border-color, rgba(0,0,0,0.12));
+        }
+        .p3xr-gui-toggle-active {
+            padding: 8px 24px;
+            font-weight: 700;
+            font-size: 14px;
+            user-select: none;
+            background-color: var(--p3xr-btn-primary-bg);
+            color: var(--p3xr-btn-primary-color);
+        }
+        .p3xr-gui-toggle-item {
+            padding: 8px 24px;
+            font-weight: 500;
+            font-size: 14px;
+            user-select: none;
+            cursor: pointer;
+        }
+        .p3xr-gui-toggle-item:hover {
+            background-color: var(--p3xr-hover-bg);
         }
         /* Wide screens: show button text, hide tooltip */
         .hide-xs { display: inline; }
@@ -837,5 +875,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
     openTreeSettings($event: any): void {
         this.treeSettingsDialog.show({ $event });
+    }
+
+    // --- GUI Framework Switch ---
+
+    switchToReact(): void {
+        try { localStorage.setItem('p3xr-frontend', 'react'); } catch {}
+        location.href = '/react/settings';
     }
 }

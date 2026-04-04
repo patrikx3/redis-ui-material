@@ -424,7 +424,14 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
         const value = actionHistory[actionHistoryPosition] ?? '';
         this.searchText = value;
         this.searchControl.setValue(value, { emitEvent: false });
-        setTimeout(() => this.autoResizeTextarea(), 0);
+        setTimeout(() => {
+            const el = this.inputEl as HTMLElement;
+            if (el) {
+                el.blur();
+                el.focus();
+            }
+            this.autoResizeTextarea();
+        }, 0);
     }
 
     onAutocompleteSelected(event: any): void {

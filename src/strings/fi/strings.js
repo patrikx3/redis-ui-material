@@ -185,6 +185,7 @@ const strings = {
     ttl: "Aseta TTL",
     delete: "Poista",
     remove: "Poista",
+    areYouSure: "Oletko varma?",
     sure: "Toki",
     testConnection: "Testaa yhteys",
     getKey: "Ladataan Redis-avainta ja siihen liittyviä tietoja...",

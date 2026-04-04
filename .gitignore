@@ -12,6 +12,7 @@ node_modules/.yarn-integrity
 
 
 /dist
+/dist-react
 
 .DS_Store
 /test-results

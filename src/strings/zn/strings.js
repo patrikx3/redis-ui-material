@@ -183,6 +183,7 @@ const strings = {
     ttl: "设置 TTL",
     delete: "删除",
     remove: "删除",
+    areYouSure: "你确定吗？",
     sure: "确定",
     testConnection: "测试连接",
     getKey: "加载Redis键及相关数据...",

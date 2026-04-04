@@ -54,8 +54,8 @@ interface FlatJsonNode {
                 </button>
                 <span class="p3xr-json-tree-key">{{ node.key }}</span>
                 <span class="p3xr-json-tree-colon">:&nbsp;</span>
-                <span class="p3xr-json-tree-bracket">{{ node.type === 'array' ? '[' : '{' }}</span>
                 @if (!treeControl.isExpanded(node)) {
+                    <span class="p3xr-json-tree-bracket">{{ node.type === 'array' ? '[' : '{' }}</span>
                     <span class="p3xr-json-tree-ellipsis">...</span>
                     <span class="p3xr-json-tree-bracket">{{ node.type === 'array' ? ']' : '}' }}</span>
                     <span class="p3xr-json-tree-count">({{ node.childCount }})</span>

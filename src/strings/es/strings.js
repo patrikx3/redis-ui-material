@@ -187,6 +187,7 @@ const strings = {
     ttl: "Establecer TTL",
     delete: "Eliminar",
     remove: "Quitar",
+    areYouSure: "¿Estás seguro?",
     sure: "Seguro",
     testConnection: "Probar conexión",
     getKey: "Cargando clave Redis y datos asociados ...",

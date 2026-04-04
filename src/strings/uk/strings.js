@@ -183,6 +183,7 @@ const strings = {
     ttl: "Встановити TTL",
     delete: "Видалити",
     remove: "Вилучити",
+    areYouSure: "Ви впевнені?",
     sure: "Впевнені",
     testConnection: "Тестувати з'єднання",
     getKey: "Завантаження Redis-ключа та пов'язаних даних ...",

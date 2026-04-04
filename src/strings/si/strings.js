@@ -187,6 +187,7 @@ const strings = {
     ttl: "TTL සකසන්න",
     delete: "මකන්න",
     remove: "ඉවත් කරන්න",
+    areYouSure: "ඔබට විශ්වාසද?",
     sure: "විශ්වාසයි",
     testConnection: "සම්බන්ධතාවය පරීක්ෂා කරන්න",
     getKey: "Redis යතුර සහ ආශ්\u200dරිත දත්ත පූරණය වෙමින් ...",

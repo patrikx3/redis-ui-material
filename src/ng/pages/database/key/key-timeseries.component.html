@@ -8,24 +8,28 @@
                 <p3xr-ng-button
                     (click)="editAllDataPoints($event); $event.stopPropagation()"
                     [label]="strings?.intention?.edit || 'Edit'"
-                    mdIcon="edit">
+                    mdIcon="edit"
+                    [breakpoint]="1280">
                 </p3xr-ng-button>
             }
             <p3xr-ng-button
                 (click)="exportChartPng(); $event.stopPropagation()"
                 [label]="strings?.page?.key?.timeseries?.exportChart || 'Export PNG'"
-                mdIcon="image">
+                mdIcon="image"
+                [breakpoint]="1280">
             </p3xr-ng-button>
             <p3xr-ng-button
                 (click)="toggleAutoRefresh(); $event.stopPropagation()"
                 [label]="strings?.label?.autoRefresh || 'Auto'"
-                [mdIcon]="autoRefresh ? 'check_box' : 'check_box_outline_blank'">
+                [mdIcon]="autoRefresh ? 'check_box' : 'check_box_outline_blank'"
+                [breakpoint]="1280">
             </p3xr-ng-button>
             @if (!autoRefresh) {
                 <p3xr-ng-button
                     (click)="loadRange(); $event.stopPropagation()"
                     [label]="strings?.intention?.refresh || 'Refresh'"
-                    mdIcon="refresh">
+                    mdIcon="refresh"
+                    [breakpoint]="1280">
                 </p3xr-ng-button>
             }
         </div>

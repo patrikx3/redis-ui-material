@@ -187,6 +187,7 @@ const strings = {
     ttl: "TTL festlegen",
     delete: "Löschen",
     remove: "Entfernen",
+    areYouSure: "Bist du sicher?",
     sure: "Sicher",
     testConnection: "Verbindung testen",
     getKey: "Redis-Schlüssel und zugehörige Daten werden geladen ...",

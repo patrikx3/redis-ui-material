@@ -67,7 +67,7 @@ export class KeyListComponent extends KeyTypeBase implements OnInit, OnChanges {
 
     async deleteListElement(index: number, event: Event): Promise<void> {
         try {
-            await this.common.confirm({ message: this.i18n.strings().confirm?.deleteListElement });
+            await this.common.confirm({ message: this.i18n.strings().confirm?.deleteListItem ?? this.i18n.strings().confirm?.areYouSure ?? 'Are you sure?' });
             await this.socket.request({ action: 'key-list-delete-index', payload: { key: this.p3xrKey, index } });
             this.common.toast(this.i18n.strings().status?.deletedListElement);
             this.refreshKey();

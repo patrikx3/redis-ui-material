@@ -38,8 +38,7 @@ export interface JsonEditorDialogData {
 
         @if (isJson) {
             <mat-dialog-content
-                class="p3xr-dialog-content p3xr-dialog-content-mono p3xr-dialog-content-editor"
-                [style.height]="minHeight">
+                class="p3xr-dialog-content p3xr-dialog-content-mono p3xr-dialog-content-editor">
                 <div #editorContainer class="p3xr-codemirror-host"></div>
             </mat-dialog-content>
         } @else {
@@ -75,10 +74,15 @@ export interface JsonEditorDialogData {
     `,
     styles: [`
         .hide-sm { display: inline; }
-        .p3xr-dialog-content-editor { padding: 0 !important; overflow: hidden !important; }
+        .p3xr-dialog-content-editor {
+            padding: 0 !important;
+            overflow: hidden !important;
+            max-height: none !important;
+        }
         .p3xr-dialog-content-message { min-height: 320px; }
-        .p3xr-codemirror-host { height: 100%; min-height: inherit; }
-        .p3xr-codemirror-host .cm-editor { height: 100%; }
+        .p3xr-codemirror-host { height: calc(90vh - 100px); }
+        .p3xr-codemirror-host .cm-editor { height: 100% !important; max-height: 100% !important; }
+        .p3xr-codemirror-host .cm-scroller { overflow: auto !important; min-height: 0 !important; }
         @media (max-width: 959px) { .hide-sm { display: none; } }
     `],
 })
@@ -210,8 +214,12 @@ export class JsonEditorDialogComponent implements OnInit, AfterViewInit, OnDestr
                     json(),
                     themeExtension,
                     EditorView.theme({
+                        '&': {
+                            'height': 'calc(90vh - 100px)',
+                            'max-height': 'calc(90vh - 100px)',
+                        },
                         '.cm-scroller': {
-                            'overflow-x': 'scroll',
+                            'overflow': 'auto',
                             'scrollbar-width': 'auto',
                         },
                         '.cm-scroller::-webkit-scrollbar': {

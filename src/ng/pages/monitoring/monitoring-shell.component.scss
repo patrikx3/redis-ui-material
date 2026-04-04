@@ -1,7 +1,27 @@
+@use '../../../scss/vars' as v;
+
 p3xr-monitoring-shell {
     display: block;
 }
 
-.p3xr-monitoring-tabs > .mat-mdc-tab-header {
-    background-color: var(--p3xr-content-bg, #303030) !important;
+.p3xr-monitoring-shell-container {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - v.$toolbar-height * 2);
+    margin: -(v.$layout-padding);
+}
+
+.p3xr-monitoring-tabs {
+    flex-shrink: 0;
+
+    > .mat-mdc-tab-header {
+        background-color: var(--p3xr-content-bg, #303030) !important;
+    }
+}
+
+.p3xr-monitoring-shell-content {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+    padding: v.$layout-padding;
 }

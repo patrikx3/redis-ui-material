@@ -185,6 +185,7 @@ const strings = {
     ttl: "Tetapkan TTL",
     delete: "Padam",
     remove: "Alih keluar",
+    areYouSure: "Adakah anda pasti?",
     sure: "pasti",
     testConnection: "Uji sambungan",
     getKey: "Memuatkan kunci Redis dan data yang berkaitan ...",

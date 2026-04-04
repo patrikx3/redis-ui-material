@@ -185,6 +185,7 @@ const strings = {
     ttl: "Postavite TTL",
     delete: "Izbriši",
     remove: "Ukloniti",
+    areYouSure: "Jeste li sigurni?",
     sure: "naravno",
     testConnection: "Testirajte vezu",
     getKey: "Učitavanje ključa Redis i povezanih podataka ...",

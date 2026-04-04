@@ -88,6 +88,8 @@ import { I18nService } from '../services/i18n.service';
         .p3xr-accordion-actions {
             display: flex;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 4px;
         }
         .p3xr-accordion-toggle {
             flex-shrink: 0;

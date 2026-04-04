@@ -185,6 +185,7 @@ const strings = {
     ttl: "Սահմանել TTL",
     delete: "Ջնջել",
     remove: "Հեռացնել",
+    areYouSure: "Վստusage՞ delays",
     sure: "Իհարկե",
     testConnection: "Փորձնական կապ",
     getKey: "Բեռնվում է Redis բանալի և հարակից տվյալները...",

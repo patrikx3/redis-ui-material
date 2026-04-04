@@ -865,13 +865,15 @@ mat-dialog-container {
     0 5px 24px 4px rgba(0, 0, 0, 0.12) !important;
   display: flex !important;
   flex-direction: column !important;
-  max-height: 80vh !important;
+  max-height: none !important;
+  height: 100% !important;
   overflow: hidden !important;
 }
 
 .cdk-overlay-pane.p3xr-dialog-panel .mat-mdc-dialog-container {
   min-width: 0 !important;
-  max-height: 80vh !important;
+  max-height: none !important;
+  height: 100% !important;
   display: flex !important;
   flex-direction: column !important;
   overflow: hidden !important;
@@ -904,6 +906,13 @@ mat-dialog-container {
   min-height: 0 !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
+}
+
+.cdk-overlay-pane.p3xr-dialog-panel .mat-mdc-dialog-component-host > .p3xr-dialog-content.p3xr-dialog-content-editor,
+.cdk-overlay-pane.p3xr-dialog-panel .mat-mdc-dialog-component-host > form > .p3xr-dialog-content.p3xr-dialog-content-editor {
+  overflow: hidden !important;
+  max-height: none !important;
+  position: relative !important;
 }
 
 .cdk-overlay-pane.p3xr-dialog-panel .p3xr-dialog-actions {

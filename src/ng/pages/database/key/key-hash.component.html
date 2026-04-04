@@ -2,8 +2,8 @@
 
 <div class="p3xr-key-type-table">
     <div class="p3xr-key-type-header">
-        <span style="flex: 20%">{{ strings?.page?.key?.label?.hashkey || 'Hash Key' }}</span>
-        <span style="flex: 60%">{{ strings?.page?.key?.label?.value || 'Value' }}</span>
+        <span style="flex: 20%">{{ strings?.page?.key?.hash?.table?.hashkey || 'Hash Key' }}</span>
+        <span style="flex: 60%">{{ strings?.page?.key?.hash?.table?.value || 'Value' }}</span>
         <span style="flex: 20%; text-align: right">
             @if (!isReadonly) {
                 <button mat-icon-button (click)="addHash($event)" matTooltip="Add">

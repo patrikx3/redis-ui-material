@@ -135,13 +135,15 @@ export interface KeyNewOrSetDialogData {
                         @if (!model.tsBulkMode) {
                             <mat-form-field class="full-width">
                                 <mat-label>{{ strings().page?.key?.timeseries?.timestamp || 'Timestamp' }}</mat-label>
-                                <input matInput name="tsTimestamp" [(ngModel)]="model.tsTimestamp" />
+                                <input matInput name="tsTimestamp" [(ngModel)]="model.tsTimestamp" [disabled]="model.originalTimestamp !== undefined" />
                                 <mat-hint>{{ strings().page?.key?.timeseries?.timestampHint || "'*' means auto generated, or milliseconds timestamp" }}</mat-hint>
                             </mat-form-field>
                         }
-                        <mat-slide-toggle [(ngModel)]="model.tsBulkMode" name="tsBulkMode" style="display: block; margin: 8px 0;">
-                            {{ strings().page?.key?.timeseries?.bulkMode || 'Bulk generate' }}
-                        </mat-slide-toggle>
+                        @if (model.originalTimestamp === undefined) {
+                            <mat-slide-toggle [(ngModel)]="model.tsBulkMode" name="tsBulkMode" style="display: block; margin: 8px 0;">
+                                {{ strings().page?.key?.timeseries?.bulkMode || 'Bulk generate' }}
+                            </mat-slide-toggle>
+                        }
                     }
                 }
 

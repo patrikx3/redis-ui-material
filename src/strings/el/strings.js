@@ -187,6 +187,7 @@ const strings = {
     ttl: "Ορισμός TTL",
     delete: "Διαγραφή",
     remove: "Αφαίρεση",
+    areYouSure: "Είσαι σίγουρος;",
     sure: "Σίγουρα",
     testConnection: "Δοκιμή σύνδεσης",
     getKey: "Φόρτωση κλειδιού Redis και σχετικών δεδομένων ...",
