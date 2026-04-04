@@ -27,7 +27,7 @@
 
 <body id="p3xr-redis-ui-bootstrap">
 
-    <script>try { if (window.parent === window && localStorage.getItem('p3xr-frontend') === 'react' && !location.pathname.startsWith('/react')) location.replace('/react/' + location.search.replace(/[?&]$/, '')) } catch(e) {}</script>
+    <script>try { if (window.parent === window && location.port !== '8080' && localStorage.getItem('p3xr-frontend') === 'react' && !location.pathname.startsWith('/react')) location.replace('/react/' + location.search) } catch(e) {}</script>
 
     <!-- Loading splash: shown before Angular bootstraps. LayoutComponent.ngOnInit() removes it.
          IMPORTANT: Must be a SIBLING of <p3xr-layout>, NOT a child — placing content inside

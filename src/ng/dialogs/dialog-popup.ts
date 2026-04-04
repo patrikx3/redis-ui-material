@@ -68,7 +68,7 @@ export function createDialogPopupSettings<T = unknown>(options: DialogPopupSetti
         autoFocus: autoFocus ?? true,
         disableClose: disableClose ?? false,
         maxWidth: maxWidth ?? '100vw',
-        maxHeight: maxHeight ?? '100vh',
+        maxHeight: maxHeight ?? 'calc(100vh - 64px)',
         enterAnimationDuration: enterAnimationDuration ?? (animationEnabled ? undefined : '0ms'),
         exitAnimationDuration: exitAnimationDuration ?? (animationEnabled ? undefined : '0ms'),
         ...rest,

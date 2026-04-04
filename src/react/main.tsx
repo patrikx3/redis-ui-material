@@ -4,6 +4,16 @@ import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 import '@fontsource/roboto-mono/400.css'
 import '@fortawesome/fontawesome-free/css/all.css'
+
+// Redirect to Angular if preference is not React (production only, not dev server)
+if (!globalThis.p3xrDevMode && window.parent === window && location.pathname.startsWith('/react')) {
+    try {
+        if (localStorage.getItem('p3xr-frontend') !== 'react') {
+            location.replace('/ng/' + location.search)
+        }
+    } catch {}
+}
+
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App'

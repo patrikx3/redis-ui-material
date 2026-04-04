@@ -54,9 +54,10 @@ export default function P3xrDialog({
             slotProps={{ paper: { sx: {
                 ...(!fullScreen && { width, maxWidth: width }),
                 ...(height && !fullScreen && { height }),
-                maxHeight: '100vh',
+                maxHeight: 'calc(100vh - 64px)',
                 display: 'flex',
                 flexDirection: 'column',
+                overflow: 'hidden',
             }}}}
         >
             {/* Header — strongBg, 48px, matches .p3xr-dialog-toolbar */}

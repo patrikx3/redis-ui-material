@@ -856,6 +856,11 @@ mat-dialog-container {
 // Dialog layout: surface → container → component-host → form → toolbar+content+actions
 // The surface constrains the overall height. The content area scrolls.
 // Every level in the chain must be flex column with min-height:0 so flex shrinking works.
+.cdk-overlay-pane.p3xr-dialog-panel {
+  max-height: calc(100vh - 64px) !important;
+  overflow: hidden !important;
+}
+
 .cdk-overlay-pane.p3xr-dialog-panel .mat-mdc-dialog-surface {
   border-radius: 4px !important;
   background-color: var(--p3xr-dialog-surface-bg, var(--p3xr-content-bg)) !important;
@@ -904,6 +909,7 @@ mat-dialog-container {
 .cdk-overlay-pane.p3xr-dialog-panel .mat-mdc-dialog-component-host > form > .p3xr-dialog-content {
   flex: 1 1 auto;
   min-height: 0 !important;
+  max-height: none !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
 }
@@ -1105,7 +1111,7 @@ body.p3xr-theme-dark .p3xr-settings-hint {
 .cdk-overlay-pane.p3xr-connection-dialog-panel {
   width: 75vw !important;
   max-width: 75vw !important;
-  max-height: 100vh !important;
+  max-height: calc(100vh - 64px) !important;
 }
 
 .p3xr-connection-dialog-panel .mdc-label,
@@ -1130,7 +1136,7 @@ body.p3xr-theme-dark .p3xr-settings-hint {
 .cdk-overlay-pane.p3xr-tree-settings-dialog-panel {
   width: 75vw !important;
   max-width: 75vw !important;
-  max-height: 100vh !important;
+  max-height: calc(100vh - 64px) !important;
   --mat-form-field-container-height: 40px;
   --mat-form-field-container-vertical-padding: 8px;
   --mat-form-field-filled-with-label-container-padding-top: 16px;
@@ -1313,7 +1319,7 @@ body.p3xr-theme-dark .p3xr-settings-hint {
     width: 100vw !important;
     max-width: 100vw !important;
     height: 100vh !important;
-    max-height: 100vh !important;
+    max-height: calc(100vh - 64px) !important;
   }
 
   .cdk-overlay-pane.p3xr-connection-dialog-panel .mat-mdc-dialog-surface {
@@ -1324,7 +1330,7 @@ body.p3xr-theme-dark .p3xr-settings-hint {
     width: 100vw !important;
     max-width: 100vw !important;
     height: 100vh !important;
-    max-height: 100vh !important;
+    max-height: calc(100vh - 64px) !important;
   }
 
   .cdk-overlay-pane.p3xr-tree-settings-dialog-panel .mat-mdc-dialog-surface {
