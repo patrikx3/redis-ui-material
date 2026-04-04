@@ -858,7 +858,6 @@ mat-dialog-container {
 // Every level in the chain must be flex column with min-height:0 so flex shrinking works.
 .cdk-overlay-pane.p3xr-dialog-panel {
   max-height: calc(100vh - 64px) !important;
-  overflow: hidden !important;
 }
 
 .cdk-overlay-pane.p3xr-dialog-panel .mat-mdc-dialog-surface {
@@ -870,14 +869,14 @@ mat-dialog-container {
     0 5px 24px 4px rgba(0, 0, 0, 0.12) !important;
   display: flex !important;
   flex-direction: column !important;
-  max-height: none !important;
+  max-height: inherit !important;
   height: 100% !important;
   overflow: hidden !important;
 }
 
 .cdk-overlay-pane.p3xr-dialog-panel .mat-mdc-dialog-container {
   min-width: 0 !important;
-  max-height: none !important;
+  max-height: inherit !important;
   height: 100% !important;
   display: flex !important;
   flex-direction: column !important;

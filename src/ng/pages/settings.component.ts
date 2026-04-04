@@ -596,6 +596,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
     private restoreGroupingState(): void {
         this.groupModeEnabled = this.getPersistentItem(SettingsComponent.GROUP_MODE_KEY) === 'true';
+        // Sync bootstrap value to localStorage so React can read it (shared origin in Electron)
+        this.setPersistentItem(SettingsComponent.GROUP_MODE_KEY, String(this.groupModeEnabled));
         try {
             const stored = this.getPersistentItem(SettingsComponent.COLLAPSED_GROUPS_KEY);
             this.collapsedGroups = stored
