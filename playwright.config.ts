@@ -12,7 +12,7 @@ if (existsSync(envFile)) {
 }
 
 const productionSettingsUrl =
-    process.env.PLAYWRIGHT_PROD_SETTINGS_URL || 'https://redis.patrikx3.com/settings';
+    process.env.PLAYWRIGHT_PROD_SETTINGS_URL || 'https://redis.patrikx3.com/ng/settings';
 const productionHttpUsername = process.env.PLAYWRIGHT_PROD_HTTP_USERNAME;
 const productionHttpPassword = process.env.PLAYWRIGHT_PROD_HTTP_PASSWORD;
 const productionHttpCredentials = productionHttpUsername && productionHttpPassword

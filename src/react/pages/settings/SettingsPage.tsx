@@ -438,7 +438,7 @@ export default function SettingsPage() {
                         <Box component="span"
                             onClick={() => {
                                 setPersistentItem('p3xr-frontend', 'ng')
-                                location.href = '/settings'
+                                location.href = '/ng/settings'
                             }}
                             sx={{
                                 px: 3, py: 1, cursor: 'pointer', fontWeight: 500,

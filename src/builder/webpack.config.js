@@ -256,7 +256,7 @@ const webpackConfig = {
         filename: `${filenamePrefix}.js`,
         // chunkFilename: `${filenamePrefix}.js`,
 //        publicPath: '{{ app.url_subdir }}/webpack/',
-        publicPath: `/`,
+        publicPath: `/ng/`,
         assetModuleFilename: 'assets/[hash][ext]',
     },
     resolve: {
@@ -276,15 +276,20 @@ const webpackConfig = {
         static: {
             directory: './src/public',
             staticOptions: {},
-            publicPath: "/",
+            publicPath: "/ng/",
             serveIndex: true,
             watch: true,
         },
         host: '0.0.0.0',
         historyApiFallback: {
             rewrites: [
-                {from: /.*/, to: '/index.html'},
+                {from: /^\/ng\/.*/, to: '/ng/index.html'},
+                {from: /.*/, to: '/ng/index.html'},
             ]
+        },
+        setupMiddlewares: (middlewares, devServer) => {
+            devServer.app.get('/', (req, res) => res.redirect('/ng/'));
+            return middlewares;
         },
         // hotOnly: true,
         client: {

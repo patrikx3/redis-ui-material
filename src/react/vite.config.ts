@@ -19,7 +19,23 @@ function cjsStringsPlugin(): Plugin {
 export default defineConfig(({ mode }) => ({
     root: __dirname,
     publicDir: path.resolve(__dirname, '../public'),
-    plugins: [react(), cjsStringsPlugin()],
+    plugins: [
+        react(),
+        cjsStringsPlugin(),
+        {
+            name: 'redirect-root',
+            configureServer(server) {
+                server.middlewares.use((req, res, next) => {
+                    if (req.url === '/' || req.url === '') {
+                        res.writeHead(302, { Location: '/react/' });
+                        res.end();
+                        return;
+                    }
+                    next();
+                });
+            },
+        },
+    ],
     server: {
         port: 8082,
         proxy: {
@@ -28,6 +44,9 @@ export default defineConfig(({ mode }) => ({
                 ws: true,
             },
         },
+    },
+    preview: {
+        port: 8082,
     },
     base: '/react/',
     build: {
