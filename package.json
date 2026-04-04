@@ -1,6 +1,6 @@
 {
     "name": "p3x-redis-ui-material",
-    "version": "2026.4.393",
+    "version": "2026.4.397",
     "description": "💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via http and socket.io",
     "corifeus": {
         "icon": "fas fa-database",
@@ -45,7 +45,7 @@
         "light"
     ],
     "author": "Patrik Laszlo <alabard@gmail.com>",
-    "license": "SEE LICENSE IN LICENSE",
+    "license": "MIT",
     "devDependencies": {
         "@angular-devkit/build-angular": "^21.2.6",
         "@angular/animations": "^21",
