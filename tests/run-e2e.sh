@@ -123,7 +123,7 @@ echo ""
 echo "=== Running Playwright tests (Angular + React) ==="
 cd "$MATERIAL_DIR"
 export PLAYWRIGHT_BASE_HOST="http://localhost:$SERVER_PORT"
-npx playwright test $GUI_MODE
+npx playwright test $GUI_MODE $P3XR_E2E_EXTRA_ARGS
 TEST_EXIT=$?
 
 echo ""
