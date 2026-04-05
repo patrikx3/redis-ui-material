@@ -43,7 +43,7 @@ export class SettingsService {
 
     prettyBytes(value: number): string {
         let lang = this.language();
-        if (lang === 'auto') lang = this.i18n.currentLang() || 'en';
+        if (lang === 'auto') lang = this.resolveAutoLang();
         return prettyBytesFn(value, { locale: lang });
     }
 
@@ -84,16 +84,17 @@ export class SettingsService {
         'pt-BR': 'pt', 'zn': 'zh_CN', 'zh-HK': 'zh_TW', 'zh-TW': 'zh_TW', 'pt-PT': 'pt',
     };
 
-    private get i18n() {
-        // Lazy resolve to avoid circular dependency
+    private resolveAutoLang(): string {
+        // Lazy resolve to avoid circular dependency with I18nService
         const { I18nService } = require('./i18n.service');
-        return this.injector.get(I18nService);
+        const i18n = this.injector.get(I18nService) as { currentLang: () => string };
+        return i18n.currentLang() || 'en';
     }
 
     getHumanizeDurationOptions(): { language: string; languages: Record<string, any> } {
         let lang = this.language();
         if (lang === 'auto') {
-            lang = this.i18n.currentLang() || 'en';
+            lang = this.resolveAutoLang();
         }
         return {
             language: this.humanizeDurationLanguageMap[lang] || lang || 'en',

@@ -34,13 +34,6 @@ export default function DatabasePage() {
     const [consoleExpanded, setConsoleExpanded] = useState(false)
     const consolePanelRef = useRef<HTMLDivElement>(null)
 
-    // Redirect to settings if not connected
-    useEffect(() => {
-        if (!connection) {
-            navigateTo('settings')
-        }
-    }, [connection])
-
     // Redirect to statistics on bare /database
     useEffect(() => {
         if (!connection) return

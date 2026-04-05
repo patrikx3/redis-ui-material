@@ -92,12 +92,6 @@ export class DatabaseComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.syncFromGlobal();
 
-        // Redirect to settings if not connected
-        if (!this.hasConnection) {
-            this.nav.navigateTo('settings');
-            return;
-        }
-
         // Subscribe to socket events for reactive state updates
         const sub1 = this.socket.connections$.subscribe(() => this.syncFromGlobal());
         const sub2 = this.socket.redisDisconnected$.subscribe(() => {
