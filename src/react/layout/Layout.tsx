@@ -413,7 +413,7 @@ export default function Layout() {
             </AppBar>
 
             {/* Version overlay */}
-            {!isElectron && version && isWide && (
+            {version && isWide && (
                 <Typography variant="caption" sx={{
                     position: 'fixed', top: 31, left: 20, width: 120,
                     textAlign: 'right', zIndex: 3, fontSize: 10, opacity: 0.7, pointerEvents: 'none',

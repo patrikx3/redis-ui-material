@@ -163,7 +163,8 @@ export class DatabaseKeyComponent implements OnInit, OnDestroy {
             if (ttlStr === '' || confirmResponse.model.ttl == null) {
                 await this.socket.request({ action: 'persist', payload: { key: this.key } });
                 this.gtag('/persist');
-                await this.refresh();
+                await this.cmd.refresh();
+                await this.refresh({ withoutParent: true });
                 this.common.toast(this.i18n.strings().status.persisted);
             } else if (!/^-?\d+$/.test(ttlStr)) {
                 this.common.toast(this.i18n.strings().status.notInteger);
@@ -173,7 +174,8 @@ export class DatabaseKeyComponent implements OnInit, OnDestroy {
                     payload: { key: this.key, ttl: parseInt(ttlStr) },
                 });
                 this.gtag('/expire');
-                await this.refresh();
+                await this.cmd.refresh();
+                await this.refresh({ withoutParent: true });
                 this.common.toast(this.i18n.strings().status.ttlChanged);
             }
         } catch (e) {

@@ -248,6 +248,8 @@ export default function DatabaseKeyPage() {
             if (ttlStr === '' || ttlVal == null) {
                 await request({ action: 'persist', payload: { key } })
                 trackPage('/persist')
+                await useMainCommandStore.getState().refresh({ withoutParent: true, force: true })
+                await loadKey()
                 toast(strings?.status?.persisted)
             } else if (!/^-?\d+$/.test(ttlStr)) {
                 toast(strings?.status?.notInteger)
@@ -255,9 +257,10 @@ export default function DatabaseKeyPage() {
             } else {
                 await request({ action: 'expire', payload: { key, ttl: parseInt(ttlStr) } })
                 trackPage('/expire')
+                await useMainCommandStore.getState().refresh({ withoutParent: true, force: true })
+                await loadKey()
                 toast(strings?.status?.ttlChanged)
             }
-            await loadKey()
         } catch (err) { generalHandleError(err) }
     }, [key, strings, toast, loadKey, generalHandleError])
 

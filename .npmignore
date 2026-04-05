@@ -15,7 +15,7 @@
 /playwright-report
 /playwright*.*
 /secure
-/src/**/*
+
 /test
 /test-results
 /tests
@@ -28,3 +28,4 @@
 *.log
 npm-debug.log*
 yarn-*.log*
+/scripts
