@@ -382,6 +382,16 @@ export default function Layout() {
                         tooltip={`${strings?.title?.name || ''}${version ? ' ' + version : ''}`}
                         onClick={() => navigateTo(connection ? 'database.statistics' : 'settings')} />
 
+                    {version && isWide && (
+                        <Typography variant="caption" sx={{
+                            fontSize: 10, opacity: 0.7, pointerEvents: 'none',
+                            position: 'absolute', top: 31, left: 20, width: 120, textAlign: 'right',
+                            color: 'inherit',
+                        }}>
+                            {version}
+                        </Typography>
+                    )}
+
                     {connection && (
                         <NavBtn icon={<Storage fontSize="small" />}
                             label={strings?.intention?.main}
@@ -412,15 +422,7 @@ export default function Layout() {
                 </Toolbar>
             </AppBar>
 
-            {/* Version overlay */}
-            {version && isWide && (
-                <Typography variant="caption" sx={{
-                    position: 'fixed', top: 31, left: 20, width: 120,
-                    textAlign: 'right', zIndex: 3, fontSize: 10, opacity: 0.7, pointerEvents: 'none',
-                }}>
-                    {version}
-                </Typography>
-            )}
+            {/* Version overlay — inside AppBar so it inherits toolbar text color */}
 
             {/* ===== CONTENT ===== */}
             <Box id="p3xr-layout-content" sx={{

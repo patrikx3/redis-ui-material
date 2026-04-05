@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "לתרום",
+    donateTitle: "תמכו ב-P3X Redis UI",
+    donateDescription: "P3X Redis UI הוא פרויקט חינמי בקוד פתוח. עלויות תחזוקת האפליקציה, תכונות AI, תמונות Docker, שרתים ותשתית יוצאות מכיסו של המפתח. אם אתם מוצאים כלי זה שימושי, אנא שקלו לתמוך בפיתוח המתמשך שלו בתרומה. כל תרומה עוזרת לשמור על הפרויקט חי וצומח. תודה!",
     jsonRecursive: "הרחבת כל העלים",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "סטטיסטיקת פקודות",
     latencystats: "סטטיסטיקת השהיה",
     keysizes: "גדלי מפתחות",
-    threads: "תהליכונים",
+    threads: "תהליכונים"
   },
   confirm: {
     dropIndex: "האם אתה בטוח שברצונך למחוק אינדקס זה?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "ריק פירושו שהוא נמשך לנצח; אחרת הזן מספר שלם.",
       convertTextToTime: "המרת טקסט לזמן",
       convertTextToTimePlaceholder: "למשל 1d יהיה 86400"
-    },
+    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -191,7 +193,7 @@ const strings = {
     getKey: "טוען מפתח Redis ונתונים קשורים...",
     jsonViewShow: "הצג את JSON",
     jsonViewEditor: "ערוך את JSON",
-    quickConsole: "קונסולה מהירה",
+    quickConsole: "קונסולה מהירה"
   },
   label: {
     id: {
@@ -332,7 +334,7 @@ const strings = {
     importNoKeys: "לא נמצאו מפתחות בקובץ",
     desktopNotifications: "התראות שולחן עבודה",
     desktopNotificationsEnabled: "הפעל התראות שולחן עבודה",
-    desktopNotificationsInfo: "קבל התראות מערכת הפעלה על ניתוקים וחיבורים מחדש של Redis כשהאפליקציה לא בפוקוס.",
+    desktopNotificationsInfo: "קבל התראות מערכת הפעלה על ניתוקים וחיבורים מחדש של Redis כשהאפליקציה לא בפוקוס."
   },
   status: {
     dataCopied: "הנתונים נמצאים בלוח",
@@ -378,7 +380,7 @@ const strings = {
     notInteger: "קלט זה אינו מספר שלם",
     persisted: "מפתח זה נמשך לנצח",
     set: "המפתח מוגדר/נוסף",
-    connectionRestored: "החיבור שוחזר",
+    connectionRestored: "החיבור שוחזר"
   },
   code: {
     "delete-connection": "חיבור זה נמחק, אז אתה מנותק למופע Redis זה.",
@@ -389,7 +391,12 @@ const strings = {
     "invalid-json-value": "הערך אינו חוקי JSON.",
     "http_auth_required": "נדרשת הרשאה: נא לאמת עם HTTP Basic Auth וטען מחדש.",
     "auto-connection-failed": "ייתכן, החיבור הוסר והחיבור האוטומטי נכשל, בגלל זה.",
-    invalid_console_command: "פקודה זו אינה פועלת דרך ה-GUI."
+    invalid_console_command: "פקודה זו אינה פועלת דרך ה-GUI.",
+    "AI_DISABLED": "AI מושבת. הפעל אותו בהגדרות AI.",
+    "AI_PROMPT_REQUIRED": "נדרשת שאילתת AI.",
+    "GROQ_API_KEY_READONLY": "מפתח Groq API הוא לקריאה בלבד ולא ניתן לשנותו.",
+    "blocked_api_access": "תוכנית Groq API שלך אינה מאפשרת גישה למודל זה. שדרג את תוכנית Groq או השתמש בפרוקסי network.corifeus.com.",
+    "rate_limit": "הגעת למגבלת קצב AI. נסה שוב מאוחר יותר או השתמש במפתח Groq API שלך בהגדרות."
   },
   form: {
     error: {
@@ -485,7 +492,7 @@ const strings = {
       indexInfo: "מידע אינדקס",
       indexName: "שם האינדקס",
       prefix: "תחילית מפתח (אופציונלי)",
-      fieldName: "שם השדה",
+      fieldName: "שם השדה"
     },
     monitor: {
       title: "ניטור",
@@ -509,7 +516,7 @@ const strings = {
       peak: "שיא",
       fragmentation: "פרגמנטציה",
       hitsAndMisses: "פגיעות / החטאות",
-      noClients: "אין לקוחות",
+      noClients: "אין לקוחות"
     },
     analysis: {
       title: "ניתוח זיכרון",
@@ -540,7 +547,7 @@ const strings = {
       maxScanKeys: "מקס. מפתחות לסריקה",
       type: "סוג",
       noData: "אין נתונים. לחץ על הפעל ניתוח כדי להתחיל.",
-      exportAll: "ייצוא הכל",
+      exportAll: "ייצוא הכל"
     },
 
     overview: {

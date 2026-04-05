@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Dona",
+    donateTitle: "Supporta P3X Redis UI",
+    donateDescription: "P3X Redis UI è un progetto gratuito e open source. I costi di manutenzione dell'app, delle funzionalità AI, delle immagini Docker, dei server e dell'infrastruttura provengono dalle tasche dello sviluppatore. Se trovi utile questo strumento, considera di supportare il suo sviluppo continuo con una donazione. Ogni contributo aiuta a mantenere il progetto vivo e in crescita. Grazie!",
     jsonRecursive: "Espansione di tutte le foglie",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Statistiche comandi",
     latencystats: "Statistiche latenza",
     keysizes: "Dimensioni chiavi",
-    threads: "Thread",
+    threads: "Thread"
   },
   confirm: {
     dropIndex: "Sei sicuro di voler eliminare questo indice?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Vuoto significa che persiste per sempre; altrimenti inserisci un intero.",
       convertTextToTime: "Converti testo in tempo",
       convertTextToTimePlaceholder: "Es. 1d sarà 86400"
-    },
+    }
   },
   language: {
     bg: "Български / Bulgarian",
@@ -189,7 +191,7 @@ const strings = {
     getKey: "Caricamento chiave Redis e dati associati ...",
     jsonViewShow: "Visualizza JSON",
     jsonViewEditor: "Modifica JSON",
-    quickConsole: "Console Rapida",
+    quickConsole: "Console Rapida"
   },
   label: {
     id: {
@@ -330,7 +332,7 @@ const strings = {
     importNoKeys: "Nessuna chiave trovata nel file",
     desktopNotifications: "Notifiche desktop",
     desktopNotificationsEnabled: "Abilita notifiche desktop",
-    desktopNotificationsInfo: "Ricevi notifiche del sistema operativo per disconnessioni e riconnessioni Redis quando l'app non è in primo piano.",
+    desktopNotificationsInfo: "Ricevi notifiche del sistema operativo per disconnessioni e riconnessioni Redis quando l'app non è in primo piano."
   },
   status: {
     dataCopied: "I dati sono negli appunti",
@@ -376,7 +378,7 @@ const strings = {
     notInteger: "Questo input non è un intero",
     persisted: "Questa chiave è persistente per sempre",
     set: "La chiave è impostata/aggiunta",
-    connectionRestored: "Connessione ripristinata",
+    connectionRestored: "Connessione ripristinata"
   },
   code: {
     "delete-connection": "Questa connessione è stata eliminata, quindi sei disconnesso da questa istanza Redis.",
@@ -387,7 +389,12 @@ const strings = {
     "invalid-json-value": "The value is not valid JSON.",
     "http_auth_required": "Autorizzazione richiesta: autenticati con HTTP Basic Auth e ricarica.",
     "auto-connection-failed": "Possibile che la connessione sia stata rimossa e la connessione automatica sia fallita per questo motivo.",
-    invalid_console_command: "Questo comando non funziona tramite la GUI."
+    invalid_console_command: "Questo comando non funziona tramite la GUI.",
+    "AI_DISABLED": "L'AI è disabilitata. Abilitala nelle impostazioni AI.",
+    "AI_PROMPT_REQUIRED": "È richiesta una richiesta AI.",
+    "GROQ_API_KEY_READONLY": "La chiave Groq API è di sola lettura e non può essere modificata.",
+    "blocked_api_access": "Il tuo piano Groq API non consente l'accesso a questo modello. Aggiorna il tuo piano Groq o usa il proxy network.corifeus.com.",
+    "rate_limit": "Limite di velocità AI raggiunto. Riprova più tardi o usa la tua chiave Groq API nelle impostazioni."
   },
   form: {
     error: {
@@ -483,7 +490,7 @@ const strings = {
       indexInfo: "Info indice",
       indexName: "Nome indice",
       prefix: "Prefisso chiave (opzionale)",
-      fieldName: "Nome campo",
+      fieldName: "Nome campo"
     },
     monitor: {
       title: "Monitoraggio",
@@ -507,7 +514,7 @@ const strings = {
       peak: "Picco",
       fragmentation: "Frammentazione",
       hitsAndMisses: "Successi / Mancati",
-      noClients: "Nessun client",
+      noClients: "Nessun client"
     },
     analysis: {
       title: "Analisi Memoria",
@@ -538,7 +545,7 @@ const strings = {
       maxScanKeys: "Max. Chiavi Analizzate",
       type: "Tipo",
       noData: "Nessun dato. Clicca Esegui Analisi per iniziare.",
-      exportAll: "Esporta Tutto",
+      exportAll: "Esporta Tutto"
     },
 
     overview: {

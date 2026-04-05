@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Spenden",
+    donateTitle: "Unterstützen Sie P3X Redis UI",
+    donateDescription: "P3X Redis UI ist ein kostenloses Open-Source-Projekt. Die Kosten für die Wartung der App, AI-Funktionen, Docker-Images, Server und Infrastruktur werden vom Entwickler aus eigener Tasche bezahlt. Wenn Sie dieses Tool nützlich finden, unterstützen Sie bitte seine Weiterentwicklung mit einer Spende. Jeder Beitrag hilft, das Projekt am Leben zu erhalten und wachsen zu lassen. Vielen Dank!",
     jsonRecursive: "Alle Blätter aufklappen",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Befehlsstatistiken",
     latencystats: "Latenzstatistiken",
     keysizes: "Schlüsselgrößen",
-    threads: "Threads",
+    threads: "Threads"
   },
   confirm: {
     dropIndex: "Sind Sie sicher, dass Sie diesen Index löschen möchten?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Leer bedeutet, dass er dauerhaft gespeichert wird; andernfalls geben Sie eine Ganzzahl ein.",
       convertTextToTime: "Text in Zeit umwandeln",
       convertTextToTimePlaceholder: "Z.B. 1d wird 86400"
-    },
+    }
   },
   language: {
     // When you translate the english name, keep the Language in English
@@ -193,7 +195,7 @@ const strings = {
     getKey: "Redis-Schlüssel und zugehörige Daten werden geladen ...",
     jsonViewShow: "JSON anzeigen",
     jsonViewEditor: "JSON bearbeiten",
-    quickConsole: "Schnellkonsole",
+    quickConsole: "Schnellkonsole"
   },
   label: {
     id: {
@@ -334,7 +336,7 @@ const strings = {
     importNoKeys: "Keine Schlüssel in der Datei gefunden",
     desktopNotifications: "Desktop-Benachrichtigungen",
     desktopNotificationsEnabled: "Desktop-Benachrichtigungen aktivieren",
-    desktopNotificationsInfo: "Erhalten Sie Betriebssystem-Benachrichtigungen bei Redis-Trennungen und Wiederverbindungen, wenn die App nicht im Fokus ist.",
+    desktopNotificationsInfo: "Erhalten Sie Betriebssystem-Benachrichtigungen bei Redis-Trennungen und Wiederverbindungen, wenn die App nicht im Fokus ist."
   },
   status: {
     dataCopied: "Die Daten sind in der Zwischenablage",
@@ -380,7 +382,7 @@ const strings = {
     notInteger: "Diese Eingabe ist keine Ganzzahl",
     persisted: "Dieser Schlüssel wird dauerhaft gespeichert",
     set: "Der Schlüssel ist gesetzt/hinzugefügt",
-    connectionRestored: "Verbindung wiederhergestellt",
+    connectionRestored: "Verbindung wiederhergestellt"
   },
   code: {
     "delete-connection": "Diese Verbindung wurde gelöscht, daher sind Sie von dieser Redis-Instanz getrennt.",
@@ -391,7 +393,12 @@ const strings = {
     "invalid-json-value": "The value is not valid JSON.",
     "http_auth_required": "Autorisierung erforderlich: Bitte authentifizieren Sie sich mit HTTP Basic Auth und laden Sie die Seite neu.",
     "auto-connection-failed": "Möglicherweise wurde die Verbindung entfernt und die automatische Verbindung ist deshalb fehlgeschlagen.",
-    invalid_console_command: "Dieser Befehl funktioniert nicht über die GUI."
+    invalid_console_command: "Dieser Befehl funktioniert nicht über die GUI.",
+    "AI_DISABLED": "AI ist deaktiviert. Aktivieren Sie es in den AI-Einstellungen.",
+    "AI_PROMPT_REQUIRED": "AI-Eingabe ist erforderlich.",
+    "GROQ_API_KEY_READONLY": "Der Groq API-Schlüssel ist schreibgeschützt und kann nicht geändert werden.",
+    "blocked_api_access": "Ihr Groq API-Plan erlaubt keinen Zugriff auf dieses Modell. Bitte upgraden Sie Ihren Groq-Plan oder verwenden Sie den network.corifeus.com Proxy.",
+    "rate_limit": "AI-Ratenlimit erreicht. Versuchen Sie es später erneut oder verwenden Sie Ihren eigenen Groq API-Schlüssel in den Einstellungen."
   },
   form: {
     error: {
@@ -487,7 +494,7 @@ const strings = {
       indexInfo: "Index-Info",
       indexName: "Indexname",
       prefix: "Schlüsselpräfix (optional)",
-      fieldName: "Feldname",
+      fieldName: "Feldname"
     },
     monitor: {
       title: "Überwachung",
@@ -511,7 +518,7 @@ const strings = {
       peak: "Spitze",
       fragmentation: "Fragmentierung",
       hitsAndMisses: "Treffer / Fehlschläge",
-      noClients: "Keine Clients",
+      noClients: "Keine Clients"
     },
     analysis: {
       title: "Speicheranalyse",
@@ -542,7 +549,7 @@ const strings = {
       maxScanKeys: "Max. gescannte Schlüssel",
       type: "Typ",
       noData: "Keine Daten. Klicken Sie auf Analyse starten, um zu beginnen.",
-      exportAll: "Alles exportieren",
+      exportAll: "Alles exportieren"
     },
 
     overview: {

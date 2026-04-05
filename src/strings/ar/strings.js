@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "تبرع",
+    donateTitle: "ادعم P3X Redis UI",
+    donateDescription: "P3X Redis UI هو مشروع مجاني ومفتوح المصدر. تكاليف صيانة التطبيق وميزات الذكاء الاصطناعي وصور Docker والخوادم والبنية التحتية تأتي من جيب المطور الخاص. إذا وجدت هذه الأداة مفيدة، يرجى التفكير في دعم تطويرها المستمر بتبرع. كل مساهمة تساعد في الحفاظ على المشروع حيًا ومتناميًا. شكرًا لك!",
     jsonRecursive: "توسيع جميع الأوراق",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "إحصائيات الأوامر",
     latencystats: "إحصائيات زمن الاستجابة",
     keysizes: "أحجام المفاتيح",
-    threads: "الخيوط",
+    threads: "الخيوط"
   },
   confirm: {
     dropIndex: "هل أنت متأكد من حذف هذا الفهرس؟",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "فارغة تعني أنها ستستمر إلى الأبد؛ وإلا أدخل عددًا صحيحًا.",
       convertTextToTime: "تحويل النص إلى وقت",
       convertTextToTimePlaceholder: "على سبيل المثال. 1d سيكون 86400"
-    },
+    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -191,7 +193,7 @@ const strings = {
     getKey: "جارٍ تحميل مفتاح Redis والبيانات المرتبطة به ...",
     jsonViewShow: "عرض JSON",
     jsonViewEditor: "تحرير JSON",
-    quickConsole: "وحدة التحكم السريعة",
+    quickConsole: "وحدة التحكم السريعة"
   },
   label: {
     id: {
@@ -332,7 +334,7 @@ const strings = {
     importNoKeys: "لم يتم العثور على مفاتيح في الملف",
     desktopNotifications: "إشعارات سطح المكتب",
     desktopNotificationsEnabled: "تفعيل إشعارات سطح المكتب",
-    desktopNotificationsInfo: "تلقي إشعارات نظام التشغيل عند انقطاع اتصال Redis أو إعادة الاتصال عندما لا يكون التطبيق في المقدمة.",
+    desktopNotificationsInfo: "تلقي إشعارات نظام التشغيل عند انقطاع اتصال Redis أو إعادة الاتصال عندما لا يكون التطبيق في المقدمة."
   },
   status: {
     dataCopied: "البيانات موجودة في الحافظة",
@@ -378,7 +380,7 @@ const strings = {
     notInteger: "هذا الإدخال ليس عددًا صحيحًا",
     persisted: "ويستمر هذا المفتاح إلى الأبد",
     set: "تم ضبط/إضافة المفتاح",
-    connectionRestored: "تم استعادة الاتصال",
+    connectionRestored: "تم استعادة الاتصال"
   },
   code: {
     "delete-connection": "تم حذف هذا الاتصال، لذا تم قطع اتصالك بمثيل Redis هذا.",
@@ -389,7 +391,12 @@ const strings = {
     "invalid-json-value": "القيمة غير صالحة JSON.",
     "http_auth_required": "التفويض مطلوب: يرجى المصادقة باستخدام HTTP Basic Auth وإعادة التحميل.",
     "auto-connection-failed": "ممكن تم حذف الاتصال وفشل الاتصال التلقائي لهذا السبب.",
-    invalid_console_command: "هذا الأمر لا يعمل عبر GUI."
+    invalid_console_command: "هذا الأمر لا يعمل عبر GUI.",
+    "AI_DISABLED": "الذكاء الاصطناعي معطل. قم بتفعيله في إعدادات AI.",
+    "AI_PROMPT_REQUIRED": "مطلوب إدخال نص للذكاء الاصطناعي.",
+    "GROQ_API_KEY_READONLY": "مفتاح Groq API للقراءة فقط ولا يمكن تعديله.",
+    "blocked_api_access": "خطة Groq API الخاصة بك لا تسمح بالوصول إلى هذا النموذج. يرجى ترقية خطة Groq أو استخدام وكيل network.corifeus.com.",
+    "rate_limit": "تم الوصول إلى حد معدل AI. حاول مرة أخرى لاحقًا أو استخدم مفتاح Groq API الخاص بك في الإعدادات."
   },
   form: {
     error: {
@@ -485,7 +492,7 @@ const strings = {
       indexInfo: "معلومات الفهرس",
       indexName: "اسم الفهرس",
       prefix: "بادئة المفتاح (اختياري)",
-      fieldName: "اسم الحقل",
+      fieldName: "اسم الحقل"
     },
     monitor: {
       title: "المراقبة",
@@ -509,7 +516,7 @@ const strings = {
       peak: "الذروة",
       fragmentation: "التجزئة",
       hitsAndMisses: "الإصابات / الأخطاء",
-      noClients: "لا يوجد عملاء",
+      noClients: "لا يوجد عملاء"
     },
     analysis: {
       title: "تحليل الذاكرة",
@@ -540,7 +547,7 @@ const strings = {
       maxScanKeys: "الحد الأقصى لمسح المفاتيح",
       type: "النوع",
       noData: "لا توجد بيانات. انقر على تشغيل التحليل للبدء.",
-      exportAll: "تصدير الكل",
+      exportAll: "تصدير الكل"
     },
 
     overview: {

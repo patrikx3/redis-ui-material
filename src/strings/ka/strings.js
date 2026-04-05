@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "შემოწირულობა",
+    donateTitle: "მხარი დაუჭირეთ P3X Redis UI-ს",
+    donateDescription: "P3X Redis UI არის უფასო, ღია კოდის პროექტი. აპლიკაციის, AI ფუნქციების, Docker სურათების, სერვერების და ინფრასტრუქტურის მოვლის ხარჯები დეველოპერის საკუთარი ჯიბიდან მოდის. თუ ეს ინსტრუმენტი სასარგებლო გეჩვენებათ, გთხოვთ, განიხილოთ მისი მუდმივი განვითარების მხარდაჭერა შემოწირულობით. ყოველი წვლილი ეხმარება პროექტს სიცოცხლესა და ზრდაში. გმადლობთ!",
     jsonRecursive: "ყველა ფოთლის გაფართოება",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "commandstats",
     latencystats: "latencystats",
     keysizes: "keysizes",
-    threads: "threads",
+    threads: "threads"
   },
   confirm: {
     dropIndex: "დარწმუნebuli ხართ?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "ცარიელი ნიშნავს, რომ ის სამუდამოდ გრძელდება; წინააღმდეგ შემთხვევაში შეიყვანეთ მთელი რიცხვი.",
       convertTextToTime: "ტექსტის დროში გადაყვანა",
       convertTextToTimePlaceholder: "მაგ. 1d იქნება 86400"
-    },
+    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -191,7 +193,7 @@ const strings = {
     getKey: "იტვირთება Redis გასაღები და მასთან დაკავშირებული მონაცემები...",
     jsonViewShow: "ეკრანი JSON",
     jsonViewEditor: "JSON რედაქტირება",
-    quickConsole: "სწრაფი კონსოლი",
+    quickConsole: "სწრაფი კონსოლი"
   },
   label: {
     id: {
@@ -332,7 +334,7 @@ const strings = {
     importNoKeys: "ფაილში გასაღebebi ვერ მოიძებna",
     desktopNotifications: "Desktop Notifications",
     desktopNotificationsEnabled: "Enable desktop notifications",
-    desktopNotificationsInfo: "Receive OS notifications for Redis disconnections and reconnections when the app is not focused.",
+    desktopNotificationsInfo: "Receive OS notifications for Redis disconnections and reconnections when the app is not focused."
   },
   status: {
     dataCopied: "მონაცემები ბუფერშია",
@@ -378,7 +380,7 @@ const strings = {
     notInteger: "ეს შეყვანა არ არის მთელი რიცხვი",
     persisted: "ეს გასაღები სამუდამოდ რჩება",
     set: "გასაღები დაყენებულია/დამატებულია",
-    connectionRestored: "Connection restored",
+    connectionRestored: "Connection restored"
   },
   code: {
     "delete-connection": "ეს კავშირი წაიშალა, ასე რომ თქვენ გათიშული ხართ ამ Redis ეგზემპლართან.",
@@ -389,7 +391,12 @@ const strings = {
     "invalid-json-value": "მნიშვნელობა არ არის სწორი JSON.",
     "http_auth_required": "საჭიროა ავტორიზაცია: გთხოვთ, გადაამოწმოთ ავთენტიფიკაცია HTTP Basic Auth-ით და გადატვირთეთ.",
     "auto-connection-failed": "შესაძლებელია, კავშირი წაიშალა და ავტომატური კავშირი ვერ მოხერხდა ამის გამო.",
-    invalid_console_command: "ეს ბრძანება არ მუშაობს GUI-ით."
+    invalid_console_command: "ეს ბრძანება არ მუშაობს GUI-ით.",
+    "AI_DISABLED": "AI გამორთულია. ჩართეთ AI პარამეტრებში.",
+    "AI_PROMPT_REQUIRED": "AI მოთხოვნა სავალდებულოა.",
+    "GROQ_API_KEY_READONLY": "Groq API გასაღები მხოლოდ წასაკითხია და ვერ შეიცვლება.",
+    "blocked_api_access": "თქვენი Groq API გეგმა არ იძლევა ამ მოდელზე წვდომის საშუალებას. გააუმჯობესეთ Groq გეგმა ან გამოიყენეთ network.corifeus.com პროქსი.",
+    "rate_limit": "AI სიჩქარის ლიმიტი მიღწეულია. სცადეთ მოგვიანებით ან გამოიყენეთ თქვენი Groq API გასაღები პარამეტრებში."
   },
   form: {
     error: {
@@ -485,7 +492,7 @@ const strings = {
       indexInfo: "ინdelays",
       indexName: "ინdelays",
       prefix: "ინdelays",
-      fieldName: "ინdelays",
+      fieldName: "ინdelays"
     },
     monitor: {
       title: "მონიტორინგი",
@@ -509,7 +516,7 @@ const strings = {
       peak: "პიკი",
       fragmentation: "ფრაგმენტაცია",
       hitsAndMisses: "მოხვედრები / გაცდენები",
-      noClients: "კლიენტebi არ არის",
+      noClients: "კლიენტebi არ არის"
     },
     analysis: {
       title: "მეხსიერების ანალიზი",
@@ -540,7 +547,7 @@ const strings = {
       maxScanKeys: "მაქს. სკანირებული გასაღებები",
       type: "ტიპი",
       noData: "მონაცემები არ არის. დააწკაპუნეთ ანალიზის გაშვება დასაწყებად.",
-      exportAll: "ყველას ექსპორტი",
+      exportAll: "ყველას ექსპორტი"
     },
 
     overview: {

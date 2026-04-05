@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Přispět",
+    donateTitle: "Podpořte P3X Redis UI",
+    donateDescription: "P3X Redis UI je bezplatný open-source projekt. Náklady na údržbu aplikace, AI funkce, Docker obrazy, servery a infrastrukturu hradí vývojář z vlastní kapsy. Pokud vám tento nástroj pomáhá, zvažte prosím podporu jeho dalšího vývoje příspěvkem. Každý příspěvek pomáhá udržet projekt živý a rostoucí. Děkujeme!",
     jsonRecursive: "Rozbalení všech listů",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Statistiky příkazů",
     latencystats: "Statistiky latence",
     keysizes: "Velikosti klíčů",
-    threads: "Vlákna",
+    threads: "Vlákna"
   },
   confirm: {
     dropIndex: "Opravdu chcete smazat tento index?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Prázdné znamená, že se uchová navždy; jinak zadejte celé číslo.",
       convertTextToTime: "Převést text na čas",
       convertTextToTimePlaceholder: "Např. 1d bude 86400"
-    },
+    }
   },
   language: {
     // When you translate the english name, keep the Language in English
@@ -193,7 +195,7 @@ const strings = {
     getKey: "Načítání Redis klíče a přidružených dat ...",
     jsonViewShow: "Zobrazit JSON",
     jsonViewEditor: "Upravit JSON",
-    quickConsole: "Rychlá konzole",
+    quickConsole: "Rychlá konzole"
   },
   label: {
     id: {
@@ -334,7 +336,7 @@ const strings = {
     importNoKeys: "V souboru nebyly nalezeny žádné klíče",
     desktopNotifications: "Oznámení na ploše",
     desktopNotificationsEnabled: "Povolit oznámení na ploše",
-    desktopNotificationsInfo: "Dostávejte oznámení OS při odpojení a opětovném připojení Redis, když aplikace není v popředí.",
+    desktopNotificationsInfo: "Dostávejte oznámení OS při odpojení a opětovném připojení Redis, když aplikace není v popředí."
   },
   status: {
     dataCopied: "Data jsou ve schránce",
@@ -380,7 +382,7 @@ const strings = {
     notInteger: "Tento vstup není celé číslo",
     persisted: "Tento klíč je uchován navždy",
     set: "Klíč je nastaven/přidán",
-    connectionRestored: "Připojení obnoveno",
+    connectionRestored: "Připojení obnoveno"
   },
   code: {
     "delete-connection": "Toto připojení bylo smazáno, proto jste odpojeni od této Redis instance.",
@@ -391,7 +393,12 @@ const strings = {
     "invalid-json-value": "The value is not valid JSON.",
     "http_auth_required": "Je vyžadována autorizace: prosím ověřte se pomocí HTTP Basic Auth a znovu načtěte stránku.",
     "auto-connection-failed": "Je možné, že připojení bylo odstraněno a automatické připojení selhalo kvůli tomu.",
-    invalid_console_command: "Tento příkaz nefunguje přes GUI."
+    invalid_console_command: "Tento příkaz nefunguje přes GUI.",
+    "AI_DISABLED": "AI je deaktivováno. Povolte ho v nastavení AI.",
+    "AI_PROMPT_REQUIRED": "Je vyžadován AI dotaz.",
+    "GROQ_API_KEY_READONLY": "Klíč Groq API je pouze pro čtení a nelze ho upravit.",
+    "blocked_api_access": "Váš plán Groq API neumožňuje přístup k tomuto modelu. Upgradujte svůj plán Groq nebo použijte proxy network.corifeus.com.",
+    "rate_limit": "Byl dosažen limit AI. Zkuste to později nebo použijte vlastní klíč Groq API v nastavení."
   },
   form: {
     error: {
@@ -487,7 +494,7 @@ const strings = {
       indexInfo: "Info o indexu",
       indexName: "Název indexu",
       prefix: "Prefix klíče (volitelné)",
-      fieldName: "Název pole",
+      fieldName: "Název pole"
     },
     monitor: {
       title: "Monitorování",
@@ -511,7 +518,7 @@ const strings = {
       peak: "Špička",
       fragmentation: "Fragmentace",
       hitsAndMisses: "Zásahy / Minutí",
-      noClients: "Žádní klienti",
+      noClients: "Žádní klienti"
     },
     analysis: {
       title: "Analýza paměti",
@@ -542,7 +549,7 @@ const strings = {
       maxScanKeys: "Max. prohledaných klíčů",
       type: "Typ",
       noData: "Žádná data. Klikněte na Spustit analýzu pro zahájení.",
-      exportAll: "Exportovat vše",
+      exportAll: "Exportovat vše"
     },
 
     overview: {

@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Donate",
+    donateTitle: "Support P3X Redis UI",
+    donateDescription: "P3X Redis UI is a free, open-source project. Maintaining the app, AI features, Docker images, servers, and infrastructure costs come out of the developer's own pocket. If you find this tool useful, please consider supporting its continued development with a donation. Every contribution helps keep the project alive and growing. Thank you!",
     jsonRecursive: "Expanding all leaves",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -391,7 +393,12 @@ const strings = {
     "invalid-json-value": "The value is not valid JSON.",
     "http_auth_required": "Authorization required: please authenticate with HTTP Basic Auth and reload.",
     "auto-connection-failed": "Possible, the connection was removed and the auto connection failed, because of this.",
-    invalid_console_command: "This command is not working via the GUI."
+    invalid_console_command: "This command is not working via the GUI.",
+    AI_DISABLED: "AI is disabled. Enable it in AI Settings.",
+    AI_PROMPT_REQUIRED: "AI prompt is required.",
+    GROQ_API_KEY_READONLY: "The Groq API key is read-only and cannot be modified.",
+    blocked_api_access: "Your Groq API plan does not allow access to this model. Please upgrade your Groq plan or use the network.corifeus.com proxy.",
+    rate_limit: "AI rate limit reached. Try again later or use your own Groq API key in Settings.",
   },
   form: {
     error: {

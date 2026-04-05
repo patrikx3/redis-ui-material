@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "दान गर्नुहोस्",
+    donateTitle: "P3X Redis UI लाई समर्थन गर्नुहोस्",
+    donateDescription: "P3X Redis UI एक निःशुल्क, ओपन-सोर्स परियोजना हो। अ्यप, AI सुविधाहरू, Docker छविहरू, सर्भरहरू र पूर्वाधारको मर्मत खर्च विकासकर्ताको आफ्नै खल्तीबाट आउँछ। यदि तपाईंलाई यो उपकरण उपयोगी लाग्छ भने, कृपया दानको माध्यमबाट यसको निरन्तर विकासलाई समर्थन गर्ने विचार गर्नुहोस्। प्रत्येक योगदानले परियोजनालाई जीवित र बढ्दो राख्न मद्दत गर्छ। धन्यवाद!",
     jsonRecursive: "सबै पातहरू विस्तार गर्दै",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "commandstats",
     latencystats: "latencystats",
     keysizes: "keysizes",
-    threads: "threads",
+    threads: "threads"
   },
   confirm: {
     dropIndex: "के तपाईं यो इन्डेक्स हटाउन निश्चित हुनुहुन्छ?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "खाली को अर्थ यो सधैंभरि रहन्छ; अन्यथा एक पूर्णांक प्रविष्ट गर्नुहोस्।",
       convertTextToTime: "पाठलाई समयमा रूपान्तरण गर्नुहोस्",
       convertTextToTimePlaceholder: "जस्तै। 1d 86400 हुनेछ"
-    },
+    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -191,7 +193,7 @@ const strings = {
     getKey: "Redis कुञ्जी र सम्बन्धित डाटा लोड गर्दै...",
     jsonViewShow: "JSON प्रदर्शन गर्नुहोस्",
     jsonViewEditor: "JSON सम्पादन गर्नुहोस्",
-    quickConsole: "द्रुत कन्सोल",
+    quickConsole: "द्रुत कन्सोल"
   },
   label: {
     id: {
@@ -332,7 +334,7 @@ const strings = {
     importNoKeys: "फाइलमा कुञ्जीहरू फेला परेनन्",
     desktopNotifications: "Desktop Notifications",
     desktopNotificationsEnabled: "Enable desktop notifications",
-    desktopNotificationsInfo: "Receive OS notifications for Redis disconnections and reconnections when the app is not focused.",
+    desktopNotificationsInfo: "Receive OS notifications for Redis disconnections and reconnections when the app is not focused."
   },
   status: {
     dataCopied: "डाटा क्लिपबोर्डमा छ",
@@ -378,7 +380,7 @@ const strings = {
     notInteger: "यो इनपुट पूर्णांक होइन",
     persisted: "यो कुञ्जी सधैंभरि रहन्छ",
     set: "कुञ्जी सेट/थपिएको छ",
-    connectionRestored: "Connection restored",
+    connectionRestored: "Connection restored"
   },
   code: {
     "delete-connection": "यो जडान मेटाइएको थियो, त्यसैले तपाईं यस Redis उदाहरणमा विच्छेद हुनुभएको छ।",
@@ -389,7 +391,12 @@ const strings = {
     "invalid-json-value": "मान मान्य छैन JSON।",
     "http_auth_required": "प्राधिकरण आवश्यक छ: कृपया HTTP Basic Auth को साथ प्रमाणीकरण गर्नुहोस् र पुन: लोड गर्नुहोस्।",
     "auto-connection-failed": "सम्भव छ, जडान हटाइयो र स्वत जडान असफल भयो, यस कारण।",
-    invalid_console_command: "यो आदेश GUI मार्फत काम गरिरहेको छैन।"
+    invalid_console_command: "यो आदेश GUI मार्फत काम गरिरहेको छैन।",
+    "AI_DISABLED": "AI निष्क्रिय छ। AI सेटिङमा सक्रिय गर्नुहोस्।",
+    "AI_PROMPT_REQUIRED": "AI प्रम्प्ट आवश्यक छ।",
+    "GROQ_API_KEY_READONLY": "Groq API कुञ्जी पठन-मात्र हो र परिमार्जन गर्न सकिँदैन।",
+    "blocked_api_access": "तपाईंको Groq API योजनाले यो मोडेलमा पहुँच दिँदैन। Groq योजना अपग्रेड गर्नुहोस् वा network.corifeus.com प्रोक्सी प्रयोग गर्नुहोस्।",
+    "rate_limit": "AI दर सीमामा पुगियो। पछि फेरि प्रयास गर्नुहोस् वा सेटिङमा आफ्नो Groq API कुञ्जी प्रयोग गर्नुहोस्।"
   },
   form: {
     error: {
@@ -485,7 +492,7 @@ const strings = {
       indexInfo: "इन्डेक्स जानकारी",
       indexName: "इन्डेक्स नाम",
       prefix: "कुञ्जी उपसर्ग (वैकल्पिक)",
-      fieldName: "फिल्ड नाम",
+      fieldName: "फिल्ड नाम"
     },
     monitor: {
       title: "निगरानी",
@@ -509,7 +516,7 @@ const strings = {
       peak: "शिखर",
       fragmentation: "फ्र्यागमेन्टेसन",
       hitsAndMisses: "हिट / मिस",
-      noClients: "ग्राहकहरू छैनन्",
+      noClients: "ग्राहकहरू छैनन्"
     },
     analysis: {
       title: "मेमोरी विश्लेषण",
@@ -540,7 +547,7 @@ const strings = {
       maxScanKeys: "अधिकतम स्क्यान कुञ्जी",
       type: "प्रकार",
       noData: "कुनै डाटा छैन। सुरु गर्न विश्लेषण चलाउनुहोस् मा क्लिक गर्नुहोस्।",
-      exportAll: "सबै निर्यात",
+      exportAll: "सबै निर्यात"
     },
 
     overview: {

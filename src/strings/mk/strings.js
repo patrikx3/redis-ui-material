@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Донирајте",
+    donateTitle: "Поддржете го P3X Redis UI",
+    donateDescription: "P3X Redis UI е бесплатен проект со отворен код. Трошоците за одржување на апликацијата, AI функциите, Docker сликите, серверите и инфраструктурата доаѓаат од џебот на програмерот. Ако го сметате овој алат за корисен, размислете да го поддржите неговиот понатамошен развој со донација. Секој придонес помага проектот да живее и расте. Благодарам!",
     jsonRecursive: "Проширување на сите лисја",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "commandstats",
     latencystats: "latencystats",
     keysizes: "keysizes",
-    threads: "threads",
+    threads: "threads"
   },
   confirm: {
     dropIndex: "Дали сте сигурни дека сакате да го избришете овој индекс?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Празно значи дека опстојува засекогаш; во спротивно внесете цел број.",
       convertTextToTime: "Претворете го текстот во време",
       convertTextToTimePlaceholder: "На пр. 1d ќе биде 86400"
-    },
+    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -191,7 +193,7 @@ const strings = {
     getKey: "Се вчитува клучот Redis и поврзаните податоци ...",
     jsonViewShow: "Приказ JSON",
     jsonViewEditor: "Уреди JSON",
-    quickConsole: "Брза конзола",
+    quickConsole: "Брза конзола"
   },
   label: {
     id: {
@@ -332,7 +334,7 @@ const strings = {
     importNoKeys: "Не се пронајдени клучеви во датотеката",
     desktopNotifications: "Известувања на работна површина",
     desktopNotificationsEnabled: "Овозможи известувања на работна површина",
-    desktopNotificationsInfo: "Примајте OS известувања за прекини и повторни поврзувања на Redis кога апликацијата не е во фокус.",
+    desktopNotificationsInfo: "Примајте OS известувања за прекини и повторни поврзувања на Redis кога апликацијата не е во фокус."
   },
   status: {
     dataCopied: "Податоците се во таблата со исечоци",
@@ -378,7 +380,7 @@ const strings = {
     notInteger: "Овој влез не е цел број",
     persisted: "Овој клуч останува засекогаш",
     set: "Клучот е поставен/додаден",
-    connectionRestored: "Конекцијата е обновена",
+    connectionRestored: "Конекцијата е обновена"
   },
   code: {
     "delete-connection": "Оваа врска е избришана, така што сте исклучени со овој примерок Redis.",
@@ -389,7 +391,12 @@ const strings = {
     "invalid-json-value": "Вредноста не е валидна JSON.",
     "http_auth_required": "Потребна е овластување: ве молиме проверете ја автентичноста со HTTP Basic Auth и вчитајте ја повторно.",
     "auto-connection-failed": "Можно е, врската е отстранета и автоматската врска не успеа, поради ова.",
-    invalid_console_command: "Оваа команда не работи преку GUI."
+    invalid_console_command: "Оваа команда не работи преку GUI.",
+    "AI_DISABLED": "AI е оневозможен. Овозможете го во AI поставки.",
+    "AI_PROMPT_REQUIRED": "Потребно е AI барање.",
+    "GROQ_API_KEY_READONLY": "Groq API клучот е само за читање и не може да се менува.",
+    "blocked_api_access": "Вашиот Groq API план не дозволува пристап до овој модел. Надградете го Groq планот или користете network.corifeus.com прокси.",
+    "rate_limit": "Достигнат е AI лимитот. Обидете се повторно подоцна или користете сопствен Groq API клуч во поставките."
   },
   form: {
     error: {
@@ -485,7 +492,7 @@ const strings = {
       indexInfo: "Инфо за индекс",
       indexName: "Име на индекс",
       prefix: "Префикс на клуч (опционално)",
-      fieldName: "Име на поле",
+      fieldName: "Име на поле"
     },
     monitor: {
       title: "Мониторинг",
@@ -509,7 +516,7 @@ const strings = {
       peak: "Врв",
       fragmentation: "Фрагментација",
       hitsAndMisses: "Погодоци / Промашувања",
-      noClients: "Нема клиенти",
+      noClients: "Нема клиенти"
     },
     analysis: {
       title: "Анализа на меморија",
@@ -540,7 +547,7 @@ const strings = {
       maxScanKeys: "Макс. скенирани клучеви",
       type: "Тип",
       noData: "Нема податоци. Кликнете Стартувај анализа за да започнете.",
-      exportAll: "Извези сè",
+      exportAll: "Извези сè"
     },
 
     overview: {

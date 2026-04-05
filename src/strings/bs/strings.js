@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Doniraj",
+    donateTitle: "Podržite P3X Redis UI",
+    donateDescription: "P3X Redis UI je besplatan projekat otvorenog koda. Troškovi održavanja aplikacije, AI funkcija, Docker slika, servera i infrastrukture dolaze iz džepa programera. Ako vam je ovaj alat koristan, razmislite o podršci daljnjem razvoju donacijom. Svaki doprinos pomaže da projekat živi i raste. Hvala!",
     jsonRecursive: "Proširivanje svih listova",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Statistike naredbi",
     latencystats: "Statistike kašnjenja",
     keysizes: "Veličine ključeva",
-    threads: "Niti",
+    threads: "Niti"
   },
   confirm: {
     dropIndex: "Jeste li sigurni da želite obrisati ovaj indeks?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Prazno znači da traje zauvijek; inače unesite cijeli broj.",
       convertTextToTime: "Pretvori tekst u vrijeme",
       convertTextToTimePlaceholder: "Npr. 1d će biti 86400"
-    },
+    }
   },
   language: {
     // When you translate the english name, keep the Language in English
@@ -193,7 +195,7 @@ const strings = {
     getKey: "Učitavanje Redis ključa i povezanih podataka ...",
     jsonViewShow: "Prikaži JSON",
     jsonViewEditor: "Uredi JSON",
-    quickConsole: "Brza konzola",
+    quickConsole: "Brza konzola"
   },
   label: {
     id: {
@@ -334,7 +336,7 @@ const strings = {
     importNoKeys: "Nisu pronađeni ključevi u datoteci",
     desktopNotifications: "Obavijesti na radnoj površini",
     desktopNotificationsEnabled: "Omogući obavijesti na radnoj površini",
-    desktopNotificationsInfo: "Primajte OS obavijesti za prekide i ponovne veze Redis-a kada aplikacija nije u fokusu.",
+    desktopNotificationsInfo: "Primajte OS obavijesti za prekide i ponovne veze Redis-a kada aplikacija nije u fokusu."
   },
   status: {
     dataCopied: "Podaci su u međuspremniku",
@@ -380,7 +382,7 @@ const strings = {
     notInteger: "Ovaj unos nije cijeli broj",
     persisted: "Ovaj ključ traje zauvijek",
     set: "Ključ je postavljen/dodan",
-    connectionRestored: "Veza je obnovljena",
+    connectionRestored: "Veza je obnovljena"
   },
   code: {
     "delete-connection": "Ova konekcija je obrisana, pa ste odspojeni sa ove Redis instance.",
@@ -391,7 +393,12 @@ const strings = {
     "invalid-json-value": "Vrijednost nije validan JSON.",
     "http_auth_required": "Autorizacija je potrebna: molimo autentificirajte se sa HTTP Basic Auth i ponovo učitajte.",
     "auto-connection-failed": "Moguće je da je konekcija uklonjena i automatska konekcija je zbog toga neuspjela.",
-    invalid_console_command: "Ova komanda ne radi putem GUI-ja."
+    invalid_console_command: "Ova komanda ne radi putem GUI-ja.",
+    "AI_DISABLED": "AI je onemogućen. Omogućite ga u AI postavkama.",
+    "AI_PROMPT_REQUIRED": "AI upit je obavezan.",
+    "GROQ_API_KEY_READONLY": "Groq API ključ je samo za čitanje i ne može se mijenjati.",
+    "blocked_api_access": "Vaš Groq API plan ne dozvoljava pristup ovom modelu. Nadogradite Groq plan ili koristite network.corifeus.com proxy.",
+    "rate_limit": "Dostignut je AI limit. Pokušajte ponovo kasnije ili koristite vlastiti Groq API ključ u postavkama."
   },
   form: {
     error: {
@@ -487,7 +494,7 @@ const strings = {
       indexInfo: "Info o indeksu",
       indexName: "Naziv indeksa",
       prefix: "Prefiks ključa (opcionalno)",
-      fieldName: "Naziv polja",
+      fieldName: "Naziv polja"
     },
     monitor: {
       title: "Monitoring",
@@ -511,7 +518,7 @@ const strings = {
       peak: "Vrh",
       fragmentation: "Fragmentacija",
       hitsAndMisses: "Pogoci / Promašaji",
-      noClients: "Nema klijenata",
+      noClients: "Nema klijenata"
     },
     analysis: {
       title: "Analiza memorije",
@@ -542,7 +549,7 @@ const strings = {
       maxScanKeys: "Maks. skeniranih ključeva",
       type: "Tip",
       noData: "Nema podataka. Kliknite Pokreni analizu za početak.",
-      exportAll: "Izvezi sve",
+      exportAll: "Izvezi sve"
     },
 
     overview: {

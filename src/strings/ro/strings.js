@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Donatie",
+    donateTitle: "Susțineți P3X Redis UI",
+    donateDescription: "P3X Redis UI este un proiect gratuit, open-source. Costurile de întreținere a aplicației, funcțiilor AI, imaginilor Docker, serverelor și infrastructurii vin din buzunarul dezvoltatorului. Dacă considerați acest instrument util, vă rugăm să luați în considerare susținerea dezvoltării sale continue cu o donație. Fiecare contribuție ajută proiectul să rămână viu și în creștere. Mulțumim!",
     jsonRecursive: "Se extind toate ramurile",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Statistici comenzi",
     latencystats: "Statistici latență",
     keysizes: "Dimensiuni chei",
-    threads: "Fire de execuție",
+    threads: "Fire de execuție"
   },
   confirm: {
     dropIndex: "Sunteți sigur că doriți să ștergeți acest index?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Gol inseamna ca persista pentru totdeauna; altfel introduceti un numar intreg.",
       convertTextToTime: "Convertire text in timp",
       convertTextToTimePlaceholder: "Ex. 1d va fi 86400"
-    },
+    }
   },
   language: {
     bg: "\u0411\u044A\u043B\u0433\u0430\u0440\u0441\u043A\u0438 / Bulgarian",
@@ -191,7 +193,7 @@ const strings = {
     getKey: "Se incarca cheia Redis si datele asociate ...",
     jsonViewShow: "Afisare JSON",
     jsonViewEditor: "Editare JSON",
-    quickConsole: "Consola rapida",
+    quickConsole: "Consola rapida"
   },
   label: {
     id: {
@@ -332,7 +334,7 @@ const strings = {
     importNoKeys: "Nu s-au găsit chei în fișier",
     desktopNotifications: "Notificări desktop",
     desktopNotificationsEnabled: "Activare notificări desktop",
-    desktopNotificationsInfo: "Primiți notificări OS pentru deconectări și reconectări Redis când aplicația nu este în prim-plan.",
+    desktopNotificationsInfo: "Primiți notificări OS pentru deconectări și reconectări Redis când aplicația nu este în prim-plan."
   },
   status: {
     dataCopied: "Datele sunt in clipboard",
@@ -378,7 +380,7 @@ const strings = {
     notInteger: "Aceasta valoare introdusa nu este un numar intreg",
     persisted: "Aceasta cheie este persistenta pentru totdeauna",
     set: "Cheia a fost setata/adaugata",
-    connectionRestored: "Conexiune restabilită",
+    connectionRestored: "Conexiune restabilită"
   },
   code: {
     "delete-connection": "Aceasta conexiune a fost stearsa, asa ca sunteti deconectat de la aceasta instanta Redis.",
@@ -389,7 +391,12 @@ const strings = {
     "invalid-json-value": "The value is not valid JSON.",
     "http_auth_required": "Autorizare necesara: va rugam autentificati-va cu HTTP Basic Auth si reincarcati.",
     "auto-connection-failed": "Posibil, conexiunea a fost eliminata si conectarea automata a esuat din aceasta cauza.",
-    invalid_console_command: "Aceasta comanda nu functioneaza prin GUI."
+    invalid_console_command: "Aceasta comanda nu functioneaza prin GUI.",
+    "AI_DISABLED": "AI este dezactivat. Activați-l în setările AI.",
+    "AI_PROMPT_REQUIRED": "Interogarea AI este necesară.",
+    "GROQ_API_KEY_READONLY": "Cheia Groq API este doar pentru citire și nu poate fi modificată.",
+    "blocked_api_access": "Planul dvs. Groq API nu permite accesul la acest model. Actualizați planul Groq sau utilizați proxy-ul network.corifeus.com.",
+    "rate_limit": "Limita de rată AI atinsă. Încercați din nou mai târziu sau utilizați propria cheie Groq API în setări."
   },
   form: {
     error: {
@@ -485,7 +492,7 @@ const strings = {
       indexInfo: "Info index",
       indexName: "Nume index",
       prefix: "Prefix cheie (opțional)",
-      fieldName: "Nume câmp",
+      fieldName: "Nume câmp"
     },
     monitor: {
       title: "Monitorizare",
@@ -509,7 +516,7 @@ const strings = {
       peak: "Vârf",
       fragmentation: "Fragmentare",
       hitsAndMisses: "Reușite / Ratări",
-      noClients: "Fără clienți",
+      noClients: "Fără clienți"
     },
     analysis: {
       title: "Analiză Memorie",
@@ -540,7 +547,7 @@ const strings = {
       maxScanKeys: "Max. Chei Scanate",
       type: "Tip",
       noData: "Fără date. Faceți clic pe Rulează Analiză pentru a începe.",
-      exportAll: "Exportă Tot",
+      exportAll: "Exportă Tot"
     },
 
     overview: {

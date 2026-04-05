@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "捐贈",
+    donateTitle: "支持 P3X Redis UI",
+    donateDescription: "P3X Redis UI 是一個免費的開源專案。應用程式、AI 功能、Docker 映像檔、伺服器和基礎設施的維護成本均來自開發者自掏腰包。如果您覺得這個工具有用，請考慮透過捐款支持其持續開發。每一份貢獻都有助於保持專案的活力和成長。謝謝！",
     jsonRecursive: "展開所有葉子",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "命令統計",
     latencystats: "延遲統計",
     keysizes: "鍵大小",
-    threads: "執行緒",
+    threads: "執行緒"
   },
   confirm: {
     dropIndex: "確定要刪除此索引嗎？",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "空意味著它永遠存在；否則輸入一個整數。",
       convertTextToTime: "將文字轉換為時間",
       convertTextToTimePlaceholder: "例如。 1d 將是 86400"
-    },
+    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -191,7 +193,7 @@ const strings = {
     getKey: "正在載入 Redis 金鑰和相關資料...",
     jsonViewShow: "顯示 JSON",
     jsonViewEditor: "編輯JSON",
-    quickConsole: "快速控制台",
+    quickConsole: "快速控制台"
   },
   label: {
     id: {
@@ -332,7 +334,7 @@ const strings = {
     importNoKeys: "檔案中未找到金鑰",
     desktopNotifications: "桌面通知",
     desktopNotificationsEnabled: "啟用桌面通知",
-    desktopNotificationsInfo: "當應用程式不在焦點時，接收 Redis 斷線和重新連線的作業系統通知。",
+    desktopNotificationsInfo: "當應用程式不在焦點時，接收 Redis 斷線和重新連線的作業系統通知。"
   },
   status: {
     dataCopied: "資料在剪貼簿中",
@@ -378,7 +380,7 @@ const strings = {
     notInteger: "該輸入不是整數",
     persisted: "該密鑰將永遠保留",
     set: "密鑰已設定/新增",
-    connectionRestored: "連線已恢復",
+    connectionRestored: "連線已恢復"
   },
   code: {
     "delete-connection": "此連線已刪除，因此您與此 Redis 實例的連線已中斷。",
@@ -389,7 +391,12 @@ const strings = {
     "invalid-json-value": "該值無效 JSON。",
     "http_auth_required": "需要授權：請使用HTTP Basic Auth進行身份驗證並重新載入。",
     "auto-connection-failed": "可能是因為這個原因，連線被刪除並且自動連線失敗。",
-    invalid_console_command: "該命令無法透過 GUI 運行。"
+    invalid_console_command: "該命令無法透過 GUI 運行。",
+    "AI_DISABLED": "AI 已停用。請在 AI 設定中啟用。",
+    "AI_PROMPT_REQUIRED": "需要 AI 提示。",
+    "GROQ_API_KEY_READONLY": "Groq API 金鑰為唯讀，無法修改。",
+    "blocked_api_access": "您的 Groq API 方案不允許存取此模型。請升級您的 Groq 方案或使用 network.corifeus.com 代理。",
+    "rate_limit": "已達到 AI 速率限制。請稍後再試或在設定中使用您自己的 Groq API 金鑰。"
   },
   form: {
     error: {
@@ -485,7 +492,7 @@ const strings = {
       indexInfo: "索引資訊",
       indexName: "索引名稱",
       prefix: "鍵前綴（可選）",
-      fieldName: "欄位名稱",
+      fieldName: "欄位名稱"
     },
     monitor: {
       title: "監控",
@@ -509,7 +516,7 @@ const strings = {
       peak: "峰值",
       fragmentation: "碎片化",
       hitsAndMisses: "命中 / 未中",
-      noClients: "沒有用戶端",
+      noClients: "沒有用戶端"
     },
     analysis: {
       title: "記憶體分析",
@@ -540,7 +547,7 @@ const strings = {
       maxScanKeys: "最大掃描金鑰數",
       type: "類型",
       noData: "無資料。點擊執行分析開始。",
-      exportAll: "匯出全部",
+      exportAll: "匯出全部"
     },
 
     overview: {

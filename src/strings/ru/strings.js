@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Донат",
+    donateTitle: "Поддержите P3X Redis UI",
+    donateDescription: "P3X Redis UI — бесплатный проект с открытым исходным кодом. Расходы на обслуживание приложения, функции ИИ, образы Docker, серверы и инфраструктуру оплачиваются из собственного кармана разработчика. Если вы считаете этот инструмент полезным, пожалуйста, поддержите его дальнейшее развитие пожертвованием. Каждый вклад помогает проекту жить и расти. Спасибо!",
     jsonRecursive: "Расширяем все листья",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Статистика команд",
     latencystats: "Статистика задержек",
     keysizes: "Размеры ключей",
-    threads: "Потоки",
+    threads: "Потоки"
   },
   confirm: {
     dropIndex: "Вы уверены, что хотите удалить этот индекс?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Пустота означает вечность, для других случаев используйте целое число.",
       convertTextToTime: "Конвертировать текст во время",
       convertTextToTimePlaceholder: "Например, 1d равен 86400"
-    },
+    }
   },
   language: {
     // When you translate the english name, keep the Language in English
@@ -193,7 +195,7 @@ const strings = {
     getKey: "Загрузка ключа Redis и асоциированных данных ...",
     jsonViewShow: "Показать JSON",
     jsonViewEditor: "Редактировать JSON",
-    quickConsole: "Быстрый",
+    quickConsole: "Быстрый"
   },
   label: {
     id: {
@@ -334,7 +336,7 @@ const strings = {
     importNoKeys: "Ключи не найдены в файле",
     desktopNotifications: "Уведомления рабочего стола",
     desktopNotificationsEnabled: "Включить уведомления рабочего стола",
-    desktopNotificationsInfo: "Получайте уведомления ОС при отключении и повторном подключении Redis, когда приложение не в фокусе.",
+    desktopNotificationsInfo: "Получайте уведомления ОС при отключении и повторном подключении Redis, когда приложение не в фокусе."
   },
   status: {
     dataCopied: "Данные скопированы в буфер обмена",
@@ -380,7 +382,7 @@ const strings = {
     notInteger: "Этот ввод не для цельной цифры",
     persisted: "Этот ключ не исчезнет сам",
     set: "Этот ключ был применён/добавлен",
-    connectionRestored: "Соединение восстановлено",
+    connectionRestored: "Соединение восстановлено"
   },
   code: {
     "delete-connection": "Это соединение было удалено и по этому вы были отключены от этой инстанции Redis.",
@@ -391,7 +393,12 @@ const strings = {
     "invalid-json-value": "The value is not valid JSON.",
     "http_auth_required": "Требуется авторизация: выполните вход через HTTP Basic Auth и перезагрузите страницу.",
     "auto-connection-failed": "Вероятно, соединение было удалено и авто-соединение провалилось по таковой причине.",
-    invalid_console_command: "Эта команда не работает через GUI."
+    invalid_console_command: "Эта команда не работает через GUI.",
+    "AI_DISABLED": "AI отключен. Включите его в настройках AI.",
+    "AI_PROMPT_REQUIRED": "Требуется запрос AI.",
+    "GROQ_API_KEY_READONLY": "Ключ Groq API доступен только для чтения и не может быть изменён.",
+    "blocked_api_access": "Ваш план Groq API не позволяет доступ к этой модели. Обновите план Groq или используйте прокси network.corifeus.com.",
+    "rate_limit": "Достигнут лимит AI. Попробуйте позже или используйте свой ключ Groq API в настройках."
   },
   form: {
     error: {
@@ -487,7 +494,7 @@ const strings = {
       indexInfo: "Информация об индексе",
       indexName: "Имя индекса",
       prefix: "Префикс ключа (необязательно)",
-      fieldName: "Имя поля",
+      fieldName: "Имя поля"
     },
     monitor: {
       title: "Мониторинг",
@@ -511,7 +518,7 @@ const strings = {
       peak: "Пик",
       fragmentation: "Фрагментация",
       hitsAndMisses: "Попадания / Промахи",
-      noClients: "Нет клиентов",
+      noClients: "Нет клиентов"
     },
     analysis: {
       title: "Анализ памяти",
@@ -542,7 +549,7 @@ const strings = {
       maxScanKeys: "Макс. сканируемых ключей",
       type: "Тип",
       noData: "Нет данных. Нажмите Запустить анализ, чтобы начать.",
-      exportAll: "Экспорт всего",
+      exportAll: "Экспорт всего"
     },
 
     overview: {

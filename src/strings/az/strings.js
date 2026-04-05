@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Bağışlayın",
+    donateTitle: "P3X Redis UI-ni dəstəkləyin",
+    donateDescription: "P3X Redis UI pulsuz, açıq mənbəli layihədir. Tətbiqin, AI funksiyalarının, Docker təsvirlərinin, serverlərin və infrastrukturun saxlanma xərcləri tərtibatçının öz cibindən ödənilir. Bu aləti faydalı hesab edirsinizsə, inkişafını dəstəkləmək üçün ianə etməyi düşünün. Hər bir töhfə layihənin yaşamasına və böyüməsinə kömək edir. Təşəkkürlər!",
     jsonRecursive: "Bütün yarpaqları genişləndirmək",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Əmr Statistikaları",
     latencystats: "Gecikmə Statistikaları",
     keysizes: "Açar Ölçüləri",
-    threads: "Mövzular",
+    threads: "Mövzular"
   },
   confirm: {
     dropIndex: "Bu indeksi silmək istədiyinizə əminsiniz?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Boş o deməkdir ki, əbədi qalacaq; əks halda tam ədəd daxil edin.",
       convertTextToTime: "Mətni zamana çevirin",
       convertTextToTimePlaceholder: "Məs. 1d 86400 olacaq"
-    },
+    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -191,7 +193,7 @@ const strings = {
     getKey: "Redis açarı və əlaqəli data yüklənir...",
     jsonViewShow: "JSON göstərin",
     jsonViewEditor: "JSON redaktə edin",
-    quickConsole: "Sürətli Konsol",
+    quickConsole: "Sürətli Konsol"
   },
   label: {
     id: {
@@ -332,7 +334,7 @@ const strings = {
     importNoKeys: "Faylda açar tapılmadı",
     desktopNotifications: "Masaüstü Bildirişləri",
     desktopNotificationsEnabled: "Masaüstü bildirişlərini aktiv edin",
-    desktopNotificationsInfo: "Redis bağlantısı kəsilərkən və ya yenidən qoşularkən, tətbiq fokusdankənar olduqda ƏS bildirişləri alın.",
+    desktopNotificationsInfo: "Redis bağlantısı kəsilərkən və ya yenidən qoşularkən, tətbiq fokusdankənar olduqda ƏS bildirişləri alın."
   },
   status: {
     dataCopied: "Məlumat mübadilə buferindədir",
@@ -378,7 +380,7 @@ const strings = {
     notInteger: "Bu daxiletmə tam ədəd deyil",
     persisted: "Bu açar əbədi olaraq qalır",
     set: "Açar quraşdırılıb/əlavə edilib",
-    connectionRestored: "Bağlantı bərpa edildi",
+    connectionRestored: "Bağlantı bərpa edildi"
   },
   code: {
     "delete-connection": "Bu əlaqə silindi, ona görə də siz bu Redis nümunəsi ilə əlaqəni kəsdiniz.",
@@ -389,7 +391,12 @@ const strings = {
     "invalid-json-value": "Dəyər etibarlı deyil JSON.",
     "http_auth_required": "Avtorizasiya tələb olunur: HTTP Basic Auth ilə autentifikasiya edin və yenidən yükləyin.",
     "auto-connection-failed": "Mümkündür ki, bu səbəbdən əlaqə silindi və avtomatik qoşulma uğursuz oldu.",
-    invalid_console_command: "Bu əmr GUI vasitəsilə işləmir."
+    invalid_console_command: "Bu əmr GUI vasitəsilə işləmir.",
+    "AI_DISABLED": "AI deaktivdir. AI Parametrlərindən aktivləşdirin.",
+    "AI_PROMPT_REQUIRED": "AI sorğusu tələb olunur.",
+    "GROQ_API_KEY_READONLY": "Groq API açarı yalnız oxunur və dəyişdirilə bilməz.",
+    "blocked_api_access": "Groq API planınız bu modelə girişə icazə vermir. Groq planınızı yüksəldin və ya network.corifeus.com proksisindən istifadə edin.",
+    "rate_limit": "AI limit həddinə çatıldı. Daha sonra yenidən cəhd edin və ya Parametrlərdə öz Groq API açarınızı istifadə edin."
   },
   form: {
     error: {
@@ -485,7 +492,7 @@ const strings = {
       indexInfo: "İndeks məlumatı",
       indexName: "İndeks adı",
       prefix: "Açar prefiksi (isteğe bağlı)",
-      fieldName: "Sahə adı",
+      fieldName: "Sahə adı"
     },
     monitor: {
       title: "Monitorinq",
@@ -509,7 +516,7 @@ const strings = {
       peak: "Pik",
       fragmentation: "Fraqmentasiya",
       hitsAndMisses: "Uğurlu / Uğursuz",
-      noClients: "Müştəri yoxdur",
+      noClients: "Müştəri yoxdur"
     },
     analysis: {
       title: "Yaddaş Analizi",
@@ -540,7 +547,7 @@ const strings = {
       maxScanKeys: "Maks Skan Açarları",
       type: "Tip",
       noData: "Verilən yoxdur. Başlamaq üçün Analizi Başlat düyməsinə klikləyin.",
-      exportAll: "Hamısını İxrac Et",
+      exportAll: "Hamısını İxrac Et"
     },
 
     overview: {

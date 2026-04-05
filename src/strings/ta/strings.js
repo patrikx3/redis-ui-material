@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "நன்கொடை",
+    donateTitle: "P3X Redis UI-ஐ ஆதரிக்கவும்",
+    donateDescription: "P3X Redis UI ஒரு இலவச, திறந்த மூல திட்டமாகும். செயலி, AI அம்சங்கள், Docker படங்கள், சேவையகங்கள் மற்றும் உள்கட்டமைப்பை பராமரிக்கும் செலவுகள் டெவலப்பரின் சொந்த பணத்தில் இருந்து வருகின்றன. இந்த கருவி உங்களுக்கு பயனுள்ளதாக இருந்தால், நன்கொடை மூலம் அதன் தொடர்ச்சியான வளர்ச்சியை ஆதரிக்கவும். ஒவ்வொரு பங்களிப்பும் திட்டத்தை உயிருடன் வளர்ந்து கொண்டிருக்க உதவுகிறது. நன்றி!",
     jsonRecursive: "அனைத்து இலைகளையும் விரிவாக்குகிறது",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "commandstats",
     latencystats: "latencystats",
     keysizes: "keysizes",
-    threads: "threads",
+    threads: "threads"
   },
   confirm: {
     dropIndex: "இந்த குறியீட்டை நீக்க விரும்புகிறீர்களா?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "காலி என்றால் நிரந்தரமாக இருக்கும்; இல்லையெனில் முழு எண்ணை உள்ளிடவும்.",
       convertTextToTime: "உரையை நேரமாக மாற்றவும்",
       convertTextToTimePlaceholder: "எ.கா. 1d 86400 ஆக இருக்கும்"
-    },
+    }
   },
   language: {
     // When you translate the english name, keep the Language in English
@@ -193,7 +195,7 @@ const strings = {
     getKey: "Redis விசை மற்றும் தொடர்புடைய தரவை ஏற்றுகிறது ...",
     jsonViewShow: "JSON காட்சி",
     jsonViewEditor: "JSON திருத்தம்",
-    quickConsole: "விரைவு கன்சோல்",
+    quickConsole: "விரைவு கன்சோல்"
   },
   label: {
     id: {
@@ -334,7 +336,7 @@ const strings = {
     importNoKeys: "கோப்பில் விசைகள் காணப்படவில்லை",
     desktopNotifications: "Desktop Notifications",
     desktopNotificationsEnabled: "Enable desktop notifications",
-    desktopNotificationsInfo: "Receive OS notifications for Redis disconnections and reconnections when the app is not focused.",
+    desktopNotificationsInfo: "Receive OS notifications for Redis disconnections and reconnections when the app is not focused."
   },
   status: {
     dataCopied: "தரவு கிளிப்போர்டில் உள்ளது",
@@ -380,7 +382,7 @@ const strings = {
     notInteger: "இந்த உள்ளீடு முழு எண் அல்ல",
     persisted: "இந்த விசை நிரந்தரமாக சேமிக்கப்பட்டது",
     set: "விசை அமைக்கப்பட்டது/சேர்க்கப்பட்டது",
-    connectionRestored: "Connection restored",
+    connectionRestored: "Connection restored"
   },
   code: {
     "delete-connection": "இந்த இணைப்பு நீக்கப்பட்டது, எனவே இந்த Redis நிகழ்வுடன் துண்டிக்கப்பட்டீர்கள்.",
@@ -391,7 +393,12 @@ const strings = {
     "invalid-json-value": "மதிப்பு செல்லுபடியான JSON அல்ல.",
     "http_auth_required": "அங்கீகாரம் தேவை: தயவுசெய்து HTTP Basic Auth மூலம் அங்கீகரித்து மீளேற்றம் செய்யவும்.",
     "auto-connection-failed": "இணைப்பு அகற்றப்பட்டிருக்கலாம் மற்றும் தானியங்கி இணைப்பு இதனால் தோல்வியடைந்தது.",
-    invalid_console_command: "இந்த கட்டளை GUI வழியாக வேலை செய்யாது."
+    invalid_console_command: "இந்த கட்டளை GUI வழியாக வேலை செய்யாது.",
+    "AI_DISABLED": "AI முடக்கப்பட்டுள்ளது. AI அமைப்புகளில் இயக்கவும்.",
+    "AI_PROMPT_REQUIRED": "AI வினவல் தேவை.",
+    "GROQ_API_KEY_READONLY": "Groq API விசை படிக்க மட்டுமே மற்றும் மாற்ற முடியாது.",
+    "blocked_api_access": "உங்கள் Groq API திட்டம் இந்த மாதிரிக்கான அணுகலை அனுமதிக்கவில்லை. Groq திட்டத்தை மேம்படுத்தவும் அல்லது network.corifeus.com ப்ராக்ஸியைப் பயன்படுத்தவும்.",
+    "rate_limit": "AI வீத வரம்பு எட்டப்பட்டது. பின்னர் மீண்டும் முயற்சிக்கவும் அல்லது அமைப்புகளில் உங்கள் சொந்த Groq API விசையைப் பயன்படுத்தவும்."
   },
   form: {
     error: {
@@ -487,7 +494,7 @@ const strings = {
       indexInfo: "குறியீடு தகவல்",
       indexName: "குறியீடு பெயர்",
       prefix: "விசை முன்னொட்டு (விருப்பம்)",
-      fieldName: "புலப் பெயர்",
+      fieldName: "புலப் பெயர்"
     },
     monitor: {
       title: "கண்காணிப்பு",
@@ -511,7 +518,7 @@ const strings = {
       peak: "உச்சம்",
       fragmentation: "துண்டாக்கம்",
       hitsAndMisses: "வெற்றி / தோல்வி",
-      noClients: "வாடிக்கையாளர்கள் இல்லை",
+      noClients: "வாடிக்கையாளர்கள் இல்லை"
     },
     analysis: {
       title: "நினைவக பகுப்பாய்வு",
@@ -542,7 +549,7 @@ const strings = {
       maxScanKeys: "அதிகபட்ச ஸ்கேன் விசைகள்",
       type: "வகை",
       noData: "தரவு இல்லை. தொடங்க பகுப்பாய்வை இயக்கு என்பதைக் கிளிக் செய்யவும்.",
-      exportAll: "அனைத்தையும் ஏற்றுமதி",
+      exportAll: "அனைத்தையும் ஏற்றுமதி"
     },
 
     overview: {

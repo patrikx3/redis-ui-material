@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Doe",
+    donateTitle: "Apoie o P3X Redis UI",
+    donateDescription: "O P3X Redis UI é um projeto gratuito e de código aberto. Os custos de manutenção do aplicativo, recursos de IA, imagens Docker, servidores e infraestrutura saem do bolso do desenvolvedor. Se você acha esta ferramenta útil, considere apoiar seu desenvolvimento contínuo com uma doação. Cada contribuição ajuda a manter o projeto vivo e crescendo. Obrigado!",
     jsonRecursive: "Expandindo todas as folhas",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Estatísticas de comandos",
     latencystats: "Estatísticas de latência",
     keysizes: "Tamanhos de chaves",
-    threads: "Threads",
+    threads: "Threads"
   },
   confirm: {
     dropIndex: "Tem certeza de que deseja excluir este índice?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Vazio significa que persiste para sempre; caso contrário, insira um número inteiro.",
       convertTextToTime: "Converter texto em hora",
       convertTextToTimePlaceholder: "Por exemplo. 1d será 86400"
-    },
+    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -191,7 +193,7 @@ const strings = {
     getKey: "Carregando chave Redis e dados associados...",
     jsonViewShow: "Exibir JSON",
     jsonViewEditor: "Editar JSON",
-    quickConsole: "Consola rápida",
+    quickConsole: "Consola rápida"
   },
   label: {
     id: {
@@ -332,7 +334,7 @@ const strings = {
     importNoKeys: "Nenhuma chave encontrada no arquivo",
     desktopNotifications: "Notificações do desktop",
     desktopNotificationsEnabled: "Ativar notificações do desktop",
-    desktopNotificationsInfo: "Receba notificações do SO para desconexões e reconexões do Redis quando o aplicativo não estiver em foco.",
+    desktopNotificationsInfo: "Receba notificações do SO para desconexões e reconexões do Redis quando o aplicativo não estiver em foco."
   },
   status: {
     dataCopied: "Os dados estão na área de transferência",
@@ -378,7 +380,7 @@ const strings = {
     notInteger: "Esta entrada não é um número inteiro",
     persisted: "Esta chave persiste para sempre",
     set: "A chave está definida/adicionada",
-    connectionRestored: "Conexão restaurada",
+    connectionRestored: "Conexão restaurada"
   },
   code: {
     "delete-connection": "Esta conexão foi excluída, portanto você está desconectado desta instância Redis.",
@@ -389,7 +391,12 @@ const strings = {
     "invalid-json-value": "O valor não é válido JSON.",
     "http_auth_required": "Autorização necessária: autentique com HTTP Basic Auth e recarregue.",
     "auto-connection-failed": "Possível, a conexão foi removida e a conexão automática falhou por causa disso.",
-    invalid_console_command: "Este comando não está funcionando por meio de GUI."
+    invalid_console_command: "Este comando não está funcionando por meio de GUI.",
+    "AI_DISABLED": "IA está desativada. Ative nas configurações de IA.",
+    "AI_PROMPT_REQUIRED": "Consulta de IA é obrigatória.",
+    "GROQ_API_KEY_READONLY": "A chave Groq API é somente leitura e não pode ser modificada.",
+    "blocked_api_access": "Seu plano Groq API não permite acesso a este modelo. Atualize seu plano Groq ou use o proxy network.corifeus.com.",
+    "rate_limit": "Limite de taxa de IA atingido. Tente novamente mais tarde ou use sua própria chave Groq API nas configurações."
   },
   form: {
     error: {
@@ -485,7 +492,7 @@ const strings = {
       indexInfo: "Info do índice",
       indexName: "Nome do índice",
       prefix: "Prefixo de chave (opcional)",
-      fieldName: "Nome do campo",
+      fieldName: "Nome do campo"
     },
     monitor: {
       title: "Monitoramento",
@@ -509,7 +516,7 @@ const strings = {
       peak: "Pico",
       fragmentation: "Fragmentação",
       hitsAndMisses: "Acertos / Erros",
-      noClients: "Sem clientes",
+      noClients: "Sem clientes"
     },
     analysis: {
       title: "Análise de Memória",
@@ -540,7 +547,7 @@ const strings = {
       maxScanKeys: "Máx. Chaves Analisadas",
       type: "Tipo",
       noData: "Sem dados. Clique em Executar Análise para começar.",
-      exportAll: "Exportar Tudo",
+      exportAll: "Exportar Tudo"
     },
 
     overview: {

@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Đóng góp",
+    donateTitle: "Hỗ trợ P3X Redis UI",
+    donateDescription: "P3X Redis UI là một dự án miễn phí, mã nguồn mở. Chi phí bảo trì ứng dụng, tính năng AI, Docker image, máy chủ và cơ sở hạ tầng đều từ túi tiền riêng của nhà phát triển. Nếu bạn thấy công cụ này hữu ích, vui lòng cân nhắc hỗ trợ sự phát triển liên tục của nó bằng một khoản quyên góp. Mọi đóng góp đều giúp dự án sống và phát triển. Cảm ơn bạn!",
     jsonRecursive: "Mở rộng tất cả các lá",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Thống kê lệnh",
     latencystats: "Thống kê độ trễ",
     keysizes: "Kích thước khóa",
-    threads: "Luồng",
+    threads: "Luồng"
   },
   confirm: {
     dropIndex: "Bạn có chắc muốn xóa chỉ mục này?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Trống rỗng có nghĩa là nó tồn tại mãi mãi; nếu không thì nhập một số nguyên.",
       convertTextToTime: "Chuyển đổi văn bản thành thời gian",
       convertTextToTimePlaceholder: "Ví dụ: 1d sẽ là 86400"
-    },
+    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -191,7 +193,7 @@ const strings = {
     getKey: "Đang tải khóa Redis và dữ liệu liên quan ...",
     jsonViewShow: "Hiển thị JSON",
     jsonViewEditor: "Chỉnh sửa JSON",
-    quickConsole: "Bảng điều khiển nhanh",
+    quickConsole: "Bảng điều khiển nhanh"
   },
   label: {
     id: {
@@ -332,7 +334,7 @@ const strings = {
     importNoKeys: "Không tìm thấy khóa trong tệp",
     desktopNotifications: "Thông báo trên máy tính",
     desktopNotificationsEnabled: "Bật thông báo trên máy tính",
-    desktopNotificationsInfo: "Nhận thông báo hệ điều hành cho các ngắt kết nối và kết nối lại Redis khi ứng dụng không được focus.",
+    desktopNotificationsInfo: "Nhận thông báo hệ điều hành cho các ngắt kết nối và kết nối lại Redis khi ứng dụng không được focus."
   },
   status: {
     dataCopied: "Dữ liệu nằm trong clipboard",
@@ -378,7 +380,7 @@ const strings = {
     notInteger: "Dữ liệu đầu vào này không phải là số nguyên",
     persisted: "Chìa khóa này được tồn tại mãi mãi",
     set: "Khóa được đặt/thêm",
-    connectionRestored: "Kết nối đã được khôi phục",
+    connectionRestored: "Kết nối đã được khôi phục"
   },
   code: {
     "delete-connection": "Kết nối này đã bị xóa nên bạn bị ngắt kết nối với phiên bản Redis này.",
@@ -389,7 +391,12 @@ const strings = {
     "invalid-json-value": "Giá trị không hợp lệ JSON.",
     "http_auth_required": "Yêu cầu ủy quyền: vui lòng xác thực bằng HTTP Basic Auth và tải lại.",
     "auto-connection-failed": "Có thể kết nối đã bị xóa và kết nối tự động không thành công vì điều này.",
-    invalid_console_command: "Lệnh này không hoạt động thông qua GUI."
+    invalid_console_command: "Lệnh này không hoạt động thông qua GUI.",
+    "AI_DISABLED": "AI đã bị tắt. Bật nó trong Cài đặt AI.",
+    "AI_PROMPT_REQUIRED": "Yêu cầu AI là bắt buộc.",
+    "GROQ_API_KEY_READONLY": "Khóa Groq API chỉ đọc và không thể sửa đổi.",
+    "blocked_api_access": "Gói Groq API của bạn không cho phép truy cập vào mô hình này. Vui lòng nâng cấp gói Groq hoặc sử dụng proxy network.corifeus.com.",
+    "rate_limit": "Đã đạt giới hạn tốc độ AI. Thử lại sau hoặc sử dụng khóa Groq API của riêng bạn trong Cài đặt."
   },
   form: {
     error: {
@@ -485,7 +492,7 @@ const strings = {
       indexInfo: "Thông tin chỉ mục",
       indexName: "Tên chỉ mục",
       prefix: "Tiền tố khóa (tùy chọn)",
-      fieldName: "Tên trường",
+      fieldName: "Tên trường"
     },
     monitor: {
       title: "Giám sát",
@@ -509,7 +516,7 @@ const strings = {
       peak: "Đỉnh",
       fragmentation: "Phân Mảnh",
       hitsAndMisses: "Trúng / Trượt",
-      noClients: "Không có kết nối",
+      noClients: "Không có kết nối"
     },
     analysis: {
       title: "Phân Tích Bộ Nhớ",
@@ -540,7 +547,7 @@ const strings = {
       maxScanKeys: "Tối Đa Khóa Quét",
       type: "Loại",
       noData: "Không có dữ liệu. Nhấp Chạy Phân Tích để bắt đầu.",
-      exportAll: "Xuất Tất Cả",
+      exportAll: "Xuất Tất Cả"
     },
 
     overview: {

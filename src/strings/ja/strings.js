@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "寄付",
+    donateTitle: "P3X Redis UIを支援する",
+    donateDescription: "P3X Redis UIは無料のオープンソースプロジェクトです。アプリの保守、AI機能、Dockerイメージ、サーバー、インフラストラクチャの費用は開発者の自腹で賄われています。このツールが役立つと感じたら、寄付で継続的な開発をサポートしてください。すべての貢献がプロジェクトを存続させ、成長させる助けになります。ありがとうございます！",
     jsonRecursive: "すべてのリーフを展開中",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "コマンド統計",
     latencystats: "レイテンシ統計",
     keysizes: "キーサイズ",
-    threads: "スレッド",
+    threads: "スレッド"
   },
   confirm: {
     dropIndex: "このインデックスを削除しますか？",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "空の場合は永続的に保持されます。それ以外の場合は整数を入力してください。",
       convertTextToTime: "テキストを時間に変換",
       convertTextToTimePlaceholder: "例：1dは86400になります"
-    },
+    }
   },
   language: {
     bg: "Български / Bulgarian",
@@ -189,7 +191,7 @@ const strings = {
     getKey: "Redisキーと関連データを読み込み中 ...",
     jsonViewShow: "JSONを表示",
     jsonViewEditor: "JSONを編集",
-    quickConsole: "クイックコンソール",
+    quickConsole: "クイックコンソール"
   },
   label: {
     id: {
@@ -330,7 +332,7 @@ const strings = {
     importNoKeys: "ファイルにキーが見つかりません",
     desktopNotifications: "デスクトップ通知",
     desktopNotificationsEnabled: "デスクトップ通知を有効にする",
-    desktopNotificationsInfo: "アプリがフォーカスされていない時に、Redisの切断と再接続のOS通知を受け取ります。",
+    desktopNotificationsInfo: "アプリがフォーカスされていない時に、Redisの切断と再接続のOS通知を受け取ります。"
   },
   status: {
     dataCopied: "データがクリップボードにコピーされました",
@@ -376,7 +378,7 @@ const strings = {
     notInteger: "この入力は整数ではありません",
     persisted: "このキーは永続的に保持されます",
     set: "キーが設定/追加されました",
-    connectionRestored: "接続が復元されました",
+    connectionRestored: "接続が復元されました"
   },
   code: {
     "delete-connection": "この接続は削除されたため、このRedisインスタンスから切断されました。",
@@ -387,7 +389,12 @@ const strings = {
     "invalid-json-value": "The value is not valid JSON.",
     "http_auth_required": "認証が必要です。HTTP Basic Authで認証し、再読み込みしてください。",
     "auto-connection-failed": "接続が削除された可能性があり、そのため自動接続に失敗しました。",
-    invalid_console_command: "このコマンドはGUIでは動作しません。"
+    invalid_console_command: "このコマンドはGUIでは動作しません。",
+    "AI_DISABLED": "AIが無効です。AI設定で有効にしてください。",
+    "AI_PROMPT_REQUIRED": "AIプロンプトが必要です。",
+    "GROQ_API_KEY_READONLY": "Groq APIキーは読み取り専用で変更できません。",
+    "blocked_api_access": "お使いのGroq APIプランではこのモデルにアクセスできません。Groqプランをアップグレードするか、network.corifeus.comプロキシを使用してください。",
+    "rate_limit": "AIレート制限に達しました。後でもう一度お試しいただくか、設定で独自のGroq APIキーを使用してください。"
   },
   form: {
     error: {
@@ -483,7 +490,7 @@ const strings = {
       indexInfo: "インデックス情報",
       indexName: "インデックス名",
       prefix: "キープレフィックス（任意）",
-      fieldName: "フィールド名",
+      fieldName: "フィールド名"
     },
     monitor: {
       title: "モニタリング",
@@ -507,7 +514,7 @@ const strings = {
       peak: "ピーク",
       fragmentation: "フラグメンテーション",
       hitsAndMisses: "ヒット / ミス",
-      noClients: "クライアントがありません",
+      noClients: "クライアントがありません"
     },
     analysis: {
       title: "メモリ分析",
@@ -538,7 +545,7 @@ const strings = {
       maxScanKeys: "最大スキャンキー数",
       type: "タイプ",
       noData: "データがありません。分析を実行をクリックして開始してください。",
-      exportAll: "すべてエクスポート",
+      exportAll: "すべてエクスポート"
     },
 
     overview: {

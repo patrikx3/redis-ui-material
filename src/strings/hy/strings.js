@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Նվիրաբերել",
+    donateTitle: "Աջակցեք P3X Redis UI-ին",
+    donateDescription: "P3X Redis UI-ն անվճար, բաց կոադային նախագիծ է: Հավելվածի, AI գործառույթների, Docker պատկերների, սերdelays և ենthink ծախserversdelays delays delays delays delays delays delays delays delays delays delays delays delays delays delays:",
     jsonRecursive: "Ընդլայնելով բոլոր տերևները",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "commandstats",
     latencystats: "latencystats",
     keysizes: "keysizes",
-    threads: "threads",
+    threads: "threads"
   },
   confirm: {
     dropIndex: "Vստah eq?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Դատարկ նշանակում է, որ այն պահպանվում է ընդմիշտ. հակառակ դեպքում մուտքագրեք ամբողջ թիվ:",
       convertTextToTime: "Փոխարկել տեքստը ժամանակի",
       convertTextToTimePlaceholder: "Օրինակ. 1d-ը կլինի 86400"
-    },
+    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -191,7 +193,7 @@ const strings = {
     getKey: "Բեռնվում է Redis բանալի և հարակից տվյալները...",
     jsonViewShow: "Ցուցադրել JSON",
     jsonViewEditor: "Խմբագրել JSON",
-    quickConsole: "Արագ կոնسول",
+    quickConsole: "Արագ կոնسول"
   },
   label: {
     id: {
@@ -332,7 +334,7 @@ const strings = {
     importNoKeys: "Ֆայլում բանալիներ չկան",
     desktopNotifications: "Desktop Notifications",
     desktopNotificationsEnabled: "Enable desktop notifications",
-    desktopNotificationsInfo: "Receive OS notifications for Redis disconnections and reconnections when the app is not focused.",
+    desktopNotificationsInfo: "Receive OS notifications for Redis disconnections and reconnections when the app is not focused."
   },
   status: {
     dataCopied: "Տվյալները սեղմատախտակում են",
@@ -378,7 +380,7 @@ const strings = {
     notInteger: "Այս մուտքագրումը ամբողջ թիվ չէ",
     persisted: "Այս բանալին ընդմիշտ պահպանվում է",
     set: "Բանալին դրված է/ավելացվել է",
-    connectionRestored: "Connection restored",
+    connectionRestored: "Connection restored"
   },
   code: {
     "delete-connection": "Այս կապը ջնջվել է, ուստի դուք անջատված եք այս Redis օրինակից:",
@@ -389,7 +391,12 @@ const strings = {
     "invalid-json-value": "Արժեքը վավեր չէ JSON:",
     "http_auth_required": "Պահանջվում է թույլտվություն. խնդրում ենք նույնականացնել HTTP Basic Auth-ով և վերաբեռնել:",
     "auto-connection-failed": "Հնարավոր է, որ կապը հեռացվել է, և ավտոմատ միացումը ձախողվել է, դրա պատճառով:",
-    invalid_console_command: "Այս հրամանը չի աշխատում GUI-ի միջոցով:"
+    invalid_console_command: "Այս հրամանը չի աշխատում GUI-ի միջոցով:",
+    "AI_DISABLED": "AI-ն անջատված է: Միացրեք այն AI կարգավորումներում:",
+    "AI_PROMPT_REQUIRED": "AI հարցումը պարտադիր է:",
+    "GROQ_API_KEY_READONLY": "Groq API բանալին միայն կարդալու համար է և չի կարող փոփոխվել:",
+    "blocked_api_access": "Ձեր Groq API պլանը թույլ չի տալիս մուտք գործել այս մdelays: Խնդրում ենք թարմացնել Groq պլdelays կամ օգտagorespace network.corifeus.com proxy-ն:",
+    "rate_limit": "AI արագdelays սdelays հasiondelays: Փdelays ավdelays delays delays delays Groq API delays delays delays:"
   },
   form: {
     error: {
@@ -485,7 +492,7 @@ const strings = {
       indexInfo: "Ինդեքսի տեղեկություն",
       indexName: "Ինդեքսի անուն",
       prefix: "Բանալի նախածանց (կամընտրական)",
-      fieldName: "Դաշտի անուն",
+      fieldName: "Դաշտի անուն"
     },
     monitor: {
       title: "Մոնիտորինգ",
@@ -509,7 +516,7 @@ const strings = {
       peak: "Գագաթնակետ",
       fragmentation: "Մասնատվածում",
       hitsAndMisses: "Հարվածներ / Վրիպներ",
-      noClients: "Հաճախորդներ չկան",
+      noClients: "Հաճախորդներ չկան"
     },
     analysis: {
       title: "Հիշողություն վերլուծություն",
@@ -540,7 +547,7 @@ const strings = {
       maxScanKeys: "Առավելագույն սկանավորման բանալիներ",
       type: "Տիպ",
       noData: "Տվյալներ չկան։ Սեղմեք Գործարկել վերլուծությունը սկսելու համար։",
-      exportAll: "Արտահանել ամբողջը",
+      exportAll: "Արտահանել ամբողջը"
     },
 
     overview: {

@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Ахвяраваць",
+    donateTitle: "Падтрымайце P3X Redis UI",
+    donateDescription: "P3X Redis UI — бясплатны праект з адкрытым зыходным кодам. Выдаткі на абслугоўванне прыкладання, функцыі AI, вобразы Docker, серверы і інфраструктуру аплачваюцца з уласнай кішэні распрацоўшчыка. Калі вы лічыце гэты інструмент карысным, калі ласка, падтрымайце яго далейшае развіццё ахвяраваннем. Кожны ўнёсак дапамагае праекту жыць і расці. Дзякуй!",
     jsonRecursive: "Разгарнуўшы ўсе лісце",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Статыстыка каманд",
     latencystats: "Статыстыка затрымак",
     keysizes: "Памеры ключоў",
-    threads: "Патокі",
+    threads: "Патокі"
   },
   confirm: {
     dropIndex: "Вы ўпэўнены, што хочаце выдаліць гэты індэкс?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Пусты азначае, што ён захоўваецца вечна; інакш увядзіце цэлы лік.",
       convertTextToTime: "Пераўтварэнне тэксту ў час",
       convertTextToTimePlaceholder: "напр. 1d будзе 86400"
-    },
+    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -191,7 +193,7 @@ const strings = {
     getKey: "Загрузка ключа Redis і звязаных з ім даных...",
     jsonViewShow: "Дысплей JSON",
     jsonViewEditor: "Рэдагаваць JSON",
-    quickConsole: "Хуткая кансоль",
+    quickConsole: "Хуткая кансоль"
   },
   label: {
     id: {
@@ -332,7 +334,7 @@ const strings = {
     importNoKeys: "Ключы ў файле не знойдзены",
     desktopNotifications: "Апавяшчэнні працоўнага стала",
     desktopNotificationsEnabled: "Уключыць апавяшчэнні працоўнага стала",
-    desktopNotificationsInfo: "Атрымліваць апавяшчэнні АС пры адключэнні Redis і паўторным падключэнні, калі праграма не ў фокусе.",
+    desktopNotificationsInfo: "Атрымліваць апавяшчэнні АС пры адключэнні Redis і паўторным падключэнні, калі праграма не ў фокусе."
   },
   status: {
     dataCopied: "Дадзеныя знаходзяцца ў буферы абмену",
@@ -378,7 +380,7 @@ const strings = {
     notInteger: "Гэты ўвод не з'яўляецца цэлым лікам",
     persisted: "Гэты ключ захоўваецца вечна",
     set: "Ключ усталяваны/дададзены",
-    connectionRestored: "Злучэнне адноўлена",
+    connectionRestored: "Злучэнне адноўлена"
   },
   code: {
     "delete-connection": "Гэта злучэнне было выдалена, таму вы адключаны ад гэтага асобніка Redis.",
@@ -389,7 +391,12 @@ const strings = {
     "invalid-json-value": "Значэнне несапраўднае JSON.",
     "http_auth_required": "Патрабуецца аўтарызацыя: прайдзіце аўтэнтыфікацыю з дапамогай HTTP Basic Auth і перазагрузіце.",
     "auto-connection-failed": "Магчыма, з-за гэтага злучэнне было выдалена і аўтаматычнае злучэнне не атрымалася.",
-    invalid_console_command: "Гэтая каманда не працуе праз GUI."
+    invalid_console_command: "Гэтая каманда не працуе праз GUI.",
+    "AI_DISABLED": "AI адключаны. Уключыце яго ў наладах AI.",
+    "AI_PROMPT_REQUIRED": "Патрабуецца запыт AI.",
+    "GROQ_API_KEY_READONLY": "Ключ Groq API даступны толькі для чытання і не можа быць зменены.",
+    "blocked_api_access": "Ваш план Groq API не дазваляе доступ да гэтай мадэлі. Калі ласка, абнавіце план Groq або выкарыстоўвайце проксі network.corifeus.com.",
+    "rate_limit": "Дасягнуты ліміт AI. Паспрабуйце пазней або выкарыстоўвайце свой уласны ключ Groq API ў наладах."
   },
   form: {
     error: {
@@ -485,7 +492,7 @@ const strings = {
       indexInfo: "Інфа пра індэкс",
       indexName: "Назва індэкса",
       prefix: "Прэфікс ключа (неабавязкова)",
-      fieldName: "Назва поля",
+      fieldName: "Назва поля"
     },
     monitor: {
       title: "Маніторынг",
@@ -509,7 +516,7 @@ const strings = {
       peak: "Пік",
       fragmentation: "Фрагментацыя",
       hitsAndMisses: "Трапленні / Промахі",
-      noClients: "Няма кліентаў",
+      noClients: "Няма кліентаў"
     },
     analysis: {
       title: "Аналіз памяці",
@@ -540,7 +547,7 @@ const strings = {
       maxScanKeys: "Макс. сканіраванне ключоў",
       type: "Тып",
       noData: "Няма даных. Націсніце Запусціць аналіз, каб пачаць.",
-      exportAll: "Экспарт усяго",
+      exportAll: "Экспарт усяго"
     },
 
     overview: {

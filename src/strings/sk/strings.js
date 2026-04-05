@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Prispiet",
+    donateTitle: "Podporte P3X Redis UI",
+    donateDescription: "P3X Redis UI je bezplatný open-source projekt. Náklady na údržbu aplikácie, AI funkcie, Docker obrazy, servery a infraštruktúru hradí vývojár z vlastného vrecka. Ak vám tento nástroj pomáha, zvážte prosím podporu jeho ďalšieho vývoja príspevkom. Každý príspevok pomáha udržať projekt živý a rastúci. Ďakujeme!",
     jsonRecursive: "Rozbalujem vsetky listy",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Štatistiky príkazov",
     latencystats: "Štatistiky latencie",
     keysizes: "Veľkosti kľúčov",
-    threads: "Vlákna",
+    threads: "Vlákna"
   },
   confirm: {
     dropIndex: "Naozaj chcete zmazať tento index?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Prazdne znamena, ze pretrvava navzdy; inak zadajte cele cislo.",
       convertTextToTime: "Konvertovat text na cas",
       convertTextToTimePlaceholder: "Napr. 1d bude 86400"
-    },
+    }
   },
   language: {
     bg: "\u0411\u044A\u043B\u0433\u0430\u0440\u0441\u043A\u0438 / Bulgarian",
@@ -191,7 +193,7 @@ const strings = {
     getKey: "Nacitavam Redis kluc a prisluchajuce data ...",
     jsonViewShow: "Zobrazit JSON",
     jsonViewEditor: "Upravit JSON",
-    quickConsole: "Rychla konzola",
+    quickConsole: "Rychla konzola"
   },
   label: {
     id: {
@@ -332,7 +334,7 @@ const strings = {
     importNoKeys: "V súbore neboli nájdené žiadne kľúče",
     desktopNotifications: "Upozornenia na ploche",
     desktopNotificationsEnabled: "Povoliť upozornenia na ploche",
-    desktopNotificationsInfo: "Dostávajte OS upozornenia pri odpojení a opätovnom pripojení Redis, keď aplikácia nie je v popredí.",
+    desktopNotificationsInfo: "Dostávajte OS upozornenia pri odpojení a opätovnom pripojení Redis, keď aplikácia nie je v popredí."
   },
   status: {
     dataCopied: "Data su v schranke",
@@ -378,7 +380,7 @@ const strings = {
     notInteger: "Tento vstup nie je cele cislo",
     persisted: "Tento kluc pretrva navzdy",
     set: "Kluc bol nastaveny/pridany",
-    connectionRestored: "Pripojenie obnovené",
+    connectionRestored: "Pripojenie obnovené"
   },
   code: {
     "delete-connection": "Toto pripojenie bolo vymazane, takze ste odpojeny od tejto Redis instancie.",
@@ -389,7 +391,12 @@ const strings = {
     "invalid-json-value": "The value is not valid JSON.",
     "http_auth_required": "Autorizacia potrebna: prosim autentifikujte sa cez HTTP Basic Auth a znovu nacitajte.",
     "auto-connection-failed": "Je mozne, ze pripojenie bolo odstranene a automaticke pripojenie zlyhalo z tohto dovodu.",
-    invalid_console_command: "Tento prikaz nefunguje cez GUI."
+    invalid_console_command: "Tento prikaz nefunguje cez GUI.",
+    "AI_DISABLED": "AI je deaktivované. Povoľte ho v nastaveniach AI.",
+    "AI_PROMPT_REQUIRED": "Je vyžadovaný AI dotaz.",
+    "GROQ_API_KEY_READONLY": "Kľúč Groq API je iba na čítanie a nedá sa upraviť.",
+    "blocked_api_access": "Váš plán Groq API neumožňuje prístup k tomuto modelu. Aktualizujte plán Groq alebo použite proxy network.corifeus.com.",
+    "rate_limit": "Dosiahnutý limit AI. Skúste to neskôr alebo použite vlastný kľúč Groq API v nastaveniach."
   },
   form: {
     error: {
@@ -485,7 +492,7 @@ const strings = {
       indexInfo: "Info o indexe",
       indexName: "Názov indexu",
       prefix: "Prefix kľúča (voliteľné)",
-      fieldName: "Názov poľa",
+      fieldName: "Názov poľa"
     },
     monitor: {
       title: "Monitorovanie",
@@ -509,7 +516,7 @@ const strings = {
       peak: "Špička",
       fragmentation: "Fragmentácia",
       hitsAndMisses: "Zásahy / Minutia",
-      noClients: "Žiadni klienti",
+      noClients: "Žiadni klienti"
     },
     analysis: {
       title: "Analýza pamäte",
@@ -540,7 +547,7 @@ const strings = {
       maxScanKeys: "Max. prehľadaných kľúčov",
       type: "Typ",
       noData: "Žiadne dáta. Kliknite na Spustiť analýzu pre začatie.",
-      exportAll: "Exportovať všetko",
+      exportAll: "Exportovať všetko"
     },
 
     overview: {

@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Donasi",
+    donateTitle: "Dukung P3X Redis UI",
+    donateDescription: "P3X Redis UI adalah proyek gratis dan open-source. Biaya pemeliharaan aplikasi, fitur AI, image Docker, server, dan infrastruktur berasal dari kantong pengembang sendiri. Jika Anda merasa alat ini berguna, pertimbangkan untuk mendukung pengembangan berkelanjutannya dengan donasi. Setiap kontribusi membantu menjaga proyek tetap hidup dan berkembang. Terima kasih!",
     jsonRecursive: "Memperluas semua daun",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Statistik Perintah",
     latencystats: "Statistik Latensi",
     keysizes: "Ukuran Kunci",
-    threads: "Thread",
+    threads: "Thread"
   },
   confirm: {
     dropIndex: "Yakin ingin menghapus indeks ini?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Kosong artinya tetap ada selamanya; jika tidak, masukkan bilangan bulat.",
       convertTextToTime: "Ubah teks menjadi waktu",
       convertTextToTimePlaceholder: "Misalnya. 1 hari akan menjadi 86400"
-    },
+    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -191,7 +193,7 @@ const strings = {
     getKey: "Memuat kunci Redis dan data terkait ...",
     jsonViewShow: "Tampilkan JSON",
     jsonViewEditor: "Sunting JSON",
-    quickConsole: "Konsol Cepat",
+    quickConsole: "Konsol Cepat"
   },
   label: {
     id: {
@@ -332,7 +334,7 @@ const strings = {
     importNoKeys: "Tidak ditemukan kunci dalam file",
     desktopNotifications: "Notifikasi Desktop",
     desktopNotificationsEnabled: "Aktifkan notifikasi desktop",
-    desktopNotificationsInfo: "Terima notifikasi OS untuk pemutusan dan penyambungan ulang Redis saat aplikasi tidak dalam fokus.",
+    desktopNotificationsInfo: "Terima notifikasi OS untuk pemutusan dan penyambungan ulang Redis saat aplikasi tidak dalam fokus."
   },
   status: {
     dataCopied: "Datanya ada di clipboard",
@@ -378,7 +380,7 @@ const strings = {
     notInteger: "Masukan ini bukan bilangan bulat",
     persisted: "Kunci ini disimpan selamanya",
     set: "Kuncinya disetel/ditambahkan",
-    connectionRestored: "Koneksi dipulihkan",
+    connectionRestored: "Koneksi dipulihkan"
   },
   code: {
     "delete-connection": "Sambungan ini telah dihapus, jadi sambungan Anda terputus ke instans Redis ini.",
@@ -389,7 +391,12 @@ const strings = {
     "invalid-json-value": "Nilai JSON tidak valid.",
     "http_auth_required": "Diperlukan otorisasi: harap autentikasi dengan HTTP Basic Auth dan muat ulang.",
     "auto-connection-failed": "Kemungkinan, koneksi terputus dan koneksi otomatis gagal, karena hal ini.",
-    invalid_console_command: "Perintah ini tidak berfungsi melalui GUI."
+    invalid_console_command: "Perintah ini tidak berfungsi melalui GUI.",
+    "AI_DISABLED": "AI dinonaktifkan. Aktifkan di Pengaturan AI.",
+    "AI_PROMPT_REQUIRED": "Permintaan AI diperlukan.",
+    "GROQ_API_KEY_READONLY": "Kunci Groq API hanya-baca dan tidak dapat diubah.",
+    "blocked_api_access": "Paket Groq API Anda tidak mengizinkan akses ke model ini. Tingkatkan paket Groq Anda atau gunakan proxy network.corifeus.com.",
+    "rate_limit": "Batas kecepatan AI tercapai. Coba lagi nanti atau gunakan kunci Groq API Anda sendiri di Pengaturan."
   },
   form: {
     error: {
@@ -485,7 +492,7 @@ const strings = {
       indexInfo: "Info indeks",
       indexName: "Nama indeks",
       prefix: "Prefiks kunci (opsional)",
-      fieldName: "Nama field",
+      fieldName: "Nama field"
     },
     monitor: {
       title: "Pemantauan",
@@ -509,7 +516,7 @@ const strings = {
       peak: "Puncak",
       fragmentation: "Fragmentasi",
       hitsAndMisses: "Hit / Miss",
-      noClients: "Tidak ada klien",
+      noClients: "Tidak ada klien"
     },
     analysis: {
       title: "Analisis Memori",
@@ -540,7 +547,7 @@ const strings = {
       maxScanKeys: "Maks. Kunci Dipindai",
       type: "Tipe",
       noData: "Tidak ada data. Klik Jalankan Analisis untuk memulai.",
-      exportAll: "Ekspor Semua",
+      exportAll: "Ekspor Semua"
     },
 
     overview: {

@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "দান করুন",
+    donateTitle: "P3X Redis UI সমর্থন করুন",
+    donateDescription: "P3X Redis UI একটি বিনামূল্যে, ওপেন-সোর্স প্রকল্প। অ্যাপ, AI ফিচার, Docker ইমেজ, সার্ভার এবং অবকাঠামো রক্ষণাবেক্ষণের খরচ ডেভেলপারের নিজের পকেট থেকে আসে। আপনি যদি এই টুলটি দরকারী মনে করেন, দয়া করে একটি অনুদান দিয়ে এর ক্রমাগত উন্নয়নে সহায়তা করুন। প্রতিটি অবদান প্রকল্পটিকে জীবিত ও ক্রমবর্ধমান রাখতে সাহায্য করে। ধন্যবাদ!",
     jsonRecursive: "সব পাতা প্রসারিত",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "কমান্ড পরিসংখ্যান",
     latencystats: "বিলম্ব পরিসংখ্যান",
     keysizes: "কী আকার",
-    threads: "থ্রেড",
+    threads: "থ্রেড"
   },
   confirm: {
     dropIndex: "আপনি কি এই ইনডেক্স মুছতে চান?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "খালি মানে এটা চিরকাল টিকে থাকে; অন্যথায় একটি পূর্ণসংখ্যা লিখুন।",
       convertTextToTime: "পাঠ্যকে সময়ে রূপান্তর করুন",
       convertTextToTimePlaceholder: "যেমন 1d হবে 86400"
-    },
+    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -191,7 +193,7 @@ const strings = {
     getKey: "Redis কী এবং সংশ্লিষ্ট ডেটা লোড হচ্ছে...",
     jsonViewShow: "JSON প্রদর্শন করুন",
     jsonViewEditor: "JSON সম্পাদনা করুন",
-    quickConsole: "দ্রুত কনসোল",
+    quickConsole: "দ্রুত কনসোল"
   },
   label: {
     id: {
@@ -332,7 +334,7 @@ const strings = {
     importNoKeys: "ফাইলে কোনো কী পাওয়া যায়নি",
     desktopNotifications: "ডেস্কটপ বিজ্ঞপ্তি",
     desktopNotificationsEnabled: "ডেস্কটপ বিজ্ঞপ্তি সক্রিয় করুন",
-    desktopNotificationsInfo: "Redis সংযোগ বিচ্ছিন্ন এবং পুনঃসংযোগের জন্য OS বিজ্ঞপ্তি পান যখন অ্যাপটি ফোকাসে নেই।",
+    desktopNotificationsInfo: "Redis সংযোগ বিচ্ছিন্ন এবং পুনঃসংযোগের জন্য OS বিজ্ঞপ্তি পান যখন অ্যাপটি ফোকাসে নেই।"
   },
   status: {
     dataCopied: "ডেটা ক্লিপবোর্ডে রয়েছে",
@@ -378,7 +380,7 @@ const strings = {
     notInteger: "এই ���নপুট একটি পূর্ণসংখ্যা নয়",
     persisted: "এই কী চিরকাল স্থায়ী হয়",
     set: "কী সেট/যোগ করা হয়েছে",
-    connectionRestored: "সংযোগ পুনরুদ্ধার হয়েছে",
+    connectionRestored: "সংযোগ পুনরুদ্ধার হয়েছে"
   },
   code: {
     "delete-connection": "এই সংযোগটি মুছে ফেলা হয়েছে, তাই আপনি এই Redis উদাহরণের সাথে সংযোগ বিচ্ছিন্ন করেছেন৷",
@@ -389,7 +391,12 @@ const strings = {
     "invalid-json-value": "মানটি বৈধ নয় JSON৷",
     "http_auth_required": "অনুমোদন প্রয়োজন: অনুগ্রহ করে HTTP Basic Auth দিয়ে প্রমাণীকরণ করুন এ��ং পুনরায় লোড করুন।",
     "auto-connection-failed": "সম্ভব, সংযোগ সরানো হয়েছে এবং স্বয়ংক্রিয় সংযোগ ব্যর্থ হয়েছে, এই কারণে।",
-    invalid_console_command: "এই কমান্ডটি GUI এর মাধ্যমে কাজ করছে না।"
+    invalid_console_command: "এই কমান্ডটি GUI এর মাধ্যমে কাজ করছে না।",
+    "AI_DISABLED": "AI নিষ্ক্রিয়। AI সেটিংসে এটি সক্রিয় করুন।",
+    "AI_PROMPT_REQUIRED": "AI প্রম্পট প্রয়োজন।",
+    "GROQ_API_KEY_READONLY": "Groq API কী শুধুমাত্র পঠনযোগ্য এবং পরিবর্তন করা যায় না।",
+    "blocked_api_access": "আপনার Groq API পরিকল্পনা এই মডেলে অ্যাক্সেসের অনুমতি দেয় না। অনুগ্রহ করে আপনার Groq পরিকল্পনা আপগ্রেড করুন বা network.corifeus.com প্রক্সি ব্যবহার করুন।",
+    "rate_limit": "AI হার সীমায় পৌঁছেছে। পরে আবার চেষ্টা করুন বা সেটিংসে আপনার নিজের Groq API কী ব্যবহার করুন।"
   },
   form: {
     error: {
@@ -485,7 +492,7 @@ const strings = {
       indexInfo: "ইনডেক্স তথ্য",
       indexName: "ইনডেক্স নাম",
       prefix: "কী প্রিফিক্স (ঐচ্ছিক)",
-      fieldName: "ফিল্ডের নাম",
+      fieldName: "ফিল্ডের নাম"
     },
     monitor: {
       title: "মনিটরিং",
@@ -509,7 +516,7 @@ const strings = {
       peak: "সর্বোচ্চ",
       fragmentation: "ফ্র্যাগমেন্টেশন",
       hitsAndMisses: "হিট / মিস",
-      noClients: "কোনো ক্লায়েন্ট নেই",
+      noClients: "কোনো ক্লায়েন্ট নেই"
     },
     analysis: {
       title: "মেমোরি বিশ্লেষণ",
@@ -540,7 +547,7 @@ const strings = {
       maxScanKeys: "সর্বোচ্চ স্ক্যান কী",
       type: "টাইপ",
       noData: "কোনো ডেটা নেই। শুরু করতে বিশ্লেষণ চালান ক্লিক করুন।",
-      exportAll: "সব রপ্তানি",
+      exportAll: "সব রপ্তানি"
     },
 
     overview: {

@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Donirajte",
+    donateTitle: "Podprite P3X Redis UI",
+    donateDescription: "P3X Redis UI je brezplačen odprtokodni projekt. Stroški vzdrževanja aplikacije, funkcij AI, Docker slik, strežnikov in infrastrukture prihajajo iz žepa razvijalca. Če se vam zdi to orodje koristno, razmislite o podpori njegovega nadaljnjega razvoja z donacijo. Vsak prispevek pomaga ohranjati projekt živ in rastoč. Hvala!",
     jsonRecursive: "Razširitev vseh listov",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Statistike ukazov",
     latencystats: "Statistike zakasnitev",
     keysizes: "Velikosti ključev",
-    threads: "Niti",
+    threads: "Niti"
   },
   confirm: {
     dropIndex: "Ali ste prepričani, da želite izbrisati ta indeks?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Prazno pomeni, da traja večno; drugače vnesite celo število.",
       convertTextToTime: "Pretvori besedilo v čas",
       convertTextToTimePlaceholder: "Npr. 1d bo 86400"
-    },
+    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -191,7 +193,7 @@ const strings = {
     getKey: "Nalaganje ključa Redis in povezanih podatkov ...",
     jsonViewShow: "Prikaz JSON",
     jsonViewEditor: "Uredi JSON",
-    quickConsole: "Hitra konzola",
+    quickConsole: "Hitra konzola"
   },
   label: {
     id: {
@@ -332,7 +334,7 @@ const strings = {
     importNoKeys: "V datoteki ni bilo najdenih ključev",
     desktopNotifications: "Obvestila na namizju",
     desktopNotificationsEnabled: "Omogoči obvestila na namizju",
-    desktopNotificationsInfo: "Prejemajte obvestila OS za prekinitve in ponovne povezave Redis, ko aplikacija ni v fokusu.",
+    desktopNotificationsInfo: "Prejemajte obvestila OS za prekinitve in ponovne povezave Redis, ko aplikacija ni v fokusu."
   },
   status: {
     dataCopied: "Podatki so v odložišču",
@@ -378,7 +380,7 @@ const strings = {
     notInteger: "Ta vnos ni celo število",
     persisted: "Ta ključ se ohrani za vedno",
     set: "Ključ je nastavljen/dodan",
-    connectionRestored: "Povezava obnovljena",
+    connectionRestored: "Povezava obnovljena"
   },
   code: {
     "delete-connection": "Ta povezava je bila izbrisana, zato ste prekinjeni s tem primerkom Redis.",
@@ -389,7 +391,12 @@ const strings = {
     "invalid-json-value": "Vrednost ni veljavna JSON.",
     "http_auth_required": "Zahtevana avtorizacija: preverite pristnost z HTTP Basic Auth in znova naložite.",
     "auto-connection-failed": "Mogoče je bila povezava odstranjena in samodejna povezava zaradi tega ni uspela.",
-    invalid_console_command: "Ta ukaz ne deluje prek GUI."
+    invalid_console_command: "Ta ukaz ne deluje prek GUI.",
+    "AI_DISABLED": "AI je onemogočen. Omogočite ga v nastavitvah AI.",
+    "AI_PROMPT_REQUIRED": "Zahteva AI je obvezna.",
+    "GROQ_API_KEY_READONLY": "Ključ Groq API je samo za branje in ga ni mogoče spremeniti.",
+    "blocked_api_access": "Vaš načrt Groq API ne dovoljuje dostopa do tega modela. Nadgradite načrt Groq ali uporabite proxy network.corifeus.com.",
+    "rate_limit": "Dosežena je omejitev AI. Poskusite znova pozneje ali uporabite lastni ključ Groq API v nastavitvah."
   },
   form: {
     error: {
@@ -485,7 +492,7 @@ const strings = {
       indexInfo: "Info o indeksu",
       indexName: "Ime indeksa",
       prefix: "Predpona ključa (neobvezno)",
-      fieldName: "Ime polja",
+      fieldName: "Ime polja"
     },
     monitor: {
       title: "Nadzor",
@@ -509,7 +516,7 @@ const strings = {
       peak: "Vrhunec",
       fragmentation: "Fragmentacija",
       hitsAndMisses: "Zadetki / Zgrešitve",
-      noClients: "Ni odjemalcev",
+      noClients: "Ni odjemalcev"
     },
     analysis: {
       title: "Analiza pomnilnika",
@@ -540,7 +547,7 @@ const strings = {
       maxScanKeys: "Maks. pregledanih ključev",
       type: "Tip",
       noData: "Ni podatkov. Kliknite Zaženi analizo za začetek.",
-      exportAll: "Izvozi vse",
+      exportAll: "Izvozi vse"
     },
 
     overview: {

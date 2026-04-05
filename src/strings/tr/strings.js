@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Bağış Yap",
+    donateTitle: "P3X Redis UI'yi Destekleyin",
+    donateDescription: "P3X Redis UI ücretsiz, açık kaynaklı bir projedir. Uygulamanın, AI özelliklerinin, Docker görüntülerinin, sunucuların ve altyapının bakım maliyetleri geliştiricinin kendi cebinden karşılanmaktadır. Bu aracı faydalı buluyorsanız, lütfen bir bağışla süregelen gelişimini desteklemeyi düşünün. Her katkı projenin yaşamasına ve büyümesine yardımcı olur. Teşekkürler!",
     jsonRecursive: "Tüm yapraklar genişletiliyor",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Komut İstatistikleri",
     latencystats: "Gecikme İstatistikleri",
     keysizes: "Anahtar Boyutları",
-    threads: "İş Parçacıkları",
+    threads: "İş Parçacıkları"
   },
   confirm: {
     dropIndex: "Bu indeksi silmek istediğinizden emin misiniz?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Boş, kalıcı olduğu anlamına gelir; aksi takdirde bir tamsayı girin.",
       convertTextToTime: "Metni zamana dönüştür",
       convertTextToTimePlaceholder: "Örn. 1d, 86400 olacaktır"
-    },
+    }
   },
   language: {
     bg: "Български / Bulgarian",
@@ -189,7 +191,7 @@ const strings = {
     getKey: "Redis anahtarı ve ilgili veriler yükleniyor ...",
     jsonViewShow: "JSON Görüntüle",
     jsonViewEditor: "JSON Düzenle",
-    quickConsole: "Hızlı Konsol",
+    quickConsole: "Hızlı Konsol"
   },
   label: {
     id: {
@@ -330,7 +332,7 @@ const strings = {
     importNoKeys: "Dosyada anahtar bulunamadı",
     desktopNotifications: "Masaüstü Bildirimleri",
     desktopNotificationsEnabled: "Masaüstü bildirimlerini etkinleştir",
-    desktopNotificationsInfo: "Uygulama odakta değilken Redis bağlantı kesintileri ve yeniden bağlantılar için OS bildirimleri alın.",
+    desktopNotificationsInfo: "Uygulama odakta değilken Redis bağlantı kesintileri ve yeniden bağlantılar için OS bildirimleri alın."
   },
   status: {
     dataCopied: "Veri panoya kopyalandı",
@@ -376,7 +378,7 @@ const strings = {
     notInteger: "Bu girdi bir tamsayı değil",
     persisted: "Bu anahtar kalıcı olarak saklanıyor",
     set: "Anahtar ayarlandı/eklendi",
-    connectionRestored: "Bağlantı yeniden kuruldu",
+    connectionRestored: "Bağlantı yeniden kuruldu"
   },
   code: {
     "delete-connection": "Bu bağlantı silindi, bu yüzden bu Redis örneğinden bağlantınız kesildi.",
@@ -387,7 +389,12 @@ const strings = {
     "invalid-json-value": "The value is not valid JSON.",
     "http_auth_required": "Yetkilendirme gerekli: lütfen HTTP Basic Auth ile kimlik doğrulaması yapın ve yeniden yükleyin.",
     "auto-connection-failed": "Muhtemelen bağlantı kaldırıldı ve bu nedenle otomatik bağlantı başarısız oldu.",
-    invalid_console_command: "Bu komut GUI üzerinden çalışmıyor."
+    invalid_console_command: "Bu komut GUI üzerinden çalışmıyor.",
+    "AI_DISABLED": "AI devre dışı. AI Ayarlarında etkinleştirin.",
+    "AI_PROMPT_REQUIRED": "AI sorgusu gereklidir.",
+    "GROQ_API_KEY_READONLY": "Groq API anahtarı salt okunurdur ve değiştirilemez.",
+    "blocked_api_access": "Groq API planınız bu modele erişime izin vermiyor. Groq planınızı yükseltin veya network.corifeus.com proxy kullanın.",
+    "rate_limit": "AI hız sınırına ulaşıldı. Daha sonra tekrar deneyin veya Ayarlarda kendi Groq API anahtarınızı kullanın."
   },
   form: {
     error: {
@@ -483,7 +490,7 @@ const strings = {
       indexInfo: "İndeks bilgisi",
       indexName: "İndeks adı",
       prefix: "Anahtar ön eki (isteğe bağlı)",
-      fieldName: "Alan adı",
+      fieldName: "Alan adı"
     },
     monitor: {
       title: "İzleme",
@@ -507,7 +514,7 @@ const strings = {
       peak: "Tepe",
       fragmentation: "Parçalanma",
       hitsAndMisses: "İsabet / Kaçırma",
-      noClients: "İstemci yok",
+      noClients: "İstemci yok"
     },
     analysis: {
       title: "Bellek Analizi",
@@ -538,7 +545,7 @@ const strings = {
       maxScanKeys: "Maks. Taranan Anahtarlar",
       type: "Tip",
       noData: "Veri yok. Başlamak için Analizi Başlat'a tıklayın.",
-      exportAll: "Tümünü Dışa Aktar",
+      exportAll: "Tümünü Dışa Aktar"
     },
 
     overview: {

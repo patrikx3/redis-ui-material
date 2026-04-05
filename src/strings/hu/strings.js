@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Adományozás",
+    donateTitle: "Támogasd a P3X Redis UI-t",
+    donateDescription: "A P3X Redis UI egy ingyenes, nyílt forráskódú projekt. Az alkalmazás, az AI funkciók, a Docker képfájlok, a szerverek és az infrastruktúra karbantartási költségei a fejlesztő saját zsebéből jönnek. Ha hasznosnak találod ezt az eszközt, kérjük, fontold meg a folyamatos fejlesztés támogatását adománnyal. Minden hozzájárulás segít a projekt életben tartásában és növekedésében. Köszönjük!",
     jsonRecursive: "Összes ág kibontása",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Parancs statisztika",
     latencystats: "Késleltetés statisztika",
     keysizes: "Kulcsméretek",
-    threads: "Szálak",
+    threads: "Szálak"
   },
   confirm: {
     dropIndex: "Biztosan törli ezt az indexet?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Az üres azt jelenti, hogy örökre megmarad; egyébként adjon meg egy egész számot.",
       convertTextToTime: "Szöveg átalakítása idővé",
       convertTextToTimePlaceholder: "Pl. 1d = 86400"
-    },
+    }
   },
   language: {
     bg: "Български / Bulgarian",
@@ -189,7 +191,7 @@ const strings = {
     getKey: "Redis kulcs és kapcsolódó adatok betöltése ...",
     jsonViewShow: "JSON megjelenítése",
     jsonViewEditor: "JSON szerkesztése",
-    quickConsole: "Gyors Konzol",
+    quickConsole: "Gyors Konzol"
   },
   label: {
     id: {
@@ -330,7 +332,7 @@ const strings = {
     importNoKeys: "Nem található kulcs a fájlban",
     desktopNotifications: "Asztali értesítések",
     desktopNotificationsEnabled: "Asztali értesítések engedélyezése",
-    desktopNotificationsInfo: "OS értesítések fogadása Redis lecsatlakozásoknál és újracsatlakozásoknál, amikor az alkalmazás nincs fókuszban.",
+    desktopNotificationsInfo: "OS értesítések fogadása Redis lecsatlakozásoknál és újracsatlakozásoknál, amikor az alkalmazás nincs fókuszban."
   },
   status: {
     dataCopied: "Az adat a vágólapon van",
@@ -376,7 +378,7 @@ const strings = {
     notInteger: "Ez a bemenet nem egész szám",
     persisted: "Ez a kulcs örökre megmarad",
     set: "A kulcs beállítva/hozzáadva",
-    connectionRestored: "Kapcsolat helyreállítva",
+    connectionRestored: "Kapcsolat helyreállítva"
   },
   code: {
     "delete-connection": "Ez a kapcsolat törölve lett, ezért leválasztásra került erről a Redis példányról.",
@@ -387,7 +389,12 @@ const strings = {
     "invalid-json-value": "The value is not valid JSON.",
     "http_auth_required": "Hitelesítés szükséges: kérjük hitelesítsen HTTP Basic Auth segítségével és töltse újra.",
     "auto-connection-failed": "Lehetséges, hogy a kapcsolat eltávolításra került és az automatikus csatlakozás emiatt sikertelen volt.",
-    invalid_console_command: "Ez a parancs nem működik a GUI-n keresztül."
+    invalid_console_command: "Ez a parancs nem működik a GUI-n keresztül.",
+    "AI_DISABLED": "Az AI le van tiltva. Engedélyezze az AI beállításokban.",
+    "AI_PROMPT_REQUIRED": "AI lekérdezés szükséges.",
+    "GROQ_API_KEY_READONLY": "A Groq API kulcs csak olvasható és nem módosítható.",
+    "blocked_api_access": "A Groq API csomagja nem engedélyezi a hozzáférést ehhez a modellhez. Frissítse a Groq csomagját vagy használja a network.corifeus.com proxyt.",
+    "rate_limit": "AI sebességkorlát elérve. Próbálja újra később vagy használja saját Groq API kulcsát a beállításokban."
   },
   form: {
     error: {
@@ -483,7 +490,7 @@ const strings = {
       indexInfo: "Index info",
       indexName: "Index neve",
       prefix: "Kulcs előtag (opcionális)",
-      fieldName: "Mező neve",
+      fieldName: "Mező neve"
     },
     monitor: {
       title: "Figyelés",
@@ -507,7 +514,7 @@ const strings = {
       peak: "Csúcs",
       fragmentation: "Töredezettség",
       hitsAndMisses: "Találatok / Tévesztések",
-      noClients: "Nincsenek kliensek",
+      noClients: "Nincsenek kliensek"
     },
     analysis: {
       title: "Memória analízis",
@@ -538,7 +545,7 @@ const strings = {
       maxScanKeys: "Max. vizsgált kulcsok",
       type: "Típus",
       noData: "Nincs adat. Kattintson az Analízis futtatása gombra a kezdéshez.",
-      exportAll: "Összes exportálása",
+      exportAll: "Összes exportálása"
     },
 
     overview: {

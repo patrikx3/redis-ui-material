@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Donirajte",
+    donateTitle: "Podržite P3X Redis UI",
+    donateDescription: "P3X Redis UI je besplatan projekt otvorenog koda. Troškovi održavanja aplikacije, AI značajki, Docker slika, servera i infrastrukture dolaze iz džepa programera. Ako vam je ovaj alat koristan, razmislite o podršci daljnjem razvoju donacijom. Svaki doprinos pomaže da projekt živi i raste. Hvala!",
     jsonRecursive: "Širenje svih listova",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Statistike naredbi",
     latencystats: "Statistike kašnjenja",
     keysizes: "Veličine ključeva",
-    threads: "Niti",
+    threads: "Niti"
   },
   confirm: {
     dropIndex: "Jeste li sigurni da želite obrisati ovaj indeks?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Prazan znači da traje zauvijek; inače unesite cijeli broj.",
       convertTextToTime: "Pretvori tekst u vrijeme",
       convertTextToTimePlaceholder: "Npr. 1d će biti 86400"
-    },
+    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -191,7 +193,7 @@ const strings = {
     getKey: "Učitavanje ključa Redis i povezanih podataka ...",
     jsonViewShow: "Prikaz JSON",
     jsonViewEditor: "Uredi JSON",
-    quickConsole: "Brza konzola",
+    quickConsole: "Brza konzola"
   },
   label: {
     id: {
@@ -332,7 +334,7 @@ const strings = {
     importNoKeys: "Nisu pronađeni ključevi u datoteci",
     desktopNotifications: "Obavijesti na radnoj površini",
     desktopNotificationsEnabled: "Omogući obavijesti na radnoj površini",
-    desktopNotificationsInfo: "Primajte OS obavijesti za prekide i ponovne veze Redis-a kada aplikacija nije u fokusu.",
+    desktopNotificationsInfo: "Primajte OS obavijesti za prekide i ponovne veze Redis-a kada aplikacija nije u fokusu."
   },
   status: {
     dataCopied: "Podaci su u međuspremniku",
@@ -378,7 +380,7 @@ const strings = {
     notInteger: "Ovaj unos nije cijeli broj",
     persisted: "Ovaj ključ ostaje zauvijek",
     set: "Ključ je postavljen/dodan",
-    connectionRestored: "Veza obnovljena",
+    connectionRestored: "Veza obnovljena"
   },
   code: {
     "delete-connection": "Ova veza je izbrisana, tako da ste prekinuti s ovom Redis instancom.",
@@ -389,7 +391,12 @@ const strings = {
     "invalid-json-value": "Vrijednost nije važeća JSON.",
     "http_auth_required": "Potrebna autorizacija: provjerite autentičnost pomoću HTTP Basic Auth i ponovno učitajte.",
     "auto-connection-failed": "Moguće je da je zbog toga veza uklonjena i automatsko povezivanje nije uspjelo.",
-    invalid_console_command: "Ova naredba ne radi putem GUI."
+    invalid_console_command: "Ova naredba ne radi putem GUI.",
+    "AI_DISABLED": "AI je onemogućen. Omogućite ga u AI postavkama.",
+    "AI_PROMPT_REQUIRED": "AI upit je obavezan.",
+    "GROQ_API_KEY_READONLY": "Groq API ključ je samo za čitanje i ne može se mijenjati.",
+    "blocked_api_access": "Vaš Groq API plan ne dopušta pristup ovom modelu. Nadogradite Groq plan ili koristite network.corifeus.com proxy.",
+    "rate_limit": "Dosegnut je AI limit. Pokušajte ponovno kasnije ili koristite vlastiti Groq API ključ u postavkama."
   },
   form: {
     error: {
@@ -485,7 +492,7 @@ const strings = {
       indexInfo: "Info o indeksu",
       indexName: "Naziv indeksa",
       prefix: "Prefiks ključa (opcionalno)",
-      fieldName: "Naziv polja",
+      fieldName: "Naziv polja"
     },
     monitor: {
       title: "Nadzor",
@@ -509,7 +516,7 @@ const strings = {
       peak: "Vrh",
       fragmentation: "Fragmentacija",
       hitsAndMisses: "Pogoci / Promašaji",
-      noClients: "Nema klijenata",
+      noClients: "Nema klijenata"
     },
     analysis: {
       title: "Analiza memorije",
@@ -540,7 +547,7 @@ const strings = {
       maxScanKeys: "Maks. skeniranih ključeva",
       type: "Tip",
       noData: "Nema podataka. Kliknite Pokreni analizu za početak.",
-      exportAll: "Izvezi sve",
+      exportAll: "Izvezi sve"
     },
 
     overview: {

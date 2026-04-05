@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Lahjoita",
+    donateTitle: "Tue P3X Redis UI:ta",
+    donateDescription: "P3X Redis UI on ilmainen avoimen lähdekoodin projekti. Sovelluksen, AI-ominaisuuksien, Docker-kuvien, palvelimien ja infrastruktuurin ylläpitokustannukset tulevat kehittäjän omasta taskusta. Jos pidät tätä työkalua hyödyllisenä, harkitse sen jatkuvan kehityksen tukemista lahjoituksella. Jokainen panos auttaa pitämään projektin elossa ja kasvamassa. Kiitos!",
     jsonRecursive: "Kaikkien lehtien laajentaminen",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Komentotilastot",
     latencystats: "Viiveтilastot",
     keysizes: "Avainkoot",
-    threads: "Säikeet",
+    threads: "Säikeet"
   },
   confirm: {
     dropIndex: "Haluatko varmasti poistaa tämän indeksin?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Tyhjä tarkoittaa, että se säilyy ikuisesti; muussa tapauksessa syötä kokonaisluku.",
       convertTextToTime: "Muunna teksti aikaan",
       convertTextToTimePlaceholder: "Esim. 1d on 86400"
-    },
+    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -191,7 +193,7 @@ const strings = {
     getKey: "Ladataan Redis-avainta ja siihen liittyviä tietoja...",
     jsonViewShow: "Näyttö JSON",
     jsonViewEditor: "Muokkaa JSON",
-    quickConsole: "Pikakonsoli",
+    quickConsole: "Pikakonsoli"
   },
   label: {
     id: {
@@ -332,7 +334,7 @@ const strings = {
     importNoKeys: "Tiedostosta ei löytynyt avaimia",
     desktopNotifications: "Työpöytäilmoitukset",
     desktopNotificationsEnabled: "Ota työpöytäilmoitukset käyttöön",
-    desktopNotificationsInfo: "Vastaanota käyttöjärjestelmän ilmoituksia Redis-yhteyden katkeamisista ja uudelleenyhdistämisistä, kun sovellus ei ole etualalla.",
+    desktopNotificationsInfo: "Vastaanota käyttöjärjestelmän ilmoituksia Redis-yhteyden katkeamisista ja uudelleenyhdistämisistä, kun sovellus ei ole etualalla."
   },
   status: {
     dataCopied: "Tiedot ovat leikepöydällä",
@@ -378,7 +380,7 @@ const strings = {
     notInteger: "Tämä syöte ei ole kokonaisluku",
     persisted: "Tämä avain säilyy ikuisesti",
     set: "Avain on asetettu/lisätty",
-    connectionRestored: "Yhteys palautettu",
+    connectionRestored: "Yhteys palautettu"
   },
   code: {
     "delete-connection": "Tämä yhteys poistettiin, joten yhteys tähän Redis-esiintymään on katkaistu.",
@@ -389,7 +391,12 @@ const strings = {
     "invalid-json-value": "Arvo ei ole kelvollinen JSON.",
     "http_auth_required": "Valtuutus vaaditaan: todenna HTTP Basic Auth ja lataa uudelleen.",
     "auto-connection-failed": "Mahdollisesti yhteys katkesi ja automaattinen yhteys epäonnistui tämän vuoksi.",
-    invalid_console_command: "Tämä komento ei toimi GUI:n kautta."
+    invalid_console_command: "Tämä komento ei toimi GUI:n kautta.",
+    "AI_DISABLED": "AI on pois käytöstä. Ota se käyttöön AI-asetuksissa.",
+    "AI_PROMPT_REQUIRED": "AI-kysely vaaditaan.",
+    "GROQ_API_KEY_READONLY": "Groq API-avain on vain luku -tilassa eikä sitä voi muokata.",
+    "blocked_api_access": "Groq API-suunnitelmasi ei salli pääsyä tähän malliin. Päivitä Groq-suunnitelmasi tai käytä network.corifeus.com-välityspalvelinta.",
+    "rate_limit": "AI-nopeusraja saavutettu. Yritä myöhemmin uudelleen tai käytä omaa Groq API-avainta asetuksissa."
   },
   form: {
     error: {
@@ -485,7 +492,7 @@ const strings = {
       indexInfo: "Indeksin tiedot",
       indexName: "Indeksin nimi",
       prefix: "Avaimen etuliite (valinnainen)",
-      fieldName: "Kentän nimi",
+      fieldName: "Kentän nimi"
     },
     monitor: {
       title: "Seuranta",
@@ -509,7 +516,7 @@ const strings = {
       peak: "Huippu",
       fragmentation: "Fragmentoituminen",
       hitsAndMisses: "Osumat / Ohitukset",
-      noClients: "Ei asiakkaita",
+      noClients: "Ei asiakkaita"
     },
     analysis: {
       title: "Muistianalyysi",
@@ -540,7 +547,7 @@ const strings = {
       maxScanKeys: "Maks. skannatut avaimet",
       type: "Tyyppi",
       noData: "Ei tietoja. Napsauta Suorita analyysi aloittaaksesi.",
-      exportAll: "Vie kaikki",
+      exportAll: "Vie kaikki"
     },
 
     overview: {

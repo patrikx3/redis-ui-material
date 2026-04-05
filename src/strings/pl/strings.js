@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Wspomóż",
+    donateTitle: "Wesprzyj P3X Redis UI",
+    donateDescription: "P3X Redis UI to darmowy projekt open source. Koszty utrzymania aplikacji, funkcji AI, obrazów Docker, serwerów i infrastruktury pokrywane są z kieszeni programisty. Jeśli uważasz to narzędzie za przydatne, rozważ wsparcie jego dalszego rozwoju darowizną. Każdy wkład pomaga utrzymać projekt przy życiu i rozwijać go. Dziękujemy!",
     jsonRecursive: "Rozwijanie wszystkich gałęzi",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Statystyki poleceń",
     latencystats: "Statystyki opóźnień",
     keysizes: "Rozmiary kluczy",
-    threads: "Wątki",
+    threads: "Wątki"
   },
   confirm: {
     dropIndex: "Czy na pewno chcesz usunąć ten indeks?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Puste oznacza, że klucz istnieje na zawsze; w przeciwnym razie wpisz liczbę całkowitą.",
       convertTextToTime: "Konwertuj tekst na czas",
       convertTextToTimePlaceholder: "Np. 1d to 86400"
-    },
+    }
   },
   language: {
     bg: "Български / Bulgarian",
@@ -191,7 +193,7 @@ const strings = {
     getKey: "Ładowanie klucza Redis i powiązanych danych ...",
     jsonViewShow: "Wyświetl JSON",
     jsonViewEditor: "Edytuj JSON",
-    quickConsole: "Szybka Konsola",
+    quickConsole: "Szybka Konsola"
   },
   label: {
     id: {
@@ -332,7 +334,7 @@ const strings = {
     importNoKeys: "Nie znaleziono kluczy w pliku",
     desktopNotifications: "Powiadomienia pulpitu",
     desktopNotificationsEnabled: "Włącz powiadomienia pulpitu",
-    desktopNotificationsInfo: "Otrzymuj powiadomienia systemu operacyjnego o rozłączeniach i ponownych połączeniach Redis, gdy aplikacja nie jest w centrum uwagi.",
+    desktopNotificationsInfo: "Otrzymuj powiadomienia systemu operacyjnego o rozłączeniach i ponownych połączeniach Redis, gdy aplikacja nie jest w centrum uwagi."
   },
   status: {
     dataCopied: "Dane są w schowku",
@@ -378,7 +380,7 @@ const strings = {
     notInteger: "Ta wartość nie jest liczbą całkowitą",
     persisted: "Ten klucz jest zachowany na zawsze",
     set: "Klucz został ustawiony/dodany",
-    connectionRestored: "Połączenie przywrócone",
+    connectionRestored: "Połączenie przywrócone"
   },
   code: {
     "delete-connection": "To połączenie zostało usunięte, dlatego zostałeś rozłączony z tą instancją Redis.",
@@ -389,7 +391,12 @@ const strings = {
     "invalid-json-value": "The value is not valid JSON.",
     "http_auth_required": "Wymagana autoryzacja: uwierzytelnij się za pomocą HTTP Basic Auth i przeładuj stronę.",
     "auto-connection-failed": "Możliwe, że połączenie zostało usunięte i automatyczne połączenie nie powiodło się z tego powodu.",
-    invalid_console_command: "To polecenie nie działa przez GUI."
+    invalid_console_command: "To polecenie nie działa przez GUI.",
+    "AI_DISABLED": "AI jest wyłączone. Włącz je w ustawieniach AI.",
+    "AI_PROMPT_REQUIRED": "Zapytanie AI jest wymagane.",
+    "GROQ_API_KEY_READONLY": "Klucz Groq API jest tylko do odczytu i nie może być modyfikowany.",
+    "blocked_api_access": "Twój plan Groq API nie pozwala na dostęp do tego modelu. Zaktualizuj plan Groq lub użyj proxy network.corifeus.com.",
+    "rate_limit": "Osiągnięto limit AI. Spróbuj ponownie później lub użyj własnego klucza Groq API w ustawieniach."
   },
   form: {
     error: {
@@ -485,7 +492,7 @@ const strings = {
       indexInfo: "Info o indeksie",
       indexName: "Nazwa indeksu",
       prefix: "Prefiks klucza (opcjonalnie)",
-      fieldName: "Nazwa pola",
+      fieldName: "Nazwa pola"
     },
     monitor: {
       title: "Monitorowanie",
@@ -509,7 +516,7 @@ const strings = {
       peak: "Szczyt",
       fragmentation: "Fragmentacja",
       hitsAndMisses: "Trafienia / Chybienia",
-      noClients: "Brak klientów",
+      noClients: "Brak klientów"
     },
     analysis: {
       title: "Analiza pamięci",
@@ -540,7 +547,7 @@ const strings = {
       maxScanKeys: "Maks. przeskanowanych kluczy",
       type: "Typ",
       noData: "Brak danych. Kliknij Uruchom analizę, aby rozpocząć.",
-      exportAll: "Eksportuj wszystko",
+      exportAll: "Eksportuj wszystko"
     },
 
     overview: {

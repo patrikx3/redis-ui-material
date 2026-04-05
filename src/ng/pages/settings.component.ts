@@ -39,6 +39,25 @@ import { P3xrButtonComponent } from '../components/p3xr-button.component';
         P3xrAccordionComponent, P3xrButtonComponent,
     ],
     template: `
+        <!-- Donate -->
+        <p3xr-ng-accordion [title]="strings().title?.donateTitle || 'Support P3X Redis UI'" accordionKey="donate" [collapsible]="false">
+            <div actions>
+                <a href="https://www.paypal.me/patrikx3" target="_blank" rel="noreferrer" style="text-decoration: none;">
+                    <p3xr-ng-button
+                        [label]="(strings().title?.donate || 'Donate') + ' — PayPal'"
+                        mdIcon="favorite">
+                    </p3xr-ng-button>
+                </a>
+            </div>
+            <div content>
+                <div style="padding: 12px 16px; font-size: 13px; opacity: 0.85; line-height: 1.6;">
+                    {{ strings().title?.donateDescription }}
+                </div>
+            </div>
+        </p3xr-ng-accordion>
+
+        <br/>
+
         <!-- Connections -->
         <p3xr-ng-accordion [title]="strings().label?.connections || 'Connections'" accordionKey="settings">
             <div actions>

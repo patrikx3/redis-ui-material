@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Δωρεά",
+    donateTitle: "Υποστηρίξτε το P3X Redis UI",
+    donateDescription: "Το P3X Redis UI είναι ένα δωρεάν έργο ανοιχτού κώδικα. Τα έξοδα συντήρησης της εφαρμογής, των λειτουργιών AI, των Docker images, των διακομιστών και της υποδομής προέρχονται από την τσέπη του προγραμματιστή. Αν βρίσκετε αυτό το εργαλείο χρήσιμο, σκεφτείτε να υποστηρίξετε τη συνεχή ανάπτυξή του με μια δωρεά. Κάθε συνεισφορά βοηθά το έργο να παραμείνει ζωντανό και να αναπτύσσεται. Ευχαριστούμε!",
     jsonRecursive: "Ανάπτυξη όλων των κλαδιών",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Στατιστικά εντολών",
     latencystats: "Στατιστικά καθυστέρησης",
     keysizes: "Μεγέθη κλειδιών",
-    threads: "Νήματα",
+    threads: "Νήματα"
   },
   confirm: {
     dropIndex: "Είστε σίγουροι ότι θέλετε να διαγράψετε αυτό το ευρετήριο;",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Κενό σημαίνει ότι παραμένει για πάντα· διαφορετικά εισάγετε έναν ακέραιο.",
       convertTextToTime: "Μετατροπή κειμένου σε χρόνο",
       convertTextToTimePlaceholder: "Π.χ. 1d θα γίνει 86400"
-    },
+    }
   },
   language: {
     // When you translate the english name, keep the Language in English
@@ -193,7 +195,7 @@ const strings = {
     getKey: "Φόρτωση κλειδιού Redis και σχετικών δεδομένων ...",
     jsonViewShow: "Εμφάνιση JSON",
     jsonViewEditor: "Επεξεργασία JSON",
-    quickConsole: "Γρήγορη κονσόλα",
+    quickConsole: "Γρήγορη κονσόλα"
   },
   label: {
     id: {
@@ -334,7 +336,7 @@ const strings = {
     importNoKeys: "Δεν βρέθηκαν κλειδιά στο αρχείο",
     desktopNotifications: "Ειδοποιήσεις επιφάνειας εργασίας",
     desktopNotificationsEnabled: "Ενεργοποίηση ειδοποιήσεων επιφάνειας εργασίας",
-    desktopNotificationsInfo: "Λάβετε ειδοποιήσεις ΛΣ για αποσυνδέσεις και επανασυνδέσεις Redis όταν η εφαρμογή δεν είναι σε εστίαση.",
+    desktopNotificationsInfo: "Λάβετε ειδοποιήσεις ΛΣ για αποσυνδέσεις και επανασυνδέσεις Redis όταν η εφαρμογή δεν είναι σε εστίαση."
   },
   status: {
     dataCopied: "Τα δεδομένα βρίσκονται στο πρόχειρο",
@@ -380,7 +382,7 @@ const strings = {
     notInteger: "Αυτή η είσοδος δεν είναι ακέραιος αριθμός",
     persisted: "Αυτό το κλειδί διατηρείται για πάντα",
     set: "Το κλειδί ορίστηκε/προστέθηκε",
-    connectionRestored: "Η σύνδεση αποκαταστάθηκε",
+    connectionRestored: "Η σύνδεση αποκαταστάθηκε"
   },
   code: {
     "delete-connection": "Αυτή η σύνδεση διαγράφηκε, οπότε αποσυνδεθήκατε από αυτή την παρουσία Redis.",
@@ -391,7 +393,12 @@ const strings = {
     "invalid-json-value": "The value is not valid JSON.",
     "http_auth_required": "Απαιτείται εξουσιοδότηση: παρακαλώ πιστοποιηθείτε με HTTP Basic Auth και κάντε επαναφόρτωση.",
     "auto-connection-failed": "Πιθανόν, η σύνδεση αφαιρέθηκε και η αυτόματη σύνδεση απέτυχε εξαιτίας αυτού.",
-    invalid_console_command: "Αυτή η εντολή δεν λειτουργεί μέσω του GUI."
+    invalid_console_command: "Αυτή η εντολή δεν λειτουργεί μέσω του GUI.",
+    "AI_DISABLED": "Το AI είναι απενεργοποιημένο. Ενεργοποιήστε το στις ρυθμίσεις AI.",
+    "AI_PROMPT_REQUIRED": "Απαιτείται ερώτημα AI.",
+    "GROQ_API_KEY_READONLY": "Το κλειδί Groq API είναι μόνο για ανάγνωση και δεν μπορεί να τροποποιηθεί.",
+    "blocked_api_access": "Το πλάνο Groq API σας δεν επιτρέπει πρόσβαση σε αυτό το μοντέλο. Αναβαθμίστε το πλάνο Groq ή χρησιμοποιήστε τον proxy network.corifeus.com.",
+    "rate_limit": "Συμπληρώθηκε το όριο AI. Δοκιμάστε αργότερα ή χρησιμοποιήστε το δικό σας κλειδί Groq API στις ρυθμίσεις."
   },
   form: {
     error: {
@@ -487,7 +494,7 @@ const strings = {
       indexInfo: "Πληροφορίες ευρετηρίου",
       indexName: "Όνομα ευρετηρίου",
       prefix: "Πρόθεμα κλειδιού (προαιρετικό)",
-      fieldName: "Όνομα πεδίου",
+      fieldName: "Όνομα πεδίου"
     },
     monitor: {
       title: "Παρακολούθηση",
@@ -511,7 +518,7 @@ const strings = {
       peak: "Μέγιστο",
       fragmentation: "Κατακερματισμός",
       hitsAndMisses: "Επιτυχίες / Αποτυχίες",
-      noClients: "Χωρίς πελάτες",
+      noClients: "Χωρίς πελάτες"
     },
     analysis: {
       title: "Ανάλυση Μνήμης",
@@ -542,7 +549,7 @@ const strings = {
       maxScanKeys: "Μέγ. Σαρωμένα Κλειδιά",
       type: "Τύπος",
       noData: "Δεν υπάρχουν δεδομένα. Κάντε κλικ στο Εκτέλεση Ανάλυσης για να ξεκινήσετε.",
-      exportAll: "Εξαγωγή Όλων",
+      exportAll: "Εξαγωγή Όλων"
     },
 
     overview: {

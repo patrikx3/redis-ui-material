@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Menderma",
+    donateTitle: "Sokong P3X Redis UI",
+    donateDescription: "P3X Redis UI adalah projek percuma dan sumber terbuka. Kos penyelenggaraan aplikasi, ciri AI, imej Docker, pelayan dan infrastruktur datang dari poket pembangun sendiri. Jika anda mendapati alat ini berguna, sila pertimbangkan untuk menyokong pembangunan berterusannya dengan derma. Setiap sumbangan membantu memastikan projek ini terus hidup dan berkembang. Terima kasih!",
     jsonRecursive: "Mengembangkan semua daun",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Statistik Arahan",
     latencystats: "Statistik Kependaman",
     keysizes: "Saiz Kunci",
-    threads: "Benang",
+    threads: "Benang"
   },
   confirm: {
     dropIndex: "Adakah anda pasti mahu memadam indeks ini?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Kosong bermakna ia berterusan selama-lamanya; jika tidak masukkan integer.",
       convertTextToTime: "Tukar teks kepada masa",
       convertTextToTimePlaceholder: "Cth. 1d ialah 86400"
-    },
+    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -191,7 +193,7 @@ const strings = {
     getKey: "Memuatkan kunci Redis dan data yang berkaitan ...",
     jsonViewShow: "Paparkan JSON",
     jsonViewEditor: "Edit JSON",
-    quickConsole: "Konsol Pantas",
+    quickConsole: "Konsol Pantas"
   },
   label: {
     id: {
@@ -332,7 +334,7 @@ const strings = {
     importNoKeys: "Tiada kunci ditemui dalam fail",
     desktopNotifications: "Pemberitahuan Desktop",
     desktopNotificationsEnabled: "Dayakan pemberitahuan desktop",
-    desktopNotificationsInfo: "Terima pemberitahuan OS untuk pemutusan dan penyambungan semula Redis apabila aplikasi tidak dalam fokus.",
+    desktopNotificationsInfo: "Terima pemberitahuan OS untuk pemutusan dan penyambungan semula Redis apabila aplikasi tidak dalam fokus."
   },
   status: {
     dataCopied: "Data berada dalam papan keratan",
@@ -378,7 +380,7 @@ const strings = {
     notInteger: "Input ini bukan integer",
     persisted: "Kunci ini dikekalkan selama-lamanya",
     set: "Kunci ditetapkan/ditambah",
-    connectionRestored: "Sambungan dipulihkan",
+    connectionRestored: "Sambungan dipulihkan"
   },
   code: {
     "delete-connection": "Sambungan ini telah dipadamkan, jadi anda terputus sambungan ke tika Redis ini.",
@@ -389,7 +391,12 @@ const strings = {
     "invalid-json-value": "Nilai ini tidak sah JSON.",
     "http_auth_required": "Keizinan diperlukan: sila sahkan dengan HTTP Basic Auth dan muat semula.",
     "auto-connection-failed": "Kemungkinan, sambungan telah dialih keluar dan sambungan automatik gagal, kerana ini.",
-    invalid_console_command: "Perintah ini tidak berfungsi melalui GUI."
+    invalid_console_command: "Perintah ini tidak berfungsi melalui GUI.",
+    "AI_DISABLED": "AI dinyahaktifkan. Aktifkan dalam Tetapan AI.",
+    "AI_PROMPT_REQUIRED": "Permintaan AI diperlukan.",
+    "GROQ_API_KEY_READONLY": "Kunci Groq API adalah baca sahaja dan tidak boleh diubah.",
+    "blocked_api_access": "Pelan Groq API anda tidak membenarkan akses kepada model ini. Naik taraf pelan Groq anda atau gunakan proksi network.corifeus.com.",
+    "rate_limit": "Had kadar AI dicapai. Cuba lagi kemudian atau gunakan kunci Groq API anda sendiri dalam Tetapan."
   },
   form: {
     error: {
@@ -485,7 +492,7 @@ const strings = {
       indexInfo: "Info indeks",
       indexName: "Nama indeks",
       prefix: "Awalan kunci (pilihan)",
-      fieldName: "Nama medan",
+      fieldName: "Nama medan"
     },
     monitor: {
       title: "Pemantauan",
@@ -509,7 +516,7 @@ const strings = {
       peak: "Puncak",
       fragmentation: "Fragmentasi",
       hitsAndMisses: "Hit / Miss",
-      noClients: "Tiada pelanggan",
+      noClients: "Tiada pelanggan"
     },
     analysis: {
       title: "Analisis Memori",
@@ -540,7 +547,7 @@ const strings = {
       maxScanKeys: "Maks. Kunci Diimbas",
       type: "Jenis",
       noData: "Tiada data. Klik Jalankan Analisis untuk mula.",
-      exportAll: "Eksport Semua",
+      exportAll: "Eksport Semua"
     },
 
     overview: {

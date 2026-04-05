@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Кайрымдуулук кылуу",
+    donateTitle: "P3X Redis UI-ди колдоңуз",
+    donateDescription: "P3X Redis UI — бекер, ачык баштапкы коддуу долбоор. Колдонмону, AI мүмкүнчүлүктөрүн, Docker сүрөттөрүн, серверлерди жана инфраструктураны тейлөө чыгымдары иштеп чыгуучунун өз чөнтөгүнөн чыгат. Бул куралды пайдалуу деп тапсаңыз, аны кайрымдуулук менен колдоону карап көрүңүз. Ар бир салым долбоорду тирүү жана өсүп жатканда кармоого жардам берет. Рахмат!",
     jsonRecursive: "Бардык жалбырактарды кеңейтүү",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Команда статistикасы",
     latencystats: "Кечigүү статistикасы",
     keysizes: "Ачкыч өлчөмдөрү",
-    threads: "Жиптер",
+    threads: "Жиптер"
   },
   confirm: {
     dropIndex: "Бул индексти жоюуга ишенесизби?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "бош дегенди билдирет, ал түбөлүккө сакталат; антпесе бүтүн санды киргизиңиз.",
       convertTextToTime: "Текстти убакытка айландыруу",
       convertTextToTimePlaceholder: "Мис. 1d 86400 болот"
-    },
+    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -191,7 +193,7 @@ const strings = {
     getKey: "Redis ачкычы жана ага байланыштуу дайындар жүктөлүүдө ...",
     jsonViewShow: "JSON көрсөтүү",
     jsonViewEditor: "JSON түзөтүү",
-    quickConsole: "Ыкчам консол",
+    quickConsole: "Ыкчам консол"
   },
   label: {
     id: {
@@ -332,7 +334,7 @@ const strings = {
     importNoKeys: "Файлдан ачкычтар табылган жок",
     desktopNotifications: "Desktop Notifications",
     desktopNotificationsEnabled: "Enable desktop notifications",
-    desktopNotificationsInfo: "Receive OS notifications for Redis disconnections and reconnections when the app is not focused.",
+    desktopNotificationsInfo: "Receive OS notifications for Redis disconnections and reconnections when the app is not focused."
   },
   status: {
     dataCopied: "Маалымат алмашуу буферинде",
@@ -378,7 +380,7 @@ const strings = {
     notInteger: "Бул киргизүү бүтүн сан эмес",
     persisted: "Бул ачкыч түбөлүккө сакталат",
     set: "Ачкыч коюлган/кошулган",
-    connectionRestored: "Connection restored",
+    connectionRestored: "Connection restored"
   },
   code: {
     "delete-connection": "Бул туташуу өчүрүлдү, андыктан сиз бул Redis инстанциясына ажыратылдыңыз.",
@@ -389,7 +391,12 @@ const strings = {
     "invalid-json-value": "Маани жарактуу эмес JSON.",
     "http_auth_required": "Авторизация талап кылынат: HTTP Basic Auth менен аныктыгын текшерип, кайра жүктөңүз.",
     "auto-connection-failed": "Мүмкүн, туташуу өчүрүлүп, автоматтык туташуу ишке ашпай калды, ушундан улам.",
-    invalid_console_command: "Бул буйрук GUI аркылуу иштебейт."
+    invalid_console_command: "Бул буйрук GUI аркылуу иштебейт.",
+    "AI_DISABLED": "AI өчүрүлгөн. AI жөндөөлөрүндө иштетиңиз.",
+    "AI_PROMPT_REQUIRED": "AI суроосу талап кылынат.",
+    "GROQ_API_KEY_READONLY": "Groq API ачкычы окуу үчүн гана жана өзгөртүүгө болбойт.",
+    "blocked_api_access": "Groq API планыңыз бул моделге кирүүгө уруксат бербейт. Groq планын жаңыртыңыз же network.corifeus.com проксисин колдонуңуз.",
+    "rate_limit": "AI ылдамдык чегине жетти. Кийинчерээк кайталаңыз же жөндөөлөрдө өз Groq API ачкычыңызды колдонуңуз."
   },
   form: {
     error: {
@@ -485,7 +492,7 @@ const strings = {
       indexInfo: "Индекс маалыматы",
       indexName: "Индекс аты",
       prefix: "Ачкыч префикси (милдеттүү эмес)",
-      fieldName: "Талаа аты",
+      fieldName: "Талаа аты"
     },
     monitor: {
       title: "Мониторинг",
@@ -509,7 +516,7 @@ const strings = {
       peak: "Чокусу",
       fragmentation: "Фрагментация",
       hitsAndMisses: "Тийгендер / Өтүп кеткендер",
-      noClients: "Кардарлар жок",
+      noClients: "Кардарлар жок"
     },
     analysis: {
       title: "Эс тутум талдоосу",
@@ -540,7 +547,7 @@ const strings = {
       maxScanKeys: "Макс. сканерлөө ачкычтары",
       type: "Түр",
       noData: "Маалымат жок. Баштоо үчүн Талдоону баштоо баскычын басыңыз.",
-      exportAll: "Баарын экспорттоо",
+      exportAll: "Баарын экспорттоо"
     },
 
     overview: {

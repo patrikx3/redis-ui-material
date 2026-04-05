@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Doner",
+    donateTitle: "Støt P3X Redis UI",
+    donateDescription: "P3X Redis UI er et gratis open source-projekt. Vedligeholdelse af appen, AI-funktioner, Docker-images, servere og infrastruktur betales af udviklerens egen lomme. Hvis du finder dette værktøj nyttigt, overvej venligst at støtte dets fortsatte udvikling med en donation. Ethvert bidrag hjælper med at holde projektet i live og voksende. Tak!",
     jsonRecursive: "Udvidelse af alle blade",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Kommandostatistik",
     latencystats: "Latensstatistik",
     keysizes: "Nøglestørrelser",
-    threads: "Tråde",
+    threads: "Tråde"
   },
   confirm: {
     dropIndex: "Er du sikker på at du vil slette dette index?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Tom betyder, at den består for evigt; ellers skal du indtaste et heltal.",
       convertTextToTime: "Konverter tekst til tid",
       convertTextToTimePlaceholder: "F.eks. 1d vil være 86400"
-    },
+    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -191,7 +193,7 @@ const strings = {
     getKey: "Indlæser Redis nøgle og tilhørende data ...",
     jsonViewShow: "Vis JSON",
     jsonViewEditor: "Rediger JSON",
-    quickConsole: "Hurtig konsol",
+    quickConsole: "Hurtig konsol"
   },
   label: {
     id: {
@@ -332,7 +334,7 @@ const strings = {
     importNoKeys: "Ingen nøgler fundet i filen",
     desktopNotifications: "Skrivebordsbeskeder",
     desktopNotificationsEnabled: "Aktiver skrivebordsbeskeder",
-    desktopNotificationsInfo: "Modtag OS-beskeder ved Redis-afbrydelser og genforbindelser, når appen ikke er i fokus.",
+    desktopNotificationsInfo: "Modtag OS-beskeder ved Redis-afbrydelser og genforbindelser, når appen ikke er i fokus."
   },
   status: {
     dataCopied: "Dataene er i udklipsholderen",
@@ -378,7 +380,7 @@ const strings = {
     notInteger: "Dette input er ikke et heltal",
     persisted: "Denne nøgle er vedvarende for evigt",
     set: "Nøglen indstilles/tilføjes",
-    connectionRestored: "Forbindelsen genoprettet",
+    connectionRestored: "Forbindelsen genoprettet"
   },
   code: {
     "delete-connection": "Denne forbindelse blev slettet, så du er afbrudt til denne Redis-instans.",
@@ -389,7 +391,12 @@ const strings = {
     "invalid-json-value": "Værdien er ikke gyldig JSON.",
     "http_auth_required": "Godkendelse påkrævet: godkend venligst med HTTP Basic Auth og genindlæs.",
     "auto-connection-failed": "Muligt, forbindelsen blev fjernet, og den automatiske forbindelse mislykkedes på grund af dette.",
-    invalid_console_command: "Denne kommando virker ikke via GUI."
+    invalid_console_command: "Denne kommando virker ikke via GUI.",
+    "AI_DISABLED": "AI er deaktiveret. Aktiver det i AI-indstillinger.",
+    "AI_PROMPT_REQUIRED": "AI-forespørgsel er påkrævet.",
+    "GROQ_API_KEY_READONLY": "Groq API-nøglen er skrivebeskyttet og kan ikke ændres.",
+    "blocked_api_access": "Din Groq API-plan tillader ikke adgang til denne model. Opgrader din Groq-plan eller brug network.corifeus.com proxy.",
+    "rate_limit": "AI-hastighedsgrænse nået. Prøv igen senere eller brug din egen Groq API-nøgle i indstillingerne."
   },
   form: {
     error: {
@@ -485,7 +492,7 @@ const strings = {
       indexInfo: "Indeksinfo",
       indexName: "Indeksnavn",
       prefix: "Nøglepræfiks (valgfrit)",
-      fieldName: "Feltnavn",
+      fieldName: "Feltnavn"
     },
     monitor: {
       title: "Overvågning",
@@ -509,7 +516,7 @@ const strings = {
       peak: "Maksimal",
       fragmentation: "Fragmentering",
       hitsAndMisses: "Træffere / Misser",
-      noClients: "Ingen klienter",
+      noClients: "Ingen klienter"
     },
     analysis: {
       title: "Hukommelsesanalyse",
@@ -540,7 +547,7 @@ const strings = {
       maxScanKeys: "Maks. scannede nøgler",
       type: "Type",
       noData: "Ingen data. Klik Kør analyse for at starte.",
-      exportAll: "Eksportér alt",
+      exportAll: "Eksportér alt"
     },
 
     overview: {

@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Doneren",
+    donateTitle: "Steun P3X Redis UI",
+    donateDescription: "P3X Redis UI is een gratis, open-source project. De kosten voor het onderhoud van de app, AI-functies, Docker-images, servers en infrastructuur komen uit de eigen zak van de ontwikkelaar. Als u dit hulpmiddel nuttig vindt, overweeg dan om de voortdurende ontwikkeling te steunen met een donatie. Elke bijdrage helpt het project levend en groeiend te houden. Bedankt!",
     jsonRecursive: "Alle takken uitvouwen",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Commandostatistieken",
     latencystats: "Latentiestatistieken",
     keysizes: "Sleutelgroottes",
-    threads: "Threads",
+    threads: "Threads"
   },
   confirm: {
     dropIndex: "Weet u zeker dat u deze index wilt verwijderen?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Leeg betekent dat het voor altijd blijft bestaan; voer anders een geheel getal in.",
       convertTextToTime: "Tekst omzetten naar tijd",
       convertTextToTimePlaceholder: "Bijv. 1d wordt 86400"
-    },
+    }
   },
   language: {
     bg: "Български / Bulgarian",
@@ -191,7 +193,7 @@ const strings = {
     getKey: "Redis-sleutel en bijbehorende gegevens laden ...",
     jsonViewShow: "JSON weergeven",
     jsonViewEditor: "JSON bewerken",
-    quickConsole: "Snelle Console",
+    quickConsole: "Snelle Console"
   },
   label: {
     id: {
@@ -332,7 +334,7 @@ const strings = {
     importNoKeys: "Geen sleutels gevonden in bestand",
     desktopNotifications: "Bureaumeldingen",
     desktopNotificationsEnabled: "Bureaumeldingen inschakelen",
-    desktopNotificationsInfo: "Ontvang OS-meldingen voor Redis-verbroken verbindingen en herverbindingen wanneer de app niet in focus is.",
+    desktopNotificationsInfo: "Ontvang OS-meldingen voor Redis-verbroken verbindingen en herverbindingen wanneer de app niet in focus is."
   },
   status: {
     dataCopied: "De gegevens staan op het klembord",
@@ -378,7 +380,7 @@ const strings = {
     notInteger: "Deze invoer is geen geheel getal",
     persisted: "Deze sleutel wordt voor altijd bewaard",
     set: "De sleutel is ingesteld/toegevoegd",
-    connectionRestored: "Verbinding hersteld",
+    connectionRestored: "Verbinding hersteld"
   },
   code: {
     "delete-connection": "Deze verbinding is verwijderd, dus u bent losgekoppeld van deze Redis-instantie.",
@@ -389,7 +391,12 @@ const strings = {
     "invalid-json-value": "The value is not valid JSON.",
     "http_auth_required": "Autorisatie vereist: authenticeer met HTTP Basic Auth en herlaad.",
     "auto-connection-failed": "Mogelijk is de verbinding verwijderd en is de automatische verbinding om die reden mislukt.",
-    invalid_console_command: "Deze opdracht werkt niet via de GUI."
+    invalid_console_command: "Deze opdracht werkt niet via de GUI.",
+    "AI_DISABLED": "AI is uitgeschakeld. Schakel het in bij AI-instellingen.",
+    "AI_PROMPT_REQUIRED": "AI-prompt is vereist.",
+    "GROQ_API_KEY_READONLY": "De Groq API-sleutel is alleen-lezen en kan niet worden gewijzigd.",
+    "blocked_api_access": "Uw Groq API-plan staat geen toegang tot dit model toe. Upgrade uw Groq-plan of gebruik de network.corifeus.com proxy.",
+    "rate_limit": "AI-snelheidslimiet bereikt. Probeer het later opnieuw of gebruik uw eigen Groq API-sleutel in de instellingen."
   },
   form: {
     error: {
@@ -485,7 +492,7 @@ const strings = {
       indexInfo: "Index info",
       indexName: "Indexnaam",
       prefix: "Sleutelprefix (optioneel)",
-      fieldName: "Veldnaam",
+      fieldName: "Veldnaam"
     },
     monitor: {
       title: "Bewaking",
@@ -509,7 +516,7 @@ const strings = {
       peak: "Piek",
       fragmentation: "Fragmentatie",
       hitsAndMisses: "Treffers / Missers",
-      noClients: "Geen clients",
+      noClients: "Geen clients"
     },
     analysis: {
       title: "Geheugenanalyse",
@@ -540,7 +547,7 @@ const strings = {
       maxScanKeys: "Max. Gescande Sleutels",
       type: "Type",
       noData: "Geen gegevens. Klik op Analyse Starten om te beginnen.",
-      exportAll: "Alles Exporteren",
+      exportAll: "Alles Exporteren"
     },
 
     overview: {

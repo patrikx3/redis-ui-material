@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Paaukoti",
+    donateTitle: "Palaikykite P3X Redis UI",
+    donateDescription: "P3X Redis UI yra nemokamas atvirojo kodo projektas. Programėlės, AI funkcijų, Docker atvaizdų, serverių ir infrastruktūros priežiūros išlaidos padengiamos iš kūrėjo kišenės. Jei manote, kad šis įrankis naudingas, apsvarstykite galimybę paremti jo tolesnę plėtrą auka. Kiekvienas indėlis padeda projektui gyvuoti ir augti. Ačiū!",
     jsonRecursive: "Išplečiant visus lapus",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Komandų statistika",
     latencystats: "Vėlinimo statistika",
     keysizes: "Raktų dydžiai",
-    threads: "Gijos",
+    threads: "Gijos"
   },
   confirm: {
     dropIndex: "Ar tikrai norite ištrinti šį indeksą?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Tuščia reiškia, kad ji išlieka amžinai; kitu atveju įveskite sveikąjį skaičių.",
       convertTextToTime: "Konvertuoti tekstą į laiką",
       convertTextToTimePlaceholder: "Pvz. 1d bus 86400"
-    },
+    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -191,7 +193,7 @@ const strings = {
     getKey: "Įkeliamas Redis raktas ir susiję duomenys...",
     jsonViewShow: "Ekranas JSON",
     jsonViewEditor: "Redaguoti JSON",
-    quickConsole: "Greitoji konsolė",
+    quickConsole: "Greitoji konsolė"
   },
   label: {
     id: {
@@ -332,7 +334,7 @@ const strings = {
     importNoKeys: "Faile nerasta raktų",
     desktopNotifications: "Darbalaukio pranešimai",
     desktopNotificationsEnabled: "Įjungti darbalaukio pranešimus",
-    desktopNotificationsInfo: "Gaukite OS pranešimus apie Redis atjungimus ir pakartotinius prisijungimus, kai programa nėra fokusuota.",
+    desktopNotificationsInfo: "Gaukite OS pranešimus apie Redis atjungimus ir pakartotinius prisijungimus, kai programa nėra fokusuota."
   },
   status: {
     dataCopied: "Duomenys yra iškarpinėje",
@@ -378,7 +380,7 @@ const strings = {
     notInteger: "Ši įvestis nėra sveikasis skaičius",
     persisted: "Šis raktas išlieka amžinai",
     set: "Raktas nustatytas/pridėtas",
-    connectionRestored: "Ryšys atkurtas",
+    connectionRestored: "Ryšys atkurtas"
   },
   code: {
     "delete-connection": "Šis ryšys buvo ištrintas, todėl esate atjungtas nuo šio Redis egzemplioriaus.",
@@ -389,7 +391,12 @@ const strings = {
     "invalid-json-value": "Vertė neteisinga JSON.",
     "http_auth_required": "Reikalingas įgaliojimas: patvirtinkite tapatybę naudodami HTTP Basic Auth ir įkelkite iš naujo.",
     "auto-connection-failed": "Gali būti, kad ryšys buvo pašalintas ir dėl to nepavyko prisijungti.",
-    invalid_console_command: "Ši komanda neveikia naudojant GUI."
+    invalid_console_command: "Ši komanda neveikia naudojant GUI.",
+    "AI_DISABLED": "AI išjungtas. Įjunkite jį AI nustatymuose.",
+    "AI_PROMPT_REQUIRED": "Reikalinga AI užklausa.",
+    "GROQ_API_KEY_READONLY": "Groq API raktas yra tik skaitomas ir negali būti keičiamas.",
+    "blocked_api_access": "Jūsų Groq API planas neleidžia pasiekti šio modelio. Atnaujinkite savo Groq planą arba naudokite network.corifeus.com tarpinį serverį.",
+    "rate_limit": "Pasiektas AI greičio limitas. Bandykite vėliau arba naudokite savo Groq API raktą nustatymuose."
   },
   form: {
     error: {
@@ -485,7 +492,7 @@ const strings = {
       indexInfo: "Indekso info",
       indexName: "Indekso pavadinimas",
       prefix: "Rakto prefiksas (neprivaloma)",
-      fieldName: "Lauko pavadinimas",
+      fieldName: "Lauko pavadinimas"
     },
     monitor: {
       title: "Stebėjimas",
@@ -509,7 +516,7 @@ const strings = {
       peak: "Didžiausias",
       fragmentation: "Fragmentacija",
       hitsAndMisses: "Pataik. / Praleid.",
-      noClients: "Nėra klientų",
+      noClients: "Nėra klientų"
     },
     analysis: {
       title: "Atminties analizė",
@@ -540,7 +547,7 @@ const strings = {
       maxScanKeys: "Maks. nuskenuotų raktų",
       type: "Tipas",
       noData: "Nėra duomenų. Spustelėkite Paleisti analizę, kad pradėtumėte.",
-      exportAll: "Eksportuoti viską",
+      exportAll: "Eksportuoti viską"
     },
 
     overview: {

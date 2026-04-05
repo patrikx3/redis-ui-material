@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Пожертвувати",
+    donateTitle: "Підтримайте P3X Redis UI",
+    donateDescription: "P3X Redis UI — безкоштовний проєкт з відкритим кодом. Витрати на підтримку додатку, функцій AI, образів Docker, серверів та інфраструктури оплачуються з власної кишені розробника. Якщо ви вважаєте цей інструмент корисним, будь ласка, підтримайте його подальший розвиток пожертвою. Кожен внесок допомагає проєкту жити та рости. Дякуємо!",
     jsonRecursive: "Розгортання всіх гілок",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Статистика команд",
     latencystats: "Статистика затримок",
     keysizes: "Розміри ключів",
-    threads: "Потоки",
+    threads: "Потоки"
   },
   confirm: {
     dropIndex: "Ви впевнені, що хочете видалити цей індекс?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Порожнє означає, що він зберігається назавжди; інакше введіть ціле число.",
       convertTextToTime: "Конвертувати текст у час",
       convertTextToTimePlaceholder: "Напр. 1d буде 86400"
-    },
+    }
   },
   language: {
     bg: "Български / Bulgarian",
@@ -189,7 +191,7 @@ const strings = {
     getKey: "Завантаження Redis-ключа та пов'язаних даних ...",
     jsonViewShow: "Показати JSON",
     jsonViewEditor: "Редагувати JSON",
-    quickConsole: "Швидка консоль",
+    quickConsole: "Швидка консоль"
   },
   label: {
     id: {
@@ -330,7 +332,7 @@ const strings = {
     importNoKeys: "Ключі не знайдено у файлі",
     desktopNotifications: "Сповіщення робочого столу",
     desktopNotificationsEnabled: "Увімкнути сповіщення робочого столу",
-    desktopNotificationsInfo: "Отримуйте сповіщення ОС про від'єднання та повторне підключення Redis, коли програма не у фокусі.",
+    desktopNotificationsInfo: "Отримуйте сповіщення ОС про від'єднання та повторне підключення Redis, коли програма не у фокусі."
   },
   status: {
     dataCopied: "Дані скопійовано в буфер обміну",
@@ -376,7 +378,7 @@ const strings = {
     notInteger: "Це введення не є цілим числом",
     persisted: "Цей ключ зберігається назавжди",
     set: "Ключ встановлено/додано",
-    connectionRestored: "З'єднання відновлено",
+    connectionRestored: "З'єднання відновлено"
   },
   code: {
     "delete-connection": "Це з'єднання було видалено, тому вас від'єднано від цього екземпляра Redis.",
@@ -387,7 +389,12 @@ const strings = {
     "invalid-json-value": "The value is not valid JSON.",
     "http_auth_required": "Потрібна авторизація: будь ласка, автентифікуйтесь за допомогою HTTP Basic Auth та перезавантажте.",
     "auto-connection-failed": "Можливо, з'єднання було видалено і через це автоматичне підключення не вдалося.",
-    invalid_console_command: "Ця команда не працює через GUI."
+    invalid_console_command: "Ця команда не працює через GUI.",
+    "AI_DISABLED": "AI вимкнено. Увімкніть його в налаштуваннях AI.",
+    "AI_PROMPT_REQUIRED": "Потрібен запит AI.",
+    "GROQ_API_KEY_READONLY": "Ключ Groq API доступний лише для читання і не може бути змінений.",
+    "blocked_api_access": "Ваш план Groq API не дозволяє доступ до цієї моделі. Оновіть план Groq або використовуйте проксі network.corifeus.com.",
+    "rate_limit": "Досягнуто ліміт AI. Спробуйте пізніше або використовуйте власний ключ Groq API в налаштуваннях."
   },
   form: {
     error: {
@@ -483,7 +490,7 @@ const strings = {
       indexInfo: "Інформація про індекс",
       indexName: "Назва індексу",
       prefix: "Префікс ключа (необов'язково)",
-      fieldName: "Назва поля",
+      fieldName: "Назва поля"
     },
     monitor: {
       title: "Моніторинг",
@@ -507,7 +514,7 @@ const strings = {
       peak: "Пік",
       fragmentation: "Фрагментація",
       hitsAndMisses: "Влучання / Промахи",
-      noClients: "Немає клієнтів",
+      noClients: "Немає клієнтів"
     },
     analysis: {
       title: "Аналіз пам'яті",
@@ -538,7 +545,7 @@ const strings = {
       maxScanKeys: "Макс. сканованих ключів",
       type: "Тип",
       noData: "Немає даних. Натисніть Запустити аналіз, щоб почати.",
-      exportAll: "Експорт усього",
+      exportAll: "Експорт усього"
     },
 
     overview: {

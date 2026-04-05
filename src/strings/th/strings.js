@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "บริจาค",
+    donateTitle: "สนับสนุน P3X Redis UI",
+    donateDescription: "P3X Redis UI เป็นโปรเจกต์ฟรีและโอเพ่นซอร์ส ค่าใช้จ่ายในการดูแลแอป ฟีเจอร์ AI อิมเมจ Docker เซิร์ฟเวอร์ และโครงสร้างพื้นฐาน มาจากกระเป๋าของนักพัฒนาเอง หากคุณพบว่าเครื่องมือนี้มีประโยชน์ โปรดพิจารณาสนับสนุนการพัฒนาอย่างต่อเนื่องด้วยการบริจาค ทุกการสนับสนุนช่วยให้โปรเจกต์มีชีวิตและเติบโต ขอบคุณ!",
     jsonRecursive: "ขยายใบทั้งหมด",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "สถิติคำสั่ง",
     latencystats: "สถิติเวลาแฝง",
     keysizes: "ขนาดคีย์",
-    threads: "เธรด",
+    threads: "เธรด"
   },
   confirm: {
     dropIndex: "คุณแน่ใจหรือว่าต้องการลบดัชนีนี้?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "ความว่างเปล่าหมายความว่ามันคงอยู่ตลอดไป มิฉะนั้นให้ป้อนจำนวนเต็ม",
       convertTextToTime: "แปลงข้อความเป็นเวลา",
       convertTextToTimePlaceholder: "เช่น 1d จะเป็น 86400"
-    },
+    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -191,7 +193,7 @@ const strings = {
     getKey: "กำลังโหลดคีย์ Redis และข้อมูลที่เกี่ยวข้อง ...",
     jsonViewShow: "จอแสดงผล JSON",
     jsonViewEditor: "แก้ไข JSON",
-    quickConsole: "คอนโซลด่วน",
+    quickConsole: "คอนโซลด่วน"
   },
   label: {
     id: {
@@ -332,7 +334,7 @@ const strings = {
     importNoKeys: "ไม่พบคีย์ในไฟล์",
     desktopNotifications: "การแจ้งเตือนบนเดสก์ท็อป",
     desktopNotificationsEnabled: "เปิดใช้การแจ้งเตือนบนเดสก์ท็อป",
-    desktopNotificationsInfo: "รับการแจ้งเตือนจาก OS เมื่อ Redis ขาดการเชื่อมต่อและเชื่อมต่อใหม่เมื่อแอปไม่อยู่ในโฟกัส",
+    desktopNotificationsInfo: "รับการแจ้งเตือนจาก OS เมื่อ Redis ขาดการเชื่อมต่อและเชื่อมต่อใหม่เมื่อแอปไม่อยู่ในโฟกัส"
   },
   status: {
     dataCopied: "ข้อมูลอยู่ในคลิปบอร์ด",
@@ -378,7 +380,7 @@ const strings = {
     notInteger: "อินพุตนี้ไม่ใช่จำ���วนเต็ม",
     persisted: "กุญแจดอกนี้จะคงอยู่ตลอดไป",
     set: "กุญแจถูกตั้งค่า/เพิ่ม",
-    connectionRestored: "การเชื่อมต่อถูกกู้คืน",
+    connectionRestored: "การเชื่อมต่อถูกกู้คืน"
   },
   code: {
     "delete-connection": "การเชื่อมต่อนี้ถูกลบแล้ว ดังนั้นคุณจึงยกเลิกการเชื่อมต่อกับอินสแตนซ์ Redis นี้",
@@ -389,7 +391,12 @@ const strings = {
     "invalid-json-value": "ค่านี้ไม่ถูกต้อง JSON",
     "http_auth_required": "ต้องมีการอนุญาต: โปรดตรวจสอบสิทธิ์กับ HTTP Basic Auth และโหลดซ้ำ",
     "auto-connection-failed": "เป็นไปได้ การเชื่อมต่อถูกลบออก และการเชื่อมต่ออัตโนมัติล้มเหลวด้วยเหตุนี้",
-    invalid_console_command: "คำสั่งนี้ใช้ไม่ได้กับ GUI"
+    invalid_console_command: "คำสั่งนี้ใช้ไม่ได้กับ GUI",
+    "AI_DISABLED": "AI ถูกปิดใช้งาน เปิดใช้งานในการตั้งค่า AI",
+    "AI_PROMPT_REQUIRED": "ต้องมีคำถาม AI",
+    "GROQ_API_KEY_READONLY": "คีย์ Groq API เป็นแบบอ่านอย่างเดียวและไม่สามารถแก้ไขได้",
+    "blocked_api_access": "แผน Groq API ของคุณไม่อนุญาตให้เข้าถึงโมเดลนี้ กรุณาอัปเกรดแผน Groq หรือใช้ proxy network.corifeus.com",
+    "rate_limit": "ถึงขีดจำกัดอัตรา AI แล้ว ลองอีกครั้งในภายหลังหรือใช้คีย์ Groq API ของคุณเองในการตั้งค่า"
   },
   form: {
     error: {
@@ -485,7 +492,7 @@ const strings = {
       indexInfo: "ข้อมูลดัชนี",
       indexName: "ชื่อดัชนี",
       prefix: "คำนำหน้าคีย์ (ไม่บังคับ)",
-      fieldName: "ชื่อฟิลด์",
+      fieldName: "ชื่อฟิลด์"
     },
     monitor: {
       title: "การตรวจสอบ",
@@ -509,7 +516,7 @@ const strings = {
       peak: "สูงสุด",
       fragmentation: "การแตกกระจาย",
       hitsAndMisses: "สำเร็จ / พลาด",
-      noClients: "ไม่มีไคลเอนต์",
+      noClients: "ไม่มีไคลเอนต์"
     },
     analysis: {
       title: "การวิเคราะห์หน่วยความจำ",
@@ -540,7 +547,7 @@ const strings = {
       maxScanKeys: "คีย์สแกนสูงสุด",
       type: "ชนิด",
       noData: "ไม่มีข้อมูล คลิกเริ่มวิเคราะห์เพื่อเริ่มต้น",
-      exportAll: "ส่งออกทั้งหมด",
+      exportAll: "ส่งออกทั้งหมด"
     },
 
     overview: {

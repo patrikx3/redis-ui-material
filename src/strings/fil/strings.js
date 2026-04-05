@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Mag-donate",
+    donateTitle: "Suportahan ang P3X Redis UI",
+    donateDescription: "Ang P3X Redis UI ay isang libre, open-source na proyekto. Ang mga gastos sa pagpapanatili ng app, AI features, Docker images, servers, at infrastructure ay galing sa sariling bulsa ng developer. Kung nakakatulong sa iyo ang tool na ito, pag-isipang suportahan ang patuloy na pag-develop nito sa pamamagitan ng donasyon. Bawat kontribusyon ay nakakatulong na mapanatiling buhay at lumalaki ang proyekto. Salamat!",
     jsonRecursive: "Pagpapalawak ng lahat ng mga dahon",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Estadistika ng Command",
     latencystats: "Estadistika ng Latency",
     keysizes: "Laki ng Susi",
-    threads: "Mga Thread",
+    threads: "Mga Thread"
   },
   confirm: {
     dropIndex: "Sigurado ka bang tanggalin ang index na ito?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Ang walang laman ay nangangahulugan na ito ay nagpapatuloy magpakailanman; kung hindi, maglagay ng integer.",
       convertTextToTime: "I-convert ang teksto sa oras",
       convertTextToTimePlaceholder: "Hal. Ang 1d ay magiging 86400"
-    },
+    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -191,7 +193,7 @@ const strings = {
     getKey: "Nilo-load ang Redis key at nauugnay na data ...",
     jsonViewShow: "Ipakita ang JSON",
     jsonViewEditor: "I-edit ang JSON",
-    quickConsole: "Mabilis na Console",
+    quickConsole: "Mabilis na Console"
   },
   label: {
     id: {
@@ -332,7 +334,7 @@ const strings = {
     importNoKeys: "Walang nahanap na key sa file",
     desktopNotifications: "Mga Notification sa Desktop",
     desktopNotificationsEnabled: "I-enable ang desktop notifications",
-    desktopNotificationsInfo: "Tumanggap ng mga notification sa OS para sa Redis disconnection at reconnection kapag ang app ay wala sa focus.",
+    desktopNotificationsInfo: "Tumanggap ng mga notification sa OS para sa Redis disconnection at reconnection kapag ang app ay wala sa focus."
   },
   status: {
     dataCopied: "Ang data ay nasa clipboard",
@@ -378,7 +380,7 @@ const strings = {
     notInteger: "Ang input na ito ay hindi isang integer",
     persisted: "Ang susi na ito ay nananatili magpakailanman",
     set: "Ang susi ay itinakda/idinagdag",
-    connectionRestored: "Naibalik ang koneksyon",
+    connectionRestored: "Naibalik ang koneksyon"
   },
   code: {
     "delete-connection": "Ang koneksyon na ito ay tinanggal, kaya ikaw ay nadiskonekta sa Redis instance na ito.",
@@ -389,7 +391,12 @@ const strings = {
     "invalid-json-value": "Ang halaga ay hindi wasto JSON.",
     "http_auth_required": "Kinakailangan ang pahintulot: mangyaring patotohanan gamit ang HTTP Basic Auth at i-reload.",
     "auto-connection-failed": "Posible, naalis ang koneksyon at nabigo ang awtomatikong koneksyon, dahil dito.",
-    invalid_console_command: "Hindi gumagana ang command na ito sa pamamagitan ng GUI."
+    invalid_console_command: "Hindi gumagana ang command na ito sa pamamagitan ng GUI.",
+    "AI_DISABLED": "Ang AI ay naka-disable. I-enable ito sa AI Settings.",
+    "AI_PROMPT_REQUIRED": "Kinakailangan ang AI prompt.",
+    "GROQ_API_KEY_READONLY": "Ang Groq API key ay read-only at hindi maaaring baguhin.",
+    "blocked_api_access": "Hindi pinapayagan ng iyong Groq API plan ang access sa modelong ito. Mag-upgrade ng Groq plan o gamitin ang network.corifeus.com proxy.",
+    "rate_limit": "Naabot na ang AI rate limit. Subukan muli mamaya o gamitin ang sariling Groq API key sa Settings."
   },
   form: {
     error: {
@@ -485,7 +492,7 @@ const strings = {
       indexInfo: "Info ng index",
       indexName: "Pangalan ng index",
       prefix: "Key prefix (opsyonal)",
-      fieldName: "Pangalan ng field",
+      fieldName: "Pangalan ng field"
     },
     monitor: {
       title: "Monitoring",
@@ -509,7 +516,7 @@ const strings = {
       peak: "Pinakamataas",
       fragmentation: "Fragmentation",
       hitsAndMisses: "Hits / Misses",
-      noClients: "Walang client",
+      noClients: "Walang client"
     },
     analysis: {
       title: "Pagsusuri ng Memory",
@@ -540,7 +547,7 @@ const strings = {
       maxScanKeys: "Maks. na-scan na Key",
       type: "Uri",
       noData: "Walang data. I-click ang Patakbuhin ang Pagsusuri para magsimula.",
-      exportAll: "I-export Lahat",
+      exportAll: "I-export Lahat"
     },
 
     overview: {

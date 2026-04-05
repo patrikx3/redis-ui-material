@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Садақа кунед",
+    donateTitle: "P3X Redis UI-ро дастгирӣ кунед",
+    donateDescription: "P3X Redis UI як лоиҳаи ройгон ва кушодаасос аст. Хароҷот барои нигоҳдории барнома, хусусиятҳои AI, тасвирҳои Docker, серверҳо ва инфрасохтор аз ҷайби шахсии таҳиягар меоянд. Агар шумо ин абзорро муфид меёбед, лутфан дастгирии рушди давомдори онро тавассути хайрия баррасӣ кунед. Ҳар як саҳм ба зинда ва рушдёбандаи лоиҳа кӯмак мекунад. Ташаккур!",
     jsonRecursive: "Васеъ кардани ҳама баргҳо",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "commandstats",
     latencystats: "latencystats",
     keysizes: "keysizes",
-    threads: "threads",
+    threads: "threads"
   },
   confirm: {
     dropIndex: "Шумо мутмаинед, ки ин индексро нест кунед?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Холӣ маънои онро дорад, ки он то абад боқӣ мемонад; дар акси ҳол адади бутун ворид ку��ед.",
       convertTextToTime: "Матнро ба вақт табдил диҳед",
       convertTextToTimePlaceholder: "Масалан. 1d 86400 хоҳад буд"
-    },
+    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -191,7 +193,7 @@ const strings = {
     getKey: "Калиди Redis ва маълумоти алоқаманд бор карда мешавад ...",
     jsonViewShow: "Намоиши JSON",
     jsonViewEditor: "Таҳрири JSON",
-    quickConsole: "Консол зуд",
+    quickConsole: "Консол зуд"
   },
   label: {
     id: {
@@ -332,7 +334,7 @@ const strings = {
     importNoKeys: "Дар файл калидҳо ёфт нашуд",
     desktopNotifications: "Desktop Notifications",
     desktopNotificationsEnabled: "Enable desktop notifications",
-    desktopNotificationsInfo: "Receive OS notifications for Redis disconnections and reconnections when the app is not focused.",
+    desktopNotificationsInfo: "Receive OS notifications for Redis disconnections and reconnections when the app is not focused."
   },
   status: {
     dataCopied: "Маълумот дар буфер аст",
@@ -378,7 +380,7 @@ const strings = {
     notInteger: "Ин вуруд адади бутун нест",
     persisted: "Ин калид то абад нигоҳ дошта мешавад",
     set: "Калид гузошта шудааст/илова карда шудааст",
-    connectionRestored: "Connection restored",
+    connectionRestored: "Connection restored"
   },
   code: {
     "delete-connection": "Ин пайвастшавӣ нест карда шуд, бинобар ин шумо аз ин мисоли Redis ҷудо кардаед.",
@@ -389,7 +391,12 @@ const strings = {
     "invalid-json-value": "Қимат JSON эътибор надорад.",
     "http_auth_required": "Иҷозатнома талаб карда мешавад: лутфан б�� HTTP Basic Auth аутентификатсия кунед ва аз нав бор кунед.",
     "auto-connection-failed": "Эҳтимол аст, ки пайвастшавӣ хориҷ карда шуд ва пайвасти худкор аз ин сабаб ноком шуд.",
-    invalid_console_command: "Ин фармон тавассути GUI кор намекунад."
+    invalid_console_command: "Ин фармон тавассути GUI кор намекунад.",
+    "AI_DISABLED": "AI ғайрифаъол аст. Онро дар танзимоти AI фаъол кунед.",
+    "AI_PROMPT_REQUIRED": "Дархости AI лозим аст.",
+    "GROQ_API_KEY_READONLY": "Калиди Groq API танҳо барои хондан аст ва тағйир дода намешавад.",
+    "blocked_api_access": "Нақшаи Groq API-и шумо ба ин модел дастрасӣ намедиҳад. Нақшаи Groq-ро навсозӣ кунед ё прокси network.corifeus.com-ро истифода баред.",
+    "rate_limit": "Ба ҳадди суръати AI расидед. Баъдтар бори дигар кӯшиш кунед ё калиди Groq API-и худро дар танзимот истифода баред."
   },
   form: {
     error: {
@@ -485,7 +492,7 @@ const strings = {
       indexInfo: "Маълумоти индекс",
       indexName: "Номи индекс",
       prefix: "Пешванди калид (ихтиёрӣ)",
-      fieldName: "Номи майдон",
+      fieldName: "Номи майдон"
     },
     monitor: {
       title: "Мониторинг",
@@ -509,7 +516,7 @@ const strings = {
       peak: "Қулла",
       fragmentation: "Фрагментатсия",
       hitsAndMisses: "Ҳамлаҳо / Хатоҳо",
-      noClients: "Муштариён нест",
+      noClients: "Муштариён нест"
     },
     analysis: {
       title: "Таҳлили хотира",
@@ -540,7 +547,7 @@ const strings = {
       maxScanKeys: "Ҳадди аксари калидҳои скан",
       type: "Навъ",
       noData: "Маълумот нест. Барои оғоз Таҳлилро оғоз кунед-ро пахш кунед.",
-      exportAll: "Содироти ҳама",
+      exportAll: "Содироти ҳама"
     },
 
     overview: {

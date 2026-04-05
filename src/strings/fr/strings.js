@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Don",
+    donateTitle: "Soutenez P3X Redis UI",
+    donateDescription: "P3X Redis UI est un projet gratuit et open source. Les coûts de maintenance de l'application, des fonctionnalités IA, des images Docker, des serveurs et de l'infrastructure proviennent de la poche du développeur. Si vous trouvez cet outil utile, veuillez envisager de soutenir son développement continu par un don. Chaque contribution aide à maintenir le projet en vie et en croissance. Merci !",
     jsonRecursive: "Expansion de toutes les feuilles",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Statistiques de commandes",
     latencystats: "Statistiques de latence",
     keysizes: "Tailles des clés",
-    threads: "Fils d'exécution",
+    threads: "Fils d'exécution"
   },
   confirm: {
     dropIndex: "Voulez-vous vraiment supprimer cet index ?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Vide signifie qu'elle persiste indéfiniment ; sinon entrez un entier.",
       convertTextToTime: "Convertir le texte en temps",
       convertTextToTimePlaceholder: "Ex. 1d donnera 86400"
-    },
+    }
   },
   language: {
     // When you translate the english name, keep the Language in English
@@ -193,7 +195,7 @@ const strings = {
     getKey: "Chargement de la clé Redis et des données associées ...",
     jsonViewShow: "Afficher JSON",
     jsonViewEditor: "Modifier JSON",
-    quickConsole: "Console rapide",
+    quickConsole: "Console rapide"
   },
   label: {
     id: {
@@ -334,7 +336,7 @@ const strings = {
     importNoKeys: "Aucune clé trouvée dans le fichier",
     desktopNotifications: "Notifications du bureau",
     desktopNotificationsEnabled: "Activer les notifications du bureau",
-    desktopNotificationsInfo: "Recevez des notifications du système lors des déconnexions et reconnexions Redis quand l'application n'est pas au premier plan.",
+    desktopNotificationsInfo: "Recevez des notifications du système lors des déconnexions et reconnexions Redis quand l'application n'est pas au premier plan."
   },
   status: {
     dataCopied: "Les données sont dans le presse-papiers",
@@ -380,7 +382,7 @@ const strings = {
     notInteger: "Cette entrée n'est pas un nombre entier",
     persisted: "Cette clé est conservée indéfiniment",
     set: "La clé est définie/ajoutée",
-    connectionRestored: "Connexion rétablie",
+    connectionRestored: "Connexion rétablie"
   },
   code: {
     "delete-connection": "Cette connexion a été supprimée, vous êtes donc déconnecté de cette instance Redis.",
@@ -391,7 +393,12 @@ const strings = {
     "invalid-json-value": "The value is not valid JSON.",
     "http_auth_required": "Autorisation requise : veuillez vous authentifier avec HTTP Basic Auth et recharger.",
     "auto-connection-failed": "Il est possible que la connexion ait été supprimée et que la connexion automatique ait échoué à cause de cela.",
-    invalid_console_command: "Cette commande ne fonctionne pas via le GUI."
+    invalid_console_command: "Cette commande ne fonctionne pas via le GUI.",
+    "AI_DISABLED": "L'IA est désactivée. Activez-la dans les paramètres IA.",
+    "AI_PROMPT_REQUIRED": "Une requête IA est requise.",
+    "GROQ_API_KEY_READONLY": "La clé Groq API est en lecture seule et ne peut pas être modifiée.",
+    "blocked_api_access": "Votre plan Groq API ne permet pas l'accès à ce modèle. Veuillez mettre à niveau votre plan Groq ou utiliser le proxy network.corifeus.com.",
+    "rate_limit": "Limite de débit IA atteinte. Réessayez plus tard ou utilisez votre propre clé Groq API dans les paramètres."
   },
   form: {
     error: {
@@ -487,7 +494,7 @@ const strings = {
       indexInfo: "Info index",
       indexName: "Nom de l'index",
       prefix: "Préfixe de clé (optionnel)",
-      fieldName: "Nom du champ",
+      fieldName: "Nom du champ"
     },
     monitor: {
       title: "Surveillance",
@@ -511,7 +518,7 @@ const strings = {
       peak: "Maximum",
       fragmentation: "Fragmentation",
       hitsAndMisses: "Succès / Échecs",
-      noClients: "Aucun client",
+      noClients: "Aucun client"
     },
     analysis: {
       title: "Analyse Mémoire",
@@ -542,7 +549,7 @@ const strings = {
       maxScanKeys: "Max. Clés Analysées",
       type: "Type",
       noData: "Aucune donnée. Cliquez sur Lancer l'analyse pour commencer.",
-      exportAll: "Tout Exporter",
+      exportAll: "Tout Exporter"
     },
 
     overview: {

@@ -6,7 +6,7 @@ import {
 import {
     Power, PowerOff, DeleteForever, Edit, ModeComment, AddBox,
     CheckBox, CheckBoxOutlineBlank,
-    ChevronRight, ExpandMore,
+    ChevronRight, ExpandMore, Favorite,
 } from '@mui/icons-material'
 import {
     DndContext, closestCenter, PointerSensor, useSensor, useSensors,
@@ -351,6 +351,23 @@ export default function SettingsPage() {
 
     return (
         <>
+            {/* === Donate === */}
+            <P3xrAccordion title={strings?.title?.donateTitle || 'Support P3X Redis UI'} accordionKey="donate" collapsible={false}
+                actions={
+                    <P3xrButton
+                        label={`${strings?.title?.donate || 'Donate'} — PayPal`}
+                        icon={<Favorite fontSize="small" />}
+                        onClick={() => window.open('https://www.paypal.me/patrikx3', '_blank')}
+                    />
+                }
+            >
+                <Box sx={{ p: '12px 16px', fontSize: 13, opacity: 0.85, lineHeight: 1.6 }}>
+                    {strings?.title?.donateDescription}
+                </Box>
+            </P3xrAccordion>
+
+            <br />
+
             {/* === Connections === */}
             <P3xrAccordion title={strings?.label?.connections} accordionKey="settings"
                 actions={

@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "捐赠",
+    donateTitle: "支持 P3X Redis UI",
+    donateDescription: "P3X Redis UI 是一个免费的开源项目。应用程序、AI 功能、Docker 镜像、服务器和基础设施的维护成本均来自开发者自掏腰包。如果您觉得这个工具有用，请考虑通过捐款支持其持续开发。每一份贡献都有助于保持项目的活力和发展。谢谢！",
     jsonRecursive: "展开所有叶子",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "命令统计",
     latencystats: "延迟统计",
     keysizes: "键大小",
-    threads: "线程",
+    threads: "线程"
   },
   confirm: {
     dropIndex: "确定要删除此索引吗？",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "空表示永久存在，否则使用所提供的整数。",
       convertTextToTime: "将文本转换为时间",
       convertTextToTimePlaceholder: "例如，1d 表示 86400"
-    },
+    }
   },
   language: {
     bg: "Български / Bulgarian",
@@ -189,7 +191,7 @@ const strings = {
     getKey: "加载Redis键及相关数据...",
     jsonViewShow: "显示 JSON 树",
     jsonViewEditor: "编辑JSON",
-    quickConsole: "快的",
+    quickConsole: "快的"
   },
   label: {
     id: {
@@ -330,7 +332,7 @@ const strings = {
     importNoKeys: "文件中未找到键",
     desktopNotifications: "桌面通知",
     desktopNotificationsEnabled: "启用桌面通知",
-    desktopNotificationsInfo: "当应用程序不在焦点时，接收 Redis 断线和重新连线的操作系统通知。",
+    desktopNotificationsInfo: "当应用程序不在焦点时，接收 Redis 断线和重新连线的操作系统通知。"
   },
   status: {
     dataCopied: "数据在剪贴板中",
@@ -376,7 +378,7 @@ const strings = {
     notInteger: "输入值不是一个整数",
     persisted: "永久键",
     set: "键已设置/添加",
-    connectionRestored: "连接已恢复",
+    connectionRestored: "连接已恢复"
   },
   code: {
     "delete-connection": "此连接已删除，因此您与此Redis实例断开连接。",
@@ -387,7 +389,12 @@ const strings = {
     "invalid-json-value": "The value is not valid JSON.",
     "http_auth_required": "需要授权：请先完成 HTTP Basic Auth 登录后再刷新页面。",
     "auto-connection-failed": "因此，可能导致连接被删除并且自动连接失败。",
-    invalid_console_command: "此命令无法通过 GUI 运行。"
+    invalid_console_command: "此命令无法通过 GUI 运行。",
+    "AI_DISABLED": "AI 已禁用。请在 AI 设置中启用。",
+    "AI_PROMPT_REQUIRED": "需要 AI 提示。",
+    "GROQ_API_KEY_READONLY": "Groq API 密钥为只读，无法修改。",
+    "blocked_api_access": "您的 Groq API 计划不允许访问此模型。请升级您的 Groq 计划或使用 network.corifeus.com 代理。",
+    "rate_limit": "已达到 AI 速率限制。请稍后重试或在设置中使用您自己的 Groq API 密钥。"
   },
   form: {
     error: {
@@ -483,7 +490,7 @@ const strings = {
       indexInfo: "索引信息",
       indexName: "索引名称",
       prefix: "键前缀（可选）",
-      fieldName: "字段名称",
+      fieldName: "字段名称"
     },
     monitor: {
       title: "监控",
@@ -507,7 +514,7 @@ const strings = {
       peak: "峰值",
       fragmentation: "碎片化",
       hitsAndMisses: "命中 / 未命中",
-      noClients: "没有客户端",
+      noClients: "没有客户端"
     },
     analysis: {
       title: "内存分析",
@@ -538,7 +545,7 @@ const strings = {
       maxScanKeys: "最大扫描键数",
       type: "类型",
       noData: "无数据。点击运行分析开始。",
-      exportAll: "导出全部",
+      exportAll: "导出全部"
     },
 
     overview: {

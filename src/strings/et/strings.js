@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Anneta",
+    donateTitle: "Toetage P3X Redis UI-d",
+    donateDescription: "P3X Redis UI on tasuta avatud lähtekoodiga projekt. Rakenduse, AI funktsioonide, Dockeri piltide, serverite ja taristu hoolduskulud tulevad arendaja enda taskust. Kui leiate selle tööriista kasulikuks, kaaluge palun selle jätkuva arenduse toetamist annetusega. Iga panus aitab projekti elus ja kasvamas hoida. Aitäh!",
     jsonRecursive: "Kõigi lehtede laiendamine",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Käskude statistika",
     latencystats: "Viivituse statistika",
     keysizes: "Võtmesuurused",
-    threads: "Lõimed",
+    threads: "Lõimed"
   },
   confirm: {
     dropIndex: "Kas olete kindel, et soovite selle indeksi kustutada?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Tühi tähendab, et see püsib igavesti; muul juhul sisestage täisarv.",
       convertTextToTime: "Teisendage tekst kellaajaks",
       convertTextToTimePlaceholder: "Nt. 1d on 86400"
-    },
+    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -191,7 +193,7 @@ const strings = {
     getKey: "Võtme Redis ja seotud andmete laadimine ...",
     jsonViewShow: "Ekraan JSON",
     jsonViewEditor: "Redigeerige JSON",
-    quickConsole: "Kiirkonsool",
+    quickConsole: "Kiirkonsool"
   },
   label: {
     id: {
@@ -332,7 +334,7 @@ const strings = {
     importNoKeys: "Failis ei leitud võtmeid",
     desktopNotifications: "Töölaua teavitused",
     desktopNotificationsEnabled: "Luba töölaua teavitused",
-    desktopNotificationsInfo: "Saate OS-i teavitusi Redise lahtiühenduste ja taasühenduste kohta, kui rakendus ei ole fookuses.",
+    desktopNotificationsInfo: "Saate OS-i teavitusi Redise lahtiühenduste ja taasühenduste kohta, kui rakendus ei ole fookuses."
   },
   status: {
     dataCopied: "Andmed on lõikepuhvril",
@@ -378,7 +380,7 @@ const strings = {
     notInteger: "See sisend ei ole täisarv",
     persisted: "See võti püsib igavesti",
     set: "Võti on seatud/lisatud",
-    connectionRestored: "Ühendus taastatud",
+    connectionRestored: "Ühendus taastatud"
   },
   code: {
     "delete-connection": "See ühendus kustutati, nii et olete selle Redis eksemplariga katkestatud.",
@@ -389,7 +391,12 @@ const strings = {
     "invalid-json-value": "Väärtus ei kehti JSON.",
     "http_auth_required": "Nõutav autoriseerimine: autentige HTTP Basic Auth ja laadige uuesti.",
     "auto-connection-failed": "Võimalik, et ühendus eemaldati ja automaatne ühendus ebaõnnestus.",
-    invalid_console_command: "See käsk ei tööta GUI kaudu."
+    invalid_console_command: "See käsk ei tööta GUI kaudu.",
+    "AI_DISABLED": "AI on keelatud. Lubage see AI seadetes.",
+    "AI_PROMPT_REQUIRED": "AI päring on nõutav.",
+    "GROQ_API_KEY_READONLY": "Groq API võti on kirjutuskaitstud ja seda ei saa muuta.",
+    "blocked_api_access": "Teie Groq API plaan ei luba juurdepääsu sellele mudelile. Uuendage oma Groq plaani või kasutage network.corifeus.com puhverserverit.",
+    "rate_limit": "AI piirang saavutatud. Proovige hiljem uuesti või kasutage seadetes oma Groq API võtit."
   },
   form: {
     error: {
@@ -485,7 +492,7 @@ const strings = {
       indexInfo: "Indeksi info",
       indexName: "Indeksi nimi",
       prefix: "Võtme prefiks (valikuline)",
-      fieldName: "Välja nimi",
+      fieldName: "Välja nimi"
     },
     monitor: {
       title: "Seire",
@@ -509,7 +516,7 @@ const strings = {
       peak: "Tipp",
       fragmentation: "Fragmenteerumine",
       hitsAndMisses: "Tabamused / Möödapanekud",
-      noClients: "Kliente pole",
+      noClients: "Kliente pole"
     },
     analysis: {
       title: "Mälu analüüs",
@@ -540,7 +547,7 @@ const strings = {
       maxScanKeys: "Maks. skannitud võtmed",
       type: "Tüüp",
       noData: "Andmed puuduvad. Klõpsake Käivita analüüs alustamiseks.",
-      exportAll: "Ekspordi kõik",
+      exportAll: "Ekspordi kõik"
     },
 
     overview: {

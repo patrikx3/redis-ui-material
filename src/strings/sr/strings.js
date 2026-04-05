@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "\u0414\u043E\u043D\u0430\u0446\u0438\u0458\u0430",
+    donateTitle: "Подржите P3X Redis UI",
+    donateDescription: "P3X Redis UI је бесплатан пројекат отвореног кода. Трошкови одржавања апликације, AI функција, Docker слика, сервера и инфраструктуре долазе из џепа програмера. Ако вам је овај алат користан, размислите о подршци даљем развоју донацијом. Сваки допринос помаже да пројекат живи и расте. Хвала!",
     jsonRecursive: "\u041F\u0440\u043E\u0448\u0438\u0440\u0438\u0432\u0430\u045A\u0435 \u0441\u0432\u0438\u0445 \u0433\u0440\u0430\u043D\u0430",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Статистика команди",
     latencystats: "Статистика кашњења",
     keysizes: "Величине кључева",
-    threads: "Нити",
+    threads: "Нити"
   },
   confirm: {
     dropIndex: "Да ли сте сигурни да желите да обришете овај индекс?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "\u041F\u0440\u0430\u0437\u043D\u043E \u0437\u043D\u0430\u0447\u0438 \u0434\u0430 \u0442\u0440\u0430\u0458\u0435 \u0437\u0430\u0443\u0432\u0435\u043A; \u0438\u043D\u0430\u0447\u0435 \u0443\u043D\u0435\u0441\u0438\u0442\u0435 \u0446\u0435\u043E \u0431\u0440\u043E\u0458.",
       convertTextToTime: "\u041F\u0440\u0435\u0442\u0432\u043E\u0440\u0438 \u0442\u0435\u043A\u0441\u0442 \u0443 \u0432\u0440\u0435\u043C\u0435",
       convertTextToTimePlaceholder: "\u041D\u043F\u0440. 1d \u045B\u0435 \u0431\u0438\u0442\u0438 86400"
-    },
+    }
   },
   language: {
     bg: "\u0411\u044A\u043B\u0433\u0430\u0440\u0441\u043A\u0438 / Bulgarian",
@@ -191,7 +193,7 @@ const strings = {
     getKey: "\u0423\u0447\u0438\u0442\u0430\u0432\u0430\u045A\u0435 Redis \u043A\u0459\u0443\u0447\u0430 \u0438 \u043F\u043E\u0432\u0435\u0437\u0430\u043D\u0438\u0445 \u043F\u043E\u0434\u0430\u0442\u0430\u043A\u0430 ...",
     jsonViewShow: "\u041F\u0440\u0438\u043A\u0430\u0436\u0438 JSON",
     jsonViewEditor: "\u0423\u0440\u0435\u0434\u0438 JSON",
-    quickConsole: "\u0411\u0440\u0437\u0430 \u043A\u043E\u043D\u0437\u043E\u043B\u0430",
+    quickConsole: "\u0411\u0440\u0437\u0430 \u043A\u043E\u043D\u0437\u043E\u043B\u0430"
   },
   label: {
     id: {
@@ -332,7 +334,7 @@ const strings = {
     importNoKeys: "Кључеви нису пронађени у датотеци",
     desktopNotifications: "Обавештења на радној површини",
     desktopNotificationsEnabled: "Омогући обавештења на радној површини",
-    desktopNotificationsInfo: "Примајте OS обавештења за прекиде и поновна повезивања Redis-а када апликација није у фокусу.",
+    desktopNotificationsInfo: "Примајте OS обавештења за прекиде и поновна повезивања Redis-а када апликација није у фокусу."
   },
   status: {
     dataCopied: "\u041F\u043E\u0434\u0430\u0446\u0438 \u0441\u0443 \u0443 \u043C\u0435\u0452\u0443\u0441\u043F\u0440\u0435\u043C\u043D\u0438\u043A\u0443",
@@ -378,7 +380,7 @@ const strings = {
     notInteger: "\u041E\u0432\u0430\u0458 \u0443\u043D\u043E\u0441 \u043D\u0438\u0458\u0435 \u0446\u0435\u043E \u0431\u0440\u043E\u0458",
     persisted: "\u041E\u0432\u0430\u0458 \u043A\u0459\u0443\u0447 \u0458\u0435 \u0442\u0440\u0430\u0458\u043D\u043E \u0441\u0430\u0447\u0443\u0432\u0430\u043D",
     set: "\u041A\u0459\u0443\u0447 \u0458\u0435 \u043F\u043E\u0441\u0442\u0430\u0432\u0459\u0435\u043D/\u0434\u043E\u0434\u0430\u0442",
-    connectionRestored: "Веза обновљена",
+    connectionRestored: "Веза обновљена"
   },
   code: {
     "delete-connection": "\u041E\u0432\u0430 \u043A\u043E\u043D\u0435\u043A\u0446\u0438\u0458\u0430 \u0458\u0435 \u043E\u0431\u0440\u0438\u0441\u0430\u043D\u0430, \u0442\u0430\u043A\u043E \u0434\u0430 \u0441\u0442\u0435 \u043E\u0434\u0432\u043E\u0458\u0435\u043D\u0438 \u043E\u0434 \u043E\u0432\u0435 Redis \u0438\u043D\u0441\u0442\u0430\u043D\u0446\u0435.",
@@ -389,7 +391,12 @@ const strings = {
     "invalid-json-value": "The value is not valid JSON.",
     "http_auth_required": "\u041F\u043E\u0442\u0440\u0435\u0431\u043D\u0430 \u0430\u0443\u0442\u043E\u0440\u0438\u0437\u0430\u0446\u0438\u0458\u0430: \u043C\u043E\u043B\u0438\u043C\u043E \u0430\u0443\u0442\u0435\u043D\u0442\u0438\u0444\u0438\u043A\u0443\u0458\u0442\u0435 \u0441\u0435 \u043F\u0443\u0442\u0435\u043C HTTP Basic Auth \u0438 \u043F\u043E\u043D\u043E\u0432\u043E \u0443\u0447\u0438\u0442\u0430\u0458\u0442\u0435.",
     "auto-connection-failed": "\u041C\u043E\u0433\u0443\u045B\u0435 \u0458\u0435 \u0434\u0430 \u0458\u0435 \u043A\u043E\u043D\u0435\u043A\u0446\u0438\u0458\u0430 \u0443\u043A\u043B\u043E\u045A\u0435\u043D\u0430 \u0438 \u0430\u0443\u0442\u043E\u043C\u0430\u0442\u0441\u043A\u043E \u043F\u043E\u0432\u0435\u0437\u0438\u0432\u0430\u045A\u0435 \u043D\u0438\u0458\u0435 \u0443\u0441\u043F\u0435\u043B\u043E \u0437\u0431\u043E\u0433 \u0442\u043E\u0433\u0430.",
-    invalid_console_command: "\u041E\u0432\u0430 \u043A\u043E\u043C\u0430\u043D\u0434\u0430 \u043D\u0435 \u0440\u0430\u0434\u0438 \u043F\u0440\u0435\u043A\u043E GUI."
+    invalid_console_command: "\u041E\u0432\u0430 \u043A\u043E\u043C\u0430\u043D\u0434\u0430 \u043D\u0435 \u0440\u0430\u0434\u0438 \u043F\u0440\u0435\u043A\u043E GUI.",
+    "AI_DISABLED": "AI је онемогућен. Омогућите га у AI подешавањима.",
+    "AI_PROMPT_REQUIRED": "AI упит је обавезан.",
+    "GROQ_API_KEY_READONLY": "Groq API кључ је само за читање и не може се мењати.",
+    "blocked_api_access": "Ваш Groq API план не дозвољава приступ овом моделу. Надоградите Groq план или користите network.corifeus.com прокси.",
+    "rate_limit": "Достигнут је AI лимит. Покушајте поново касније или користите сопствени Groq API кључ у подешавањима."
   },
   form: {
     error: {
@@ -485,7 +492,7 @@ const strings = {
       indexInfo: "Инфо о индексу",
       indexName: "Назив индекса",
       prefix: "Префикс кључа (опционално)",
-      fieldName: "Назив поља",
+      fieldName: "Назив поља"
     },
     monitor: {
       title: "Надгледање",
@@ -509,7 +516,7 @@ const strings = {
       peak: "Врх",
       fragmentation: "Фрагментација",
       hitsAndMisses: "Погоци / Промашаји",
-      noClients: "Нема клијената",
+      noClients: "Нема клијената"
     },
     analysis: {
       title: "Анализа меморије",
@@ -540,7 +547,7 @@ const strings = {
       maxScanKeys: "Макс. скенираних кључева",
       type: "Тип",
       noData: "Нема података. Кликните Покрени анализу за почетак.",
-      exportAll: "Извези све",
+      exportAll: "Извези све"
     },
 
     overview: {

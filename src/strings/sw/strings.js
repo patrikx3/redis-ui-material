@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Changia",
+    donateTitle: "Saidia P3X Redis UI",
+    donateDescription: "P3X Redis UI ni mradi wa bure na wa chanzo huria. Gharama za kudumisha programu, vipengele vya AI, picha za Docker, seva na miundombinu zinatoka mfukoni mwa msanidi programu. Ikiwa unapata chombo hiki kuwa muhimu, tafadhali fikiria kusaidia maendeleo yake yanayoendelea kwa mchango. Kila mchango husaidia mradi kuendelea kuishi na kukua. Asante!",
     jsonRecursive: "Kupanua majani yote",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Takwimu za amri",
     latencystats: "Takwimu za ucheleweshaji",
     keysizes: "Ukubwa wa funguo",
-    threads: "Nyuzi",
+    threads: "Nyuzi"
   },
   confirm: {
     dropIndex: "Una uhakika unataka kufuta faharasa hii?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Tupu inamaanisha unaendelea milele; vinginevyo ingiza nambari kamili.",
       convertTextToTime: "Badilisha maandishi kuwa wakati",
       convertTextToTimePlaceholder: "Mfano 1d itakuwa 86400"
-    },
+    }
   },
   language: {
     // When you translate the english name, keep the Language in English
@@ -193,7 +195,7 @@ const strings = {
     getKey: "Inapakia ufunguo wa Redis na data inayohusiana ...",
     jsonViewShow: "Onyesha JSON",
     jsonViewEditor: "Hariri JSON",
-    quickConsole: "Konsoli ya Haraka",
+    quickConsole: "Konsoli ya Haraka"
   },
   label: {
     id: {
@@ -334,7 +336,7 @@ const strings = {
     importNoKeys: "Hakuna funguo zilizopatikana kwenye faili",
     desktopNotifications: "Arifa za Eneo-kazi",
     desktopNotificationsEnabled: "Washa arifa za eneo-kazi",
-    desktopNotificationsInfo: "Pokea arifa za OS kwa kukatika na kuunganisha tena kwa Redis wakati programu haipo katika lengo.",
+    desktopNotificationsInfo: "Pokea arifa za OS kwa kukatika na kuunganisha tena kwa Redis wakati programu haipo katika lengo."
   },
   status: {
     dataCopied: "Data iko kwenye ubao wa kunakili",
@@ -380,7 +382,7 @@ const strings = {
     notInteger: "Ingizo hili si nambari kamili",
     persisted: "Ufunguo huu umehifadhiwa milele",
     set: "Ufunguo umewekwa/imeongezwa",
-    connectionRestored: "Muunganisho umerejeshwa",
+    connectionRestored: "Muunganisho umerejeshwa"
   },
   code: {
     "delete-connection": "Muunganisho huu umefutwa, kwa hivyo umetenganishwa na mfano huu wa Redis.",
@@ -391,7 +393,12 @@ const strings = {
     "invalid-json-value": "Thamani si JSON halali.",
     "http_auth_required": "Idhini inahitajika: tafadhali thibitisha na HTTP Basic Auth na upakia upya.",
     "auto-connection-failed": "Huenda muunganisho uliondolewa na muunganisho wa kiotomatiki umeshindwa kwa sababu hiyo.",
-    invalid_console_command: "Amri hii haifanyi kazi kupitia GUI."
+    invalid_console_command: "Amri hii haifanyi kazi kupitia GUI.",
+    "AI_DISABLED": "AI imezimwa. Iwashe katika Mipangilio ya AI.",
+    "AI_PROMPT_REQUIRED": "Ombi la AI linahitajika.",
+    "GROQ_API_KEY_READONLY": "Ufunguo wa Groq API ni wa kusoma tu na hauwezi kubadilishwa.",
+    "blocked_api_access": "Mpango wako wa Groq API hauruhusu ufikiaji wa modeli hii. Boresha mpango wako wa Groq au tumia proksi ya network.corifeus.com.",
+    "rate_limit": "Kikomo cha kiwango cha AI kimefikiwa. Jaribu tena baadaye au tumia ufunguo wako wa Groq API katika Mipangilio."
   },
   form: {
     error: {
@@ -487,7 +494,7 @@ const strings = {
       indexInfo: "Maelezo ya faharasa",
       indexName: "Jina la faharasa",
       prefix: "Kiambishi awali cha ufunguo (hiari)",
-      fieldName: "Jina la uga",
+      fieldName: "Jina la uga"
     },
     monitor: {
       title: "Ufuatiliaji",
@@ -511,7 +518,7 @@ const strings = {
       peak: "Kilele",
       fragmentation: "Mgawanyiko",
       hitsAndMisses: "Mapigo / Kukosa",
-      noClients: "Hakuna wateja",
+      noClients: "Hakuna wateja"
     },
     analysis: {
       title: "Uchambuzi wa Kumbukumbu",
@@ -542,7 +549,7 @@ const strings = {
       maxScanKeys: "Upeo wa Funguo Zilizoskanwa",
       type: "Aina",
       noData: "Hakuna data. Bofya Endesha Uchambuzi kuanza.",
-      exportAll: "Hamisha Zote",
+      exportAll: "Hamisha Zote"
     },
 
     overview: {

@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Дарение",
+    donateTitle: "Подкрепете P3X Redis UI",
+    donateDescription: "P3X Redis UI е безплатен проект с отворен код. Разходите за поддръжка на приложението, AI функциите, Docker образите, сървърите и инфраструктурата идват от собствения джоб на разработчика. Ако намирате този инструмент за полезен, моля обмислете да подкрепите развитието му с дарение. Всеки принос помага проектът да живее и расте. Благодаря!",
     jsonRecursive: "Разгъване на всички листа",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Статистика на командите",
     latencystats: "Статистика на закъсненията",
     keysizes: "Размери на ключовете",
-    threads: "Нишки",
+    threads: "Нишки"
   },
   confirm: {
     dropIndex: "Сигурни ли сте, че искате да изтриете този индекс?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Празно означава, че се запазва завинаги; в противен случай въведете цяло число.",
       convertTextToTime: "Преобразуване на текст във време",
       convertTextToTimePlaceholder: "Напр. 1d ще бъде 86400"
-    },
+    }
   },
   language: {
     // When you translate the english name, keep the Language in English
@@ -193,7 +195,7 @@ const strings = {
     getKey: "Зареждане на Redis ключ и свързани данни ...",
     jsonViewShow: "Покажи JSON",
     jsonViewEditor: "Редактирай JSON",
-    quickConsole: "Бърза конзола",
+    quickConsole: "Бърза конзола"
   },
   label: {
     id: {
@@ -334,7 +336,7 @@ const strings = {
     importNoKeys: "Не са намерени ключове във файла",
     desktopNotifications: "Настолни известия",
     desktopNotificationsEnabled: "Активиране на настолни известия",
-    desktopNotificationsInfo: "Получавайте известия от ОС при прекъсване и възстановяване на Redis връзката, когато приложението не е на фокус.",
+    desktopNotificationsInfo: "Получавайте известия от ОС при прекъсване и възстановяване на Redis връзката, когато приложението не е на фокус."
   },
   status: {
     dataCopied: "Данните са в клипборда",
@@ -380,7 +382,7 @@ const strings = {
     notInteger: "Този вход не е цяло число",
     persisted: "Този ключ е запазен завинаги",
     set: "Ключът е зададен/добавен",
-    connectionRestored: "Връзката е възстановена",
+    connectionRestored: "Връзката е възстановена"
   },
   code: {
     "delete-connection": "Тази връзка е изтрита, затова сте прекъснати от тази Redis инстанция.",
@@ -391,7 +393,12 @@ const strings = {
     "invalid-json-value": "The value is not valid JSON.",
     "http_auth_required": "Необходима е оторизация: моля, удостоверете се с HTTP Basic Auth и презаредете.",
     "auto-connection-failed": "Възможно е връзката да е била премахната и автоматичното свързване е неуспешно поради това.",
-    invalid_console_command: "Тази команда не работи чрез GUI."
+    invalid_console_command: "Тази команда не работи чрез GUI.",
+    "AI_DISABLED": "AI е деактивиран. Активирайте го в AI настройките.",
+    "AI_PROMPT_REQUIRED": "Необходим е AI запрос.",
+    "GROQ_API_KEY_READONLY": "Ключът на Groq API е само за четене и не може да бъде променен.",
+    "blocked_api_access": "Вашият план на Groq API не позволява достъп до този модел. Моля, надградете плана си или използвайте прокси network.corifeus.com.",
+    "rate_limit": "Достигнат е лимитът на AI. Опитайте по-късно или използвайте собствен Groq API ключ в настройките."
   },
   form: {
     error: {
@@ -487,7 +494,7 @@ const strings = {
       indexInfo: "Инфо за индекс",
       indexName: "Име на индекс",
       prefix: "Префикс на ключ (по избор)",
-      fieldName: "Име на поле",
+      fieldName: "Име на поле"
     },
     monitor: {
       title: "Мониторинг",
@@ -511,7 +518,7 @@ const strings = {
       peak: "Пик",
       fragmentation: "Фрагментация",
       hitsAndMisses: "Попадения / Пропуски",
-      noClients: "Няма клиенти",
+      noClients: "Няма клиенти"
     },
     analysis: {
       title: "Анализ на паметта",
@@ -542,7 +549,7 @@ const strings = {
       maxScanKeys: "Макс. сканирани ключове",
       type: "Тип",
       noData: "Няма данни. Кликнете Стартирай анализ, за да започнете.",
-      exportAll: "Експорт на всичко",
+      exportAll: "Експорт на всичко"
     },
 
     overview: {

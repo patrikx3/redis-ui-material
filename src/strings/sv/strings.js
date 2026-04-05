@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Donera",
+    donateTitle: "Stöd P3X Redis UI",
+    donateDescription: "P3X Redis UI är ett gratis projekt med öppen källkod. Kostnaderna för underhåll av appen, AI-funktioner, Docker-images, servrar och infrastruktur kommer ur utvecklarens egen ficka. Om du tycker att detta verktyg är användbart, överväg att stödja dess fortsatta utveckling med en donation. Varje bidrag hjälper projektet att leva och växa. Tack!",
     jsonRecursive: "Expanderar alla löv",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Kommandostatistik",
     latencystats: "Latensstatistik",
     keysizes: "Nyckelstorlekar",
-    threads: "Trådar",
+    threads: "Trådar"
   },
   confirm: {
     dropIndex: "Är du säker på att du vill ta bort detta index?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Tomt betyder att den finns kvar för alltid; annars ange ett heltal.",
       convertTextToTime: "Konvertera text till tid",
       convertTextToTimePlaceholder: "T.ex. 1d blir 86400"
-    },
+    }
   },
   language: {
     bg: "Български / Bulgarian",
@@ -189,7 +191,7 @@ const strings = {
     getKey: "Laddar Redis-nyckel och tillhörande data ...",
     jsonViewShow: "Visa JSON",
     jsonViewEditor: "Redigera JSON",
-    quickConsole: "Snabbkonsol",
+    quickConsole: "Snabbkonsol"
   },
   label: {
     id: {
@@ -330,7 +332,7 @@ const strings = {
     importNoKeys: "Inga nycklar hittades i filen",
     desktopNotifications: "Skrivbordsmeddelanden",
     desktopNotificationsEnabled: "Aktivera skrivbordsmeddelanden",
-    desktopNotificationsInfo: "Få OS-meddelanden för Redis-frånkopplingar och återanslutningar när appen inte är i fokus.",
+    desktopNotificationsInfo: "Få OS-meddelanden för Redis-frånkopplingar och återanslutningar när appen inte är i fokus."
   },
   status: {
     dataCopied: "Datan finns i urklipp",
@@ -376,7 +378,7 @@ const strings = {
     notInteger: "Denna inmatning är inte ett heltal",
     persisted: "Denna nyckel finns kvar för alltid",
     set: "Nyckeln är satt/tillagd",
-    connectionRestored: "Anslutningen återställd",
+    connectionRestored: "Anslutningen återställd"
   },
   code: {
     "delete-connection": "Denna anslutning raderades, så du är frånkopplad från denna Redis-instans.",
@@ -387,7 +389,12 @@ const strings = {
     "invalid-json-value": "The value is not valid JSON.",
     "http_auth_required": "Auktorisering krävs: vänligen autentisera med HTTP Basic Auth och ladda om.",
     "auto-connection-failed": "Möjligen togs anslutningen bort och den automatiska anslutningen misslyckades på grund av detta.",
-    invalid_console_command: "Detta kommando fungerar inte via GUI."
+    invalid_console_command: "Detta kommando fungerar inte via GUI.",
+    "AI_DISABLED": "AI är inaktiverad. Aktivera det i AI-inställningar.",
+    "AI_PROMPT_REQUIRED": "AI-förfrågan krävs.",
+    "GROQ_API_KEY_READONLY": "Groq API-nyckeln är skrivskyddad och kan inte ändras.",
+    "blocked_api_access": "Din Groq API-plan tillåter inte åtkomst till denna modell. Uppgradera din Groq-plan eller använd network.corifeus.com proxy.",
+    "rate_limit": "AI-hastighetsgräns nådd. Försök igen senare eller använd din egen Groq API-nyckel i inställningarna."
   },
   form: {
     error: {
@@ -483,7 +490,7 @@ const strings = {
       indexInfo: "Indexinfo",
       indexName: "Indexnamn",
       prefix: "Nyckelprefix (valfritt)",
-      fieldName: "Fältnamn",
+      fieldName: "Fältnamn"
     },
     monitor: {
       title: "Övervakning",
@@ -507,7 +514,7 @@ const strings = {
       peak: "Topp",
       fragmentation: "Fragmentering",
       hitsAndMisses: "Träffar / Missar",
-      noClients: "Inga klienter",
+      noClients: "Inga klienter"
     },
     analysis: {
       title: "Minnesanalys",
@@ -538,7 +545,7 @@ const strings = {
       maxScanKeys: "Max. skannade nycklar",
       type: "Typ",
       noData: "Ingen data. Klicka Kör analys för att starta.",
-      exportAll: "Exportera allt",
+      exportAll: "Exportera allt"
     },
 
     overview: {

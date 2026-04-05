@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Donar",
+    donateTitle: "Apoya P3X Redis UI",
+    donateDescription: "P3X Redis UI es un proyecto gratuito y de código abierto. Los costos de mantenimiento de la aplicación, funciones de IA, imágenes Docker, servidores e infraestructura salen del bolsillo del desarrollador. Si encuentras útil esta herramienta, considera apoyar su desarrollo continuo con una donación. Cada contribución ayuda a mantener el proyecto vivo y creciendo. ¡Gracias!",
     jsonRecursive: "Expandiendo todas las hojas",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Estadísticas de comandos",
     latencystats: "Estadísticas de latencia",
     keysizes: "Tamaños de claves",
-    threads: "Hilos",
+    threads: "Hilos"
   },
   confirm: {
     dropIndex: "¿Está seguro de eliminar este índice?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Vacío significa que persiste para siempre; de lo contrario ingrese un entero.",
       convertTextToTime: "Convertir texto a tiempo",
       convertTextToTimePlaceholder: "Ej. 1d será 86400"
-    },
+    }
   },
   language: {
     // When you translate the english name, keep the Language in English
@@ -193,7 +195,7 @@ const strings = {
     getKey: "Cargando clave Redis y datos asociados ...",
     jsonViewShow: "Mostrar JSON",
     jsonViewEditor: "Editar JSON",
-    quickConsole: "Consola rápida",
+    quickConsole: "Consola rápida"
   },
   label: {
     id: {
@@ -334,7 +336,7 @@ const strings = {
     importNoKeys: "No se encontraron claves en el archivo",
     desktopNotifications: "Notificaciones de escritorio",
     desktopNotificationsEnabled: "Activar notificaciones de escritorio",
-    desktopNotificationsInfo: "Reciba notificaciones del SO para desconexiones y reconexiones de Redis cuando la aplicación no esté en primer plano.",
+    desktopNotificationsInfo: "Reciba notificaciones del SO para desconexiones y reconexiones de Redis cuando la aplicación no esté en primer plano."
   },
   status: {
     dataCopied: "Los datos están en el portapapeles",
@@ -380,7 +382,7 @@ const strings = {
     notInteger: "Esta entrada no es un número entero",
     persisted: "Esta clave se mantiene para siempre",
     set: "La clave ha sido establecida/agregada",
-    connectionRestored: "Conexión restablecida",
+    connectionRestored: "Conexión restablecida"
   },
   code: {
     "delete-connection": "Esta conexión fue eliminada, por lo que se ha desconectado de esta instancia de Redis.",
@@ -391,7 +393,12 @@ const strings = {
     "invalid-json-value": "The value is not valid JSON.",
     "http_auth_required": "Autorización requerida: por favor autentíquese con HTTP Basic Auth y recargue.",
     "auto-connection-failed": "Es posible que la conexión fue eliminada y la conexión automática falló por esta razón.",
-    invalid_console_command: "Este comando no funciona a través del GUI."
+    invalid_console_command: "Este comando no funciona a través del GUI.",
+    "AI_DISABLED": "AI está desactivado. Actívelo en la configuración de AI.",
+    "AI_PROMPT_REQUIRED": "Se requiere una consulta de AI.",
+    "GROQ_API_KEY_READONLY": "La clave de Groq API es de solo lectura y no se puede modificar.",
+    "blocked_api_access": "Su plan de Groq API no permite el acceso a este modelo. Actualice su plan de Groq o use el proxy network.corifeus.com.",
+    "rate_limit": "Se alcanzó el límite de AI. Inténtelo más tarde o use su propia clave de Groq API en la configuración."
   },
   form: {
     error: {
@@ -487,7 +494,7 @@ const strings = {
       indexInfo: "Info del índice",
       indexName: "Nombre del índice",
       prefix: "Prefijo de clave (opcional)",
-      fieldName: "Nombre del campo",
+      fieldName: "Nombre del campo"
     },
     monitor: {
       title: "Monitoreo",
@@ -511,7 +518,7 @@ const strings = {
       peak: "Máximo",
       fragmentation: "Fragmentación",
       hitsAndMisses: "Aciertos / Fallos",
-      noClients: "Sin clientes",
+      noClients: "Sin clientes"
     },
     analysis: {
       title: "Análisis de Memoria",
@@ -542,7 +549,7 @@ const strings = {
       maxScanKeys: "Máx. Claves Escaneadas",
       type: "Tipo",
       noData: "Sin datos. Haga clic en Ejecutar Análisis para comenzar.",
-      exportAll: "Exportar Todo",
+      exportAll: "Exportar Todo"
     },
 
     overview: {

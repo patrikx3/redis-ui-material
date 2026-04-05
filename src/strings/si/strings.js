@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "පරිත්\u200dයාග කරන්න",
+    donateTitle: "P3X Redis UI සඳහා සහාය වන්න",
+    donateDescription: "P3X Redis UI නිදහස්, විවෘත මූලාශ්‍ර ව්‍යාපෘතියකි. යෙදුම, AI විශේෂාංග, Docker පින්තූර, සේවාදායක සහ යටිතල පහසුකම් නඩත්තු කිරීමේ වියදම් සංවර්ධකයාගේ සාක්කුවෙන් පැමිණේ. ඔබට මෙම මෙවලම ප්‍රයෝජනවත් යැයි හැඟේ නම්, කරුණාකර පරිත්‍යාගයක් මගින් එහි අඛණ්ඩ සංවර්ධනයට සහාය දීම සලකා බලන්න. සෑම දායකත්වයක්ම ව්‍යාපෘතිය ජීවමාන හා වර්ධනය වෙමින් පවත්වා ගැනීමට උපකාරී වේ. ස්තූතියි!",
     jsonRecursive: "සියලුම කොළ පුළුල් කරමින්",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "commandstats",
     latencystats: "latencystats",
     keysizes: "keysizes",
-    threads: "threads",
+    threads: "threads"
   },
   confirm: {
     dropIndex: "මෙම සුචිය මැකීමට විශ්වාසද?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "හිස් යනු සදාකාලිකව පවතිනවා; නැතිනම් පූර්ණ සංඛ්\u200dයාවක් ඇතුළත් කරන්න.",
       convertTextToTime: "පෙළ කාලයට පරිවර්තනය කරන්න",
       convertTextToTimePlaceholder: "උදා. 1d 86400 වනු ඇත"
-    },
+    }
   },
   language: {
     // When you translate the english name, keep the Language in English
@@ -193,7 +195,7 @@ const strings = {
     getKey: "Redis යතුර සහ ආශ්\u200dරිත දත්ත පූරණය වෙමින් ...",
     jsonViewShow: "JSON පෙන්වන්න",
     jsonViewEditor: "JSON සංස්කරණය",
-    quickConsole: "ඉක්මන් කොන්සෝලය",
+    quickConsole: "ඉක්මන් කොන්සෝලය"
   },
   label: {
     id: {
@@ -334,7 +336,7 @@ const strings = {
     importNoKeys: "ගොනුවේ යතුරු හමු නොවීය",
     desktopNotifications: "Desktop Notifications",
     desktopNotificationsEnabled: "Enable desktop notifications",
-    desktopNotificationsInfo: "Receive OS notifications for Redis disconnections and reconnections when the app is not focused.",
+    desktopNotificationsInfo: "Receive OS notifications for Redis disconnections and reconnections when the app is not focused."
   },
   status: {
     dataCopied: "දත්ත පසුරු පුවරුවේ ඇත",
@@ -380,7 +382,7 @@ const strings = {
     notInteger: "මෙම ආදානය පූර්ණ සංඛ්\u200dයාවක් නොවේ",
     persisted: "මෙම යතුර සදාකාලිකව පවතී",
     set: "යතුර සකසන ලදී/එක් කරන ලදී",
-    connectionRestored: "Connection restored",
+    connectionRestored: "Connection restored"
   },
   code: {
     "delete-connection": "මෙම සම්බන්ධතාවය මකා දමන ලදී, එබැවින් ඔබ මෙම Redis අවස්ථාවෙන් විසන්ධි වී ඇත.",
@@ -391,7 +393,12 @@ const strings = {
     "invalid-json-value": "අගය වලංගු JSON නොවේ.",
     "http_auth_required": "අවසරය අවශ්\u200dයයි: කරුණාකර HTTP Basic Auth සමඟ සත්\u200dයාපනය කර නැවත පූරණය කරන්න.",
     "auto-connection-failed": "සම්බන්ධතාවය ඉවත් කර ඇති විය හැකි අතර ස්වයංක්\u200dරීය සම්බන්ධතාවය මේ නිසා අසාර්ථක විය.",
-    invalid_console_command: "මෙම විධානය GUI හරහා ක්\u200dරියා නොකරයි."
+    invalid_console_command: "මෙම විධානය GUI හරහා ක්\u200dරියා නොකරයි.",
+    "AI_DISABLED": "AI අක්‍රියයි. AI සැකසුම් තුළ සක්‍රිය කරන්න.",
+    "AI_PROMPT_REQUIRED": "AI ඉල්ලීම අවශ්‍යයි.",
+    "GROQ_API_KEY_READONLY": "Groq API යතුර කියවීම පමණක් වන අතර වෙනස් කළ නොහැක.",
+    "blocked_api_access": "ඔබේ Groq API සැලැස්ම මෙම ආකෘතියට ප්‍රවේශය ලබා දෙන්නේ නැත. Groq සැලැස්ම උත්ශ්‍රේණි කරන්න හෝ network.corifeus.com proxy භාවිතා කරන්න.",
+    "rate_limit": "AI අනුපාත සීමාවට ළඟා විය. පසුව නැවත උත්සාහ කරන්න හෝ සැකසුම් තුළ ඔබේම Groq API යතුර භාවිතා කරන්න."
   },
   form: {
     error: {
@@ -487,7 +494,7 @@ const strings = {
       indexInfo: "සුචි තොරතුරු",
       indexName: "සුචි නම",
       prefix: "යතුරු උපසර්ගය (විකල්ප)",
-      fieldName: "ක්ෂේත්‍ර නම",
+      fieldName: "ක්ෂේත්‍ර නම"
     },
     monitor: {
       title: "අධීක්ෂණය",
@@ -511,7 +518,7 @@ const strings = {
       peak: "උපරිම",
       fragmentation: "ඛණ්ඩනය",
       hitsAndMisses: "වාර / මග හැරීම්",
-      noClients: "සේවාදායකයින් නැත",
+      noClients: "සේවාදායකයින් නැත"
     },
     analysis: {
       title: "මතක විශ්ලේෂණය",
@@ -542,7 +549,7 @@ const strings = {
       maxScanKeys: "උපරිම ස්කෑන් යතුරු",
       type: "වර්ගය",
       noData: "දත්ත නැත. ආරම්භ කිරීමට විශ්ලේෂණය ක්‍රියාත්මක කරන්න ක්ලික් කරන්න.",
-      exportAll: "සියල්ල අපනයනය",
+      exportAll: "සියල්ල අපනයනය"
     },
 
     overview: {

@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "기부",
+    donateTitle: "P3X Redis UI 지원하기",
+    donateDescription: "P3X Redis UI는 무료 오픈소스 프로젝트입니다. 앱 유지 관리, AI 기능, Docker 이미지, 서버 및 인프라 비용은 개발자의 사비로 충당됩니다. 이 도구가 유용하다면, 기부를 통해 지속적인 개발을 지원해 주세요. 모든 기여는 프로젝트를 유지하고 성장시키는 데 도움이 됩니다. 감사합니다!",
     jsonRecursive: "모든 잎 확장",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "명령 통계",
     latencystats: "지연 통계",
     keysizes: "키 크기",
-    threads: "스레드",
+    threads: "스레드"
   },
   confirm: {
     dropIndex: "이 인덱스를 삭제하시겠습니까?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "비어 있다는 것은 그것이 영원히 지속된다는 것을 의미합니다. 그렇지 않으면 정수를 입력하십시오.",
       convertTextToTime: "텍스트를 시간으로 변환",
       convertTextToTimePlaceholder: "예. 1d는 86400이 됩니다."
-    },
+    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -191,7 +193,7 @@ const strings = {
     getKey: "Redis 키 및 관련 데이터 로드 중...",
     jsonViewShow: "JSON 표시",
     jsonViewEditor: "JSON 편집",
-    quickConsole: "빠른 콘솔",
+    quickConsole: "빠른 콘솔"
   },
   label: {
     id: {
@@ -332,7 +334,7 @@ const strings = {
     importNoKeys: "파일에서 키를 찾을 수 없습니다",
     desktopNotifications: "데스크톱 알림",
     desktopNotificationsEnabled: "데스크톱 알림 활성화",
-    desktopNotificationsInfo: "앱이 포커스되지 않을 때 Redis 연결 해제 및 재연결에 대한 OS 알림을 받습니다.",
+    desktopNotificationsInfo: "앱이 포커스되지 않을 때 Redis 연결 해제 및 재연결에 대한 OS 알림을 받습니다."
   },
   status: {
     dataCopied: "데이터가 클립보드에 있습니다.",
@@ -378,7 +380,7 @@ const strings = {
     notInteger: "이 입력은 정수가 아닙니다.",
     persisted: "이 키는 영원히 유지됩니다.",
     set: "���가 설정/추가되었습니다.",
-    connectionRestored: "연결이 복원됨",
+    connectionRestored: "연결이 복원됨"
   },
   code: {
     "delete-connection": "이 연결이 삭제되어 이 Redis 인스턴스에 대한 연결이 끊어졌습니다.",
@@ -389,7 +391,12 @@ const strings = {
     "invalid-json-value": "값이 유효한 JSON가 아닙니다.",
     "http_auth_required": "승인 필요: HTTP Basic Auth로 인증하고 다시 로드하세요.",
     "auto-connection-failed": "이로 인해 연결이 제거되고 자동 연결이 실패했을 수도 있습니다.",
-    invalid_console_command: "이 명령은 GUI를 통해 작동하지 않습니다."
+    invalid_console_command: "이 명령은 GUI를 통해 작동하지 않습니다.",
+    "AI_DISABLED": "AI가 비활성화되었습니다. AI 설정에서 활성화하세요.",
+    "AI_PROMPT_REQUIRED": "AI 프롬프트가 필요합니다.",
+    "GROQ_API_KEY_READONLY": "Groq API 키는 읽기 전용이며 수정할 수 없습니다.",
+    "blocked_api_access": "Groq API 플랜에서 이 모델에 대한 액세스를 허용하지 않습니다. Groq 플랜을 업그레이드하거나 network.corifeus.com 프록시를 사용하세요.",
+    "rate_limit": "AI 속도 제한에 도달했습니다. 나중에 다시 시도하거나 설정에서 자신의 Groq API 키를 사용하세요."
   },
   form: {
     error: {
@@ -485,7 +492,7 @@ const strings = {
       indexInfo: "인덱스 정보",
       indexName: "인덱스 이름",
       prefix: "키 접두사 (선택)",
-      fieldName: "필드 이름",
+      fieldName: "필드 이름"
     },
     monitor: {
       title: "모니터링",
@@ -509,7 +516,7 @@ const strings = {
       peak: "최대",
       fragmentation: "단편화",
       hitsAndMisses: "적중 / 미스",
-      noClients: "클라이언트 없음",
+      noClients: "클라이언트 없음"
     },
     analysis: {
       title: "메모리 분석",
@@ -540,7 +547,7 @@ const strings = {
       maxScanKeys: "최대 스캔 키 수",
       type: "타입",
       noData: "데이터 없음. 분석 실행을 클릭하여 시작하세요.",
-      exportAll: "모두 내보내기",
+      exportAll: "모두 내보내기"
     },
 
     overview: {

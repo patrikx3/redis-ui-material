@@ -4,6 +4,8 @@ const strings = {
   },
   title: {
     donate: "Садақа беру",
+    donateTitle: "P3X Redis UI-ді қолдаңыз",
+    donateDescription: "P3X Redis UI — тегін, ашық бастапқы код жобасы. Қосымшаны, AI мүмкіндіктерін, Docker кескіндерін, серверлерді және инфрақұрылымды ұстау шығындары әзірлеушінің өз қалтасынан шығады. Бұл құралды пайдалы деп тапсаңыз, оның үздіксіз дамуын қайырмалдықпен қолдауды қарастырыңыз. Әрбір үлес жобаны тірі және өсіп келе жатқан ұстауға көмектеседі. Рахмет!",
     jsonRecursive: "Барлық жапырақтарды кеңейту",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
@@ -26,7 +28,7 @@ const strings = {
     commandstats: "Команда статistикасы",
     latencystats: "Кідіріс статistикасы",
     keysizes: "Кілт өлшемдері",
-    threads: "Ағындар",
+    threads: "Ағындар"
   },
   confirm: {
     dropIndex: "Бұл индексті жоюға сенімдісіз бе?",
@@ -66,7 +68,7 @@ const strings = {
       placeholderPlaceholder: "Бос бұл мәңгілік сақталады дегенді білдіреді; әйтпесе бүтін санды енгізіңіз.",
       convertTextToTime: "Мәтінді уақытқа түрлендіру",
       convertTextToTimePlaceholder: "Мысалы. 1d 86400 болады"
-    },
+    }
   },
   language: {
     ar: "العربية / Arabic",
@@ -191,7 +193,7 @@ const strings = {
     getKey: "Redis кілті мен байланысты деректер жүктелуде ...",
     jsonViewShow: "JSON дисплейі",
     jsonViewEditor: "JSON өңдеу",
-    quickConsole: "Жылдам консоль",
+    quickConsole: "Жылдам консоль"
   },
   label: {
     id: {
@@ -332,7 +334,7 @@ const strings = {
     importNoKeys: "Файлдан кілттер табылмады",
     desktopNotifications: "Desktop Notifications",
     desktopNotificationsEnabled: "Enable desktop notifications",
-    desktopNotificationsInfo: "Receive OS notifications for Redis disconnections and reconnections when the app is not focused.",
+    desktopNotificationsInfo: "Receive OS notifications for Redis disconnections and reconnections when the app is not focused."
   },
   status: {
     dataCopied: "Деректер алмасу буферінде",
@@ -378,7 +380,7 @@ const strings = {
     notInteger: "Бұл кіріс бүтін сан емес",
     persisted: "Бұл кілт мәңгі сақталады",
     set: "Кілт орнатылған/қосылған",
-    connectionRestored: "Connection restored",
+    connectionRestored: "Connection restored"
   },
   code: {
     "delete-connection": "Бұл қосылым жойылды, сондықтан сіз осы Redis данасына ажыратылдыңыз.",
@@ -389,7 +391,12 @@ const strings = {
     "invalid-json-value": "Мән жарамсыз JSON.",
     "http_auth_required": "Авторизация қажет: HTTP Basic Auth көмегімен аутентификациядан өтіп, қайта жүктеңіз.",
     "auto-connection-failed": "Мүмкін, осыған байланысты қосылым жойылды және автоматты қосылым сәтсіз аяқталды.",
-    invalid_console_command: "Бұл пәрмен GUI арқылы жұмыс істемейді."
+    invalid_console_command: "Бұл пәрмен GUI арқылы жұмыс істемейді.",
+    "AI_DISABLED": "AI өшірілген. AI параметрлерінде қосыңыз.",
+    "AI_PROMPT_REQUIRED": "AI сұрауы қажет.",
+    "GROQ_API_KEY_READONLY": "Groq API кілті тек оқу үшін және өзгертуге болмайды.",
+    "blocked_api_access": "Groq API жоспарыңыз бұл модельге кіруге рұқсат бермейді. Groq жоспарын жаңартыңыз немесе network.corifeus.com проксиін пайдаланыңыз.",
+    "rate_limit": "AI жылдамдық шегіне жетті. Кейінірек қайталаңыз немесе параметрлерде өз Groq API кілтіңізді пайдаланыңыз."
   },
   form: {
     error: {
@@ -485,7 +492,7 @@ const strings = {
       indexInfo: "Индекс ақпараты",
       indexName: "Индекс атауы",
       prefix: "Кілт префиксі (міндетті емес)",
-      fieldName: "Өріс атауы",
+      fieldName: "Өріс атауы"
     },
     monitor: {
       title: "Мониторинг",
@@ -509,7 +516,7 @@ const strings = {
       peak: "Шың",
       fragmentation: "Фрагментация",
       hitsAndMisses: "Тапқандар / Жоғалтқандар",
-      noClients: "Клиенттер жоқ",
+      noClients: "Клиенттер жоқ"
     },
     analysis: {
       title: "Жад талдауы",
@@ -540,7 +547,7 @@ const strings = {
       maxScanKeys: "Макс. сканерлеу кілттері",
       type: "Түр",
       noData: "Деректер жоқ. Бастау үшін Талдауды бастау батырмасын басыңыз.",
-      exportAll: "Барлығын экспорттау",
+      exportAll: "Барлығын экспорттау"
     },
 
     overview: {
