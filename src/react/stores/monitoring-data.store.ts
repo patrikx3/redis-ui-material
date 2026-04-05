@@ -45,6 +45,12 @@ let profilerSaveTimeout: any = null
 let pubsubSaveTimeout: any = null
 let langFn: () => string = () => 'en'
 let initialized = false
+let profilerDesired = false
+let pubsubDesired = false
+let profilerGeneration = 0
+let pubsubGeneration = 0
+let profilerStartPromise: Promise<void> | null = null
+let pubsubStartPromise: Promise<void> | null = null
 
 function decodePubsubMessage(message: any): string {
     if (message instanceof ArrayBuffer) {
@@ -145,34 +151,80 @@ export function initMonitoringData(getLang: () => string): void {
 }
 
 export async function startProfiler(): Promise<void> {
+    profilerDesired = true
     if (useMonitoringDataStore.getState().profilerStarted) return
-    await request({ action: 'set-monitor', payload: { enabled: true } })
-    useMonitoringDataStore.setState({ profilerStarted: true })
-    getClient()?.on('monitor-data', onMonitorData)
+    if (profilerStartPromise) return profilerStartPromise
+
+    const generation = ++profilerGeneration
+    const startPromise = (async () => {
+        await request({ action: 'set-monitor', payload: { enabled: true } })
+
+        // Ignore stale async completions from a previous mount/unmount cycle.
+        if (generation !== profilerGeneration || !profilerDesired) return
+
+        const client = getClient()
+        client?.removeListener('monitor-data', onMonitorData)
+        client?.on('monitor-data', onMonitorData)
+        useMonitoringDataStore.setState({ profilerStarted: true })
+    })().finally(() => {
+        if (profilerStartPromise === startPromise) profilerStartPromise = null
+    })
+    profilerStartPromise = startPromise
+
+    return profilerStartPromise
 }
 
 export function stopProfiler(): void {
-    if (!useMonitoringDataStore.getState().profilerStarted) return
-    request({ action: 'set-monitor', payload: { enabled: false } }).catch(() => {})
+    const wasStarted = useMonitoringDataStore.getState().profilerStarted
+    profilerDesired = false
+    profilerGeneration++
+    profilerStartPromise = null
+
     getClient()?.removeListener('monitor-data', onMonitorData)
     useMonitoringDataStore.setState({ profilerStarted: false })
+    if (wasStarted) {
+        request({ action: 'set-monitor', payload: { enabled: false } }).catch(() => {})
+    }
     if (profilerSaveTimeout) { clearTimeout(profilerSaveTimeout); profilerSaveTimeout = null }
     saveToStorage(PROFILER_STORAGE_KEY, useMonitoringDataStore.getState().profilerEntries)
 }
 
 export async function startPubSub(): Promise<void> {
+    pubsubDesired = true
     if (useMonitoringDataStore.getState().pubsubStarted) return
+    if (pubsubStartPromise) return pubsubStartPromise
+
+    const generation = ++pubsubGeneration
     const pattern = useMonitoringDataStore.getState().pubsubPattern
-    await request({ action: 'set-subscription', payload: { subscription: true, subscriberPattern: pattern } })
-    useMonitoringDataStore.setState({ pubsubStarted: true })
-    getClient()?.on('pubsub-message', onPubSubMessage)
+    const startPromise = (async () => {
+        await request({ action: 'set-subscription', payload: { subscription: true, subscriberPattern: pattern } })
+
+        // Ignore stale async completions from a previous mount/unmount cycle.
+        if (generation !== pubsubGeneration || !pubsubDesired) return
+
+        const client = getClient()
+        client?.removeListener('pubsub-message', onPubSubMessage)
+        client?.on('pubsub-message', onPubSubMessage)
+        useMonitoringDataStore.setState({ pubsubStarted: true })
+    })().finally(() => {
+        if (pubsubStartPromise === startPromise) pubsubStartPromise = null
+    })
+    pubsubStartPromise = startPromise
+
+    return pubsubStartPromise
 }
 
 export function stopPubSub(): void {
-    if (!useMonitoringDataStore.getState().pubsubStarted) return
-    request({ action: 'set-subscription', payload: { subscription: false, subscriberPattern: '*' } }).catch(() => {})
+    const wasStarted = useMonitoringDataStore.getState().pubsubStarted
+    pubsubDesired = false
+    pubsubGeneration++
+    pubsubStartPromise = null
+
     getClient()?.removeListener('pubsub-message', onPubSubMessage)
     useMonitoringDataStore.setState({ pubsubStarted: false })
+    if (wasStarted) {
+        request({ action: 'set-subscription', payload: { subscription: false, subscriberPattern: '*' } }).catch(() => {})
+    }
     if (pubsubSaveTimeout) { clearTimeout(pubsubSaveTimeout); pubsubSaveTimeout = null }
     saveToStorage(PUBSUB_STORAGE_KEY, useMonitoringDataStore.getState().pubsubEntries)
 }

@@ -14,6 +14,7 @@ import { useMainCommandStore, onCommandEvent } from '../../stores/main-command.s
 import { useThemeStore } from '../../stores/theme.store'
 import { request } from '../../stores/socket.service'
 import { navigateTo } from '../../stores/navigation.store'
+import { trackPage } from '../../stores/analytics'
 import { isDarkTheme } from '../../themes'
 import humanizeDuration from 'humanize-duration'
 import KeyString from './key/KeyString'
@@ -208,6 +209,7 @@ export default function DatabaseKeyPage() {
         try {
             await confirm({ message: strings?.confirm?.deleteKey })
             await request({ action: 'delete', payload: { key } })
+            trackPage('/delete')
             navigateTo('database.statistics')
             toast(typeof strings?.status?.deletedKey === 'function' ? strings.status.deletedKey({ key }) : '')
             await useMainCommandStore.getState().refresh({ withoutParent: false, force: true })
@@ -225,6 +227,7 @@ export default function DatabaseKeyPage() {
                 cancelLabel: strings?.intention?.cancel,
             })
             await request({ action: 'rename', payload: { key, keyNew: newKey } })
+            trackPage('/rename')
             navigateTo('database.key', { key: newKey })
             toast(strings?.status?.renamedKey)
             await useMainCommandStore.getState().refresh({ withoutParent: false, force: true })
@@ -244,19 +247,21 @@ export default function DatabaseKeyPage() {
             const ttlStr = String(ttlVal).trim()
             if (ttlStr === '' || ttlVal == null) {
                 await request({ action: 'persist', payload: { key } })
+                trackPage('/persist')
                 toast(strings?.status?.persisted)
             } else if (!/^-?\d+$/.test(ttlStr)) {
                 toast(strings?.status?.notInteger)
                 return
             } else {
                 await request({ action: 'expire', payload: { key, ttl: parseInt(ttlStr) } })
+                trackPage('/expire')
                 toast(strings?.status?.ttlChanged)
             }
             await loadKey()
         } catch (err) { generalHandleError(err) }
     }, [key, strings, toast, loadKey, generalHandleError])
 
-    const refreshKey = useCallback(async () => { await loadKey() }, [loadKey])
+    const refreshKey = useCallback(async () => { trackPage('/refresh'); await loadKey() }, [loadKey])
 
     // --- Responsive button ---
     const ActionBtn = ({ icon, label, color, onClick }: {

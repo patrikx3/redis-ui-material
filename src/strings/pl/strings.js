@@ -304,6 +304,7 @@ const strings = {
     shortcutNewKey: "Nowy klucz",
     shortcutDisconnect: "Rozłącz",
     themeAuto: "Automatyczny (system)",
+    languageAuto: "Automatyczny (system)",
     shortcutCommandPalette: "Paleta poleceń",
     commandPalette: "Paleta poleceń",
     noResults: "Brak wyników",
@@ -329,6 +330,9 @@ const strings = {
     deleteSearchHint: "Usuwa wszystkie klucze pasujące do bieżącego wyszukiwania na serwerze",
     deletingSearchKeys: "Usuwanie pasujących kluczy...",
     importNoKeys: "Nie znaleziono kluczy w pliku",
+    desktopNotifications: "Powiadomienia pulpitu",
+    desktopNotificationsEnabled: "Włącz powiadomienia pulpitu",
+    desktopNotificationsInfo: "Otrzymuj powiadomienia systemu operacyjnego o rozłączeniach i ponownych połączeniach Redis, gdy aplikacja nie jest w centrum uwagi.",
   },
   status: {
     dataCopied: "Dane są w schowku",
@@ -373,7 +377,8 @@ const strings = {
     ttlChanged: "TTL tego klucza został zmieniony",
     notInteger: "Ta wartość nie jest liczbą całkowitą",
     persisted: "Ten klucz jest zachowany na zawsze",
-    set: "Klucz został ustawiony/dodany"
+    set: "Klucz został ustawiony/dodany",
+    connectionRestored: "Połączenie przywrócone",
   },
   code: {
     "delete-connection": "To połączenie zostało usunięte, dlatego zostałeś rozłączony z tą instancją Redis.",

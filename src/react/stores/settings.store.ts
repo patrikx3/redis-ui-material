@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import prettyBytes from 'pretty-bytes'
+import { useI18nStore } from './i18n.store'
 
 function readLocal(key: string, fallback: string): string {
     try { return localStorage.getItem(key) ?? fallback } catch { return fallback }
@@ -93,12 +94,17 @@ export const useSettingsStore = create<SettingsState>((set) => ({
     getStorageKeyCurrentDatabase: (connectionId: string) => `p3xr-main-current-database-${connectionId}`,
 
     prettyBytes: (value: number) => {
-        const lang = useSettingsStore.getState().language
+        let lang = useSettingsStore.getState().language
+        if (lang === 'auto') lang = useI18nStore.getState().currentLang || 'en'
         return prettyBytes(value, { locale: lang })
     },
 
     getHumanizeDurationOptions: () => {
-        const lang = useSettingsStore.getState().language
+        // Use resolved language from i18n store (not raw localStorage which may be 'auto')
+        let lang = useSettingsStore.getState().language
+        if (lang === 'auto') {
+            lang = useI18nStore.getState().currentLang || 'en'
+        }
         const languageMap: Record<string, string> = {
             'pt-BR': 'pt', 'zn': 'zh_CN', 'zh-HK': 'zh_TW', 'zh-TW': 'zh_TW', 'pt-PT': 'pt',
         }

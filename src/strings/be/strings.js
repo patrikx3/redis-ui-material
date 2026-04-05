@@ -304,6 +304,7 @@ const strings = {
     shortcutNewKey: "New Key",
     shortcutDisconnect: "Адключыцца",
     themeAuto: "Auto (system)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Command Palette",
     commandPalette: "Command Palette",
     noResults: "No results",
@@ -329,6 +330,9 @@ const strings = {
     deleteSearchHint: "Выдаляе ўсе ключы, якія адпавядаюць бягучаму пошуку на серверы",
     deletingSearchKeys: "Выдаленне адпаведных ключоў...",
     importNoKeys: "Ключы ў файле не знойдзены",
+    desktopNotifications: "Апавяшчэнні працоўнага стала",
+    desktopNotificationsEnabled: "Уключыць апавяшчэнні працоўнага стала",
+    desktopNotificationsInfo: "Атрымліваць апавяшчэнні АС пры адключэнні Redis і паўторным падключэнні, калі праграма не ў фокусе.",
   },
   status: {
     dataCopied: "Дадзеныя знаходзяцца ў буферы абмену",
@@ -373,7 +377,8 @@ const strings = {
     ttlChanged: "TTL гэтага ключа быў зменены",
     notInteger: "Гэты ўвод не з'яўляецца цэлым лікам",
     persisted: "Гэты ключ захоўваецца вечна",
-    set: "Ключ усталяваны/дададзены"
+    set: "Ключ усталяваны/дададзены",
+    connectionRestored: "Злучэнне адноўлена",
   },
   code: {
     "delete-connection": "Гэта злучэнне было выдалена, таму вы адключаны ад гэтага асобніка Redis.",

@@ -56,6 +56,15 @@ interface CommonState {
     prompt: (options: PromptOptions) => Promise<string>
     resolvePrompt: ((value: string | null) => void) | null
 
+    // Ask Authorization dialog
+    askAuthOpen: boolean
+    resolveAskAuth: ((result: { username: string; password: string } | null) => void) | null
+    askAuth: () => Promise<{ username: string; password: string }>
+
+    // Command palette
+    commandPaletteOpen: boolean
+    setCommandPaletteOpen: (open: boolean) => void
+
     // Error handling
     generalHandleError: (dataOrError: any) => boolean
 
@@ -110,6 +119,23 @@ export const useCommonStore = create<CommonState>((set, get) => ({
             })
         })
     },
+
+    askAuthOpen: false,
+    resolveAskAuth: null,
+    askAuth: () => {
+        return new Promise<{ username: string; password: string }>((resolve, reject) => {
+            set({
+                askAuthOpen: true,
+                resolveAskAuth: (result: { username: string; password: string } | null) => {
+                    set({ askAuthOpen: false, resolveAskAuth: null })
+                    result !== null ? resolve(result) : reject()
+                },
+            })
+        })
+    },
+
+    commandPaletteOpen: false,
+    setCommandPaletteOpen: (open: boolean) => set({ commandPaletteOpen: open }),
 
     generalHandleError: (dataOrError: any): boolean => {
         if (dataOrError === undefined) return true

@@ -17,6 +17,7 @@ import { useCommonStore } from '../stores/common.store'
 import { useOverlayStore } from '../stores/overlay.store'
 import { useMainCommandStore } from '../stores/main-command.store'
 import { request, onSocketEvent } from '../stores/socket.service'
+import { trackPage } from '../stores/analytics'
 import { ALL_THEME_KEYS } from '../themes'
 
 const TOOLBAR_HEIGHT = 48
@@ -29,6 +30,7 @@ export default function Layout() {
     // Stores
     const strings = useI18nStore(s => s.strings)
     const currentLang = useI18nStore(s => s.currentLang)
+    const isLangAuto = useI18nStore(s => s.isAuto)
     const setLanguage = useI18nStore(s => s.setLanguage)
     const { themeKey, isAuto, setTheme } = useThemeStore()
     const connection = useRedisStateStore(s => s.connection)
@@ -40,6 +42,8 @@ export default function Layout() {
     const overlay = useOverlayStore()
     const { disconnect } = useMainCommandStore()
 
+    const { askAuth } = useCommonStore()
+
     // Connect to a Redis connection (exact port of Angular LayoutComponent.connect)
     const connect = async (conn: any) => {
         const cloned = structuredClone(conn)
@@ -47,6 +51,16 @@ export default function Layout() {
             const dbStorageKey = settings.getStorageKeyCurrentDatabase(cloned.id)
             let db: string | undefined
             try { db = localStorage.getItem(dbStorageKey) ?? undefined } catch {}
+
+            if (cloned.askAuth === true) {
+                try {
+                    const auth = await askAuth()
+                    cloned.username = auth.username || undefined
+                    cloned.password = auth.password || undefined
+                } catch {
+                    return // user cancelled
+                }
+            }
 
             overlay.show({ message: strings?.title?.connectingRedis })
 
@@ -273,8 +287,8 @@ export default function Layout() {
                 navigateTo(data.action)
             }
         }
-        const timer = setTimeout(() => window.addEventListener('message', handler), 3000)
-        return () => { clearTimeout(timer); window.removeEventListener('message', handler) }
+        window.addEventListener('message', handler)
+        return () => { window.removeEventListener('message', handler) }
     }, [isElectron])
 
     // Remove loading splash
@@ -301,11 +315,30 @@ export default function Layout() {
         return unsub
     }, [])
 
+    // Track route changes for analytics (matches Angular setupRouteTracking)
+    useEffect(() => {
+        const path = location.pathname.toLowerCase().startsWith('/database/key/')
+            ? '/database/key'
+            : location.pathname
+        trackPage(path)
+    }, [location.pathname])
+
+    // Show overlay on raw socket disconnect/error (matches Angular behavior)
+    useEffect(() => {
+        const unsubDisconnect = onSocketEvent('disconnect', () => {
+            overlay.show({ message: strings?.status?.socketDisconnected || 'Disconnected' })
+        })
+        const unsubError = onSocketEvent('socket-error', () => {
+            overlay.show({ message: strings?.status?.socketError || 'Connection error' })
+        })
+        return () => { unsubDisconnect(); unsubError() }
+    }, [strings])
+
     // --- Responsive button helpers ---
     const activeSx = { bgcolor: 'rgba(255,255,255,0.1)' }
 
-    const NavBtn = ({ icon, label, page, onClick }: {
-        icon: React.ReactNode, label: string, page?: string, onClick: () => void
+    const NavBtn = ({ icon, label, tooltip, page, onClick }: {
+        icon: React.ReactNode, label: string, tooltip?: string, page?: string, onClick: () => void
     }) => {
         const active = page ? isActivePage(page) : false
         return isWide ? (
@@ -313,7 +346,7 @@ export default function Layout() {
                 {icon}<span>{label}</span>
             </Button>
         ) : (
-            <Tooltip title={label} placement="bottom">
+            <Tooltip title={tooltip || label} placement="bottom">
                 <IconButton color="inherit" onClick={onClick} sx={active ? activeSx : undefined}>
                     {icon}
                 </IconButton>
@@ -346,7 +379,8 @@ export default function Layout() {
                 <Toolbar variant="dense" sx={{ minHeight: TOOLBAR_HEIGHT, height: TOOLBAR_HEIGHT, overflow: 'hidden' }}>
                     <NavBtn icon={<i className="fas fa-database" />}
                         label={strings?.title?.name}
-                        onClick={() => navigateTo('database.statistics')} />
+                        tooltip={`${strings?.title?.name || ''}${version ? ' ' + version : ''}`}
+                        onClick={() => navigateTo(connection ? 'database.statistics' : 'settings')} />
 
                     {connection && (
                         <NavBtn icon={<Storage fontSize="small" />}
@@ -381,7 +415,7 @@ export default function Layout() {
             {/* Version overlay */}
             {!isElectron && version && isWide && (
                 <Typography variant="caption" sx={{
-                    position: 'fixed', top: 35, left: 20, width: 120,
+                    position: 'fixed', top: 31, left: 20, width: 120,
                     textAlign: 'right', zIndex: 3, fontSize: 10, opacity: 0.7, pointerEvents: 'none',
                 }}>
                     {version}
@@ -402,7 +436,7 @@ export default function Layout() {
             </Box>
 
             {/* ===== FOOTER ===== */}
-            <AppBar position="fixed" sx={{ top: 'auto', bottom: 0, height: TOOLBAR_HEIGHT, zIndex: 2 }}>
+            <AppBar id="p3xr-layout-footer-container" position="fixed" sx={{ top: 'auto', bottom: 0, height: TOOLBAR_HEIGHT, zIndex: 2 }}>
                 <Toolbar variant="dense" sx={{ minHeight: TOOLBAR_HEIGHT, height: TOOLBAR_HEIGHT }}>
 
                     {/* Connection menu */}
@@ -486,7 +520,8 @@ export default function Layout() {
                         <Box
                             sx={{
                                 position: 'sticky', top: 0, zIndex: 1,
-                                background: 'inherit',
+                                bgcolor: 'background.paper',
+                                backgroundImage: 'inherit',
                                 px: 1, py: 1,
                                 overflow: 'hidden',
                             }}
@@ -523,12 +558,18 @@ export default function Layout() {
                                 }}
                             />
                         </Box>
+                        <MenuItem selected={isLangAuto}
+                            sx={{ borderRadius: 0, '&:hover': { borderRadius: 0 }, '&.Mui-selected': { borderRadius: 0 } }}
+                            onClick={() => { setLanguage('auto'); setLanguageAnchor(null) }}>
+                            {strings?.label?.languageAuto || 'Auto (system)'}
+                        </MenuItem>
+                        <Divider />
                         {filteredLanguages.map((key, i) => (
                             <MenuItem key={key}
-                                selected={currentLang === key}
+                                selected={!isLangAuto && currentLang === key}
                                 sx={{
                                     borderRadius: 0,
-                                    ...(currentLang === key && { bgcolor: 'action.selected' }),
+                                    ...(!isLangAuto && currentLang === key && { bgcolor: 'action.selected' }),
                                     ...(i === highlightedLangIdx && { bgcolor: 'action.hover' }),
                                     '&:hover': { borderRadius: 0 },
                                     '&.Mui-selected': { borderRadius: 0 },

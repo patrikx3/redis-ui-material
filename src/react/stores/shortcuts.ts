@@ -6,9 +6,8 @@
 import { useI18nStore } from './i18n.store'
 import { useRedisStateStore } from './redis-state.store'
 import { useCommonStore } from './common.store'
-import { useMainCommandStore } from './main-command.store'
+import { useMainCommandStore, emitCommand } from './main-command.store'
 import { navigateTo } from './navigation.store'
-import { onCommandEvent } from './main-command.store'
 
 export interface ShortcutDef {
     key: string
@@ -75,14 +74,14 @@ const shortcuts: ShortcutDef[] = isElectron ? [
         key: 'n', ctrlKey: true, label: 'Ctrl+N',
         descriptionKey: 'shortcutNewKey',
         action: () => requireConnectionAndHome(() => {
-            // TODO: wire to key-new command event
+            emitCommand('key-new', {})
         }),
     },
     {
         key: 'k', ctrlKey: true, label: 'Ctrl+K',
         descriptionKey: 'shortcutCommandPalette',
         action: () => {
-            // TODO: wire to command palette dialog
+            useCommonStore.getState().setCommandPaletteOpen(true)
         },
     },
     {

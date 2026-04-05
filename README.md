@@ -12,7 +12,7 @@ https://corifeus.com/redis-ui
 
 
 ---
-# 💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via http and socket.io v2026.4.399
+# 💿 P3X Redis UI dual frontend — Angular + React/MUI with 54 languages, 7 themes, Socket.IO, desktop notifications, and full feature parity v2026.4.402
 
 
   
@@ -48,24 +48,176 @@ v24.14.1
 [//]: #@corifeus-header:end
 
 
-The is the `p3x-redis-ui-material` web gui, that uses the `p3x-redis-ui-server`.   
+The `p3x-redis-ui-material` package is the **dual frontend** for [p3x-redis-ui](https://github.com/patrikx3/redis-ui). It provides two fully independent, feature-parity GUIs that connect to `p3x-redis-ui-server` via Socket.IO:
 
-It is based on Socket.IO and Angular with Angular Material, uses themes light/dark schema and internationalization (21 languages).
+### Angular Frontend (`/ng/`)
+- **Angular** (latest LTS) with standalone components and Angular Signals
+- **Angular Material** component library
+- **Webpack** bundler with AOT compilation via `@ngtools/webpack`
+- **CDK virtual scrolling** for tree view performance
 
+### React Frontend (`/react/`)
+- **React** (latest LTS) with functional components and hooks
+- **MUI (Material UI)** component library matching Angular Material's look and feel
+- **Vite** bundler — instant dev server startup and fast production builds
+- **Zustand** lightweight state management replacing Angular services
+- **@tanstack/react-virtual** for virtual scrolling
 
-# For development standalone
+### Shared Across Both
+- **54 languages** with auto browser/system locale detection and "Auto (system)" option
+- **7 themes** — Light, Enterprise, Redis (light) + Dark, Dark Neu, Darko Bluo, Matrix (dark) — with auto system preference detection
+- **Same Socket.IO protocol** — identical backend API
+- **Same translation system** — single source of truth in `src/strings/`
+- **CodeMirror** JSON editor with GitHub dark/light themes
+- **uPlot** lightweight canvas charts for monitoring dashboards
+- **Web Worker tree building** — key sorting off the main thread
+- **Desktop notifications** — Electron native + Web Notification API
+- **Playwright E2E tests** — run against both frontends in parallel
+- **Live switching** — toggle between Angular and React in Settings
+
+### Project Structure
+
+```
+src/
+├── ng/                     # Angular frontend
+│   ├── pages/              # Lazy-loaded page components
+│   ├── dialogs/            # Modal dialogs
+│   ├── components/         # Reusable UI components
+│   ├── services/           # Angular services (signals-based state)
+│   └── layout/             # App shell, header, footer
+├── react/                  # React frontend
+│   ├── pages/              # Page components (console, database, monitoring, search, settings, info)
+│   ├── dialogs/            # Modal dialogs
+│   ├── components/         # Reusable UI components
+│   ├── stores/             # Zustand stores (state management)
+│   ├── layout/             # App shell, header, footer
+│   ├── themes/             # MUI theme definitions
+│   ├── vite.config.ts      # Vite configuration
+│   └── index.html          # React entry HTML
+├── core/                   # Shared utilities (detect-language, translation-loader)
+├── strings/                # 54 language translation files
+│   ├── en/strings.js       # English (primary)
+│   ├── de/strings.js       # German
+│   └── .../strings.js      # 52 more languages
+├── scss/                   # Shared theme CSS variables (7 themes)
+├── public/                 # Static assets (images, icons)
+├── builder/                # Webpack config for Angular
+│   └── webpack.config.js
+└── tests/                  # Playwright E2E tests
+    ├── redis-ui.spec.js    # Shared test spec (runs against both GUIs)
+    └── run-e2e.sh          # Test runner script
+```
+
+## NPM Scripts
+
+| Script | Description |
+|--------|-------------|
+| `yarn run dev` | Start Angular dev server (Webpack, port 8080) |
+| `yarn run dev-react` | Start React dev server (Vite, port 8082) |
+| `yarn run build` | Production build Angular → `dist/` |
+| `yarn run build-react` | Production build React → `dist-react/` |
+| `yarn run stats` | Angular bundle analysis with `webpack-bundle-analyzer` |
+| `yarn run test:e2e` | Run Playwright E2E tests (both GUIs) |
+| `yarn run test:e2e:gui` | Run E2E tests with Playwright UI |
+
+## Development
 
 For file names do not use camelCase, but use kebab-case. Folder should be named as kebab-case as well. As you can see, all code filenames are using it like that, please do not change that.
 Please apply the `.editorconfig` settings in your IDE.
 
-Then:  
+### Prerequisites
+
+Requires a running `p3x-redis-ui-server` backend (default port 7843). Override with `P3XR_API_PORT`:
+
 ```bash
-npm install
-npm run dev
+P3XR_API_PORT=7844 yarn run dev-react
 ```
 
-The frontend is available @  
-http://localhost:8080
+### Angular development
+
+```bash
+yarn install
+yarn run dev
+```
+
+- Dev server: http://localhost:8080/ng/
+- Webpack proxies Socket.IO to backend on port 7843
+- Hot module reload enabled
+- CSP headers configured for development
+
+### React development
+
+```bash
+yarn install
+yarn run dev-react
+```
+
+- Dev server: http://localhost:8082/react/
+- Vite proxies Socket.IO to backend on port 7843
+- Instant HMR via Vite's native ESM
+- CJS translation files auto-transformed to ESM via custom plugin
+
+### Running both simultaneously
+
+```bash
+# Terminal 1: Angular
+yarn run dev
+
+# Terminal 2: React  
+yarn run dev-react
+
+# Terminal 3: Backend
+cd ../redis-ui-server && yarn run dev
+```
+
+## Key Dependencies
+
+All dependencies track the latest LTS versions and are regularly upgraded.
+
+### Angular (devDependencies — bundled at build time)
+| Package | Purpose |
+|---------|---------|
+| `@angular/core` | Framework |
+| `@angular/material` | UI component library |
+| `@angular/cdk` | Virtual scrolling, drag-drop |
+| `@ngtools/webpack` | AOT compilation |
+| `webpack` | Bundler |
+| `typescript` | Type system |
+
+### React (dependencies — shipped in npm package)
+| Package | Purpose |
+|---------|---------|
+| `react` | Framework |
+| `@mui/material` | UI component library |
+| `zustand` | State management |
+| `@tanstack/react-virtual` | Virtual scrolling |
+| `react-router-dom` | Client-side routing |
+| `vite` | Bundler (devDependency) |
+
+### Shared
+| Package | Purpose |
+|---------|---------|
+| `socket.io-client` | Real-time communication with backend |
+| `codemirror` + `@codemirror/*` | JSON editor |
+| `uplot` | Lightweight canvas charts (monitoring) |
+| `jspdf` | PDF export |
+| `jszip` | ZIP export (memory analysis) |
+| `@dnd-kit/*` | Drag-and-drop (connection groups) |
+| `lodash` | Utility functions (merge for i18n) |
+
+## E2E Testing
+
+Playwright tests run against both frontends in parallel using a shared test spec:
+
+```bash
+# Run all tests (Angular + React)
+yarn run test:e2e
+
+# Run with Playwright UI
+yarn run test:e2e:gui
+```
+
+Tests cover: connect, disconnect, key operations, search, settings, monitoring, and GUI switching.
 
 
 [//]: #@corifeus-footer
@@ -113,7 +265,7 @@ All my domains, including [patrikx3.com](https://patrikx3.com), [corifeus.eu](ht
 ---
 
 
-[**P3X-REDIS-UI-MATERIAL**](https://corifeus.com/redis-ui-material) Build v2026.4.399
+[**P3X-REDIS-UI-MATERIAL**](https://corifeus.com/redis-ui-material) Build v2026.4.402
 
  [![NPM](https://img.shields.io/npm/v/p3x-redis-ui-material.svg)](https://www.npmjs.com/package/p3x-redis-ui-material)  [![Donate for PatrikX3 / P3X](https://img.shields.io/badge/Donate-PatrikX3-003087.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QZVM4V6HVZJW6)  [![Contact Corifeus / P3X](https://img.shields.io/badge/Contact-P3X-ff9900.svg)](https://www.patrikx3.com/en/front/contact) [![Like Corifeus @ Facebook](https://img.shields.io/badge/LIKE-Corifeus-3b5998.svg)](https://www.facebook.com/corifeus.software)
 

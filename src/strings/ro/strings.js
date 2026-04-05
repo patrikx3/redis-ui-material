@@ -304,6 +304,7 @@ const strings = {
     shortcutNewKey: "Cheie nouă",
     shortcutDisconnect: "Deconectare",
     themeAuto: "Automat (sistem)",
+    languageAuto: "Automat (sistem)",
     shortcutCommandPalette: "Paletă de comenzi",
     commandPalette: "Paletă de comenzi",
     noResults: "Fără rezultate",
@@ -329,6 +330,9 @@ const strings = {
     deleteSearchHint: "Șterge toate cheile care corespund căutării curente de pe server",
     deletingSearchKeys: "Se șterg cheile corespunzătoare...",
     importNoKeys: "Nu s-au găsit chei în fișier",
+    desktopNotifications: "Notificări desktop",
+    desktopNotificationsEnabled: "Activare notificări desktop",
+    desktopNotificationsInfo: "Primiți notificări OS pentru deconectări și reconectări Redis când aplicația nu este în prim-plan.",
   },
   status: {
     dataCopied: "Datele sunt in clipboard",
@@ -373,7 +377,8 @@ const strings = {
     ttlChanged: "TTL-ul acestei chei a fost modificat",
     notInteger: "Aceasta valoare introdusa nu este un numar intreg",
     persisted: "Aceasta cheie este persistenta pentru totdeauna",
-    set: "Cheia a fost setata/adaugata"
+    set: "Cheia a fost setata/adaugata",
+    connectionRestored: "Conexiune restabilită",
   },
   code: {
     "delete-connection": "Aceasta conexiune a fost stearsa, asa ca sunteti deconectat de la aceasta instanta Redis.",

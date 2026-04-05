@@ -23,11 +23,12 @@ const productionHttpCredentials = productionHttpUsername && productionHttpPasswo
     }
     : undefined;
 
+const baseHost = process.env.PLAYWRIGHT_BASE_HOST || 'http://localhost:8080';
+
 export default defineConfig({
     testDir: './tests',
     timeout: 30000,
     use: {
-        baseURL: process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:8080/ng',
         headless: true,
         httpCredentials: productionHttpCredentials,
         viewport: { width: 1280, height: 900 },
@@ -35,8 +36,18 @@ export default defineConfig({
     },
     projects: [
         {
-            name: 'chromium',
-            use: { browserName: 'chromium' },
+            name: 'angular',
+            use: {
+                browserName: 'chromium',
+                baseURL: process.env.PLAYWRIGHT_BASE_URL || `${baseHost}/ng/`,
+            },
+        },
+        {
+            name: 'react',
+            use: {
+                browserName: 'chromium',
+                baseURL: process.env.PLAYWRIGHT_BASE_URL_REACT || `${baseHost}/react/`,
+            },
         },
     ],
 });

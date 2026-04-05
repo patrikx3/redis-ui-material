@@ -355,6 +355,193 @@ export default function PulsePage() {
         downloadText(lines.join('\n'), `${connName}-topkeys.txt`)
     }, [topKeys, connName])
 
+    function getExportBackgroundColor(): string {
+        return getComputedStyle(document.body).getPropertyValue('--p3xr-body-bg').trim() || (isDark ? '#1e1e1e' : '#ffffff')
+    }
+
+    function renderPulseChartsForExport(): Array<{ label: string; canvas: HTMLCanvasElement }> {
+        let data: ReturnType<typeof buildChartData>
+        if (historyRef.current.length >= 2) {
+            data = buildChartData()
+        } else if (current) {
+            const c = current
+            const now = Date.now() / 1000
+            data = {
+                timestamps: [now - 1, now],
+                memUsed: [c.memory.used / (1024 * 1024), c.memory.used / (1024 * 1024)],
+                memRss: [c.memory.rss / (1024 * 1024), c.memory.rss / (1024 * 1024)],
+                ops: [c.stats.opsPerSec, c.stats.opsPerSec],
+                connected: [c.clients.connected, c.clients.connected],
+                blocked: [c.clients.blocked, c.clients.blocked],
+                netIn: [c.stats.inputKbps, c.stats.inputKbps],
+                netOut: [c.stats.outputKbps, c.stats.outputKbps],
+            }
+        } else {
+            return []
+        }
+
+        const colors = themeRef.current
+        const s = stringsRef.current?.page?.monitor || {} as any
+
+        const chartConfigs: Array<{
+            label: string
+            series: Array<{ label: string; color: string; values: number[]; fill?: boolean }>
+        }> = [
+            {
+                label: `${s.memory || 'Memory'} (MB)`,
+                series: [
+                    { label: s.memory || 'Memory', color: colors.primary, values: data.memUsed, fill: true },
+                    { label: 'RSS', color: colors.accent, values: data.memRss },
+                ],
+            },
+            {
+                label: s.opsPerSec || 'Ops/sec',
+                series: [
+                    { label: s.opsPerSec || 'Ops/s', color: colors.primary, values: data.ops, fill: true },
+                ],
+            },
+            {
+                label: s.clients || 'Clients',
+                series: [
+                    { label: s.clients || 'Connected', color: colors.primary, values: data.connected },
+                    { label: s.blocked || 'Blocked', color: colors.warn, values: data.blocked },
+                ],
+            },
+            {
+                label: `${s.networkIo || 'Network I/O'} (KB/s)`,
+                series: [
+                    { label: '\u2193 In', color: colors.primary, values: data.netIn, fill: true },
+                    { label: '\u2191 Out', color: colors.accent, values: data.netOut },
+                ],
+            },
+        ]
+
+        return chartConfigs.map(config => ({
+            label: config.label,
+            canvas: renderLineChartForExport(data.timestamps, config.series, colors),
+        }))
+    }
+
+    function renderLineChartForExport(
+        timestamps: number[],
+        series: Array<{ label: string; color: string; values: number[]; fill?: boolean }>,
+        colors: typeof themeRef.current,
+    ): HTMLCanvasElement {
+        const dpr = 2
+        const width = 900
+        const height = 260
+        const padTop = 32
+        const padBottom = 40
+        const padLeft = 60
+        const padRight = 16
+        const legendH = 20
+        const chartW = width - padLeft - padRight
+        const chartH = height - padTop - padBottom - legendH
+
+        const canvas = document.createElement('canvas')
+        canvas.width = width * dpr
+        canvas.height = height * dpr
+        const ctx = canvas.getContext('2d')!
+        ctx.scale(dpr, dpr)
+
+        ctx.fillStyle = getExportBackgroundColor()
+        ctx.fillRect(0, 0, width, height)
+
+        const n = timestamps.length
+        if (n < 2) return canvas
+
+        let yMin = Infinity
+        let yMax = -Infinity
+        for (const s of series) {
+            for (const v of s.values) {
+                if (v < yMin) yMin = v
+                if (v > yMax) yMax = v
+            }
+        }
+        if (yMin === yMax) {
+            yMin -= 1
+            yMax += 1
+        }
+        const yRange = yMax - yMin
+        const tMin = timestamps[0]
+        const tMax = timestamps[n - 1]
+        const tRange = tMax - tMin || 1
+
+        const toX = (t: number) => padLeft + ((t - tMin) / tRange) * chartW
+        const toY = (v: number) => padTop + chartH - ((v - yMin) / yRange) * chartH
+
+        ctx.strokeStyle = colors.grid
+        ctx.lineWidth = 1
+        const ySteps = 5
+        for (let i = 0; i <= ySteps; i++) {
+            const gy = padTop + (chartH / ySteps) * i
+            ctx.beginPath()
+            ctx.moveTo(padLeft, gy)
+            ctx.lineTo(padLeft + chartW, gy)
+            ctx.stroke()
+
+            const val = yMax - (yRange / ySteps) * i
+            ctx.fillStyle = colors.text
+            ctx.font = '10px Roboto Mono, monospace'
+            ctx.textAlign = 'right'
+            ctx.textBaseline = 'middle'
+            ctx.fillText(val >= 1000 ? `${(val / 1000).toFixed(1)}k` : val.toFixed(1), padLeft - 6, gy)
+        }
+
+        const labelCount = Math.min(6, n)
+        ctx.font = '10px Roboto, sans-serif'
+        ctx.textAlign = 'center'
+        ctx.textBaseline = 'top'
+        ctx.fillStyle = colors.text
+        for (let i = 0; i < labelCount; i++) {
+            const idx = Math.round((i / (labelCount - 1)) * (n - 1))
+            const t = timestamps[idx]
+            const d = new Date(t * 1000)
+            const label = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}:${String(d.getSeconds()).padStart(2, '0')}`
+            ctx.fillText(label, toX(t), padTop + chartH + 6)
+        }
+
+        for (const s of series) {
+            ctx.strokeStyle = s.color
+            ctx.lineWidth = 2
+            ctx.lineJoin = 'round'
+            ctx.beginPath()
+            for (let i = 0; i < n; i++) {
+                const x = toX(timestamps[i])
+                const y = toY(s.values[i])
+                if (i === 0) ctx.moveTo(x, y)
+                else ctx.lineTo(x, y)
+            }
+            ctx.stroke()
+
+            if (s.fill) {
+                ctx.fillStyle = `${s.color}20`
+                ctx.beginPath()
+                ctx.moveTo(toX(timestamps[0]), toY(s.values[0]))
+                for (let i = 1; i < n; i++) ctx.lineTo(toX(timestamps[i]), toY(s.values[i]))
+                ctx.lineTo(toX(timestamps[n - 1]), padTop + chartH)
+                ctx.lineTo(toX(timestamps[0]), padTop + chartH)
+                ctx.closePath()
+                ctx.fill()
+            }
+        }
+
+        let lx = padLeft
+        const ly = height - legendH + 4
+        ctx.font = '11px Roboto, sans-serif'
+        ctx.textAlign = 'left'
+        ctx.textBaseline = 'middle'
+        for (const s of series) {
+            ctx.fillStyle = s.color
+            ctx.fillRect(lx, ly - 4, 12, 8)
+            ctx.fillStyle = colors.text
+            ctx.fillText(s.label, lx + 16, ly)
+            lx += ctx.measureText(s.label).width + 32
+        }
+
+        return canvas
+    }
+
     // --- Export All (ZIP with TXT + charts PNG + PDF) ---
     const exportAll = useCallback(async () => {
         if (!current) return
@@ -451,16 +638,7 @@ export default function PulsePage() {
 
             // Charts PNG — collect all pulse chart canvases + analysis bar charts
             const allCanvases: Array<{ label: string; canvas: HTMLCanvasElement }> = []
-            const chartRefs = [
-                { ref: memChartRef, label: `${mon.memory || 'Memory'} (MB)` },
-                { ref: opsChartRef, label: mon.opsPerSec || 'Ops/sec' },
-                { ref: cliChartRef, label: mon.clients || 'Clients' },
-                { ref: netChartRef, label: `${mon.networkIo || 'Network I/O'} (KB/s)` },
-            ]
-            for (const cr of chartRefs) {
-                const canvas = cr.ref.current?.querySelector('canvas') as HTMLCanvasElement
-                if (canvas) allCanvases.push({ label: cr.label, canvas })
-            }
+            allCanvases.push(...renderPulseChartsForExport())
             // Render analysis bar charts
             for (const ci of analysisChartItems) {
                 if (ci.items.length === 0) continue
@@ -502,7 +680,7 @@ export default function PulsePage() {
         canvas.width = width * dpr; canvas.height = height * dpr
         const ctx = canvas.getContext('2d')!
         ctx.scale(dpr, dpr)
-        ctx.fillStyle = isDark ? '#1e1e1e' : '#ffffff'
+        ctx.fillStyle = getExportBackgroundColor()
         ctx.fillRect(0, 0, width, height)
         const maxVal = Math.max(...items.map(i => i.value), 1)
         items.forEach((item, i) => {
@@ -531,7 +709,7 @@ export default function PulsePage() {
         stitched.width = width; stitched.height = totalHeight
         const ctx = stitched.getContext('2d')!
         const colors = themeRef.current
-        ctx.fillStyle = isDark ? '#1e1e1e' : '#ffffff'
+        ctx.fillStyle = getExportBackgroundColor()
         ctx.fillRect(0, 0, width, totalHeight)
         let y = padding
         for (const item of items) {
@@ -546,7 +724,7 @@ export default function PulsePage() {
 
     async function generatePdf(sections: string[], charts: Array<{ label: string; canvas: HTMLCanvasElement }>, tailSections: string[]): Promise<Blob | null> {
         const { jsPDF } = await import('jspdf')
-        const bgColor = isDark ? '#1e1e1e' : '#ffffff'
+        const bgColor = getExportBackgroundColor()
         const textColor = isDark ? '#e0e0e0' : '#212121'
         const headerColor = isDark ? '#90caf9' : '#1565c0'
         const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
@@ -571,8 +749,18 @@ export default function PulsePage() {
             pdf.setFontSize(12); pdf.setTextColor(headerColor); pdf.text(chart.label, margin, y); y += 8
             const imgData = chart.canvas.toDataURL('image/png')
             const ratio = chart.canvas.height / chart.canvas.width
-            const imgW = contentW, imgH = Math.min(imgW * ratio, pageH - y - margin)
-            pdf.addImage(imgData, 'PNG', margin, y, imgW, imgH); y += imgH
+            const availH = pageH - y - margin
+            const imgW = contentW
+            const imgH = imgW * ratio
+            if (imgH > availH) {
+                const drawH = availH
+                const drawW = drawH / ratio
+                pdf.addImage(imgData, 'PNG', margin, y, drawW, drawH)
+                y += drawH
+            } else {
+                pdf.addImage(imgData, 'PNG', margin, y, imgW, imgH)
+                y += imgH
+            }
         }
         if (tailSections.length > 0 && charts.length > 0) { pdf.addPage(); fillBg(); y = margin }
         for (const line of tailSections) {

@@ -304,6 +304,7 @@ const strings = {
     shortcutNewKey: "New Key",
     shortcutDisconnect: "Ажыратуу",
     themeAuto: "Auto (system)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Command Palette",
     commandPalette: "Command Palette",
     noResults: "No results",
@@ -329,6 +330,9 @@ const strings = {
     deleteSearchHint: "Серверде учурдагы издөөгө дал келген бардык ачкычтарды жок кылат",
     deletingSearchKeys: "Дал келген ачкычтарды жок кылуу...",
     importNoKeys: "Файлдан ачкычтар табылган жок",
+    desktopNotifications: "Desktop Notifications",
+    desktopNotificationsEnabled: "Enable desktop notifications",
+    desktopNotificationsInfo: "Receive OS notifications for Redis disconnections and reconnections when the app is not focused.",
   },
   status: {
     dataCopied: "Маалымат алмашуу буферинде",
@@ -373,7 +377,8 @@ const strings = {
     ttlChanged: "Бул ачкычтын TTL өзгөртүлдү",
     notInteger: "Бул киргизүү бүтүн сан эмес",
     persisted: "Бул ачкыч түбөлүккө сакталат",
-    set: "Ачкыч коюлган/кошулган"
+    set: "Ачкыч коюлган/кошулган",
+    connectionRestored: "Connection restored",
   },
   code: {
     "delete-connection": "Бул туташуу өчүрүлдү, андыктан сиз бул Redis инстанциясына ажыратылдыңыз.",

@@ -368,6 +368,7 @@ export default function DatabaseTree({ resizeSignal }: { resizeSignal?: any }) {
                                 slotProps={{ popper: { sx: { ml: '36px !important' } } }}>
                                 <Box
                                     component="label"
+                                    className="p3xr-database-tree-node"
                                     onClick={() => node.expandable ? toggleExpand(node.key) : selectNode(node)}
                                     sx={{
                                         cursor: 'pointer',

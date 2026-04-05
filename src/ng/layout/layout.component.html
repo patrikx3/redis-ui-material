@@ -5,17 +5,17 @@
 <div id="p3xr-layout-header-container">
     <mat-toolbar class="p3xr-mat-layout">
 
-        <!-- App name button: navigates to database -->
+        <!-- App name button: navigates to database if connected, settings otherwise -->
         @if (isWide) {
-            <button mat-button (click)="navigateTo('database.statistics')">
+            <button mat-button (click)="navigateTo(currentConnection ? 'database.statistics' : 'settings')">
                 <i class="fas fa-database"></i>
                 <span>{{ i18n.strings().title?.name }}</span>
             </button>
         } @else {
-            <button mat-icon-button (click)="navigateTo('database.statistics')"
-                    [matTooltip]="i18n.strings().title?.name ?? ''"
+            <button mat-icon-button (click)="navigateTo(currentConnection ? 'database.statistics' : 'settings')"
+                    [matTooltip]="(i18n.strings().title?.name ?? '') + (state.version() ? ' ' + state.version() : '')"
                     matTooltipPosition="below">
-                <i class="fas fa-database"></i>
+                <mat-icon style="display: flex; align-items: center; justify-content: center;"><i class="fas fa-database" style="font-size: 20px;"></i></mat-icon>
             </button>
         }
 
@@ -202,9 +202,14 @@
                            (input)="onLanguageSearchInput(languageSearchInput.value)"
                            autocomplete="off" />
                 </div>
+                <button mat-menu-item (click)="setLanguage('auto')"
+                        [class.p3xr-mat-menu-item-selected]="i18n.isAuto()">
+                    {{ i18n.strings().label?.languageAuto || 'Auto (system)' }}
+                </button>
+                <mat-divider></mat-divider>
                 @for (langKey of filteredLanguages; track langKey; let i = $index) {
                     <button mat-menu-item (click)="setLanguage(langKey)"
-                            [class.p3xr-mat-menu-item-selected]="i18n.currentLang() === langKey"
+                            [class.p3xr-mat-menu-item-selected]="!i18n.isAuto() && i18n.currentLang() === langKey"
                             [class.p3xr-language-highlighted]="i === highlightedLanguageIndex">
                         {{ languageLabel(langKey) }}
                     </button>

@@ -304,6 +304,7 @@ const strings = {
     shortcutNewKey: "New Key",
     shortcutDisconnect: "Ажырату",
     themeAuto: "Auto (system)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Command Palette",
     commandPalette: "Command Palette",
     noResults: "No results",
@@ -329,6 +330,9 @@ const strings = {
     deleteSearchHint: "Сервердегі ағымдағы іздеуге сәйкес барлық кілттерді жояды",
     deletingSearchKeys: "Сәйкес кілттер жойылуда...",
     importNoKeys: "Файлдан кілттер табылмады",
+    desktopNotifications: "Desktop Notifications",
+    desktopNotificationsEnabled: "Enable desktop notifications",
+    desktopNotificationsInfo: "Receive OS notifications for Redis disconnections and reconnections when the app is not focused.",
   },
   status: {
     dataCopied: "Деректер алмасу буферінде",
@@ -373,7 +377,8 @@ const strings = {
     ttlChanged: "Бұл кілттің TTL өзгертілді",
     notInteger: "Бұл кіріс бүтін сан емес",
     persisted: "Бұл кілт мәңгі сақталады",
-    set: "Кілт орнатылған/қосылған"
+    set: "Кілт орнатылған/қосылған",
+    connectionRestored: "Connection restored",
   },
   code: {
     "delete-connection": "Бұл қосылым жойылды, сондықтан сіз осы Redis данасына ажыратылдыңыз.",

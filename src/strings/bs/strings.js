@@ -306,6 +306,7 @@ const strings = {
     shortcutNewKey: "New Key",
     shortcutDisconnect: "Prekini vezu",
     themeAuto: "Auto (system)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Command Palette",
     commandPalette: "Command Palette",
     noResults: "No results",
@@ -331,6 +332,9 @@ const strings = {
     deleteSearchHint: "Briše sve ključeve koji odgovaraju trenutnom pretraživanju na serveru",
     deletingSearchKeys: "Brisanje odgovarajućih ključeva...",
     importNoKeys: "Nisu pronađeni ključevi u datoteci",
+    desktopNotifications: "Obavijesti na radnoj površini",
+    desktopNotificationsEnabled: "Omogući obavijesti na radnoj površini",
+    desktopNotificationsInfo: "Primajte OS obavijesti za prekide i ponovne veze Redis-a kada aplikacija nije u fokusu.",
   },
   status: {
     dataCopied: "Podaci su u međuspremniku",
@@ -375,7 +379,8 @@ const strings = {
     ttlChanged: "TTL ovog ključa je promijenjen",
     notInteger: "Ovaj unos nije cijeli broj",
     persisted: "Ovaj ključ traje zauvijek",
-    set: "Ključ je postavljen/dodan"
+    set: "Ključ je postavljen/dodan",
+    connectionRestored: "Veza je obnovljena",
   },
   code: {
     "delete-connection": "Ova konekcija je obrisana, pa ste odspojeni sa ove Redis instance.",

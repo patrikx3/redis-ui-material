@@ -304,6 +304,7 @@ const strings = {
     shortcutNewKey: "New Key",
     shortcutDisconnect: "Ngắt kết nối",
     themeAuto: "Auto (system)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Command Palette",
     commandPalette: "Command Palette",
     noResults: "No results",
@@ -329,6 +330,9 @@ const strings = {
     deleteSearchHint: "Xóa tất cả các khóa khớp với tìm kiếm hiện tại trên máy chủ",
     deletingSearchKeys: "Đang xóa các khóa khớp...",
     importNoKeys: "Không tìm thấy khóa trong tệp",
+    desktopNotifications: "Thông báo trên máy tính",
+    desktopNotificationsEnabled: "Bật thông báo trên máy tính",
+    desktopNotificationsInfo: "Nhận thông báo hệ điều hành cho các ngắt kết nối và kết nối lại Redis khi ứng dụng không được focus.",
   },
   status: {
     dataCopied: "Dữ liệu nằm trong clipboard",
@@ -373,7 +377,8 @@ const strings = {
     ttlChanged: "TTL của khóa này đã được thay đổi",
     notInteger: "Dữ liệu đầu vào này không phải là số nguyên",
     persisted: "Chìa khóa này được tồn tại mãi mãi",
-    set: "Khóa được đặt/thêm"
+    set: "Khóa được đặt/thêm",
+    connectionRestored: "Kết nối đã được khôi phục",
   },
   code: {
     "delete-connection": "Kết nối này đã bị xóa nên bạn bị ngắt kết nối với phiên bản Redis này.",

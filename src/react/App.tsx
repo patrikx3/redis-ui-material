@@ -2,6 +2,7 @@ import { useMemo, useEffect, lazy, Suspense } from 'react'
 import { ThemeProvider, CssBaseline } from '@mui/material'
 import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import { useThemeStore } from './stores/theme.store'
+import { useI18nStore } from './stores/i18n.store'
 import { setNavigate } from './stores/navigation.store'
 import { themes } from './themes'
 import Layout from './layout/Layout'
@@ -9,6 +10,8 @@ import ConfirmDialog from './components/ConfirmDialog'
 import PromptDialog from './components/PromptDialog'
 import Toast from './components/Toast'
 import Overlay from './components/Overlay'
+import AskAuthorizationDialog from './dialogs/AskAuthorizationDialog'
+import CommandPaletteDialog from './dialogs/CommandPaletteDialog'
 
 const SettingsPage = lazy(() => import('./pages/settings/SettingsPage'))
 const InfoPage = lazy(() => import('./pages/info/InfoPage'))
@@ -30,10 +33,13 @@ function NavigationBridge() {
 
 function App() {
     const themeKey = useThemeStore(s => s.themeKey)
+    const i18nReady = useI18nStore(s => s.ready)
 
     const theme = useMemo(() =>
         themes[themeKey] || themes.enterprise
     , [themeKey])
+
+    if (!i18nReady) return null
 
     return (
         <ThemeProvider theme={theme}>
@@ -63,6 +69,8 @@ function App() {
             </BrowserRouter>
             <ConfirmDialog />
             <PromptDialog />
+            <AskAuthorizationDialog />
+            <CommandPaletteDialog />
             <Toast />
             <Overlay />
         </ThemeProvider>

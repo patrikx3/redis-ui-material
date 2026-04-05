@@ -88,11 +88,6 @@ export const appRoutes: Routes = [
         ],
     },
     {
-        path: 'main',
-        redirectTo: 'database',
-        pathMatch: 'prefix',
-    },
-    {
         path: '',
         redirectTo: 'settings',
         pathMatch: 'full',

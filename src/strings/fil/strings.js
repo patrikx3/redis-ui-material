@@ -304,6 +304,7 @@ const strings = {
     shortcutNewKey: "New Key",
     shortcutDisconnect: "Idiskonekta",
     themeAuto: "Auto (system)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Command Palette",
     commandPalette: "Command Palette",
     noResults: "No results",
@@ -329,6 +330,9 @@ const strings = {
     deleteSearchHint: "Tinatanggal ang lahat ng key na tumutugma sa kasalukuyang paghahanap sa server",
     deletingSearchKeys: "Tinatanggal ang mga tumutugmang key...",
     importNoKeys: "Walang nahanap na key sa file",
+    desktopNotifications: "Mga Notification sa Desktop",
+    desktopNotificationsEnabled: "I-enable ang desktop notifications",
+    desktopNotificationsInfo: "Tumanggap ng mga notification sa OS para sa Redis disconnection at reconnection kapag ang app ay wala sa focus.",
   },
   status: {
     dataCopied: "Ang data ay nasa clipboard",
@@ -373,7 +377,8 @@ const strings = {
     ttlChanged: "Ang TTL ng key na ito ay nabago",
     notInteger: "Ang input na ito ay hindi isang integer",
     persisted: "Ang susi na ito ay nananatili magpakailanman",
-    set: "Ang susi ay itinakda/idinagdag"
+    set: "Ang susi ay itinakda/idinagdag",
+    connectionRestored: "Naibalik ang koneksyon",
   },
   code: {
     "delete-connection": "Ang koneksyon na ito ay tinanggal, kaya ikaw ay nadiskonekta sa Redis instance na ito.",

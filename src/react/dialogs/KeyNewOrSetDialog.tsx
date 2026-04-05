@@ -13,6 +13,7 @@ import { useI18nStore } from '../stores/i18n.store'
 import { useRedisStateStore } from '../stores/redis-state.store'
 import { useSettingsStore } from '../stores/settings.store'
 import { useCommonStore } from '../stores/common.store'
+import { trackPage } from '../stores/analytics'
 import { useOverlayStore } from '../stores/overlay.store'
 import { request } from '../stores/socket.service'
 import P3xrDialog from '../components/P3xrDialog'
@@ -168,6 +169,7 @@ export default function KeyNewOrSetDialog({ open, data, onClose }: Props) {
                     model: structuredClone(model),
                 },
             })
+            trackPage('/key-new-or-set')
             toast(strings?.status?.set)
             onClose(response)
         } catch (e) { generalHandleError(e) }

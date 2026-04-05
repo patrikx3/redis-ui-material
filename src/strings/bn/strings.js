@@ -304,6 +304,7 @@ const strings = {
     shortcutNewKey: "New Key",
     shortcutDisconnect: "সংযোগ বিচ্ছিন্ন করুন",
     themeAuto: "Auto (system)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Command Palette",
     commandPalette: "Command Palette",
     noResults: "No results",
@@ -329,6 +330,9 @@ const strings = {
     deleteSearchHint: "সার্ভারে বর্তমান অনুসন্ধানের সাথে মিলে যাওয়া সমস্ত কী মুছে ফেলে",
     deletingSearchKeys: "মিলে যাওয়া কী মুছে ফেলা হচ্ছে...",
     importNoKeys: "ফাইলে কোনো কী পাওয়া যায়নি",
+    desktopNotifications: "ডেস্কটপ বিজ্ঞপ্তি",
+    desktopNotificationsEnabled: "ডেস্কটপ বিজ্ঞপ্তি সক্রিয় করুন",
+    desktopNotificationsInfo: "Redis সংযোগ বিচ্ছিন্ন এবং পুনঃসংযোগের জন্য OS বিজ্ঞপ্তি পান যখন অ্যাপটি ফোকাসে নেই।",
   },
   status: {
     dataCopied: "ডেটা ক্লিপবোর্ডে রয়েছে",
@@ -373,7 +377,8 @@ const strings = {
     ttlChanged: "এই কীটির TTL পরিবর্তন করা হয়েছে৷",
     notInteger: "এই ���নপুট একটি পূর্ণসংখ্যা নয়",
     persisted: "এই কী চিরকাল স্থায়ী হয়",
-    set: "কী সেট/যোগ করা হয়েছে"
+    set: "কী সেট/যোগ করা হয়েছে",
+    connectionRestored: "সংযোগ পুনরুদ্ধার হয়েছে",
   },
   code: {
     "delete-connection": "এই সংযোগটি মুছে ফেলা হয়েছে, তাই আপনি এই Redis উদাহরণের সাথে সংযোগ বিচ্ছিন্ন করেছেন৷",

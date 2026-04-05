@@ -302,6 +302,7 @@ const strings = {
     shortcutNewKey: "Yeni anahtar",
     shortcutDisconnect: "Bağlantıyı kes",
     themeAuto: "Otomatik (sistem)",
+    languageAuto: "Otomatik (sistem)",
     shortcutCommandPalette: "Komut paleti",
     commandPalette: "Komut paleti",
     noResults: "Sonuç yok",
@@ -327,6 +328,9 @@ const strings = {
     deleteSearchHint: "Sunucudaki geçerli aramayla eşleşen tüm anahtarları siler",
     deletingSearchKeys: "Eşleşen anahtarlar siliniyor...",
     importNoKeys: "Dosyada anahtar bulunamadı",
+    desktopNotifications: "Masaüstü Bildirimleri",
+    desktopNotificationsEnabled: "Masaüstü bildirimlerini etkinleştir",
+    desktopNotificationsInfo: "Uygulama odakta değilken Redis bağlantı kesintileri ve yeniden bağlantılar için OS bildirimleri alın.",
   },
   status: {
     dataCopied: "Veri panoya kopyalandı",
@@ -371,7 +375,8 @@ const strings = {
     ttlChanged: "Bu anahtarın TTL değeri değiştirildi",
     notInteger: "Bu girdi bir tamsayı değil",
     persisted: "Bu anahtar kalıcı olarak saklanıyor",
-    set: "Anahtar ayarlandı/eklendi"
+    set: "Anahtar ayarlandı/eklendi",
+    connectionRestored: "Bağlantı yeniden kuruldu",
   },
   code: {
     "delete-connection": "Bu bağlantı silindi, bu yüzden bu Redis örneğinden bağlantınız kesildi.",

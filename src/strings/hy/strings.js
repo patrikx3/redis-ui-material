@@ -304,6 +304,7 @@ const strings = {
     shortcutNewKey: "New Key",
     shortcutDisconnect: "Անջատել",
     themeAuto: "Auto (system)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Command Palette",
     commandPalette: "Command Palette",
     noResults: "No results",
@@ -329,6 +330,9 @@ const strings = {
     deleteSearchHint: "Ջնջում է սերվերի վրա ընթացիկ որոնման համապատասխող բոլոր բանալիները",
     deletingSearchKeys: "Համապատասխող բանալիների ջնջում...",
     importNoKeys: "Ֆայլում բանալիներ չկան",
+    desktopNotifications: "Desktop Notifications",
+    desktopNotificationsEnabled: "Enable desktop notifications",
+    desktopNotificationsInfo: "Receive OS notifications for Redis disconnections and reconnections when the app is not focused.",
   },
   status: {
     dataCopied: "Տվյալները սեղմատախտակում են",
@@ -373,7 +377,8 @@ const strings = {
     ttlChanged: "Այս բանալին TTL փոխվել է",
     notInteger: "Այս մուտքագրումը ամբողջ թիվ չէ",
     persisted: "Այս բանալին ընդմիշտ պահպանվում է",
-    set: "Բանալին դրված է/ավելացվել է"
+    set: "Բանալին դրված է/ավելացվել է",
+    connectionRestored: "Connection restored",
   },
   code: {
     "delete-connection": "Այս կապը ջնջվել է, ուստի դուք անջատված եք այս Redis օրինակից:",

@@ -304,6 +304,7 @@ const strings = {
     shortcutNewKey: "New Key",
     shortcutDisconnect: "Atsijungti",
     themeAuto: "Auto (system)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Command Palette",
     commandPalette: "Command Palette",
     noResults: "No results",
@@ -329,6 +330,9 @@ const strings = {
     deleteSearchHint: "Ištrina visus raktus, atitinkančius dabartinę paiešką serveryje",
     deletingSearchKeys: "Trinami atitinkantys raktai...",
     importNoKeys: "Faile nerasta raktų",
+    desktopNotifications: "Darbalaukio pranešimai",
+    desktopNotificationsEnabled: "Įjungti darbalaukio pranešimus",
+    desktopNotificationsInfo: "Gaukite OS pranešimus apie Redis atjungimus ir pakartotinius prisijungimus, kai programa nėra fokusuota.",
   },
   status: {
     dataCopied: "Duomenys yra iškarpinėje",
@@ -373,7 +377,8 @@ const strings = {
     ttlChanged: "Šio rakto TTL buvo pakeistas",
     notInteger: "Ši įvestis nėra sveikasis skaičius",
     persisted: "Šis raktas išlieka amžinai",
-    set: "Raktas nustatytas/pridėtas"
+    set: "Raktas nustatytas/pridėtas",
+    connectionRestored: "Ryšys atkurtas",
   },
   code: {
     "delete-connection": "Šis ryšys buvo ištrintas, todėl esate atjungtas nuo šio Redis egzemplioriaus.",

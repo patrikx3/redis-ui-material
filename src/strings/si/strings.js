@@ -306,6 +306,7 @@ const strings = {
     shortcutNewKey: "New Key",
     shortcutDisconnect: "විසන්ධි කරන්න",
     themeAuto: "Auto (system)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Command Palette",
     commandPalette: "Command Palette",
     noResults: "No results",
@@ -331,6 +332,9 @@ const strings = {
     deleteSearchHint: "සේවාදායකයේ වත්මන් සෙවීමට ගැළපෙන සියලුම යතුරු මකා දමයි",
     deletingSearchKeys: "ගැළපෙන යතුරු මකා දමමින්...",
     importNoKeys: "ගොනුවේ යතුරු හමු නොවීය",
+    desktopNotifications: "Desktop Notifications",
+    desktopNotificationsEnabled: "Enable desktop notifications",
+    desktopNotificationsInfo: "Receive OS notifications for Redis disconnections and reconnections when the app is not focused.",
   },
   status: {
     dataCopied: "දත්ත පසුරු පුවරුවේ ඇත",
@@ -375,7 +379,8 @@ const strings = {
     ttlChanged: "මෙම යතුරේ TTL වෙනස් කරන ලදී",
     notInteger: "මෙම ආදානය පූර්ණ සංඛ්\u200dයාවක් නොවේ",
     persisted: "මෙම යතුර සදාකාලිකව පවතී",
-    set: "යතුර සකසන ලදී/එක් කරන ලදී"
+    set: "යතුර සකසන ලදී/එක් කරන ලදී",
+    connectionRestored: "Connection restored",
   },
   code: {
     "delete-connection": "මෙම සම්බන්ධතාවය මකා දමන ලදී, එබැවින් ඔබ මෙම Redis අවස්ථාවෙන් විසන්ධි වී ඇත.",

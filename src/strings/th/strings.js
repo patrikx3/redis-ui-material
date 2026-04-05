@@ -304,6 +304,7 @@ const strings = {
     shortcutNewKey: "New Key",
     shortcutDisconnect: "ตัดการเชื่อมต่อ",
     themeAuto: "Auto (system)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Command Palette",
     commandPalette: "Command Palette",
     noResults: "No results",
@@ -329,6 +330,9 @@ const strings = {
     deleteSearchHint: "ลบคีย์ทั้งหมดที่ตรงกับการค้นหาปัจจุบันบนเซิร์ฟเวอร์",
     deletingSearchKeys: "กำลังลบคีย์ที่ตรงกัน...",
     importNoKeys: "ไม่พบคีย์ในไฟล์",
+    desktopNotifications: "การแจ้งเตือนบนเดสก์ท็อป",
+    desktopNotificationsEnabled: "เปิดใช้การแจ้งเตือนบนเดสก์ท็อป",
+    desktopNotificationsInfo: "รับการแจ้งเตือนจาก OS เมื่อ Redis ขาดการเชื่อมต่อและเชื่อมต่อใหม่เมื่อแอปไม่อยู่ในโฟกัส",
   },
   status: {
     dataCopied: "ข้อมูลอยู่ในคลิปบอร์ด",
@@ -373,7 +377,8 @@ const strings = {
     ttlChanged: "TTL ของคีย์นี้มีการเปลี่ยนแปลง",
     notInteger: "อินพุตนี้ไม่ใช่จำ���วนเต็ม",
     persisted: "กุญแจดอกนี้จะคงอยู่ตลอดไป",
-    set: "กุญแจถูกตั้งค่า/เพิ่ม"
+    set: "กุญแจถูกตั้งค่า/เพิ่ม",
+    connectionRestored: "การเชื่อมต่อถูกกู้คืน",
   },
   code: {
     "delete-connection": "การเชื่อมต่อนี้ถูกลบแล้ว ดังนั้นคุณจึงยกเลิกการเชื่อมต่อกับอินสแตนซ์ Redis นี้",

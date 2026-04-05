@@ -2,6 +2,7 @@ import { io, Socket } from 'socket.io-client'
 import { useRedisStateStore } from './redis-state.store'
 import { useSettingsStore } from './settings.store'
 import { useI18nStore } from './i18n.store'
+import { notify } from './notification'
 
 type Callback = (data: any) => void
 type VoidCallback = () => void
@@ -49,6 +50,7 @@ export function getClient(): Socket {
     client.on('connect', () => {
         if (disconnected || connectErrorWas) {
             console.log('p3xr-socket RE-connected', client!.id)
+            notify(useI18nStore.getState().strings?.title?.name || 'P3X Redis UI', useI18nStore.getState().strings?.status?.connectionRestored || 'Connection restored')
             disconnected = false
             connectErrorWas = false
             location.reload()
@@ -95,11 +97,13 @@ export function getClient(): Socket {
                 const fn = strings?.status?.redisDisconnected
                 const msg = typeof fn === 'function' ? fn(data) : 'Redis disconnected'
                 showToast(msg)
+                notify(strings?.title?.name || 'P3X Redis UI', msg)
             } else if (data.status === 'code') {
                 const strings = useI18nStore.getState().strings
                 const codes = strings?.code ?? {}
                 const msg = codes[data.code] ?? `unknown redis disconnect code: ${data.code}`
                 showToast(msg)
+                notify(strings?.title?.name || 'P3X Redis UI', msg)
             }
 
             emit('redis-disconnected', data)

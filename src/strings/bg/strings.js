@@ -306,6 +306,7 @@ const strings = {
     shortcutNewKey: "Нов ключ",
     shortcutDisconnect: "Прекъсни",
     themeAuto: "Автоматично (система)",
+    languageAuto: "Автоматично (система)",
     shortcutCommandPalette: "Палитра с команди",
     commandPalette: "Палитра с команди",
     noResults: "Няма резултати",
@@ -331,6 +332,9 @@ const strings = {
     deleteSearchHint: "Изтрива всички ключове, съответстващи на текущото търсене на сървъра",
     deletingSearchKeys: "Изтриване на съвпадащи ключове...",
     importNoKeys: "Не са намерени ключове във файла",
+    desktopNotifications: "Настолни известия",
+    desktopNotificationsEnabled: "Активиране на настолни известия",
+    desktopNotificationsInfo: "Получавайте известия от ОС при прекъсване и възстановяване на Redis връзката, когато приложението не е на фокус.",
   },
   status: {
     dataCopied: "Данните са в клипборда",
@@ -375,7 +379,8 @@ const strings = {
     ttlChanged: "TTL на този ключ е променен",
     notInteger: "Този вход не е цяло число",
     persisted: "Този ключ е запазен завинаги",
-    set: "Ключът е зададен/добавен"
+    set: "Ключът е зададен/добавен",
+    connectionRestored: "Връзката е възстановена",
   },
   code: {
     "delete-connection": "Тази връзка е изтрита, затова сте прекъснати от тази Redis инстанция.",

@@ -304,6 +304,7 @@ const strings = {
     shortcutNewKey: "New Key",
     shortcutDisconnect: "Bağlantını kəsin",
     themeAuto: "Auto (system)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Command Palette",
     commandPalette: "Command Palette",
     noResults: "No results",
@@ -329,6 +330,9 @@ const strings = {
     deleteSearchHint: "Serverdəki cari axtarışa uyğun bütün açarları silir",
     deletingSearchKeys: "Uyğun açarlar silinir...",
     importNoKeys: "Faylda açar tapılmadı",
+    desktopNotifications: "Masaüstü Bildirişləri",
+    desktopNotificationsEnabled: "Masaüstü bildirişlərini aktiv edin",
+    desktopNotificationsInfo: "Redis bağlantısı kəsilərkən və ya yenidən qoşularkən, tətbiq fokusdankənar olduqda ƏS bildirişləri alın.",
   },
   status: {
     dataCopied: "Məlumat mübadilə buferindədir",
@@ -373,7 +377,8 @@ const strings = {
     ttlChanged: "Bu açarın TTL d��yişdirildi",
     notInteger: "Bu daxiletmə tam ədəd deyil",
     persisted: "Bu açar əbədi olaraq qalır",
-    set: "Açar quraşdırılıb/əlavə edilib"
+    set: "Açar quraşdırılıb/əlavə edilib",
+    connectionRestored: "Bağlantı bərpa edildi",
   },
   code: {
     "delete-connection": "Bu əlaqə silindi, ona görə də siz bu Redis nümunəsi ilə əlaqəni kəsdiniz.",

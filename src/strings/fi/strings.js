@@ -304,6 +304,7 @@ const strings = {
     shortcutNewKey: "New Key",
     shortcutDisconnect: "Katkaise yhteys",
     themeAuto: "Auto (system)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Command Palette",
     commandPalette: "Command Palette",
     noResults: "No results",
@@ -329,6 +330,9 @@ const strings = {
     deleteSearchHint: "Poistaa kaikki palvelimen nykyistä hakua vastaavat avaimet",
     deletingSearchKeys: "Poistetaan vastaavia avaimia...",
     importNoKeys: "Tiedostosta ei löytynyt avaimia",
+    desktopNotifications: "Työpöytäilmoitukset",
+    desktopNotificationsEnabled: "Ota työpöytäilmoitukset käyttöön",
+    desktopNotificationsInfo: "Vastaanota käyttöjärjestelmän ilmoituksia Redis-yhteyden katkeamisista ja uudelleenyhdistämisistä, kun sovellus ei ole etualalla.",
   },
   status: {
     dataCopied: "Tiedot ovat leikepöydällä",
@@ -373,7 +377,8 @@ const strings = {
     ttlChanged: "Tämän avaimen TTL on muutettu",
     notInteger: "Tämä syöte ei ole kokonaisluku",
     persisted: "Tämä avain säilyy ikuisesti",
-    set: "Avain on asetettu/lisätty"
+    set: "Avain on asetettu/lisätty",
+    connectionRestored: "Yhteys palautettu",
   },
   code: {
     "delete-connection": "Tämä yhteys poistettiin, joten yhteys tähän Redis-esiintymään on katkaistu.",

@@ -306,6 +306,7 @@ const strings = {
     shortcutNewKey: "Nový klíč",
     shortcutDisconnect: "Odpojit",
     themeAuto: "Automaticky (systém)",
+    languageAuto: "Automaticky (systém)",
     shortcutCommandPalette: "Paleta příkazů",
     commandPalette: "Paleta příkazů",
     noResults: "Žádné výsledky",
@@ -331,6 +332,9 @@ const strings = {
     deleteSearchHint: "Smaže všechny klíče odpovídající aktuálnímu vyhledávání na serveru",
     deletingSearchKeys: "Mazání odpovídajících klíčů...",
     importNoKeys: "V souboru nebyly nalezeny žádné klíče",
+    desktopNotifications: "Oznámení na ploše",
+    desktopNotificationsEnabled: "Povolit oznámení na ploše",
+    desktopNotificationsInfo: "Dostávejte oznámení OS při odpojení a opětovném připojení Redis, když aplikace není v popředí.",
   },
   status: {
     dataCopied: "Data jsou ve schránce",
@@ -375,7 +379,8 @@ const strings = {
     ttlChanged: "TTL tohoto klíče bylo změněno",
     notInteger: "Tento vstup není celé číslo",
     persisted: "Tento klíč je uchován navždy",
-    set: "Klíč je nastaven/přidán"
+    set: "Klíč je nastaven/přidán",
+    connectionRestored: "Připojení obnoveno",
   },
   code: {
     "delete-connection": "Toto připojení bylo smazáno, proto jste odpojeni od této Redis instance.",

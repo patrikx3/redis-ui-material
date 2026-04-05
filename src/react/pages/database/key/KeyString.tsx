@@ -13,6 +13,7 @@ import {
 } from '@mui/icons-material'
 import { useI18nStore } from '../../../stores/i18n.store'
 import { useRedisStateStore } from '../../../stores/redis-state.store'
+import { trackPage } from '../../../stores/analytics'
 import { useSettingsStore } from '../../../stores/settings.store'
 import { useCommonStore } from '../../../stores/common.store'
 import { useOverlayStore } from '../../../stores/overlay.store'
@@ -65,6 +66,7 @@ export default function KeyString({ response, value: initValue, valueBuffer: ini
             if (validateJson) JSON.parse(v)
             overlay.show({ message: strings?.intention?.save })
             await request({ action: 'key-set', payload: { type: response?.type, key: keyName, value: v } })
+            trackPage('/key-set')
             setEditable(false)
             setBuffer(false)
             onRefresh()
@@ -93,6 +95,7 @@ export default function KeyString({ response, value: initValue, valueBuffer: ini
                     await confirm({ message: strings?.confirm?.uploadBuffer })
                     overlay.show()
                     await request({ action: 'key-set', payload: { type: response?.type, value: arrayBuffer, key: keyName } })
+                    trackPage('/key-set')
                     toast(strings?.confirm?.uploadBufferDoneAndSave)
                     onRefresh()
                 } catch (e) { generalHandleError(e) }
@@ -113,6 +116,7 @@ export default function KeyString({ response, value: initValue, valueBuffer: ini
             setValue(formatted)
             overlay.show({ message: strings?.intention?.save })
             await request({ action: 'key-set', payload: { type: response?.type, key: keyName, value: formatted } })
+            trackPage('/key-set')
             onRefresh()
         } catch { toast(strings?.label?.jsonViewNotParsable) }
         finally { overlay.hide() }
@@ -248,7 +252,7 @@ export default function KeyString({ response, value: initValue, valueBuffer: ini
                         setValue(result.obj)
                         overlay.show({ message: strings?.intention?.save })
                         request({ action: 'key-set', payload: { type: response?.type, key: keyName, value: result.obj } })
-                            .then(() => onRefresh())
+                            .then(() => { trackPage('/key-set'); onRefresh() })
                             .catch(e => generalHandleError(e))
                             .finally(() => overlay.hide())
                     }

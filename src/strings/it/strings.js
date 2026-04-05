@@ -302,6 +302,7 @@ const strings = {
     shortcutNewKey: "Nuova chiave",
     shortcutDisconnect: "Disconnetti",
     themeAuto: "Automatico (sistema)",
+    languageAuto: "Automatico (sistema)",
     shortcutCommandPalette: "Tavolozza comandi",
     commandPalette: "Tavolozza comandi",
     noResults: "Nessun risultato",
@@ -327,6 +328,9 @@ const strings = {
     deleteSearchHint: "Elimina tutte le chiavi corrispondenti alla ricerca corrente",
     deletingSearchKeys: "Eliminazione delle chiavi corrispondenti...",
     importNoKeys: "Nessuna chiave trovata nel file",
+    desktopNotifications: "Notifiche desktop",
+    desktopNotificationsEnabled: "Abilita notifiche desktop",
+    desktopNotificationsInfo: "Ricevi notifiche del sistema operativo per disconnessioni e riconnessioni Redis quando l'app non è in primo piano.",
   },
   status: {
     dataCopied: "I dati sono negli appunti",
@@ -371,7 +375,8 @@ const strings = {
     ttlChanged: "Il TTL di questa chiave è stato modificato",
     notInteger: "Questo input non è un intero",
     persisted: "Questa chiave è persistente per sempre",
-    set: "La chiave è impostata/aggiunta"
+    set: "La chiave è impostata/aggiunta",
+    connectionRestored: "Connessione ripristinata",
   },
   code: {
     "delete-connection": "Questa connessione è stata eliminata, quindi sei disconnesso da questa istanza Redis.",

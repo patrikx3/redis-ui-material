@@ -18,7 +18,7 @@ export function onCommandEvent(event: string, cb: Callback): VoidCallback {
     return () => { cmdListeners[event].delete(cb) }
 }
 
-function emitCommand(event: string, data?: any) {
+export function emitCommand(event: string, data?: any) {
     cmdListeners[event]?.forEach(cb => cb(data))
 }
 

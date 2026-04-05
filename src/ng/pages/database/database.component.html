@@ -6,18 +6,6 @@
      [class.p3xr-database-content-with-bottom-console]="hasConnection && !isXs"
      style="background-color: var(--p3xr-content-bg); color: var(--mat-app-text-color, inherit);">
 
-    <div class="md-title" style="padding: 16px;"
-         *ngIf="hasConnections && !hasConnection">
-        {{ strings().title?.main }}
-    </div>
-
-    <div *ngIf="!hasConnections && !hasConnection" style="padding: 16px;">
-        <button (click)="goSettings()"
-                style="display: inline-block; word-wrap: break-word; white-space: normal; cursor: pointer; background: none; border: none; color: inherit; font-size: inherit; text-decoration: underline;">
-            {{ strings().intention?.noConnections }}
-        </button>
-    </div>
-
     <div *ngIf="hasConnection" class="p3xr-database-has-connection">
 
         <!-- Desktop layout -->

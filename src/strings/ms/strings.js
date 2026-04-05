@@ -304,6 +304,7 @@ const strings = {
     shortcutNewKey: "New Key",
     shortcutDisconnect: "Putuskan sambungan",
     themeAuto: "Auto (system)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Command Palette",
     commandPalette: "Command Palette",
     noResults: "No results",
@@ -329,6 +330,9 @@ const strings = {
     deleteSearchHint: "Memadamkan semua kunci yang sepadan dengan carian semasa di pelayan",
     deletingSearchKeys: "Memadamkan kunci yang sepadan...",
     importNoKeys: "Tiada kunci ditemui dalam fail",
+    desktopNotifications: "Pemberitahuan Desktop",
+    desktopNotificationsEnabled: "Dayakan pemberitahuan desktop",
+    desktopNotificationsInfo: "Terima pemberitahuan OS untuk pemutusan dan penyambungan semula Redis apabila aplikasi tidak dalam fokus.",
   },
   status: {
     dataCopied: "Data berada dalam papan keratan",
@@ -373,7 +377,8 @@ const strings = {
     ttlChanged: "TTL kunci ini telah ditukar",
     notInteger: "Input ini bukan integer",
     persisted: "Kunci ini dikekalkan selama-lamanya",
-    set: "Kunci ditetapkan/ditambah"
+    set: "Kunci ditetapkan/ditambah",
+    connectionRestored: "Sambungan dipulihkan",
   },
   code: {
     "delete-connection": "Sambungan ini telah dipadamkan, jadi anda terputus sambungan ke tika Redis ini.",

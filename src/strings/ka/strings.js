@@ -304,6 +304,7 @@ const strings = {
     shortcutNewKey: "New Key",
     shortcutDisconnect: "გათიშვა",
     themeAuto: "Auto (system)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Command Palette",
     commandPalette: "Command Palette",
     noResults: "No results",
@@ -329,6 +330,9 @@ const strings = {
     deleteSearchHint: "სერვერზე მიმდინარე ძიების შესაბამისი ყველა გასაღების წაშლა",
     deletingSearchKeys: "შესაბამისი გასაღebebis წdelays...",
     importNoKeys: "ფაილში გასაღebebi ვერ მოიძებna",
+    desktopNotifications: "Desktop Notifications",
+    desktopNotificationsEnabled: "Enable desktop notifications",
+    desktopNotificationsInfo: "Receive OS notifications for Redis disconnections and reconnections when the app is not focused.",
   },
   status: {
     dataCopied: "მონაცემები ბუფერშია",
@@ -373,7 +377,8 @@ const strings = {
     ttlChanged: "ამ გასაღების TTL შეიცვალა",
     notInteger: "ეს შეყვანა არ არის მთელი რიცხვი",
     persisted: "ეს გასაღები სამუდამოდ რჩება",
-    set: "გასაღები დაყენებულია/დამატებულია"
+    set: "გასაღები დაყენებულია/დამატებულია",
+    connectionRestored: "Connection restored",
   },
   code: {
     "delete-connection": "ეს კავშირი წაიშალა, ასე რომ თქვენ გათიშული ხართ ამ Redis ეგზემპლართან.",

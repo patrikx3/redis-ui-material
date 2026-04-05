@@ -306,6 +306,7 @@ const strings = {
     shortcutNewKey: "Νέο κλειδί",
     shortcutDisconnect: "Αποσύνδεση",
     themeAuto: "Αυτόματο (σύστημα)",
+    languageAuto: "Αυτόματο (σύστημα)",
     shortcutCommandPalette: "Παλέτα εντολών",
     commandPalette: "Παλέτα εντολών",
     noResults: "Κανένα αποτέλεσμα",
@@ -331,6 +332,9 @@ const strings = {
     deleteSearchHint: "Διαγράφει όλα τα κλειδιά που ταιριάζουν με την τρέχουσα αναζήτηση στον διακομιστή",
     deletingSearchKeys: "Διαγραφή αντίστοιχων κλειδιών...",
     importNoKeys: "Δεν βρέθηκαν κλειδιά στο αρχείο",
+    desktopNotifications: "Ειδοποιήσεις επιφάνειας εργασίας",
+    desktopNotificationsEnabled: "Ενεργοποίηση ειδοποιήσεων επιφάνειας εργασίας",
+    desktopNotificationsInfo: "Λάβετε ειδοποιήσεις ΛΣ για αποσυνδέσεις και επανασυνδέσεις Redis όταν η εφαρμογή δεν είναι σε εστίαση.",
   },
   status: {
     dataCopied: "Τα δεδομένα βρίσκονται στο πρόχειρο",
@@ -375,7 +379,8 @@ const strings = {
     ttlChanged: "Το TTL αυτού του κλειδιού άλλαξε",
     notInteger: "Αυτή η είσοδος δεν είναι ακέραιος αριθμός",
     persisted: "Αυτό το κλειδί διατηρείται για πάντα",
-    set: "Το κλειδί ορίστηκε/προστέθηκε"
+    set: "Το κλειδί ορίστηκε/προστέθηκε",
+    connectionRestored: "Η σύνδεση αποκαταστάθηκε",
   },
   code: {
     "delete-connection": "Αυτή η σύνδεση διαγράφηκε, οπότε αποσυνδεθήκατε από αυτή την παρουσία Redis.",

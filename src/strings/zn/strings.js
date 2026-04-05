@@ -302,6 +302,7 @@ const strings = {
     shortcutNewKey: "新建键",
     shortcutDisconnect: "断开",
     themeAuto: "自动（系统）",
+    languageAuto: "自动（系统）",
     shortcutCommandPalette: "命令面板",
     commandPalette: "命令面板",
     noResults: "无结果",
@@ -327,6 +328,9 @@ const strings = {
     deleteSearchHint: "删除所有匹配当前搜索的键",
     deletingSearchKeys: "正在删除匹配的键...",
     importNoKeys: "文件中未找到键",
+    desktopNotifications: "桌面通知",
+    desktopNotificationsEnabled: "启用桌面通知",
+    desktopNotificationsInfo: "当应用程序不在焦点时，接收 Redis 断线和重新连线的操作系统通知。",
   },
   status: {
     dataCopied: "数据在剪贴板中",
@@ -371,7 +375,8 @@ const strings = {
     ttlChanged: "该键TTL已被更改",
     notInteger: "输入值不是一个整数",
     persisted: "永久键",
-    set: "键已设置/添加"
+    set: "键已设置/添加",
+    connectionRestored: "连接已恢复",
   },
   code: {
     "delete-connection": "此连接已删除，因此您与此Redis实例断开连接。",

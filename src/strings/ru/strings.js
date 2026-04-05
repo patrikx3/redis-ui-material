@@ -306,6 +306,7 @@ const strings = {
     shortcutNewKey: "Новый ключ",
     shortcutDisconnect: "Отключится",
     themeAuto: "Авто (система)",
+    languageAuto: "Авто (система)",
     shortcutCommandPalette: "Палитра команд",
     commandPalette: "Палитра команд",
     noResults: "Нет результатов",
@@ -331,6 +332,9 @@ const strings = {
     deleteSearchHint: "Удалить все ключи, соответствующие текущему поиску",
     deletingSearchKeys: "Удаление совпадающих ключей...",
     importNoKeys: "Ключи не найдены в файле",
+    desktopNotifications: "Уведомления рабочего стола",
+    desktopNotificationsEnabled: "Включить уведомления рабочего стола",
+    desktopNotificationsInfo: "Получайте уведомления ОС при отключении и повторном подключении Redis, когда приложение не в фокусе.",
   },
   status: {
     dataCopied: "Данные скопированы в буфер обмена",
@@ -375,7 +379,8 @@ const strings = {
     ttlChanged: "TTL этого ключа был изменён",
     notInteger: "Этот ввод не для цельной цифры",
     persisted: "Этот ключ не исчезнет сам",
-    set: "Этот ключ был применён/добавлен"
+    set: "Этот ключ был применён/добавлен",
+    connectionRestored: "Соединение восстановлено",
   },
   code: {
     "delete-connection": "Это соединение было удалено и по этому вы были отключены от этой инстанции Redis.",

@@ -304,6 +304,7 @@ const strings = {
     shortcutNewKey: "Nova chave",
     shortcutDisconnect: "Desligar",
     themeAuto: "Automático (sistema)",
+    languageAuto: "Automático (sistema)",
     shortcutCommandPalette: "Paleta de comandos",
     commandPalette: "Paleta de comandos",
     noResults: "Sem resultados",
@@ -329,6 +330,9 @@ const strings = {
     deleteSearchHint: "Eliminar todas as chaves correspondentes à pesquisa atual",
     deletingSearchKeys: "A eliminar chaves correspondentes...",
     importNoKeys: "Nenhuma chave encontrada no ficheiro",
+    desktopNotifications: "Notificações do ambiente de trabalho",
+    desktopNotificationsEnabled: "Ativar notificações do ambiente de trabalho",
+    desktopNotificationsInfo: "Receba notificações do SO para desconexões e reconexões do Redis quando a aplicação não estiver em foco.",
   },
   status: {
     dataCopied: "Os dados estão na área de transferência",
@@ -373,7 +377,8 @@ const strings = {
     ttlChanged: "O TTL desta chave foi alterado",
     notInteger: "Esta entrada não é um número inteiro",
     persisted: "Esta chave é persistida para sempre",
-    set: "A chave foi definida/adicionada"
+    set: "A chave foi definida/adicionada",
+    connectionRestored: "Ligação restaurada",
   },
   code: {
     "delete-connection": "Esta ligação foi eliminada, por isso foi desligado desta instância Redis.",

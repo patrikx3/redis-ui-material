@@ -127,7 +127,12 @@ export default function MemoryAnalysisPage() {
         }
     }, [topN, maxScanKeys, loading, drawCharts, generalHandleError])
 
-    useEffect(() => { runAnalysis() }, []) // eslint-disable-line react-hooks/exhaustive-deps
+    const connectionId = connection?.id
+    useEffect(() => {
+        setData(null)
+        setTypeEntries([])
+        runAnalysis()
+    }, [connectionId]) // eslint-disable-line react-hooks/exhaustive-deps
 
     // Redraw charts on theme change
     const primaryColor = muiTheme.palette.primary.main

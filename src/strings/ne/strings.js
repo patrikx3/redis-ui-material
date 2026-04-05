@@ -304,6 +304,7 @@ const strings = {
     shortcutNewKey: "New Key",
     shortcutDisconnect: "जडान विच्छेद गर्नुहोस्",
     themeAuto: "Auto (system)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Command Palette",
     commandPalette: "Command Palette",
     noResults: "No results",
@@ -329,6 +330,9 @@ const strings = {
     deleteSearchHint: "सर्भरमा हालको खोजसँग मिल्ने सबै कुञ्जीहरू मेटाउँछ",
     deletingSearchKeys: "मिल्ने कुञ्जीहरू मेटाउँदै...",
     importNoKeys: "फाइलमा कुञ्जीहरू फेला परेनन्",
+    desktopNotifications: "Desktop Notifications",
+    desktopNotificationsEnabled: "Enable desktop notifications",
+    desktopNotificationsInfo: "Receive OS notifications for Redis disconnections and reconnections when the app is not focused.",
   },
   status: {
     dataCopied: "डाटा क्लिपबोर्डमा छ",
@@ -373,7 +377,8 @@ const strings = {
     ttlChanged: "यो कुञ्जीको TTL परिवर्तन गरिएको छ",
     notInteger: "यो इनपुट पूर्णांक होइन",
     persisted: "यो कुञ्जी सधैंभरि रहन्छ",
-    set: "कुञ्जी सेट/थपिएको छ"
+    set: "कुञ्जी सेट/थपिएको छ",
+    connectionRestored: "Connection restored",
   },
   code: {
     "delete-connection": "यो जडान मेटाइएको थियो, त्यसैले तपाईं यस Redis उदाहरणमा विच्छेद हुनुभएको छ।",

@@ -9,6 +9,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { I18nService } from '../services/i18n.service';
+import { NotificationService } from '../services/notification.service';
 import { SettingsService } from '../services/settings.service';
 import { RedisStateService } from '../services/redis-state.service';
 import { CommonService } from '../services/common.service';
@@ -339,6 +340,26 @@ import { P3xrButtonComponent } from '../components/p3xr-button.component';
 
         <br />
 
+        <!-- Desktop Notifications -->
+        <p3xr-ng-accordion [title]="strings().label?.desktopNotifications || 'Desktop Notifications'" accordionKey="desktop-notifications">
+            <div content>
+                <mat-list>
+                    <mat-list-item>
+                        <div style="display: flex; width: 100%; align-items: center;">
+                            <span class="p3xr-settings-label" style="flex: 1;">{{ strings().label?.desktopNotificationsEnabled || 'Enable desktop notifications' }}</span>
+                            <mat-slide-toggle [checked]="notificationService.isEnabled()" (change)="notificationService.setEnabled($event.checked)"></mat-slide-toggle>
+                        </div>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <mat-list-item>
+                        <div style="font-size: 12px; opacity: 0.7;">{{ strings().label?.desktopNotificationsInfo || 'Receive OS notifications for Redis disconnections and reconnections when the app is not focused.' }}</div>
+                    </mat-list-item>
+                </mat-list>
+            </div>
+        </p3xr-ng-accordion>
+
+        <br />
+
         <!-- Tree Settings -->
         <p3xr-ng-accordion [title]="strings().form?.treeSettings?.label?.formName || 'Redis Settings'" accordionKey="tree-settings">
             <div actions>
@@ -527,6 +548,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
     private static readonly COLLAPSED_GROUPS_KEY = 'p3xr-collapsed-connection-groups';
     private static readonly GROUP_MODE_KEY = 'p3xr-connection-group-mode';
+    isElectron = /electron/i.test(navigator.userAgent);
     readonlyConnections = false;
     currentConnectionId: string | undefined;
     isXs = false;
@@ -546,6 +568,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
         @Inject(AiSettingsDialogService) private aiSettingsDialog: AiSettingsDialogService,
         @Inject(BreakpointObserver) private breakpointObserver: BreakpointObserver,
         @Inject(ChangeDetectorRef) private cdr: ChangeDetectorRef,
+        @Inject(NotificationService) public notificationService: NotificationService,
     ) {
         this.strings = this.i18n.strings;
 

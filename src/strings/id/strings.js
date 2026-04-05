@@ -304,6 +304,7 @@ const strings = {
     shortcutNewKey: "New Key",
     shortcutDisconnect: "Putuskan sambungan",
     themeAuto: "Auto (system)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Command Palette",
     commandPalette: "Command Palette",
     noResults: "No results",
@@ -329,6 +330,9 @@ const strings = {
     deleteSearchHint: "Menghapus semua kunci yang cocok dengan pencarian saat ini di server",
     deletingSearchKeys: "Menghapus kunci yang cocok...",
     importNoKeys: "Tidak ditemukan kunci dalam file",
+    desktopNotifications: "Notifikasi Desktop",
+    desktopNotificationsEnabled: "Aktifkan notifikasi desktop",
+    desktopNotificationsInfo: "Terima notifikasi OS untuk pemutusan dan penyambungan ulang Redis saat aplikasi tidak dalam fokus.",
   },
   status: {
     dataCopied: "Datanya ada di clipboard",
@@ -373,7 +377,8 @@ const strings = {
     ttlChanged: "TTL kunci ini telah diubah",
     notInteger: "Masukan ini bukan bilangan bulat",
     persisted: "Kunci ini disimpan selamanya",
-    set: "Kuncinya disetel/ditambahkan"
+    set: "Kuncinya disetel/ditambahkan",
+    connectionRestored: "Koneksi dipulihkan",
   },
   code: {
     "delete-connection": "Sambungan ini telah dihapus, jadi sambungan Anda terputus ke instans Redis ini.",

@@ -304,6 +304,7 @@ const strings = {
     shortcutNewKey: "New Key",
     shortcutDisconnect: "התנתק",
     themeAuto: "Auto (system)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Command Palette",
     commandPalette: "Command Palette",
     noResults: "No results",
@@ -329,6 +330,9 @@ const strings = {
     deleteSearchHint: "מוחק את כל המפתחות התואמים לחיפוש הנוכחי בשרת",
     deletingSearchKeys: "מוחק מפתחות תואמים...",
     importNoKeys: "לא נמצאו מפתחות בקובץ",
+    desktopNotifications: "התראות שולחן עבודה",
+    desktopNotificationsEnabled: "הפעל התראות שולחן עבודה",
+    desktopNotificationsInfo: "קבל התראות מערכת הפעלה על ניתוקים וחיבורים מחדש של Redis כשהאפליקציה לא בפוקוס.",
   },
   status: {
     dataCopied: "הנתונים נמצאים בלוח",
@@ -373,7 +377,8 @@ const strings = {
     ttlChanged: "ה-TTL של מפתח זה השתנה",
     notInteger: "קלט זה אינו מספר שלם",
     persisted: "מפתח זה נמשך לנצח",
-    set: "המפתח מוגדר/נוסף"
+    set: "המפתח מוגדר/נוסף",
+    connectionRestored: "החיבור שוחזר",
   },
   code: {
     "delete-connection": "חיבור זה נמחק, אז אתה מנותק למופע Redis זה.",

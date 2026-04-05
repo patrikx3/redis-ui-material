@@ -106,17 +106,46 @@ export default function ConnectionDialog({ open, type, model: sourceModel, onClo
         } catch {}
     }
 
+    const validateForm = (): boolean => {
+        if (!model.name?.trim()) {
+            toast(strings?.form?.error?.invalid)
+            return false
+        }
+        if (model.ssh) {
+            if (!model.sshHost?.trim() || !model.sshUsername?.trim()) {
+                toast(strings?.form?.error?.invalid)
+                return false
+            }
+        }
+        if (model.sentinel && !model.sentinelName?.trim()) {
+            toast(strings?.form?.error?.invalid)
+            return false
+        }
+        return true
+    }
+
     const testConnection = async () => {
+        if (!validateForm()) return
         try {
+            const authModel = structuredClone(model)
+            if (model.askAuth === true) {
+                try {
+                    const auth = await useCommonStore.getState().askAuth()
+                    authModel.username = auth.username || undefined
+                    authModel.password = auth.password || undefined
+                } catch {
+                    return // user cancelled
+                }
+            }
             overlay.show({ message: strings?.title?.connectingRedis })
-            await request({ action: 'redis-test-connection', payload: { model: structuredClone(model) } })
+            await request({ action: 'redis-test-connection', payload: { model: authModel } })
             toast(strings?.status?.redisConnected)
         } catch (e) { generalHandleError(e) }
         finally { overlay.hide() }
     }
 
     const submit = async () => {
-        if (!model.name?.trim()) { toast(strings?.form?.error?.invalid); return }
+        if (!validateForm()) return
         const saveModel = structuredClone(model)
         if (!saveModel.host) saveModel.host = 'localhost'
         if (!saveModel.port) saveModel.port = 6379

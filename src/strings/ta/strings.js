@@ -306,6 +306,7 @@ const strings = {
     shortcutNewKey: "New Key",
     shortcutDisconnect: "துண்டி",
     themeAuto: "Auto (system)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Command Palette",
     commandPalette: "Command Palette",
     noResults: "No results",
@@ -331,6 +332,9 @@ const strings = {
     deleteSearchHint: "சேவையகத்தில் தற்போதைய தேடலுடன் பொருந்தும் அனைத்து விசைகளையும் நீக்குகிறது",
     deletingSearchKeys: "பொருந்தும் விசைகளை நீக்குகிறது...",
     importNoKeys: "கோப்பில் விசைகள் காணப்படவில்லை",
+    desktopNotifications: "Desktop Notifications",
+    desktopNotificationsEnabled: "Enable desktop notifications",
+    desktopNotificationsInfo: "Receive OS notifications for Redis disconnections and reconnections when the app is not focused.",
   },
   status: {
     dataCopied: "தரவு கிளிப்போர்டில் உள்ளது",
@@ -375,7 +379,8 @@ const strings = {
     ttlChanged: "இந்த விசையின் TTL மாற்றப்பட்டது",
     notInteger: "இந்த உள்ளீடு முழு எண் அல்ல",
     persisted: "இந்த விசை நிரந்தரமாக சேமிக்கப்பட்டது",
-    set: "விசை அமைக்கப்பட்டது/சேர்க்கப்பட்டது"
+    set: "விசை அமைக்கப்பட்டது/சேர்க்கப்பட்டது",
+    connectionRestored: "Connection restored",
   },
   code: {
     "delete-connection": "இந்த இணைப்பு நீக்கப்பட்டது, எனவே இந்த Redis நிகழ்வுடன் துண்டிக்கப்பட்டீர்கள்.",

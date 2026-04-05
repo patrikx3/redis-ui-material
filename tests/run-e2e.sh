@@ -1,6 +1,6 @@
 #!/bin/bash
 # Self-contained E2E test runner
-# Starts Redis (Docker), redis-ui-server, webpack-dev-server, runs tests, cleans up.
+# Starts Redis (Docker), builds Angular+React, starts redis-ui-server, runs tests, cleans up.
 # Usage: bash tests/run-e2e.sh [--gui]
 
 set -e
@@ -13,7 +13,6 @@ SERVER_DIR="$WORKSPACE_DIR/redis-ui-server"
 REDIS_PORT=${P3XR_TEST_REDIS_PORT:-26379}
 REDIS_CONTAINER="p3xr-test-redis"
 SERVER_PORT=${P3XR_TEST_SERVER_PORT:-27843}
-FRONTEND_PORT=${P3XR_TEST_FRONTEND_PORT:-28080}
 GUI_MODE=""
 
 if [[ "$1" == "--gui" ]]; then
@@ -21,23 +20,18 @@ if [[ "$1" == "--gui" ]]; then
     export P3XR_HEADLESS=false
 fi
 
-# Kill any existing processes on test ports
-for PORT in $SERVER_PORT $FRONTEND_PORT; do
-    PID=$(lsof -ti:$PORT 2>/dev/null || true)
-    if [ -n "$PID" ]; then
-        echo "Killing existing process on port $PORT (PID $PID)"
-        kill $PID 2>/dev/null || true
-        sleep 1
-    fi
-done
+# Kill any existing processes on test port
+PID=$(lsof -ti:$SERVER_PORT 2>/dev/null || true)
+if [ -n "$PID" ]; then
+    echo "Killing existing process on port $SERVER_PORT (PID $PID)"
+    kill $PID 2>/dev/null || true
+    sleep 1
+fi
 
 cleanup() {
     echo ""
     echo "=== Cleanup ==="
-    # Kill background processes
     [ -n "$SERVER_PID" ] && kill $SERVER_PID 2>/dev/null && echo "Stopped redis-ui-server (PID $SERVER_PID)"
-    [ -n "$WEBPACK_PID" ] && kill $WEBPACK_PID 2>/dev/null && echo "Stopped webpack-dev-server (PID $WEBPACK_PID)"
-    # Remove test Redis container
     docker rm -f $REDIS_CONTAINER 2>/dev/null && echo "Removed Redis container"
     echo "Done."
 }
@@ -64,10 +58,25 @@ docker exec $REDIS_CONTAINER redis-cli SADD test:set red green blue
 docker exec $REDIS_CONTAINER redis-cli ZADD test:zset 1 alpha 2 beta 3 gamma
 echo "Test data seeded"
 
+# Build Angular + React if needed
+echo ""
+echo "=== Building Angular + React ==="
+cd "$MATERIAL_DIR"
+if [ ! -f dist/index.html ]; then
+    echo "Building Angular..."
+    yarn build
+else
+    echo "Angular build exists, skipping"
+fi
+if [ ! -f dist-react/index.html ]; then
+    echo "Building React..."
+    yarn build-react
+else
+    echo "React build exists, skipping"
+fi
+
 # Create test connections config
 TEST_HOME=$(mktemp -d)
-# Config and connections for test
-mkdir -p "$TEST_HOME/static"
 cat > "$TEST_HOME/p3xrs.json" <<EOF
 {
     "p3xrs": {
@@ -78,7 +87,8 @@ cat > "$TEST_HOME/p3xrs.json" <<EOF
         "connections": {
             "home-dir": "$TEST_HOME"
         },
-        "static": "$TEST_HOME/static"
+        "static": "$MATERIAL_DIR/dist",
+        "staticReact": "$MATERIAL_DIR/dist-react"
     }
 }
 EOF
@@ -110,29 +120,9 @@ fi
 echo "Server ready on port $SERVER_PORT"
 
 echo ""
-echo "=== Starting webpack-dev-server on port $FRONTEND_PORT ==="
+echo "=== Running Playwright tests (Angular + React) ==="
 cd "$MATERIAL_DIR"
-P3XR_API_PORT=$SERVER_PORT npx webpack serve --config ./src/builder/webpack.config.js --port $FRONTEND_PORT 2>&1 &
-WEBPACK_PID=$!
-
-echo "Waiting for webpack build..."
-for i in $(seq 1 30); do
-    if curl -s -o /dev/null -w "%{http_code}" http://localhost:$FRONTEND_PORT 2>/dev/null | grep -q 200; then
-        break
-    fi
-    sleep 2
-done
-
-if ! curl -s -o /dev/null http://localhost:$FRONTEND_PORT; then
-    echo "ERROR: webpack-dev-server not responding after 60s"
-    exit 1
-fi
-echo "Frontend ready on port $FRONTEND_PORT"
-
-echo ""
-echo "=== Running Playwright tests ==="
-cd "$MATERIAL_DIR"
-export P3XR_URL="http://localhost:$FRONTEND_PORT"
+export PLAYWRIGHT_BASE_HOST="http://localhost:$SERVER_PORT"
 npx playwright test $GUI_MODE
 TEST_EXIT=$?
 

@@ -51,7 +51,7 @@ export default function ProfilerPage() {
         div.innerHTML = `<span style="opacity:0.5">${escapeHtml(entry.displayTime)}</span> <span style="opacity:0.7">[${escapeHtml(entry.database)} ${escapeHtml(entry.source)}]</span> ${escapeHtml(entry.command)}`
         el.appendChild(div)
         while (el.children.length > MAX_DOM_ENTRIES) el.removeChild(el.firstChild!)
-        el.scrollTop = el.scrollHeight
+        requestAnimationFrame(() => { el.scrollTop = el.scrollHeight })
     }, [oddBg])
 
     const recalcHeight = useCallback(() => {
@@ -65,13 +65,17 @@ export default function ProfilerPage() {
     useEffect(() => {
         document.body.classList.add('p3xr-no-main-scroll')
 
+        // Set height before rendering entries so scroll works immediately
+        recalcHeight()
+
         // Render existing entries
+        const el = outputRef.current
+        if (el) el.innerHTML = ''
         const entries = useMonitoringDataStore.getState().profilerEntries
         const start = Math.max(0, entries.length - MAX_DOM_ENTRIES)
         entryIndexRef.current = start
         for (let i = start; i < entries.length; i++) renderEntry(entries[i])
-        const el = outputRef.current
-        if (el) el.scrollTop = el.scrollHeight
+        if (el) requestAnimationFrame(() => { el.scrollTop = el.scrollHeight })
 
         // Subscribe to new entries
         const unsub = onProfilerEntry(renderEntry)
@@ -79,7 +83,6 @@ export default function ProfilerPage() {
         // Resize handling
         const onResize = () => recalcHeight()
         window.addEventListener('resize', onResize)
-        setTimeout(recalcHeight, 50)
 
         return () => {
             document.body.classList.remove('p3xr-no-main-scroll')

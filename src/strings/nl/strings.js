@@ -304,6 +304,7 @@ const strings = {
     shortcutNewKey: "Nieuwe sleutel",
     shortcutDisconnect: "Verbinding verbreken",
     themeAuto: "Automatisch (systeem)",
+    languageAuto: "Automatisch (systeem)",
     shortcutCommandPalette: "Opdrachtenpalet",
     commandPalette: "Opdrachtenpalet",
     noResults: "Geen resultaten",
@@ -329,6 +330,9 @@ const strings = {
     deleteSearchHint: "Alle sleutels verwijderen die overeenkomen met de huidige zoekopdracht",
     deletingSearchKeys: "Overeenkomende sleutels worden verwijderd...",
     importNoKeys: "Geen sleutels gevonden in bestand",
+    desktopNotifications: "Bureaumeldingen",
+    desktopNotificationsEnabled: "Bureaumeldingen inschakelen",
+    desktopNotificationsInfo: "Ontvang OS-meldingen voor Redis-verbroken verbindingen en herverbindingen wanneer de app niet in focus is.",
   },
   status: {
     dataCopied: "De gegevens staan op het klembord",
@@ -373,7 +377,8 @@ const strings = {
     ttlChanged: "De TTL van deze sleutel is gewijzigd",
     notInteger: "Deze invoer is geen geheel getal",
     persisted: "Deze sleutel wordt voor altijd bewaard",
-    set: "De sleutel is ingesteld/toegevoegd"
+    set: "De sleutel is ingesteld/toegevoegd",
+    connectionRestored: "Verbinding hersteld",
   },
   code: {
     "delete-connection": "Deze verbinding is verwijderd, dus u bent losgekoppeld van deze Redis-instantie.",

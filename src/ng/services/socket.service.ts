@@ -4,6 +4,7 @@ import { RedisStateService } from './redis-state.service';
 import { SettingsService } from './settings.service';
 import { OverlayService } from './overlay.service';
 import { I18nService } from './i18n.service';
+import { NotificationService } from './notification.service';
 
 declare const io: any;
 
@@ -32,6 +33,7 @@ export class SocketService {
         @Inject(SettingsService) private settings: SettingsService,
         @Inject(OverlayService) private overlay: OverlayService,
         @Inject(I18nService) private i18n: I18nService,
+        @Inject(NotificationService) private notificationService: NotificationService,
     ) {
         this.initConnection();
     }
@@ -63,6 +65,8 @@ export class SocketService {
         this.ioClient.on('connect', async () => {
             if (this.disconnected || this.connectErrorWas) {
                 console.log('p3xr-socket RE-connected', this.ioClient.id);
+                const strings = this.i18n.strings();
+                this.notificationService.notify(strings?.title?.name || 'P3X Redis UI', strings?.status?.connectionRestored || 'Connection restored');
                 this.disconnected = false;
                 this.connectErrorWas = false;
                 location.reload();
@@ -110,11 +114,13 @@ export class SocketService {
                     const strings = this.i18n.strings();
                     const msg = strings?.status?.redisDisconnected?.(data) ?? 'Redis disconnected';
                     this.showToast(msg);
+                    this.notificationService.notify(strings?.title?.name || 'P3X Redis UI', msg);
                 } else if (data.status === 'code') {
                     const strings = this.i18n.strings();
                     const codes = strings?.code ?? {};
                     const msg = codes[data.code] ?? `unknown redis disconnect code: ${data.code}`;
                     this.showToast(msg);
+                    this.notificationService.notify(strings?.title?.name || 'P3X Redis UI', msg);
                 }
 
                 this.redisDisconnected$.next(data);

@@ -272,12 +272,16 @@ export default function ConsoleComponent({ embedded = false, collapsed = false }
             let indexes: string[] = []
             try { const r = await request({ action: 'search-list', payload: {} }); indexes = r.data || [] } catch {}
             const info = useRedisStateStore.getState().info || {}
+            const modules = useRedisStateStore.getState().modules || []
             const ctx: any = { indexes }
             if (info.redis_version) ctx.redisVersion = info.redis_version
             if (info.redis_mode) ctx.redisMode = info.redis_mode
             if (info.os) ctx.os = info.os
             if (info.connected_clients) ctx.connectedClients = info.connected_clients
             if (info.used_memory_human) ctx.usedMemory = info.used_memory_human
+            const dbKeys = Object.keys(info).filter((k: string) => /^db\d+$/.test(k))
+            if (dbKeys.length > 0) ctx.databases = dbKeys.map((k: string) => `${k}: ${info[k]}`)
+            if (modules.length > 0) ctx.modules = modules
             ctx.uiLanguage = useI18nStore.getState().currentLang
 
             const response = await request({ action: 'ai-redis-query', payload: { prompt, context: ctx } })

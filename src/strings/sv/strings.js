@@ -302,6 +302,7 @@ const strings = {
     shortcutNewKey: "Ny nyckel",
     shortcutDisconnect: "Koppla från",
     themeAuto: "Automatisk (system)",
+    languageAuto: "Automatisk (system)",
     shortcutCommandPalette: "Kommandopalett",
     commandPalette: "Kommandopalett",
     noResults: "Inga resultat",
@@ -327,6 +328,9 @@ const strings = {
     deleteSearchHint: "Raderar alla nycklar som matchar den aktuella sökningen på servern",
     deletingSearchKeys: "Raderar matchande nycklar...",
     importNoKeys: "Inga nycklar hittades i filen",
+    desktopNotifications: "Skrivbordsmeddelanden",
+    desktopNotificationsEnabled: "Aktivera skrivbordsmeddelanden",
+    desktopNotificationsInfo: "Få OS-meddelanden för Redis-frånkopplingar och återanslutningar när appen inte är i fokus.",
   },
   status: {
     dataCopied: "Datan finns i urklipp",
@@ -371,7 +375,8 @@ const strings = {
     ttlChanged: "Denna nyckels TTL har ändrats",
     notInteger: "Denna inmatning är inte ett heltal",
     persisted: "Denna nyckel finns kvar för alltid",
-    set: "Nyckeln är satt/tillagd"
+    set: "Nyckeln är satt/tillagd",
+    connectionRestored: "Anslutningen återställd",
   },
   code: {
     "delete-connection": "Denna anslutning raderades, så du är frånkopplad från denna Redis-instans.",

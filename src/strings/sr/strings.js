@@ -304,6 +304,7 @@ const strings = {
     shortcutNewKey: "\u041D\u043E\u0432\u0438 \u043A\u0459\u0443\u0447",
     shortcutDisconnect: "\u041E\u0434\u0432\u043E\u0458\u0438",
     themeAuto: "Аутоматски (систем)",
+    languageAuto: "Аутоматски (систем)",
     shortcutCommandPalette: "\u041F\u0430\u043B\u0435\u0442\u0430 \u043A\u043E\u043C\u0430\u043D\u0434\u0438",
     commandPalette: "\u041F\u0430\u043B\u0435\u0442\u0430 \u043A\u043E\u043C\u0430\u043D\u0434\u0438",
     noResults: "\u041D\u0435\u043C\u0430 \u0440\u0435\u0437\u0443\u043B\u0442\u0430\u0442\u0430",
@@ -329,6 +330,9 @@ const strings = {
     deleteSearchHint: "Брише све кључеве који одговарају тренутној претрази на серверу",
     deletingSearchKeys: "Брисање одговарајућих кључева...",
     importNoKeys: "Кључеви нису пронађени у датотеци",
+    desktopNotifications: "Обавештења на радној површини",
+    desktopNotificationsEnabled: "Омогући обавештења на радној површини",
+    desktopNotificationsInfo: "Примајте OS обавештења за прекиде и поновна повезивања Redis-а када апликација није у фокусу.",
   },
   status: {
     dataCopied: "\u041F\u043E\u0434\u0430\u0446\u0438 \u0441\u0443 \u0443 \u043C\u0435\u0452\u0443\u0441\u043F\u0440\u0435\u043C\u043D\u0438\u043A\u0443",
@@ -373,7 +377,8 @@ const strings = {
     ttlChanged: "TTL \u043E\u0432\u043E\u0433 \u043A\u0459\u0443\u0447\u0430 \u0458\u0435 \u043F\u0440\u043E\u043C\u0435\u045A\u0435\u043D",
     notInteger: "\u041E\u0432\u0430\u0458 \u0443\u043D\u043E\u0441 \u043D\u0438\u0458\u0435 \u0446\u0435\u043E \u0431\u0440\u043E\u0458",
     persisted: "\u041E\u0432\u0430\u0458 \u043A\u0459\u0443\u0447 \u0458\u0435 \u0442\u0440\u0430\u0458\u043D\u043E \u0441\u0430\u0447\u0443\u0432\u0430\u043D",
-    set: "\u041A\u0459\u0443\u0447 \u0458\u0435 \u043F\u043E\u0441\u0442\u0430\u0432\u0459\u0435\u043D/\u0434\u043E\u0434\u0430\u0442"
+    set: "\u041A\u0459\u0443\u0447 \u0458\u0435 \u043F\u043E\u0441\u0442\u0430\u0432\u0459\u0435\u043D/\u0434\u043E\u0434\u0430\u0442",
+    connectionRestored: "Веза обновљена",
   },
   code: {
     "delete-connection": "\u041E\u0432\u0430 \u043A\u043E\u043D\u0435\u043A\u0446\u0438\u0458\u0430 \u0458\u0435 \u043E\u0431\u0440\u0438\u0441\u0430\u043D\u0430, \u0442\u0430\u043A\u043E \u0434\u0430 \u0441\u0442\u0435 \u043E\u0434\u0432\u043E\u0458\u0435\u043D\u0438 \u043E\u0434 \u043E\u0432\u0435 Redis \u0438\u043D\u0441\u0442\u0430\u043D\u0446\u0435.",

@@ -304,6 +304,7 @@ const strings = {
     shortcutNewKey: "New Key",
     shortcutDisconnect: "Afbryd forbindelsen",
     themeAuto: "Auto (system)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Command Palette",
     commandPalette: "Command Palette",
     noResults: "No results",
@@ -329,6 +330,9 @@ const strings = {
     deleteSearchHint: "Sletter alle nøgler, der matcher den aktuelle søgning på serveren",
     deletingSearchKeys: "Sletter matchende nøgler...",
     importNoKeys: "Ingen nøgler fundet i filen",
+    desktopNotifications: "Skrivebordsbeskeder",
+    desktopNotificationsEnabled: "Aktiver skrivebordsbeskeder",
+    desktopNotificationsInfo: "Modtag OS-beskeder ved Redis-afbrydelser og genforbindelser, når appen ikke er i fokus.",
   },
   status: {
     dataCopied: "Dataene er i udklipsholderen",
@@ -373,7 +377,8 @@ const strings = {
     ttlChanged: "Denne nøgles TTL er blevet ændret",
     notInteger: "Dette input er ikke et heltal",
     persisted: "Denne nøgle er vedvarende for evigt",
-    set: "Nøglen indstilles/tilføjes"
+    set: "Nøglen indstilles/tilføjes",
+    connectionRestored: "Forbindelsen genoprettet",
   },
   code: {
     "delete-connection": "Denne forbindelse blev slettet, så du er afbrudt til denne Redis-instans.",

@@ -1,4 +1,4 @@
-import { Injectable, signal, computed, effect } from '@angular/core';
+import { Injectable, Inject, Injector, signal, computed, effect } from '@angular/core';
 
 const prettyBytesModule = require('pretty-bytes');
 const prettyBytesFn = prettyBytesModule.default || prettyBytesModule;
@@ -42,7 +42,9 @@ export class SettingsService {
     // --- Utility methods ---
 
     prettyBytes(value: number): string {
-        return prettyBytesFn(value, { locale: this.language() });
+        let lang = this.language();
+        if (lang === 'auto') lang = this.i18n.currentLang() || 'en';
+        return prettyBytesFn(value, { locale: lang });
     }
 
     getStorageKeyCurrentDatabase(connectionId: string): string {
@@ -82,15 +84,24 @@ export class SettingsService {
         'pt-BR': 'pt', 'zn': 'zh_CN', 'zh-HK': 'zh_TW', 'zh-TW': 'zh_TW', 'pt-PT': 'pt',
     };
 
+    private get i18n() {
+        // Lazy resolve to avoid circular dependency
+        const { I18nService } = require('./i18n.service');
+        return this.injector.get(I18nService);
+    }
+
     getHumanizeDurationOptions(): { language: string; languages: Record<string, any> } {
-        const lang = this.language();
+        let lang = this.language();
+        if (lang === 'auto') {
+            lang = this.i18n.currentLang() || 'en';
+        }
         return {
             language: this.humanizeDurationLanguageMap[lang] || lang || 'en',
             languages: this.humanizeDurationCustomLanguages,
         };
     }
 
-    constructor() {
+    constructor(@Inject(Injector) private readonly injector: Injector) {
         // Persist signal changes back to localStorage
         effect(() => { this.setStorage('p3xr-main-treecontrol-divider', this.redisTreeDivider()); });
         effect(() => { this.setStorage('p3xr-json-format', String(this.jsonFormat())); });

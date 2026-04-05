@@ -1,7 +1,7 @@
 {
     "name": "p3x-redis-ui-material",
-    "version": "2026.4.399",
-    "description": "💿 The p3x-redis-ui-material web interface that connects to the p3x-redis-ui-server via http and socket.io",
+    "version": "2026.4.402",
+    "description": "💿 P3X Redis UI dual frontend — Angular + React/MUI with 54 languages, 7 themes, Socket.IO, desktop notifications, and full feature parity",
     "corifeus": {
         "icon": "fas fa-database",
         "code": "Fireball",

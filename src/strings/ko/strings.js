@@ -304,6 +304,7 @@ const strings = {
     shortcutNewKey: "New Key",
     shortcutDisconnect: "연결 끊기",
     themeAuto: "Auto (system)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Command Palette",
     commandPalette: "Command Palette",
     noResults: "No results",
@@ -329,6 +330,9 @@ const strings = {
     deleteSearchHint: "현재 검색과 일치하는 모든 키 삭제",
     deletingSearchKeys: "일치하는 키 삭제 중...",
     importNoKeys: "파일에서 키를 찾을 수 없습니다",
+    desktopNotifications: "데스크톱 알림",
+    desktopNotificationsEnabled: "데스크톱 알림 활성화",
+    desktopNotificationsInfo: "앱이 포커스되지 않을 때 Redis 연결 해제 및 재연결에 대한 OS 알림을 받습니다.",
   },
   status: {
     dataCopied: "데이터가 클립보드에 있습니다.",
@@ -373,7 +377,8 @@ const strings = {
     ttlChanged: "이 키의 TTL가 변경되었습니다.",
     notInteger: "이 입력은 정수가 아닙니다.",
     persisted: "이 키는 영원히 유지됩니다.",
-    set: "���가 설정/추가되었습니다."
+    set: "���가 설정/추가되었습니다.",
+    connectionRestored: "연결이 복원됨",
   },
   code: {
     "delete-connection": "이 연결이 삭제되어 이 Redis 인스턴스에 대한 연결이 끊어졌습니다.",

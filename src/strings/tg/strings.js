@@ -304,6 +304,7 @@ const strings = {
     shortcutNewKey: "New Key",
     shortcutDisconnect: "Қатъ кунед",
     themeAuto: "Auto (system)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Command Palette",
     commandPalette: "Command Palette",
     noResults: "No results",
@@ -329,6 +330,9 @@ const strings = {
     deleteSearchHint: "Ҳамаи калидҳои мувофиқи ҷустуҷӯи ҷориро дар сервер нест мекунад",
     deletingSearchKeys: "Калидҳои мувофиқ нест карда мешаванд...",
     importNoKeys: "Дар файл калидҳо ёфт нашуд",
+    desktopNotifications: "Desktop Notifications",
+    desktopNotificationsEnabled: "Enable desktop notifications",
+    desktopNotificationsInfo: "Receive OS notifications for Redis disconnections and reconnections when the app is not focused.",
   },
   status: {
     dataCopied: "Маълумот дар буфер аст",
@@ -373,7 +377,8 @@ const strings = {
     ttlChanged: "Ин калиди TTL тағир дода шудааст",
     notInteger: "Ин вуруд адади бутун нест",
     persisted: "Ин калид то абад нигоҳ дошта мешавад",
-    set: "Калид гузошта шудааст/илова карда шудааст"
+    set: "Калид гузошта шудааст/илова карда шудааст",
+    connectionRestored: "Connection restored",
   },
   code: {
     "delete-connection": "Ин пайвастшавӣ нест карда шуд, бинобар ин шумо аз ин мисоли Redis ҷудо кардаед.",

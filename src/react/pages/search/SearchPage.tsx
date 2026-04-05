@@ -161,15 +161,21 @@ export default function SearchPage() {
         } catch (e) { generalHandleError(e) }
     }, [newIndexName, newIndexPrefix, newIndexFields, strings, toast, loadIndexes, generalHandleError])
 
-    // --- Init ---
+    // --- Init + refresh on connection change ---
+    const connectionId = connection?.id
     useEffect(() => {
+        setSelectedIndex('')
+        setResults([])
+        setTotal(0)
+        setSearchDone(false)
+        setIndexInfo(null)
         loadIndexes().then(idxs => {
             if (idxs.length > 0) {
                 setSelectedIndex(idxs[0])
                 loadIndexInfo(idxs[0])
             }
         })
-    }, []) // eslint-disable-line react-hooks/exhaustive-deps
+    }, [connectionId]) // eslint-disable-line react-hooks/exhaustive-deps
 
     const onIndexChange = (idx: string) => {
         setSelectedIndex(idx)

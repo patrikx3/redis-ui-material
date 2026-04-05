@@ -304,6 +304,7 @@ const strings = {
     shortcutNewKey: "New Key",
     shortcutDisconnect: "Koble fra",
     themeAuto: "Auto (system)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Command Palette",
     commandPalette: "Command Palette",
     noResults: "No results",
@@ -329,6 +330,9 @@ const strings = {
     deleteSearchHint: "Sletter alle nøkler som matcher gjeldende søk på serveren",
     deletingSearchKeys: "Sletter matchende nøkler...",
     importNoKeys: "Ingen nøkler funnet i filen",
+    desktopNotifications: "Skrivebordsvarsler",
+    desktopNotificationsEnabled: "Aktiver skrivebordsvarsler",
+    desktopNotificationsInfo: "Motta OS-varsler for Redis-frakoblinger og gjenoppkoblinger når appen ikke er i fokus.",
   },
   status: {
     dataCopied: "Dataene er i utklippstavlen",
@@ -373,7 +377,8 @@ const strings = {
     ttlChanged: "Denne nøkkelens TTL er endret",
     notInteger: "Denne inngangen er ikke et heltall",
     persisted: "Denne nøkkelen er vedvart for alltid",
-    set: "Nøkkelen er satt/lagt til"
+    set: "Nøkkelen er satt/lagt til",
+    connectionRestored: "Tilkobling gjenopprettet",
   },
   code: {
     "delete-connection": "Denne tilkoblingen ble slettet, så du er frakoblet denne Redis-forekomsten.",

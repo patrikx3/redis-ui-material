@@ -304,6 +304,7 @@ const strings = {
     shortcutNewKey: "New Key",
     shortcutDisconnect: "ផ្តាច់",
     themeAuto: "Auto (system)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Command Palette",
     commandPalette: "Command Palette",
     noResults: "No results",
@@ -329,6 +330,9 @@ const strings = {
     deleteSearchHint: "លុបសោទាំងអស់ដែលផ្គូផ្គងនឹងការស្វែងរកបច្ចុប្បន្ននៅលើម៉ាស៊ីនមេ",
     deletingSearchKeys: "កំពុងលុបសោដែលផ្គូផ្គង...",
     importNoKeys: "រកមិនឃើញសោក្នុងឯកសារ",
+    desktopNotifications: "Desktop Notifications",
+    desktopNotificationsEnabled: "Enable desktop notifications",
+    desktopNotificationsInfo: "Receive OS notifications for Redis disconnections and reconnections when the app is not focused.",
   },
   status: {
     dataCopied: "ទិន្នន័យគឺនៅក្នុងក្ដារតម្បៀតខ្ទាស់",
@@ -373,7 +377,8 @@ const strings = {
     ttlChanged: "TTL របស់សោនេះត្រូវបានផ្លាស់ប្តូរ",
     notInteger: "ការបញ្ចូលនេះមិនមែនជាចំនួនគត់ទេ។",
     persisted: "គន្លឹះ​នេះ​ស្ថិត​នៅ​ជា​រៀង​រហូត",
-    set: "គ្រាប់ចុចត្រូវបានកំណត់ / បន្ថែម"
+    set: "គ្រាប់ចុចត្រូវបានកំណត់ / បន្ថែម",
+    connectionRestored: "Connection restored",
   },
   code: {
     "delete-connection": "ការ​តភ្ជាប់​នេះ​ត្រូវ​បាន​លុប ដូច្នេះ​អ្នក​ត្រូវ​បាន​ផ្ដាច់​ទៅ​នឹង​ឧទាហរណ៍ Redis នេះ។",

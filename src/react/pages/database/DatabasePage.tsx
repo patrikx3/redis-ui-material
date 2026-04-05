@@ -34,6 +34,13 @@ export default function DatabasePage() {
     const [consoleExpanded, setConsoleExpanded] = useState(false)
     const consolePanelRef = useRef<HTMLDivElement>(null)
 
+    // Redirect to settings if not connected
+    useEffect(() => {
+        if (!connection) {
+            navigateTo('settings')
+        }
+    }, [connection])
+
     // Redirect to statistics on bare /database
     useEffect(() => {
         if (!connection) return
@@ -127,24 +134,6 @@ export default function DatabasePage() {
                 display: 'flex',
                 flexDirection: 'column',
             }}>
-                {/* No connections message */}
-                {!hasConnections && !hasConnection && (
-                    <Box sx={{ p: 2 }}>
-                        <Button variant="text" onClick={() => navigateTo('settings')}
-                            sx={{ textDecoration: 'underline', textTransform: 'none', color: 'inherit' }}>
-                            {strings?.intention?.noConnections}
-                        </Button>
-                    </Box>
-                )}
-
-                {/* Has connections but not connected */}
-                {hasConnections && !hasConnection && (
-                    <Box sx={{ p: 2, fontSize: 20, fontWeight: 400 }}>
-                        {strings?.title?.main}
-                    </Box>
-                )}
-
-                {/* Connected */}
                 {hasConnection && (
                     isXs ? (
                         /* Mobile: matches Angular exactly

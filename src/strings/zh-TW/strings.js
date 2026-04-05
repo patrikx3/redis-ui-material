@@ -304,6 +304,7 @@ const strings = {
     shortcutNewKey: "New Key",
     shortcutDisconnect: "斷開連接",
     themeAuto: "Auto (system)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Command Palette",
     commandPalette: "Command Palette",
     noResults: "No results",
@@ -329,6 +330,9 @@ const strings = {
     deleteSearchHint: "刪除所有符合當前搜尋的金鑰",
     deletingSearchKeys: "正在刪除符合的金鑰...",
     importNoKeys: "檔案中未找到金鑰",
+    desktopNotifications: "桌面通知",
+    desktopNotificationsEnabled: "啟用桌面通知",
+    desktopNotificationsInfo: "當應用程式不在焦點時，接收 Redis 斷線和重新連線的作業系統通知。",
   },
   status: {
     dataCopied: "資料在剪貼簿中",
@@ -373,7 +377,8 @@ const strings = {
     ttlChanged: "該密鑰的 TTL 已更改",
     notInteger: "該輸入不是整數",
     persisted: "該密鑰將永遠保留",
-    set: "密鑰已設定/新增"
+    set: "密鑰已設定/新增",
+    connectionRestored: "連線已恢復",
   },
   code: {
     "delete-connection": "此連線已刪除，因此您與此 Redis 實例的連線已中斷。",

@@ -304,6 +304,7 @@ const strings = {
     shortcutNewKey: "New Key",
     shortcutDisconnect: "Исклучете се",
     themeAuto: "Auto (system)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Command Palette",
     commandPalette: "Command Palette",
     noResults: "No results",
@@ -329,6 +330,9 @@ const strings = {
     deleteSearchHint: "Ги брише сите клучеви што одговараат на тековното пребарување на серверот",
     deletingSearchKeys: "Бришење на совпаѓачки клучеви...",
     importNoKeys: "Не се пронајдени клучеви во датотеката",
+    desktopNotifications: "Известувања на работна површина",
+    desktopNotificationsEnabled: "Овозможи известувања на работна површина",
+    desktopNotificationsInfo: "Примајте OS известувања за прекини и повторни поврзувања на Redis кога апликацијата не е во фокус.",
   },
   status: {
     dataCopied: "Податоците се во таблата со исечоци",
@@ -373,7 +377,8 @@ const strings = {
     ttlChanged: "TTL на овој клуч е променет",
     notInteger: "Овој влез не е цел број",
     persisted: "Овој клуч останува засекогаш",
-    set: "Клучот е поставен/додаден"
+    set: "Клучот е поставен/додаден",
+    connectionRestored: "Конекцијата е обновена",
   },
   code: {
     "delete-connection": "Оваа врска е избришана, така што сте исклучени со овој примерок Redis.",

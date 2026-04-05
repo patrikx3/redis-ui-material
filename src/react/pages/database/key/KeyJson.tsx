@@ -13,6 +13,7 @@ import { useRedisStateStore } from '../../../stores/redis-state.store'
 import { useCommonStore } from '../../../stores/common.store'
 import { useOverlayStore } from '../../../stores/overlay.store'
 import { request } from '../../../stores/socket.service'
+import { trackPage } from '../../../stores/analytics'
 import { KeyTypeProps, truncateDisplay, copyValue } from './key-type-base'
 import JsonEditorDialog from '../../../dialogs/JsonEditorDialog'
 
@@ -184,6 +185,7 @@ export default function KeyJson({ response, value, valueBuffer, keyName, valueFo
             const val = typeof result.obj === 'string' ? result.obj : JSON.stringify(result.obj)
             overlay.show()
             await request({ action: 'key-json-set', payload: { key: keyName, path: '$', value: val } })
+            trackPage('/key-json-set')
             toast(strings?.status?.set)
             onRefresh()
         } catch (e) { if (e) generalHandleError(e) }

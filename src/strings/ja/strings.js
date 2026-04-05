@@ -302,6 +302,7 @@ const strings = {
     shortcutNewKey: "新しいキー",
     shortcutDisconnect: "切断",
     themeAuto: "自動（システム）",
+    languageAuto: "自動（システム）",
     shortcutCommandPalette: "コマンドパレット",
     commandPalette: "コマンドパレット",
     noResults: "結果なし",
@@ -327,6 +328,9 @@ const strings = {
     deleteSearchHint: "現在の検索に一致するすべてのキーを削除",
     deletingSearchKeys: "一致するキーを削除中...",
     importNoKeys: "ファイルにキーが見つかりません",
+    desktopNotifications: "デスクトップ通知",
+    desktopNotificationsEnabled: "デスクトップ通知を有効にする",
+    desktopNotificationsInfo: "アプリがフォーカスされていない時に、Redisの切断と再接続のOS通知を受け取ります。",
   },
   status: {
     dataCopied: "データがクリップボードにコピーされました",
@@ -371,7 +375,8 @@ const strings = {
     ttlChanged: "このキーのTTLが変更されました",
     notInteger: "この入力は整数ではありません",
     persisted: "このキーは永続的に保持されます",
-    set: "キーが設定/追加されました"
+    set: "キーが設定/追加されました",
+    connectionRestored: "接続が復元されました",
   },
   code: {
     "delete-connection": "この接続は削除されたため、このRedisインスタンスから切断されました。",

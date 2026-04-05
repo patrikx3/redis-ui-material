@@ -29,6 +29,7 @@ import { useOverlayStore } from '../../stores/overlay.store'
 import { useMainCommandStore } from '../../stores/main-command.store'
 import { request, onSocketEvent } from '../../stores/socket.service'
 import { getPersistentItem, setPersistentItem } from '../../stores/electron-bridge'
+import { isNotificationsEnabled, setNotificationsEnabled } from '../../stores/notification'
 
 // --- Sortable connection row (whole row is draggable) ---
 function SortableConnectionItem({ conn, isLast, children }: {
@@ -215,6 +216,7 @@ export default function SettingsPage() {
     const [dialogModel, setDialogModel] = useState<any>(undefined)
     const [aiDialogOpen, setAiDialogOpen] = useState(false)
     const [treeDialogOpen, setTreeDialogOpen] = useState(false)
+    const [notifToggle, setNotifToggle] = useState(isNotificationsEnabled)
 
     const handleConnect = async (conn: any) => {
         const cloned = structuredClone(conn)
@@ -504,6 +506,22 @@ export default function SettingsPage() {
                             </ListItem>
                         </>
                     )}
+                </List>
+            </P3xrAccordion>
+            <br />
+            {/* === Notifications === */}
+            <P3xrAccordion title={strings?.label?.desktopNotifications || 'Desktop Notifications'} accordionKey="desktop-notifications">
+                <List disablePadding>
+                    <ListItem>
+                        <Box sx={{ display: 'flex', width: '100%', alignItems: 'center' }}>
+                            <Box sx={{ flex: 1, fontWeight: 500 }}>{strings?.label?.desktopNotificationsEnabled || 'Enable desktop notifications'}</Box>
+                            <Switch checked={isNotificationsEnabled()} onChange={(_, checked) => { setNotificationsEnabled(checked); setNotifToggle(checked) }} />
+                        </Box>
+                    </ListItem>
+                    <Divider />
+                    <ListItem>
+                        <Box sx={{ fontSize: 12, opacity: 0.7 }}>{strings?.label?.desktopNotificationsInfo || 'Receive OS notifications for Redis disconnections and reconnections when the app is not focused.'}</Box>
+                    </ListItem>
                 </List>
             </P3xrAccordion>
             <br />

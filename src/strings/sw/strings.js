@@ -306,6 +306,7 @@ const strings = {
     shortcutNewKey: "New Key",
     shortcutDisconnect: "Tenganisha",
     themeAuto: "Auto (system)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Command Palette",
     commandPalette: "Command Palette",
     noResults: "No results",
@@ -331,6 +332,9 @@ const strings = {
     deleteSearchHint: "Hufuta funguo zote zinazolingana na utafutaji wa sasa kwenye seva",
     deletingSearchKeys: "Inafuta funguo zinazolingana...",
     importNoKeys: "Hakuna funguo zilizopatikana kwenye faili",
+    desktopNotifications: "Arifa za Eneo-kazi",
+    desktopNotificationsEnabled: "Washa arifa za eneo-kazi",
+    desktopNotificationsInfo: "Pokea arifa za OS kwa kukatika na kuunganisha tena kwa Redis wakati programu haipo katika lengo.",
   },
   status: {
     dataCopied: "Data iko kwenye ubao wa kunakili",
@@ -375,7 +379,8 @@ const strings = {
     ttlChanged: "TTL ya ufunguo huu imebadilishwa",
     notInteger: "Ingizo hili si nambari kamili",
     persisted: "Ufunguo huu umehifadhiwa milele",
-    set: "Ufunguo umewekwa/imeongezwa"
+    set: "Ufunguo umewekwa/imeongezwa",
+    connectionRestored: "Muunganisho umerejeshwa",
   },
   code: {
     "delete-connection": "Muunganisho huu umefutwa, kwa hivyo umetenganishwa na mfano huu wa Redis.",

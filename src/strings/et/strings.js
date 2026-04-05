@@ -304,6 +304,7 @@ const strings = {
     shortcutNewKey: "New Key",
     shortcutDisconnect: "Katkesta ühendus",
     themeAuto: "Auto (system)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Command Palette",
     commandPalette: "Command Palette",
     noResults: "No results",
@@ -329,6 +330,9 @@ const strings = {
     deleteSearchHint: "Kustutab kõik serveris praegusele otsingule vastavad võtmed",
     deletingSearchKeys: "Vastavate võtmete kustutamine...",
     importNoKeys: "Failis ei leitud võtmeid",
+    desktopNotifications: "Töölaua teavitused",
+    desktopNotificationsEnabled: "Luba töölaua teavitused",
+    desktopNotificationsInfo: "Saate OS-i teavitusi Redise lahtiühenduste ja taasühenduste kohta, kui rakendus ei ole fookuses.",
   },
   status: {
     dataCopied: "Andmed on lõikepuhvril",
@@ -373,7 +377,8 @@ const strings = {
     ttlChanged: "Selle võtme TTL on muudetud",
     notInteger: "See sisend ei ole täisarv",
     persisted: "See võti püsib igavesti",
-    set: "Võti on seatud/lisatud"
+    set: "Võti on seatud/lisatud",
+    connectionRestored: "Ühendus taastatud",
   },
   code: {
     "delete-connection": "See ühendus kustutati, nii et olete selle Redis eksemplariga katkestatud.",

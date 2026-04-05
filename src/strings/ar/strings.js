@@ -304,6 +304,7 @@ const strings = {
     shortcutNewKey: "New Key",
     shortcutDisconnect: "قطع الاتصال",
     themeAuto: "Auto (system)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Command Palette",
     commandPalette: "Command Palette",
     noResults: "No results",
@@ -329,6 +330,9 @@ const strings = {
     deleteSearchHint: "يحذف جميع المفاتيح المطابقة للبحث الحالي على الخادم",
     deletingSearchKeys: "جارٍ حذف المفاتيح المطابقة...",
     importNoKeys: "لم يتم العثور على مفاتيح في الملف",
+    desktopNotifications: "إشعارات سطح المكتب",
+    desktopNotificationsEnabled: "تفعيل إشعارات سطح المكتب",
+    desktopNotificationsInfo: "تلقي إشعارات نظام التشغيل عند انقطاع اتصال Redis أو إعادة الاتصال عندما لا يكون التطبيق في المقدمة.",
   },
   status: {
     dataCopied: "البيانات موجودة في الحافظة",
@@ -373,7 +377,8 @@ const strings = {
     ttlChanged: "تم تغيير TTL لهذا المفتاح",
     notInteger: "هذا الإدخال ليس عددًا صحيحًا",
     persisted: "ويستمر هذا المفتاح إلى الأبد",
-    set: "تم ضبط/إضافة المفتاح"
+    set: "تم ضبط/إضافة المفتاح",
+    connectionRestored: "تم استعادة الاتصال",
   },
   code: {
     "delete-connection": "تم حذف هذا الاتصال، لذا تم قطع اتصالك بمثيل Redis هذا.",

@@ -302,6 +302,7 @@ const strings = {
     shortcutNewKey: "Új kulcs",
     shortcutDisconnect: "Leválasztás",
     themeAuto: "Automatikus (rendszer)",
+    languageAuto: "Automatikus (rendszer)",
     shortcutCommandPalette: "Parancspaletta",
     commandPalette: "Parancspaletta",
     noResults: "Nincs találat",
@@ -327,6 +328,9 @@ const strings = {
     deleteSearchHint: "Törli az összes kulcsot, amely megfelel az aktuális keresésnek a szerveren",
     deletingSearchKeys: "Egyező kulcsok törlése...",
     importNoKeys: "Nem található kulcs a fájlban",
+    desktopNotifications: "Asztali értesítések",
+    desktopNotificationsEnabled: "Asztali értesítések engedélyezése",
+    desktopNotificationsInfo: "OS értesítések fogadása Redis lecsatlakozásoknál és újracsatlakozásoknál, amikor az alkalmazás nincs fókuszban.",
   },
   status: {
     dataCopied: "Az adat a vágólapon van",
@@ -371,7 +375,8 @@ const strings = {
     ttlChanged: "Ennek a kulcsnak a TTL értéke módosult",
     notInteger: "Ez a bemenet nem egész szám",
     persisted: "Ez a kulcs örökre megmarad",
-    set: "A kulcs beállítva/hozzáadva"
+    set: "A kulcs beállítva/hozzáadva",
+    connectionRestored: "Kapcsolat helyreállítva",
   },
   code: {
     "delete-connection": "Ez a kapcsolat törölve lett, ezért leválasztásra került erről a Redis példányról.",

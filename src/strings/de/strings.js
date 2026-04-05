@@ -306,6 +306,7 @@ const strings = {
     shortcutNewKey: "Neuer Schlüssel",
     shortcutDisconnect: "Trennen",
     themeAuto: "Automatisch (System)",
+    languageAuto: "Automatisch (System)",
     shortcutCommandPalette: "Befehlspalette",
     commandPalette: "Befehlspalette",
     noResults: "Keine Ergebnisse",
@@ -331,6 +332,9 @@ const strings = {
     deleteSearchHint: "Alle Schlüssel löschen, die der aktuellen Suche entsprechen",
     deletingSearchKeys: "Übereinstimmende Schlüssel werden gelöscht...",
     importNoKeys: "Keine Schlüssel in der Datei gefunden",
+    desktopNotifications: "Desktop-Benachrichtigungen",
+    desktopNotificationsEnabled: "Desktop-Benachrichtigungen aktivieren",
+    desktopNotificationsInfo: "Erhalten Sie Betriebssystem-Benachrichtigungen bei Redis-Trennungen und Wiederverbindungen, wenn die App nicht im Fokus ist.",
   },
   status: {
     dataCopied: "Die Daten sind in der Zwischenablage",
@@ -375,7 +379,8 @@ const strings = {
     ttlChanged: "Die TTL dieses Schlüssels wurde geändert",
     notInteger: "Diese Eingabe ist keine Ganzzahl",
     persisted: "Dieser Schlüssel wird dauerhaft gespeichert",
-    set: "Der Schlüssel ist gesetzt/hinzugefügt"
+    set: "Der Schlüssel ist gesetzt/hinzugefügt",
+    connectionRestored: "Verbindung wiederhergestellt",
   },
   code: {
     "delete-connection": "Diese Verbindung wurde gelöscht, daher sind Sie von dieser Redis-Instanz getrennt.",

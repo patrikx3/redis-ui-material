@@ -1,0 +1,100 @@
+import { useState, useEffect } from 'react'
+import {
+    Button, IconButton, Tooltip, TextField, useMediaQuery,
+    InputAdornment,
+} from '@mui/material'
+import { Done, Cancel, Visibility, VisibilityOff } from '@mui/icons-material'
+import { useCommonStore } from '../stores/common.store'
+import { useI18nStore } from '../stores/i18n.store'
+import P3xrDialog from '../components/P3xrDialog'
+
+export default function AskAuthorizationDialog() {
+    const { askAuthOpen, resolveAskAuth } = useCommonStore()
+    const strings = useI18nStore(s => s.strings)
+    const isWide = useMediaQuery('(min-width: 600px)')
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    const [pwVisible, setPwVisible] = useState(false)
+
+    useEffect(() => {
+        if (askAuthOpen) {
+            setUsername('')
+            setPassword('')
+            setPwVisible(false)
+        }
+    }, [askAuthOpen])
+
+    if (!askAuthOpen) return null
+
+    const handleOk = () => {
+        resolveAskAuth?.({ username, password })
+    }
+
+    const handleCancel = () => {
+        resolveAskAuth?.(null)
+    }
+
+    return (
+        <P3xrDialog
+            open
+            onClose={handleCancel}
+            title={strings?.label?.askAuth || 'Authorization'}
+            width="400px"
+            actions={
+                <>
+                    {isWide ? (
+                        <Button variant="contained" color="error" onClick={handleCancel}>
+                            <Cancel fontSize="small" /><span style={{ marginLeft: 3 }}>{strings?.intention?.cancel}</span>
+                        </Button>
+                    ) : (
+                        <Tooltip title={strings?.intention?.cancel} placement="top">
+                            <IconButton color="error" onClick={handleCancel} sx={{ borderRadius: '4px' }}>
+                                <Cancel fontSize="small" />
+                            </IconButton>
+                        </Tooltip>
+                    )}
+                    {isWide ? (
+                        <Button variant="contained" color="primary" onClick={handleOk}>
+                            <Done fontSize="small" /><span style={{ marginLeft: 3 }}>{strings?.intention?.ok || 'OK'}</span>
+                        </Button>
+                    ) : (
+                        <Tooltip title={strings?.intention?.ok || 'OK'} placement="top">
+                            <IconButton color="primary" onClick={handleOk} sx={{ borderRadius: '4px' }}>
+                                <Done fontSize="small" />
+                            </IconButton>
+                        </Tooltip>
+                    )}
+                </>
+            }
+        >
+            <TextField
+                autoFocus fullWidth margin="dense"
+                label={strings?.form?.connection?.label?.username || 'Username'}
+                value={username}
+                onChange={e => setUsername(e.target.value)}
+                autoComplete="off"
+                onKeyDown={e => e.key === 'Enter' && handleOk()}
+            />
+            <TextField
+                fullWidth margin="dense"
+                label={strings?.form?.connection?.label?.password || 'Password'}
+                type={pwVisible ? 'text' : 'password'}
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                autoComplete="off"
+                onKeyDown={e => e.key === 'Enter' && handleOk()}
+                slotProps={{
+                    input: {
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton onClick={() => setPwVisible(!pwVisible)} size="small">
+                                    {pwVisible ? <VisibilityOff fontSize="small" /> : <Visibility fontSize="small" />}
+                                </IconButton>
+                            </InputAdornment>
+                        ),
+                    },
+                }}
+            />
+        </P3xrDialog>
+    )
+}
