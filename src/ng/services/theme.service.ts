@@ -147,16 +147,37 @@ export class ThemeService {
 
     // --- Private helpers ---
 
+    /**
+     * Convert short localStorage key to Angular internal name.
+     * e.g. 'dark' → 'p3xrThemeDark', 'enterprise' → 'p3xrThemeEnterprise'
+     */
+    private fromShortKey(key: string): string {
+        if (key.startsWith('p3xrTheme')) return key; // already Angular format
+        const angularName = 'p3xrTheme' + key.charAt(0).toUpperCase() + key.slice(1);
+        return ThemeService.ALL_THEMES.includes(angularName) ? angularName : key;
+    }
+
+    /**
+     * Convert Angular internal name to short localStorage key.
+     * e.g. 'p3xrThemeDark' → 'dark', 'p3xrThemeEnterprise' → 'enterprise'
+     */
+    private toShortKey(themeName: string): string {
+        if (!themeName.startsWith('p3xrTheme')) return themeName;
+        const name = themeName.replace('p3xrTheme', '');
+        return name.charAt(0).toLowerCase() + name.slice(1);
+    }
+
     private getInitialTheme(): string {
         const stored = this.readStorageItem(ThemeService.STORAGE_KEY);
         if (!stored) return ThemeService.AUTO_THEME;
-        return stored;
+        if (stored === ThemeService.AUTO_THEME) return stored;
+        return this.fromShortKey(stored);
     }
 
     private applyTheme(themeName: string): void {
         const dark = ThemeService.DARK_THEMES.includes(themeName);
 
-        this.setStorageItem(ThemeService.STORAGE_KEY, this.isAuto() ? ThemeService.AUTO_THEME : themeName);
+        this.setStorageItem(ThemeService.STORAGE_KEY, this.isAuto() ? ThemeService.AUTO_THEME : this.toShortKey(themeName));
 
         if (typeof document !== 'undefined') {
             document.body.classList.remove('p3xr-theme-light', 'p3xr-theme-dark');

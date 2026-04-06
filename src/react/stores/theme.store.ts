@@ -8,8 +8,21 @@ function getSystemDark(): boolean {
     return typeof window !== 'undefined' && window.matchMedia?.('(prefers-color-scheme: dark)').matches
 }
 
+function normalizeThemeKey(raw: string): string {
+    // Handle Angular format: p3xrThemeDark → dark, p3xrThemeEnterprise → enterprise
+    if (raw.startsWith('p3xrTheme')) {
+        const name = raw.replace('p3xrTheme', '')
+        return name.charAt(0).toLowerCase() + name.slice(1)
+    }
+    return raw
+}
+
 function readStored(): string {
-    try { return localStorage.getItem(STORAGE_KEY) || AUTO } catch { return AUTO }
+    try {
+        const raw = localStorage.getItem(STORAGE_KEY) || AUTO
+        if (raw === AUTO) return AUTO
+        return normalizeThemeKey(raw)
+    } catch { return AUTO }
 }
 
 function applyBodyClasses(resolved: string): void {

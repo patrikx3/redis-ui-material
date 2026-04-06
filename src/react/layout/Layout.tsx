@@ -197,13 +197,6 @@ export default function Layout() {
     const [highlightedLangIdx, setHighlightedLangIdx] = useState(0)
     const languageInputRef = useRef<HTMLInputElement>(null)
 
-    // Close language menu on resize to avoid stale positioning
-    useEffect(() => {
-        const onResize = () => { if (languageAnchor) setLanguageAnchor(null) }
-        window.addEventListener('resize', onResize)
-        return () => window.removeEventListener('resize', onResize)
-    }, [languageAnchor])
-
     const availableLanguages = useMemo(() =>
         Object.keys(strings?.language ?? {}), [strings])
 
@@ -513,8 +506,13 @@ export default function Layout() {
                     <Menu anchorEl={languageAnchor} open={Boolean(languageAnchor)}
                         onClose={() => { setLanguageAnchor(null); onLanguageMenuClose() }}
                         className="p3xr-language-menu"
+                        disableAutoFocus
+                        disableEnforceFocus
+                        disableRestoreFocus
+                        autoFocus={false}
                         anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
                         transformOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+                        MenuListProps={{ autoFocus: false, autoFocusItem: false }}
                         slotProps={{
                             paper: { sx: { minWidth: 320, maxWidth: '90vw', maxHeight: 400, overflow: 'hidden' } },
                             list: { sx: { pt: 0, overflow: 'auto', maxHeight: 400 } },

@@ -1,6 +1,6 @@
 {
     "name": "p3x-redis-ui-material",
-    "version": "2026.4.407",
+    "version": "2026.4.408",
     "description": "💿 P3X Redis UI dual frontend — Angular + React/MUI with 54 languages, 7 themes, Socket.IO, desktop notifications, and full feature parity",
     "corifeus": {
         "icon": "fas fa-database",
@@ -98,7 +98,7 @@
         "timestring": "^7.0.0",
         "ts-loader": "^9.5.7",
         "typescript": "^6.0.2",
-        "vite": "^8.0.3",
+        "vite": "^8.0.5",
         "webpack": "^5.105.4",
         "webpack-bundle-analyzer": "^5.3.0",
         "webpack-cli": "^7.0.2",

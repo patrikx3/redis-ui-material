@@ -196,6 +196,8 @@ const strings = {
     jsonViewShow: "Display JSON",
     jsonViewEditor: "Edit JSON",
     quickConsole: "Quick Console",
+    moveUp: "Move up",
+    moveDown: "Move down",
   },
   label: {
     id: {
@@ -221,6 +223,8 @@ const strings = {
     aiRouteViaNetwork: "Route via network.corifeus.com",
     aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
     aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiMaxTokens: "AI Max Tokens",
+    aiMaxTokensInfo: "Maximum number of tokens for AI responses. Higher values allow longer responses but may use more API credits.",
     ssh: {
       on: 'SSH on',
       off: 'SSH off',
