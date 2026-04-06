@@ -19,6 +19,7 @@
             </button>
         }
 
+        @if (!showLogin) {
         <!-- Database button — shown only when connected -->
         @if (currentConnection) {
             @if (isWide) {
@@ -66,10 +67,11 @@
                 </button>
             }
         }
-
+        }
 
         <span class="p3xr-layout-spacer"></span>
 
+        @if (!showLogin) {
         <!-- Info button -->
         @if (isWide) {
             <button mat-button (click)="navigateTo('info')" [class.p3xr-nav-active]="isActivePage('info')">
@@ -97,6 +99,16 @@
                 <mat-icon>settings</mat-icon>
             </button>
         }
+        }
+
+        <!-- Logout button — rightmost, shown when auth is enabled and user is authenticated -->
+        @if (auth.authRequired() && auth.isAuthenticated()) {
+            <button mat-icon-button (click)="logout()"
+                    [matTooltip]="i18n.strings().intention?.logout || 'Logout'"
+                    matTooltipPosition="below">
+                <mat-icon>logout</mat-icon>
+            </button>
+        }
 
     </mat-toolbar>
 </div>
@@ -114,6 +126,7 @@
 <div id="p3xr-layout-footer-container">
     <mat-toolbar class="p3xr-mat-layout">
 
+        @if (!showLogin) {
         <!-- Connection menu — shown only when there are saved connections -->
         @if (connectionsList.length > 0) {
             @if (isWide) {
@@ -162,6 +175,7 @@
                     <i class="fa fa-power-off"></i>
                 </button>
             }
+        }
         }
 
         <span class="p3xr-layout-spacer"></span>
@@ -271,7 +285,11 @@
     </mat-toolbar>
 </div>
 
-<!-- Content area: Angular Router renders pages here -->
+<!-- Content area -->
 <div class="p3xr-layout-content">
-    <router-outlet></router-outlet>
+    @if (showLogin) {
+        <p3xr-login></p3xr-login>
+    } @else {
+        <router-outlet></router-outlet>
+    }
 </div>

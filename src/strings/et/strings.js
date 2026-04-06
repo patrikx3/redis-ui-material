@@ -55,6 +55,7 @@ const strings = {
     },
     socketioConnectError: "Socket.IO ei saa serveriga ühendust, saate uuesti laadida ja proovida ühenduse tõrke ise lahendada, klient ei tea, kuidas seda ise lahendada.",
     socketioAuthRequired: "Nõutav on Socket.IO autoriseerimine. Autentige koodiga HTTP Basic Auth (kasutajanimi/parool) ja laadige uuesti.",
+    invalidCredentials: "Vale kasutajanimi või parool.",
     deleteKey: "Kas olete kindel, et kustutate selle võtme?",
     rename: {
       title: "Kas olete kindel, et nimetate selle võtme ümber?",
@@ -173,6 +174,7 @@ const strings = {
     settings: "Seaded",
     connect: "Ühendage",
     disconnect: "Katkesta ühendus",
+    logout: "Logi välja",
     overview: "Ülevaade",
     console: "konsool",
     noConnections: "Ühendusi pole, lisage ühendus seadete menüüs.",

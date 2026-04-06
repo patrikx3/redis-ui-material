@@ -54,6 +54,7 @@ const strings = {
     },
     socketioConnectError: "Socket.IO nu se poate conecta la server, puteti reincarca si incerca sa rezolvati eroarea de conexiune singur, clientul nu stie cum sa o rezolve.",
     socketioAuthRequired: "Autorizarea Socket.IO este necesara. Va rugam autentificati-va cu HTTP Basic Auth (utilizator/parola) si reincarcati.",
+    invalidCredentials: "Nume de utilizator sau parolă nevalide.",
     delete: "Stergeti?",
     deleteKey: "Sunteti sigur ca doriti sa stergeti aceasta cheie?",
     rename: {
@@ -173,6 +174,7 @@ const strings = {
     settings: "Setari",
     connect: "Conectare",
     disconnect: "Deconectare",
+    logout: "Deconectare",
     overview: "Prezentare generala",
     console: "Consola",
     noConnections: "Nu exista conexiuni, adaugati o conexiune in meniul de setari.",

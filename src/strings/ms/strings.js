@@ -54,6 +54,7 @@ const strings = {
     },
     socketioConnectError: "Socket.IO tidak boleh menyambung ke pelayan, anda boleh memuat semula dan cuba menyelesaikan sendiri ralat sambungan, pelanggan tidak tahu bagaimana untuk menyelesaikannya sendiri.",
     socketioAuthRequired: "Keizinan Socket.IO diperlukan. Sila sahkan dengan HTTP Basic Auth (nama pengguna/kata laluan) dan muat semula.",
+    invalidCredentials: "Nama pengguna atau kata laluan tidak sah.",
     delete: "Padam?",
     deleteKey: "Adakah anda pasti akan memadamkan kunci ini?",
     rename: {
@@ -173,6 +174,7 @@ const strings = {
     settings: "tetapan",
     connect: "Sambung",
     disconnect: "Putuskan sambungan",
+    logout: "Log keluar",
     overview: "Gambaran keseluruhan",
     console: "Konsol",
     noConnections: "Tiada sambungan, tambah sambungan dalam menu tetapan.",

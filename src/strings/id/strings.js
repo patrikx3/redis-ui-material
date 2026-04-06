@@ -55,6 +55,7 @@ const strings = {
     },
     socketioConnectError: "Socket.IO tidak dapat terhubung ke server, Anda dapat memuat ulang dan mencoba mengatasi sendiri kesalahan koneksi, klien tidak tahu cara menyelesaikannya sendiri.",
     socketioAuthRequired: "Diperlukan otorisasi Socket.IO. Harap autentikasi dengan HTTP Basic Auth (nama pengguna/kata sandi) dan muat ulang.",
+    invalidCredentials: "Nama pengguna atau kata sandi tidak valid.",
     deleteKey: "Apakah Anda yakin akan menghapus kunci ini?",
     rename: {
       title: "Apakah Anda yakin akan mengganti nama kunci ini?",
@@ -173,6 +174,7 @@ const strings = {
     settings: "Pengaturan",
     connect: "Hubungkan",
     disconnect: "Putuskan sambungan",
+    logout: "Keluar",
     overview: "Ikhtisar",
     console: "Konsol",
     noConnections: "Tidak ada koneksi, tambahkan koneksi di menu pengaturan.",

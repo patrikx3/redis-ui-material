@@ -54,6 +54,7 @@ const strings = {
     },
     socketioConnectError: "Socket.IO se ne more povezati s strežnikom, lahko znova naložite in poskusite sami odpraviti napako povezave, odjemalec ne ve, kako bi jo rešil sam.",
     socketioAuthRequired: "Zahtevana je avtorizacija Socket.IO. Preverite pristnost z HTTP Basic Auth (uporabniško ime/geslo) in znova naložite.",
+    invalidCredentials: "Neveljavno uporabniško ime ali geslo.",
     delete: "Izbrisati?",
     deleteKey: "Ali ste prepričani, da želite izbrisati ta ključ?",
     rename: {
@@ -173,6 +174,7 @@ const strings = {
     settings: "nastavitve",
     connect: "Povežite se",
     disconnect: "Prekini povezavo",
+    logout: "Odjava",
     overview: "Pregled",
     console: "Konzola",
     noConnections: "Brez povezav, dodajte povezavo v meniju z nastavitvami.",

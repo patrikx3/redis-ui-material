@@ -43,6 +43,9 @@ export default defineConfig(({ mode }) => ({
                 target: `http://localhost:${apiPort}`,
                 ws: true,
             },
+            '/api': {
+                target: `http://localhost:${apiPort}`,
+            },
         },
     },
     preview: {

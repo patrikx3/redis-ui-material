@@ -54,6 +54,7 @@ const strings = {
     },
     socketioConnectError: "Socket.IO nie może połączyć się z serwerem. Możesz przeładować stronę i spróbować samodzielnie rozwiązać problem z połączeniem; klient nie potrafi rozwiązać go samodzielnie.",
     socketioAuthRequired: "Wymagana jest autoryzacja Socket.IO. Uwierzytelnij się za pomocą HTTP Basic Auth (nazwa użytkownika/hasło) i przeładuj stronę.",
+    invalidCredentials: "Nieprawidłowa nazwa użytkownika lub hasło.",
     delete: "Usunąć?",
     deleteKey: "Czy na pewno chcesz usunąć ten klucz?",
     rename: {
@@ -173,6 +174,7 @@ const strings = {
     settings: "Ustawienia",
     connect: "Połącz",
     disconnect: "Rozłącz",
+    logout: "Wyloguj",
     overview: "Przegląd",
     console: "Konsola",
     noConnections: "Brak połączeń, dodaj połączenie w menu ustawień.",

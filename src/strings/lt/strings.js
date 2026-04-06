@@ -54,6 +54,7 @@ const strings = {
     },
     socketioConnectError: "Socket.IO negali prisijungti prie serverio, galite perkrauti ir patys bandyti išspręsti ryšio klaidą, klientas pats nežino, kaip ją išspręsti.",
     socketioAuthRequired: "Reikalingas Socket.IO leidimas. Autentifikuokite naudodami HTTP Basic Auth (naudotojo vardą / slaptažodį) ir įkelkite iš naujo.",
+    invalidCredentials: "Neteisingas vartotojo vardas arba slaptažodis.",
     delete: "Ištrinti?",
     deleteKey: "Ar tikrai ištrinsite šį raktą?",
     rename: {
@@ -173,6 +174,7 @@ const strings = {
     settings: "Nustatymai",
     connect: "Prisijunkite",
     disconnect: "Atsijungti",
+    logout: "Atsijungti",
     overview: "Apžvalga",
     console: "konsolė",
     noConnections: "Nėra ryšių, pridėkite ryšį nustatymų meniu.",

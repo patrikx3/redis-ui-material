@@ -54,6 +54,7 @@ const strings = {
     },
     socketioConnectError: "Socket.IO không kết nối được với máy chủ, bạn có thể tải lại và thử tự khắc phục lỗi kết nối, máy khách không biết tự giải quyết.",
     socketioAuthRequired: "Cần có ủy quyền Socket.IO. Vui lòng xác thực bằng HTTP Basic Auth (tên người dùng/mật khẩu) và tải lại.",
+    invalidCredentials: "Tên người dùng hoặc mật khẩu không hợp lệ.",
     delete: "Xóa?",
     deleteKey: "Bạn có chắc chắn xóa khóa này không?",
     rename: {
@@ -173,6 +174,7 @@ const strings = {
     settings: "Cài đặt",
     connect: "Kết nối",
     disconnect: "Ngắt kết nối",
+    logout: "Đăng xuất",
     overview: "Tổng quan",
     console: "Bảng điều khiển",
     noConnections: "Không có kết nối, thêm kết nối trong menu cài đặt.",

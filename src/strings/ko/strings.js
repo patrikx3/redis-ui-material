@@ -55,6 +55,7 @@ const strings = {
     },
     socketioConnectError: "Socket.IO는 서버에 연결할 수 없습니다. 다시 로드하여 연결 오류를 직접 해결할 수 있습니다. 클라이언트는 자체적으로 문제를 해결하는 방법을 모릅니다.",
     socketioAuthRequired: "Socket.IO 인증이 필요합니다. HTTP Basic Auth(사용자 이름/비밀번호)로 인증하고 다시 로드하세요.",
+    invalidCredentials: "잘못된 사용자 이름 또는 비밀번호입니다.",
     deleteKey: "이 키를 삭제하시겠습니까?",
     rename: {
       title: "이 키의 이름을 바꾸시겠습니까?",
@@ -173,6 +174,7 @@ const strings = {
     settings: "설정",
     connect: "연결하다",
     disconnect: "연결 끊기",
+    logout: "로그아웃",
     overview: "개요",
     console: "콘솔",
     noConnections: "연결이 없습니다. 설정 메뉴에서 연결을 추가하세요.",

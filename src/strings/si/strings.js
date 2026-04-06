@@ -54,6 +54,7 @@ const strings = {
     },
     socketioConnectError: "Socket.IO සේවාදායකයට සම්බන්ධ විය නොහැක, ඔබට නැවත පූරණය කර සම්බන්ධතා දෝෂය විසඳීමට උත්සාහ කළ හැක, සේවාලාභියාට එය තනිවම විසඳන්නේ කෙසේදැයි නොදනී.",
     socketioAuthRequired: "Socket.IO අවසරය අවශ්\u200dයයි. කරුණාකර HTTP Basic Auth (පරිශීලක නාමය/මුරපදය) සමඟ සත්\u200dයාපනය කර නැවත පූරණය කරන්න.",
+    invalidCredentials: "වලංගු නොවන පරිශීලක නාමය හෝ මුරපදය.",
     delete: "මකන්නද?",
     deleteKey: "ඔබට මෙම යතුර මකා දැමීමට අවශ්\u200dය බව විශ්වාසද?",
     rename: {
@@ -175,6 +176,7 @@ const strings = {
     settings: "සැකසුම්",
     connect: "සම්බන්ධ වන්න",
     disconnect: "විසන්ධි කරන්න",
+    logout: "පිටවීම",
     overview: "දළ විශ්ලේෂණය",
     console: "කොන්සෝලය",
     noConnections: "සම්බන්ධතා නැත, සැකසුම් මෙනුවේ සම්බන්ධතාවයක් එක් කරන්න.",

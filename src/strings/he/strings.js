@@ -55,6 +55,7 @@ const strings = {
     },
     socketioConnectError: "Socket.IO לא יכול להתחבר לשרת, אתה יכול לטעון מחדש ולנסות לפתור את שגיאת החיבור בעצמך, הלקוח לא יודע איך לפתור אותה בעצמו.",
     socketioAuthRequired: "נדרש אישור Socket.IO. נא לאמת באמצעות HTTP Basic Auth (שם משתמש/סיסמה) וטען מחדש.",
+    invalidCredentials: "שם משתמש או סיסמה לא תקינים.",
     deleteKey: "האם אתה בטוח שמחקת מפתח זה?",
     rename: {
       title: "האם אתה בטוח לשנות את שם המפתח הזה?",
@@ -173,6 +174,7 @@ const strings = {
     settings: "הגדרות",
     connect: "התחבר",
     disconnect: "התנתק",
+    logout: "התנתק",
     overview: "סקירה כללית",
     console: "קונסולה",
     noConnections: "אין חיבורים, הוסף חיבור בתפריט ההגדרות.",

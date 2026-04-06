@@ -54,6 +54,7 @@ const strings = {
     },
     socketioConnectError: "Socket.IO kan ikke oprette forbindelse til serveren, du kan genindlæse og prøve at løse forbindelsesfejlen selv, klienten ved ikke, hvordan den selv skal løse det.",
     socketioAuthRequired: "Socket.IO-autorisation er påkrævet. Godkend venligst med HTTP Basic Auth (brugernavn/adgangskode) og genindlæs.",
+    invalidCredentials: "Ugyldigt brugernavn eller adgangskode.",
     delete: "Slet?",
     deleteKey: "Er du sikker på at du vil slette denne nøgle?",
     rename: {
@@ -173,6 +174,7 @@ const strings = {
     settings: "Indstillinger",
     connect: "Forbind",
     disconnect: "Afbryd forbindelsen",
+    logout: "Log ud",
     overview: "Oversigt",
     console: "Konsol",
     noConnections: "Ingen forbindelser, tilføj en forbindelse i indstillingsmenuen.",

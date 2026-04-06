@@ -55,6 +55,7 @@ const strings = {
     },
     socketioConnectError: "Socket.IO 無法連接伺服器，您可以重新載入並嘗試自行解決連線錯誤，用戶端不知道如何解決。",
     socketioAuthRequired: "需要Socket.IO授權。請使用 HTTP Basic Auth（使用者名稱/密碼）進行身份驗證並重新載入。",
+    invalidCredentials: "無效的使用者名稱或密碼。",
     deleteKey: "您確定要刪除該密鑰嗎？",
     rename: {
       title: "您確定要重新命名該鍵嗎？",
@@ -173,6 +174,7 @@ const strings = {
     settings: "設定",
     connect: "連接",
     disconnect: "斷開連接",
+    logout: "登出",
     overview: "概述",
     console: "主機",
     noConnections: "沒有連接，請在設定選單中新增連接。",

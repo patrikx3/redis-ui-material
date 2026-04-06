@@ -54,6 +54,7 @@ const strings = {
     },
     socketioConnectError: "Socket.IO kan inte ansluta till servern, du kan ladda om och försöka lösa anslutningsfelet själv, klienten vet inte hur den ska lösa det.",
     socketioAuthRequired: "Socket.IO-auktorisering krävs. Vänligen autentisera med HTTP Basic Auth (användarnamn/lösenord) och ladda om.",
+    invalidCredentials: "Ogiltigt användarnamn eller lösenord.",
     delete: "Radera?",
     deleteKey: "Är du säker på att du vill radera denna nyckel?",
     rename: {
@@ -171,6 +172,7 @@ const strings = {
     settings: "Inställningar",
     connect: "Anslut",
     disconnect: "Koppla från",
+    logout: "Logga ut",
     overview: "Översikt",
     console: "Konsol",
     noConnections: "Inga anslutningar, lägg till en anslutning i inställningsmenyn.",

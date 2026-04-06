@@ -281,6 +281,12 @@ const webpackConfig = {
             watch: true,
         },
         host: '0.0.0.0',
+        proxy: [
+            {
+                context: ['/api'],
+                target: `http://localhost:${process.env.P3XR_API_PORT || 7843}`,
+            },
+        ],
         historyApiFallback: {
             rewrites: [
                 {from: /^\/ng\/.*/, to: '/ng/index.html'},

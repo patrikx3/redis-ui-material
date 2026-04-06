@@ -5,7 +5,7 @@ import {
 } from '@mui/material'
 import {
     Storage, MonitorHeart, Search, Info, Settings,
-    Power, PowerOff, Language,
+    Power, PowerOff, Language, Logout,
 } from '@mui/icons-material'
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 import { ColorLens } from '@mui/icons-material'
@@ -17,6 +17,8 @@ import { useCommonStore } from '../stores/common.store'
 import { useOverlayStore } from '../stores/overlay.store'
 import { useMainCommandStore } from '../stores/main-command.store'
 import { request, onSocketEvent } from '../stores/socket.service'
+import { useAuthStore } from '../stores/auth.store'
+import LoginPage from '../pages/login/LoginPage'
 import { trackPage } from '../stores/analytics'
 import { ALL_THEME_KEYS } from '../themes'
 
@@ -43,6 +45,18 @@ export default function Layout() {
     const { disconnect } = useMainCommandStore()
 
     const { askAuth } = useCommonStore()
+
+    const { authChecked, authRequired, isAuthenticated, checkAuthStatus } = useAuthStore()
+    const showLogin = authChecked && authRequired && !isAuthenticated
+
+    useEffect(() => {
+        checkAuthStatus().then(() => {
+            const state = useAuthStore.getState()
+            if (state.authRequired && !state.isAuthenticated) {
+                overlay.hide()
+            }
+        })
+    }, [checkAuthStatus])
 
     // Connect to a Redis connection (exact port of Angular LayoutComponent.connect)
     const connect = async (conn: any) => {
@@ -289,8 +303,9 @@ export default function Layout() {
         document.getElementById('p3xr-loading')?.remove()
     }, [])
 
-    // Auto-connect from localStorage on startup
+    // Auto-connect from localStorage on startup (only when authenticated)
     useEffect(() => {
+        if (!isAuthenticated) return
         try {
             const saved = localStorage.getItem(settings.connectInfoStorageKey)
             if (saved) {
@@ -298,7 +313,7 @@ export default function Layout() {
                 if (conn?.id) connect(conn)
             }
         } catch {}
-    }, [])
+    }, [isAuthenticated])
 
     // Subscribe to redis disconnect → navigate to settings
     useEffect(() => {
@@ -316,16 +331,18 @@ export default function Layout() {
         trackPage(path)
     }, [location.pathname])
 
-    // Show overlay on raw socket disconnect/error (matches Angular behavior)
+    // Show overlay on raw socket disconnect/error (matches Angular behavior, skip during login)
     useEffect(() => {
         const unsubDisconnect = onSocketEvent('disconnect', () => {
+            if (showLogin) return
             overlay.show({ message: strings?.status?.socketDisconnected || 'Disconnected' })
         })
         const unsubError = onSocketEvent('socket-error', () => {
+            if (showLogin) return
             overlay.show({ message: strings?.status?.socketError || 'Connection error' })
         })
         return () => { unsubDisconnect(); unsubError() }
-    }, [strings])
+    }, [strings, showLogin])
 
     // --- Responsive button helpers ---
     const activeSx = { bgcolor: 'rgba(255,255,255,0.1)' }
@@ -405,13 +422,33 @@ export default function Layout() {
 
                     <Box sx={{ flex: 1, minWidth: 8 }} />
 
-                    <NavBtn icon={<Info fontSize="small" />}
-                        label={strings?.intention?.info}
-                        page="info" onClick={() => navigateTo('info')} />
+                    {!showLogin && (
+                        <NavBtn icon={<Info fontSize="small" />}
+                            label={strings?.intention?.info}
+                            page="info" onClick={() => navigateTo('info')} />
+                    )}
 
-                    <NavBtn icon={<Settings fontSize="small" />}
-                        label={strings?.intention?.settings}
-                        page="settings" onClick={() => navigateTo('settings')} />
+                    {!showLogin && (
+                        <NavBtn icon={<Settings fontSize="small" />}
+                            label={strings?.intention?.settings}
+                            page="settings" onClick={() => navigateTo('settings')} />
+                    )}
+
+                    {/* Logout button — rightmost in header */}
+                    {authRequired && isAuthenticated && (
+                        <Tooltip title={strings?.intention?.logout || 'Logout'} placement="bottom">
+                            <IconButton color="inherit" onClick={async () => {
+                                try {
+                                    await useCommonStore.getState().confirm({
+                                        message: strings?.intention?.logout || 'Logout',
+                                    })
+                                    useAuthStore.getState().logout()
+                                } catch {}
+                            }}>
+                                <Logout fontSize="small" />
+                            </IconButton>
+                        </Tooltip>
+                    )}
                 </Toolbar>
             </AppBar>
 
@@ -427,15 +464,15 @@ export default function Layout() {
                 display: 'flex',
                 flexDirection: 'column',
             }}>
-                <Outlet />
+                {showLogin ? <LoginPage /> : <Outlet />}
             </Box>
 
             {/* ===== FOOTER ===== */}
             <AppBar id="p3xr-layout-footer-container" position="fixed" sx={{ top: 'auto', bottom: 0, height: TOOLBAR_HEIGHT, zIndex: 2 }}>
                 <Toolbar variant="dense" sx={{ minHeight: TOOLBAR_HEIGHT, height: TOOLBAR_HEIGHT }}>
 
-                    {/* Connection menu */}
-                    {connectionsList.length > 0 && (
+                    {/* Connection menu — hidden during login */}
+                    {!showLogin && connectionsList.length > 0 && (
                         <>
                             {isWide ? (
                                 <Button color="inherit" onClick={e => setConnectionAnchor(e.currentTarget)}>
@@ -477,8 +514,8 @@ export default function Layout() {
                         </>
                     )}
 
-                    {/* Disconnect */}
-                    {connection && (
+                    {/* Disconnect — hidden during login */}
+                    {!showLogin && connection && (
                         <FooterBtn icon={<i className="fa fa-power-off" />}
                             label={strings?.intention?.disconnect}
                             bp="gtSm" onClick={() => disconnect()} />

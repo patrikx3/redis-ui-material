@@ -21,6 +21,8 @@ import { MainCommandService } from '../services/main-command.service';
 import { ShortcutsService } from '../services/shortcuts.service';
 import { OverlayService } from '../services/overlay.service';
 import { SettingsService } from '../services/settings.service';
+import { AuthService } from '../services/auth.service';
+import { LoginComponent } from '../components/login.component';
 
 // Side-effect: webpack processes the SCSS through sass-loader → css-loader → MiniCssExtractPlugin
 require('./layout.component.scss');
@@ -50,6 +52,7 @@ require('./layout.component.scss');
         MatMenuModule,
         MatDividerModule,
         MatTooltipModule,
+        LoginComponent,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     templateUrl: './layout.component.html',
@@ -84,6 +87,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
         @Inject(ShortcutsService) readonly shortcuts: ShortcutsService,
         @Inject(OverlayService) private readonly overlay: OverlayService,
         @Inject(SettingsService) private readonly settings: SettingsService,
+        @Inject(AuthService) readonly auth: AuthService,
     ) {}
 
     @HostListener('document:keydown', ['$event'])
@@ -94,6 +98,19 @@ export class LayoutComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         // Remove the loading splash shown before Angular bootstraps
         document.getElementById('p3xr-loading')?.remove();
+
+        // Check auth status — only proceed with app init when authenticated
+        this.auth.checkAuthStatus().then(() => {
+            this.cdr.markForCheck();
+
+            if (this.auth.isAuthenticated()) {
+                // Auto-connect from localStorage on startup
+                const savedConnection = this.readConnectionFromStorage();
+                if (savedConnection) {
+                    this.connect(savedConnection);
+                }
+            }
+        });
 
         // Initialize filtered languages list
         this.filterLanguages();
@@ -116,12 +133,6 @@ export class LayoutComponent implements OnInit, OnDestroy {
         this.unsubFns.push(() => { sub720.unsubscribe(); sub600.unsubscribe(); sub960.unsubscribe(); });
 
         this.isElectron = /electron/i.test(navigator.userAgent);
-
-        // Auto-connect from localStorage on startup
-        const savedConnection = this.readConnectionFromStorage();
-        if (savedConnection) {
-            this.connect(savedConnection);
-        }
 
         // Subscribe to socket events
         this.subscribeSocketEvents();
@@ -173,6 +184,10 @@ export class LayoutComponent implements OnInit, OnDestroy {
         if (!theme.startsWith('p3xrTheme')) return '';
         const raw = theme.slice('p3xrTheme'.length);
         return raw.charAt(0).toLowerCase() + raw.slice(1);
+    }
+
+    get showLogin(): boolean {
+        return this.auth.authChecked() && this.auth.authRequired() && !this.auth.isAuthenticated();
     }
 
     get hasRediSearch(): boolean {
@@ -339,6 +354,17 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
     reloadPage(): void {
         location.href = '/ng/';
+    }
+
+    async logout(): Promise<void> {
+        try {
+            await this.common.confirm({
+                message: this.i18n.strings()?.intention?.logout || 'Logout',
+            });
+            this.auth.logout();
+        } catch {
+            // cancelled
+        }
     }
 
     setTheme(key: string): void {

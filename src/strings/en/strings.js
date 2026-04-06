@@ -54,6 +54,7 @@ const strings = {
     },
     socketioConnectError: "Socket.IO cannot connect to the server, you can reload and try resolve the connection error yourself, the client does not know how to solve it itself.",
     socketioAuthRequired: "Socket.IO authorization is required. Please authenticate with HTTP Basic Auth (username/password) and reload.",
+    invalidCredentials: "Invalid username or password.",
     delete: "Delete?",
     deleteKey: "Are you sure to delete this key?",
     rename: {
@@ -175,6 +176,7 @@ const strings = {
     settings: "Settings",
     connect: "Connect",
     disconnect: "Disconnect",
+    logout: "Logout",
     overview: "Overview",
     console: "Console",
     noConnections: "No connections, add a connection in the settings menu.",

@@ -54,6 +54,7 @@ const strings = {
     },
     socketioConnectError: "Socket.IO серверге туташа албайт, сиз кайра жүктөп, байланыш катасын өзүңүз чечип көрүңүз, кардар аны кантип чечүүнү билбейт.",
     socketioAuthRequired: "Socket.IO авторизациясы талап кылынат. Сураныч, HTTP Basic Auth (колдонуучунун аты/сырсөз) менен аныктыгын текшерип, кайра жүктөңүз.",
+    invalidCredentials: "Жараксыз колдонуучу аты же сырсөз.",
     delete: "Жок кылуу?",
     deleteKey: "Бул ачкычты чын эле жок кыласызбы?",
     rename: {
@@ -173,6 +174,7 @@ const strings = {
     settings: "Орнотуулар",
     connect: "Туташуу",
     disconnect: "Ажыратуу",
+    logout: "Чыгуу",
     overview: "Обзор",
     console: "Консол",
     noConnections: "Туташуулар жок, жөндөөлөр менюсуна туташууну кошуңуз.",

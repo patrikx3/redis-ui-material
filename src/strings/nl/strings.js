@@ -55,6 +55,7 @@ const strings = {
     },
     socketioConnectError: "Socket.IO kan geen verbinding maken met de server. U kunt herladen en proberen de verbindingsfout zelf op te lossen; de client weet niet hoe het zelf op te lossen.",
     socketioAuthRequired: "Socket.IO-autorisatie is vereist. Authenticeer met HTTP Basic Auth (gebruikersnaam/wachtwoord) en herlaad.",
+    invalidCredentials: "Ongeldige gebruikersnaam of wachtwoord.",
     deleteKey: "Weet u zeker dat u deze sleutel wilt verwijderen?",
     rename: {
       title: "Weet u zeker dat u deze sleutel wilt hernoemen?",
@@ -173,6 +174,7 @@ const strings = {
     settings: "Instellingen",
     connect: "Verbinden",
     disconnect: "Verbinding verbreken",
+    logout: "Uitloggen",
     overview: "Overzicht",
     console: "Console",
     noConnections: "Geen verbindingen, voeg een verbinding toe in het instellingenmenu.",

@@ -54,6 +54,7 @@ const strings = {
     },
     socketioConnectError: "Socket.IO ei voi muodostaa yhteyttä palvelimeen, voit ladata uudelleen ja yrittää ratkaista yhteysvirheen itse, asiakas ei osaa ratkaista sitä itse.",
     socketioAuthRequired: "Socket.IO-valtuutus vaaditaan. Todennus komennolla HTTP Basic Auth (käyttäjänimi/salasana) ja lataa uudelleen.",
+    invalidCredentials: "Virheellinen käyttäjänimi tai salasana.",
     delete: "Poista?",
     deleteKey: "Haluatko varmasti poistaa tämän avaimen?",
     rename: {
@@ -173,6 +174,7 @@ const strings = {
     settings: "Asetukset",
     connect: "Yhdistä",
     disconnect: "Katkaise yhteys",
+    logout: "Kirjaudu ulos",
     overview: "Yleiskatsaus",
     console: "konsoli",
     noConnections: "Ei yhteyksiä, lisää yhteys asetusvalikossa.",

@@ -55,6 +55,7 @@ const strings = {
     },
     socketioConnectError: "Socket.IOがサーバーに接続できません。再読み込みして接続エラーの解決を試みることができますが、クライアント側では自動的に解決できません。",
     socketioAuthRequired: "Socket.IO認証が必要です。HTTP Basic Auth（ユーザー名/パスワード）で認証し、再読み込みしてください。",
+    invalidCredentials: "ユーザー名またはパスワードが無効です。",
     deleteKey: "このキーを削除してもよろしいですか？",
     rename: {
       title: "このキーの名前を変更してもよろしいですか？",
@@ -171,6 +172,7 @@ const strings = {
     settings: "設定",
     connect: "接続",
     disconnect: "切断",
+    logout: "ログアウト",
     overview: "概要",
     console: "コンソール",
     noConnections: "接続がありません。設定メニューで接続を追加してください。",

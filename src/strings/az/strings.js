@@ -55,6 +55,7 @@ const strings = {
     },
     socketioConnectError: "Socket.IO serverə qoşula bilmir, siz yenidən yükləyə və qoşulma xətasını özünüz həll etməyə cəhd edə bilərsiniz, müştəri özü bunu necə həll edəcəyini bilmir.",
     socketioAuthRequired: "Socket.IO icazəsi tələb olunur. HTTP Basic Auth (istifadəçi adı/parol) ilə autentifikasiya edin və yenidən yükləyin.",
+    invalidCredentials: "İstifadəçi adı və ya şifrə yanlışdır.",
     deleteKey: "Bu açarı siləcəyinizə əminsiniz?",
     rename: {
       title: "Bu açarın adını dəyişəcəyinizə əminsiniz?",
@@ -173,6 +174,7 @@ const strings = {
     settings: "Parametrlər",
     connect: "Qoşun",
     disconnect: "Bağlantını kəsin",
+    logout: "Çıxış",
     overview: "Ümumi baxış",
     console: "Konsol",
     noConnections: "Bağlantı yoxdur, parametrlər menyusunda əlaqə əlavə edin.",

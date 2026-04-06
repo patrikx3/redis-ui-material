@@ -19,6 +19,7 @@ export class SocketService {
     private reconnect = false;
     private connectErrorWas = false;
     private disconnected = false;
+    private authBlocked = false;
 
     readonly connections$ = new Subject<any>();
     readonly redisDisconnected$ = new Subject<any>();
@@ -59,6 +60,12 @@ export class SocketService {
             ioOptions.transports = ['websocket'];
         }
 
+        // Include auth token if stored (JWT login)
+        const authToken = localStorage.getItem('p3xr-auth-token');
+        if (authToken) {
+            ioOptions.auth = { token: authToken };
+        }
+
         this.ioClient = io.connect(this.state.apiHost, ioOptions);
 
 
@@ -82,6 +89,7 @@ export class SocketService {
         });
 
         this.ioClient.on('disconnect', () => {
+            if (this.authBlocked) return;
             this.disconnected = true;
             try { this.overlay.show(); } catch {}
         });
@@ -91,6 +99,12 @@ export class SocketService {
         });
 
         this.ioClient.on('connect_error', (error: any) => {
+            if (error?.message === 'auth_required') {
+                // Auth required but no valid token — stop reconnecting, no overlay
+                this.authBlocked = true;
+                this.ioClient.disconnect();
+                return;
+            }
             this.handleSocketError(error);
         });
 

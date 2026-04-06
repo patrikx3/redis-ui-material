@@ -54,6 +54,7 @@ const strings = {
     },
     socketioConnectError: "Socket.IO haiwezi kuunganisha na seva, unaweza kupakia upya na kujaribu kutatua hitilafu ya muunganisho mwenyewe, mteja hajui jinsi ya kutatua peke yake.",
     socketioAuthRequired: "Idhini ya Socket.IO inahitajika. Tafadhali thibitisha na HTTP Basic Auth (jina la mtumiaji/nenosiri) na upakia upya.",
+    invalidCredentials: "Jina la mtumiaji au nenosiri si sahihi.",
     delete: "Futa?",
     deleteKey: "Una uhakika wa kufuta ufunguo huu?",
     rename: {
@@ -175,6 +176,7 @@ const strings = {
     settings: "Mipangilio",
     connect: "Unganisha",
     disconnect: "Tenganisha",
+    logout: "Toka",
     overview: "Muhtasari",
     console: "Konsoli",
     noConnections: "Hakuna muunganisho, ongeza muunganisho kwenye menyu ya mipangilio.",

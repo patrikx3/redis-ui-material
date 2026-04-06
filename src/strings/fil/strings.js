@@ -55,6 +55,7 @@ const strings = {
     },
     socketioConnectError: "Ang Socket.IO ay hindi makakonekta sa server, maaari mong i-reload at subukang lutasin ang error sa koneksyon sa iyong sarili, hindi alam ng kliyente kung paano lutasin ito mismo.",
     socketioAuthRequired: "Kinakailangan ang pahintulot ng Socket.IO. Paki-authenticate gamit ang HTTP Basic Auth (username/password) at i-reload.",
+    invalidCredentials: "Di-wastong username o password.",
     deleteKey: "Sigurado ka bang tatanggalin ang key na ito?",
     rename: {
       title: "Sigurado ka bang papalitan ang pangalan ng key na ito?",
@@ -173,6 +174,7 @@ const strings = {
     settings: "Mga setting",
     connect: "Kumonekta",
     disconnect: "Idiskonekta",
+    logout: "Mag-logout",
     overview: "Pangkalahatang-ideya",
     console: "Console",
     noConnections: "Walang koneksyon, magdagdag ng koneksyon sa menu ng mga setting.",

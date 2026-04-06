@@ -1,5 +1,6 @@
 import { Box, Typography } from '@mui/material'
 import { useOverlayStore } from '../stores/overlay.store'
+import { useAuthStore } from '../stores/auth.store'
 
 /**
  * Full-screen loading overlay — exact port of Angular OverlayService.
@@ -10,8 +11,10 @@ import { useOverlayStore } from '../stores/overlay.store'
  */
 export default function Overlay() {
     const { visible, message } = useOverlayStore()
+    const { authRequired, isAuthenticated } = useAuthStore()
 
-    if (!visible) return null
+    // Don't show overlay when login page is displayed
+    if (!visible || (authRequired && !isAuthenticated)) return null
 
     return (
         <Box id="p3xr-overlay" sx={{

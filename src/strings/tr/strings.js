@@ -54,6 +54,7 @@ const strings = {
     },
     socketioConnectError: "Socket.IO sunucuya bağlanamıyor, yeniden yükleyip bağlantı hatasını kendiniz çözmeyi deneyebilirsiniz, istemci bunu kendi başına nasıl çözeceğini bilmiyor.",
     socketioAuthRequired: "Socket.IO yetkilendirmesi gerekli. Lütfen HTTP Basic Auth (kullanıcı adı/şifre) ile kimlik doğrulaması yapın ve yeniden yükleyin.",
+    invalidCredentials: "Geçersiz kullanıcı adı veya şifre.",
     delete: "Silinsin mi?",
     deleteKey: "Bu anahtarı silmek istediğinizden emin misiniz?",
     rename: {
@@ -171,6 +172,7 @@ const strings = {
     settings: "Ayarlar",
     connect: "Bağlan",
     disconnect: "Bağlantıyı kes",
+    logout: "Çıkış",
     overview: "Genel Bakış",
     console: "Konsol",
     noConnections: "Bağlantı yok, ayarlar menüsünden bir bağlantı ekleyin.",

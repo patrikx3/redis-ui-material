@@ -25,6 +25,7 @@ let client: Socket | null = null
 let reconnect = false
 let connectErrorWas = false
 let disconnected = false
+let authBlocked = false
 
 export function getClient(): Socket {
     if (client) return client
@@ -43,6 +44,12 @@ export function getClient(): Socket {
 
     if ((globalThis as any).p3xrDevMode === true) {
         ioOptions.transports = ['websocket']
+    }
+
+    // Include auth token if stored (JWT login)
+    const authToken = localStorage.getItem('p3xr-auth-token')
+    if (authToken) {
+        ioOptions.auth = { token: authToken }
     }
 
     client = io(state.apiHost, ioOptions)
@@ -66,6 +73,7 @@ export function getClient(): Socket {
     })
 
     client.on('disconnect', () => {
+        if (authBlocked) return
         disconnected = true
         emit('disconnect')
     })
@@ -75,6 +83,12 @@ export function getClient(): Socket {
     })
 
     client.on('connect_error', (error: any) => {
+        if (error?.message === 'auth_required') {
+            authBlocked = true
+            client!.disconnect()
+            emit('auth_required')
+            return
+        }
         handleSocketError(error)
     })
 

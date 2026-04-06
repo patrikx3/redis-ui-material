@@ -54,6 +54,7 @@ const strings = {
     },
     socketioConnectError: "Socket.IO se nemůže připojit k serveru, můžete stránku znovu načíst a pokusit se chybu připojení vyřešit sami, klient neví, jak ji vyřešit sám.",
     socketioAuthRequired: "Je vyžadována autorizace Socket.IO. Prosím ověřte se pomocí HTTP Basic Auth (uživatelské jméno/heslo) a znovu načtěte stránku.",
+    invalidCredentials: "Neplatné uživatelské jméno nebo heslo.",
     delete: "Smazat?",
     deleteKey: "Opravdu chcete smazat tento klíč?",
     rename: {
@@ -175,6 +176,7 @@ const strings = {
     settings: "Nastavení",
     connect: "Připojit",
     disconnect: "Odpojit",
+    logout: "Odhlásit",
     overview: "Přehled",
     console: "Konzole",
     noConnections: "Žádná připojení, přidejte připojení v menu nastavení.",

@@ -55,6 +55,7 @@ const strings = {
     },
     socketioConnectError: "Socket.IO 无法连接到该服务，请重新加载并尝试解决此错误，客户端无法解决此错误",
     socketioAuthRequired: "Socket.IO 需要授权。请先完成 HTTP Basic Auth（用户名/密码）后再刷新页面。",
+    invalidCredentials: "用户名或密码无效。",
     deleteKey: "您确定要删除此键吗？",
     rename: {
       title: "您确定要重命名此键吗？",
@@ -171,6 +172,7 @@ const strings = {
     settings: "设置",
     connect: "连接",
     disconnect: "断开",
+    logout: "登出",
     overview: "概览",
     console: "控制台",
     noConnections: "没有任何连接，请在设置菜单中添加一个连接。",

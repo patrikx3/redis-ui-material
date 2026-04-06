@@ -55,6 +55,7 @@ const strings = {
     },
     socketioConnectError: "Socket.IO no puede conectarse al servidor. Puede recargar e intentar resolver el error de conexión usted mismo, el cliente no sabe cómo resolverlo por sí solo.",
     socketioAuthRequired: "Se requiere autorización de Socket.IO. Por favor autentíquese con HTTP Basic Auth (usuario/contraseña) y recargue.",
+    invalidCredentials: "Nombre de usuario o contraseña no válidos.",
     deleteKey: "¿Está seguro de que desea eliminar esta clave?",
     rename: {
       title: "¿Está seguro de que desea renombrar esta clave?",
@@ -175,6 +176,7 @@ const strings = {
     settings: "Configuración",
     connect: "Conectar",
     disconnect: "Desconectar",
+    logout: "Cerrar sesión",
     overview: "Vista general",
     console: "Consola",
     noConnections: "No hay conexiones, agregue una conexión en el menú de configuración.",

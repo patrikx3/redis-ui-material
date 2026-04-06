@@ -54,6 +54,7 @@ const strings = {
     },
     socketioConnectError: "A Socket.IO nem tud csatlakozni a szerverhez. Újratöltéssel megpróbálhatja megoldani a kapcsolódási hibát, a kliens nem tudja önállóan megoldani.",
     socketioAuthRequired: "Socket.IO hitelesítés szükséges. Kérjük, hitelesítsen HTTP Basic Auth (felhasználónév/jelszó) segítségével, majd töltse újra.",
+    invalidCredentials: "Érvénytelen felhasználónév vagy jelszó.",
     delete: "Törlés?",
     deleteKey: "Biztosan törli ezt a kulcsot?",
     rename: {
@@ -171,6 +172,7 @@ const strings = {
     settings: "Beállítások",
     connect: "Csatlakozás",
     disconnect: "Leválasztás",
+    logout: "Kijelentkezés",
     overview: "Áttekintés",
     console: "Konzol",
     noConnections: "Nincs kapcsolat, adjon hozzá egyet a beállítások menüben.",
