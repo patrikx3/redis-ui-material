@@ -468,14 +468,31 @@ const strings = {
         index: "Index",
         hashKey: "Hash-Schlüssel",
         score: "Punktzahl",
-        value: "Wert"
+        value: "Wert",
+        errorRate: "Fehlerrate",
+        capacity: "Kapazität",
+        topk: "Top K",
+        width: "Breite",
+        depth: "Tiefe",
+        decay: "Zerfall",
+        compression: "Komprimierung",
+        increment: "Inkrement",
+        item: "Element",
+        vectorValues: "Vektorwerte (kommagetrennt)",
+        element: "Elementname",
       },
       error: {
         streamTimestamp: "Der Zeitstempel ist erforderlich, entweder im Redis-Format oder als *",
         key: "Der Schlüssel muss mindestens ein Zeichen lang sein",
         hashKey: "Der Hash-Schlüssel muss mindestens ein Zeichen lang sein",
         score: "Die Punktzahl der sortierten Menge ist erforderlich",
-        value: "Der Wert ist erforderlich"
+        value: "Der Wert ist erforderlich",
+        errorRate: "Die Fehlerrate muss zwischen 0 und 1 liegen (z.B. 0.01)",
+        capacity: "Die Kapazität muss eine positive Ganzzahl sein",
+        topk: "Top K muss eine positive Ganzzahl sein",
+        width: "Die Breite muss eine positive Ganzzahl sein",
+        depth: "Die Tiefe muss eine positive Ganzzahl sein",
+        item: "Das Element ist erforderlich"
       }
     },
     main: {
@@ -645,6 +662,41 @@ const strings = {
         mrangeFilter: "Label-Filter",
         bulkMode: "Massengenerierung",
         mrangeHint: "z.B. sensor=temp"
+      },
+      probabilistic: {
+        info: "Info",
+        addItem: "Element hinzufügen",
+        checkItem: "Element prüfen",
+        item: "Element",
+        exists: "Existiert",
+        doesNotExist: "Existiert nicht",
+        topkList: "Top Elemente",
+        topkCount: "Anzahl",
+        queryCount: "Abfrageanzahl",
+        queryResult: "Abfrageergebnis",
+        addedSuccessfully: "Element erfolgreich hinzugefügt",
+        deletedSuccessfully: "Element erfolgreich gelöscht",
+        quantile: "Quantil",
+        quantileResult: "Ergebnis",
+        noItems: "Keine Elemente zum Anzeigen",
+        resetConfirm: "Alle Daten in diesem T-Digest zurücksetzen?",
+      },
+      vectorset: {
+        info: "Info",
+        elements: "Elemente",
+        similarity: "Ähnlichkeitssuche",
+        searchByElement: "Nach Element suchen",
+        searchByVector: "Nach Vektor suchen",
+        vectorValues: "Vektorwerte",
+        element: "Element",
+        score: "Punktzahl",
+        count: "Anzahl",
+        addElement: "Element hinzufügen",
+        attributes: "Attribute",
+        noAttributes: "Keine Attribute",
+        dimensions: "Dimensionen",
+        removeConfirm: "Dieses Element aus dem VectorSet entfernen?",
+        noElements: "Keine Elemente",
       }
     },
     treeControls: {
@@ -694,7 +746,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom Filter",
+    cuckoo: "Cuckoo Filter",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

@@ -466,14 +466,31 @@ const strings = {
         index: "Indeks",
         hashKey: "Hash nøgle",
         score: "Score",
-        value: "Værdi"
+        value: "Værdi",
+        errorRate: "Fejlrate",
+        capacity: "Kapacitet",
+        topk: "Top K",
+        width: "Bredde",
+        depth: "Dybde",
+        decay: "Henfald",
+        compression: "Komprimering",
+        increment: "Inkrement",
+        item: "Element",
+        vectorValues: "Vektorværdier (kommaseparerede)",
+        element: "Elementnavn",
       },
       error: {
         streamTimestamp: "Tidsstemplet er påkrævet, enten Redis-format eller som *",
         key: "Nøglen er mindst ét tegn",
         hashKey: "Hash-tabelnøglen er mindst ét tegn",
         score: "Den sorterede sætscore er påkrævet",
-        value: "Værdien er påkrævet"
+        value: "Værdien er påkrævet",
+        errorRate: "Fejlraten skal være mellem 0 og 1 (f.eks. 0.01)",
+        capacity: "Kapaciteten skal være et positivt heltal",
+        topk: "Top K skal være et positivt heltal",
+        width: "Bredden skal være et positivt heltal",
+        depth: "Dybden skal være et positivt heltal",
+        item: "Elementet er påkrævet"
       }
     },
     main: {
@@ -643,6 +660,41 @@ const strings = {
         mrangeFilter: "Etiketfilter",
         bulkMode: "Massegenerering",
         mrangeHint: "f.eks. sensor=temp"
+      },
+      probabilistic: {
+        info: "Info",
+        addItem: "Tilføj element",
+        checkItem: "Tjek element",
+        item: "Element",
+        exists: "Eksisterer",
+        doesNotExist: "Eksisterer ikke",
+        topkList: "Top elementer",
+        topkCount: "Antal",
+        queryCount: "Forespørgselsantal",
+        queryResult: "Forespørgselsresultat",
+        addedSuccessfully: "Element tilføjet med succes",
+        deletedSuccessfully: "Element slettet med succes",
+        quantile: "Kvantil",
+        quantileResult: "Resultat",
+        noItems: "Ingen elementer at vise",
+        resetConfirm: "Nulstil alle data i denne T-Digest?",
+      },
+      vectorset: {
+        info: "Info",
+        elements: "Elementer",
+        similarity: "Lighedssøgning",
+        searchByElement: "Søg efter element",
+        searchByVector: "Søg efter vektor",
+        vectorValues: "Vektorværdier",
+        element: "Element",
+        score: "Score",
+        count: "Antal",
+        addElement: "Tilføj element",
+        attributes: "Attributter",
+        noAttributes: "Ingen attributter",
+        dimensions: "Dimensioner",
+        removeConfirm: "Fjern dette element fra VectorSet?",
+        noElements: "Ingen elementer",
       }
     },
     treeControls: {
@@ -692,7 +744,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom filter",
+    cuckoo: "Cuckoo filter",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

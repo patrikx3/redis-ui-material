@@ -464,14 +464,31 @@ const strings = {
         index: "インデックス",
         hashKey: "ハッシュキー",
         score: "スコア",
-        value: "値"
+        value: "値",
+        errorRate: "エラー率",
+        capacity: "容量",
+        topk: "Top K",
+        width: "幅",
+        depth: "深さ",
+        decay: "減衰",
+        compression: "圧縮",
+        increment: "増分",
+        item: "アイテム",
+        vectorValues: "ベクトル値（カンマ区切り）",
+        element: "要素名",
       },
       error: {
         streamTimestamp: "タイムスタンプは必須です。Redis形式または*として入力してください",
         key: "キーは少なくとも1文字必要です",
         hashKey: "ハッシュテーブルキーは少なくとも1文字必要です",
         score: "ソート済みセットのスコアは必須です",
-        value: "値は必須です"
+        value: "値は必須です",
+        errorRate: "エラー率は0から1の間でなければなりません（例：0.01）",
+        capacity: "容量は正の整数でなければなりません",
+        topk: "Top Kは正の整数でなければなりません",
+        width: "幅は正の整数でなければなりません",
+        depth: "深さは正の整数でなければなりません",
+        item: "アイテムは必須です"
       }
     },
     main: {
@@ -641,6 +658,41 @@ const strings = {
         mrangeFilter: "ラベルフィルター",
         bulkMode: "一括生成",
         mrangeHint: "例: sensor=temp"
+      },
+      probabilistic: {
+        info: "情報",
+        addItem: "アイテム追加",
+        checkItem: "アイテム確認",
+        item: "アイテム",
+        exists: "存在する",
+        doesNotExist: "存在しない",
+        topkList: "トップアイテム",
+        topkCount: "カウント",
+        queryCount: "クエリカウント",
+        queryResult: "クエリ結果",
+        addedSuccessfully: "アイテムが正常に追加されました",
+        deletedSuccessfully: "アイテムが正常に削除されました",
+        quantile: "分位数",
+        quantileResult: "結果",
+        noItems: "表示するアイテムがありません",
+        resetConfirm: "このT-Digestのすべてのデータをリセットしますか？"
+      },
+      vectorset: {
+        info: "情報",
+        elements: "要素",
+        similarity: "類似検索",
+        searchByElement: "要素で検索",
+        searchByVector: "ベクトルで検索",
+        vectorValues: "ベクトル値",
+        element: "要素",
+        score: "スコア",
+        count: "件数",
+        addElement: "要素を追加",
+        attributes: "属性",
+        noAttributes: "属性なし",
+        dimensions: "次元",
+        removeConfirm: "この要素をVectorSetから削除しますか？",
+        noElements: "要素なし",
       }
     },
     treeControls: {
@@ -690,7 +742,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom フィルター",
+    cuckoo: "Cuckoo フィルター",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

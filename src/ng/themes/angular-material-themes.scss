@@ -1341,7 +1341,8 @@ p3xr-ng-settings .p3xr-settings-pair-row,
 p3xr-info .p3xr-settings-pair-row,
 p3xr-monitoring .p3xr-settings-pair-row,
 p3xr-memory-analysis .p3xr-settings-pair-row,
-p3xr-search .p3xr-settings-pair-row {
+p3xr-search .p3xr-settings-pair-row,
+p3xr-key-probabilistic .p3xr-settings-pair-row {
   display: flex;
   width: 100%;
   gap: 16px;
@@ -1351,7 +1352,8 @@ p3xr-ng-settings .p3xr-settings-pair-row,
 p3xr-info .p3xr-settings-pair-row,
 p3xr-monitoring .p3xr-settings-pair-row,
 p3xr-memory-analysis .p3xr-settings-pair-row,
-p3xr-search .p3xr-settings-pair-row {
+p3xr-search .p3xr-settings-pair-row,
+p3xr-key-probabilistic .p3xr-settings-pair-row {
   align-items: center;
 }
 
@@ -1359,7 +1361,8 @@ p3xr-ng-settings .p3xr-settings-row-label,
 p3xr-info .p3xr-settings-row-label,
 p3xr-monitoring .p3xr-settings-row-label,
 p3xr-memory-analysis .p3xr-settings-row-label,
-p3xr-search .p3xr-settings-row-label {
+p3xr-search .p3xr-settings-row-label,
+p3xr-key-probabilistic .p3xr-settings-row-label {
   flex: 1 1 auto;
   min-width: 0;
   font-weight: 700;
@@ -1369,7 +1372,8 @@ p3xr-ng-settings .p3xr-settings-row-value,
 p3xr-info .p3xr-settings-row-value,
 p3xr-monitoring .p3xr-settings-row-value,
 p3xr-memory-analysis .p3xr-settings-row-value,
-p3xr-search .p3xr-settings-row-value {
+p3xr-search .p3xr-settings-row-value,
+p3xr-key-probabilistic .p3xr-settings-row-value {
   flex: 0 1 60%;
   min-width: 0;
   text-align: right;

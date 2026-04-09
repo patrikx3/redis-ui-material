@@ -12,8 +12,8 @@ import { I18nService } from '../services/i18n.service';
 import { CommonService } from '../services/common.service';
 import { SettingsService } from '../services/settings.service';
 
-const timestring = require('timestring');
-const humanizeDuration = require('humanize-duration');
+import timestring from 'timestring';
+import humanizeDuration from 'humanize-duration';
 
 export interface TtlDialogData {
     model: { ttl: number };

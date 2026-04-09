@@ -466,14 +466,31 @@ const strings = {
         index: "Indeks",
         hashKey: "Hash-nøkkel",
         score: "Score",
-        value: "Verdi"
+        value: "Verdi",
+        errorRate: "Feilrate",
+        capacity: "Kapasitet",
+        topk: "Top K",
+        width: "Bredde",
+        depth: "Dybde",
+        decay: "Forfall",
+        compression: "Komprimering",
+        increment: "Økning",
+        item: "Element",
+        vectorValues: "Vektorverdier (kommaseparert)",
+        element: "Elementnavn",
       },
       error: {
         streamTimestamp: "Tidsstemplet er påkrevd, enten Redis-format eller som *",
         key: "Nøkkelen er minst ett tegn",
         hashKey: "Hash-tabellnøkkelen er minst ett tegn",
         score: "Den sorterte settpoengsummen er påkrevd",
-        value: "Verdien er påkrevd"
+        value: "Verdien er påkrevd",
+        errorRate: "Feilraten må være mellom 0 og 1 (f.eks. 0.01)",
+        capacity: "Kapasiteten må være et positivt heltall",
+        topk: "Top K må være et positivt heltall",
+        width: "Bredden må være et positivt heltall",
+        depth: "Dybden må være et positivt heltall",
+        item: "Elementet er påkrevd"
       }
     },
     main: {
@@ -643,6 +660,41 @@ const strings = {
         mrangeFilter: "Etikettfilter",
         bulkMode: "Massegenerering",
         mrangeHint: "f.eks. sensor=temp"
+      },
+      probabilistic: {
+        info: "Info",
+        addItem: "Legg til element",
+        checkItem: "Sjekk element",
+        item: "Element",
+        exists: "Eksisterer",
+        doesNotExist: "Eksisterer ikke",
+        topkList: "Topp elementer",
+        topkCount: "Antall",
+        queryCount: "Antall spørringer",
+        queryResult: "Spørringsresultat",
+        addedSuccessfully: "Element lagt til",
+        deletedSuccessfully: "Element slettet",
+        quantile: "Kvantil",
+        quantileResult: "Resultat",
+        noItems: "Ingen elementer å vise",
+        resetConfirm: "Tilbakestille alle data i denne T-Digest?"
+      },
+      vectorset: {
+        info: "Info",
+        elements: "Elementer",
+        similarity: "Likhetssøk",
+        searchByElement: "Søk etter element",
+        searchByVector: "Søk etter vektor",
+        vectorValues: "Vektorverdier",
+        element: "Element",
+        score: "Poeng",
+        count: "Antall",
+        addElement: "Legg til element",
+        attributes: "Attributter",
+        noAttributes: "Ingen attributter",
+        dimensions: "Dimensjoner",
+        removeConfirm: "Fjerne dette elementet fra VectorSet?",
+        noElements: "Ingen elementer",
       }
     },
     treeControls: {
@@ -692,7 +744,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom filter",
+    cuckoo: "Cuckoo filter",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

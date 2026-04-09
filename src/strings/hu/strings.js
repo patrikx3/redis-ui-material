@@ -464,14 +464,31 @@ const strings = {
         index: "Index",
         hashKey: "Hash kulcs",
         score: "Pontszám",
-        value: "Érték"
+        value: "Érték",
+        errorRate: "Hibaarány",
+        capacity: "Kapacitás",
+        topk: "Top K",
+        width: "Szélesség",
+        depth: "Mélység",
+        decay: "Lecsengés",
+        compression: "Tömörítés",
+        increment: "Növekmény",
+        item: "Elem",
+        vectorValues: "Vektor értékek (vesszővel elválasztva)",
+        element: "Elem neve",
       },
       error: {
         streamTimestamp: "Az időbélyeg kötelező, Redis formátumban vagy *-ként",
         key: "A kulcs legalább egy karakter",
         hashKey: "A hash tábla kulcs legalább egy karakter",
         score: "A rendezett halmaz pontszám kötelező",
-        value: "Az érték kötelező"
+        value: "Az érték kötelező",
+        errorRate: "A hibaaránynak 0 és 1 között kell lennie (pl. 0.01)",
+        capacity: "A kapacitásnak pozitív egész számnak kell lennie",
+        topk: "A Top K-nak pozitív egész számnak kell lennie",
+        width: "A szélességnek pozitív egész számnak kell lennie",
+        depth: "A mélységnek pozitív egész számnak kell lennie",
+        item: "Az elem kötelező"
       }
     },
     main: {
@@ -641,6 +658,41 @@ const strings = {
         mrangeFilter: "Címke szűrő",
         bulkMode: "Tömeges generálás",
         mrangeHint: "pl. sensor=temp"
+      },
+      probabilistic: {
+        info: "Információ",
+        addItem: "Elem hozzáadása",
+        checkItem: "Elem ellenőrzése",
+        item: "Elem",
+        exists: "Létezik",
+        doesNotExist: "Nem létezik",
+        topkList: "Leggyakoribb elemek",
+        topkCount: "Darabszám",
+        queryCount: "Lekérdezések száma",
+        queryResult: "Lekérdezés eredménye",
+        addedSuccessfully: "Elem sikeresen hozzáadva",
+        deletedSuccessfully: "Elem sikeresen törölve",
+        quantile: "Kvantilis",
+        quantileResult: "Eredmény",
+        noItems: "Nincsenek megjelenítendő elemek",
+        resetConfirm: "Visszaállítja az összes adatot ebben a T-Digest-ben?",
+      },
+      vectorset: {
+        info: "Információ",
+        elements: "Elemek",
+        similarity: "Hasonlósági keresés",
+        searchByElement: "Keresés elem szerint",
+        searchByVector: "Keresés vektor szerint",
+        vectorValues: "Vektor értékek",
+        element: "Elem",
+        score: "Pontszám",
+        count: "Darabszám",
+        addElement: "Elem hozzáadása",
+        attributes: "Attribútumok",
+        noAttributes: "Nincsenek attribútumok",
+        dimensions: "Dimenziók",
+        removeConfirm: "Eltávolítja ezt az elemet a VectorSet-ből?",
+        noElements: "Nincsenek elemek",
       }
     },
     treeControls: {
@@ -687,7 +739,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom szűrő",
+    cuckoo: "Cuckoo szűrő",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

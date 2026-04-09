@@ -1,0 +1,152 @@
+<div class="p3xr-key-type-content">
+
+    <!-- INFO -->
+    <br />
+    <p3xr-ng-accordion [title]="strings()?.page?.key?.vectorset?.info || 'Info'" accordionKey="vs-info">
+        <div actions>
+            <p3xr-ng-button
+                (click)="toggleAutoRefresh(); $event.stopPropagation()"
+                [label]="strings()?.label?.autoRefresh || 'Auto'"
+                [mdIcon]="autoRefresh ? 'check_box' : 'check_box_outline_blank'"
+                [breakpoint]="1280">
+            </p3xr-ng-button>
+            @if (!autoRefresh) {
+                <p3xr-ng-button
+                    (click)="refresh(); $event.stopPropagation()"
+                    [label]="strings()?.intention?.refresh || 'Refresh'"
+                    mdIcon="refresh"
+                    [breakpoint]="1280">
+                </p3xr-ng-button>
+            }
+        </div>
+        <div content>
+            <mat-list>
+                @for (item of infoItems; track item.key; let last = $last) {
+                    <mat-list-item>
+                        <div style="display: flex; width: 100%;">
+                            <span class="p3xr-settings-label" style="flex: 1;">{{ item.key }}</span>
+                            <span class="p3xr-settings-value">{{ item.value }}</span>
+                        </div>
+                    </mat-list-item>
+                    @if (!last) { <mat-divider></mat-divider> }
+                }
+            </mat-list>
+        </div>
+    </p3xr-ng-accordion>
+
+    <!-- ELEMENTS -->
+    <br />
+    <p3xr-ng-accordion [title]="(strings()?.page?.key?.vectorset?.elements || 'Elements') + ' (' + elements.length + ')'" accordionKey="vs-elements">
+        <div content>
+            <p3xr-key-pager-inline [paging]="paging" (pageChanged)="updatePagedElements()"></p3xr-key-pager-inline>
+            <div class="p3xr-key-type-table">
+                <div class="p3xr-key-type-header">
+                    <span style="flex: 50%">{{ strings()?.page?.key?.vectorset?.element || 'Element' }}</span>
+                    <span style="flex: 20%">{{ strings()?.page?.key?.vectorset?.score || 'Score' }}</span>
+                    <span style="flex: 30%; text-align: right">
+                        @if (!readonly) {
+                            <button mat-icon-button (click)="showAddForm = !showAddForm" matTooltip="Add">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        }
+                    </span>
+                </div>
+                @for (elem of pagedElements; track elem.element) {
+                    <div class="p3xr-key-type-row">
+                        <span class="p3xr-key-col" style="flex: 50%">{{ elem.element }}</span>
+                        <span class="p3xr-value-col" style="flex: 20%">{{ elem.score?.toFixed(4) }}</span>
+                        <span style="flex: 30%; text-align: right" class="p3xr-key-type-row-actions">
+                            <mat-icon class="icon-accent" (click)="searchSimilarByElement(elem.element)" matTooltip="Find similar">search</mat-icon>
+                            <mat-icon class="icon-accent" (click)="getAttributes(elem.element)" matTooltip="Attributes">info</mat-icon>
+                            @if (!readonly) {
+                                <mat-icon class="icon-warn" (click)="removeElement(elem.element)" matTooltip="Delete">delete</mat-icon>
+                            }
+                        </span>
+                    </div>
+                }
+            </div>
+
+                @if (!readonly && showAddForm) {
+                    <div class="p3xr-timeseries-controls" style="padding: 16px;">
+                        <mat-form-field class="p3xr-timeseries-field" subscriptSizing="dynamic" style="flex: 1; min-width: 200px;">
+                            <mat-label>{{ strings()?.page?.key?.vectorset?.elementName || 'Element name' }}</mat-label>
+                            <input matInput [(ngModel)]="elementInput" (keydown.enter)="addElement()" />
+                        </mat-form-field>
+
+                        <mat-form-field class="p3xr-timeseries-field" subscriptSizing="dynamic" style="flex: 1; min-width: 200px;">
+                            <mat-label>{{ strings()?.page?.key?.vectorset?.vectorValues || 'Vector values' }}</mat-label>
+                            <input matInput [(ngModel)]="vectorInput" (keydown.enter)="addElement()" placeholder="0.1, 0.2, 0.3" />
+                        </mat-form-field>
+
+                        @if (isGtSm) {
+                            <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="addElement()">
+                                <mat-icon>add</mat-icon>
+                                <span>{{ strings()?.intention?.add || 'Add' }}</span>
+                            </button>
+                        } @else {
+                            <button mat-mini-fab class="btn-primary" type="button" (click)="addElement()"
+                                    [matTooltip]="strings()?.intention?.add ?? 'Add'" matTooltipPosition="above">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        }
+                    </div>
+                }
+        </div>
+    </p3xr-ng-accordion>
+
+    <!-- SIMILARITY SEARCH -->
+    <br />
+    <p3xr-ng-accordion [title]="strings()?.page?.key?.vectorset?.similaritySearch || 'Similarity Search'" accordionKey="vs-sim">
+        <div content>
+            <div style="padding: 16px;">
+                <div class="p3xr-timeseries-controls">
+                    <mat-form-field class="p3xr-timeseries-field" subscriptSizing="dynamic" style="flex: 1; min-width: 200px;">
+                        <mat-label>{{ simMode === 'element' ? (strings()?.page?.key?.vectorset?.elementName || 'Element name') : (strings()?.page?.key?.vectorset?.vectorValues || 'Vector values') }}</mat-label>
+                        <input matInput [(ngModel)]="simQueryInput" (keydown.enter)="searchSimilar()" [placeholder]="simMode === 'vector' ? '0.1, 0.2, 0.3' : ''" />
+                    </mat-form-field>
+
+                    <mat-form-field class="p3xr-timeseries-field" subscriptSizing="dynamic" style="max-width: 80px;">
+                        <mat-label>{{ strings()?.page?.key?.vectorset?.count || 'Count' }}</mat-label>
+                        <input matInput type="number" [(ngModel)]="simCountInput" />
+                    </mat-form-field>
+
+                    @if (isGtSm) {
+                        <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="simMode = 'element'; searchSimilar()">
+                            <mat-icon>person</mat-icon>
+                            <span>{{ strings()?.page?.key?.vectorset?.byElement || 'By Element' }}</span>
+                        </button>
+                        <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="simMode = 'vector'; searchSimilar()">
+                            <mat-icon>data_array</mat-icon>
+                            <span>{{ strings()?.page?.key?.vectorset?.byVector || 'By Vector' }}</span>
+                        </button>
+                    } @else {
+                        <button mat-mini-fab class="btn-primary" type="button" (click)="simMode = 'element'; searchSimilar()"
+                                [matTooltip]="strings()?.page?.key?.vectorset?.byElement ?? 'By Element'" matTooltipPosition="above">
+                            <mat-icon>person</mat-icon>
+                        </button>
+                        <button mat-mini-fab class="btn-primary" type="button" (click)="simMode = 'vector'; searchSimilar()"
+                                [matTooltip]="strings()?.page?.key?.vectorset?.byVector ?? 'By Vector'" matTooltipPosition="above">
+                            <mat-icon>data_array</mat-icon>
+                        </button>
+                    }
+                </div>
+
+                @if (simResults.length > 0) {
+                    <mat-divider style="margin: 16px 0;"></mat-divider>
+                    <mat-list>
+                        @for (result of simResults; track result.element; let last = $last) {
+                            <mat-list-item>
+                                <div style="display: flex; width: 100%;">
+                                    <span class="p3xr-settings-label" style="flex: 1; font-weight: bold;">{{ result.element }}</span>
+                                    <span class="p3xr-settings-value">{{ result.score }}</span>
+                                </div>
+                            </mat-list-item>
+                            @if (!last) { <mat-divider></mat-divider> }
+                        }
+                    </mat-list>
+                }
+            </div>
+        </div>
+    </p3xr-ng-accordion>
+
+</div>

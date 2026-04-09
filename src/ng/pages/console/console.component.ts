@@ -16,9 +16,8 @@ import { RedisParserService } from '../../services/redis-parser.service';
 import { MainCommandService } from '../../services/main-command.service';
 import { RedisStateService } from '../../services/redis-state.service';
 
-require('./console.component.scss');
-
-const htmlEncode = (globalThis as any).htmlEncode;
+import { htmlEncode } from 'js-htmlencode';
+import { debounce } from 'lodash-es';
 const consoleOutputStorageKey = 'p3xr-console-output-v1';
 const consoleOutputMaxBytes = 10 * 1024 * 1024;
 
@@ -40,6 +39,7 @@ let actionHistoryPosition = -1;
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     templateUrl: './console.component.html',
+    styleUrls: ['./console.component.scss'],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -470,7 +470,6 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
     // --- DOM init ---
 
     private initJQuery(): void {
-        const debounce = require('lodash/debounce');
         const rootEl = this.elementRef.nativeElement;
 
         this.containerEl = rootEl.querySelector('#p3xr-console-content');

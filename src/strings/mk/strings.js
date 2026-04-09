@@ -466,14 +466,31 @@ const strings = {
         index: "Индекс",
         hashKey: "Хеш клуч",
         score: "Резултат",
-        value: "Вредност"
+        value: "Вредност",
+        errorRate: "Стапка на грешка",
+        capacity: "Капацитет",
+        topk: "Top K",
+        width: "Ширина",
+        depth: "Длабочина",
+        decay: "Распаѓање",
+        compression: "Компресија",
+        increment: "Зголемување",
+        item: "Елемент",
+        vectorValues: "Вектор вредности (одделени со запирка)",
+        element: "Име на елемент",
       },
       error: {
         streamTimestamp: "Потребен е временскиот печат, или формат Redis или како *",
         key: "Клучот е, барем, еден лик",
         hashKey: "Копчето за хеш табела е најмалку еден знак",
         score: "Потребен е подредениот сет резултат",
-        value: "Вредноста е потребна"
+        value: "Вредноста е потребна",
+        errorRate: "Стапката на грешка мора да биде помеѓу 0 и 1 (пр. 0.01)",
+        capacity: "Капацитетот мора да биде позитивен цел број",
+        topk: "Top K мора да биде позитивен цел број",
+        width: "Ширината мора да биде позитивен цел број",
+        depth: "Длабочината мора да биде позитивен цел број",
+        item: "Елементот е потребен"
       }
     },
     main: {
@@ -643,6 +660,41 @@ const strings = {
         mrangeFilter: "Филтер за етикети",
         bulkMode: "Масовно генерирање",
         mrangeHint: "пр. sensor=temp"
+      },
+      probabilistic: {
+        info: "Информации",
+        addItem: "Додај елемент",
+        checkItem: "Провери елемент",
+        item: "Елемент",
+        exists: "Постои",
+        doesNotExist: "Не постои",
+        topkList: "Најчести елементи",
+        topkCount: "Број",
+        queryCount: "Број на барања",
+        queryResult: "Резултат на барање",
+        addedSuccessfully: "Елементот е успешно додаден",
+        deletedSuccessfully: "Елементот е успешно избришан",
+        quantile: "Квантил",
+        quantileResult: "Резултат",
+        noItems: "Нема елементи за прикажување",
+        resetConfirm: "Ресетирај ги сите податоци во овој T-Digest?"
+      },
+      vectorset: {
+        info: "Информации",
+        elements: "Елементи",
+        similarity: "Пребарување по сличност",
+        searchByElement: "Барај по елемент",
+        searchByVector: "Барај по вектор",
+        vectorValues: "Вектор вредности",
+        element: "Елемент",
+        score: "Резултат",
+        count: "Број",
+        addElement: "Додади елемент",
+        attributes: "Атрибути",
+        noAttributes: "Нема атрибути",
+        dimensions: "Димензии",
+        removeConfirm: "Отстрани го овој елемент од VectorSet?",
+        noElements: "Нема елементи",
       }
     },
     treeControls: {
@@ -692,7 +744,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom филтер",
+    cuckoo: "Cuckoo филтер",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

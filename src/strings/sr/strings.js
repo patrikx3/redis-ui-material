@@ -466,14 +466,31 @@ const strings = {
         index: "\u0418\u043D\u0434\u0435\u043A\u0441",
         hashKey: "\u0425\u0435\u0448 \u043A\u0459\u0443\u0447",
         score: "\u0420\u0435\u0437\u0443\u043B\u0442\u0430\u0442",
-        value: "\u0412\u0440\u0435\u0434\u043D\u043E\u0441\u0442"
+        value: "\u0412\u0440\u0435\u0434\u043D\u043E\u0441\u0442",
+        errorRate: "Стопа грешке",
+        capacity: "Капацитет",
+        topk: "Top K",
+        width: "Ширина",
+        depth: "Дубина",
+        decay: "Опадање",
+        compression: "Компресија",
+        increment: "Инкремент",
+        item: "Ставка",
+        vectorValues: "Векторске вредности (раздвојене зарезом)",
+        element: "Назив елемента",
       },
       error: {
         streamTimestamp: "\u0412\u0440\u0435\u043C\u0435\u043D\u0441\u043A\u0430 \u043E\u0437\u043D\u0430\u043A\u0430 \u0458\u0435 \u043E\u0431\u0430\u0432\u0435\u0437\u043D\u0430, \u0431\u0438\u043B\u043E \u0443 Redis \u0444\u043E\u0440\u043C\u0430\u0442\u0443 \u0438\u043B\u0438 \u043A\u0430\u043E *",
         key: "\u041A\u0459\u0443\u0447 \u0438\u043C\u0430 \u043D\u0430\u0458\u043C\u0430\u045A\u0435 \u0458\u0435\u0434\u0430\u043D \u043A\u0430\u0440\u0430\u043A\u0442\u0435\u0440",
         hashKey: "\u0425\u0435\u0448 \u043A\u0459\u0443\u0447 \u0442\u0430\u0431\u0435\u043B\u0435 \u0438\u043C\u0430 \u043D\u0430\u0458\u043C\u0430\u045A\u0435 \u0458\u0435\u0434\u0430\u043D \u043A\u0430\u0440\u0430\u043A\u0442\u0435\u0440",
         score: "\u0420\u0435\u0437\u0443\u043B\u0442\u0430\u0442 \u0441\u043E\u0440\u0442\u0438\u0440\u0430\u043D\u043E\u0433 \u0441\u043A\u0443\u043F\u0430 \u0458\u0435 \u043E\u0431\u0430\u0432\u0435\u0437\u0430\u043D",
-        value: "\u0412\u0440\u0435\u0434\u043D\u043E\u0441\u0442 \u0458\u0435 \u043E\u0431\u0430\u0432\u0435\u0437\u043D\u0430"
+        value: "\u0412\u0440\u0435\u0434\u043D\u043E\u0441\u0442 \u0458\u0435 \u043E\u0431\u0430\u0432\u0435\u0437\u043D\u0430",
+        errorRate: "Стопа грешке мора бити између 0 и 1 (нпр. 0.01)",
+        capacity: "Капацитет мора бити позитиван цео број",
+        topk: "Top K мора бити позитиван цео број",
+        width: "Ширина мора бити позитиван цео број",
+        depth: "Дубина мора бити позитиван цео број",
+        item: "Ставка је обавезна"
       }
     },
     main: {
@@ -643,6 +660,41 @@ const strings = {
         mrangeFilter: "Филтер ознака",
         bulkMode: "Масовно генерисање",
         mrangeHint: "нпр. sensor=temp"
+      },
+      probabilistic: {
+        info: "Информације",
+        addItem: "Додај ставку",
+        checkItem: "Провери ставку",
+        item: "Ставка",
+        exists: "Постоји",
+        doesNotExist: "Не постоји",
+        topkList: "Главне ставке",
+        topkCount: "Број",
+        queryCount: "Број упита",
+        queryResult: "Резултат упита",
+        addedSuccessfully: "Ставка успешно додата",
+        deletedSuccessfully: "Ставка успешно обрисана",
+        quantile: "Квантил",
+        quantileResult: "Резултат",
+        noItems: "Нема ставки за приказ",
+        resetConfirm: "Ресетовати све податке у овом T-Digest?"
+      },
+      vectorset: {
+        info: "Информације",
+        elements: "Елементи",
+        similarity: "Претрага по сличности",
+        searchByElement: "Претрага по елементу",
+        searchByVector: "Претрага по вектору",
+        vectorValues: "Векторске вредности",
+        element: "Елемент",
+        score: "Резултат",
+        count: "Број",
+        addElement: "Додај елемент",
+        attributes: "Атрибути",
+        noAttributes: "Нема атрибута",
+        dimensions: "Димензије",
+        removeConfirm: "Уклонити овај елемент из VectorSet?",
+        noElements: "Нема елемената",
       }
     },
     treeControls: {
@@ -692,7 +744,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom филтер",
+    cuckoo: "Cuckoo филтер",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

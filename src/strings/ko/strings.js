@@ -466,14 +466,31 @@ const strings = {
         index: "색인",
         hashKey: "해시 키",
         score: "점수",
-        value: "가치"
+        value: "가치",
+        errorRate: "오류율",
+        capacity: "용량",
+        topk: "Top K",
+        width: "너비",
+        depth: "깊이",
+        decay: "감쇠",
+        compression: "압축",
+        increment: "증가",
+        item: "항목",
+        vectorValues: "벡터 값 (쉼표로 구분)",
+        element: "요소 이름",
       },
       error: {
         streamTimestamp: "Redis 형식 또는 * 형식의 타임스탬프가 필요합니다.",
         key: "키는 1자 이상입니다.",
         hashKey: "해시 테이블 키는 1자 이상입니다.",
         score: "정렬된 세트 스코어가 필요합니다.",
-        value: "값은 필수입니다."
+        value: "값은 필수입니다.",
+        errorRate: "오류율은 0과 1 사이여야 합니다 (예: 0.01)",
+        capacity: "용량은 양의 정수여야 합니다",
+        topk: "Top K는 양의 정수여야 합니다",
+        width: "너비는 양의 정수여야 합니다",
+        depth: "깊이는 양의 정수여야 합니다",
+        item: "항목은 필수입니다"
       }
     },
     main: {
@@ -643,6 +660,41 @@ const strings = {
         mrangeFilter: "레이블 필터",
         bulkMode: "대량 생성",
         mrangeHint: "예: sensor=temp"
+      },
+      probabilistic: {
+        info: "정보",
+        addItem: "항목 추가",
+        checkItem: "항목 확인",
+        item: "항목",
+        exists: "존재함",
+        doesNotExist: "존재하지 않음",
+        topkList: "상위 항목",
+        topkCount: "개수",
+        queryCount: "쿼리 개수",
+        queryResult: "쿼리 결과",
+        addedSuccessfully: "항목이 성공적으로 추가되었습니다",
+        deletedSuccessfully: "항목이 성공적으로 삭제되었습니다",
+        quantile: "분위수",
+        quantileResult: "결과",
+        noItems: "표시할 항목이 없습니다",
+        resetConfirm: "이 T-Digest의 모든 데이터를 리셋하시겠습니까?"
+      },
+      vectorset: {
+        info: "정보",
+        elements: "요소",
+        similarity: "유사도 검색",
+        searchByElement: "요소로 검색",
+        searchByVector: "벡터로 검색",
+        vectorValues: "벡터 값",
+        element: "요소",
+        score: "점수",
+        count: "개수",
+        addElement: "요소 추가",
+        attributes: "속성",
+        noAttributes: "속성 없음",
+        dimensions: "차원",
+        removeConfirm: "이 요소를 VectorSet에서 제거하시겠습니까?",
+        noElements: "요소 없음",
       }
     },
     treeControls: {
@@ -692,7 +744,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom 필터",
+    cuckoo: "Cuckoo 필터",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

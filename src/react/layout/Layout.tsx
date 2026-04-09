@@ -108,6 +108,7 @@ export default function Layout() {
                 hasReJSON: modules.some((m: any) => m.name === 'ReJSON'),
                 hasRediSearch: modules.some((m: any) => m.name === 'search'),
                 hasTimeSeries: modules.some((m: any) => m.name === 'timeseries' || m.name === 'Timeseries'),
+                hasBloom: modules.some((m: any) => m.name === 'bf'),
             })
 
             useCommonStore.getState().loadRedisInfoResponse({ response })
@@ -549,10 +550,9 @@ export default function Layout() {
                         autoFocus={false}
                         anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
                         transformOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-                        MenuListProps={{ autoFocus: false, autoFocusItem: false }}
                         slotProps={{
                             paper: { sx: { minWidth: 320, maxWidth: '90vw', maxHeight: 400, overflow: 'hidden' } },
-                            list: { sx: { pt: 0, overflow: 'auto', maxHeight: 400 } },
+                            list: { autoFocus: false, autoFocusItem: false, sx: { pt: 0, overflow: 'auto', maxHeight: 400 } },
                         }}>
                         <Box
                             sx={{

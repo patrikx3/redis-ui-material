@@ -38,6 +38,12 @@ const typeIcons: Record<string, string> = {
     stream: 'fas fa-stream',
     json: 'fas fa-code',
     timeseries: 'fas fa-chart-area',
+    bloom: 'fas fa-filter',
+    cuckoo: 'fas fa-filter',
+    topk: 'fas fa-trophy',
+    cms: 'fas fa-chart-simple',
+    tdigest: 'fas fa-chart-bar',
+    vectorset: 'fas fa-brain',
 }
 
 export default function DatabaseTree({ resizeSignal }: { resizeSignal?: any }) {

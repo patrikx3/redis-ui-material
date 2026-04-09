@@ -464,14 +464,31 @@ const strings = {
         index: "Indice",
         hashKey: "Chiave hash",
         score: "Punteggio",
-        value: "Valore"
+        value: "Valore",
+        errorRate: "Tasso di errore",
+        capacity: "Capacità",
+        topk: "Top K",
+        width: "Larghezza",
+        depth: "Profondità",
+        decay: "Decadimento",
+        compression: "Compressione",
+        increment: "Incremento",
+        item: "Elemento",
+        vectorValues: "Valori vettoriali (separati da virgola)",
+        element: "Nome elemento",
       },
       error: {
         streamTimestamp: "Il timestamp è obbligatorio, in formato Redis o come *",
         key: "La chiave deve essere almeno un carattere",
         hashKey: "La chiave della tabella hash deve essere almeno un carattere",
         score: "Il punteggio del set ordinato è obbligatorio",
-        value: "Il valore è obbligatorio"
+        value: "Il valore è obbligatorio",
+        errorRate: "Il tasso di errore deve essere compreso tra 0 e 1 (es. 0,01)",
+        capacity: "La capacità deve essere un intero positivo",
+        topk: "Top K deve essere un intero positivo",
+        width: "La larghezza deve essere un intero positivo",
+        depth: "La profondità deve essere un intero positivo",
+        item: "L'elemento è obbligatorio"
       }
     },
     main: {
@@ -641,6 +658,41 @@ const strings = {
         mrangeFilter: "Filtro etichette",
         bulkMode: "Generazione di massa",
         mrangeHint: "es. sensor=temp"
+      },
+      probabilistic: {
+        info: "Info",
+        addItem: "Aggiungi elemento",
+        checkItem: "Verifica elemento",
+        item: "Elemento",
+        exists: "Esiste",
+        doesNotExist: "Non esiste",
+        topkList: "Elementi principali",
+        topkCount: "Conteggio",
+        queryCount: "Conteggio query",
+        queryResult: "Risultato query",
+        addedSuccessfully: "Elemento aggiunto con successo",
+        deletedSuccessfully: "Elemento eliminato con successo",
+        quantile: "Quantile",
+        quantileResult: "Risultato",
+        noItems: "Nessun elemento da visualizzare",
+        resetConfirm: "Reimpostare tutti i dati in questo T-Digest?"
+      },
+      vectorset: {
+        info: "Info",
+        elements: "Elementi",
+        similarity: "Ricerca per similarità",
+        searchByElement: "Cerca per elemento",
+        searchByVector: "Cerca per vettore",
+        vectorValues: "Valori vettoriali",
+        element: "Elemento",
+        score: "Punteggio",
+        count: "Conteggio",
+        addElement: "Aggiungi elemento",
+        attributes: "Attributi",
+        noAttributes: "Nessun attributo",
+        dimensions: "Dimensioni",
+        removeConfirm: "Rimuovere questo elemento dal VectorSet?",
+        noElements: "Nessun elemento",
       }
     },
     treeControls: {
@@ -690,7 +742,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom filtro",
+    cuckoo: "Cuckoo filtro",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

@@ -24,9 +24,6 @@ import { SettingsService } from '../services/settings.service';
 import { AuthService } from '../services/auth.service';
 import { LoginComponent } from '../components/login.component';
 
-// Side-effect: webpack processes the SCSS through sass-loader → css-loader → MiniCssExtractPlugin
-require('./layout.component.scss');
-
 /**
  * Angular layout component — replaces the AngularJS p3xrLayout component.
  *
@@ -56,6 +53,7 @@ require('./layout.component.scss');
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     templateUrl: './layout.component.html',
+    styleUrls: ['./layout.component.scss'],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -437,6 +435,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
             this.state.hasReJSON.set(modules.some((m: any) => m.name === 'ReJSON'));
             this.state.hasRediSearch.set(modules.some((m: any) => m.name === 'search'));
             this.state.hasTimeSeries.set(modules.some((m: any) => m.name === 'timeseries' || m.name === 'Timeseries'));
+            this.state.hasBloom.set(modules.some((m: any) => m.name === 'bf'));
 
             await this.common.loadRedisInfoResponse({ response });
             this.socket.stateChanged$.next();

@@ -2,6 +2,7 @@ import { Injectable, Inject, signal, computed } from '@angular/core';
 import { SettingsService } from './settings.service';
 
 declare const P3XR_API_PORT: number;
+declare const P3XR_DEV_MODE: boolean;
 
 /**
  * Runtime state service using Angular signals.
@@ -37,6 +38,7 @@ export class RedisStateService {
     readonly hasRediSearch = signal<boolean>(false);
     readonly hasReJSON = signal<boolean>(false);
     readonly hasTimeSeries = signal<boolean>(false);
+    readonly hasBloom = signal<boolean>(false);
     readonly reducedFunctions = signal<boolean>(false);
     readonly keysInfoFetchedAt = signal<number>(Date.now());
 
@@ -85,7 +87,7 @@ export class RedisStateService {
     // --- API host (computed once at startup) ---
     readonly apiHost: string = (() => {
         const apiUrl = new URL(location.toString());
-        if ((globalThis as any).p3xrDevMode === true) {
+        if (typeof P3XR_DEV_MODE !== 'undefined' && P3XR_DEV_MODE) {
             const apiPort = typeof P3XR_API_PORT !== 'undefined' ? P3XR_API_PORT : 7843;
             return `http://${apiUrl.hostname}:${apiPort}`;
         }

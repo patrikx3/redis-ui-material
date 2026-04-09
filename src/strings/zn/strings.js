@@ -464,14 +464,31 @@ const strings = {
         index: "索引",
         hashKey: "哈希键",
         score: "分数",
-        value: "值"
+        value: "值",
+        errorRate: "错误率",
+        capacity: "容量",
+        topk: "Top K",
+        width: "宽度",
+        depth: "深度",
+        decay: "衰减",
+        compression: "压缩",
+        increment: "增量",
+        item: "项目",
+        vectorValues: "向量值（以逗号分隔）",
+        element: "元素名称",
       },
       error: {
         streamTimestamp: "时间戳是必需的，可以是Redis格式，也可以*",
         key: "键至少存在一个字符",
         hashKey: "哈希表键至少是一个字符",
         score: "排序的集合分数是必需的",
-        value: "该值是必填的"
+        value: "该值是必填的",
+        errorRate: "错误率必须在 0 到 1 之间（例如 0.01）",
+        capacity: "容量必须是正整数",
+        topk: "Top K 必须是正整数",
+        width: "宽度必须是正整数",
+        depth: "深度必须是正整数",
+        item: "项目是必填的"
       }
     },
     main: {
@@ -641,6 +658,41 @@ const strings = {
         mrangeFilter: "标签过滤器",
         bulkMode: "批量生成",
         mrangeHint: "例如 sensor=temp"
+      },
+      probabilistic: {
+        info: "信息",
+        addItem: "添加项目",
+        checkItem: "检查项目",
+        item: "项目",
+        exists: "存在",
+        doesNotExist: "不存在",
+        topkList: "热门项目",
+        topkCount: "数量",
+        queryCount: "查询数量",
+        queryResult: "查询结果",
+        addedSuccessfully: "项目已成功添加",
+        deletedSuccessfully: "项目已成功删除",
+        quantile: "分位数",
+        quantileResult: "结果",
+        noItems: "没有项目可显示",
+        resetConfirm: "重置此 T-Digest 中的所有数据？"
+      },
+      vectorset: {
+        info: "信息",
+        elements: "元素",
+        similarity: "相似度搜索",
+        searchByElement: "按元素搜索",
+        searchByVector: "按向量搜索",
+        vectorValues: "向量值",
+        element: "元素",
+        score: "分数",
+        count: "数量",
+        addElement: "添加元素",
+        attributes: "属性",
+        noAttributes: "没有属性",
+        dimensions: "维度",
+        removeConfirm: "从 VectorSet 中移除此元素？",
+        noElements: "没有元素",
       }
     },
     treeControls: {
@@ -690,7 +742,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom 过滤器",
+    cuckoo: "Cuckoo 过滤器",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

@@ -1,7 +1,7 @@
 import { Injectable, Inject, Injector, signal, computed, effect } from '@angular/core';
 
-const prettyBytesModule = require('pretty-bytes');
-const prettyBytesFn = prettyBytesModule.default || prettyBytesModule;
+import prettyBytes from 'pretty-bytes';
+import { I18nService } from './i18n.service';
 
 /**
  * LocalStorage-backed settings service using Angular signals.
@@ -44,7 +44,7 @@ export class SettingsService {
     prettyBytes(value: number): string {
         let lang = this.language();
         if (lang === 'auto') lang = this.resolveAutoLang();
-        return prettyBytesFn(value, { locale: lang });
+        return prettyBytes(value, { locale: lang });
     }
 
     getStorageKeyCurrentDatabase(connectionId: string): string {
@@ -85,8 +85,6 @@ export class SettingsService {
     };
 
     private resolveAutoLang(): string {
-        // Lazy resolve to avoid circular dependency with I18nService
-        const { I18nService } = require('./i18n.service');
         const i18n = this.injector.get(I18nService) as { currentLang: () => string };
         return i18n.currentLang() || 'en';
     }

@@ -466,14 +466,31 @@ const strings = {
         index: "ดัชนี",
         hashKey: "แฮชคีย์",
         score: "คะแนน",
-        value: "ความคุ้มค่า"
+        value: "ความคุ้มค่า",
+        errorRate: "อัตราข้อผิดพลาด",
+        capacity: "ความจุ",
+        topk: "Top K",
+        width: "ความกว้าง",
+        depth: "ความลึก",
+        decay: "การลดลง",
+        compression: "การบีบอัด",
+        increment: "การเพิ่ม",
+        item: "รายการ",
+        vectorValues: "ค่าเวกเตอร์ (คั่นด้วยเครื่องหมายจุลภาค)",
+        element: "ชื่อองค์ประกอบ",
       },
       error: {
         streamTimestamp: "ต้องมีการประทับเวลา รูปแบบ Redis หรือเป็น *",
         key: "สิ่งสำคัญคือต้องมีอักขระอย่างน้อยหนึ่งตัว",
         hashKey: "คีย์ตารางแฮชมีอักขระอย่างน้อยหนึ่งตัว",
         score: "จำเป็นต้องมีคะแนนชุดการเรียงลำดับ",
-        value: "ต้องระบุค่า"
+        value: "ต้องระบุค่า",
+        errorRate: "อัตราข้อผิดพลาดต้องอยู่ระหว่าง 0 ถึง 1 (เช่น 0.01)",
+        capacity: "ความจุต้องเป็นจำนวนเต็มบวก",
+        topk: "Top K ต้องเป็นจำนวนเต็มบวก",
+        width: "ความกว้างต้องเป็นจำนวนเต็มบวก",
+        depth: "ความลึกต้องเป็นจำนวนเต็มบวก",
+        item: "ต้องระบุรายการ"
       }
     },
     main: {
@@ -643,6 +660,41 @@ const strings = {
         mrangeFilter: "ตัวกรองป้ายกำกับ",
         bulkMode: "สร้างจำนวนมาก",
         mrangeHint: "เช่น sensor=temp"
+      },
+      probabilistic: {
+        info: "ข้อมูล",
+        addItem: "เพิ่มรายการ",
+        checkItem: "ตรวจสอบรายการ",
+        item: "รายการ",
+        exists: "มีอยู่",
+        doesNotExist: "ไม่มี",
+        topkList: "รายการยอดนิยม",
+        topkCount: "จำนวน",
+        queryCount: "จำนวนการสืบค้น",
+        queryResult: "ผลการสืบค้น",
+        addedSuccessfully: "เพิ่มรายการสำเร็จ",
+        deletedSuccessfully: "ลบรายการสำเร็จ",
+        quantile: "ควอนไทล์",
+        quantileResult: "ผลลัพธ์",
+        noItems: "ไม่มีรายการที่จะแสดง",
+        resetConfirm: "รีเซ็ตข้อมูลทั้งหมดใน T-Digest นี้?"
+      },
+      vectorset: {
+        info: "ข้อมูล",
+        elements: "องค์ประกอบ",
+        similarity: "ค้นหาความคล้ายคลึง",
+        searchByElement: "ค้นหาตามองค์ประกอบ",
+        searchByVector: "ค้นหาตามเวกเตอร์",
+        vectorValues: "ค่าเวกเตอร์",
+        element: "องค์ประกอบ",
+        score: "คะแนน",
+        count: "จำนวน",
+        addElement: "เพิ่มองค์ประกอบ",
+        attributes: "คุณลักษณะ",
+        noAttributes: "ไม่มีคุณลักษณะ",
+        dimensions: "มิติ",
+        removeConfirm: "ลบองค์ประกอบนี้ออกจาก VectorSet?",
+        noElements: "ไม่มีองค์ประกอบ",
       }
     },
     treeControls: {
@@ -692,7 +744,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom ตัวกรอง",
+    cuckoo: "Cuckoo ตัวกรอง",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

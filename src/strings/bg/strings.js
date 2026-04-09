@@ -468,14 +468,31 @@ const strings = {
         index: "Индекс",
         hashKey: "Хеш ключ",
         score: "Резултат",
-        value: "Стойност"
+        value: "Стойност",
+        errorRate: "Процент грешки",
+        capacity: "Капацитет",
+        topk: "Top K",
+        width: "Ширина",
+        depth: "Дълбочина",
+        decay: "Затихване",
+        compression: "Компресия",
+        increment: "Увеличение",
+        item: "Елемент",
+        vectorValues: "Стойности на вектора (разделени със запетая)",
+        element: "Име на елемент",
       },
       error: {
         streamTimestamp: "Времевата марка е задължителна, във формат на Redis или като *",
         key: "Ключът е поне един символ",
         hashKey: "Хеш ключът е поне един символ",
         score: "Резултатът на подреденото множество е задължителен",
-        value: "Стойността е задължителна"
+        value: "Стойността е задължителна",
+        errorRate: "Процентът грешки трябва да е между 0 и 1 (напр. 0.01)",
+        capacity: "Капацитетът трябва да е положително цяло число",
+        topk: "Top K трябва да е положително цяло число",
+        width: "Ширината трябва да е положително цяло число",
+        depth: "Дълбочината трябва да е положително цяло число",
+        item: "Елементът е задължителен"
       }
     },
     main: {
@@ -645,6 +662,41 @@ const strings = {
         mrangeFilter: "Филтър по етикети",
         bulkMode: "Масово генериране",
         mrangeHint: "напр. sensor=temp"
+      },
+      probabilistic: {
+        info: "Информация",
+        addItem: "Добави елемент",
+        checkItem: "Провери елемент",
+        item: "Елемент",
+        exists: "Съществува",
+        doesNotExist: "Не съществува",
+        topkList: "Топ елементи",
+        topkCount: "Брой",
+        queryCount: "Брой заявки",
+        queryResult: "Резултат от заявка",
+        addedSuccessfully: "Елементът е добавен успешно",
+        deletedSuccessfully: "Елементът е изтрит успешно",
+        quantile: "Квантил",
+        quantileResult: "Резултат",
+        noItems: "Няма елементи за показване",
+        resetConfirm: "Нулиране на всички данни в този T-Digest?",
+      },
+      vectorset: {
+        info: "Информация",
+        elements: "Елементи",
+        similarity: "Търсене по сходство",
+        searchByElement: "Търсене по елемент",
+        searchByVector: "Търсене по вектор",
+        vectorValues: "Стойности на вектора",
+        element: "Елемент",
+        score: "Резултат",
+        count: "Брой",
+        addElement: "Добави елемент",
+        attributes: "Атрибути",
+        noAttributes: "Няма атрибути",
+        dimensions: "Размерности",
+        removeConfirm: "Премахване на този елемент от VectorSet?",
+        noElements: "Няма елементи",
       }
     },
     treeControls: {
@@ -694,7 +746,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom филтър",
+    cuckoo: "Cuckoo филтър",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

@@ -25,36 +25,45 @@ import KeyZset from './key/KeyZset'
 import KeyStream from './key/KeyStream'
 import KeyJson from './key/KeyJson'
 import KeyTimeseries from './key/KeyTimeseries'
+import KeyProbabilistic from './key/KeyProbabilistic'
+import KeyVectorset from './key/KeyVectorset'
 import TtlDialog from '../../dialogs/TtlDialog'
 
 const TextDecoder_ = typeof TextDecoder !== 'undefined' ? TextDecoder : class { decode(b: any) { return String(b) } }
+
+function toBytes(buf: any): any {
+    if (buf instanceof Uint8Array || buf instanceof ArrayBuffer) return buf instanceof ArrayBuffer ? new Uint8Array(buf) : buf
+    if (buf && buf.type === 'Buffer' && Array.isArray(buf.data)) return new Uint8Array(buf.data)
+    if (ArrayBuffer.isView(buf)) return new Uint8Array((buf as any).buffer, (buf as any).byteOffset, (buf as any).byteLength)
+    return buf
+}
 
 function decodeValueBuffer(response: any, jsonFormat: number): void {
     const td = new TextDecoder_()
     const { type, valueBuffer } = response
     switch (type) {
         case 'string':
-            response.value = td.decode(valueBuffer)
+            response.value = td.decode(toBytes(valueBuffer))
             break
         case 'list':
         case 'set':
-            response.value = valueBuffer.map((buf: any) => td.decode(buf))
+            response.value = valueBuffer.map((buf: any) => td.decode(toBytes(buf)))
             break
         case 'hash':
             response.value = {}
             Object.entries(valueBuffer).forEach(([key, buf]: [string, any]) => {
-                response.value[key] = td.decode(buf)
+                response.value[key] = td.decode(toBytes(buf))
             })
             break
         case 'zset':
             response.value = []
             for (let i = 0; i < valueBuffer.length; i += 2) {
-                response.value.push(td.decode(valueBuffer[i]))
+                response.value.push(td.decode(toBytes(valueBuffer[i])))
                 response.value.push(td.decode(valueBuffer[i + 1]))
             }
             break
         case 'json': {
-            const rawJson = td.decode(valueBuffer)
+            const rawJson = td.decode(toBytes(valueBuffer))
             try {
                 const parsed = JSON.parse(rawJson)
                 const unwrapped = Array.isArray(parsed) ? parsed[0] : parsed
@@ -68,7 +77,7 @@ function decodeValueBuffer(response: any, jsonFormat: number): void {
             const decodeEntry = (entry: any): any => {
                 return entry.map((item: any) => {
                     if (Array.isArray(item)) return decodeEntry(item)
-                    if (ArrayBuffer.isView(item) || item instanceof ArrayBuffer) return td.decode(item)
+                    if (ArrayBuffer.isView(item) || item instanceof ArrayBuffer) return td.decode(toBytes(item))
                     return item
                 })
             }
@@ -76,8 +85,18 @@ function decodeValueBuffer(response: any, jsonFormat: number): void {
             break
         }
         case 'timeseries':
-            try { response.value = JSON.parse(td.decode(valueBuffer)) }
+        case 'bloom':
+        case 'cuckoo':
+        case 'topk':
+        case 'cms':
+        case 'tdigest':
+        case 'vectorset':
+            try { response.value = JSON.parse(td.decode(toBytes(valueBuffer))) }
             catch { response.value = {} }
+            break
+        default:
+            try { response.value = JSON.parse(td.decode(toBytes(valueBuffer))) }
+            catch { response.value = td.decode(toBytes(valueBuffer)) }
             break
     }
 }
@@ -264,7 +283,18 @@ export default function DatabaseKeyPage() {
         } catch (err) { generalHandleError(err) }
     }, [key, strings, toast, loadKey, generalHandleError])
 
-    const refreshKey = useCallback(async () => { trackPage('/refresh'); await loadKey() }, [loadKey])
+    const refreshKey = useCallback(async () => {
+        trackPage('/refresh')
+        try {
+            const resp = await request({ action: 'key-get', payload: { key } })
+            if (resp.ttl === -2) return
+            resp.size = 0
+            decodeValueBuffer(resp, jsonFormat ? 2 : 0)
+            calculateSize(resp)
+            if (resp.ttl > -1) wasExpiringRef.current = true
+            setResponse(resp)
+        } catch {}
+    }, [key, jsonFormat])
 
     // --- Responsive button ---
     const ActionBtn = ({ icon, label, color, onClick }: {
@@ -401,7 +431,7 @@ export default function DatabaseKeyPage() {
                 </Box>
 
                 {/* Format toggle */}
-                {response.type !== 'timeseries' && response.type !== 'json' && (
+                {response.type !== 'timeseries' && response.type !== 'json' && !['bloom', 'cuckoo', 'topk', 'cms', 'tdigest', 'vectorset'].includes(response.type) && (
                     <Box sx={{
                         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
                         px: 2, py: 1.5, borderBottom: `1px solid ${borderColor}`,
@@ -466,12 +496,18 @@ export default function DatabaseKeyPage() {
                     <KeyTimeseries response={response} value={response.value} valueBuffer={response.valueBuffer}
                         keyName={key} valueFormat={valueFormat} onRefresh={refreshKey} />
                 )}
+                {['bloom', 'cuckoo', 'topk', 'cms', 'tdigest'].includes(response.type) && (
+                    <KeyProbabilistic response={response} value={response.value} valueBuffer={response.valueBuffer}
+                        keyName={key} valueFormat={valueFormat} onRefresh={refreshKey} />
+                )}
+                {response.type === 'vectorset' && (
+                    <KeyVectorset response={response} value={response.value} valueBuffer={response.valueBuffer}
+                        keyName={key} valueFormat={valueFormat} onRefresh={refreshKey} />
+                )}
 
-            {response.type !== 'string' && response.type !== 'hash' && response.type !== 'set' && response.type !== 'zset' && response.type !== 'list' && response.type !== 'stream' && response.type !== 'json' && response.type !== 'timeseries' && (
-                    <Box sx={{ mt: 1, p: 1, bgcolor: 'action.hover', borderRadius: 1, fontSize: 13,
-                        fontFamily: "'Roboto Mono', monospace", whiteSpace: 'pre-wrap', wordBreak: 'break-all',
-                        maxHeight: 400, overflow: 'auto' }}>
-                        {typeof response.value === 'string' ? response.value : JSON.stringify(response.value, null, 2)}
+            {response.type !== 'string' && response.type !== 'hash' && response.type !== 'set' && response.type !== 'zset' && response.type !== 'list' && response.type !== 'stream' && response.type !== 'json' && response.type !== 'timeseries' && !['bloom', 'cuckoo', 'topk', 'cms', 'tdigest'].includes(response.type) && response.type !== 'vectorset' && (
+                    <Box sx={{ mt: 2, p: 2, opacity: 0.7 }}>
+                        {strings?.page?.key?.probabilistic?.noItems || 'This key type is not fully supported in the GUI. Use the console for commands.'}
                     </Box>
                 )}
 

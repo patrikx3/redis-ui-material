@@ -466,14 +466,31 @@ const strings = {
         index: "אינדקס",
         hashKey: "מפתח Hash",
         score: "ציון",
-        value: "ערך"
+        value: "ערך",
+        errorRate: "שיעור שגיאה",
+        capacity: "קיבולת",
+        topk: "Top K",
+        width: "רוחב",
+        depth: "עומק",
+        decay: "דעיכה",
+        compression: "דחיסה",
+        increment: "תוספת",
+        item: "פריט",
+        vectorValues: "ערכי וקטור (מופרדים בפסיק)",
+        element: "שם אלמנט",
       },
       error: {
         streamTimestamp: "חותמת הזמן נדרשת, בפורמט Redis או בתור *",
         key: "המפתח הוא, לפחות, תו אחד",
         hashKey: "מפתח טבלת הגיבוב הוא תו אחד לפחות",
         score: "נדרש ציון הסט הממוין",
-        value: "הערך נדרש"
+        value: "הערך נדרש",
+        errorRate: "שיעור השגיאה חייב להיות בין 0 ל-1 (לדוגמה 0.01)",
+        capacity: "הקיבולת חייבת להיות מספר שלם חיובי",
+        topk: "Top K חייב להיות מספר שלם חיובי",
+        width: "הרוחב חייב להיות מספר שלם חיובי",
+        depth: "העומק חייב להיות מספר שלם חיובי",
+        item: "הפריט נדרש"
       }
     },
     main: {
@@ -643,6 +660,41 @@ const strings = {
         mrangeFilter: "סינון תוויות",
         bulkMode: "יצירה המונית",
         mrangeHint: "לדוגמה sensor=temp"
+      },
+      probabilistic: {
+        info: "מידע",
+        addItem: "הוסף פריט",
+        checkItem: "בדוק פריט",
+        item: "פריט",
+        exists: "קיים",
+        doesNotExist: "לא קיים",
+        topkList: "פריטים מובילים",
+        topkCount: "ספירה",
+        queryCount: "ספירת שאילתות",
+        queryResult: "תוצאת שאילתה",
+        addedSuccessfully: "הפריט נוסף בהצלחה",
+        deletedSuccessfully: "הפריט נמחק בהצלחה",
+        quantile: "אחוזון",
+        quantileResult: "תוצאה",
+        noItems: "אין פריטים להצגה",
+        resetConfirm: "לאפס את כל הנתונים ב-T-Digest הזה?",
+      },
+      vectorset: {
+        info: "מידע",
+        elements: "אלמנטים",
+        similarity: "חיפוש דמיון",
+        searchByElement: "חיפוש לפי אלמנט",
+        searchByVector: "חיפוש לפי וקטור",
+        vectorValues: "ערכי וקטור",
+        element: "אלמנט",
+        score: "ציון",
+        count: "ספירה",
+        addElement: "הוסף אלמנט",
+        attributes: "תכונות",
+        noAttributes: "אין תכונות",
+        dimensions: "ממדים",
+        removeConfirm: "להסיר אלמנט זה מה-VectorSet?",
+        noElements: "אין אלמנטים",
       }
     },
     treeControls: {
@@ -692,7 +744,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom מסנן",
+    cuckoo: "Cuckoo מסנן",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

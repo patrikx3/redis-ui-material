@@ -466,14 +466,31 @@ const strings = {
         index: "Index",
         hashKey: "Hash-sleutel",
         score: "Score",
-        value: "Waarde"
+        value: "Waarde",
+        errorRate: "Foutpercentage",
+        capacity: "Capaciteit",
+        topk: "Top K",
+        width: "Breedte",
+        depth: "Diepte",
+        decay: "Verval",
+        compression: "Compressie",
+        increment: "Toename",
+        item: "Item",
+        vectorValues: "Vectorwaarden (kommagescheiden)",
+        element: "Elementnaam",
       },
       error: {
         streamTimestamp: "Het tijdstempel is verplicht, in Redis-formaat of als *",
         key: "De sleutel moet minimaal één teken bevatten",
         hashKey: "De hash-tabelsleutel moet minimaal één teken bevatten",
         score: "De gesorteerde set-score is verplicht",
-        value: "De waarde is verplicht"
+        value: "De waarde is verplicht",
+        errorRate: "Het foutpercentage moet tussen 0 en 1 liggen (bijv. 0.01)",
+        capacity: "De capaciteit moet een positief geheel getal zijn",
+        topk: "Top K moet een positief geheel getal zijn",
+        width: "De breedte moet een positief geheel getal zijn",
+        depth: "De diepte moet een positief geheel getal zijn",
+        item: "Het item is verplicht"
       }
     },
     main: {
@@ -643,6 +660,41 @@ const strings = {
         mrangeFilter: "Labelfilter",
         bulkMode: "Bulk genereren",
         mrangeHint: "bijv. sensor=temp"
+      },
+      probabilistic: {
+        info: "Info",
+        addItem: "Item toevoegen",
+        checkItem: "Item controleren",
+        item: "Item",
+        exists: "Bestaat",
+        doesNotExist: "Bestaat niet",
+        topkList: "Top items",
+        topkCount: "Aantal",
+        queryCount: "Aantal zoekopdrachten",
+        queryResult: "Zoekresultaat",
+        addedSuccessfully: "Item succesvol toegevoegd",
+        deletedSuccessfully: "Item succesvol verwijderd",
+        quantile: "Kwantiel",
+        quantileResult: "Resultaat",
+        noItems: "Geen items om weer te geven",
+        resetConfirm: "Alle gegevens in deze T-Digest resetten?"
+      },
+      vectorset: {
+        info: "Info",
+        elements: "Elementen",
+        similarity: "Gelijkeniszoekopdracht",
+        searchByElement: "Zoeken op element",
+        searchByVector: "Zoeken op vector",
+        vectorValues: "Vectorwaarden",
+        element: "Element",
+        score: "Score",
+        count: "Aantal",
+        addElement: "Element toevoegen",
+        attributes: "Attributen",
+        noAttributes: "Geen attributen",
+        dimensions: "Dimensies",
+        removeConfirm: "Dit element verwijderen uit de VectorSet?",
+        noElements: "Geen elementen",
       }
     },
     treeControls: {
@@ -692,7 +744,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom filter",
+    cuckoo: "Cuckoo filter",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

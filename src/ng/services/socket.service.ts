@@ -6,7 +6,8 @@ import { OverlayService } from './overlay.service';
 import { I18nService } from './i18n.service';
 import { NotificationService } from './notification.service';
 
-declare const io: any;
+import { io } from 'socket.io-client';
+declare const P3XR_DEV_MODE: boolean;
 
 /**
  * Angular Socket.IO service — standalone, no AngularJS dependency.
@@ -56,7 +57,7 @@ export class SocketService {
             reconnectionDelayMax: 5000,
         };
 
-        if ((globalThis as any).p3xrDevMode === true) {
+        if (typeof P3XR_DEV_MODE !== 'undefined' && P3XR_DEV_MODE) {
             ioOptions.transports = ['websocket'];
         }
 
@@ -66,7 +67,7 @@ export class SocketService {
             ioOptions.auth = { token: authToken };
         }
 
-        this.ioClient = io.connect(this.state.apiHost, ioOptions);
+        this.ioClient = io(this.state.apiHost, ioOptions);
 
 
         this.ioClient.on('connect', async () => {

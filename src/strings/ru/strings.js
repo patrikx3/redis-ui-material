@@ -468,14 +468,31 @@ const strings = {
         index: "Индекс",
         hashKey: "Хэш",
         score: "Очки",
-        value: "Значение"
+        value: "Значение",
+        errorRate: "Частота ошибок",
+        capacity: "Ёмкость",
+        topk: "Top K",
+        width: "Ширина",
+        depth: "Глубина",
+        decay: "Затухание",
+        compression: "Сжатие",
+        increment: "Инкремент",
+        item: "Элемент",
+        vectorValues: "Значения вектора (через запятую)",
+        element: "Имя элемента",
       },
       error: {
         streamTimestamp: "Временная отметка обязательна, либо в формате Redis либо как *",
         key: "Ключ должен иметь длинну минимум одного символа",
         hashKey: "Стол хэшей ключей должен иметь длинну минимум одного символа",
         score: "Очки сортировки набора обязательны",
-        value: "Значение обязательно"
+        value: "Значение обязательно",
+        errorRate: "Частота ошибок должна быть от 0 до 1 (напр. 0.01)",
+        capacity: "Ёмкость должна быть положительным целым числом",
+        topk: "Top K должен быть положительным целым числом",
+        width: "Ширина должна быть положительным целым числом",
+        depth: "Глубина должна быть положительным целым числом",
+        item: "Элемент обязателен"
       }
     },
     main: {
@@ -645,6 +662,41 @@ const strings = {
         mrangeFilter: "Фильтр меток",
         bulkMode: "Массовая генерация",
         mrangeHint: "напр. sensor=temp"
+      },
+      probabilistic: {
+        info: "Информация",
+        addItem: "Добавить элемент",
+        checkItem: "Проверить элемент",
+        item: "Элемент",
+        exists: "Существует",
+        doesNotExist: "Не существует",
+        topkList: "Лучшие элементы",
+        topkCount: "Количество",
+        queryCount: "Количество запросов",
+        queryResult: "Результат запроса",
+        addedSuccessfully: "Элемент успешно добавлен",
+        deletedSuccessfully: "Элемент успешно удалён",
+        quantile: "Квантиль",
+        quantileResult: "Результат",
+        noItems: "Нет элементов для отображения",
+        resetConfirm: "Сбросить все данные в этом T-Digest?"
+      },
+      vectorset: {
+        info: "Информация",
+        elements: "Элементы",
+        similarity: "Поиск по сходству",
+        searchByElement: "Поиск по элементу",
+        searchByVector: "Поиск по вектору",
+        vectorValues: "Значения вектора",
+        element: "Элемент",
+        score: "Оценка",
+        count: "Количество",
+        addElement: "Добавить элемент",
+        attributes: "Атрибуты",
+        noAttributes: "Нет атрибутов",
+        dimensions: "Размерности",
+        removeConfirm: "Удалить этот элемент из VectorSet?",
+        noElements: "Нет элементов",
       }
     },
     treeControls: {
@@ -694,7 +746,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom фильтр",
+    cuckoo: "Cuckoo фильтр",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

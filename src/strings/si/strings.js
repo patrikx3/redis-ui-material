@@ -468,14 +468,31 @@ const strings = {
         index: "දර්ශකය",
         hashKey: "Hash යතුර",
         score: "ලකුණු",
-        value: "අගය"
+        value: "අගය",
+        errorRate: "දෝෂ අනුපාතය",
+        capacity: "ධාරිතාව",
+        topk: "Top K",
+        width: "පළල",
+        depth: "ගැඹුර",
+        decay: "ක්ෂය",
+        compression: "සම්පීඩනය",
+        increment: "වර්ධකය",
+        item: "අයිතමය",
+        vectorValues: "දෛශික අගයන් (කොමාවෙන් වෙන් කළ)",
+        element: "මූලද්\u200dරව්\u200dය නම",
       },
       error: {
         streamTimestamp: "කාල මුද්\u200dරාව අවශ්\u200dයයි, Redis ආකෘතිය හෝ * ලෙස",
         key: "යතුර අවම වශයෙන් එක් අක්ෂරයක් විය යුතුය",
         hashKey: "hash වගු යතුර අවම වශයෙන් එක් අක්ෂරයක් විය යුතුය",
         score: "වර්ග කළ කට්ටලයේ ලකුණු අවශ්\u200dයයි",
-        value: "අගය අවශ්\u200dයයි"
+        value: "අගය අවශ්\u200dයයි",
+        errorRate: "දෝෂ අනුපාතය 0 සහ 1 අතර විය යුතුය (උදා. 0.01)",
+        capacity: "ධාරිතාව ධන පූර්ණ සංඛ්\u200dයාවක් විය යුතුය",
+        topk: "Top K ධන පූර්ණ සංඛ්\u200dයාවක් විය යුතුය",
+        width: "පළල ධන පූර්ණ සංඛ්\u200dයාවක් විය යුතුය",
+        depth: "ගැඹුර ධන පූර්ණ සංඛ්\u200dයාවක් විය යුතුය",
+        item: "අයිතමය අවශ්\u200dයයි"
       }
     },
     main: {
@@ -645,6 +662,41 @@ const strings = {
         mrangeHint: "උදා. sensor=temp",
         timestamp: "කාල මුද්\u200dරාව",
         value: "අගය"
+      },
+      probabilistic: {
+        info: "තොරතුරු",
+        addItem: "අයිතමය එක් කරන්න",
+        checkItem: "අයිතමය පරීක්ෂා කරන්න",
+        item: "අයිතමය",
+        exists: "පවතී",
+        doesNotExist: "නොපවතී",
+        topkList: "ප්\u200dරමුඛ අයිතම",
+        topkCount: "ගණන",
+        queryCount: "විමසුම් ගණන",
+        queryResult: "විමසුම් ප්\u200dරතිඵලය",
+        addedSuccessfully: "අයිතමය සාර්ථකව එක් කරන ලදි",
+        deletedSuccessfully: "අයිතමය සාර්ථකව මකා දමන ලදි",
+        quantile: "ප්\u200dරමාණාංකය",
+        quantileResult: "ප්\u200dරතිඵලය",
+        noItems: "පෙන්වීමට අයිතම නැත",
+        resetConfirm: "මෙම T-Digest හි සියලුම දත්ත යළි සකසන්නද?"
+      },
+      vectorset: {
+        info: "තොරතුරු",
+        elements: "මූලද්\u200dරව්\u200dය",
+        similarity: "සමානතා සෙවීම",
+        searchByElement: "මූලද්\u200dරව්\u200dය අනුව සොයන්න",
+        searchByVector: "දෛශිකය අනුව සොයන්න",
+        vectorValues: "දෛශික අගයන්",
+        element: "මූලද්\u200dරව්\u200dය",
+        score: "ලකුණු",
+        count: "ගණන",
+        addElement: "මූලද්\u200dරව්\u200dය එක් කරන්න",
+        attributes: "ගුණාංග",
+        noAttributes: "ගුණාංග නැත",
+        dimensions: "මාන",
+        removeConfirm: "මෙම මූලද්\u200dරව්\u200dය VectorSet වෙතින් ඉවත් කරන්නද?",
+        noElements: "මූලද්\u200dරව්\u200dය නැත",
       }
     },
     treeControls: {
@@ -694,7 +746,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom පෙරහන",
+    cuckoo: "Cuckoo පෙරහන",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

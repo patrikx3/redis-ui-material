@@ -466,14 +466,31 @@ const strings = {
         index: "Indeks",
         hashKey: "Räsivõti",
         score: "Skoor",
-        value: "Väärtus"
+        value: "Väärtus",
+        errorRate: "Veamäär",
+        capacity: "Mahtuvus",
+        topk: "Top K",
+        width: "Laius",
+        depth: "Sügavus",
+        decay: "Kadu",
+        compression: "Tihendamine",
+        increment: "Kasv",
+        item: "Element",
+        vectorValues: "Vektori väärtused (komaga eraldatud)",
+        element: "Elemendi nimi",
       },
       error: {
         streamTimestamp: "Ajatempel on nõutav kas vormingus Redis või kujul *",
         key: "Võti on vähemalt üks märk",
         hashKey: "Räsitabeli võti koosneb vähemalt ühest tähemärgist",
         score: "Nõutav on sorteeritud komplekti punktisumma",
-        value: "Väärtus on nõutav"
+        value: "Väärtus on nõutav",
+        errorRate: "Veamäär peab olema vahemikus 0 kuni 1 (nt. 0.01)",
+        capacity: "Mahtuvus peab olema positiivne täisarv",
+        topk: "Top K peab olema positiivne täisarv",
+        width: "Laius peab olema positiivne täisarv",
+        depth: "Sügavus peab olema positiivne täisarv",
+        item: "Element on nõutav"
       }
     },
     main: {
@@ -643,6 +660,41 @@ const strings = {
         mrangeFilter: "Siltide filter",
         bulkMode: "Hulgi genereerimine",
         mrangeHint: "nt. sensor=temp"
+      },
+      probabilistic: {
+        info: "Teave",
+        addItem: "Lisa element",
+        checkItem: "Kontrolli elementi",
+        item: "Element",
+        exists: "Eksisteerib",
+        doesNotExist: "Ei eksisteeri",
+        topkList: "Populaarseimad elemendid",
+        topkCount: "Arv",
+        queryCount: "Päringute arv",
+        queryResult: "Päringu tulemus",
+        addedSuccessfully: "Element lisati edukalt",
+        deletedSuccessfully: "Element kustutati edukalt",
+        quantile: "Kvantiil",
+        quantileResult: "Tulemus",
+        noItems: "Elemente pole kuvamiseks",
+        resetConfirm: "Lähtestada kõik andmed selles T-Digest-is?",
+      },
+      vectorset: {
+        info: "Teave",
+        elements: "Elemendid",
+        similarity: "Sarnasuse otsing",
+        searchByElement: "Otsi elemendi järgi",
+        searchByVector: "Otsi vektori järgi",
+        vectorValues: "Vektori väärtused",
+        element: "Element",
+        score: "Skoor",
+        count: "Arv",
+        addElement: "Lisa element",
+        attributes: "Atribuudid",
+        noAttributes: "Atribuute pole",
+        dimensions: "Mõõtmed",
+        removeConfirm: "Eemaldada see element VectorSet-ist?",
+        noElements: "Elemente pole",
       }
     },
     treeControls: {
@@ -692,7 +744,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom filter",
+    cuckoo: "Cuckoo filter",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

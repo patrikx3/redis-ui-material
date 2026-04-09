@@ -466,14 +466,31 @@ const strings = {
         index: "Паказальнік",
         hashKey: "Хэш ключ",
         score: "Ацэнка",
-        value: "Каштоўнасць"
+        value: "Каштоўнасць",
+        errorRate: "Узровень памылкі",
+        capacity: "Ёмістасць",
+        topk: "Top K",
+        width: "Шырыня",
+        depth: "Глыбіня",
+        decay: "Згасанне",
+        compression: "Сціск",
+        increment: "Прырашчэнне",
+        item: "Элемент",
+        vectorValues: "Значэнні вектара (праз коску)",
+        element: "Назва элемента",
       },
       error: {
         streamTimestamp: "Патрабуецца пазнака часу ў фармаце Redis або ў выглядзе *",
         key: "Ключ - гэта хаця б адзін знак",
         hashKey: "Ключ хэш-табліцы складаецца як мінімум з аднаго сімвала",
         score: "Патрабуецца адсартаваны бал",
-        value: "Значэнне абавязковае"
+        value: "Значэнне абавязковае",
+        errorRate: "Узровень памылкі павінен быць ад 0 да 1 (напр. 0.01)",
+        capacity: "Ёмістасць павінна быць дадатным цэлым лікам",
+        topk: "Top K павінен быць дадатным цэлым лікам",
+        width: "Шырыня павінна быць дадатным цэлым лікам",
+        depth: "Глыбіня павінна быць дадатным цэлым лікам",
+        item: "Элемент абавязковы"
       }
     },
     main: {
@@ -643,6 +660,41 @@ const strings = {
         mrangeFilter: "Фільтр пазнак",
         bulkMode: "Масавая генерацыя",
         mrangeHint: "напр. sensor=temp"
+      },
+      probabilistic: {
+        info: "Інфармацыя",
+        addItem: "Дадаць элемент",
+        checkItem: "Праверыць элемент",
+        item: "Элемент",
+        exists: "Існуе",
+        doesNotExist: "Не існуе",
+        topkList: "Верхнія элементы",
+        topkCount: "Колькасць",
+        queryCount: "Колькасць запытаў",
+        queryResult: "Вынік запыту",
+        addedSuccessfully: "Элемент паспяхова дададзены",
+        deletedSuccessfully: "Элемент паспяхова выдалены",
+        quantile: "Квантыль",
+        quantileResult: "Вынік",
+        noItems: "Няма элементаў для адлюстравання",
+        resetConfirm: "Скінуць усе даныя ў гэтым T-Digest?",
+      },
+      vectorset: {
+        info: "Інфармацыя",
+        elements: "Элементы",
+        similarity: "Пошук падабенства",
+        searchByElement: "Пошук па элеменце",
+        searchByVector: "Пошук па вектары",
+        vectorValues: "Значэнні вектара",
+        element: "Элемент",
+        score: "Бал",
+        count: "Колькасць",
+        addElement: "Дадаць элемент",
+        attributes: "Атрыбуты",
+        noAttributes: "Няма атрыбутаў",
+        dimensions: "Вымярэнні",
+        removeConfirm: "Выдаліць гэты элемент з VectorSet?",
+        noElements: "Няма элементаў",
       }
     },
     treeControls: {
@@ -692,7 +744,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom фільтр",
+    cuckoo: "Cuckoo фільтр",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

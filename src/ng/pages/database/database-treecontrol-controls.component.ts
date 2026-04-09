@@ -1,4 +1,4 @@
-import { Component, Input, Inject, OnInit, OnDestroy, NgZone, ElementRef, ChangeDetectorRef, ChangeDetectionStrategy, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, Input, Inject, OnInit, OnDestroy, NgZone, ElementRef, ChangeDetectorRef, ChangeDetectionStrategy, CUSTOM_ELEMENTS_SCHEMA, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -19,8 +19,6 @@ import { RedisStateService } from '../../services/redis-state.service';
 import { SettingsService } from '../../services/settings.service';
 import { OverlayService } from '../../services/overlay.service';
 
-require('./database-treecontrol-controls.component.scss');
-
 @Component({
     selector: 'p3xr-database-treecontrol-controls',
     standalone: true,
@@ -35,6 +33,8 @@ require('./database-treecontrol-controls.component.scss');
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     templateUrl: './database-treecontrol-controls.component.html',
+    styleUrls: ['./database-treecontrol-controls.component.scss'],
+    encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DatabaseTreecontrolControlsComponent implements OnInit, OnDestroy {

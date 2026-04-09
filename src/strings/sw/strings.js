@@ -468,14 +468,31 @@ const strings = {
         index: "Faharasa",
         hashKey: "Ufunguo wa Hash",
         score: "Alama",
-        value: "Thamani"
+        value: "Thamani",
+        errorRate: "Kiwango cha makosa",
+        capacity: "Uwezo",
+        topk: "Top K",
+        width: "Upana",
+        depth: "Kina",
+        decay: "Kupungua",
+        compression: "Ubanaji",
+        increment: "Ongezeko",
+        item: "Kipengee",
+        vectorValues: "Thamani za vekta (zimetenganishwa kwa koma)",
+        element: "Jina la kipengee",
       },
       error: {
         streamTimestamp: "Muhuri wa wakati unahitajika, ama muundo wa Redis au kama *",
         key: "Ufunguo ni, angalau, herufi moja",
         hashKey: "Ufunguo wa jedwali la hash ni angalau herufi moja",
         score: "Alama ya seti iliyopangwa inahitajika",
-        value: "Thamani inahitajika"
+        value: "Thamani inahitajika",
+        errorRate: "Kiwango cha makosa lazima kiwe kati ya 0 na 1 (mf. 0.01)",
+        capacity: "Uwezo lazima uwe nambari kamili chanya",
+        topk: "Top K lazima iwe nambari kamili chanya",
+        width: "Upana lazima uwe nambari kamili chanya",
+        depth: "Kina lazima kiwe nambari kamili chanya",
+        item: "Kipengee kinahitajika"
       }
     },
     main: {
@@ -645,6 +662,41 @@ const strings = {
         mrangeFilter: "Kichujio cha lebo",
         bulkMode: "Uzalishaji wa wingi",
         mrangeHint: "mf. sensor=temp"
+      },
+      probabilistic: {
+        info: "Taarifa",
+        addItem: "Ongeza Kipengee",
+        checkItem: "Angalia Kipengee",
+        item: "Kipengee",
+        exists: "Ipo",
+        doesNotExist: "Haipo",
+        topkList: "Vipengee Bora",
+        topkCount: "Hesabu",
+        queryCount: "Hesabu ya Swali",
+        queryResult: "Matokeo ya Swali",
+        addedSuccessfully: "Kipengee kimeongezwa kwa mafanikio",
+        deletedSuccessfully: "Kipengee kimefutwa kwa mafanikio",
+        quantile: "Quantile",
+        quantileResult: "Matokeo",
+        noItems: "Hakuna vipengee vya kuonyesha",
+        resetConfirm: "Weka upya data zote katika T-Digest hii?"
+      },
+      vectorset: {
+        info: "Taarifa",
+        elements: "Vipengee",
+        similarity: "Utafutaji wa Kufanana",
+        searchByElement: "Tafuta kwa kipengee",
+        searchByVector: "Tafuta kwa vekta",
+        vectorValues: "Thamani za vekta",
+        element: "Kipengee",
+        score: "Alama",
+        count: "Hesabu",
+        addElement: "Ongeza Kipengee",
+        attributes: "Sifa",
+        noAttributes: "Hakuna sifa",
+        dimensions: "Vipimo",
+        removeConfirm: "Ondoa kipengee hiki kutoka VectorSet?",
+        noElements: "Hakuna vipengee",
       }
     },
     treeControls: {
@@ -694,7 +746,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom kichujio",
+    cuckoo: "Cuckoo kichujio",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

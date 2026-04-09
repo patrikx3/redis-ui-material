@@ -466,14 +466,31 @@ const strings = {
         index: "សន្ទស្សន៍",
         hashKey: "គ្រាប់ចុចហាស",
         score: "ពិន្ទុ",
-        value: "តម្លៃ"
+        value: "តម្លៃ",
+        errorRate: "អត្រាកំហុស",
+        capacity: "សមត្ថភាព",
+        topk: "Top K",
+        width: "ទទឹង",
+        depth: "ជម្រៅ",
+        decay: "ការរលត់",
+        compression: "ការបង្ហាប់",
+        increment: "ការកើនឡើង",
+        item: "ធាតុ",
+        vectorValues: "Vector values (comma-separated)",
+        element: "Element name",
       },
       error: {
         streamTimestamp: "ត្រាពេលវេលាត្រូវបានទាមទារ ទាំងទម្រង់ Redis ឬជា *",
         key: "គន្លឹះគឺយ៉ាងហោចណាស់តួអក្សរមួយ។",
         hashKey: "គ្រាប់ចុចតារាង hash គឺយ៉ាងហោចណាស់មួយតួអក្សរ",
         score: "ពិន្ទុដែលបានតម្រៀបត្រូវបានទាមទារ",
-        value: "តម្លៃត្រូវបានទាមទារ"
+        value: "តម្លៃត្រូវបានទាមទារ",
+        errorRate: "អត្រាកំហុសត្រូវតែស្ថិតចន្លោះ 0 និង 1 (ឧទា. 0.01)",
+        capacity: "សមត្ថភាពត្រូវតែជាចំនួនគត់វិជ្ជមាន",
+        topk: "Top K ត្រូវតែជាចំនួនគត់វិជ្ជមាន",
+        width: "ទទឹងត្រូវតែជាចំនួនគត់វិជ្ជមាន",
+        depth: "ជម្រៅត្រូវតែជាចំនួនគត់វិជ្ជមាន",
+        item: "ធាតុត្រូវបានទាមទារ"
       }
     },
     main: {
@@ -643,6 +660,41 @@ const strings = {
         mrangeFilter: "\u178f\u1798\u17d2\u179a\u1784\u179f\u17d2\u179b\u17b6\u1780\u179f\u1789\u17d2\u1789\u17b6",
         bulkMode: "បង្កើតច្រើន",
         mrangeHint: "\u17a7\u1791\u17b6. sensor=temp"
+      },
+      probabilistic: {
+        info: "ព័ត៌មាន",
+        addItem: "បន្ថែមធាតុ",
+        checkItem: "ពិនិត្យធាតុ",
+        item: "ធាតុ",
+        exists: "មានdelays",
+        doesNotExist: "មdelays មានdelays",
+        topkList: "ធdelays កំdelays",
+        topkCount: "ចdelays នួន",
+        queryCount: "ចdelays នួន សdelaysួរ",
+        queryResult: "លdelays ផល សdelaysួរ",
+        addedSuccessfully: "ធdelays បdelays នdelays ថdelays មdelays ដdelays យdelays ជdelays គdelays រdelays ប",
+        deletedSuccessfully: "ធdelays បdelays នdelays លdelays បdelays ដdelays យdelays ជdelays គdelays រdelays ប",
+        quantile: "ខdelays្delaysdelays នdelays ធdelays លdelays",
+        quantileResult: "លdelays ផdelays ល",
+        noItems: "គdelays delaysdelays នdelays ធdelays ដdelays ម delays បdelays ីdelays បdelays ង delays ញ",
+        resetConfirm: "កdelays delaysdelays ស delays ទdelays delays ន delays យdelays ទdelays ន delays delaysdelays ន delays ក delays delaysdelays ង delays T-Digest delays delays delays delays?"
+      },
+      vectorset: {
+        info: "Info",
+        elements: "Elements",
+        similarity: "Similarity Search",
+        searchByElement: "Search by element",
+        searchByVector: "Search by vector",
+        vectorValues: "Vector values",
+        element: "Element",
+        score: "Score",
+        count: "Count",
+        addElement: "Add Element",
+        attributes: "Attributes",
+        noAttributes: "No attributes",
+        dimensions: "Dimensions",
+        removeConfirm: "Remove this element from the VectorSet?",
+        noElements: "No elements",
       }
     },
     treeControls: {
@@ -692,7 +744,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom តម្រង",
+    cuckoo: "Cuckoo តម្រង",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

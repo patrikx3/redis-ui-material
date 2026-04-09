@@ -466,14 +466,31 @@ const strings = {
         index: "Indeks",
         hashKey: "Klucz hash",
         score: "Wynik",
-        value: "Wartość"
+        value: "Wartość",
+        errorRate: "Współczynnik błędu",
+        capacity: "Pojemność",
+        topk: "Top K",
+        width: "Szerokość",
+        depth: "Głębokość",
+        decay: "Zanik",
+        compression: "Kompresja",
+        increment: "Przyrost",
+        item: "Element",
+        vectorValues: "Wartości wektora (oddzielone przecinkami)",
+        element: "Nazwa elementu",
       },
       error: {
         streamTimestamp: "Znacznik czasu jest wymagany, w formacie Redis lub jako *",
         key: "Klucz musi mieć co najmniej jeden znak",
         hashKey: "Klucz tabeli hash musi mieć co najmniej jeden znak",
         score: "Wynik zbioru posortowanego jest wymagany",
-        value: "Wartość jest wymagana"
+        value: "Wartość jest wymagana",
+        errorRate: "Współczynnik błędu musi wynosić od 0 do 1 (np. 0.01)",
+        capacity: "Pojemność musi być dodatnią liczbą całkowitą",
+        topk: "Top K musi być dodatnią liczbą całkowitą",
+        width: "Szerokość musi być dodatnią liczbą całkowitą",
+        depth: "Głębokość musi być dodatnią liczbą całkowitą",
+        item: "Element jest wymagany"
       }
     },
     main: {
@@ -643,6 +660,41 @@ const strings = {
         mrangeFilter: "Filtr etykiet",
         bulkMode: "Generowanie masowe",
         mrangeHint: "np. sensor=temp"
+      },
+      probabilistic: {
+        info: "Informacje",
+        addItem: "Dodaj element",
+        checkItem: "Sprawdź element",
+        item: "Element",
+        exists: "Istnieje",
+        doesNotExist: "Nie istnieje",
+        topkList: "Najczęstsze elementy",
+        topkCount: "Liczba",
+        queryCount: "Liczba zapytań",
+        queryResult: "Wynik zapytania",
+        addedSuccessfully: "Element dodany pomyślnie",
+        deletedSuccessfully: "Element usunięty pomyślnie",
+        quantile: "Kwantyl",
+        quantileResult: "Wynik",
+        noItems: "Brak elementów do wyświetlenia",
+        resetConfirm: "Zresetować wszystkie dane w tym T-Digest?"
+      },
+      vectorset: {
+        info: "Informacje",
+        elements: "Elementy",
+        similarity: "Wyszukiwanie podobieństwa",
+        searchByElement: "Szukaj po elemencie",
+        searchByVector: "Szukaj po wektorze",
+        vectorValues: "Wartości wektora",
+        element: "Element",
+        score: "Wynik",
+        count: "Liczba",
+        addElement: "Dodaj element",
+        attributes: "Atrybuty",
+        noAttributes: "Brak atrybutów",
+        dimensions: "Wymiary",
+        removeConfirm: "Usunąć ten element z VectorSet?",
+        noElements: "Brak elementów",
       }
     },
     treeControls: {
@@ -692,7 +744,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom filtr",
+    cuckoo: "Cuckoo filtr",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

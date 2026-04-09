@@ -466,14 +466,31 @@ const strings = {
         index: "Индекс",
         hashKey: "Хэш кілті",
         score: "Ұпай",
-        value: "Мән"
+        value: "Мән",
+        errorRate: "Қате деңгейі",
+        capacity: "Сыйымділік",
+        topk: "Top K",
+        width: "Ені",
+        depth: "Тереңдігі",
+        decay: "Ыдырау",
+        compression: "Сығымдау",
+        increment: "Өсім",
+        item: "Элемент",
+        vectorValues: "Вектор мәндері (үтірмен бөлінген)",
+        element: "Элемент атауы",
       },
       error: {
         streamTimestamp: "Уақыт белгісі қажет, Redis пішімі немесе * ретінде",
         key: "Ең бастысы, кем дегенде бір таңба",
         hashKey: "Хэш кестесінің кілті кемінде бір таңбадан тұрады",
         score: "Сұрыпталған жиынтық ұпай қажет",
-        value: "Мән қажет"
+        value: "Мән қажет",
+        errorRate: "Қате деңгейі 0 мен 1 арасында болуы керек (мыс. 0.01)",
+        capacity: "Сыйымділік оң бүтін сан болуы керек",
+        topk: "Top K оң бүтін сан болуы керек",
+        width: "Ені оң бүтін сан болуы керек",
+        depth: "Тереңдігі оң бүтін сан болуы керек",
+        item: "Элемент қажет"
       }
     },
     main: {
@@ -643,6 +660,41 @@ const strings = {
         mrangeFilter: "\u0411\u0435\u043b\u0433\u0456\u043b\u0435\u0440 \u0441\u04af\u0437\u0433\u0456\u0441\u0456",
         bulkMode: "Жаппай генерация",
         mrangeHint: "\u043c\u044b\u0441. sensor=temp"
+      },
+      probabilistic: {
+        info: "Ақпарат",
+        addItem: "Элемент қосу",
+        checkItem: "Элементті тексеру",
+        item: "Элемент",
+        exists: "Бар",
+        doesNotExist: "Жоқ",
+        topkList: "Үздік элементтер",
+        topkCount: "Саны",
+        queryCount: "Сұраныс саны",
+        queryResult: "Сұраныс нәтижесі",
+        addedSuccessfully: "Элемент сәтті қосылды",
+        deletedSuccessfully: "Элемент сәтті жойылды",
+        quantile: "Квантиль",
+        quantileResult: "Нәтиже",
+        noItems: "Көрсетілетін элементтер жоқ",
+        resetConfirm: "Осы T-Digest ішіндегі барлық деректерді қалпына келтіру керек пе?"
+      },
+      vectorset: {
+        info: "Ақпарат",
+        elements: "Элементтер",
+        similarity: "Ұқсастық іздеу",
+        searchByElement: "Элемент бойынша іздеу",
+        searchByVector: "Вектор бойынша іздеу",
+        vectorValues: "Вектор мәндері",
+        element: "Элемент",
+        score: "Ұпай",
+        count: "Саны",
+        addElement: "Элемент қосу",
+        attributes: "Атрибуттар",
+        noAttributes: "Атрибуттар жоқ",
+        dimensions: "Өлшемдер",
+        removeConfirm: "Бұл элементті VectorSet-тен жою керек пе?",
+        noElements: "Элементтер жоқ",
       }
     },
     treeControls: {
@@ -692,7 +744,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom сүзgі",
+    cuckoo: "Cuckoo сүзgі",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, OnDestroy, NgZone, ChangeDetectorRef, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy, NgZone, ChangeDetectorRef, CUSTOM_ELEMENTS_SCHEMA, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { BreakpointObserver } from '@angular/cdk/layout';
@@ -14,8 +14,7 @@ import { DatabaseTreecontrolControlsComponent } from './database-treecontrol-con
 import { DatabaseTreeComponent } from './database-tree.component';
 import { ConsoleComponent } from '../console/console.component';
 
-require('./database.component.scss');
-const debounce = require('lodash/debounce');
+import { debounce } from 'lodash-es';
 
 @Component({
     selector: 'p3xr-database',
@@ -30,9 +29,11 @@ const debounce = require('lodash/debounce');
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     templateUrl: './database.component.html',
+    styleUrls: ['./database.component.scss'],
     styles: [`
         :host { display: block; }
     `],
+    encapsulation: ViewEncapsulation.None,
 })
 export class DatabaseComponent implements OnInit, OnDestroy {
 

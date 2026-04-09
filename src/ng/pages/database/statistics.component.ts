@@ -6,14 +6,13 @@ import { I18nService } from '../../services/i18n.service';
 import { MainCommandService } from '../../services/main-command.service';
 import { RedisStateService } from '../../services/redis-state.service';
 
-require('./statistics.component.scss');
-
 @Component({
     selector: 'p3xr-database-statistics',
     standalone: true,
     imports: [MatTabsModule],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     templateUrl: './statistics.component.html',
+    styleUrls: ['./statistics.component.scss'],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

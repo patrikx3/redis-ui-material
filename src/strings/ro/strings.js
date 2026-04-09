@@ -466,14 +466,31 @@ const strings = {
         index: "Index",
         hashKey: "Cheie hash",
         score: "Scor",
-        value: "Valoare"
+        value: "Valoare",
+        errorRate: "Rata de eroare",
+        capacity: "Capacitate",
+        topk: "Top K",
+        width: "Latime",
+        depth: "Adancime",
+        decay: "Degradare",
+        compression: "Compresie",
+        increment: "Increment",
+        item: "Element",
+        vectorValues: "Valori vectoriale (separate prin virgulă)",
+        element: "Numele elementului",
       },
       error: {
         streamTimestamp: "Marca temporala este obligatorie, fie in format Redis, fie ca *",
         key: "Cheia are cel putin un caracter",
         hashKey: "Cheia tabelului hash are cel putin un caracter",
         score: "Scorul setului sortat este obligatoriu",
-        value: "Valoarea este obligatorie"
+        value: "Valoarea este obligatorie",
+        errorRate: "Rata de eroare trebuie sa fie intre 0 si 1 (ex. 0.01)",
+        capacity: "Capacitatea trebuie sa fie un numar intreg pozitiv",
+        topk: "Top K trebuie sa fie un numar intreg pozitiv",
+        width: "Latimea trebuie sa fie un numar intreg pozitiv",
+        depth: "Adancimea trebuie sa fie un numar intreg pozitiv",
+        item: "Elementul este obligatoriu"
       }
     },
     main: {
@@ -643,6 +660,41 @@ const strings = {
         mrangeFilter: "Filtru etichete",
         bulkMode: "Generare în masă",
         mrangeHint: "ex. sensor=temp"
+      },
+      probabilistic: {
+        info: "Informatii",
+        addItem: "Adaugare element",
+        checkItem: "Verificare element",
+        item: "Element",
+        exists: "Exista",
+        doesNotExist: "Nu exista",
+        topkList: "Elemente principale",
+        topkCount: "Numar",
+        queryCount: "Numar interogari",
+        queryResult: "Rezultat interogare",
+        addedSuccessfully: "Elementul a fost adaugat cu succes",
+        deletedSuccessfully: "Elementul a fost sters cu succes",
+        quantile: "Cuantila",
+        quantileResult: "Rezultat",
+        noItems: "Nu exista elemente de afisat",
+        resetConfirm: "Resetati toate datele din acest T-Digest?"
+      },
+      vectorset: {
+        info: "Informații",
+        elements: "Elemente",
+        similarity: "Căutare după similaritate",
+        searchByElement: "Căutare după element",
+        searchByVector: "Căutare după vector",
+        vectorValues: "Valori vectoriale",
+        element: "Element",
+        score: "Scor",
+        count: "Număr",
+        addElement: "Adăugare element",
+        attributes: "Atribute",
+        noAttributes: "Fără atribute",
+        dimensions: "Dimensiuni",
+        removeConfirm: "Eliminați acest element din VectorSet?",
+        noElements: "Fără elemente",
       }
     },
     treeControls: {
@@ -692,7 +744,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom filtru",
+    cuckoo: "Cuckoo filtru",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

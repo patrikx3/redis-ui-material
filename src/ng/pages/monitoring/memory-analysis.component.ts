@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, ElementRef, ViewChild, AfterViewInit, NgZone } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, ElementRef, ViewChild, AfterViewInit, NgZone, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,8 +15,7 @@ import { P3xrAccordionComponent } from '../../components/p3xr-accordion.componen
 import { P3xrButtonComponent } from '../../components/p3xr-button.component';
 import { P3xrInputComponent } from '../../components/p3xr-input.component';
 import { RedisStateService } from '../../services/redis-state.service';
-
-require('./memory-analysis.component.scss');
+import humanizeDuration from 'humanize-duration';
 
 @Component({
     selector: 'p3xr-memory-analysis',
@@ -28,6 +27,8 @@ require('./memory-analysis.component.scss');
         P3xrAccordionComponent, P3xrButtonComponent, P3xrInputComponent,
     ],
     templateUrl: './memory-analysis.component.html',
+    styleUrls: ['./memory-analysis.component.scss'],
+    encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MemoryAnalysisComponent implements OnInit, OnDestroy, AfterViewInit {
@@ -147,7 +148,6 @@ export class MemoryAnalysisComponent implements OnInit, OnDestroy, AfterViewInit
     formatTTL(seconds: number): string {
         if (!seconds || seconds <= 0) return '-';
         try {
-            const humanizeDuration = require('humanize-duration');
             const hdOpts = this.settings.getHumanizeDurationOptions();
             return humanizeDuration(seconds * 1000, { ...hdOpts, delimiter: ' ' });
         } catch {

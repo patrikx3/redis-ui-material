@@ -468,14 +468,31 @@ const strings = {
         index: "Δείκτης",
         hashKey: "Κλειδί hash",
         score: "Βαθμολογία",
-        value: "Τιμή"
+        value: "Τιμή",
+        errorRate: "Ποσοστό σφάλματος",
+        capacity: "Χωρητικότητα",
+        topk: "Top K",
+        width: "Πλάτος",
+        depth: "Βάθος",
+        decay: "Φθορά",
+        compression: "Συμπίεση",
+        increment: "Αύξηση",
+        item: "Στοιχείο",
+        vectorValues: "Τιμές διανύσματος (χωρισμένες με κόμμα)",
+        element: "Όνομα στοιχείου",
       },
       error: {
         streamTimestamp: "Η χρονοσήμανση είναι υποχρεωτική, είτε σε μορφή Redis είτε ως *",
         key: "Το κλειδί πρέπει να έχει τουλάχιστον έναν χαρακτήρα",
         hashKey: "Το κλειδί hash πρέπει να έχει τουλάχιστον έναν χαρακτήρα",
         score: "Η βαθμολογία ταξινομημένου συνόλου είναι υποχρεωτική",
-        value: "Η τιμή είναι υποχρεωτική"
+        value: "Η τιμή είναι υποχρεωτική",
+        errorRate: "Το ποσοστό σφάλματος πρέπει να είναι μεταξύ 0 και 1 (π.χ. 0.01)",
+        capacity: "Η χωρητικότητα πρέπει να είναι θετικός ακέραιος",
+        topk: "Το Top K πρέπει να είναι θετικός ακέραιος",
+        width: "Το πλάτος πρέπει να είναι θετικός ακέραιος",
+        depth: "Το βάθος πρέπει να είναι θετικός ακέραιος",
+        item: "Το στοιχείο είναι υποχρεωτικό"
       }
     },
     main: {
@@ -645,6 +662,41 @@ const strings = {
         mrangeFilter: "Φίλτρο ετικετών",
         bulkMode: "Μαζική δημιουργία",
         mrangeHint: "π.χ. sensor=temp"
+      },
+      probabilistic: {
+        info: "Πληροφορίες",
+        addItem: "Προσθήκη στοιχείου",
+        checkItem: "Έλεγχος στοιχείου",
+        item: "Στοιχείο",
+        exists: "Υπάρχει",
+        doesNotExist: "Δεν υπάρχει",
+        topkList: "Κορυφαία στοιχεία",
+        topkCount: "Πλήθος",
+        queryCount: "Πλήθος ερωτημάτων",
+        queryResult: "Αποτέλεσμα ερωτήματος",
+        addedSuccessfully: "Το στοιχείο προστέθηκε επιτυχώς",
+        deletedSuccessfully: "Το στοιχείο διαγράφηκε επιτυχώς",
+        quantile: "Ποσοστημόριο",
+        quantileResult: "Αποτέλεσμα",
+        noItems: "Δεν υπάρχουν στοιχεία για εμφάνιση",
+        resetConfirm: "Επαναφορά όλων των δεδομένων σε αυτό το T-Digest;",
+      },
+      vectorset: {
+        info: "Πληροφορίες",
+        elements: "Στοιχεία",
+        similarity: "Αναζήτηση ομοιότητας",
+        searchByElement: "Αναζήτηση κατά στοιχείο",
+        searchByVector: "Αναζήτηση κατά διάνυσμα",
+        vectorValues: "Τιμές διανύσματος",
+        element: "Στοιχείο",
+        score: "Βαθμολογία",
+        count: "Πλήθος",
+        addElement: "Προσθήκη στοιχείου",
+        attributes: "Χαρακτηριστικά",
+        noAttributes: "Χωρίς χαρακτηριστικά",
+        dimensions: "Διαστάσεις",
+        removeConfirm: "Αφαίρεση αυτού του στοιχείου από το VectorSet;",
+        noElements: "Δεν υπάρχουν στοιχεία",
       }
     },
     treeControls: {
@@ -694,7 +746,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom φίλτρο",
+    cuckoo: "Cuckoo φίλτρο",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

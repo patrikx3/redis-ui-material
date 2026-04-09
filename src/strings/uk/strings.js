@@ -464,14 +464,31 @@ const strings = {
         index: "Індекс",
         hashKey: "Хеш-ключ",
         score: "Оцінка",
-        value: "Значення"
+        value: "Значення",
+        errorRate: "Частота помилок",
+        capacity: "Ємність",
+        topk: "Top K",
+        width: "Ширина",
+        depth: "Глибина",
+        decay: "Згасання",
+        compression: "Стиснення",
+        increment: "Інкремент",
+        item: "Елемент",
+        vectorValues: "Значення вектора (через кому)",
+        element: "Назва елемента",
       },
       error: {
         streamTimestamp: "Мітка часу обов'язкова, у форматі Redis або як *",
         key: "Ключ повинен містити щонайменше один символ",
         hashKey: "Ключ хеш-таблиці повинен містити щонайменше один символ",
         score: "Оцінка впорядкованої множини обов'язкова",
-        value: "Значення обов'язкове"
+        value: "Значення обов'язкове",
+        errorRate: "Частота помилок повинна бути від 0 до 1 (напр. 0.01)",
+        capacity: "Ємність повинна бути додатним цілим числом",
+        topk: "Top K повинен бути додатним цілим числом",
+        width: "Ширина повинна бути додатним цілим числом",
+        depth: "Глибина повинна бути додатним цілим числом",
+        item: "Елемент обов'язковий"
       }
     },
     main: {
@@ -641,6 +658,41 @@ const strings = {
         mrangeFilter: "Фільтр міток",
         bulkMode: "Масова генерація",
         mrangeHint: "напр. sensor=temp"
+      },
+      probabilistic: {
+        info: "Інформація",
+        addItem: "Додати елемент",
+        checkItem: "Перевірити елемент",
+        item: "Елемент",
+        exists: "Існує",
+        doesNotExist: "Не існує",
+        topkList: "Основні елементи",
+        topkCount: "Кількість",
+        queryCount: "Кількість запитів",
+        queryResult: "Результат запиту",
+        addedSuccessfully: "Елемент успішно додано",
+        deletedSuccessfully: "Елемент успішно видалено",
+        quantile: "Квантиль",
+        quantileResult: "Результат",
+        noItems: "Немає елементів для відображення",
+        resetConfirm: "Скинути всі дані в цьому T-Digest?"
+      },
+      vectorset: {
+        info: "Інформація",
+        elements: "Елементи",
+        similarity: "Пошук за подібністю",
+        searchByElement: "Пошук за елементом",
+        searchByVector: "Пошук за вектором",
+        vectorValues: "Значення вектора",
+        element: "Елемент",
+        score: "Оцінка",
+        count: "Кількість",
+        addElement: "Додати елемент",
+        attributes: "Атрибути",
+        noAttributes: "Немає атрибутів",
+        dimensions: "Розмірності",
+        removeConfirm: "Видалити цей елемент з VectorSet?",
+        noElements: "Немає елементів",
       }
     },
     treeControls: {
@@ -690,7 +742,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom фільтр",
+    cuckoo: "Cuckoo фільтр",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

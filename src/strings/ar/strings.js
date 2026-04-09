@@ -466,14 +466,31 @@ const strings = {
         index: "الفهرس",
         hashKey: "مفتاح التجزئة",
         score: "النتيجة",
-        value: "القيمة"
+        value: "القيمة",
+        errorRate: "معدل الخطأ",
+        capacity: "السعة",
+        topk: "Top K",
+        width: "العرض",
+        depth: "العمق",
+        decay: "الاضمحلال",
+        compression: "الضغط",
+        increment: "الزيادة",
+        item: "العنصر",
+        vectorValues: "قيم المتجه (مفصولة بفواصل)",
+        element: "اسم العنصر",
       },
       error: {
         streamTimestamp: "الطابع الزمني مطلوب، إما بتنسيق Redis أو *",
         key: "المفتاح هو، على الأقل، حرف واحد",
         hashKey: "يتكون مفتاح جدول التجزئة من حرف واحد على الأقل",
         score: "مطلوب النتيجة المحددة التي تم فرزها",
-        value: "القيمة مطلوبة"
+        value: "القيمة مطلوبة",
+        errorRate: "يجب أن يكون معدل الخطأ بين 0 و1 (مثال 0.01)",
+        capacity: "يجب أن تكون السعة عددًا صحيحًا موجبًا",
+        topk: "يجب أن يكون Top K عددًا صحيحًا موجبًا",
+        width: "يجب أن يكون العرض عددًا صحيحًا موجبًا",
+        depth: "يجب أن يكون العمق عددًا صحيحًا موجبًا",
+        item: "العنصر مطلوب"
       }
     },
     main: {
@@ -643,6 +660,41 @@ const strings = {
         mrangeFilter: "فلتر التسميات",
         bulkMode: "إنشاء مجمع",
         mrangeHint: "مثال sensor=temp"
+      },
+      probabilistic: {
+        info: "معلومات",
+        addItem: "إضافة عنصر",
+        checkItem: "فحص عنصر",
+        item: "عنصر",
+        exists: "موجود",
+        doesNotExist: "غير موجود",
+        topkList: "أعلى العناصر",
+        topkCount: "العدد",
+        queryCount: "عدد الاستعلام",
+        queryResult: "نتيجة الاستعلام",
+        addedSuccessfully: "تمت إضافة العنصر بنجاح",
+        deletedSuccessfully: "تم حذف العنصر بنجاح",
+        quantile: "الكمية",
+        quantileResult: "النتيجة",
+        noItems: "لا توجد عناصر للعرض",
+        resetConfirm: "إعادة تعيين جميع البيانات في هذا T-Digest؟",
+      },
+      vectorset: {
+        info: "معلومات",
+        elements: "العناصر",
+        similarity: "بحث التشابه",
+        searchByElement: "البحث حسب العنصر",
+        searchByVector: "البحث حسب المتجه",
+        vectorValues: "قيم المتجه",
+        element: "عنصر",
+        score: "النتيجة",
+        count: "العدد",
+        addElement: "إضافة عنصر",
+        attributes: "السمات",
+        noAttributes: "لا توجد سمات",
+        dimensions: "الأبعاد",
+        removeConfirm: "هل تريد إزالة هذا العنصر من VectorSet؟",
+        noElements: "لا توجد عناصر",
       }
     },
     treeControls: {
@@ -692,7 +744,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom مرشح",
+    cuckoo: "Cuckoo مرشح",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

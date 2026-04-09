@@ -1,8 +1,7 @@
 import { create } from 'zustand'
-import merge from 'lodash/merge'
+import { merge } from 'lodash-es'
 import { getPersistentItem } from './electron-bridge'
-// @ts-ignore
-import { detectLanguageFromLocale } from '../../core/detect-language.js'
+import { detectLanguageFromLocale } from '../../core/detect-language'
 
 // Vite glob import: lazily load all translation files
 const translationModules = import.meta.glob('../../strings/*/strings.js')

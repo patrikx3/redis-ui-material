@@ -466,14 +466,31 @@ const strings = {
         index: "Hakemisto",
         hashKey: "Hash-avain",
         score: "Pisteet",
-        value: "Arvo"
+        value: "Arvo",
+        errorRate: "Virhesuhde",
+        capacity: "Kapasiteetti",
+        topk: "Top K",
+        width: "Leveys",
+        depth: "Syvyys",
+        decay: "Vaimeneminen",
+        compression: "Pakkaus",
+        increment: "Kasvu",
+        item: "Kohde",
+        vectorValues: "Vektoriarvot (pilkuilla erotetut)",
+        element: "Elementin nimi",
       },
       error: {
         streamTimestamp: "Aikaleima vaaditaan joko muodossa Redis tai muodossa *",
         key: "Avain on ainakin yksi merkki",
         hashKey: "Hajautustaulukon avain on vähintään yksi merkki",
         score: "Lajiteltu pistemäärä vaaditaan",
-        value: "Arvo vaaditaan"
+        value: "Arvo vaaditaan",
+        errorRate: "Virhesuhteen on oltava välillä 0 ja 1 (esim. 0.01)",
+        capacity: "Kapasiteetin on oltava positiivinen kokonaisluku",
+        topk: "Top K:n on oltava positiivinen kokonaisluku",
+        width: "Leveyden on oltava positiivinen kokonaisluku",
+        depth: "Syvyyden on oltava positiivinen kokonaisluku",
+        item: "Kohde vaaditaan"
       }
     },
     main: {
@@ -643,6 +660,41 @@ const strings = {
         mrangeFilter: "Tunnistesuodatin",
         bulkMode: "Massagenerointi",
         mrangeHint: "esim. sensor=temp"
+      },
+      probabilistic: {
+        info: "Tiedot",
+        addItem: "Lisää kohde",
+        checkItem: "Tarkista kohde",
+        item: "Kohde",
+        exists: "On olemassa",
+        doesNotExist: "Ei ole olemassa",
+        topkList: "Suosituimmat kohteet",
+        topkCount: "Lukumäärä",
+        queryCount: "Kyselyiden määrä",
+        queryResult: "Kyselyn tulos",
+        addedSuccessfully: "Kohde lisätty onnistuneesti",
+        deletedSuccessfully: "Kohde poistettu onnistuneesti",
+        quantile: "Kvantiili",
+        quantileResult: "Tulos",
+        noItems: "Ei kohteita näytettäväksi",
+        resetConfirm: "Nollataanko kaikki tiedot tässä T-Digest-rakenteessa?",
+      },
+      vectorset: {
+        info: "Tiedot",
+        elements: "Elementit",
+        similarity: "Samankaltaisuushaku",
+        searchByElement: "Hae elementin mukaan",
+        searchByVector: "Hae vektorin mukaan",
+        vectorValues: "Vektoriarvot",
+        element: "Elementti",
+        score: "Pistemäärä",
+        count: "Lukumäärä",
+        addElement: "Lisää elementti",
+        attributes: "Attribuutit",
+        noAttributes: "Ei attribuutteja",
+        dimensions: "Ulottuvuudet",
+        removeConfirm: "Poistetaanko tämä elementti VectorSet-rakenteesta?",
+        noElements: "Ei elementtejä",
       }
     },
     treeControls: {
@@ -692,7 +744,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom suodatin",
+    cuckoo: "Cuckoo suodatin",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

@@ -466,14 +466,31 @@ const strings = {
         index: "Kazalo",
         hashKey: "Hash ključ",
         score: "rezultat",
-        value: "Vrednost"
+        value: "Vrednost",
+        errorRate: "Stopnja napak",
+        capacity: "Zmogljivost",
+        topk: "Top K",
+        width: "Širina",
+        depth: "Globina",
+        decay: "Razpad",
+        compression: "Stiskanje",
+        increment: "Prirastek",
+        item: "Element",
+        vectorValues: "Vektorske vrednosti (ločene z vejico)",
+        element: "Ime elementa",
       },
       error: {
         streamTimestamp: "Potreben je časovni žig v obliki Redis ali kot *",
         key: "Ključ je vsaj en znak",
         hashKey: "Ključ razpršilne tabele je vsaj en znak",
         score: "Potreben je razvrščen rezultat niza",
-        value: "Vrednost je obvezna"
+        value: "Vrednost je obvezna",
+        errorRate: "Stopnja napak mora biti med 0 in 1 (npr. 0.01)",
+        capacity: "Zmogljivost mora biti pozitivno celo število",
+        topk: "Top K mora biti pozitivno celo število",
+        width: "Širina mora biti pozitivno celo število",
+        depth: "Globina mora biti pozitivno celo število",
+        item: "Element je obvezen"
       }
     },
     main: {
@@ -643,6 +660,41 @@ const strings = {
         mrangeFilter: "Filter oznak",
         bulkMode: "Masovno generiranje",
         mrangeHint: "npr. sensor=temp"
+      },
+      probabilistic: {
+        info: "Informacije",
+        addItem: "Dodaj element",
+        checkItem: "Preveri element",
+        item: "Element",
+        exists: "Obstaja",
+        doesNotExist: "Ne obstaja",
+        topkList: "Glavni elementi",
+        topkCount: "Število",
+        queryCount: "Število poizvedb",
+        queryResult: "Rezultat poizvedbe",
+        addedSuccessfully: "Element uspešno dodan",
+        deletedSuccessfully: "Element uspešno izbrisan",
+        quantile: "Kvantil",
+        quantileResult: "Rezultat",
+        noItems: "Ni elementov za prikaz",
+        resetConfirm: "Ponastaviti vse podatke v tem T-Digest?"
+      },
+      vectorset: {
+        info: "Informacije",
+        elements: "Elementi",
+        similarity: "Iskanje po podobnosti",
+        searchByElement: "Iskanje po elementu",
+        searchByVector: "Iskanje po vektorju",
+        vectorValues: "Vektorske vrednosti",
+        element: "Element",
+        score: "Rezultat",
+        count: "Število",
+        addElement: "Dodaj element",
+        attributes: "Atributi",
+        noAttributes: "Brez atributov",
+        dimensions: "Dimenzije",
+        removeConfirm: "Odstraniti ta element iz VectorSet?",
+        noElements: "Brez elementov",
       }
     },
     treeControls: {
@@ -692,7 +744,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom filter",
+    cuckoo: "Cuckoo filter",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

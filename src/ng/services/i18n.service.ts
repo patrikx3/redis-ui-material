@@ -1,8 +1,8 @@
 import { Injectable, signal, computed, effect } from '@angular/core';
 
-const merge = require('lodash/merge');
-const { getTranslations, loadTranslation: loadTranslationChunk } = require('../../core/translation-loader');
-const { detectLanguageFromLocale } = require('../../core/detect-language');
+import { merge } from 'lodash-es';
+import { getTranslations, loadTranslation as loadTranslationChunk } from '../../core/translation-loader';
+import { detectLanguageFromLocale } from '../../core/detect-language';
 
 /**
  * i18n service — Angular-native translation management.

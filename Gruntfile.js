@@ -22,18 +22,16 @@ module.exports = (grunt) => {
 
         try {
 
-            // Build Angular (webpack) and React (vite) in parallel
+            // Build Angular (ng build) and React (vite) in parallel
             await Promise.all([
                 // Angular → dist/
                 gruntUtil.spawn({
                     grunt: grunt,
                     gruntThis: this,
                 }, {
-                    cmd: `${cwd}/node_modules/.bin/webpack${gruntUtil.commandAddon}`,
+                    cmd: `${cwd}/node_modules/.bin/ng${gruntUtil.commandAddon}`,
                     args: [
-                        '--config',
-                        './src/builder/webpack.config.js',
-                        '--mode=production'
+                        'build',
                     ]
                 }),
 

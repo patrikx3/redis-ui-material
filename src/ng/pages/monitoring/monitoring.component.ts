@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, ElementRef, ViewChild, AfterViewInit, NgZone } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, ElementRef, ViewChild, AfterViewInit, NgZone, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,8 +15,6 @@ import { P3xrAccordionComponent } from '../../components/p3xr-accordion.componen
 import { P3xrButtonComponent } from '../../components/p3xr-button.component';
 import { RedisStateService } from '../../services/redis-state.service';
 import { MonitoringDataService } from './monitoring-data.service';
-
-require('./monitoring.component.scss');
 
 interface MonitorSnapshot {
     timestamp: number;
@@ -40,6 +38,8 @@ const MAX_HISTORY = 120;
         P3xrButtonComponent,
     ],
     templateUrl: './monitoring.component.html',
+    styleUrls: ['./monitoring.component.scss'],
+    encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
@@ -889,19 +889,7 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
         const uPlotModule = await import('uplot');
         this.uPlot = uPlotModule.default;
 
-        // Import uPlot CSS inline
-        if (!document.getElementById('uplot-css')) {
-            const style = document.createElement('style');
-            style.id = 'uplot-css';
-            try {
-                const cssModule = require('uplot/dist/uPlot.min.css');
-                style.textContent = typeof cssModule === 'string' ? cssModule : '';
-            } catch {
-                // Fallback: minimal uPlot styles
-                style.textContent = '.uplot { font-family: inherit; } .u-legend { display: flex; gap: 12px; padding: 4px 0; font-size: 12px; }';
-            }
-            document.head.appendChild(style);
-        }
+        // uPlot CSS is loaded globally via angular.json styles[]
 
         if (this.history.length >= 2) {
             this.initCharts();

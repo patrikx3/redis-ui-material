@@ -1,0 +1,95 @@
+{
+    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "version": 1,
+    "projects": {
+        "p3x-redis-ui-material": {
+            "projectType": "application",
+            "root": "",
+            "sourceRoot": "src",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:application",
+                    "options": {
+                        "outputPath": {
+                            "base": "dist",
+                            "browser": ""
+                        },
+                        "index": "src/index.html",
+                        "browser": "src/main.ts",
+                        "polyfills": [
+                            "zone.js"
+                        ],
+                        "tsConfig": "tsconfig.app.json",
+                        "styles": [
+                            "node_modules/material-design-icons-iconfont/dist/material-design-icons.css",
+                            "node_modules/@fortawesome/fontawesome-free/css/all.css",
+                            "node_modules/@fontsource/roboto/300.css",
+                            "node_modules/@fontsource/roboto/400.css",
+                            "node_modules/@fontsource/roboto/400-italic.css",
+                            "node_modules/@fontsource/roboto/500.css",
+                            "node_modules/@fontsource/roboto/700.css",
+                            "node_modules/@fontsource/roboto-mono/300.css",
+                            "node_modules/@fontsource/roboto-mono/400.css",
+                            "node_modules/@fontsource/roboto-mono/400-italic.css",
+                            "node_modules/@fontsource/roboto-mono/500.css",
+                            "node_modules/@fontsource/roboto-mono/700.css",
+                            "node_modules/uplot/dist/uPlot.min.css",
+                            "src/scss/index.scss"
+                        ],
+                        "scripts": [],
+                        "baseHref": "/ng/",
+                        "assets": [
+                            {
+                                "glob": "**/*",
+                                "input": "src/public",
+                                "output": "public"
+                            }
+                        ]
+                    },
+                    "configurations": {
+                        "production": {
+                            "outputHashing": "all",
+                            "define": {
+                                "P3XR_API_PORT": "7843",
+                                "P3XR_DEV_MODE": "false"
+                            }
+                        },
+                        "development": {
+                            "optimization": false,
+                            "extractLicenses": false,
+                            "sourceMap": true,
+                            "define": {
+                                "P3XR_API_PORT": "7843",
+                                "P3XR_DEV_MODE": "true"
+                            }
+                        }
+                    },
+                    "defaultConfiguration": "production"
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "configurations": {
+                        "production": {
+                            "buildTarget": "p3x-redis-ui-material:build:production"
+                        },
+                        "development": {
+                            "buildTarget": "p3x-redis-ui-material:build:development"
+                        }
+                    },
+                    "defaultConfiguration": "development",
+                    "options": {
+                        "host": "0.0.0.0",
+                        "port": 8080,
+                        "proxyConfig": "proxy.conf.js",
+                        "headers": {
+                            "Content-Security-Policy": "default-src 'self'; script-src 'self' https://www.googletagmanager.com 'unsafe-inline' 'unsafe-eval'; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' ws: wss: http://localhost:* http://127.0.0.1:* https://www.google-analytics.com https://region1.google-analytics.com; frame-src https://redis.io; object-src 'none'; base-uri 'self'; form-action 'self'"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "cli": {
+      "analytics": false
+    }
+}

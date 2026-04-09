@@ -30,6 +30,7 @@ interface RedisState {
     hasRediSearch: boolean
     hasReJSON: boolean
     hasTimeSeries: boolean
+    hasBloom: boolean
     theme: string | undefined
     redisConnections: Record<string, any>
     keysInfoFetchedAt: number
@@ -61,6 +62,7 @@ export const useRedisStateStore = create<RedisState>((set) => ({
     hasRediSearch: false,
     hasReJSON: false,
     hasTimeSeries: false,
+    hasBloom: false,
     theme: undefined,
     redisConnections: {},
     keysInfoFetchedAt: Date.now(),

@@ -1,0 +1,173 @@
+<div class="p3xr-key-type-content">
+
+    <!-- INFO -->
+    <br />
+    <p3xr-ng-accordion [title]="strings()?.page?.key?.probabilistic?.info || 'Info'" accordionKey="prob-info">
+        <div actions>
+            <p3xr-ng-button
+                (click)="toggleAutoRefresh(); $event.stopPropagation()"
+                [label]="strings()?.label?.autoRefresh || 'Auto'"
+                [mdIcon]="autoRefresh ? 'check_box' : 'check_box_outline_blank'"
+                [breakpoint]="1280">
+            </p3xr-ng-button>
+            @if (!autoRefresh) {
+                <p3xr-ng-button
+                    (click)="refresh(); $event.stopPropagation()"
+                    [label]="strings()?.intention?.refresh || 'Refresh'"
+                    mdIcon="refresh"
+                    [breakpoint]="1280">
+                </p3xr-ng-button>
+            }
+        </div>
+        <div content>
+            <mat-list>
+                @for (item of infoItems; track item.key; let last = $last) {
+                    <mat-list-item>
+                        <div style="display: flex; width: 100%;">
+                            <span class="p3xr-settings-label" style="flex: 1;">{{ item.key }}</span>
+                            <span class="p3xr-settings-value">{{ item.value }}</span>
+                        </div>
+                    </mat-list-item>
+                    @if (!last) { <mat-divider></mat-divider> }
+                }
+            </mat-list>
+        </div>
+    </p3xr-ng-accordion>
+
+    <!-- ACTIONS -->
+    <br />
+    <p3xr-ng-accordion [title]="(p3xrResponse.type === 'topk' ? (strings()?.page?.key?.probabilistic?.topkList || 'Top Items') : (strings()?.page?.key?.probabilistic?.addItem || 'Actions'))" accordionKey="prob-actions">
+        <div content>
+            <div style="padding: 16px;">
+            <div class="p3xr-timeseries-controls">
+                @if (p3xrResponse.type === 'tdigest') {
+                    <mat-form-field class="p3xr-timeseries-field" subscriptSizing="dynamic">
+                        <mat-label>{{ strings()?.form?.key?.field?.value || 'Value' }}</mat-label>
+                        <input matInput type="number" [(ngModel)]="itemInput" (keydown.enter)="addItem()" />
+                    </mat-form-field>
+                } @else {
+                    <mat-form-field class="p3xr-timeseries-field" subscriptSizing="dynamic" style="flex: 1; min-width: 200px;">
+                        <mat-label>{{ strings()?.page?.key?.probabilistic?.item || 'Item' }}</mat-label>
+                        <input matInput [(ngModel)]="itemInput" (keydown.enter)="addItem()" />
+                    </mat-form-field>
+                }
+
+                @if (p3xrResponse.type === 'cms') {
+                    <mat-form-field class="p3xr-timeseries-field" subscriptSizing="dynamic" style="max-width: 120px;">
+                        <mat-label>{{ strings()?.form?.key?.field?.increment || 'Increment' }}</mat-label>
+                        <input matInput type="number" [(ngModel)]="incrementInput" />
+                    </mat-form-field>
+                }
+
+                @if (p3xrResponse.type === 'tdigest') {
+                    <mat-form-field class="p3xr-timeseries-field" subscriptSizing="dynamic" style="max-width: 120px;">
+                        <mat-label>{{ strings()?.page?.key?.probabilistic?.quantile || 'Quantile' }}</mat-label>
+                        <input matInput type="number" step="0.1" [(ngModel)]="quantileInput" (keydown.enter)="queryQuantile()" />
+                    </mat-form-field>
+                }
+
+                @if (!readonly) {
+                    @if (isGtSm) {
+                        <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="addItem()">
+                            <mat-icon>add</mat-icon>
+                            <span>{{ strings()?.intention?.add || 'Add' }}</span>
+                        </button>
+                    } @else {
+                        <button mat-mini-fab class="btn-primary" type="button" (click)="addItem()"
+                                [matTooltip]="strings()?.intention?.add ?? 'Add'" matTooltipPosition="above">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    }
+                }
+
+                @if (p3xrResponse.type === 'bloom' || p3xrResponse.type === 'cuckoo') {
+                    @if (isGtSm) {
+                        <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="checkItem()">
+                            <mat-icon>search</mat-icon>
+                            <span>{{ strings()?.page?.key?.probabilistic?.checkItem || 'Check' }}</span>
+                        </button>
+                    } @else {
+                        <button mat-mini-fab class="btn-primary" type="button" (click)="checkItem()"
+                                [matTooltip]="strings()?.page?.key?.probabilistic?.checkItem ?? 'Check'" matTooltipPosition="above">
+                            <mat-icon>search</mat-icon>
+                        </button>
+                    }
+                }
+
+                @if (p3xrResponse.type === 'cuckoo' && !readonly) {
+                    @if (isGtSm) {
+                        <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="deleteItem()">
+                            <mat-icon>delete</mat-icon>
+                            <span>{{ strings()?.intention?.delete || 'Delete' }}</span>
+                        </button>
+                    } @else {
+                        <button mat-mini-fab class="btn-primary" type="button" (click)="deleteItem()"
+                                [matTooltip]="strings()?.intention?.delete ?? 'Delete'" matTooltipPosition="above">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    }
+                }
+
+                @if (p3xrResponse.type === 'cms') {
+                    @if (isGtSm) {
+                        <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="queryItem()">
+                            <mat-icon>search</mat-icon>
+                            <span>{{ strings()?.page?.key?.probabilistic?.queryCount || 'Query' }}</span>
+                        </button>
+                    } @else {
+                        <button mat-mini-fab class="btn-primary" type="button" (click)="queryItem()"
+                                [matTooltip]="strings()?.page?.key?.probabilistic?.queryCount ?? 'Query'" matTooltipPosition="above">
+                            <mat-icon>search</mat-icon>
+                        </button>
+                    }
+                }
+
+                @if (p3xrResponse.type === 'tdigest') {
+                    @if (isGtSm) {
+                        <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="queryQuantile()">
+                            <mat-icon>bar_chart</mat-icon>
+                            <span>{{ strings()?.page?.key?.probabilistic?.quantile || 'Quantile' }}</span>
+                        </button>
+                    } @else {
+                        <button mat-mini-fab class="btn-primary" type="button" (click)="queryQuantile()"
+                                [matTooltip]="strings()?.page?.key?.probabilistic?.quantile ?? 'Quantile'" matTooltipPosition="above">
+                            <mat-icon>bar_chart</mat-icon>
+                        </button>
+                    }
+                }
+
+                @if (p3xrResponse.type === 'tdigest' && !readonly) {
+                    @if (isGtSm) {
+                        <button mat-raised-button class="btn-warn p3xr-action-btn" type="button" (click)="resetTdigest()">
+                            <mat-icon>undo</mat-icon>
+                            <span>Reset</span>
+                        </button>
+                    } @else {
+                        <button mat-mini-fab class="btn-warn" type="button" (click)="resetTdigest()"
+                                matTooltip="Reset" matTooltipPosition="above">
+                            <mat-icon>undo</mat-icon>
+                        </button>
+                    }
+                }
+            </div>
+
+            </div>
+            <!-- TOPK ITEMS LIST -->
+            @if (p3xrResponse.type === 'topk' && topkItems.length > 0) {
+                <mat-divider></mat-divider>
+                <mat-list>
+                    @for (entry of topkItems; track entry.item; let last = $last) {
+                        <mat-list-item>
+                            <div style="display: flex; width: 100%;">
+                                <span class="p3xr-settings-label" style="flex: 1;">{{ entry.item }}</span>
+                                <span class="p3xr-settings-value">{{ entry.count }}</span>
+                            </div>
+                        </mat-list-item>
+                        @if (!last) { <mat-divider></mat-divider> }
+                    }
+                </mat-list>
+            }
+        </div>
+    </p3xr-ng-accordion>
+
+</div>

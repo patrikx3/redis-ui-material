@@ -466,14 +466,31 @@ const strings = {
         index: "সূচক",
         hashKey: "হ্যাশ কী",
         score: "স্কোর",
-        value: "মান"
+        value: "মান",
+        errorRate: "ত্রুটির হার",
+        capacity: "ধারণক্ষমতা",
+        topk: "Top K",
+        width: "প্রস্থ",
+        depth: "গভীরতা",
+        decay: "ক্ষয়",
+        compression: "সংকোচন",
+        increment: "বৃদ্ধি",
+        item: "আইটেম",
+        vectorValues: "ভেক্টর মান (কমা-বিভক্ত)",
+        element: "উপাদানের নাম",
       },
       error: {
         streamTimestamp: "টাইমস্ট্যাম্প প্রয়োজন, হয় Redis ফর্ম্যাট বা * হিসাবে",
         key: "মূল হল, অন্তত একটি অক্ষর",
         hashKey: "হ্যাশ টেবিল কী অন্তত একটি অক্ষর",
         score: "সাজানো সেট স্কোর প্রয়োজন",
-        value: "মান প্রয়োজন"
+        value: "মান প্রয়োজন",
+        errorRate: "ত্রুটির হার 0 এবং 1 এর মধ্যে হতে হবে (যেমন 0.01)",
+        capacity: "ধারণক্ষমতা একটি ধনাত্মক পূর্ণসংখ্যা হতে হবে",
+        topk: "Top K একটি ধনাত্মক পূর্ণসংখ্যা হতে হবে",
+        width: "প্রস্থ একটি ধনাত্মক পূর্ণসংখ্যা হতে হবে",
+        depth: "গভীরতা একটি ধনাত্মক পূর্ণসংখ্যা হতে হবে",
+        item: "আইটেম প্রয়োজন"
       }
     },
     main: {
@@ -643,6 +660,41 @@ const strings = {
         mrangeFilter: "লেবেল ফিল্টার",
         bulkMode: "বাল্ক জেনারেট",
         mrangeHint: "যেমন sensor=temp"
+      },
+      probabilistic: {
+        info: "তথ্য",
+        addItem: "আইটেম যোগ করুন",
+        checkItem: "আইটেম পরীক্ষা করুন",
+        item: "আইটেম",
+        exists: "বিদ্যমান",
+        doesNotExist: "বিদ্যমান নেই",
+        topkList: "শীর্ষ আইটেম",
+        topkCount: "গণনা",
+        queryCount: "কোয়েরি গণনা",
+        queryResult: "কোয়েরি ফলাফল",
+        addedSuccessfully: "আইটেম সফলভাবে যোগ করা হয়েছে",
+        deletedSuccessfully: "আইটেম সফলভাবে মুছে ফেলা হয়েছে",
+        quantile: "কোয়ান্টাইল",
+        quantileResult: "ফলাফল",
+        noItems: "প্রদর্শনের জন্য কোনো আইটেম নেই",
+        resetConfirm: "এই T-Digest-এর সমস্ত ডেটা রিসেট করবেন?",
+      },
+      vectorset: {
+        info: "তথ্য",
+        elements: "উপাদানসমূহ",
+        similarity: "সাদৃশ্য অনুসন্ধান",
+        searchByElement: "উপাদান দ্বারা অনুসন্ধান",
+        searchByVector: "ভেক্টর দ্বারা অনুসন্ধান",
+        vectorValues: "ভেক্টর মান",
+        element: "উপাদান",
+        score: "স্কোর",
+        count: "গণনা",
+        addElement: "উপাদান যোগ করুন",
+        attributes: "বৈশিষ্ট্য",
+        noAttributes: "কোনো বৈশিষ্ট্য নেই",
+        dimensions: "মাত্রা",
+        removeConfirm: "এই উপাদানটি VectorSet থেকে সরাতে চান?",
+        noElements: "কোনো উপাদান নেই",
       }
     },
     treeControls: {
@@ -692,7 +744,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom ফিল্টার",
+    cuckoo: "Cuckoo ফিল্টার",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

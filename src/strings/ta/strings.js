@@ -468,14 +468,31 @@ const strings = {
         index: "குறியீடு",
         hashKey: "Hash விசை",
         score: "மதிப்பெண்",
-        value: "மதிப்பு"
+        value: "மதிப்பு",
+        errorRate: "பிழை விகிதம்",
+        capacity: "கொள்ளளவு",
+        topk: "Top K",
+        width: "அகலம்",
+        depth: "ஆழம்",
+        decay: "சிதைவு",
+        compression: "சுருக்கம்",
+        increment: "அதிகரிப்பு",
+        item: "உருப்படி",
+        vectorValues: "வெக்டார் மதிப்புகள் (கமாவால் பிரிக்கப்பட்ட)",
+        element: "உறுப்பு பெயர்",
       },
       error: {
         streamTimestamp: "நேர முத்திரை தேவை, Redis வடிவம் அல்லது * ஆக",
         key: "விசை குறைந்தது ஒரு எழுத்தாவது இருக்க வேண்டும்",
         hashKey: "hash அட்டவணை விசை குறைந்தது ஒரு எழுத்தாவது இருக்க வேண்டும்",
         score: "வரிசைப்படுத்தப்பட்ட தொகுப்பு மதிப்பெண் தேவை",
-        value: "மதிப்பு தேவை"
+        value: "மதிப்பு தேவை",
+        errorRate: "பிழை விகிதம் 0 மற்றும் 1 க்கு இடையில் இருக்க வேண்டும் (எ.கா. 0.01)",
+        capacity: "கொள்ளளவு நேர்மறை முழு எண்ணாக இருக்க வேண்டும்",
+        topk: "Top K நேர்மறை முழு எண்ணாக இருக்க வேண்டும்",
+        width: "அகலம் நேர்மறை முழு எண்ணாக இருக்க வேண்டும்",
+        depth: "ஆழம் நேர்மறை முழு எண்ணாக இருக்க வேண்டும்",
+        item: "உருப்படி தேவை"
       }
     },
     main: {
@@ -645,6 +662,41 @@ const strings = {
         mrangeFilter: "லேபிள் வடிகட்டி",
         bulkMode: "மொத்த உருவாக்கம்",
         mrangeHint: "எ.கா. sensor=temp"
+      },
+      probabilistic: {
+        info: "தகவல்",
+        addItem: "உருப்படியைச் சேர்",
+        checkItem: "உருப்படியைச் சரிபார்",
+        item: "உருப்படி",
+        exists: "உள்ளது",
+        doesNotExist: "இல்லை",
+        topkList: "முதன்மை உருப்படிகள்",
+        topkCount: "எண்ணிக்கை",
+        queryCount: "வினவல் எண்ணிக்கை",
+        queryResult: "வினவல் முடிவு",
+        addedSuccessfully: "உருப்படி வெற்றிகரமாகச் சேர்க்கப்பட்டது",
+        deletedSuccessfully: "உருப்படி வெற்றிகரமாக நீக்கப்பட்டது",
+        quantile: "நூற்றுவீதம்",
+        quantileResult: "முடிவு",
+        noItems: "காட்ட உருப்படிகள் இல்லை",
+        resetConfirm: "இந்த T-Digest இல் உள்ள அனைத்து தரவையும் மீட்டமைக்கவா?"
+      },
+      vectorset: {
+        info: "தகவல்",
+        elements: "உறுப்புகள்",
+        similarity: "ஒற்றுமை தேடல்",
+        searchByElement: "உறுப்பு மூலம் தேடு",
+        searchByVector: "வெக்டார் மூலம் தேடு",
+        vectorValues: "வெக்டார் மதிப்புகள்",
+        element: "உறுப்பு",
+        score: "மதிப்பெண்",
+        count: "எண்ணிக்கை",
+        addElement: "உறுப்பு சேர்",
+        attributes: "பண்புகள்",
+        noAttributes: "பண்புகள் இல்லை",
+        dimensions: "பரிமாணங்கள்",
+        removeConfirm: "இந்த உறுப்பை VectorSet இலிருந்து அகற்றவா?",
+        noElements: "உறுப்புகள் இல்லை",
       }
     },
     treeControls: {
@@ -694,7 +746,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom வடிகட்டி",
+    cuckoo: "Cuckoo வடிகட்டி",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

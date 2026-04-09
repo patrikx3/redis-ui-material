@@ -468,14 +468,31 @@ const strings = {
         index: "Index",
         hashKey: "Hash klíč",
         score: "Skóre",
-        value: "Hodnota"
+        value: "Hodnota",
+        errorRate: "Chybovost",
+        capacity: "Kapacita",
+        topk: "Top K",
+        width: "Šířka",
+        depth: "Hloubka",
+        decay: "Útlum",
+        compression: "Komprese",
+        increment: "Přírůstek",
+        item: "Položka",
+        vectorValues: "Hodnoty vektoru (oddělené čárkou)",
+        element: "Název elementu",
       },
       error: {
         streamTimestamp: "Časová značka je povinná, buď ve formátu Redis nebo jako *",
         key: "Klíč musí mít alespoň jeden znak",
         hashKey: "Hash klíč musí mít alespoň jeden znak",
         score: "Skóre seřazené množiny je povinné",
-        value: "Hodnota je povinná"
+        value: "Hodnota je povinná",
+        errorRate: "Chybovost musí být mezi 0 a 1 (např. 0.01)",
+        capacity: "Kapacita musí být kladné celé číslo",
+        topk: "Top K musí být kladné celé číslo",
+        width: "Šířka musí být kladné celé číslo",
+        depth: "Hloubka musí být kladné celé číslo",
+        item: "Položka je povinná"
       }
     },
     main: {
@@ -645,6 +662,41 @@ const strings = {
         mrangeFilter: "Filtr štítků",
         bulkMode: "Hromadné generování",
         mrangeHint: "např. sensor=temp"
+      },
+      probabilistic: {
+        info: "Informace",
+        addItem: "Přidat položku",
+        checkItem: "Zkontrolovat položku",
+        item: "Položka",
+        exists: "Existuje",
+        doesNotExist: "Neexistuje",
+        topkList: "Nejčastější položky",
+        topkCount: "Počet",
+        queryCount: "Počet dotazů",
+        queryResult: "Výsledek dotazu",
+        addedSuccessfully: "Položka byla úspěšně přidána",
+        deletedSuccessfully: "Položka byla úspěšně smazána",
+        quantile: "Kvantil",
+        quantileResult: "Výsledek",
+        noItems: "Žádné položky k zobrazení",
+        resetConfirm: "Resetovat všechna data v tomto T-Digest?",
+      },
+      vectorset: {
+        info: "Informace",
+        elements: "Elementy",
+        similarity: "Hledání podobnosti",
+        searchByElement: "Hledat podle elementu",
+        searchByVector: "Hledat podle vektoru",
+        vectorValues: "Hodnoty vektoru",
+        element: "Element",
+        score: "Skóre",
+        count: "Počet",
+        addElement: "Přidat element",
+        attributes: "Atributy",
+        noAttributes: "Žádné atributy",
+        dimensions: "Dimenze",
+        removeConfirm: "Odebrat tento element z VectorSet?",
+        noElements: "Žádné elementy",
       }
     },
     treeControls: {
@@ -694,7 +746,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom filtr",
+    cuckoo: "Cuckoo filtr",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

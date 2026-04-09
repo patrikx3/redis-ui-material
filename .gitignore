@@ -11,8 +11,10 @@
 node_modules/.yarn-integrity
 
 
+/.angular/**/*.*
 /dist
 /dist-react
+/out-tsc
 
 .DS_Store
 /test-results

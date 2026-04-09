@@ -1,11 +1,12 @@
 import { Injectable, signal } from '@angular/core';
 
-declare const P3XR_API_PORT: number | undefined;
+declare const P3XR_API_PORT: number;
+declare const P3XR_DEV_MODE: boolean;
 
 const AUTH_TOKEN_KEY = 'p3xr-auth-token';
 
 function getApiBase(): string {
-    if ((globalThis as any).p3xrDevMode === true) {
+    if (typeof P3XR_DEV_MODE !== 'undefined' && P3XR_DEV_MODE) {
         const url = new URL(location.toString());
         const apiPort = typeof P3XR_API_PORT !== 'undefined' ? P3XR_API_PORT : 7843;
         return `http://${url.hostname}:${apiPort}`;

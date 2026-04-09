@@ -45,6 +45,18 @@ interface KeyModel {
     tsEditAll: boolean
     hashKey: string
     index: string
+    bloomErrorRate: number
+    bloomCapacity: number
+    cuckooCapacity: number
+    topkK: number
+    topkWidth: number
+    topkDepth: number
+    topkDecay: number
+    cmsWidth: number
+    cmsDepth: number
+    tdigestCompression: number
+    vectorElement: string
+    vectorValues: string
 }
 
 interface Props {
@@ -57,6 +69,7 @@ export default function KeyNewOrSetDialog({ open, data, onClose }: Props) {
     const strings = useI18nStore(s => s.strings)
     const hasTimeSeries = useRedisStateStore(s => s.hasTimeSeries)
     const hasReJSON = useRedisStateStore(s => s.hasReJSON)
+    const hasBloom = useRedisStateStore(s => s.hasBloom)
     const connection = useRedisStateStore(s => s.connection)
     const settings = useSettingsStore()
     const { toast, generalHandleError } = useCommonStore()
@@ -74,12 +87,20 @@ export default function KeyNewOrSetDialog({ open, data, onClose }: Props) {
         tsBulkMode: false, tsSpread: 60000, tsFormula: '', tsFormulaPoints: 25,
         tsFormulaAmplitude: 100, tsFormulaOffset: 0, tsEditAll: false,
         hashKey: '', index: '',
+        bloomErrorRate: 0.01, bloomCapacity: 100, cuckooCapacity: 1024,
+        topkK: 10, topkWidth: 2000, topkDepth: 7, topkDecay: 0.9,
+        cmsWidth: 2000, cmsDepth: 7, tdigestCompression: 100,
+        vectorElement: '', vectorValues: '',
     })
+    const isProbabilistic = ['bloom', 'cuckoo', 'topk', 'cms', 'tdigest'].includes(model.type)
+    const isVectorset = model.type === 'vectorset'
 
     const types = (() => {
         const base = ['string', 'list', 'hash', 'set', 'zset', 'stream']
         if (hasTimeSeries) base.push('timeseries')
         if (hasReJSON) base.push('json')
+        if (hasBloom) base.push('bloom', 'cuckoo', 'topk', 'cms', 'tdigest')
+        base.push('vectorset')
         return base
     })()
 
@@ -266,16 +287,80 @@ export default function KeyNewOrSetDialog({ open, data, onClose }: Props) {
                 </>
             )}
 
+            {/* Probabilistic type fields */}
+            {model.type === 'bloom' && (
+                <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                    <TextField margin="dense" type="number" slotProps={{ htmlInput: { step: 0.001 } }}
+                        label={strings?.form?.key?.field?.errorRate || 'Error rate'}
+                        value={model.bloomErrorRate} onChange={e => set('bloomErrorRate', parseFloat(e.target.value))}
+                        placeholder="0.01 = 1%" sx={{ flex: 1, minWidth: 140 }} />
+                    <TextField margin="dense" type="number"
+                        label={strings?.form?.key?.field?.capacity || 'Capacity'}
+                        value={model.bloomCapacity} onChange={e => set('bloomCapacity', parseInt(e.target.value))}
+                        sx={{ flex: 1, minWidth: 140 }} />
+                </Box>
+            )}
+            {model.type === 'cuckoo' && (
+                <TextField fullWidth margin="dense" type="number"
+                    label={strings?.form?.key?.field?.capacity || 'Capacity'}
+                    value={model.cuckooCapacity} onChange={e => set('cuckooCapacity', parseInt(e.target.value))} />
+            )}
+            {model.type === 'topk' && (
+                <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                    <TextField margin="dense" type="number" label="Top K"
+                        value={model.topkK} onChange={e => set('topkK', parseInt(e.target.value))}
+                        sx={{ flex: 1, minWidth: 100 }} />
+                    <TextField margin="dense" type="number" label={strings?.form?.key?.field?.width || 'Width'}
+                        value={model.topkWidth} onChange={e => set('topkWidth', parseInt(e.target.value))}
+                        sx={{ flex: 1, minWidth: 100 }} />
+                    <TextField margin="dense" type="number" label={strings?.form?.key?.field?.depth || 'Depth'}
+                        value={model.topkDepth} onChange={e => set('topkDepth', parseInt(e.target.value))}
+                        sx={{ flex: 1, minWidth: 100 }} />
+                    <TextField margin="dense" type="number" slotProps={{ htmlInput: { step: 0.1 } }}
+                        label={strings?.form?.key?.field?.decay || 'Decay'}
+                        value={model.topkDecay} onChange={e => set('topkDecay', parseFloat(e.target.value))}
+                        sx={{ flex: 1, minWidth: 100 }} />
+                </Box>
+            )}
+            {model.type === 'cms' && (
+                <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                    <TextField margin="dense" type="number" label={strings?.form?.key?.field?.width || 'Width'}
+                        value={model.cmsWidth} onChange={e => set('cmsWidth', parseInt(e.target.value))}
+                        sx={{ flex: 1, minWidth: 140 }} />
+                    <TextField margin="dense" type="number" label={strings?.form?.key?.field?.depth || 'Depth'}
+                        value={model.cmsDepth} onChange={e => set('cmsDepth', parseInt(e.target.value))}
+                        sx={{ flex: 1, minWidth: 140 }} />
+                </Box>
+            )}
+            {model.type === 'tdigest' && (
+                <TextField fullWidth margin="dense" type="number"
+                    label={strings?.form?.key?.field?.compression || 'Compression'}
+                    value={model.tdigestCompression} onChange={e => set('tdigestCompression', parseInt(e.target.value))} />
+            )}
+            {model.type === 'vectorset' && (
+                <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                    <TextField margin="dense"
+                        label={strings?.page?.key?.vectorset?.elementName || 'Element name'}
+                        value={model.vectorElement} onChange={e => set('vectorElement', e.target.value)}
+                        sx={{ flex: 1, minWidth: 200 }} />
+                    <TextField margin="dense"
+                        label={strings?.page?.key?.vectorset?.vectorValues || 'Vector values'}
+                        placeholder="0.1, 0.2, 0.3"
+                        value={model.vectorValues} onChange={e => set('vectorValues', e.target.value)}
+                        sx={{ flex: 1, minWidth: 200 }} />
+                </Box>
+            )}
+
             {/* Action buttons */}
             <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={onFileSelected} />
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, my: 1 }}>
-                {model.type !== 'stream' && model.type !== 'timeseries' && (
+                {model.type !== 'stream' && model.type !== 'timeseries' && !isProbabilistic && !isVectorset && (
                     <Button variant="contained" color="primary" size="small" onClick={() => fileInputRef.current?.click()}>
                         <Upload fontSize="small" />
                         {isWide && <span style={{ marginLeft: 3 }}>{strings?.intention?.setBuffer}</span>}
                     </Button>
                 )}
-                {model.type !== 'timeseries' && (
+                {model.type !== 'timeseries' && !isProbabilistic && !isVectorset && (
                     <>
                         <Button variant="contained" color="primary" size="small" onClick={() => setJsonEditorOpen(true)}>
                             <Description fontSize="small" />
@@ -297,7 +382,7 @@ export default function KeyNewOrSetDialog({ open, data, onClose }: Props) {
                 </Button>
             </Box>
 
-            {model.type !== 'timeseries' && (
+            {model.type !== 'timeseries' && !isProbabilistic && !isVectorset && (
                 <FormControlLabel sx={{ display: 'block', my: 1 }}
                     control={<Switch checked={validateJson} onChange={(_, v) => setValidateJson(v)} />}
                     label={strings?.label?.validateJson} />
@@ -354,7 +439,8 @@ export default function KeyNewOrSetDialog({ open, data, onClose }: Props) {
             )}
 
             {/* Value field */}
-            {model.type === 'timeseries' && (model.tsEditAll || model.tsBulkMode) ? (
+            {isProbabilistic || isVectorset ? null
+            : model.type === 'timeseries' && (model.tsEditAll || model.tsBulkMode) ? (
                 <TextField fullWidth margin="dense" required multiline rows={10}
                     label={strings?.page?.key?.timeseries?.dataPoints}
                     value={model.value} onChange={e => set('value', e.target.value)}

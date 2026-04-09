@@ -466,14 +466,31 @@ const strings = {
         index: "索引",
         hashKey: "哈希鍵",
         score: "分數",
-        value: "價值"
+        value: "價值",
+        errorRate: "錯誤率",
+        capacity: "容量",
+        topk: "Top K",
+        width: "寬度",
+        depth: "深度",
+        decay: "衰減",
+        compression: "壓縮",
+        increment: "增量",
+        item: "項目",
+        vectorValues: "向量值（以逗號分隔）",
+        element: "元素名稱",
       },
       error: {
         streamTimestamp: "時間戳記是必要的，可以是 Redis 格式或 *",
         key: "關鍵是至少有一個字符",
         hashKey: "哈希表鍵至少為一個字符",
         score: "需要排序後的集合分數",
-        value: "該值是必需的"
+        value: "該值是必需的",
+        errorRate: "錯誤率必須介於 0 到 1 之間（例如 0.01）",
+        capacity: "容量必須是正整數",
+        topk: "Top K 必須是正整數",
+        width: "寬度必須是正整數",
+        depth: "深度必須是正整數",
+        item: "項目是必填的"
       }
     },
     main: {
@@ -643,6 +660,41 @@ const strings = {
         mrangeFilter: "標籤篩選器",
         bulkMode: "批量生成",
         mrangeHint: "例如 sensor=temp"
+      },
+      probabilistic: {
+        info: "資訊",
+        addItem: "新增項目",
+        checkItem: "檢查項目",
+        item: "項目",
+        exists: "存在",
+        doesNotExist: "不存在",
+        topkList: "熱門項目",
+        topkCount: "數量",
+        queryCount: "查詢數量",
+        queryResult: "查詢結果",
+        addedSuccessfully: "項目已成功新增",
+        deletedSuccessfully: "項目已成功刪除",
+        quantile: "分位數",
+        quantileResult: "結果",
+        noItems: "沒有項目可顯示",
+        resetConfirm: "重置此 T-Digest 中的所有資料？"
+      },
+      vectorset: {
+        info: "資訊",
+        elements: "元素",
+        similarity: "相似度搜尋",
+        searchByElement: "按元素搜尋",
+        searchByVector: "按向量搜尋",
+        vectorValues: "向量值",
+        element: "元素",
+        score: "分數",
+        count: "數量",
+        addElement: "新增元素",
+        attributes: "屬性",
+        noAttributes: "沒有屬性",
+        dimensions: "維度",
+        removeConfirm: "從 VectorSet 中移除此元素？",
+        noElements: "沒有元素",
       }
     },
     treeControls: {
@@ -692,7 +744,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom 過濾器",
+    cuckoo: "Cuckoo 過濾器",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

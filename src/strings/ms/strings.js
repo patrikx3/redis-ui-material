@@ -466,14 +466,31 @@ const strings = {
         index: "Indeks",
         hashKey: "Kunci cincang",
         score: "skor",
-        value: "Nilai"
+        value: "Nilai",
+        errorRate: "Kadar ralat",
+        capacity: "Kapasiti",
+        topk: "Top K",
+        width: "Lebar",
+        depth: "Kedalaman",
+        decay: "Pereputan",
+        compression: "Pemampatan",
+        increment: "Kenaikan",
+        item: "Item",
+        vectorValues: "Nilai vektor (dipisahkan koma)",
+        element: "Nama elemen",
       },
       error: {
         streamTimestamp: "Cap masa diperlukan, sama ada format Redis atau sebagai *",
         key: "Kuncinya, sekurang-kurangnya, satu watak",
         hashKey: "Kekunci jadual cincang ialah sekurang-kurangnya satu aksara",
         score: "Skor set yang diisih diperlukan",
-        value: "Nilai itu diperlukan"
+        value: "Nilai itu diperlukan",
+        errorRate: "Kadar ralat mestilah antara 0 dan 1 (cth. 0.01)",
+        capacity: "Kapasiti mestilah integer positif",
+        topk: "Top K mestilah integer positif",
+        width: "Lebar mestilah integer positif",
+        depth: "Kedalaman mestilah integer positif",
+        item: "Item diperlukan"
       }
     },
     main: {
@@ -643,6 +660,41 @@ const strings = {
         mrangeFilter: "Penapis label",
         bulkMode: "Penjanaan pukal",
         mrangeHint: "cth. sensor=temp"
+      },
+      probabilistic: {
+        info: "Maklumat",
+        addItem: "Tambah Item",
+        checkItem: "Semak Item",
+        item: "Item",
+        exists: "Wujud",
+        doesNotExist: "Tidak wujud",
+        topkList: "Item Teratas",
+        topkCount: "Bilangan",
+        queryCount: "Bilangan Pertanyaan",
+        queryResult: "Hasil Pertanyaan",
+        addedSuccessfully: "Item berjaya ditambah",
+        deletedSuccessfully: "Item berjaya dipadam",
+        quantile: "Kuantil",
+        quantileResult: "Hasil",
+        noItems: "Tiada item untuk dipaparkan",
+        resetConfirm: "Set semula semua data dalam T-Digest ini?"
+      },
+      vectorset: {
+        info: "Info",
+        elements: "Elemen",
+        similarity: "Carian Kesamaan",
+        searchByElement: "Cari mengikut elemen",
+        searchByVector: "Cari mengikut vektor",
+        vectorValues: "Nilai vektor",
+        element: "Elemen",
+        score: "Skor",
+        count: "Bilangan",
+        addElement: "Tambah Elemen",
+        attributes: "Atribut",
+        noAttributes: "Tiada atribut",
+        dimensions: "Dimensi",
+        removeConfirm: "Alih keluar elemen ini daripada VectorSet?",
+        noElements: "Tiada elemen",
       }
     },
     treeControls: {
@@ -692,7 +744,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom penapis",
+    cuckoo: "Cuckoo penapis",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

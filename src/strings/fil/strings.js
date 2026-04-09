@@ -466,14 +466,31 @@ const strings = {
         index: "Index",
         hashKey: "Hash key",
         score: "Puntos",
-        value: "Halaga"
+        value: "Halaga",
+        errorRate: "Rate ng error",
+        capacity: "Kapasidad",
+        topk: "Top K",
+        width: "Lapad",
+        depth: "Lalim",
+        decay: "Pagkabulok",
+        compression: "Compression",
+        increment: "Dagdag",
+        item: "Aytem",
+        vectorValues: "Mga halaga ng vector (pinaghihiwalay ng kuwit)",
+        element: "Pangalan ng elemento",
       },
       error: {
         streamTimestamp: "Kinakailangan ang timestamp, alinman sa Redis na format o bilang *",
         key: "Ang susi ay, hindi bababa sa, isang karakter",
         hashKey: "Ang hash table key ay hindi bababa sa isang character",
         score: "Kinakailangan ang pinagsunod-sunod na marka",
-        value: "Kinakailangan ang halaga"
+        value: "Kinakailangan ang halaga",
+        errorRate: "Ang rate ng error ay dapat nasa pagitan ng 0 at 1 (hal. 0.01)",
+        capacity: "Ang kapasidad ay dapat positibong integer",
+        topk: "Ang Top K ay dapat positibong integer",
+        width: "Ang lapad ay dapat positibong integer",
+        depth: "Ang lalim ay dapat positibong integer",
+        item: "Kinakailangan ang aytem"
       }
     },
     main: {
@@ -643,6 +660,41 @@ const strings = {
         mrangeFilter: "Filter ng label",
         bulkMode: "Bulk generate",
         mrangeHint: "hal. sensor=temp"
+      },
+      probabilistic: {
+        info: "Impormasyon",
+        addItem: "Magdagdag ng aytem",
+        checkItem: "Suriin ang aytem",
+        item: "Aytem",
+        exists: "Umiiral",
+        doesNotExist: "Hindi umiiral",
+        topkList: "Nangungunang mga aytem",
+        topkCount: "Bilang",
+        queryCount: "Bilang ng query",
+        queryResult: "Resulta ng query",
+        addedSuccessfully: "Matagumpay na naidagdag ang aytem",
+        deletedSuccessfully: "Matagumpay na nabura ang aytem",
+        quantile: "Quantile",
+        quantileResult: "Resulta",
+        noItems: "Walang mga aytem na ipapakita",
+        resetConfirm: "I-reset ang lahat ng data sa T-Digest na ito?",
+      },
+      vectorset: {
+        info: "Impormasyon",
+        elements: "Mga elemento",
+        similarity: "Paghahanap ng pagkakapareho",
+        searchByElement: "Maghanap ayon sa elemento",
+        searchByVector: "Maghanap ayon sa vector",
+        vectorValues: "Mga halaga ng vector",
+        element: "Elemento",
+        score: "Iskor",
+        count: "Bilang",
+        addElement: "Magdagdag ng elemento",
+        attributes: "Mga katangian",
+        noAttributes: "Walang mga katangian",
+        dimensions: "Mga dimensyon",
+        removeConfirm: "Alisin ang elementong ito mula sa VectorSet?",
+        noElements: "Walang mga elemento",
       }
     },
     treeControls: {
@@ -692,7 +744,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom filter",
+    cuckoo: "Cuckoo filter",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

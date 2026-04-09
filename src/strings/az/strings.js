@@ -466,14 +466,31 @@ const strings = {
         index: "indeks",
         hashKey: "Hash açarı",
         score: "Hesab",
-        value: "Dəyər"
+        value: "Dəyər",
+        errorRate: "Xəta dərəcəsi",
+        capacity: "Tutum",
+        topk: "Top K",
+        width: "En",
+        depth: "Dərinlik",
+        decay: "Azalma",
+        compression: "Sıxılma",
+        increment: "Artım",
+        item: "Element",
+        vectorValues: "Vektor dəyərləri (vergüllə ayrılmış)",
+        element: "Element adı",
       },
       error: {
         streamTimestamp: "Zaman damğası ya Redis formatında, ya da * kimi tələb olunur",
         key: "Əsas odur ki, ən azı bir simvol",
         hashKey: "Hash cədvəlinin açarı ən azı bir simvoldur",
         score: "Çeşidlənmiş xal tələb olunur",
-        value: "Dəyər tələb olunur"
+        value: "Dəyər tələb olunur",
+        errorRate: "Xəta dərəcəsi 0 ilə 1 arasında olmalıdır (məs. 0.01)",
+        capacity: "Tutum müsbət tam ədəd olmalıdır",
+        topk: "Top K müsbət tam ədəd olmalıdır",
+        width: "En müsbət tam ədəd olmalıdır",
+        depth: "Dərinlik müsbət tam ədəd olmalıdır",
+        item: "Element tələb olunur"
       }
     },
     main: {
@@ -643,6 +660,41 @@ const strings = {
         mrangeFilter: "Etiket filtri",
         bulkMode: "Toplu yaratma",
         mrangeHint: "məs. sensor=temp"
+      },
+      probabilistic: {
+        info: "Məlumat",
+        addItem: "Element əlavə et",
+        checkItem: "Elementi yoxla",
+        item: "Element",
+        exists: "Mövcuddur",
+        doesNotExist: "Mövcud deyil",
+        topkList: "Ən yuxarı elementlər",
+        topkCount: "Say",
+        queryCount: "Sorğu sayı",
+        queryResult: "Sorğu nəticəsi",
+        addedSuccessfully: "Element uğurla əlavə edildi",
+        deletedSuccessfully: "Element uğurla silindi",
+        quantile: "Kvantil",
+        quantileResult: "Nəticə",
+        noItems: "Göstəriləcək element yoxdur",
+        resetConfirm: "Bu T-Digest-dəki bütün məlumatlar sıfırlansın?",
+      },
+      vectorset: {
+        info: "Məlumat",
+        elements: "Elementlər",
+        similarity: "Oxşarlıq axtarışı",
+        searchByElement: "Elementə görə axtar",
+        searchByVector: "Vektora görə axtar",
+        vectorValues: "Vektor dəyərləri",
+        element: "Element",
+        score: "Xal",
+        count: "Say",
+        addElement: "Element əlavə et",
+        attributes: "Atributlar",
+        noAttributes: "Atribut yoxdur",
+        dimensions: "Ölçülər",
+        removeConfirm: "Bu element VectorSet-dən silinsin?",
+        noElements: "Element yoxdur",
       }
     },
     treeControls: {
@@ -692,7 +744,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom filtr",
+    cuckoo: "Cuckoo filtr",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

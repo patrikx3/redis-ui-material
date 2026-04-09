@@ -466,14 +466,31 @@ const strings = {
         index: "Индекс",
         hashKey: "Калиди хэш",
         score: "Хол",
-        value: "Арзиш"
+        value: "Арзиш",
+        errorRate: "Сатҳи хато",
+        capacity: "Иқтидор",
+        topk: "Top K",
+        width: "Паҳноӣ",
+        depth: "Чуқурӣ",
+        decay: "Коҳиш",
+        compression: "Фишурдасозӣ",
+        increment: "Афзоиш",
+        item: "Ашё",
+        vectorValues: "Арзишҳои вектор (бо вергул ҷудо шуда)",
+        element: "Номи элемент",
       },
       error: {
         streamTimestamp: "Тамғаи вақт талаб карда мешавад, ё формати Redis ё ҳамчун *",
         key: "Калид, ҳад��и аққал як аломат аст",
         hashKey: "Калиди ҷадвали ҳаш ҳадди аққал як аломат аст",
         score: "Холи маҷмӯи мураттабшуда талаб карда мешавад",
-        value: "Арзиш талаб карда мешавад"
+        value: "Арзиш талаб карда мешавад",
+        errorRate: "Сатҳи хато бояд байни 0 ва 1 бошад (мас. 0.01)",
+        capacity: "Иқтидор бояд адади бутуни мусбат бошад",
+        topk: "Top K бояд адади бутуни мусбат бошад",
+        width: "Паҳноӣ бояд адади бутуни мусбат бошад",
+        depth: "Чуқурӣ бояд адади бутуни мусбат бошад",
+        item: "Ашё талаб карда мешавад"
       }
     },
     main: {
@@ -643,6 +660,41 @@ const strings = {
         mrangeFilter: "Филтри тамғаҳо",
         bulkMode: "Эҷоди оммавӣ",
         mrangeHint: "мас. sensor=temp"
+      },
+      probabilistic: {
+        info: "Маълумот",
+        addItem: "Ашё илова кунед",
+        checkItem: "Ашёро тафтиш кунед",
+        item: "Ашё",
+        exists: "Мавҷуд аст",
+        doesNotExist: "Мавҷуд нест",
+        topkList: "Ашёҳои асосӣ",
+        topkCount: "Шумора",
+        queryCount: "Шумораи дархостҳо",
+        queryResult: "Натиҷаи дархост",
+        addedSuccessfully: "Ашё бо муваффақият илова шуд",
+        deletedSuccessfully: "Ашё бо муваффақият нест шуд",
+        quantile: "Квантил",
+        quantileResult: "Натиҷа",
+        noItems: "Ашёҳо барои намоиш нест",
+        resetConfirm: "Ҳамаи маълумотро дар ин T-Digest бозсозӣ кунед?"
+      },
+      vectorset: {
+        info: "Маълумот",
+        elements: "Элементҳо",
+        similarity: "Ҷустуҷӯи шабоҳат",
+        searchByElement: "Ҷустуҷӯ бо элемент",
+        searchByVector: "Ҷустуҷӯ бо вектор",
+        vectorValues: "Арзишҳои вектор",
+        element: "Элемент",
+        score: "Хол",
+        count: "Шумора",
+        addElement: "Элемент илова кунед",
+        attributes: "Хусусиятҳо",
+        noAttributes: "Хусусият нест",
+        dimensions: "Андозаҳо",
+        removeConfirm: "Ин элементро аз VectorSet хориҷ кунед?",
+        noElements: "Элементҳо нест",
       }
     },
     treeControls: {
@@ -692,7 +744,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom филтр",
+    cuckoo: "Cuckoo филтр",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

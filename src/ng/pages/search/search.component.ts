@@ -19,8 +19,6 @@ import { P3xrButtonComponent } from '../../components/p3xr-button.component';
 import { RedisStateService } from '../../services/redis-state.service';
 import { OverlayService } from '../../services/overlay.service';
 
-require('./search.component.scss');
-
 @Component({
     selector: 'p3xr-search',
     standalone: true,
@@ -32,6 +30,7 @@ require('./search.component.scss');
         P3xrAccordionComponent, P3xrButtonComponent,
     ],
     templateUrl: './search.component.html',
+    styleUrls: ['./search.component.scss'],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

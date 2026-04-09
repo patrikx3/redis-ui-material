@@ -9,12 +9,11 @@ import { CommonService } from '../../services/common.service';
 import { MonitoringDataService } from './monitoring-data.service';
 import { RedisStateService } from '../../services/redis-state.service';
 
-require('./monitoring-shell.component.scss');
-
 @Component({
     selector: 'p3xr-monitoring-shell',
     standalone: true,
     imports: [RouterOutlet, MatTabsModule],
+    styleUrls: ['./monitoring-shell.component.scss'],
     template: `
         <div class="p3xr-monitoring-shell-container">
             <mat-tab-group class="p3xr-monitoring-tabs" [selectedIndex]="selectedTab" (selectedIndexChange)="onTabChange($event)">

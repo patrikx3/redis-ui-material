@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { Button, IconButton, Tooltip, useMediaQuery } from '@mui/material'
+import { Button, IconButton, Fab, Tooltip, useMediaQuery } from '@mui/material'
 
 /**
  * Responsive button — shows icon+text on wide screens, icon-only+tooltip on narrow.
@@ -38,11 +38,29 @@ export default function P3xrButton({
                 color={color}
                 disabled={disabled}
                 onClick={onClick}
-                sx={{ m: 0, gap: '3px' }}
+                sx={{ gap: '3px' }}
             >
                 {icon}
                 <span>{label}</span>
             </Button>
+        )
+    }
+
+    if (raised) {
+        return (
+            <Tooltip title={label} placement={tooltipPlacement}>
+                <span>
+                    <Fab
+                        size="small"
+                        color={color === 'inherit' ? 'primary' : color}
+                        disabled={disabled}
+                        onClick={onClick}
+                        sx={{ borderRadius: '4px', boxShadow: 'none' }}
+                    >
+                        {icon}
+                    </Fab>
+                </span>
+            </Tooltip>
         )
     }
 
@@ -55,8 +73,6 @@ export default function P3xrButton({
                     onClick={onClick}
                     sx={{
                         borderRadius: '4px',
-                        width: raised ? 40 : undefined,
-                        height: raised ? 40 : undefined,
                         m: 0,
                     }}
                 >

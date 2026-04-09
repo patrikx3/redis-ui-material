@@ -23,13 +23,14 @@ import { KeyZsetComponent } from './key/key-zset.component';
 import { KeyStreamComponent } from './key/key-stream.component';
 import { KeyJsonComponent } from './key/key-json.component';
 import { KeyTimeseriesComponent } from './key/key-timeseries.component';
+import { KeyProbabilisticComponent } from './key/key-probabilistic.component';
+import { KeyVectorsetComponent } from './key/key-vectorset.component';
 import { NavigationService } from '../../services/navigation.service';
 import { RedisStateService } from '../../services/redis-state.service';
 import { SettingsService } from '../../services/settings.service';
 
-require('./database-key.component.scss');
-require('./key/key-types.scss');
-
+import { htmlEncode } from 'js-htmlencode';
+import humanizeDuration from 'humanize-duration';
 
 @Component({
     selector: 'p3xr-database-key',
@@ -50,9 +51,12 @@ require('./key/key-types.scss');
         KeyStreamComponent,
         KeyJsonComponent,
         KeyTimeseriesComponent,
+        KeyProbabilisticComponent,
+        KeyVectorsetComponent,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     templateUrl: './database-key.component.html',
+    styleUrls: ['./database-key.component.scss', './key/key-types.scss'],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -236,33 +240,40 @@ export class DatabaseKeyComponent implements OnInit, OnDestroy {
         }
     }
 
+    private toBytes(buf: any): Uint8Array {
+        if (buf instanceof Uint8Array || buf instanceof ArrayBuffer) return buf instanceof ArrayBuffer ? new Uint8Array(buf) : buf;
+        if (buf && buf.type === 'Buffer' && Array.isArray(buf.data)) return new Uint8Array(buf.data);
+        if (ArrayBuffer.isView(buf)) return new Uint8Array(buf.buffer, buf.byteOffset, buf.byteLength);
+        return buf;
+    }
+
     private decodeValueBuffer(response: any): void {
         const { type, valueBuffer } = response;
         const td = new TextDecoder();
         switch (type) {
             case 'string':
-                response.value = td.decode(valueBuffer);
+                response.value = td.decode(this.toBytes(valueBuffer));
                 break;
             case 'list':
             case 'set':
-                response.value = valueBuffer.map((buf: any) => td.decode(buf));
+                response.value = valueBuffer.map((buf: any) => td.decode(this.toBytes(buf)));
                 break;
             case 'hash':
                 response.value = {};
                 Object.entries(valueBuffer).forEach(([key, buf]: [string, any]) => {
-                    response.value[key] = td.decode(buf);
+                    response.value[key] = td.decode(this.toBytes(buf));
                 });
                 break;
             case 'zset':
                 response.value = [];
                 for (let i = 0; i < valueBuffer.length; i += 2) {
-                    response.value.push(td.decode(valueBuffer[i]));
+                    response.value.push(td.decode(this.toBytes(valueBuffer[i])));
                     response.value.push(td.decode(valueBuffer[i + 1]));
                 }
                 break;
             case 'json':
                 // JSON.GET with $ returns a JSON string (always compact from Redis)
-                const rawJson = td.decode(valueBuffer);
+                const rawJson = td.decode(this.toBytes(valueBuffer));
                 try {
                     const parsed = JSON.parse(rawJson);
                     // JSONPath $ returns array wrapper, unwrap it
@@ -285,9 +296,28 @@ export class DatabaseKeyComponent implements OnInit, OnDestroy {
             case 'timeseries':
                 // valueBuffer is a JSON-encoded TS.INFO object
                 try {
-                    response.value = JSON.parse(td.decode(valueBuffer));
+                    response.value = JSON.parse(td.decode(this.toBytes(valueBuffer)));
                 } catch {
                     response.value = {};
+                }
+                break;
+            case 'bloom':
+            case 'cuckoo':
+            case 'topk':
+            case 'cms':
+            case 'tdigest':
+            case 'vectorset':
+                try {
+                    response.value = JSON.parse(td.decode(this.toBytes(valueBuffer)));
+                } catch {
+                    response.value = {};
+                }
+                break;
+            default:
+                try {
+                    response.value = JSON.parse(td.decode(this.toBytes(valueBuffer)));
+                } catch {
+                    response.value = td.decode(this.toBytes(valueBuffer));
                 }
                 break;
         }
@@ -321,7 +351,6 @@ export class DatabaseKeyComponent implements OnInit, OnDestroy {
     private loadTtl(): void {
         if (!this.response || this.response.ttl <= -1) return;
 
-        const humanizeDuration = require('humanize-duration');
         const updateTtl = () => {
             if (!this.checkTtl()) { this.clearTtlInterval(); return; }
             const hdOpts = this.settings.getHumanizeDurationOptions();
@@ -367,7 +396,7 @@ export class DatabaseKeyComponent implements OnInit, OnDestroy {
         const color = isDark ? 'white' : 'black';
         const style = document.createElement('style');
         style.id = 'p3xr-theme-styles-tree-key';
-        style.textContent = `[data-p3xr-tree-key="${(globalThis as any).htmlEncode?.(this.key) ?? ''}"] .p3xr-database-tree-node-label {
+        style.textContent = `[data-p3xr-tree-key="${htmlEncode(this.key) ?? ''}"] .p3xr-database-tree-node-label {
             background-color: ${bg} !important;
             color: ${color} !important;
             padding: 2px;

@@ -145,11 +145,77 @@ export interface KeyNewOrSetDialogData {
                             </mat-slide-toggle>
                         }
                     }
+                    @case ('bloom') {
+                        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                            <mat-form-field style="flex: 1; min-width: 140px;">
+                                <mat-label>{{ strings().form?.key?.field?.errorRate || 'Error rate' }}</mat-label>
+                                <input matInput type="number" step="0.001" name="bloomErrorRate" [(ngModel)]="model.bloomErrorRate" placeholder="0.01 = 1%" />
+                            </mat-form-field>
+                            <mat-form-field style="flex: 1; min-width: 140px;">
+                                <mat-label>{{ strings().form?.key?.field?.capacity || 'Capacity' }}</mat-label>
+                                <input matInput type="number" name="bloomCapacity" [(ngModel)]="model.bloomCapacity" />
+                            </mat-form-field>
+                        </div>
+                    }
+                    @case ('cuckoo') {
+                        <mat-form-field class="full-width">
+                            <mat-label>{{ strings().form?.key?.field?.capacity || 'Capacity' }}</mat-label>
+                            <input matInput type="number" name="cuckooCapacity" [(ngModel)]="model.cuckooCapacity" />
+                        </mat-form-field>
+                    }
+                    @case ('topk') {
+                        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                            <mat-form-field style="flex: 1; min-width: 100px;">
+                                <mat-label>Top K</mat-label>
+                                <input matInput type="number" name="topkK" [(ngModel)]="model.topkK" />
+                            </mat-form-field>
+                            <mat-form-field style="flex: 1; min-width: 100px;">
+                                <mat-label>{{ strings().form?.key?.field?.width || 'Width' }}</mat-label>
+                                <input matInput type="number" name="topkWidth" [(ngModel)]="model.topkWidth" />
+                            </mat-form-field>
+                            <mat-form-field style="flex: 1; min-width: 100px;">
+                                <mat-label>{{ strings().form?.key?.field?.depth || 'Depth' }}</mat-label>
+                                <input matInput type="number" name="topkDepth" [(ngModel)]="model.topkDepth" />
+                            </mat-form-field>
+                            <mat-form-field style="flex: 1; min-width: 100px;">
+                                <mat-label>{{ strings().form?.key?.field?.decay || 'Decay' }}</mat-label>
+                                <input matInput type="number" step="0.1" name="topkDecay" [(ngModel)]="model.topkDecay" />
+                            </mat-form-field>
+                        </div>
+                    }
+                    @case ('cms') {
+                        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                            <mat-form-field style="flex: 1; min-width: 140px;">
+                                <mat-label>{{ strings().form?.key?.field?.width || 'Width' }}</mat-label>
+                                <input matInput type="number" name="cmsWidth" [(ngModel)]="model.cmsWidth" />
+                            </mat-form-field>
+                            <mat-form-field style="flex: 1; min-width: 140px;">
+                                <mat-label>{{ strings().form?.key?.field?.depth || 'Depth' }}</mat-label>
+                                <input matInput type="number" name="cmsDepth" [(ngModel)]="model.cmsDepth" />
+                            </mat-form-field>
+                        </div>
+                    }
+                    @case ('tdigest') {
+                        <mat-form-field class="full-width">
+                            <mat-label>{{ strings().form?.key?.field?.compression || 'Compression' }}</mat-label>
+                            <input matInput type="number" name="tdigestCompression" [(ngModel)]="model.tdigestCompression" />
+                        </mat-form-field>
+                    }
+                    @case ('vectorset') {
+                        <mat-form-field class="full-width">
+                            <mat-label>{{ strings().page?.key?.vectorset?.elementName || 'Element name' }}</mat-label>
+                            <input matInput name="vectorElement" [(ngModel)]="model.vectorElement" />
+                        </mat-form-field>
+                        <mat-form-field class="full-width">
+                            <mat-label>{{ strings().page?.key?.vectorset?.vectorValues || 'Vector values' }}</mat-label>
+                            <input matInput name="vectorValues" [(ngModel)]="model.vectorValues" placeholder="0.1, 0.2, 0.3" />
+                        </mat-form-field>
+                    }
                 }
 
                 <!-- Buffer upload -->
                 <input type="file" #fileInput style="display: none" (change)="onFileSelected($event)" />
-                @if (model.type !== 'stream' && model.type !== 'timeseries') {
+                @if (model.type !== 'stream' && model.type !== 'timeseries' && !isProbabilisticType()) {
                     <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="fileInput.click()"
                         [matTooltip]="isWide ? '' : (strings().intention?.setBuffer || 'Upload Binary')">
                         <mat-icon>upload</mat-icon>
@@ -157,7 +223,7 @@ export interface KeyNewOrSetDialogData {
                     </button>
                 }
 
-                @if (model.type !== 'timeseries') {
+                @if (model.type !== 'timeseries' && !isProbabilisticType()) {
                     <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="openJsonEditor()"
                         [matTooltip]="isWide ? '' : (strings().intention?.jsonViewEditor || 'Edit JSON')">
                         <mat-icon>description</mat-icon>
@@ -185,7 +251,7 @@ export interface KeyNewOrSetDialogData {
                     </button>
                 </div>
 
-                @if (model.type !== 'timeseries') {
+                @if (model.type !== 'timeseries' && !isProbabilisticType()) {
                     <mat-slide-toggle [(ngModel)]="validateJson" name="validateJson" style="display: block; margin: 8px 0;">
                         {{ strings().label?.validateJson || 'Validate JSON' }}
                     </mat-slide-toggle>
@@ -267,7 +333,7 @@ export interface KeyNewOrSetDialogData {
                             <mat-error>{{ strings().form?.key?.error?.value }}</mat-error>
                         }
                     </mat-form-field>
-                } @else {
+                } @else if (!isProbabilisticType()) {
                     <mat-form-field class="full-width">
                         <mat-label>{{ strings().form?.key?.field?.value || 'Value' }}</mat-label>
                         <textarea matInput required name="value" [(ngModel)]="model.value" rows="5"></textarea>
@@ -307,7 +373,15 @@ export class KeyNewOrSetDialogComponent implements OnInit {
         if (this.state.hasReJSON()) {
             base.push('json');
         }
+        if (this.state.hasBloom()) {
+            base.push('bloom', 'cuckoo', 'topk', 'cms', 'tdigest');
+        }
+        base.push('vectorset');
         return base;
+    }
+    private static readonly PROBABILISTIC_TYPES = ['bloom', 'cuckoo', 'topk', 'cms', 'tdigest'];
+    isProbabilisticType(): boolean {
+        return KeyNewOrSetDialogComponent.PROBABILISTIC_TYPES.includes(this.model.type) || this.model.type === 'vectorset';
     }
     validateJson = false;
     isReadonly = false;
@@ -358,6 +432,18 @@ export class KeyNewOrSetDialogComponent implements OnInit {
             tsFormulaOffset: 0,
             hashKey: undefined,
             index: undefined,
+            bloomErrorRate: 0.01,
+            bloomCapacity: 100,
+            cuckooCapacity: 1024,
+            topkK: 10,
+            topkWidth: 2000,
+            topkDepth: 7,
+            topkDecay: 0.9,
+            cmsWidth: 2000,
+            cmsDepth: 7,
+            tdigestCompression: 100,
+            vectorElement: '',
+            vectorValues: '',
         };
 
         if (this.data.model) {

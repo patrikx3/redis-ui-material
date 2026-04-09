@@ -1,3 +1,4 @@
+/.angular
 /.babelrc
 /.github
 /.idea
@@ -29,3 +30,8 @@
 npm-debug.log*
 yarn-*.log*
 /scripts
+secure/
+agents/
+.claude/
+/.angular/**/*.*
+/src/**/*.*

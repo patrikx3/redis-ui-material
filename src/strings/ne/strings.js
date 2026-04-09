@@ -466,14 +466,31 @@ const strings = {
         index: "अनुक्रमणिका",
         hashKey: "ह्यास कुञ्जी",
         score: "स्कोर",
-        value: "मूल्य"
+        value: "मूल्य",
+        errorRate: "त्रुटि दर",
+        capacity: "क्षमता",
+        topk: "Top K",
+        width: "चौडाइ",
+        depth: "गहिराइ",
+        decay: "क्षय",
+        compression: "कम्प्रेसन",
+        increment: "वृद्धि",
+        item: "वस्तु",
+        vectorValues: "भेक्टर मानहरू (अल्पविरामले छुट्याइएको)",
+        element: "तत्वको नाम",
       },
       error: {
         streamTimestamp: "टाइमस्ट्याम्प आवश्यक छ, या त Redis ढाँचा वा * को रूपमा",
         key: "कुञ्जी हो, कम्तिमा, एक वर्ण",
         hashKey: "ह्यास तालिका कुञ्जी कम्तिमा एक वर्ण हो",
         score: "क्रमबद्ध सेट स्कोर आवश्यक छ",
-        value: "मूल्य आवश्यक छ"
+        value: "मूल्य आवश्यक छ",
+        errorRate: "त्रुटि दर 0 र 1 बीच हुनुपर्छ (उदा. 0.01)",
+        capacity: "क्षमता सकारात्मक पूर्णांक हुनुपर्छ",
+        topk: "Top K सकारात्मक पूर्णांक हुनुपर्छ",
+        width: "चौडाइ सकारात्मक पूर्णांक हुनुपर्छ",
+        depth: "गहिराइ सकारात्मक पूर्णांक हुनुपर्छ",
+        item: "वस्तु आवश्यक छ"
       }
     },
     main: {
@@ -643,6 +660,41 @@ const strings = {
         mrangeFilter: "लेबल फिल्टर",
         bulkMode: "बल्क जेनरेट",
         mrangeHint: "उदा. sensor=temp"
+      },
+      probabilistic: {
+        info: "जानकारी",
+        addItem: "वस्तु थप्नुहोस्",
+        checkItem: "वस्तु जाँच गर्नुहोस्",
+        item: "वस्तु",
+        exists: "अवस्थित छ",
+        doesNotExist: "अवस्थित छैन",
+        topkList: "शीर्ष वस्तुहरू",
+        topkCount: "गणना",
+        queryCount: "क्वेरी गणना",
+        queryResult: "क्वेरी परिणाम",
+        addedSuccessfully: "वस्तु सफलतापूर्वक थपियो",
+        deletedSuccessfully: "वस्तु सफलतापूर्वक मेटियो",
+        quantile: "क्वान्टाइल",
+        quantileResult: "परिणाम",
+        noItems: "प्रदर्शन गर्न कुनै वस्तु छैन",
+        resetConfirm: "यो T-Digest मा सबै डाटा रिसेट गर्ने?"
+      },
+      vectorset: {
+        info: "जानकारी",
+        elements: "तत्वहरू",
+        similarity: "समानता खोज",
+        searchByElement: "तत्वद्वारा खोज्नुहोस्",
+        searchByVector: "भेक्टरद्वारा खोज्नुहोस्",
+        vectorValues: "भेक्टर मानहरू",
+        element: "तत्व",
+        score: "स्कोर",
+        count: "गणना",
+        addElement: "तत्व थप्नुहोस्",
+        attributes: "विशेषताहरू",
+        noAttributes: "कुनै विशेषता छैन",
+        dimensions: "आयामहरू",
+        removeConfirm: "यो तत्वलाई VectorSet बाट हटाउने?",
+        noElements: "कुनै तत्व छैन",
       }
     },
     treeControls: {
@@ -692,7 +744,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom फिल्टर",
+    cuckoo: "Cuckoo फिल्टर",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

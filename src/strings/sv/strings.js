@@ -464,14 +464,31 @@ const strings = {
         index: "Index",
         hashKey: "Hash-nyckel",
         score: "Poäng",
-        value: "Värde"
+        value: "Värde",
+        errorRate: "Felfrekvens",
+        capacity: "Kapacitet",
+        topk: "Top K",
+        width: "Bredd",
+        depth: "Djup",
+        decay: "Förfall",
+        compression: "Komprimering",
+        increment: "Ökning",
+        item: "Objekt",
+        vectorValues: "Vektorvärden (kommaseparerade)",
+        element: "Elementnamn",
       },
       error: {
         streamTimestamp: "Tidsstämpeln krävs, antingen Redis-format eller som *",
         key: "Nyckeln måste ha minst ett tecken",
         hashKey: "Hash-tabellnyckeln måste ha minst ett tecken",
         score: "Sorterad uppsättningspoäng krävs",
-        value: "Värdet krävs"
+        value: "Värdet krävs",
+        errorRate: "Felfrekvensen måste vara mellan 0 och 1 (t.ex. 0.01)",
+        capacity: "Kapaciteten måste vara ett positivt heltal",
+        topk: "Top K måste vara ett positivt heltal",
+        width: "Bredden måste vara ett positivt heltal",
+        depth: "Djupet måste vara ett positivt heltal",
+        item: "Objektet krävs"
       }
     },
     main: {
@@ -641,6 +658,41 @@ const strings = {
         mrangeFilter: "Etikettfilter",
         bulkMode: "Massgenerering",
         mrangeHint: "t.ex. sensor=temp"
+      },
+      probabilistic: {
+        info: "Info",
+        addItem: "Lägg till objekt",
+        checkItem: "Kontrollera objekt",
+        item: "Objekt",
+        exists: "Finns",
+        doesNotExist: "Finns inte",
+        topkList: "Toppobjekt",
+        topkCount: "Antal",
+        queryCount: "Antal förfrågningar",
+        queryResult: "Frågeresultat",
+        addedSuccessfully: "Objektet lades till framgångsrikt",
+        deletedSuccessfully: "Objektet raderades framgångsrikt",
+        quantile: "Kvantil",
+        quantileResult: "Resultat",
+        noItems: "Inga objekt att visa",
+        resetConfirm: "Återställa all data i detta T-Digest?"
+      },
+      vectorset: {
+        info: "Info",
+        elements: "Element",
+        similarity: "Likhetssökning",
+        searchByElement: "Sök efter element",
+        searchByVector: "Sök efter vektor",
+        vectorValues: "Vektorvärden",
+        element: "Element",
+        score: "Poäng",
+        count: "Antal",
+        addElement: "Lägg till element",
+        attributes: "Attribut",
+        noAttributes: "Inga attribut",
+        dimensions: "Dimensioner",
+        removeConfirm: "Ta bort detta element från VectorSet?",
+        noElements: "Inga element",
       }
     },
     treeControls: {
@@ -690,7 +742,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom filter",
+    cuckoo: "Cuckoo filter",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

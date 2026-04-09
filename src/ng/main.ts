@@ -1,6 +1,5 @@
-import 'zone.js';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { importProvidersFrom, enableProdMode, isDevMode } from '@angular/core';
+import { importProvidersFrom } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -9,12 +8,8 @@ import { MAT_TOOLTIP_DEFAULT_OPTIONS } from '@angular/material/tooltip';
 
 import { appRoutes } from './app.routes';
 import { LayoutComponent } from './layout/layout.component';
-
-// Enable Angular production mode when webpack builds in production mode.
-// This disables dev-only assertion checks (NG0100, "Should be run in update mode").
-if (process.env.NODE_ENV === 'production') {
-    enableProdMode();
-}
+import { RedisStateService } from './services/redis-state.service';
+import { SettingsService } from './services/settings.service';
 
 bootstrapApplication(LayoutComponent, {
     providers: [
@@ -30,8 +25,6 @@ bootstrapApplication(LayoutComponent, {
     (globalThis as any).__p3xr_snackbar = appRef.injector.get(MatSnackBar);
 
     // Expose state for Playwright E2E tests
-    const { RedisStateService } = require('./services/redis-state.service');
-    const { SettingsService } = require('./services/settings.service');
     const stateService = appRef.injector.get(RedisStateService);
     const settingsService = appRef.injector.get(SettingsService);
     (globalThis as any).__p3xr_test = {

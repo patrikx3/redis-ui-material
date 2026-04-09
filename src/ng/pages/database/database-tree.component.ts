@@ -14,7 +14,8 @@ import { TreeBuilderService } from '../../services/tree-builder.service';
 import { RedisStateService } from '../../services/redis-state.service';
 import { SettingsService } from '../../services/settings.service';
 
-require('./database-tree.component.scss');
+import { htmlEncode } from 'js-htmlencode';
+import humanizeDuration from 'humanize-duration';
 
 export interface FlatTreeNode {
     label: string;
@@ -38,6 +39,7 @@ export interface FlatTreeNode {
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     templateUrl: './database-tree.component.html',
+    styleUrls: ['./database-tree.component.scss'],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -221,7 +223,6 @@ export class DatabaseTreeComponent implements OnInit, OnDestroy {
     formatTtl(node: FlatTreeNode): string {
         const remaining = this.getRemainingTtl(node);
         if (remaining <= 0) return '';
-        const humanizeDuration = require('humanize-duration');
         const hdOpts = this.settingsService.getHumanizeDurationOptions();
         return humanizeDuration(remaining * 1000, {
             ...hdOpts,
@@ -390,9 +391,9 @@ export class DatabaseTreeComponent implements OnInit, OnDestroy {
     extractNodeTooltip(node: FlatTreeNode): string {
         if (node.type !== 'folder' && node.keysInfo) {
             const strings = this.i18n.strings();
-            return (globalThis as any).htmlEncode((strings.redisTypes?.[node.keysInfo.type] ?? node.keysInfo.type) + ' - ' + node.key);
+            return htmlEncode((strings.redisTypes?.[node.keysInfo.type] ?? node.keysInfo.type) + ' - ' + node.key);
         }
-        return (globalThis as any).htmlEncode(node.key);
+        return htmlEncode(node.key);
     }
 
     deleteTreeTooltip(node: FlatTreeNode): string {

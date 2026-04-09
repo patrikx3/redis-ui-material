@@ -466,14 +466,31 @@ const strings = {
         index: "Rodyklė",
         hashKey: "Maišos raktas",
         score: "Rezultatas",
-        value: "Vertė"
+        value: "Vertė",
+        errorRate: "Klaidų dažnis",
+        capacity: "Talpa",
+        topk: "Top K",
+        width: "Plotis",
+        depth: "Gylis",
+        decay: "Irimas",
+        compression: "Glaudinimas",
+        increment: "Prieaugis",
+        item: "Elementas",
+        vectorValues: "Vektoriaus reikšmės (atskirtos kableliais)",
+        element: "Elemento pavadinimas",
       },
       error: {
         streamTimestamp: "Būtina nurodyti laiko žymą Redis formatu arba kaip *",
         key: "Svarbiausia yra bent vienas simbolis",
         hashKey: "Maišos lentelės raktą sudaro bent vienas simbolis",
         score: "Reikalingas surūšiuotas rinkinio balas",
-        value: "Reikšmė būtina"
+        value: "Reikšmė būtina",
+        errorRate: "Klaidų dažnis turi būti nuo 0 iki 1 (pvz. 0.01)",
+        capacity: "Talpa turi būti teigiamas sveikasis skaičius",
+        topk: "Top K turi būti teigiamas sveikasis skaičius",
+        width: "Plotis turi būti teigiamas sveikasis skaičius",
+        depth: "Gylis turi būti teigiamas sveikasis skaičius",
+        item: "Elementas yra privalomas"
       }
     },
     main: {
@@ -643,6 +660,41 @@ const strings = {
         mrangeFilter: "Etiketės filtras",
         bulkMode: "Masinis generavimas",
         mrangeHint: "pvz. sensor=temp"
+      },
+      probabilistic: {
+        info: "Informacija",
+        addItem: "Pridėti elementą",
+        checkItem: "Patikrinti elementą",
+        item: "Elementas",
+        exists: "Egzistuoja",
+        doesNotExist: "Neegzistuoja",
+        topkList: "Populiariausi elementai",
+        topkCount: "Skaičius",
+        queryCount: "Užklausų skaičius",
+        queryResult: "Užklausos rezultatas",
+        addedSuccessfully: "Elementas sėkmingai pridėtas",
+        deletedSuccessfully: "Elementas sėkmingai ištrintas",
+        quantile: "Kvantilis",
+        quantileResult: "Rezultatas",
+        noItems: "Nėra elementų rodymui",
+        resetConfirm: "Atstatyti visus duomenis šiame T-Digest?"
+      },
+      vectorset: {
+        info: "Informacija",
+        elements: "Elementai",
+        similarity: "Panašumo paieška",
+        searchByElement: "Ieškoti pagal elementą",
+        searchByVector: "Ieškoti pagal vektorių",
+        vectorValues: "Vektoriaus reikšmės",
+        element: "Elementas",
+        score: "Balas",
+        count: "Kiekis",
+        addElement: "Pridėti elementą",
+        attributes: "Atributai",
+        noAttributes: "Nėra atributų",
+        dimensions: "Matmenys",
+        removeConfirm: "Pašalinti šį elementą iš VectorSet?",
+        noElements: "Nėra elementų",
       }
     },
     treeControls: {
@@ -692,7 +744,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom filtras",
+    cuckoo: "Cuckoo filtras",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

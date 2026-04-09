@@ -466,14 +466,31 @@ const strings = {
         index: "chỉ mục",
         hashKey: "Khóa băm",
         score: "Điểm",
-        value: "Giá trị"
+        value: "Giá trị",
+        errorRate: "Tỷ lệ lỗi",
+        capacity: "Dung lượng",
+        topk: "Top K",
+        width: "Chiều rộng",
+        depth: "Chiều sâu",
+        decay: "Suy giảm",
+        compression: "Nén",
+        increment: "Gia tăng",
+        item: "Mục",
+        vectorValues: "Giá trị vector (phân tách bằng dấu phẩy)",
+        element: "Tên phần tử",
       },
       error: {
         streamTimestamp: "Dấu thời gian là bắt buộc, ở định dạng Redis hoặc ở dạng *",
         key: "Chìa khóa ít nhất là một ký tự",
         hashKey: "Khóa bảng băm có ít nhất một ký tự",
         score: "Điểm số đã sắp xếp là bắt buộc",
-        value: "Giá trị là bắt buộc"
+        value: "Giá trị là bắt buộc",
+        errorRate: "Tỷ lệ lỗi phải nằm trong khoảng từ 0 đến 1 (vd. 0.01)",
+        capacity: "Dung lượng phải là số nguyên dương",
+        topk: "Top K phải là số nguyên dương",
+        width: "Chiều rộng phải là số nguyên dương",
+        depth: "Chiều sâu phải là số nguyên dương",
+        item: "Mục là bắt buộc"
       }
     },
     main: {
@@ -643,6 +660,41 @@ const strings = {
         mrangeFilter: "Bộ lọc nhãn",
         bulkMode: "Tạo hàng loạt",
         mrangeHint: "vd. sensor=temp"
+      },
+      probabilistic: {
+        info: "Thông tin",
+        addItem: "Thêm mục",
+        checkItem: "Kiểm tra mục",
+        item: "Mục",
+        exists: "Tồn tại",
+        doesNotExist: "Không tồn tại",
+        topkList: "Mục hàng đầu",
+        topkCount: "Số lượng",
+        queryCount: "Số lượng truy vấn",
+        queryResult: "Kết quả truy vấn",
+        addedSuccessfully: "Mục đã được thêm thành công",
+        deletedSuccessfully: "Mục đã được xóa thành công",
+        quantile: "Phân vị",
+        quantileResult: "Kết quả",
+        noItems: "Không có mục để hiển thị",
+        resetConfirm: "Đặt lại tất cả dữ liệu trong T-Digest này?"
+      },
+      vectorset: {
+        info: "Thông tin",
+        elements: "Phần tử",
+        similarity: "Tìm kiếm tương đồng",
+        searchByElement: "Tìm theo phần tử",
+        searchByVector: "Tìm theo vector",
+        vectorValues: "Giá trị vector",
+        element: "Phần tử",
+        score: "Điểm",
+        count: "Số lượng",
+        addElement: "Thêm phần tử",
+        attributes: "Thuộc tính",
+        noAttributes: "Không có thuộc tính",
+        dimensions: "Chiều",
+        removeConfirm: "Xóa phần tử này khỏi VectorSet?",
+        noElements: "Không có phần tử",
       }
     },
     treeControls: {
@@ -692,7 +744,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom bộ lọc",
+    cuckoo: "Cuckoo bộ lọc",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;

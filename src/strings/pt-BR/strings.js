@@ -466,14 +466,31 @@ const strings = {
         index: "Índice",
         hashKey: "Chave hash",
         score: "Pontuação",
-        value: "Valor"
+        value: "Valor",
+        errorRate: "Taxa de erro",
+        capacity: "Capacidade",
+        topk: "Top K",
+        width: "Largura",
+        depth: "Profundidade",
+        decay: "Decaimento",
+        compression: "Compressão",
+        increment: "Incremento",
+        item: "Item",
+        vectorValues: "Valores do vetor (separados por vírgula)",
+        element: "Nome do elemento",
       },
       error: {
         streamTimestamp: "O carimbo de data/hora é obrigatório, no formato Redis ou como *",
         key: "A chave é, pelo menos, um caractere",
         hashKey: "A chave da tabela hash tem pelo menos um caractere",
         score: "A pontuação do conjunto classificado é obrigatória",
-        value: "O valor é obrigatório"
+        value: "O valor é obrigatório",
+        errorRate: "A taxa de erro deve estar entre 0 e 1 (ex. 0.01)",
+        capacity: "A capacidade deve ser um inteiro positivo",
+        topk: "Top K deve ser um inteiro positivo",
+        width: "A largura deve ser um inteiro positivo",
+        depth: "A profundidade deve ser um inteiro positivo",
+        item: "O item é obrigatório"
       }
     },
     main: {
@@ -643,6 +660,41 @@ const strings = {
         mrangeFilter: "Filtro de rótulos",
         bulkMode: "Geração em massa",
         mrangeHint: "ex. sensor=temp"
+      },
+      probabilistic: {
+        info: "Informação",
+        addItem: "Adicionar Item",
+        checkItem: "Verificar Item",
+        item: "Item",
+        exists: "Existe",
+        doesNotExist: "Não existe",
+        topkList: "Itens Principais",
+        topkCount: "Contagem",
+        queryCount: "Contagem de Consultas",
+        queryResult: "Resultado da Consulta",
+        addedSuccessfully: "Item adicionado com sucesso",
+        deletedSuccessfully: "Item excluído com sucesso",
+        quantile: "Quantil",
+        quantileResult: "Resultado",
+        noItems: "Nenhum item para exibir",
+        resetConfirm: "Redefinir todos os dados neste T-Digest?"
+      },
+      vectorset: {
+        info: "Informações",
+        elements: "Elementos",
+        similarity: "Busca por Similaridade",
+        searchByElement: "Buscar por elemento",
+        searchByVector: "Buscar por vetor",
+        vectorValues: "Valores do vetor",
+        element: "Elemento",
+        score: "Pontuação",
+        count: "Contagem",
+        addElement: "Adicionar Elemento",
+        attributes: "Atributos",
+        noAttributes: "Sem atributos",
+        dimensions: "Dimensões",
+        removeConfirm: "Remover este elemento do VectorSet?",
+        noElements: "Sem elementos",
       }
     },
     treeControls: {
@@ -692,7 +744,13 @@ const strings = {
     zset: "Sorted set - zset",
     stream: "Stream",
     json: "JSON",
-    timeseries: "Time Series"
+    timeseries: "Time Series",
+    bloom: "Bloom filtro",
+    cuckoo: "Cuckoo filtro",
+    topk: "Top-K",
+    cms: "Count-Min Sketch",
+    tdigest: "T-Digest",
+    vectorset: "VectorSet",
   }
 };
 module.exports = strings;
