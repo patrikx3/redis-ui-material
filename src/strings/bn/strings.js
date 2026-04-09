@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "সার্ভার ত্রুটি, আবার চেষ্টা করুন"
+    server_error: "সার্ভার ত্রুটি, আবার চেষ্টা করুন",
+    aiPromptTooLong: "AI অনুরোধটি খুব দীর্ঘ (সর্বোচ্চ 4096 অক্ষর)",
   },
   title: {
     donate: "দান করুন",
@@ -12,7 +13,7 @@ const strings = {
     main: "আপনি বাম নীচের মেনু থেকে সংযোগ করতে একটি Redis সংযোগ চয়ন করতে পারেন৷",
     statistics: "পরিসংখ্যান",
     error: "ত্রুটি",
-    connectingRedis: "Redis ��র সাথে সংযুক্ত হচ্ছে...",
+    connectingRedis: "Redis এর সাথে সংযুক্ত হচ্ছে...",
     socketioConnectError: "Socket.IO ত্রুটি৷",
     db: "DB",
     server: "সার্ভার",
@@ -39,7 +40,7 @@ const strings = {
     alert: "সতর্কতা",
     info: "তথ্য",
     deleteListItem: "আপনি এই তালিকা আইটেম মুছে ফেলার বিষয়ে নিশ্চিত?",
-    deleteHashKey: "আপনি এই হ্যাশ কী ��ইটেম মুছে ফেলার বিষয়ে নিশ্চিত?",
+    deleteHashKey: "আপনি এই হ্যাশ কী আইটেম মুছে ফেলার বিষয়ে নিশ্চিত?",
     deleteStreamTimestamp: "আপনি কি এই স্ট্রিম টাইমস্ট্যাম্প মুছে ফেলার বিষয়ে নিশ্চিত?",
     deleteSetMember: "আপনি এই সেট সদস্য মুছে ফেলার বিষয়ে নিশ্চিত?",
     deleteZSetMember: "আপনি এই সাজানো সেট সদস্য মুছে ফেলার বিষয়ে নিশ্চিত?",
@@ -145,7 +146,7 @@ const strings = {
     pubsubMonitor: "PubSub",
     pulse: "Pulse",
     profiler: "Profiler",
-    memoryAnalysis: "Analysis",
+    memoryAnalysis: "বিশ্লেষণ",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "ভাষা",
@@ -162,7 +163,7 @@ const strings = {
     pause: "বিরতি",
     resume: "পুনরায় শুরু",
     clear: "পরিষ্কার",
-    rename: "না��� পরিবর্তন করুন",
+    rename: "নাম পরিবর্তন করুন",
     main: "ডাটাবেস",
     cancel: "বাতিল করুন",
     theme: "থিম",
@@ -170,7 +171,7 @@ const strings = {
     githubRepo: "ভান্ডার",
     githubRelease: "মুক্তি দেয়",
     githubChangelog: "চেঞ্জলগ",
-    info: "Info",
+    info: "তথ্য",
     settings: "সেটিংস",
     connect: "সংযোগ করুন",
     disconnect: "সংযোগ বিচ্ছিন্ন করুন",
@@ -187,6 +188,8 @@ const strings = {
     edit: "সম্পাদনা করুন",
     save: "সংরক্ষণ করুন",
     ttl: "TTL সেট করুন",
+    fieldTtl: "ফিল্ড TTL",
+    digest: "ডাইজেস্ট",
     delete: "মুছে দিন",
     remove: "সরান",
     areYouSure: "আপনি কি নিশ্চিত?",
@@ -195,7 +198,9 @@ const strings = {
     getKey: "Redis কী এবং সংশ্লিষ্ট ডেটা লোড হচ্ছে...",
     jsonViewShow: "JSON প্রদর্শন করুন",
     jsonViewEditor: "JSON সম্পাদনা করুন",
-    quickConsole: "দ্রুত কনসোল"
+    quickConsole: "দ্রুত কনসোল",
+    moveUp: "উপরে সরান",
+    moveDown: "নিচে সরান"
   },
   label: {
     id: {
@@ -204,20 +209,22 @@ const strings = {
       info: "আপনি যদি এর বৈশিষ্ট্যগুলি পরিবর্তন করতে না চান: sshPassword, sshPrivateKey, পাসওয়ার্ড, tlsCrt, tlsKey, tlsCa, অনুগ্রহ করে সম্পত্তির মানগুলি অক্ষুণ্ণ রাখতে সেই বৈশিষ্ট্যগুলিতে সংযোগের আইডি লিখুন৷ আপনি যদি নোড পাসওয়ার্ডে একই যুক্তি চান তবে নোড পাসওয়ার্ডে নোড আইডি দিন।"
     },
     secureFeature: "আপনি যদি P3X দিয়ে শুরু হয় এমন একটি মান দেখতে দেখতে একই রকম দেখতে পান তবে এটি একটি সুরক্ষিত বৈশিষ্ট্য। সেটিংস পরিবর্তন করতে, এই সেটিংসগুলিকে খালি বা অন্য কিছু দিয়ে প্রতিস্থাপন করুন এবং সেগুলি সংরক্ষণ করা হবে। আপনি যদি সেটিংস পরিবর্তন না করেন তবে সেটিংস সার্ভারে যেমন আছে তেমনই রাখা হবে।",
-    aiTranslating: "Translating...",
+    aiTranslating: "অনুবাদ করা হচ্ছে...",
     aiSettings: "AI সেটিংস",
     aiGroqApiKey: "Groq API কী",
     aiGroqApiKeyInfo: "ঐচ্ছিক। ভালো পারফরম্যান্সের জন্য নিজের Groq API কী। বিনামূল্যে কী পান",
     aiGroqApiKeyPlaceholder: "gsk_...",
     aiGroqApiKeySaved: "AI API কী সংরক্ষিত",
-    aiGroqApiKeyInvalid: "Invalid Groq API key",
+    aiGroqApiKeyInvalid: "Groq API কী সঠিক নয়",
     aiGroqApiKeyNotSet: "সেট করা হয়নি (সার্ভার ডিফল্ট)",
-    aiEnabled: "AI Enabled",
-    aiEnabledYes: "Yes",
-    aiEnabledNo: "No",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
-    aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiEnabled: "AI সক্রিয়",
+    aiEnabledYes: "হ্যাঁ",
+    aiEnabledNo: "না",
+    aiRouteViaNetwork: "network.corifeus.com হয়ে পাঠান",
+    aiRoutingDirect: "আপনার নিজস্ব API কী ব্যবহার করে অনুরোধ সরাসরি Groq-এ যাবে, network.corifeus.com এড়িয়ে।",
+    aiRoutingNetwork: "AI অনুরোধগুলো network.corifeus.com এর মাধ্যমে যায়। আপনার নিজের ফ্রি Groq API কী থাকলে এই সুইচ বন্ধ করে network.corifeus.com ছাড়া সরাসরি Groq-এ পাঠাতে পারেন।",
+    aiMaxTokens: "AI সর্বোচ্চ টোকেন",
+    aiMaxTokensInfo: "AI উত্তরের জন্য সর্বোচ্চ টোকেন সংখ্যা। বেশি মান দিলে উত্তর বড় হতে পারে, তবে API ক্রেডিটও বেশি খরচ হতে পারে।",
     ssh: {
       on: "SSH চালু",
       off: "SSH বন্ধ",
@@ -235,7 +242,7 @@ const strings = {
     }) => {
       return `এই কী লোড করতে অক্ষম: ${key}. সম্ভব, কী মুছে ফেলা হয়েছে. সঠিক ত্রুটিটি কনসোলে রয়েছে।`;
     },
-    bigJson: "এই JSON অবজেক্ট 10 kb ���র বেশি, তাই আপনি কি করছেন তা নিশ্চিত করুন, কারণ কিছু ফাংশন ধীর রেন্ডারিং হতে পারে।",
+    bigJson: "এই JSON অবজেক্ট 10 kb এর বেশি, তাই আপনি কী করছেন তা নিশ্চিত করুন, কারণ কিছু ফাংশন ধীরে রেন্ডার হতে পারে।",
     addNode: "নোড যোগ করুন",
     validateJson: "JSON যাচাই করুন",
     reducedFunction: `কার্যকারিতা হ্রাস`,
@@ -245,7 +252,7 @@ const strings = {
     redisCommandNotFound: "কোন Redis কমান্ড মিল পাওয়া যায়নি...",
     treeKeyStore: `বাছাই করা (প্রাকৃতিক তুলনা) ক্লায়েন্ট ওরফে ব্রাউজারে কার্যকর করা হয়, যার মানে এটির জন্য বড় বড় সেটের জন্য একটি জরিমানা রয়েছে, যেমন 10k-এর বেশি কী, এটি পৃষ্ঠা রেন্ডারিংয়ে একটু সময় যোগ করতে পারে। Redis এ কোন কী বাছাই নেই, শুধুমাত্র এইরকম।`,
     socketIoTimeout: options => {
-      return `এই অনুরোধে�� জন্য Socket.IO সময় শেষ হয়েছে (সর্বোচ্চ ${options.timeout / 1000} সেকেন্ড)...`;
+      return `এই অনুরোধের জন্য Socket.IO সময় শেষ হয়েছে (সর্বোচ্চ ${options.timeout / 1000} সেকেন্ড)...`;
     },
     resizerInfo: options => {
       return `বাম বা ডান প্যানেলের ন্যূনতম প্রস্থ ${options.width}px`;
@@ -255,9 +262,9 @@ const strings = {
     passwordSecure: "পাসওয়ার্ড খালি হতে পারে, কিন্তু তবুও এটি অক্ষর দেখাবে, এটি একটি নিরাপত্তা বৈশিষ্ট্য।",
     tlsWithoutCert: "অতিরিক্ত শংসাপত্র ছাড়াই TLS সক্ষম করুন৷",
     tlsRejectUnauthorized: "অননুমোদিত শংসাপত্র প্রত্যাখ্যান করুন",
-    tlsSecure: "আপনি যদি একটি TLS কনফিগারেশন দেখতে পান যা একটি P3X দিয়ে শুরু হয় বা সমস্ত TLS সেটিংস একই রকম দেখায় তবে এটি একটি সুরক্ষিত বৈশিষ্ট্য৷ সেটিংস পরিবর্তন করতে, এই সেটিংসগুলিকে খালি বা অন্য কিছু দিয়ে প্রতিস্থ��পন করুন এবং সেগুলি সংরক্ষণ করা হবে। আপনি যদি TLS সেটিংস পরিবর্তন না করেন, সেটিংগুলি সার্ভারে থাকা অবস্থায় রাখা হবে৷",
+    tlsSecure: "আপনি যদি একটি TLS কনফিগারেশন দেখতে পান যা P3X দিয়ে শুরু হয় বা সব TLS সেটিংস একই রকম দেখায়, তবে এটি একটি নিরাপত্তা বৈশিষ্ট্য। সেটিংস পরিবর্তন করতে, এই সেটিংসগুলো খালি বা অন্য কিছু দিয়ে প্রতিস্থাপন করুন, তাহলে সেগুলো সংরক্ষিত হবে। আপনি যদি TLS সেটিংস পরিবর্তন না করেন, তবে সেটিংস সার্ভারে যেমন আছে তেমনই থাকবে।",
     treeSeparatorEmpty: "গাছ বিভাজক খালি থাকলে, গাছের কোনো নেস্টেড নোড থাকবে না, শুধু একটি বিশুদ্ধ তালিকা",
-    treeSeparatorEmptyNote: "কোনো ন���স্টেড নোড নেই, শুধু একটি বিশুদ্ধ তালিকা",
+    treeSeparatorEmptyNote: "কোনো নেস্টেড নোড নেই, শুধু একটি বিশুদ্ধ তালিকা",
     welcomeConsole: "Redis কনসোলে স্বাগতম",
     welcomeConsoleInfo: "কার্সার UP বা ডাউন ইতিহাস সক্ষম করা হয়েছে",
     redisListIndexInfo: "যোগ করার জন্য খালি, -1 প্রিপেন্ড করতে বা দেখানো অবস্থানে সংরক্ষণ করতে।",
@@ -309,12 +316,12 @@ const strings = {
     shortcutDisconnect: "সংযোগ বিচ্ছিন্ন করুন",
     themeAuto: "Auto (system)",
     languageAuto: "Auto (system)",
-    shortcutCommandPalette: "Command Palette",
-    commandPalette: "Command Palette",
-    noResults: "No results",
+    shortcutCommandPalette: "কমান্ড প্যালেট",
+    commandPalette: "কমান্ড প্যালেট",
+    noResults: "কোনো ফলাফল নেই",
     redisCommandsReference: "Redis কমান্ড",
     ungrouped: "গ্রুপবিহীন",
-    grouped: "Grouped",
+    grouped: "দলবদ্ধ",
     connectFirst: "প্রথমে একটি Redis সার্ভারে সংযোগ করুন",
     searchLanguage: "ভাষা অনুসন্ধান...",
     exportProgress: "কী রপ্তানি হচ্ছে...",
@@ -379,7 +386,7 @@ const strings = {
     },
     renamedKey: "এই কীটির নাম পরিবর্তন করা হয়েছে",
     ttlChanged: "এই কীটির TTL পরিবর্তন করা হয়েছে৷",
-    notInteger: "এই ���নপুট একটি পূর্ণসংখ্যা নয়",
+    notInteger: "এই ইনপুট একটি পূর্ণসংখ্যা নয়",
     persisted: "এই কী চিরকাল স্থায়ী হয়",
     set: "কী সেট/যোগ করা হয়েছে",
     connectionRestored: "সংযোগ পুনরুদ্ধার হয়েছে"
@@ -391,7 +398,7 @@ const strings = {
     "readonly-connection-mode": "এই সংযোগ শুধুমাত্র পঠন মোড!",
     "list-out-of-bounds": "এই তালিকা সূচক সীমার বাইরে",
     "invalid-json-value": "মানটি বৈধ নয় JSON৷",
-    "http_auth_required": "অনুমোদন প্রয়োজন: অনুগ্রহ করে HTTP Basic Auth দিয়ে প্রমাণীকরণ করুন এ��ং পুনরায় লোড করুন।",
+    "http_auth_required": "অনুমোদন প্রয়োজন: অনুগ্রহ করে HTTP Basic Auth দিয়ে প্রমাণীকরণ করুন এবং পুনরায় লোড করুন।",
     "auto-connection-failed": "সম্ভব, সংযোগ সরানো হয়েছে এবং স্বয়ংক্রিয় সংযোগ ব্যর্থ হয়েছে, এই কারণে।",
     invalid_console_command: "এই কমান্ডটি GUI এর মাধ্যমে কাজ করছে না।",
     "AI_DISABLED": "AI নিষ্ক্রিয়। AI সেটিংসে এটি সক্রিয় করুন।",
@@ -409,7 +416,7 @@ const strings = {
     connection: {
       label: {
         name: "নাম",
-        group: "Group",
+        group: "গ্রুপ",
         host: "হোস্টনাম",
         port: "বন্দর",
         password: "পাসওয়ার্ড",
@@ -433,7 +440,7 @@ const strings = {
         searchModeClient: "ক্লায়েন্ট অনুসন্ধান মোড",
         searchModeServer: "সার্ভার অনুসন্ধান মোড",
         searchModeStartsWith: "মোড দিয়ে শুরু করে অনুসন্ধান করুন",
-        searchModeIncludes: "অনুসন্ধান মোড অ���্তর্ভুক্ত"
+        searchModeIncludes: "অনুসন্ধান মোড অন্তর্ভুক্ত"
       },
       field: {
         treeSeparator: "গাছ বিভাজক",
@@ -511,7 +518,10 @@ const strings = {
       indexInfo: "ইনডেক্স তথ্য",
       indexName: "ইনডেক্স নাম",
       prefix: "কী প্রিফিক্স (ঐচ্ছিক)",
-      fieldName: "ফিল্ডের নাম"
+      fieldName: "ফিল্ডের নাম",
+      hybridMode: "হাইব্রিড অনুসন্ধান (FT.HYBRID)",
+      vectorField: "ভেক্টর ফিল্ড",
+      vectorValues: "ভেক্টর মান",
     },
     monitor: {
       title: "মনিটরিং",
@@ -535,7 +545,8 @@ const strings = {
       peak: "সর্বোচ্চ",
       fragmentation: "ফ্র্যাগমেন্টেশন",
       hitsAndMisses: "হিট / মিস",
-      noClients: "কোনো ক্লায়েন্ট নেই"
+      noClients: "কোনো ক্লায়েন্ট নেই",
+      slotStats: "ক্লাস্টার স্লট পরিসংখ্যান",
     },
     analysis: {
       title: "মেমোরি বিশ্লেষণ",
@@ -695,6 +706,8 @@ const strings = {
         dimensions: "মাত্রা",
         removeConfirm: "এই উপাদানটি VectorSet থেকে সরাতে চান?",
         noElements: "কোনো উপাদান নেই",
+        filter: "ফিল্টার",
+        searchComplete: "অনুসন্ধান সম্পন্ন",
       }
     },
     treeControls: {
@@ -714,15 +727,12 @@ const strings = {
       pager: {
         next: "পরবর্তী",
         prev: "আগের",
-        first: "প্���থম",
+        first: "প্রথম",
         last: "শেষ"
       }
     }
   },
   time: {
-    type: "ধরন",
-    format: "ফরম্যাট",
-    loading: "লোড হচ্ছে...",
     years: "বছর",
     months: "মাস",
     days: "দিন",

@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Pogreška poslužitelja, pokušajte ponovo"
+    server_error: "Pogreška poslužitelja, pokušajte ponovo",
+    aiPromptTooLong: "AI upit je predug (maksimalno 4096 znakova)",
   },
   title: {
     donate: "Donirajte",
@@ -187,6 +188,8 @@ const strings = {
     edit: "Uredi",
     save: "spremiti",
     ttl: "Postavite TTL",
+    fieldTtl: "TTL polja",
+    digest: "Sažetak",
     delete: "Izbriši",
     remove: "Ukloniti",
     areYouSure: "Jeste li sigurni?",
@@ -195,7 +198,9 @@ const strings = {
     getKey: "Učitavanje ključa Redis i povezanih podataka ...",
     jsonViewShow: "Prikaz JSON",
     jsonViewEditor: "Uredi JSON",
-    quickConsole: "Brza konzola"
+    quickConsole: "Brza konzola",
+    moveUp: "Pomakni gore",
+    moveDown: "Pomakni dolje"
   },
   label: {
     id: {
@@ -210,14 +215,16 @@ const strings = {
     aiGroqApiKeyInfo: "Opcionalno. Vlastiti Groq API ključ za bolju izvedbu. Nabavite besplatni ključ na",
     aiGroqApiKeyPlaceholder: "gsk_...",
     aiGroqApiKeySaved: "AI API ključ spremljen",
-    aiGroqApiKeyInvalid: "Invalid Groq API key",
+    aiGroqApiKeyInvalid: "Neispravan Groq API ključ",
     aiGroqApiKeyNotSet: "Nije postavljeno (zadano poslužitelja)",
     aiEnabled: "AI omogućeno",
     aiEnabledYes: "Da",
     aiEnabledNo: "Ne",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
-    aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiRouteViaNetwork: "Usmjeri preko network.corifeus.com",
+    aiRoutingDirect: "Upiti idu izravno prema Groqu koristeći vaš vlastiti API ključ, zaobilazeći network.corifeus.com.",
+    aiRoutingNetwork: "AI upiti se usmjeravaju kroz network.corifeus.com. Ako imate vlastiti besplatni Groq API ključ, možete isključiti ovaj prekidač kako biste se povezali izravno na Groq bez network.corifeus.com.",
+    aiMaxTokens: "Maksimalni AI tokeni",
+    aiMaxTokensInfo: "Maksimalan broj tokena za AI odgovore. Veće vrijednosti omogućuju dulje odgovore, ali mogu koristiti više API kredita.",
     ssh: {
       on: "SSH uključen",
       off: "SSH isključeno",
@@ -511,7 +518,10 @@ const strings = {
       indexInfo: "Info o indeksu",
       indexName: "Naziv indeksa",
       prefix: "Prefiks ključa (opcionalno)",
-      fieldName: "Naziv polja"
+      fieldName: "Naziv polja",
+      hybridMode: "Hibridno pretraživanje (FT.HYBRID)",
+      vectorField: "Vektorsko polje",
+      vectorValues: "Vektorske vrijednosti",
     },
     monitor: {
       title: "Nadzor",
@@ -535,7 +545,8 @@ const strings = {
       peak: "Vrh",
       fragmentation: "Fragmentacija",
       hitsAndMisses: "Pogoci / Promašaji",
-      noClients: "Nema klijenata"
+      noClients: "Nema klijenata",
+      slotStats: "Statistika slotova klastera",
     },
     analysis: {
       title: "Analiza memorije",
@@ -695,6 +706,8 @@ const strings = {
         dimensions: "Dimenzije",
         removeConfirm: "Ukloniti ovaj element iz VectorSet-a?",
         noElements: "Nema elemenata",
+        filter: "Filtar",
+        searchComplete: "Pretraživanje završeno",
       }
     },
     treeControls: {
@@ -720,9 +733,6 @@ const strings = {
     }
   },
   time: {
-    type: "Tip",
-    format: "Format",
-    loading: "Učitavanje...",
     years: "godina",
     months: "mjeseca",
     days: "dana",

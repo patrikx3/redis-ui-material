@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Грешка на серверот, обидете се повторно"
+    server_error: "Грешка на серверот, обидете се повторно",
+    aiPromptTooLong: "AI барањето е предолго (максимум 4096 знаци)",
   },
   title: {
     donate: "Донирајте",
@@ -137,7 +138,7 @@ const strings = {
     deleteAllKeysMenu: (opts) => `Избриши ги сите ${opts.count}`,
     importKeys: "Увези клучеви",
     deleteSearchKeys: (opts) => `Избриши ${opts.count} совпаѓачки клучеви`,
-    saveWithFormatJson: "Зач��вај со формат",
+    saveWithFormatJson: "Зачувај со формат",
     formatJson: "Форматирајте Json",
     wrap: "Завиткајте",
     unwrap: "Одвиткајте",
@@ -187,6 +188,8 @@ const strings = {
     edit: "Уреди",
     save: "Зачувај",
     ttl: "Поставете TTL",
+    fieldTtl: "TTL на полето",
+    digest: "Дигест",
     delete: "Избриши",
     remove: "Отстрани",
     areYouSure: "Дали сте сигурни?",
@@ -195,7 +198,9 @@ const strings = {
     getKey: "Се вчитува клучот Redis и поврзаните податоци ...",
     jsonViewShow: "Приказ JSON",
     jsonViewEditor: "Уреди JSON",
-    quickConsole: "Брза конзола"
+    quickConsole: "Брза конзола",
+    moveUp: "Премести нагоре",
+    moveDown: "Премести надолу"
   },
   label: {
     id: {
@@ -204,20 +209,22 @@ const strings = {
       info: "Ако не сакате да ги промените својствата на: sshPassword, sshPrivateKey, лозинка, tlsCrt, tlsKey, tlsCa, ве молиме внесете го ID на врската во тие својства за да ги задржите вредностите на својствата непроменети. Ако ја сакате истата логика во лозинката на јазолот, тогаш внесете го ID на јазолот во лозинката на јазолот."
     },
     secureFeature: "Ако видите вредност што започнува со P3X и изгледа исто, тоа е безбедна карактеристика. За да ги промените поставките, само заменете ги со празни или нешто друго и тие ќе бидат зачувани. Ако не ги промените поставките, поставките ќе се задржат како што се на серверот.",
-    aiTranslating: "Translating...",
+    aiTranslating: "Се преведува...",
     aiSettings: "AI Поставки",
     aiGroqApiKey: "Groq API клуч",
     aiGroqApiKeyInfo: "Опционално. Сопствен Groq API клуч за подобри перформанси. Добијте бесплатен клуч од",
     aiGroqApiKeyPlaceholder: "gsk_...",
     aiGroqApiKeySaved: "AI API клучот е зачуван",
-    aiGroqApiKeyInvalid: "Invalid Groq API key",
+    aiGroqApiKeyInvalid: "Невалиден Groq API клуч",
     aiGroqApiKeyNotSet: "Не е поставено (стандардно на серверот)",
-    aiEnabled: "AI Enabled",
-    aiEnabledYes: "Yes",
-    aiEnabledNo: "No",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
-    aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiEnabled: "AI е овозможен",
+    aiEnabledYes: "Да",
+    aiEnabledNo: "Не",
+    aiRouteViaNetwork: "Рутирај преку network.corifeus.com",
+    aiRoutingDirect: "Прашањата одат директно до Groq со користење на вашиот сопствен API клуч, заобиколувајќи го network.corifeus.com.",
+    aiRoutingNetwork: "AI барањата се рутираат преку network.corifeus.com. Ако имате сопствен бесплатен Groq API клуч, можете да го исклучите овој прекинувач за да рутирате директно до Groq без network.corifeus.com.",
+    aiMaxTokens: "Максимум AI токени",
+    aiMaxTokensInfo: "Максималниот број токени за AI одговори. Повисоките вредности овозможуваат подолги одговори, но може да трошат повеќе API кредити.",
     ssh: {
       on: "SSH вклучен",
       off: "SSH исклучено",
@@ -263,7 +270,7 @@ const strings = {
     redisListIndexInfo: "Празен за додавање, -1 за прикачување или зачувување на прикажаната позиција.",
     console: "Конзола",
     connectiondAdd: "Додадете врска",
-    connectiondEdit: "Уред�� врска",
+    connectiondEdit: "Уреди врска",
     connectiondView: "Прикажи ја врската",
     connections: "Врски",
     keysSort: {
@@ -309,9 +316,9 @@ const strings = {
     shortcutDisconnect: "Исклучете се",
     themeAuto: "Auto (system)",
     languageAuto: "Auto (system)",
-    shortcutCommandPalette: "Command Palette",
-    commandPalette: "Command Palette",
-    noResults: "No results",
+    shortcutCommandPalette: "Палета со наредби",
+    commandPalette: "Палета со наредби",
+    noResults: "Нема резултати",
     redisCommandsReference: "Redis Команди",
     ungrouped: "Без група",
     grouped: "Grouped",
@@ -511,7 +518,10 @@ const strings = {
       indexInfo: "Инфо за индекс",
       indexName: "Име на индекс",
       prefix: "Префикс на клуч (опционално)",
-      fieldName: "Име на поле"
+      fieldName: "Име на поле",
+      hybridMode: "Хибридно пребарување (FT.HYBRID)",
+      vectorField: "Векторско поле",
+      vectorValues: "Векторски вредности",
     },
     monitor: {
       title: "Мониторинг",
@@ -535,7 +545,8 @@ const strings = {
       peak: "Врв",
       fragmentation: "Фрагментација",
       hitsAndMisses: "Погодоци / Промашувања",
-      noClients: "Нема клиенти"
+      noClients: "Нема клиенти",
+      slotStats: "Статистика на слотови на кластер",
     },
     analysis: {
       title: "Анализа на меморија",
@@ -695,6 +706,8 @@ const strings = {
         dimensions: "Димензии",
         removeConfirm: "Отстрани го овој елемент од VectorSet?",
         noElements: "Нема елементи",
+        filter: "Филтер",
+        searchComplete: "Пребарувањето е завршено",
       }
     },
     treeControls: {
@@ -720,9 +733,6 @@ const strings = {
     }
   },
   time: {
-    type: "Тип",
-    format: "Формат",
-    loading: "Се вчитува...",
     years: "години",
     months: "месеци",
     days: "денови",

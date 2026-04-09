@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Ralat pelayan, sila cuba lagi"
+    server_error: "Ralat pelayan, sila cuba lagi",
+    aiPromptTooLong: "Prompt AI terlalu panjang (maksimum 4096 aksara)",
   },
   title: {
     donate: "Menderma",
@@ -187,6 +188,8 @@ const strings = {
     edit: "Sunting",
     save: "Jimat",
     ttl: "Tetapkan TTL",
+    fieldTtl: "TTL medan",
+    digest: "Ringkasan",
     delete: "Padam",
     remove: "Alih keluar",
     areYouSure: "Adakah anda pasti?",
@@ -195,7 +198,9 @@ const strings = {
     getKey: "Memuatkan kunci Redis dan data yang berkaitan ...",
     jsonViewShow: "Paparkan JSON",
     jsonViewEditor: "Edit JSON",
-    quickConsole: "Konsol Pantas"
+    quickConsole: "Konsol Pantas",
+    moveUp: "Alih ke atas",
+    moveDown: "Alih ke bawah"
   },
   label: {
     id: {
@@ -204,20 +209,22 @@ const strings = {
       info: "Jika anda tidak mahu menukar sifat-sifat: sshPassword, sshPrivateKey, kata laluan, tlsCrt, tlsKey, tlsCa, sila masukkan ID sambungan dalam sifat-sifat tersebut untuk mengekalkan nilai harta benda tersebut. Jika anda mahukan logik yang sama dalam kata laluan nod, kemudian masukkan ID nod dalam kata laluan nod."
     },
     secureFeature: "Jika anda melihat nilai yang bermula dengan P3X rupa yang sama, ia adalah ciri selamat. Untuk menukar tetapan, cuma gantikan tetapan ini dengan kosong atau sesuatu yang lain dan ia akan disimpan. Jika anda tidak menukar tetapan, tetapan akan disimpan kerana ia berada pada pelayan.",
-    aiTranslating: "Translating...",
+    aiTranslating: "Menterjemahkan...",
     aiSettings: "Tetapan AI",
     aiGroqApiKey: "Kunci API Groq",
     aiGroqApiKeyInfo: "Pilihan. Kunci API Groq sendiri untuk prestasi lebih baik. Dapatkan kunci percuma dari",
     aiGroqApiKeyPlaceholder: "gsk_...",
     aiGroqApiKeySaved: "Kunci API AI disimpan",
-    aiGroqApiKeyInvalid: "Invalid Groq API key",
+    aiGroqApiKeyInvalid: "Kunci API Groq tidak sah",
     aiGroqApiKeyNotSet: "Tidak ditetapkan (lalai pelayan)",
-    aiEnabled: "AI Enabled",
-    aiEnabledYes: "Yes",
-    aiEnabledNo: "No",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
-    aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiEnabled: "AI didayakan",
+    aiEnabledYes: "Ya",
+    aiEnabledNo: "Tidak",
+    aiRouteViaNetwork: "Rutekan melalui network.corifeus.com",
+    aiRoutingDirect: "Pertanyaan dihantar terus ke Groq menggunakan kunci API anda sendiri, tanpa melalui network.corifeus.com.",
+    aiRoutingNetwork: "Pertanyaan AI dirutekan melalui network.corifeus.com. Jika anda mempunyai kunci API Groq percuma sendiri, anda boleh mematikan suis ini untuk merutekan terus ke Groq tanpa network.corifeus.com.",
+    aiMaxTokens: "Maksimum token AI",
+    aiMaxTokensInfo: "Bilangan maksimum token untuk respons AI. Nilai yang lebih tinggi membenarkan respons yang lebih panjang tetapi mungkin menggunakan lebih banyak kredit API.",
     ssh: {
       on: "SSH dihidupkan",
       off: "SSH dimatikan",
@@ -324,8 +331,8 @@ const strings = {
     importSkip: "Langkau",
     importConflict: "Jika kunci sudah wujud:",
     noKeysToExport: "Tiada kunci untuk dieksport",
-    time: "Masa",
     type: "Jenis",
+    time: "Masa",
     format: "Format",
     loading: "Memuatkan...",
     autoRefresh: "Auto",
@@ -511,7 +518,10 @@ const strings = {
       indexInfo: "Info indeks",
       indexName: "Nama indeks",
       prefix: "Awalan kunci (pilihan)",
-      fieldName: "Nama medan"
+      fieldName: "Nama medan",
+      hybridMode: "Carian hibrid (FT.HYBRID)",
+      vectorField: "Medan vektor",
+      vectorValues: "Nilai vektor",
     },
     monitor: {
       title: "Pemantauan",
@@ -535,7 +545,8 @@ const strings = {
       peak: "Puncak",
       fragmentation: "Fragmentasi",
       hitsAndMisses: "Hit / Miss",
-      noClients: "Tiada pelanggan"
+      noClients: "Tiada pelanggan",
+      slotStats: "Statistik slot kluster",
     },
     analysis: {
       title: "Analisis Memori",
@@ -695,6 +706,8 @@ const strings = {
         dimensions: "Dimensi",
         removeConfirm: "Alih keluar elemen ini daripada VectorSet?",
         noElements: "Tiada elemen",
+        filter: "Penapis",
+        searchComplete: "Carian selesai",
       }
     },
     treeControls: {
@@ -720,9 +733,6 @@ const strings = {
     }
   },
   time: {
-    type: "Jenis",
-    format: "Format",
-    loading: "Memuatkan...",
     years: "tahun",
     months: "bulan",
     days: "hari",

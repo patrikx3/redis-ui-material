@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "სერვერის შეცდომა, გთხოვთ სცადოთ ხელახლა"
+    server_error: "სერვერის შეცდომა, გთხოვთ სცადოთ ხელახლა",
+    aiPromptTooLong: "AI მოთხოვნა ზედმეტად გრძელია (მაქსიმუმ 4096 სიმბოლო)",
   },
   title: {
     donate: "შემოწირულობა",
@@ -41,7 +42,7 @@ const strings = {
     deleteListItem: "დარწმუნებული ხართ, რომ წაშლით ამ სიის ერთეულს?",
     deleteHashKey: "დარწმუნებული ხართ, რომ წაშლით ამ ჰეშის გასაღების ერთეულს?",
     deleteStreamTimestamp: "დარწმუნებული ხართ, რომ წაშლით ამ ნაკადის დროის ნიშანს?",
-    deleteSetMember: "დარწმუნებული ხართ, რომ წაშლით ამ ნ���კრების წევრს?",
+    deleteSetMember: "დარწმუნებული ხართ, რომ წაშლით ამ ნაკრების წევრს?",
     deleteZSetMember: "დარწმუნებული ხართ, რომ წაშლით ამ დალაგებული ნაკრების წევრს?",
     deleteConnection: "დაადასტურეთ",
     deleteConnectionText: "დარწმუნებული ხართ, რომ წაშალეთ ეს Redis კავშირი?",
@@ -145,7 +146,7 @@ const strings = {
     pubsubMonitor: "PubSub",
     pulse: "Pulse",
     profiler: "Profiler",
-    memoryAnalysis: "Analysis",
+    memoryAnalysis: "ანალიზი",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "ენა",
@@ -153,7 +154,7 @@ const strings = {
     addKey: "დაამატეთ ამ გასაღებს",
     addKeyRoot: "დაამატეთ root გასაღები",
     reloadKey: "გადატვირთეთ გასაღები",
-    reload: "გა��ატვირთვა",
+    reload: "გადატვირთვა",
     close: "დახურვა",
     commands: "ბრძანებები",
     view: "ხედი",
@@ -170,7 +171,7 @@ const strings = {
     githubRepo: "საცავი",
     githubRelease: "რელიზები",
     githubChangelog: "ცვლილებების ჟურნალი",
-    info: "Info",
+    info: "ინფორმაცია",
     settings: "პარამეტრები",
     connect: "დაკავშირება",
     disconnect: "გათიშვა",
@@ -187,6 +188,8 @@ const strings = {
     edit: "რედაქტირება",
     save: "შენახვა",
     ttl: "დააყენეთ TTL",
+    fieldTtl: "ველის TTL",
+    digest: "დაიჯესტი",
     delete: "წაშლა",
     remove: "ამოღება",
     areYouSure: "დარწმუნებული ხართ?",
@@ -195,7 +198,9 @@ const strings = {
     getKey: "იტვირთება Redis გასაღები და მასთან დაკავშირებული მონაცემები...",
     jsonViewShow: "ეკრანი JSON",
     jsonViewEditor: "JSON რედაქტირება",
-    quickConsole: "სწრაფი კონსოლი"
+    quickConsole: "სწრაფი კონსოლი",
+    moveUp: "ზემოთ აწევა",
+    moveDown: "ქვემოთ ჩამოწევა"
   },
   label: {
     id: {
@@ -203,21 +208,23 @@ const strings = {
       id: "კავშირის ID",
       info: "თუ არ გსურთ შეცვალოთ თვისებები: sshPassword, sshPrivateKey, პაროლი, tlsCrt, tlsKey, tlsCa, გთხოვთ, შეიყვანოთ კავშირის ID ამ თვისებებში, რათა შეინარჩუნოთ ქონების მნიშვნელობები ხელუხლებელი. თუ გსურთ იგივე ლოგიკა კვანძის პაროლში, მაშინ შეიყვანეთ კვანძის ID კვანძის პაროლში."
     },
-    secureFeature: "თუ ხედავთ მნიშვნელობას, რომელიც იწყება P3X-ით, იგივე გამოიყურება, ეს უსაფრთხო ფუნქციაა. პარამეტრების შესაცვლელად, უბრალოდ შეცვალეთ ეს პარამეტრები ცარიელი ან ს��ვა რამით და ისინი შეინახება. თუ არ შეცვლით პარამეტრებს, პარამეტრები შენარჩუნდება როგორც სერვერზეა.",
-    aiTranslating: "Translating...",
+    secureFeature: "თუ ხედავთ მნიშვნელობას, რომელიც იწყება P3X-ით და ერთნაირად გამოიყურება, ეს უსაფრთხოების ფუნქციაა. პარამეტრების შესაცვლელად, უბრალოდ შეცვალეთ ეს პარამეტრები ცარიელი მნიშვნელობით ან სხვა რამით და ისინი შეინახება. თუ პარამეტრებს არ შეცვლით, ისინი სერვერზე არსებულ მდგომარეობაში დარჩება.",
+    aiTranslating: "ითარგმნება...",
     aiSettings: "AI პარამეტრები",
     aiGroqApiKey: "Groq API გასაღები",
     aiGroqApiKeyInfo: "არასავალდებულო. თქვენი Groq API გასაღები უკეთესი წარმადობისთვის. მიიღეთ უფასო გასაღები",
     aiGroqApiKeyPlaceholder: "gsk_...",
     aiGroqApiKeySaved: "AI API გასაღები შენახულია",
-    aiGroqApiKeyInvalid: "Invalid Groq API key",
+    aiGroqApiKeyInvalid: "Groq API გასაღები არასწორია",
     aiGroqApiKeyNotSet: "არ არის დაყენებული (სერვერის ნაგულისხმევი)",
-    aiEnabled: "AI Enabled",
-    aiEnabledYes: "Yes",
-    aiEnabledNo: "No",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
-    aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiEnabled: "AI ჩართულია",
+    aiEnabledYes: "დიახ",
+    aiEnabledNo: "არა",
+    aiRouteViaNetwork: "გაგზავნა network.corifeus.com-ით",
+    aiRoutingDirect: "მოთხოვნები პირდაპირ იგზავნება Groq-ზე თქვენი საკუთარი API გასაღების გამოყენებით, network.corifeus.com-ის გვერდის ავლით.",
+    aiRoutingNetwork: "AI მოთხოვნები გადის network.corifeus.com-ით. თუ გაქვთ საკუთარი უფასო Groq API გასაღები, შეგიძლიათ გამორთოთ ეს გადამრთველი და მოთხოვნები პირდაპირ Groq-ზე გააგზავნოთ network.corifeus.com-ის გარეშე.",
+    aiMaxTokens: "AI მაქსიმალური ტოკენები",
+    aiMaxTokensInfo: "AI პასუხებისთვის მაქსიმალური ტოკენების რაოდენობა. უფრო მაღალი მნიშვნელობა უფრო გრძელ პასუხებს იძლევა, მაგრამ შეიძლება მეტი API კრედიტი გამოიყენოს.",
     ssh: {
       on: "SSH ჩართულია",
       off: "SSH გამორთულია",
@@ -290,7 +297,7 @@ const strings = {
       darkoBluo: "დარკო ბლუო",
       enterprise: "საწარმო",
       redis: "Redis",
-      matrix: "მატრ��ცა"
+      matrix: "მატრიცა"
     },
     connected: opts => {
       return `დაკავშირებულია: ${opts.name}`;
@@ -309,34 +316,34 @@ const strings = {
     shortcutDisconnect: "გათიშვა",
     themeAuto: "Auto (system)",
     languageAuto: "Auto (system)",
-    shortcutCommandPalette: "Command Palette",
-    commandPalette: "Command Palette",
-    noResults: "No results",
-    redisCommandsReference: "Redis ბრძანebebi",
+    shortcutCommandPalette: "ბრძანებების პალიტრა",
+    commandPalette: "ბრძანებების პალიტრა",
+    noResults: "შედეგები არ არის",
+    redisCommandsReference: "Redis ბრძანებები",
     ungrouped: "ჯგუფის გარეშე",
-    grouped: "Grouped",
-    connectFirst: "connectFirst",
+    grouped: "დაჯგუფებული",
+    connectFirst: "ჯერ დაუკავშირდით",
     searchLanguage: "ენის ძიება...",
-    exportProgress: "გასაღebebis ექსპორტი...",
-    importProgress: "გასაღebebis იმპორტი...",
+    exportProgress: "გასაღებების ექსპორტი...",
+    importProgress: "გასაღებების იმპორტი...",
     importPreview: "წინასწარი ნახვა",
     importOverwrite: "გადაწერა",
     importSkip: "გამოტოვება",
-    importConflict: "თუ გასაღები უკვე არსებobs:",
-    noKeysToExport: "არ არის გასაღebebi ექსპორტისთვის",
+    importConflict: "თუ გასაღები უკვე არსებობს:",
+    noKeysToExport: "ექსპორტისთვის გასაღებები არ არის",
     time: "დრო",
     type: "ტიპი",
     format: "ფორმატი",
-    loading: "იტvirtheba...",
+    loading: "იტვირთება...",
     autoRefresh: "ავტო",
-    exportSearchHint: "ექსპორტი მხოლოდ მიმდინარე ძიებას შესაბამისი გასაღebebis",
-    importSearchHint: "იმპორტი ვრცeldeba მთელ მონაცემთა ბაზაზე",
+    exportSearchHint: "ექსპორტი მხოლოდ მიმდინარე ძიებას შესაბამისი გასაღებების",
+    importSearchHint: "იმპორტი ვრცელდება მთელ მონაცემთა ბაზაზე",
     deleteSearchHint: "სერვერზე მიმდინარე ძიების შესაბამისი ყველა გასაღების წაშლა",
-    deletingSearchKeys: "შესაბამისი გასაღebebis წdelays...",
-    importNoKeys: "ფაილში გასაღebebi ვერ მოიძებna",
-    desktopNotifications: "Desktop Notifications",
-    desktopNotificationsEnabled: "Enable desktop notifications",
-    desktopNotificationsInfo: "Receive OS notifications for Redis disconnections and reconnections when the app is not focused."
+    deletingSearchKeys: "შესაბამისი გასაღებების წაშლა...",
+    importNoKeys: "ფაილში გასაღებები ვერ მოიძებნა",
+    desktopNotifications: "დესკტოპის შეტყობინებები",
+    desktopNotificationsEnabled: "დესკტოპის შეტყობინებების ჩართვა",
+    desktopNotificationsInfo: "მიიღეთ OS-ის შეტყობინებები Redis-ის გათიშვისა და ხელახლა დაკავშირების შესახებ, როცა აპს ფოკუსი არ აქვს."
   },
   status: {
     dataCopied: "მონაცემები ბუფერშია",
@@ -372,7 +379,7 @@ const strings = {
       return `db ინდექსი დაყენებულია ${opts.db}. `;
     },
     treeDeleted: opts => {
-      return `ხის გასაღები წაი��ალა (${opts.key}).`;
+      return `ხის გასაღები წაიშალა (${opts.key}).`;
     },
     deletedKey: opts => {
       return `გასაღები წაიშალა (${opts.key}).`;
@@ -382,12 +389,12 @@ const strings = {
     notInteger: "ეს შეყვანა არ არის მთელი რიცხვი",
     persisted: "ეს გასაღები სამუდამოდ რჩება",
     set: "გასაღები დაყენებულია/დამატებულია",
-    connectionRestored: "Connection restored"
+    connectionRestored: "კავშირი აღდგენილია"
   },
   code: {
     "delete-connection": "ეს კავშირი წაიშალა, ასე რომ თქვენ გათიშული ხართ ამ Redis ეგზემპლართან.",
     "save-connection": "ეს კავშირი შეიცვალა, ასე რომ თქვენ გათიშული ხართ ამ Redis ეგზემპლართან. შეგიძლიათ ხელახლა დაუკავშირდეთ.",
-    "readonly-connections": "კავშირების დამატება/შენახვა/წაშლა მხოლოდ წაკი���ხულია!",
+    "readonly-connections": "კავშირების დამატება/შენახვა/წაშლა მხოლოდ წასაკითხია!",
     "readonly-connection-mode": "ეს კავშირი მხოლოდ წაკითხვის რეჟიმშია!",
     "list-out-of-bounds": "ეს სიის ინდექსი საზღვრებს გარეთაა",
     "invalid-json-value": "მნიშვნელობა არ არის სწორი JSON.",
@@ -409,7 +416,7 @@ const strings = {
     connection: {
       label: {
         name: "სახელი",
-        group: "Group",
+        group: "ჯგუფი",
         host: "მასპინძლის სახელი",
         port: "პორტი",
         password: "პაროლი",
@@ -466,7 +473,7 @@ const strings = {
         index: "ინდექსი",
         hashKey: "ჰეშის გასაღები",
         score: "ქულა",
-        value: "��ირებულება",
+        value: "მნიშვნელობა",
         errorRate: "Error rate",
         capacity: "Capacity",
         topk: "Top K",
@@ -501,17 +508,20 @@ const strings = {
   },
   page: {
     search: {
-      title: "ძიeba",
-      index: "ინdelays",
-      query: "მoთxovna",
-      results: "შედეgebi",
-      noIndex: "ინdelays",
-      createIndex: "ინdelays",
-      dropIndex: "ინdelays",
-      indexInfo: "ინdelays",
-      indexName: "ინdelays",
-      prefix: "ინdelays",
-      fieldName: "ინdelays"
+      title: "ძიება",
+      index: "ინდექსი",
+      query: "მოთხოვნა",
+      results: "შედეგები",
+      noIndex: "ინდექსი არ არის",
+      createIndex: "ინდექსის შექმნა",
+      dropIndex: "ინდექსის წაშლა",
+      indexInfo: "ინდექსის ინფორმაცია",
+      indexName: "ინდექსის სახელი",
+      prefix: "პრეფიქსი",
+      fieldName: "ველის სახელი",
+      hybridMode: "ჰიბრიდული ძიება (FT.HYBRID)",
+      vectorField: "ვექტორის ველი",
+      vectorValues: "ვექტორის მნიშვნელობები",
     },
     monitor: {
       title: "მონიტორინგი",
@@ -526,16 +536,17 @@ const strings = {
       expired: "ვადაგასული",
       evicted: "გამოძevebuli",
       clientList: "კლიენტების სია",
-      topKeys: "უდიდესი გასაღebebi",
+      topKeys: "უდიდესი გასაღებები",
       killClient: "კლიენტის გაchერeba",
       clientKilled: "კლიენტი გაchერda",
       confirmKillClient: "დარწმუნebuli ხართ კლიენტის შეჩerebashi?",
-      noKeys: "გასაღebebi არ არის",
+      noKeys: "გასაღებები არ არის",
       rss: "RSS",
       peak: "პიკი",
       fragmentation: "ფრაგმენტაცია",
       hitsAndMisses: "მოხვედრები / გაცდენები",
-      noClients: "კლიენტebi არ არის"
+      noClients: "კლიენტebi არ არის",
+      slotStats: "კლასტერის სლოტის სტატისტიკა",
     },
     analysis: {
       title: "მეხსიერების ანალიზი",
@@ -571,7 +582,7 @@ const strings = {
 
     overview: {
       noConnected: "არ არის კავშირი Redis-თან.",
-      overviewClients: "ჩამოთვალეთ დაკავშირებული კლიენტები��� რაოდენობის მიხედვით",
+      overviewClients: "ჩამოთვალეთ დაკავშირებული კლიენტები რაოდენობის მიხედვით",
       connectedCount: opt => {
         if (opt.length === 1) {
           return "1 კლიენტი";
@@ -598,13 +609,13 @@ const strings = {
       list: {
         table: {
           index: "ინდექსი",
-          value: "��ირებულება"
+          value: "მნიშვნელობა"
         }
       },
       hash: {
         table: {
           hashkey: "ჰეშკი",
-          value: "��ირებულება"
+          value: "მნიშვნელობა"
         }
       },
       set: {
@@ -622,7 +633,7 @@ const strings = {
         table: {
           timestamp: "დროის ანაბეჭდის ID",
           field: "ველი",
-          value: "��ირებულება"
+          value: "მნიშვნელობა"
         }
       },
       timeseries: {
@@ -662,39 +673,41 @@ const strings = {
         mrangeHint: "\u10db\u10d0\u10d2. sensor=temp"
       },
       probabilistic: {
-        info: "Info",
-        addItem: "Add Item",
-        checkItem: "Check Item",
-        item: "Item",
-        exists: "Exists",
-        doesNotExist: "Does not exist",
-        topkList: "Top Items",
-        topkCount: "Count",
-        queryCount: "Query Count",
-        queryResult: "Query Result",
-        addedSuccessfully: "Item added successfully",
-        deletedSuccessfully: "Item deleted successfully",
-        quantile: "Quantile",
-        quantileResult: "Result",
-        noItems: "No items to display",
-        resetConfirm: "Reset all data in this T-Digest?",
+        info: "ინფორმაცია",
+        addItem: "ელემენტის დამატება",
+        checkItem: "ელემენტის შემოწმება",
+        item: "ელემენტი",
+        exists: "არსებობს",
+        doesNotExist: "არ არსებობს",
+        topkList: "ზედა ელემენტები",
+        topkCount: "რაოდენობა",
+        queryCount: "მოთხოვნების რაოდენობა",
+        queryResult: "მოთხოვნის შედეგი",
+        addedSuccessfully: "ელემენტი წარმატებით დაემატა",
+        deletedSuccessfully: "ელემენტი წარმატებით წაიშალა",
+        quantile: "კვანტილი",
+        quantileResult: "შედეგი",
+        noItems: "საჩვენებელი ელემენტები არ არის",
+        resetConfirm: "გავანულოთ ამ T-Digest-ის ყველა მონაცემი?",
       },
       vectorset: {
-        info: "Info",
-        elements: "Elements",
-        similarity: "Similarity Search",
-        searchByElement: "Search by element",
-        searchByVector: "Search by vector",
-        vectorValues: "Vector values",
-        element: "Element",
-        score: "Score",
-        count: "Count",
-        addElement: "Add Element",
-        attributes: "Attributes",
-        noAttributes: "No attributes",
-        dimensions: "Dimensions",
-        removeConfirm: "Remove this element from the VectorSet?",
-        noElements: "No elements",
+        info: "ინფორმაცია",
+        elements: "ელემენტები",
+        similarity: "მსგავსების ძიება",
+        searchByElement: "ელემენტით ძიება",
+        searchByVector: "ვექტორით ძიება",
+        vectorValues: "ვექტორის მნიშვნელობები",
+        element: "ელემენტი",
+        score: "ქულა",
+        count: "რაოდენობა",
+        addElement: "ელემენტის დამატება",
+        attributes: "ატრიბუტები",
+        noAttributes: "ატრიბუტები არ არის",
+        dimensions: "განზომილებები",
+        removeConfirm: "წავშალოთ ეს ელემენტი VectorSet-იდან?",
+        noElements: "ელემენტები არ არის",
+        filter: "ფილტრი",
+        searchComplete: "ძიება დასრულდა",
       }
     },
     treeControls: {
@@ -720,9 +733,6 @@ const strings = {
     }
   },
   time: {
-    type: "ტიპი",
-    format: "ფორმატი",
-    loading: "იტvirtheba...",
     years: "წლები",
     months: "თვეების",
     days: "დღეები",

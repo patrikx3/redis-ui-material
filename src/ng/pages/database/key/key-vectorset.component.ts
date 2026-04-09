@@ -49,6 +49,7 @@ export class KeyVectorsetComponent extends KeyTypeBase implements OnInit, OnChan
     vectorInput = '';
     simQueryInput = '';
     simCountInput = 10;
+    simFilterInput = '';
     simMode: 'element' | 'vector' = 'element';
 
     autoRefresh = false;
@@ -171,6 +172,7 @@ export class KeyVectorsetComponent extends KeyTypeBase implements OnInit, OnChan
                     query: query.trim(),
                     count: this.simCountInput,
                     mode: searchMode,
+                    filter: this.simFilterInput.trim() || undefined,
                 },
             });
             this.simResults = (response as any).results || [];

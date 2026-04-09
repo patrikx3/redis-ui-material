@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "ข้อผิดพลาดของเซิร์ฟเวอร์ โปรดลองอีกครั้ง"
+    server_error: "ข้อผิดพลาดของเซิร์ฟเวอร์ โปรดลองอีกครั้ง",
+    aiPromptTooLong: "คำสั่ง AI ยาวเกินไป (สูงสุด 4096 อักขระ)",
   },
   title: {
     donate: "บริจาค",
@@ -9,7 +10,7 @@ const strings = {
     jsonRecursive: "ขยายใบทั้งหมด",
     name: "P3X Redis UI",
     nameDonated: "P3X Redis UI+",
-    main: "คุณสามารถเลือกการเชื่อมต่อ Redis เพื่อเชื่อมต่อจา��เมนูด้านล่างซ้าย",
+    main: "คุณสามารถเลือกการเชื่อมต่อ Redis เพื่อเชื่อมต่อจากเมนูด้านล่างซ้าย",
     statistics: "สถิติ",
     error: "เกิดข้อผิดพลาด",
     connectingRedis: "กำลังเชื่อมต่อกับ Redis ...",
@@ -44,7 +45,7 @@ const strings = {
     deleteSetMember: "คุณแน่ใจหรือว่าจะลบสมาชิกชุดนี้",
     deleteZSetMember: "คุณแน่ใจหรือไม่ที่จะลบสมาชิกชุดที่เรียงลำดับนี้",
     deleteConnection: "ยืนยัน",
-    deleteConnectionText: "คุณแน่ใจหรือไม่ว่าจะ��บการเชื่อมต่อ Redis นี้",
+    deleteConnectionText: "คุณแน่ใจหรือไม่ว่าจะลบการเชื่อมต่อ Redis นี้",
     deleteNode: "คุณแน่ใจหรือไม่ว่าจะลบโหนด Redis นี้",
     deleteAllKeys: opts => {
       return `ลบแผนผังนี้และกุญแจทั้งหมด (${opts.key})?`;
@@ -52,7 +53,7 @@ const strings = {
     deleteSearchKeys: opts => {
       return `คุณแน่ใจหรือไม่ว่าจะลบคีย์ทั้งหมดที่ตรงกับ "${opts.pattern}"? พบ ${opts.count} คีย์`;
     },
-    socketioConnectError: "Socket.IO ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้ คุณสามารถโหลดซ้ำและลองแ��้ไขข้อผิดพลาดในการเชื่อมต่อด้วยตนเอง ไคลเอ็นต์ไม่ทราบวิธีแก้ปัญหาด้วยตนเอง",
+    socketioConnectError: "Socket.IO ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้ คุณสามารถโหลดซ้ำและลองแก้ไขข้อผิดพลาดในการเชื่อมต่อด้วยตนเอง ไคลเอ็นต์ไม่ทราบวิธีแก้ปัญหาด้วยตนเอง",
     socketioAuthRequired: "ต้องมีการอนุญาต Socket.IO โปรดตรวจสอบสิทธิ์ด้วย HTTP Basic Auth (ชื่อผู้ใช้/รหัสผ่าน) แล้วโหลดซ้ำ",
     invalidCredentials: "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง",
     delete: "ลบ?",
@@ -129,7 +130,7 @@ const strings = {
   },
   intention: {
     copy: "คัดลอก",
-    downloadBuffer: "ดาวน์โหลด��บนารี่",
+    downloadBuffer: "ดาวน์โหลดไบนารี",
     setBuffer: "อัปโหลดไบนารี",
     exportKeys: "ส่งออกคีย์",
     exportAllKeys: (opts) => `ส่งออกคีย์ทั้งหมด ${opts.count} รายการ`,
@@ -141,17 +142,17 @@ const strings = {
     formatJson: "จัดรูปแบบ Json",
     wrap: "ห่อ",
     unwrap: "แกะห่อ",
-    downloadJson: "ดาวน์โหลด JSON.dll",
+    downloadJson: "ดาวน์โหลด JSON",
     pubsubMonitor: "PubSub",
     pulse: "Pulse",
     profiler: "Profiler",
-    memoryAnalysis: "Analysis",
+    memoryAnalysis: "การวิเคราะห์",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "ภาษา",
     ok: "ตกลง",
     addKey: "เพิ่มลงในคีย์นี้",
-    addKeyRoot: "เพิ่มคี���์รูท",
+    addKeyRoot: "เพิ่มคีย์รูท",
     reloadKey: "โหลดคีย์ซ้ำ",
     reload: "โหลดซ้ำ",
     close: "ปิด",
@@ -170,7 +171,7 @@ const strings = {
     githubRepo: "พื้นที่เก็บข้อมูล",
     githubRelease: "ข่าวประชาสัมพันธ์",
     githubChangelog: "บันทึกการเปลี่ยนแปลง",
-    info: "Info",
+    info: "ข้อมูล",
     settings: "การตั้งค่า",
     connect: "เชื่อมต่อ",
     disconnect: "ตัดการเชื่อมต่อ",
@@ -187,6 +188,8 @@ const strings = {
     edit: "แก้ไข",
     save: "บันทึก",
     ttl: "ตั้งค่า TTL",
+    fieldTtl: "TTL ฟิลด์",
+    digest: "ไดเจสต์",
     delete: "ลบ",
     remove: "ลบ",
     areYouSure: "คุณแน่ใจหรือไม่?",
@@ -195,7 +198,9 @@ const strings = {
     getKey: "กำลังโหลดคีย์ Redis และข้อมูลที่เกี่ยวข้อง ...",
     jsonViewShow: "จอแสดงผล JSON",
     jsonViewEditor: "แก้ไข JSON",
-    quickConsole: "คอนโซลด่วน"
+    quickConsole: "คอนโซลด่วน",
+    moveUp: "เลื่อนขึ้น",
+    moveDown: "เลื่อนลง"
   },
   label: {
     id: {
@@ -210,14 +215,16 @@ const strings = {
     aiGroqApiKeyInfo: "ไม่บังคับ คีย์ API Groq ของคุณเองเพื่อประสิทธิภาพที่ดีขึ้น รับคีย์ฟรีจาก",
     aiGroqApiKeyPlaceholder: "gsk_...",
     aiGroqApiKeySaved: "บันทึกคีย์ API AI แล้ว",
-    aiGroqApiKeyInvalid: "Invalid Groq API key",
+    aiGroqApiKeyInvalid: "คีย์ Groq API ไม่ถูกต้อง",
     aiGroqApiKeyNotSet: "ยังไม่ตั้งค่า (ค่าเริ่มต้นเซิร์ฟเวอร์)",
     aiEnabled: "AI เปิดใช้งาน",
     aiEnabledYes: "ใช่",
     aiEnabledNo: "ไม่",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
-    aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiRouteViaNetwork: "ส่งผ่าน network.corifeus.com",
+    aiRoutingDirect: "คำขอจะถูกส่งไปยัง Groq โดยตรงด้วยคีย์ API ของคุณเอง โดยไม่ผ่าน network.corifeus.com",
+    aiRoutingNetwork: "คำขอ AI จะถูกส่งผ่าน network.corifeus.com หากคุณมีคีย์ Groq API ฟรีของตัวเอง คุณสามารถปิดสวิตช์นี้เพื่อส่งตรงไปยัง Groq โดยไม่ผ่าน network.corifeus.com",
+    aiMaxTokens: "จำนวนโทเค็น AI สูงสุด",
+    aiMaxTokensInfo: "จำนวนโทเค็นสูงสุดสำหรับคำตอบ AI ค่าที่สูงขึ้นจะทำให้ตอบได้ยาวขึ้น แต่ก็อาจใช้เครดิต API มากขึ้น",
     ssh: {
       on: "เปิด SSH",
       off: "ปิด SSH",
@@ -255,8 +262,8 @@ const strings = {
     passwordSecure: "รหัสผ่านอาจจะว่างเปล่า แต่ยังคงแสดงตัวอักษร นี่คือคุณลักษณะด้านความปลอดภัย",
     tlsWithoutCert: "เปิดใช้งาน TLS โดยไม่มีใบรับรองเพิ่มเติม",
     tlsRejectUnauthorized: "ปฏิเสธใบรับรองที่ไม่ได้รับอนุญาต",
-    tlsSecure: "หากคุณเห็นการกำหนดค่า TLS ที่ขึ้นต้นด้วย P3X หรือการต���้งค่า TLS ทั้งหมดเหมือนกัน แสดงว่าเป็นคุณสมบัติที่ปลอดภัย หากต้องการเปลี่ยนการตั้งค่า เพียงแทนที่การตั้งค่าเหล่านี้ด้วยค่าว่างหรืออย่างอื่น จากนั้นระบบจะบันทึกการตั้งค่าเหล่านั้น หากคุณไม่เปลี่ยนการตั้งค่า TLS การตั้งค่าจะถูกเก็บไว้เหมือนเดิมบนเซิร์ฟเวอร์",
-    treeSeparatorEmpty: "หากตัวแยกแผ��ผังว่างเปล่า ต้นไม้จะไม่มีโหนดที่ซ้อนกัน เป็นเพียงรายการล้วนๆ",
+    tlsSecure: "หากคุณเห็นการกำหนดค่า TLS ที่ขึ้นต้นด้วย P3X หรือการตั้งค่า TLS ทั้งหมดเหมือนกัน แสดงว่าเป็นคุณสมบัติที่ปลอดภัย หากต้องการเปลี่ยนการตั้งค่า เพียงแทนที่การตั้งค่าเหล่านี้ด้วยค่าว่างหรืออย่างอื่น จากนั้นระบบจะบันทึกการตั้งค่าเหล่านั้น หากคุณไม่เปลี่ยนการตั้งค่า TLS การตั้งค่าจะถูกเก็บไว้เหมือนเดิมบนเซิร์ฟเวอร์",
+    treeSeparatorEmpty: "หากตัวแยกแผนผังว่างเปล่า ต้นไม้จะไม่มีโหนดที่ซ้อนกัน เป็นเพียงรายการล้วนๆ",
     treeSeparatorEmptyNote: "ไม่มีโหนดที่ซ้อนกัน เป็นเพียงรายการล้วนๆ",
     welcomeConsole: "ยินดีต้อนรับสู่คอนโซล Redis",
     welcomeConsoleInfo: "เปิดใช้งานประวัติเคอร์เซอร์ขึ้นหรือลง",
@@ -309,12 +316,12 @@ const strings = {
     shortcutDisconnect: "ตัดการเชื่อมต่อ",
     themeAuto: "Auto (system)",
     languageAuto: "Auto (system)",
-    shortcutCommandPalette: "Command Palette",
-    commandPalette: "Command Palette",
-    noResults: "No results",
+    shortcutCommandPalette: "แผงคำสั่ง",
+    commandPalette: "แผงคำสั่ง",
+    noResults: "ไม่มีผลลัพธ์",
     redisCommandsReference: "คำสั่ง Redis",
     ungrouped: "ไม่มีกลุ่ม",
-    grouped: "Grouped",
+    grouped: "จัดกลุ่มแล้ว",
     connectFirst: "เชื่อมต่อกับเซิร์ฟเวอร์ Redis ก่อน",
     searchLanguage: "ค้นหาภาษา...",
     exportProgress: "กำลังส่งออกคีย์...",
@@ -358,7 +365,7 @@ const strings = {
     },
     treeExpandAll: "ขยายใบต้นไม้ทั้งหมด การดำเนินการนี้อาจมีราคาแพงและอาจต้องใช้เวลา ...",
     noRedisKeys: "ไม่มีคีย์ในฐานข้อมูลนี้",
-    redisConnected: "เชื่อมต่อ Redis ส���เร็จแล้ว",
+    redisConnected: "เชื่อมต่อ Redis สำเร็จแล้ว",
     reloadingDataInfo: "กำลังโหลดข้อมูลข้อมูล Redis อีกครั้ง",
     added: "เพิ่มแล้ว",
     saved: "อัปเดตแล้ว",
@@ -379,14 +386,14 @@ const strings = {
     },
     renamedKey: "เปลี่ยนชื่อคีย์นี้แล้ว",
     ttlChanged: "TTL ของคีย์นี้มีการเปลี่ยนแปลง",
-    notInteger: "อินพุตนี้ไม่ใช่จำ���วนเต็ม",
+    notInteger: "อินพุตนี้ไม่ใช่จำนวนเต็ม",
     persisted: "กุญแจดอกนี้จะคงอยู่ตลอดไป",
     set: "กุญแจถูกตั้งค่า/เพิ่ม",
     connectionRestored: "การเชื่อมต่อถูกกู้คืน"
   },
   code: {
     "delete-connection": "การเชื่อมต่อนี้ถูกลบแล้ว ดังนั้นคุณจึงยกเลิกการเชื่อมต่อกับอินสแตนซ์ Redis นี้",
-    "save-connection": "การเชื่อมต่อน��้มีการเปลี่ยนแปลง ดังนั้นคุณจึงยกเลิกการเชื่อมต่อกับอินสแตนซ์ Redis นี้ คุณสามารถเชื่อมต่อใหม่ได้",
+    "save-connection": "การเชื่อมต่อนี้มีการเปลี่ยนแปลง ดังนั้นคุณจึงถูกตัดการเชื่อมต่อจากอินสแตนซ์ Redis นี้ คุณสามารถเชื่อมต่อใหม่ได้",
     "readonly-connections": "การเชื่อมต่อเพิ่ม/บันทึก/ลบเป็นแบบอ่านอย่างเดียวเท่านั้น!",
     "readonly-connection-mode": "การเชื่อมต่อนี้เป็นโหมดอ่านอย่างเดียว!",
     "list-out-of-bounds": "ดัชนีรายการนี้อยู่นอกขอบเขต",
@@ -403,13 +410,13 @@ const strings = {
   form: {
     error: {
       required: "จำเป็น",
-      port: "พอร์ตอ���ู่ระหว่าง 1-65535",
+      port: "พอร์ตอยู่ระหว่าง 1-65535",
       invalid: "แบบฟอร์มไม่ถูกต้อง"
     },
     connection: {
       label: {
         name: "ชื่อ",
-        group: "Group",
+        group: "กลุ่ม",
         host: "ชื่อโฮสต์",
         port: "ท่าเรือ",
         password: "รหัสผ่าน",
@@ -418,7 +425,7 @@ const strings = {
     },
     treeSettings: {
       maxValueDisplay: "ความยาวสตริงการแสดงค่าสูงสุด",
-      maxValueDisplayInfo: "หากตั้งค่าเป็น 0 แสดงค่าเต็ม หากมากกว่า 0 ให้ตัดทอนตามความยาวนี้ ถ้า -1: สำหรับสตริง ให้ซ่อนค่าจนกว่าจะแก้ไข สำหรับประเภทอื่นๆ ให้แสดงเ���ื้อหาทั้งหมด",
+      maxValueDisplayInfo: "หากตั้งค่าเป็น 0 แสดงค่าเต็ม หากมากกว่า 0 ให้ตัดทอนตามความยาวนี้ ถ้า -1: สำหรับสตริง ให้ซ่อนค่าจนกว่าจะแก้ไข สำหรับประเภทอื่นๆ ให้แสดงเนื้อหาทั้งหมด",
       maxKeys: "จำนวนคีย์สูงสุด",
       maxKeysInfo: "เพื่อให้ GUI ไม่ขัดข้อง เราจึงจำกัดจำนวนคีย์สูงสุด",
       keyCount: (opts) => {
@@ -437,7 +444,7 @@ const strings = {
       },
       field: {
         treeSeparator: "เครื่องแยกต้นไม้",
-        treeSeparatorSelector: "ตัวเลือกตัวแยกต้���ไม้",
+        treeSeparatorSelector: "ตัวเลือกตัวแยกต้นไม้",
         page: "จำนวนเพจต้นไม้",
         keyPageCount: "จำนวนการเพจคีย์",
         keysSort: "จัดเรียงคีย์",
@@ -447,7 +454,7 @@ const strings = {
       error: {
         keyPageCount: "จำนวนหน้าหลักต้องเป็นจำนวนเต็มระหว่าง 5 - 100",
         page: "จำนวนหน้าต้องเป็นจำนวนเต็มระหว่าง 10 - 5,000",
-        maxValueDisplay: "ค่าที่แสดงสูงสุดต้องเป็นจำนวนเต็มระ���ว่าง -1 ถึง 32768",
+        maxValueDisplay: "ค่าที่แสดงสูงสุดต้องเป็นจำนวนเต็มระหว่าง -1 ถึง 32768",
         maxKeys: "ค่าจำนวนคีย์สูงสุดต้องเป็นจำนวนเต็มระหว่าง 100 ถึง 100,000"
       }
     },
@@ -511,7 +518,10 @@ const strings = {
       indexInfo: "ข้อมูลดัชนี",
       indexName: "ชื่อดัชนี",
       prefix: "คำนำหน้าคีย์ (ไม่บังคับ)",
-      fieldName: "ชื่อฟิลด์"
+      fieldName: "ชื่อฟิลด์",
+      hybridMode: "ค้นหาไฮบริด (FT.HYBRID)",
+      vectorField: "ฟิลด์เวกเตอร์",
+      vectorValues: "ค่าเวกเตอร์",
     },
     monitor: {
       title: "การตรวจสอบ",
@@ -535,7 +545,8 @@ const strings = {
       peak: "สูงสุด",
       fragmentation: "การแตกกระจาย",
       hitsAndMisses: "สำเร็จ / พลาด",
-      noClients: "ไม่มีไคลเอนต์"
+      noClients: "ไม่มีไคลเอนต์",
+      slotStats: "สถิติสล็อตคลัสเตอร์",
     },
     analysis: {
       title: "การวิเคราะห์หน่วยความจำ",
@@ -695,6 +706,8 @@ const strings = {
         dimensions: "มิติ",
         removeConfirm: "ลบองค์ประกอบนี้ออกจาก VectorSet?",
         noElements: "ไม่มีองค์ประกอบ",
+        filter: "ตัวกรอง",
+        searchComplete: "การค้นหาเสร็จสมบูรณ์",
       }
     },
     treeControls: {
@@ -720,9 +733,6 @@ const strings = {
     }
   },
   time: {
-    type: "ประเภท",
-    format: "รูปแบบ",
-    loading: "กำลังโหลด...",
     years: "ปี",
     months: "เดือน",
     days: "วัน",

@@ -1,10 +1,13 @@
 import { Component, Inject, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, ElementRef, ViewChild, AfterViewInit, NgZone, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 const timeFormatter = new Intl.DateTimeFormat(undefined, { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
 const formatTime = (ms: number) => timeFormatter.format(new Date(ms));
@@ -32,8 +35,10 @@ const MAX_HISTORY = 120;
     selector: 'p3xr-monitoring',
     standalone: true,
     imports: [
-        CommonModule, MatIconModule, MatButtonModule,
+        CommonModule, FormsModule,
+        MatIconModule, MatButtonModule,
         MatTooltipModule, MatDividerModule, MatListModule,
+        MatFormFieldModule, MatInputModule,
         P3xrAccordionComponent,
         P3xrButtonComponent,
     ],
@@ -54,6 +59,10 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
     autoRefreshTopKeys = localStorage.getItem('p3xr-monitor-auto-topkeys') === 'true';
     clientListLoaded = false;
     topKeysLoaded = false;
+    slotStats: Array<{ slot: number; 'key-count'?: number; 'cpu-usec'?: number; 'memory-bytes'?: number }> = [];
+    slotStatsMetric = 'KEY-COUNT';
+    slotStatsLoaded = false;
+    isCluster = false;
 
     @ViewChild('memoryChart') memoryChartRef!: ElementRef<HTMLDivElement>;
     @ViewChild('opsChart') opsChartRef!: ElementRef<HTMLDivElement>;
@@ -87,9 +96,13 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
 
     ngOnInit(): void {
         this.isReadonly = this.state.connection()?.readonly === true;
+        this.isCluster = this.state.connection()?.cluster === true;
         this.fetchData();
         this.loadClientList();
         this.loadTopKeys();
+        if (this.isCluster && this.state.redisVersion().isAtLeast(8, 2)) {
+            this.loadSlotStats();
+        }
 
         // Reload all data when connection changes
         const sub = this.socket.stateChanged$.subscribe(() => {
@@ -191,6 +204,18 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
         } catch (e) {
             if (e !== undefined) this.common.generalHandleError(e);
         }
+    }
+
+    async loadSlotStats(): Promise<void> {
+        try {
+            const response = await this.socket.request({
+                action: 'cluster-slot-stats',
+                payload: { metric: this.slotStatsMetric, limit: 20 },
+            });
+            this.slotStats = response.slots || [];
+            this.slotStatsLoaded = true;
+            this.safeDetectChanges();
+        } catch { this.slotStatsLoaded = true; this.slotStats = []; }
     }
 
     async loadTopKeys(): Promise<void> {

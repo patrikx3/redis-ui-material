@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "सर्भर त्रुटि, कृपया पुन: प्रयास गर्नुहोस्"
+    server_error: "सर्भर त्रुटि, कृपया पुन: प्रयास गर्नुहोस्",
+    aiPromptTooLong: "AI अनुरोध धेरै लामो छ (अधिकतम 4096 अक्षर)",
   },
   title: {
     donate: "दान गर्नुहोस्",
@@ -39,10 +40,10 @@ const strings = {
     alert: "अलर्ट",
     info: "जानकारी",
     deleteListItem: "के तपाइँ यो सूची वस्तु मेटाउन निश्चित हुनुहुन्छ?",
-    deleteHashKey: "के तपाइँ यो ह्यास कुञ्��ी वस्तु मेटाउन निश्चित हुनुहुन्छ?",
+    deleteHashKey: "के तपाइँ यो ह्यास कुञ्जी वस्तु मेटाउन निश्चित हुनुहुन्छ?",
     deleteStreamTimestamp: "के तपाइँ यो स्ट्रिम टाइमस्ट्याम्प मेटाउन निश्चित हुनुहुन्छ?",
     deleteSetMember: "के तपाइँ यो सेट सदस्य मेटाउन निश्चित हुनुहुन्छ?",
-    deleteZSetMember: "के तपाइँ यो क्रमबद्ध सेट सदस्य मेटाउन निश्चित हुनुहु��्छ?",
+    deleteZSetMember: "के तपाइँ यो क्रमबद्ध सेट सदस्य मेटाउन निश्चित हुनुहुन्छ?",
     deleteConnection: "पुष्टि गर्नुहोस्",
     deleteConnectionText: "के तपाइँ यो Redis जडान मेटाउन निश्चित हुनुहुन्छ?",
     deleteNode: "के तपाइँ यो Redis नोड मेटाउन निश्चित हुनुहुन्छ?",
@@ -139,13 +140,13 @@ const strings = {
     deleteSearchKeys: (opts) => `${opts.count} मिल्ने कुञ्जीहरू मेटाउनुहोस्`,
     saveWithFormatJson: "ढाँचा संग बचत गर्नुहोस्",
     formatJson: "ढाँचा Json",
-    wrap: "लपेट्���ुहोस्",
+    wrap: "लपेट्नुहोस्",
     unwrap: "खोल्नुहोस्",
     downloadJson: "JSON डाउनलोड गर्नुहोस्",
     pubsubMonitor: "PubSub",
     pulse: "Pulse",
     profiler: "Profiler",
-    memoryAnalysis: "Analysis",
+    memoryAnalysis: "विश्लेषण",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "भाषा",
@@ -165,12 +166,12 @@ const strings = {
     rename: "पुन: नामाकरण गर्नुहोस्",
     main: "डाटाबेस",
     cancel: "रद्द गर्नुहोस्",
-    theme: "वि���यवस्तु",
+    theme: "विषयवस्तु",
     github: "GitHub",
     githubRepo: "भण्डार",
     githubRelease: "रिलीज गर्दछ",
-    githubChangelog: "Changelog",
-    info: "Info",
+    githubChangelog: "परिवर्तन सूची",
+    info: "जानकारी",
     settings: "सेटिङहरू",
     connect: "जडान गर्नुहोस्",
     disconnect: "जडान विच्छेद गर्नुहोस्",
@@ -187,6 +188,8 @@ const strings = {
     edit: "सम्पादन गर्नुहोस्",
     save: "बचत गर्नुहोस्",
     ttl: "TTL सेट गर्नुहोस्",
+    fieldTtl: "फिल्ड TTL",
+    digest: "डाइजेस्ट",
     delete: "मेट्नुहोस्",
     remove: "हटाउनुहोस्",
     areYouSure: "के तपाईं पक्का हुनुहुन्छ?",
@@ -195,7 +198,9 @@ const strings = {
     getKey: "Redis कुञ्जी र सम्बन्धित डाटा लोड गर्दै...",
     jsonViewShow: "JSON प्रदर्शन गर्नुहोस्",
     jsonViewEditor: "JSON सम्पादन गर्नुहोस्",
-    quickConsole: "द्रुत कन्सोल"
+    quickConsole: "द्रुत कन्सोल",
+    moveUp: "माथि सार्नुहोस्",
+    moveDown: "तल सार्नुहोस्"
   },
   label: {
     id: {
@@ -204,20 +209,22 @@ const strings = {
       info: "यदि तपाइँ निम्न गुणहरू परिवर्तन गर्न चाहनुहुन्न भने: sshPassword, sshPrivateKey, पासवर्ड, tlsCrt, tlsKey, tlsCa, कृपया गुण मानहरू अक्षुण्ण राख्न ती गुणहरूमा जडानको ID प्रविष्ट गर्नुहोस्। यदि तपाइँ नोड पासवर्डमा समान तर्क चाहनुहुन्छ भने, त्यसपछि नोड पासवर्डमा नोड आईडी प्रविष्ट गर्नुहोस्।"
     },
     secureFeature: "यदि तपाईंले P3X बाट सुरु हुने मान देख्नुभयो भने, यो एक सुरक्षित सुविधा हो। सेटिङ्हरू परिवर्तन गर्नका लागि, यी सेटिङहरूलाई खाली वा अरू केहीले बदल्नुहोस् र तिनीहरू बचत हुनेछन्। यदि तपाइँ सेटिङहरू परिवर्तन गर्नुहुन्न भने, सेटिङहरू सर्भरमा जस्तै राखिनेछ।",
-    aiTranslating: "Translating...",
+    aiTranslating: "अनुवाद गर्दै...",
     aiSettings: "AI सेटिङ",
     aiGroqApiKey: "Groq API कुञ्जी",
     aiGroqApiKeyInfo: "वैकल्पिक। राम्रो प्रदर्शनको लागि आफ्नो Groq API कुञ्जी। निःशुल्क कुञ्जी प्राप्त गर्नुहोस्",
     aiGroqApiKeyPlaceholder: "gsk_...",
     aiGroqApiKeySaved: "AI API कुञ्जी सुरक्षित गरियो",
-    aiGroqApiKeyInvalid: "Invalid Groq API key",
+    aiGroqApiKeyInvalid: "Groq API कुञ्जी अमान्य छ",
     aiGroqApiKeyNotSet: "सेट गरिएको छैन (सर्भर पूर्वनिर्धारित)",
-    aiEnabled: "AI Enabled",
-    aiEnabledYes: "Yes",
-    aiEnabledNo: "No",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
-    aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiEnabled: "AI सक्षम",
+    aiEnabledYes: "हो",
+    aiEnabledNo: "होइन",
+    aiRouteViaNetwork: "network.corifeus.com मार्फत पठाउनुहोस्",
+    aiRoutingDirect: "अनुरोधहरू तपाईंको आफ्नै API कुञ्जी प्रयोग गरेर network.corifeus.com बिना सीधै Groq मा जान्छन्।",
+    aiRoutingNetwork: "AI अनुरोधहरू network.corifeus.com मार्फत पठाइन्छन्। यदि तपाईंसँग आफ्नै निःशुल्क Groq API कुञ्जी छ भने, यो स्विच बन्द गरेर network.corifeus.com बिना सीधै Groq मा पठाउन सक्नुहुन्छ।",
+    aiMaxTokens: "AI अधिकतम टोकन",
+    aiMaxTokensInfo: "AI प्रतिक्रियाका लागि अधिकतम टोकन संख्या। उच्च मानले लामो उत्तर दिन सक्छ, तर API क्रेडिट बढी प्रयोग हुन सक्छ।",
     ssh: {
       on: "SSH सक्रिय",
       off: "SSH बन्द",
@@ -250,14 +257,14 @@ const strings = {
     resizerInfo: options => {
       return `बायाँ वा दायाँ प्यानल न्यूनतम चौडाइ हो ${options.width}px`;
     },
-    jsonViewNotParsable: "यो मान JSON पार्सयोग्य छै���  ",
+    jsonViewNotParsable: "यो मान JSON पार्स गर्न मिल्दैन।",
     ttlTitle: "TTL सेकेन्डमा सेट गर्नुहोस्",
     passwordSecure: "पासवर्ड खाली हुन सक्छ, तर अझै पनि यसले क्यारेक्टरहरू देखाउनेछ, यो एक सुरक्षा सुविधा हो।",
     tlsWithoutCert: "अतिरिक्त प्रमाणपत्र बिना TLS सक्षम गर्नुहोस्",
     tlsRejectUnauthorized: "अनधिकृत प्रमाणपत्र अस्वीकार गर्नुहोस्",
-    tlsSecure: "यदि तपाइँ P3X बाट सुरु हुने TLS कन्फिगरेसन देख्नुहुन्छ वा सबै TLS सेटिङहरू उस्तै देखिन्छन् भने, यो सुरक्षित सुविधा हो। सेटिङ्हरू परिवर्तन गर्नका लागि, यी सेटिङहरूलाई खाली वा अरू केहीले बदल्नुहोस् र तिनीहरू बचत हुन���छन्। यदि तपाईंले TLS सेटिङहरू परिवर्तन गर्नुभएन भने, सेटिङहरूलाई सर्भरमा जस्तै राखिनेछ।",
+    tlsSecure: "यदि तपाइँ P3X बाट सुरु हुने TLS कन्फिगरेसन देख्नुहुन्छ वा सबै TLS सेटिङहरू उस्तै देखिन्छन् भने, यो सुरक्षित सुविधा हो। सेटिङहरू परिवर्तन गर्न यी सेटिङहरूलाई खाली वा अरू केहीले बदल्नुहोस्, र ती बचत हुनेछन्। यदि तपाईंले TLS सेटिङहरू परिवर्तन गर्नुभएन भने, ती सर्भरमा जस्तै राखिनेछन्।",
     treeSeparatorEmpty: "यदि रूख विभाजक खाली छ भने, रूखमा कुनै नेस्टेड नोडहरू हुनेछैन, केवल एक शुद्ध सूची",
-    treeSeparatorEmptyNote: "कुनै नेस्टेड नोडहरू, केवल एक शुद्�� सूची",
+    treeSeparatorEmptyNote: "कुनै नेस्टेड नोडहरू छैनन्, केवल शुद्ध सूची",
     welcomeConsole: "Redis कन्सोलमा स्वागत छ",
     welcomeConsoleInfo: "कर्सर माथि वा तल इतिहास सक्षम छ",
     redisListIndexInfo: "जोड्नको लागि खाली, -1 लाई प्रिपेन्ड गर्न वा देखाइएको स्थितिमा बचत गर्न।",
@@ -309,13 +316,13 @@ const strings = {
     shortcutDisconnect: "जडान विच्छेद गर्नुहोस्",
     themeAuto: "Auto (system)",
     languageAuto: "Auto (system)",
-    shortcutCommandPalette: "Command Palette",
-    commandPalette: "Command Palette",
-    noResults: "No results",
+    shortcutCommandPalette: "कमान्ड प्यालेट",
+    commandPalette: "कमान्ड प्यालेट",
+    noResults: "कुनै परिणाम छैन",
     redisCommandsReference: "Redis आदेशहरू",
     ungrouped: "समूहविहीन",
-    grouped: "Grouped",
-    connectFirst: "connectFirst",
+    grouped: "समूहबद्ध",
+    connectFirst: "पहिले Redis सर्भरसँग जडान गर्नुहोस्",
     searchLanguage: "भाषा खोज्नुहोस्...",
     exportProgress: "कुञ्जीहरू निर्यात हुँदैछ...",
     importProgress: "कुञ्जीहरू आयात हुँदैछ...",
@@ -336,7 +343,7 @@ const strings = {
     importNoKeys: "फाइलमा कुञ्जीहरू फेला परेनन्",
     desktopNotifications: "Desktop Notifications",
     desktopNotificationsEnabled: "Enable desktop notifications",
-    desktopNotificationsInfo: "Receive OS notifications for Redis disconnections and reconnections when the app is not focused."
+    desktopNotificationsInfo: "एपमा फोकस नभएको बेला Redis विच्छेद र पुन: जडानका लागि OS सूचनाहरू प्राप्त गर्नुहोस्।"
   },
   status: {
     dataCopied: "डाटा क्लिपबोर्डमा छ",
@@ -366,7 +373,7 @@ const strings = {
     deleted: "मेटाइयो",
     savedRedis: "Redis डाटा बचत गरिएको छ",
     redisDisconnected: opts => {
-      return `हालक�� जडानमा त्रुटि थियो: ${opts.error.message}`;
+      return `हालको जडानमा त्रुटि थियो: ${opts.error.message}`;
     },
     dbChanged: opts => {
       return `db सूचकांक सेट गरियो ${opts.db}। `;
@@ -382,7 +389,7 @@ const strings = {
     notInteger: "यो इनपुट पूर्णांक होइन",
     persisted: "यो कुञ्जी सधैंभरि रहन्छ",
     set: "कुञ्जी सेट/थपिएको छ",
-    connectionRestored: "Connection restored"
+    connectionRestored: "जडान पुनर्स्थापित भयो"
   },
   code: {
     "delete-connection": "यो जडान मेटाइएको थियो, त्यसैले तपाईं यस Redis उदाहरणमा विच्छेद हुनुभएको छ।",
@@ -408,8 +415,8 @@ const strings = {
     },
     connection: {
       label: {
-        name: "ना��",
-        group: "Group",
+        name: "नाम",
+        group: "समूह",
         host: "होस्टनाम",
         port: "पोर्ट",
         password: "पासवर्ड",
@@ -455,7 +462,7 @@ const strings = {
       label: {
         formName: {
           add: "नयाँ Redis कुञ्जी थप्नुहोस्",
-          edit: "Redis कु��्जी सम्पादन गर्नुहोस्",
+          edit: "Redis कुञ्जी सम्पादन गर्नुहोस्",
           append: "अवस्थित Redis कुञ्जीमा थप्नुहोस्"
         }
       },
@@ -511,7 +518,10 @@ const strings = {
       indexInfo: "इन्डेक्स जानकारी",
       indexName: "इन्डेक्स नाम",
       prefix: "कुञ्जी उपसर्ग (वैकल्पिक)",
-      fieldName: "फिल्ड नाम"
+      fieldName: "फिल्ड नाम",
+      hybridMode: "हाइब्रिड खोज (FT.HYBRID)",
+      vectorField: "भेक्टर फिल्ड",
+      vectorValues: "भेक्टर मानहरू",
     },
     monitor: {
       title: "निगरानी",
@@ -535,7 +545,8 @@ const strings = {
       peak: "शिखर",
       fragmentation: "फ्र्यागमेन्टेसन",
       hitsAndMisses: "हिट / मिस",
-      noClients: "ग्राहकहरू छैनन्"
+      noClients: "ग्राहकहरू छैनन्",
+      slotStats: "क्लस्टर स्लट तथ्याङ्क",
     },
     analysis: {
       title: "मेमोरी विश्लेषण",
@@ -588,7 +599,7 @@ const strings = {
         aiError: "AI क्वेरी असफल भयो",
         length: "साइज",
         ttl: "TTL",
-        ttlTitle: "ब��ँच्ने समय",
+        ttlTitle: "बाँच्ने समय",
         type: "टाइप गर्नुहोस्",
         ttlNotExpire: "म्याद समाप्त हुँदैन",
         lengthString: "बाइट्स",
@@ -695,6 +706,8 @@ const strings = {
         dimensions: "आयामहरू",
         removeConfirm: "यो तत्वलाई VectorSet बाट हटाउने?",
         noElements: "कुनै तत्व छैन",
+        filter: "फिल्टर",
+        searchComplete: "खोज पूरा भयो",
       }
     },
     treeControls: {
@@ -720,9 +733,6 @@ const strings = {
     }
   },
   time: {
-    type: "प्रकार",
-    format: "ढाँचा",
-    loading: "लोड हुँदैछ...",
     years: "वर्ष",
     months: "महिना",
     days: "दिनहरू",

@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Помилка сервера, будь ласка, спробуйте ще раз"
+    server_error: "Помилка сервера, будь ласка, спробуйте ще раз",
+    aiPromptTooLong: "Запит AI занадто довгий (максимум 4096 символів)",
   },
   title: {
     donate: "Пожертвувати",
@@ -185,6 +186,8 @@ const strings = {
     edit: "Редагувати",
     save: "Зберегти",
     ttl: "Встановити TTL",
+    fieldTtl: "TTL поля",
+    digest: "Дайджест",
     delete: "Видалити",
     remove: "Вилучити",
     areYouSure: "Ви впевнені?",
@@ -193,7 +196,9 @@ const strings = {
     getKey: "Завантаження Redis-ключа та пов'язаних даних ...",
     jsonViewShow: "Показати JSON",
     jsonViewEditor: "Редагувати JSON",
-    quickConsole: "Швидка консоль"
+    quickConsole: "Швидка консоль",
+    moveUp: "Перемістити вгору",
+    moveDown: "Перемістити вниз",
   },
   label: {
     id: {
@@ -216,6 +221,8 @@ const strings = {
     aiRouteViaNetwork: "Маршрут через network.corifeus.com",
     aiRoutingDirect: "Запити йдуть напряму до Groq з вашим власним API-ключем, оминаючи network.corifeus.com.",
     aiRoutingNetwork: "AI-запити маршрутизуються через network.corifeus.com. Якщо у вас є власний безкоштовний ключ API Groq, ви можете вимкнути цей перемикач.",
+    aiMaxTokens: "Максимальна кількість токенів AI",
+    aiMaxTokensInfo: "Максимальна кількість токенів для відповідей AI. Більші значення дозволяють довші відповіді, але можуть використовувати більше API-кредитів.",
     ssh: {
       on: 'SSH увімкнено',
       off: 'SSH вимкнено',
@@ -306,7 +313,7 @@ const strings = {
     shortcutNewKey: "Новий ключ",
     shortcutDisconnect: "Відключити",
     themeAuto: "Автоматично (система)",
-    languageAuto: "Автоматично (система)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Палітра команд",
     commandPalette: "Палітра команд",
     noResults: "Немає результатів",
@@ -509,7 +516,10 @@ const strings = {
       indexInfo: "Інформація про індекс",
       indexName: "Назва індексу",
       prefix: "Префікс ключа (необов'язково)",
-      fieldName: "Назва поля"
+      fieldName: "Назва поля",
+      hybridMode: "Гібридний пошук (FT.HYBRID)",
+      vectorField: "Векторне поле",
+      vectorValues: "Значення вектора",
     },
     monitor: {
       title: "Моніторинг",
@@ -533,7 +543,8 @@ const strings = {
       peak: "Пік",
       fragmentation: "Фрагментація",
       hitsAndMisses: "Влучання / Промахи",
-      noClients: "Немає клієнтів"
+      noClients: "Немає клієнтів",
+      slotStats: "Статистика слотів кластера",
     },
     analysis: {
       title: "Аналіз пам'яті",
@@ -693,6 +704,8 @@ const strings = {
         dimensions: "Розмірності",
         removeConfirm: "Видалити цей елемент з VectorSet?",
         noElements: "Немає елементів",
+        filter: "Фільтр",
+        searchComplete: "Пошук завершено",
       }
     },
     treeControls: {
@@ -718,9 +731,6 @@ const strings = {
     }
   },
   time: {
-    type: "Тип",
-    format: "Формат",
-    loading: "Завантаження...",
     years: "років",
     months: "місяців",
     days: "днів",

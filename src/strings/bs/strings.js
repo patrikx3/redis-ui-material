@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Greška servera, molimo pokušajte ponovo"
+    server_error: "Greška servera, molimo pokušajte ponovo",
+    aiPromptTooLong: "AI upit je predug (maksimalno 4096 znakova)",
   },
   title: {
     donate: "Doniraj",
@@ -189,6 +190,8 @@ const strings = {
     edit: "Uredi",
     save: "Sačuvaj",
     ttl: "Postavi TTL",
+    fieldTtl: "TTL polja",
+    digest: "Sažetak",
     delete: "Obriši",
     remove: "Ukloni",
     areYouSure: "Jeste li sigurni?",
@@ -197,7 +200,9 @@ const strings = {
     getKey: "Učitavanje Redis ključa i povezanih podataka ...",
     jsonViewShow: "Prikaži JSON",
     jsonViewEditor: "Uredi JSON",
-    quickConsole: "Brza konzola"
+    quickConsole: "Brza konzola",
+    moveUp: "Pomjeri gore",
+    moveDown: "Pomjeri dolje",
   },
   label: {
     id: {
@@ -206,20 +211,22 @@ const strings = {
       info: "Ako ne želite promijeniti svojstva: sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa, molimo unesite ID konekcije u ta svojstva kako biste zadržali vrijednosti svojstava. Ako želite istu logiku u lozinci čvora, unesite ID čvora u lozinku čvora."
     },
     secureFeature: 'Ako vidite vrijednost koja počinje sa P3X i izgleda isto, to je sigurnosna funkcija. Da promijenite postavke, zamijenite ove postavke sa praznim ili nečim drugim i bit će sačuvane. Ako ne mijenjate postavke, postavke će ostati kakve jesu na serveru.',
-    aiTranslating: "Translating...",
+    aiTranslating: "Prevođenje...",
     aiSettings: "AI Postavke",
     aiGroqApiKey: "Groq API ključ",
     aiGroqApiKeyInfo: "Opcionalno. Vlastiti Groq API ključ za bolje performanse. Nabavite besplatni ključ na",
     aiGroqApiKeyPlaceholder: "gsk_...",
     aiGroqApiKeySaved: "AI API ključ sačuvan",
-    aiGroqApiKeyInvalid: "Invalid Groq API key",
+    aiGroqApiKeyInvalid: "Neispravan Groq API ključ",
     aiGroqApiKeyNotSet: "Nije postavljeno (zadano servera)",
     aiEnabled: "AI omogućeno",
     aiEnabledYes: "Da",
     aiEnabledNo: "Ne",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
-    aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiRouteViaNetwork: "Usmjeravanje preko network.corifeus.com",
+    aiRoutingDirect: "Upiti idu direktno u Groq koristeći vaš vlastiti API ključ, zaobilazeći network.corifeus.com.",
+    aiRoutingNetwork: "AI upiti se usmjeravaju preko network.corifeus.com. Ako imate vlastiti besplatni Groq API ključ, možete isključiti ovaj prekidač i usmjeravati direktno na Groq bez network.corifeus.com.",
+    aiMaxTokens: "Maksimalni AI tokeni",
+    aiMaxTokensInfo: "Maksimalan broj tokena za AI odgovore. Veće vrijednosti omogućavaju duže odgovore, ali mogu koristiti više API kredita.",
     ssh: {
       on: 'SSH uključen',
       off: 'SSH isključen',
@@ -513,7 +520,10 @@ const strings = {
       indexInfo: "Info o indeksu",
       indexName: "Naziv indeksa",
       prefix: "Prefiks ključa (opcionalno)",
-      fieldName: "Naziv polja"
+      fieldName: "Naziv polja",
+      hybridMode: "Hibridna pretraga (FT.HYBRID)",
+      vectorField: "Vektorsko polje",
+      vectorValues: "Vektorske vrijednosti",
     },
     monitor: {
       title: "Monitoring",
@@ -537,7 +547,8 @@ const strings = {
       peak: "Vrh",
       fragmentation: "Fragmentacija",
       hitsAndMisses: "Pogoci / Promašaji",
-      noClients: "Nema klijenata"
+      noClients: "Nema klijenata",
+      slotStats: "Statistika slotova klastera",
     },
     analysis: {
       title: "Analiza memorije",
@@ -697,6 +708,8 @@ const strings = {
         dimensions: "Dimenzije",
         removeConfirm: "Ukloniti ovaj element iz VectorSet-a?",
         noElements: "Nema elemenata",
+        filter: "Filter",
+        searchComplete: "Pretraga završena",
       }
     },
     treeControls: {
@@ -722,9 +735,6 @@ const strings = {
     }
   },
   time: {
-    type: "Tip",
-    format: "Format",
-    loading: "Učitavanje...",
     years: "godina",
     months: "mjeseci",
     days: "dana",

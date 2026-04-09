@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Kesalahan server, silakan coba lagi"
+    server_error: "Kesalahan server, silakan coba lagi",
+    aiPromptTooLong: "Prompt AI terlalu panjang (maksimal 4096 karakter)",
   },
   title: {
     donate: "Donasi",
@@ -187,6 +188,8 @@ const strings = {
     edit: "Sunting",
     save: "Simpan",
     ttl: "Setel TTL",
+    fieldTtl: "TTL bidang",
+    digest: "Ringkasan",
     delete: "Hapus",
     remove: "Hapus",
     areYouSure: "Apakah Anda yakin?",
@@ -195,7 +198,9 @@ const strings = {
     getKey: "Memuat kunci Redis dan data terkait ...",
     jsonViewShow: "Tampilkan JSON",
     jsonViewEditor: "Sunting JSON",
-    quickConsole: "Konsol Cepat"
+    quickConsole: "Konsol Cepat",
+    moveUp: "Pindahkan ke atas",
+    moveDown: "Pindahkan ke bawah"
   },
   label: {
     id: {
@@ -210,14 +215,16 @@ const strings = {
     aiGroqApiKeyInfo: "Opsional. Kunci API Groq sendiri untuk performa lebih baik. Dapatkan kunci gratis dari",
     aiGroqApiKeyPlaceholder: "gsk_...",
     aiGroqApiKeySaved: "Kunci API AI tersimpan",
-    aiGroqApiKeyInvalid: "Invalid Groq API key",
+    aiGroqApiKeyInvalid: "Kunci API Groq tidak valid",
     aiGroqApiKeyNotSet: "Belum diatur (bawaan server)",
     aiEnabled: "AI diaktifkan",
     aiEnabledYes: "Ya",
     aiEnabledNo: "Tidak",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
-    aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiRouteViaNetwork: "Rutekan melalui network.corifeus.com",
+    aiRoutingDirect: "Kueri langsung ke Groq menggunakan kunci API Anda sendiri, melewati network.corifeus.com.",
+    aiRoutingNetwork: "Kueri AI dirutekan melalui network.corifeus.com. Jika Anda memiliki kunci API Groq gratis sendiri, Anda dapat mematikan sakelar ini untuk merutekan langsung ke Groq tanpa network.corifeus.com.",
+    aiMaxTokens: "Token AI maksimum",
+    aiMaxTokensInfo: "Jumlah token maksimum untuk respons AI. Nilai yang lebih tinggi memungkinkan respons yang lebih panjang tetapi dapat menggunakan lebih banyak kredit API.",
     ssh: {
       on: "SSH aktif",
       off: "SSH mati",
@@ -511,7 +518,10 @@ const strings = {
       indexInfo: "Info indeks",
       indexName: "Nama indeks",
       prefix: "Prefiks kunci (opsional)",
-      fieldName: "Nama field"
+      fieldName: "Nama field",
+      hybridMode: "Pencarian hibrida (FT.HYBRID)",
+      vectorField: "Bidang vektor",
+      vectorValues: "Nilai vektor",
     },
     monitor: {
       title: "Pemantauan",
@@ -535,7 +545,8 @@ const strings = {
       peak: "Puncak",
       fragmentation: "Fragmentasi",
       hitsAndMisses: "Hit / Miss",
-      noClients: "Tidak ada klien"
+      noClients: "Tidak ada klien",
+      slotStats: "Statistik slot kluster",
     },
     analysis: {
       title: "Analisis Memori",
@@ -695,6 +706,8 @@ const strings = {
         dimensions: "Dimensi",
         removeConfirm: "Hapus elemen ini dari VectorSet?",
         noElements: "Tidak ada elemen",
+        filter: "Filter",
+        searchComplete: "Pencarian selesai",
       }
     },
     treeControls: {
@@ -720,9 +733,6 @@ const strings = {
     }
   },
   time: {
-    type: "Tipe",
-    format: "Format",
-    loading: "Memuat...",
     years: "tahun",
     months: "bulan",
     days: "hari",

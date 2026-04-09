@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Сервер катасы, кайталап к��рүңүз"
+    server_error: "Сервер катасы, кайталап көрүңүз",
+    aiPromptTooLong: "AI сурамы өтө узун (максимум 4096 белги)",
   },
   title: {
     donate: "Кайрымдуулук кылуу",
@@ -41,7 +42,7 @@ const strings = {
     deleteListItem: "Бул тизмени чын эле жок кыласызбы?",
     deleteHashKey: "Бул хэш ачкычты чын эле жок кыласызбы?",
     deleteStreamTimestamp: "Бул агымдын убакыт белгисин чын эле жок кыласызбы?",
-    deleteSetMember: "Бул топтомдун мүчөсүн чын эле жок кыласы��бы?",
+    deleteSetMember: "Бул топтомдун мүчөсүн чын эле жок кыласызбы?",
     deleteZSetMember: "Бул иреттелген топтом мүчөсүн чын эле жок кыласызбы?",
     deleteConnection: "ырастоо",
     deleteConnectionText: "Бул Redis байланышын чын эле жок кыласызбы?",
@@ -128,7 +129,7 @@ const strings = {
     ta: 'தமிழ் / Tamil'
   },
   intention: {
-    copy: "Көч��рмө",
+    copy: "Көчүрүү",
     downloadBuffer: "экилик жүктөө",
     setBuffer: "экилик жүктөө",
     exportKeys: "Ачкычтарды экспорттоо",
@@ -187,6 +188,8 @@ const strings = {
     edit: "Түзөтүү",
     save: "Сактоо",
     ttl: "TTL орнотуңуз",
+    fieldTtl: "Талaa TTL",
+    digest: "Дайджест",
     delete: "Жок кылуу",
     remove: "Алып салуу",
     areYouSure: "Ишенесизби?",
@@ -195,7 +198,9 @@ const strings = {
     getKey: "Redis ачкычы жана ага байланыштуу дайындар жүктөлүүдө ...",
     jsonViewShow: "JSON көрсөтүү",
     jsonViewEditor: "JSON түзөтүү",
-    quickConsole: "Ыкчам консол"
+    quickConsole: "Ыкчам консол",
+    moveUp: "Жогору жылдыруу",
+    moveDown: "Төмөн жылдыруу"
   },
   label: {
     id: {
@@ -204,20 +209,22 @@ const strings = {
       info: "Эгерде сиз төмөнкүлөрдүн касиеттерин өзгөртүүнү каалабасаңыз: sshPassword, sshPrivateKey, сырсөз, tlsCrt, tlsKey, tlsCa, касиеттин баалуулуктарын сактап калуу үчүн ошол пропорцияларга байланыштын идентификаторун киргизиңиз. Түйүндүн сырсөзүндө ошол эле логиканы кааласаңыз, түйүн сырсөзүнө түйүн идентификаторун киргизиңиз."
     },
     secureFeature: "Эгер сиз P3X менен башталган бир маанини көрсөңүз, анда бул коопсуз функция. Орнотууларды өзгөртүү үчүн, жөн гана бул жөндөөлөрдү бош же башка нерсе менен алмаштырыңыз жана алар сакталат. Эгер сиз орнотууларды өзгөртпөсөңүз, орнотуулар сервердегидей сакталып калат.",
-    aiTranslating: "Translating...",
+    aiTranslating: "Которулууда...",
     aiSettings: "AI Орнотуулар",
     aiGroqApiKey: "Groq API ачкычы",
     aiGroqApiKeyInfo: "Милдеттүү эмес. Жакшыраак иштөө үчүн өзүңүздүн Groq API ачкычы. Акысыз ачкыч алыңыз",
     aiGroqApiKeyPlaceholder: "gsk_...",
     aiGroqApiKeySaved: "AI API ачкычы сакталды",
-    aiGroqApiKeyInvalid: "Invalid Groq API key",
+    aiGroqApiKeyInvalid: "Жараксыз Groq API ачкычы",
     aiGroqApiKeyNotSet: "Коюлган эмес (сервер демейки)",
-    aiEnabled: "AI Enabled",
-    aiEnabledYes: "Yes",
-    aiEnabledNo: "No",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
-    aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiEnabled: "AI иштетилген",
+    aiEnabledYes: "Ооба",
+    aiEnabledNo: "Жок",
+    aiRouteViaNetwork: "network.corifeus.com аркылуу багыттоо",
+    aiRoutingDirect: "Суроолор өзүңүздүн API ачкычыңызды колдонуп түздөн-түз Groq'ка жөнөтүлөт, network.corifeus.com айланып өтүлөт.",
+    aiRoutingNetwork: "AI суроолору network.corifeus.com аркылуу багытталат. Эгер өзүңүздүн акысыз Groq API ачкычыңыз болсо, бул которгучту өчүрүп, network.corifeus.com'суз түздөн-түз Groq'ка багыттай аласыз.",
+    aiMaxTokens: "AI максималдуу токендери",
+    aiMaxTokensInfo: "AI жооптору үчүн токендердин максималдуу саны. Жогорку маанилер узунураак жоопторго мүмкүндүк берет, бирок көбүрөөк API кредитин колдонушу мүмкүн.",
     ssh: {
       on: "SSH күйүк",
       off: "SSH өчүк",
@@ -255,7 +262,7 @@ const strings = {
     passwordSecure: "Сырсөз бош болушу мүмкүн, бирок ал дагы эле белгилерди көрсөтөт, бул коопсуздук өзгөчөлүгү.",
     tlsWithoutCert: "TLSти кошумча сертификатсыз иштетүү",
     tlsRejectUnauthorized: "Уруксатсыз сертификатты четке кагуу",
-    tlsSecure: "Эгер сиз P3X менен ��ашталган TLS конфигурациясын көрсөңүз же бардык TLS жөндөөлөрү окшош болсо, бул коопсуз функция. Орнотууларды өзгөртүү үчүн, жөн гана бул жөндөөлөрдү бош же башка нерсе менен алмаштырыңыз жана алар сакталат. TLS жөндөөлөрүн өзгөртпөсөңүз, орнотуулар сервердегидей сакталып калат.",
+    tlsSecure: "Эгер сиз P3X менен башталган TLS конфигурациясын көрсөңүз же бардык TLS жөндөөлөрү окшош болсо, бул коопсуз функция. Орнотууларды өзгөртүү үчүн, жөн гана бул жөндөөлөрдү бош же башка нерсе менен алмаштырыңыз жана алар сакталат. TLS жөндөөлөрүн өзгөртпөсөңүз, орнотуулар сервердегидей сакталып калат.",
     treeSeparatorEmpty: "Эгерде дарак бөлгүч бош болсо, анда дарактын эч кандай түйүндөрү болбойт, болгону таза тизме",
     treeSeparatorEmptyNote: "Уюшкан түйүндөр жок, жөн гана тизме",
     welcomeConsole: "Redis консолуна кош келиңиз",
@@ -285,7 +292,7 @@ const strings = {
     },
     theme: {
       light: "Жарык",
-      dark: "��араңгы ишкана",
+      dark: "Караңгы ишкана",
       darkNeu: "Караңгы",
       darkoBluo: "Darko blue",
       enterprise: "Enterprise",
@@ -309,9 +316,9 @@ const strings = {
     shortcutDisconnect: "Ажыратуу",
     themeAuto: "Auto (system)",
     languageAuto: "Auto (system)",
-    shortcutCommandPalette: "Command Palette",
-    commandPalette: "Command Palette",
-    noResults: "No results",
+    shortcutCommandPalette: "Буйрук палитрасы",
+    commandPalette: "Буйрук палитрасы",
+    noResults: "Натыйжа жок",
     redisCommandsReference: "Redis Буйруктары",
     ungrouped: "Топсуз",
     grouped: "Grouped",
@@ -369,7 +376,7 @@ const strings = {
       return `Учурдагы туташууда ката кетти: ${opts.error.message}`;
     },
     dbChanged: opts => {
-      return `db ин��екси коюлган ${opts.db}. `;
+      return `db индекси коюлган ${opts.db}. `;
     },
     treeDeleted: opts => {
       return `Дарактын ачкычы жок кылынды (${opts.key}).`;
@@ -511,7 +518,10 @@ const strings = {
       indexInfo: "Индекс маалыматы",
       indexName: "Индекс аты",
       prefix: "Ачкыч префикси (милдеттүү эмес)",
-      fieldName: "Талаа аты"
+      fieldName: "Талаа аты",
+      hybridMode: "Гибриддик издөө (FT.HYBRID)",
+      vectorField: "Вектор талаасы",
+      vectorValues: "Вектор маанилери",
     },
     monitor: {
       title: "Мониторинг",
@@ -535,7 +545,8 @@ const strings = {
       peak: "Чокусу",
       fragmentation: "Фрагментация",
       hitsAndMisses: "Тийгендер / Өтүп кеткендер",
-      noClients: "Кардарлар жок"
+      noClients: "Кардарлар жок",
+      slotStats: "Кластер слот статистикасы",
     },
     analysis: {
       title: "Эс тутум талдоосу",
@@ -695,6 +706,8 @@ const strings = {
         dimensions: "Өлчөмдөр",
         removeConfirm: "Бул элементти VectorSet-тен алып салуу керекпи?",
         noElements: "Элементтер жок",
+        filter: "Чыпка",
+        searchComplete: "Издөө аяктады",
       }
     },
     treeControls: {
@@ -707,7 +720,7 @@ const strings = {
         clear: "Бош коюу үчүн учурдагы издөөнү тазалаңыз",
         placeholderClient: "Кардар тарабынан издөө",
         placeholderServer: "Издөө сервер тарабы",
-        info: (opts) => "Кардар тарабынан издөө дегенди билдирет, ал издөө киргизүүдөгү тек��тке дал келет. Сервер тарабында издөө, бул *{search-text}* сыяктуу баскычтардын үлгүлөрүндөгү издөө сыяктуу. Чоң издөө топтомдору үчүн сервердик издөөнү колдонуу жакшы. Кичинекей издөө топтомдору үчүн кардар тарабынан издөө режимин колдонуу жакшы." + ` Эгер ачкычтарды эсептөө бүтсө ${opts?.maxLightKeysCount ?? 110000}, сиз сервер тараптан гана издей аласыз.`,
+        info: (opts) => "Кардар тарабынан издөө дегенди билдирет, ал издөө киргизүүсүндөгү текстке дал келет. Сервер тарабындагы издөө *{search-text}* сыяктуу ачкыч үлгүлөрү боюнча издөөгө окшош. Чоң издөө топтомдору үчүн сервердик издөөнү колдонуу жакшы. Кичинекей издөө топтомдору үчүн кардар тарабынан издөө режимин колдонуу жакшы." + ` Эгер ачкычтарды эсептөө бүтсө ${opts?.maxLightKeysCount ?? 110000}, сиз сервер тараптан гана издей аласыз.`,
         largeSetInfo: "Чоң топтомдо кардар тарабынан издөө өчүрүлгөн. ошондуктан азыр сервер тараптан издөө гана мүмкүн.",
         infoDetails: "Издөө кандай иштээрин билүү үчүн, жөндөөлөрдү текшериңиз"
       },
@@ -720,9 +733,6 @@ const strings = {
     }
   },
   time: {
-    type: "Түрү",
-    format: "Формат",
-    loading: "Жүктөлүүдө...",
     years: "жыл",
     months: "айлар",
     days: "күн",

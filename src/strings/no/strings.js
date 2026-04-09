@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Serverfeil, prøv igjen"
+    server_error: "Serverfeil, prøv igjen",
+    aiPromptTooLong: "AI-prompten er for lang (maks 4096 tegn)",
   },
   title: {
     donate: "Doner",
@@ -187,6 +188,8 @@ const strings = {
     edit: "Rediger",
     save: "Lagre",
     ttl: "Sett TTL",
+    fieldTtl: "Felt TTL",
+    digest: "Sammendrag",
     delete: "Slett",
     remove: "Fjern",
     areYouSure: "Er du sikker?",
@@ -195,7 +198,9 @@ const strings = {
     getKey: "Laster inn Redis-nøkkel og tilhørende data ...",
     jsonViewShow: "Vis JSON",
     jsonViewEditor: "Rediger JSON",
-    quickConsole: "Hurtigkonsoll"
+    quickConsole: "Hurtigkonsoll",
+    moveUp: "Flytt opp",
+    moveDown: "Flytt ned"
   },
   label: {
     id: {
@@ -210,14 +215,16 @@ const strings = {
     aiGroqApiKeyInfo: "Valgfritt. Egen Groq API-nøkkel for bedre ytelse. Skaff en gratis nøkkel på",
     aiGroqApiKeyPlaceholder: "gsk_...",
     aiGroqApiKeySaved: "AI API-nøkkel lagret",
-    aiGroqApiKeyInvalid: "Invalid Groq API key",
+    aiGroqApiKeyInvalid: "Ugyldig Groq API-nøkkel",
     aiGroqApiKeyNotSet: "Ikke satt (serverstandard)",
     aiEnabled: "AI aktivert",
     aiEnabledYes: "Ja",
     aiEnabledNo: "Nei",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
-    aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiRouteViaNetwork: "Rute via network.corifeus.com",
+    aiRoutingDirect: "Spørringer går direkte til Groq med din egen API-nøkkel, uten å gå via network.corifeus.com.",
+    aiRoutingNetwork: "AI-spørringer rutes via network.corifeus.com. Hvis du har din egen gratis Groq API-nøkkel, kan du slå av denne bryteren for å rute direkte til Groq uten network.corifeus.com.",
+    aiMaxTokens: "AI-maksimalt antall tokens",
+    aiMaxTokensInfo: "Maksimalt antall tokens for AI-svar. Høyere verdier gir lengre svar, men kan bruke flere API-kreditter.",
     ssh: {
       on: "SSH på",
       off: "SSH av",
@@ -324,8 +331,8 @@ const strings = {
     importSkip: "Hopp over",
     importConflict: "Hvis nøkkelen allerede finnes:",
     noKeysToExport: "Ingen nøkler å eksportere",
-    time: "Tid",
     type: "Type",
+    time: "Tid",
     format: "Format",
     loading: "Laster...",
     autoRefresh: "Auto",
@@ -511,7 +518,10 @@ const strings = {
       indexInfo: "Indeksinfo",
       indexName: "Indeksnavn",
       prefix: "Nøkkelprefiks (valgfritt)",
-      fieldName: "Feltnavn"
+      fieldName: "Feltnavn",
+      hybridMode: "Hybridsøk (FT.HYBRID)",
+      vectorField: "Vektorfelt",
+      vectorValues: "Vektorverdier",
     },
     monitor: {
       title: "Overvåking",
@@ -535,7 +545,8 @@ const strings = {
       peak: "Topp",
       fragmentation: "Fragmentering",
       hitsAndMisses: "Treff / Bom",
-      noClients: "Ingen klienter"
+      noClients: "Ingen klienter",
+      slotStats: "Klynge slot statistikk",
     },
     analysis: {
       title: "Minneanalyse",
@@ -695,6 +706,8 @@ const strings = {
         dimensions: "Dimensjoner",
         removeConfirm: "Fjerne dette elementet fra VectorSet?",
         noElements: "Ingen elementer",
+        filter: "Filter",
+        searchComplete: "Søk fullført",
       }
     },
     treeControls: {
@@ -720,9 +733,6 @@ const strings = {
     }
   },
   time: {
-    type: "Type",
-    format: "Format",
-    loading: "Laster...",
     years: "år",
     months: "måneder",
     days: "dager",

@@ -110,6 +110,13 @@
                         <input matInput type="number" [(ngModel)]="simCountInput" />
                     </mat-form-field>
 
+                    @if (redisState.redisVersion().isAtLeast(8, 2)) {
+                        <mat-form-field class="p3xr-timeseries-field" subscriptSizing="dynamic" style="flex: 1; min-width: 150px;">
+                            <mat-label>{{ strings()?.page?.key?.vectorset?.filter || 'Filter' }}</mat-label>
+                            <input matInput [(ngModel)]="simFilterInput" (keydown.enter)="searchSimilar()" placeholder="attr == 'value'" />
+                        </mat-form-field>
+                    }
+
                     @if (isGtSm) {
                         <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="simMode = 'element'; searchSimilar()">
                             <mat-icon>person</mat-icon>

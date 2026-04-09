@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Serverfout, probeer het opnieuw"
+    server_error: "Serverfout, probeer het opnieuw",
+    aiPromptTooLong: "AI-prompt is te lang (maximaal 4096 tekens)",
   },
   title: {
     donate: "Doneren",
@@ -187,6 +188,8 @@ const strings = {
     edit: "Bewerken",
     save: "Opslaan",
     ttl: "TTL instellen",
+    fieldTtl: "Veld TTL",
+    digest: "Digest",
     delete: "Verwijderen",
     remove: "Verwijderen",
     areYouSure: "Weet je het zeker?",
@@ -195,7 +198,9 @@ const strings = {
     getKey: "Redis-sleutel en bijbehorende gegevens laden ...",
     jsonViewShow: "JSON weergeven",
     jsonViewEditor: "JSON bewerken",
-    quickConsole: "Snelle Console"
+    quickConsole: "Snelle Console",
+    moveUp: "Verplaats omhoog",
+    moveDown: "Verplaats omlaag"
   },
   label: {
     id: {
@@ -215,9 +220,11 @@ const strings = {
     aiEnabled: "AI ingeschakeld",
     aiEnabledYes: "Ja",
     aiEnabledNo: "Nee",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries gaan rechtstreeks naar Groq met uw eigen API-sleutel, zonder network.corifeus.com.",
-    aiRoutingNetwork: "AI-queries worden via network.corifeus.com gerouteerd. Als u uw eigen gratis Groq API-sleutel hebt, kunt u deze schakelaar uitschakelen.",
+    aiRouteViaNetwork: "Routeren via network.corifeus.com",
+    aiRoutingDirect: "Query's gaan rechtstreeks naar Groq met uw eigen API-sleutel, zonder network.corifeus.com.",
+    aiRoutingNetwork: "AI-query's worden via network.corifeus.com gerouteerd. Als u uw eigen gratis Groq API-sleutel hebt, kunt u deze schakelaar uitschakelen om rechtstreeks naar Groq te routeren zonder network.corifeus.com.",
+    aiMaxTokens: "AI-maximale tokens",
+    aiMaxTokensInfo: "Maximaal aantal tokens voor AI-antwoorden. Hogere waarden maken langere antwoorden mogelijk, maar kunnen meer API-credits gebruiken.",
     ssh: {
       on: 'SSH aan',
       off: 'SSH uit',
@@ -308,7 +315,7 @@ const strings = {
     shortcutNewKey: "Nieuwe sleutel",
     shortcutDisconnect: "Verbinding verbreken",
     themeAuto: "Automatisch (systeem)",
-    languageAuto: "Automatisch (systeem)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Opdrachtenpalet",
     commandPalette: "Opdrachtenpalet",
     noResults: "Geen resultaten",
@@ -324,8 +331,8 @@ const strings = {
     importSkip: "Overslaan",
     importConflict: "Als de sleutel al bestaat:",
     noKeysToExport: "Geen sleutels om te exporteren",
-    time: "Tijd",
     type: "Type",
+    time: "Tijd",
     format: "Formaat",
     loading: "Laden...",
     autoRefresh: "Auto",
@@ -511,7 +518,10 @@ const strings = {
       indexInfo: "Index info",
       indexName: "Indexnaam",
       prefix: "Sleutelprefix (optioneel)",
-      fieldName: "Veldnaam"
+      fieldName: "Veldnaam",
+      hybridMode: "Hybride zoekopdracht (FT.HYBRID)",
+      vectorField: "Vectorveld",
+      vectorValues: "Vectorwaarden",
     },
     monitor: {
       title: "Bewaking",
@@ -535,7 +545,8 @@ const strings = {
       peak: "Piek",
       fragmentation: "Fragmentatie",
       hitsAndMisses: "Treffers / Missers",
-      noClients: "Geen clients"
+      noClients: "Geen clients",
+      slotStats: "Cluster slot statistieken",
     },
     analysis: {
       title: "Geheugenanalyse",
@@ -695,6 +706,8 @@ const strings = {
         dimensions: "Dimensies",
         removeConfirm: "Dit element verwijderen uit de VectorSet?",
         noElements: "Geen elementen",
+        filter: "Filter",
+        searchComplete: "Zoeken voltooid",
       }
     },
     treeControls: {
@@ -720,9 +733,6 @@ const strings = {
     }
   },
   time: {
-    type: "Type",
-    format: "Formaat",
-    loading: "Laden...",
     years: "jaren",
     months: "maanden",
     days: "dagen",

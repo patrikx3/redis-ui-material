@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "خطأ في الخادم، يرجى المحاولة مرة أخرى"
+    server_error: "خطأ في الخادم، يرجى المحاولة مرة أخرى",
+    aiPromptTooLong: "طلب AI طويل جدًا (الحد الأقصى 4096 حرفًا)",
   },
   title: {
     donate: "تبرع",
@@ -187,6 +188,8 @@ const strings = {
     edit: "تحرير",
     save: "حفظ",
     ttl: "قم بتعيين TTL",
+    fieldTtl: "مهلة الحقل",
+    digest: "ملخص",
     delete: "حذف",
     remove: "إزالة",
     areYouSure: "هل أنت متأكد؟",
@@ -195,7 +198,9 @@ const strings = {
     getKey: "جارٍ تحميل مفتاح Redis والبيانات المرتبطة به ...",
     jsonViewShow: "عرض JSON",
     jsonViewEditor: "تحرير JSON",
-    quickConsole: "وحدة التحكم السريعة"
+    quickConsole: "وحدة التحكم السريعة",
+    moveUp: "نقل لأعلى",
+    moveDown: "نقل لأسفل",
   },
   label: {
     id: {
@@ -210,14 +215,16 @@ const strings = {
     aiGroqApiKeyInfo: "اختياري. مفتاح API Groq خاص بك لأداء أفضل. احصل على مفتاح مجاني من",
     aiGroqApiKeyPlaceholder: "gsk_...",
     aiGroqApiKeySaved: "تم حفظ مفتاح API AI",
-    aiGroqApiKeyInvalid: "Invalid Groq API key",
+    aiGroqApiKeyInvalid: "مفتاح API Groq غير صالح",
     aiGroqApiKeyNotSet: "غير محدد (الافتراضي للخادم)",
     aiEnabled: "AI مفعّل",
     aiEnabledYes: "نعم",
     aiEnabledNo: "لا",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
-    aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiRouteViaNetwork: "التوجيه عبر network.corifeus.com",
+    aiRoutingDirect: "تنتقل الاستعلامات مباشرة إلى Groq باستخدام مفتاح API الخاص بك، متجاوزةً network.corifeus.com.",
+    aiRoutingNetwork: "تُوجَّه استعلامات الذكاء الاصطناعي عبر network.corifeus.com. إذا كان لديك مفتاح Groq API مجاني خاص بك، يمكنك إيقاف هذا الخيار للتوجيه مباشرةً إلى Groq بدون network.corifeus.com.",
+    aiMaxTokens: "الحد الأقصى لرموز AI",
+    aiMaxTokensInfo: "الحد الأقصى لعدد الرموز المميزة لاستجابات AI. تسمح القيم الأعلى باستجابات أطول ولكن قد تستهلك المزيد من رصيد API.",
     ssh: {
       on: "SSH على",
       off: "إيقاف تشغيل SSH",
@@ -511,7 +518,10 @@ const strings = {
       indexInfo: "معلومات الفهرس",
       indexName: "اسم الفهرس",
       prefix: "بادئة المفتاح (اختياري)",
-      fieldName: "اسم الحقل"
+      fieldName: "اسم الحقل",
+      hybridMode: "بحث هجين (FT.HYBRID)",
+      vectorField: "حقل المتجه",
+      vectorValues: "قيم المتجه",
     },
     monitor: {
       title: "المراقبة",
@@ -535,7 +545,8 @@ const strings = {
       peak: "الذروة",
       fragmentation: "التجزئة",
       hitsAndMisses: "الإصابات / الأخطاء",
-      noClients: "لا يوجد عملاء"
+      noClients: "لا يوجد عملاء",
+      slotStats: "إحصائيات فتحات المجموعة",
     },
     analysis: {
       title: "تحليل الذاكرة",
@@ -695,6 +706,8 @@ const strings = {
         dimensions: "الأبعاد",
         removeConfirm: "هل تريد إزالة هذا العنصر من VectorSet؟",
         noElements: "لا توجد عناصر",
+        filter: "تصفية",
+        searchComplete: "اكتمل البحث",
       }
     },
     treeControls: {
@@ -720,9 +733,6 @@ const strings = {
     }
   },
   time: {
-    type: "النوع",
-    format: "التنسيق",
-    loading: "جارٍ التحميل...",
     years: "سنوات",
     months: "أشهر",
     days: "أيام",

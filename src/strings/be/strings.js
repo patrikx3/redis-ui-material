@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Памылка сервера, паспрабуйце яшчэ раз"
+    server_error: "Памылка сервера, паспрабуйце яшчэ раз",
+    aiPromptTooLong: "Запыт AI занадта доўгі (максімум 4096 сімвалаў)",
   },
   title: {
     donate: "Ахвяраваць",
@@ -187,6 +188,8 @@ const strings = {
     edit: "Рэдагаваць",
     save: "Захаваць",
     ttl: "Набор TTL",
+    fieldTtl: "TTL поля",
+    digest: "Дайджэст",
     delete: "Выдаліць",
     remove: "Выдаліць",
     areYouSure: "Вы ўпэўнены?",
@@ -195,7 +198,9 @@ const strings = {
     getKey: "Загрузка ключа Redis і звязаных з ім даных...",
     jsonViewShow: "Дысплей JSON",
     jsonViewEditor: "Рэдагаваць JSON",
-    quickConsole: "Хуткая кансоль"
+    quickConsole: "Хуткая кансоль",
+    moveUp: "Перамясціць уверх",
+    moveDown: "Перамясціць уніз"
   },
   label: {
     id: {
@@ -204,22 +209,24 @@ const strings = {
       info: "Калі вы не хочаце змяняць уласцівасці: sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa, увядзіце ідэнтыфікатар злучэння ў гэтыя ўласцівасці, каб захаваць значэнні ўласцівасцей. Калі вы хочаце такую ​​ж логіку ў паролі вузла, увядзіце ідэнтыфікатар вузла ў паролі вузла."
     },
     secureFeature: "Калі вы бачыце значэнне, якое пачынаецца з P3X і выглядае аднолькава, гэта бяспечная функцыя. Каб змяніць налады, проста заменіце гэтыя налады пустымі або іншымі, і яны будуць захаваны. Калі вы не зменіце налады, налады будуць захаваны ў тым выглядзе, у якім яны ёсць на серверы.",
-    aiTranslating: "Translating...",
+    aiTranslating: "Перакладаецца...",
     aiSettings: "Налады ШІ",
     aiGroqApiKey: "Ключ API Groq",
     aiGroqApiKeyInfo: "Неабавязкова. Уласны ключ API Groq для лепшай прадукцыйнасці. Атрымайце бясплатны ключ на",
     aiGroqApiKeyPlaceholder: "gsk_...",
     aiGroqApiKeySaved: "Ключ API ШІ захаваны",
-    aiGroqApiKeyInvalid: "Invalid Groq API key",
+    aiGroqApiKeyInvalid: "Няправільны ключ Groq API",
     aiGroqApiKeyNotSet: "Не ўстаноўлена (па змаўчанні сервера)",
-    aiEnabled: "AI Enabled",
-    aiEnabledYes: "Yes",
-    aiEnabledNo: "No",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
-    aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiEnabled: "AI уключаны",
+    aiEnabledYes: "Так",
+    aiEnabledNo: "Не",
+    aiRouteViaNetwork: "Маршрутызацыя праз network.corifeus.com",
+    aiRoutingDirect: "Запыты накіроўваюцца непасрэдна ў Groq з выкарыстаннем вашага ўласнага ключа API, абыходзячы network.corifeus.com.",
+    aiRoutingNetwork: "Запыты AI маршрутызуюцца праз network.corifeus.com. Калі ў вас ёсць уласны бясплатны ключ Groq API, вы можаце выключыць гэты пераключальнік і накіроўваць запыты непасрэдна ў Groq без network.corifeus.com.",
+    aiMaxTokens: "Максімум токенаў AI",
+    aiMaxTokensInfo: "Максімальная колькасць токенаў для адказаў AI. Большыя значэнні дазваляюць даўжэйшыя адказы, але могуць выкарыстоўваць больш крэдытаў API.",
     ssh: {
-      on: "SSH ук��",
+      on: "SSH уключаны",
       off: "SSH выключаны",
       sshHost: "Хост SSH",
       sshPort: "Порт SSH",
@@ -309,9 +316,9 @@ const strings = {
     shortcutDisconnect: "Адключыцца",
     themeAuto: "Auto (system)",
     languageAuto: "Auto (system)",
-    shortcutCommandPalette: "Command Palette",
-    commandPalette: "Command Palette",
-    noResults: "No results",
+    shortcutCommandPalette: "Палітра каманд",
+    commandPalette: "Палітра каманд",
+    noResults: "Няма вынікаў",
     redisCommandsReference: "Каманды Redis",
     ungrouped: "Без групы",
     grouped: "Grouped",
@@ -386,7 +393,7 @@ const strings = {
   },
   code: {
     "delete-connection": "Гэта злучэнне было выдалена, таму вы адключаны ад гэтага асобніка Redis.",
-    "save-connection": "Гэта злучэнне было зменена, таму вы адключаны ад гэтага асобніка Redis. Вы можаце паўторна падключыцц��.",
+    "save-connection": "Гэта злучэнне было зменена, таму вы адключаны ад гэтага асобніка Redis. Вы можаце паўторна падключыцца.",
     "readonly-connections": "Даданне/захаванне/выдаленне злучэнняў толькі для чытання!",
     "readonly-connection-mode": "Гэта злучэнне ў рэжыме толькі для чытання!",
     "list-out-of-bounds": "Гэты індэкс спісу па-за межамі",
@@ -511,7 +518,10 @@ const strings = {
       indexInfo: "Інфа пра індэкс",
       indexName: "Назва індэкса",
       prefix: "Прэфікс ключа (неабавязкова)",
-      fieldName: "Назва поля"
+      fieldName: "Назва поля",
+      hybridMode: "Гібрыдны пошук (FT.HYBRID)",
+      vectorField: "Вектарнае поле",
+      vectorValues: "Вектарныя значэнні",
     },
     monitor: {
       title: "Маніторынг",
@@ -535,7 +545,8 @@ const strings = {
       peak: "Пік",
       fragmentation: "Фрагментацыя",
       hitsAndMisses: "Трапленні / Промахі",
-      noClients: "Няма кліентаў"
+      noClients: "Няма кліентаў",
+      slotStats: "Статыстыка слотаў кластара",
     },
     analysis: {
       title: "Аналіз памяці",
@@ -695,6 +706,8 @@ const strings = {
         dimensions: "Вымярэнні",
         removeConfirm: "Выдаліць гэты элемент з VectorSet?",
         noElements: "Няма элементаў",
+        filter: "Фільтр",
+        searchComplete: "Пошук завершаны",
       }
     },
     treeControls: {
@@ -707,7 +720,7 @@ const strings = {
         clear: "Ачысціць бягучы пошук, каб зрабіць пустым",
         placeholderClient: "Пошук на баку кліента",
         placeholderServer: "Пошук на баку сервера",
-        info: (opts) => "Пошук на баку кліента азначае, што ён адпа��ядае тэксту ўводу пошуку. Пошук на баку сервера азначае, што ён падобны да пошуку ў шаблонах ключоў *{search-text}*. Для вялікіх пошукавых набораў лепш выкарыстоўваць пошук на серверы. Для меншых набораў пошуку лепш выкарыстоўваць рэжым пошуку на баку кліента." + ` Калі падлік ключоў скончыўся ${opts?.maxLightKeysCount ?? 110000}, вы можаце шукаць толькі на баку сервера.`,
+        info: (opts) => "Пошук на баку кліента азначае, што ён адпавядае тэксту ўводу пошуку. Пошук на баку сервера азначае, што ён падобны да пошуку ў шаблонах ключоў *{search-text}*. Для вялікіх пошукавых набораў лепш выкарыстоўваць пошук на серверы. Для меншых набораў пошуку лепш выкарыстоўваць рэжым пошуку на баку кліента." + ` Калі падлік ключоў скончыўся ${opts?.maxLightKeysCount ?? 110000}, вы можаце шукаць толькі на баку сервера.`,
         largeSetInfo: "У вялікім наборы пошук на баку кліента адключаны. таму зараз магчымы толькі пошук на серверы.",
         infoDetails: "Каб даведацца, як працуе пошук, праверце налады"
       },
@@ -720,9 +733,6 @@ const strings = {
     }
   },
   time: {
-    type: "Тып",
-    format: "Фармат",
-    loading: "Загрузка...",
     years: "гадоў",
     months: "месяцаў",
     days: "дзён",

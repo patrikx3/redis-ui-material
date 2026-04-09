@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Palvelinvirhe, yritä uudelleen"
+    server_error: "Palvelinvirhe, yritä uudelleen",
+    aiPromptTooLong: "AI-kehote on liian pitkä (enintään 4096 merkkiä)",
   },
   title: {
     donate: "Lahjoita",
@@ -187,6 +188,8 @@ const strings = {
     edit: "Muokkaa",
     save: "Tallenna",
     ttl: "Aseta TTL",
+    fieldTtl: "Kentän TTL",
+    digest: "Tiivistelmä",
     delete: "Poista",
     remove: "Poista",
     areYouSure: "Oletko varma?",
@@ -195,7 +198,9 @@ const strings = {
     getKey: "Ladataan Redis-avainta ja siihen liittyviä tietoja...",
     jsonViewShow: "Näyttö JSON",
     jsonViewEditor: "Muokkaa JSON",
-    quickConsole: "Pikakonsoli"
+    quickConsole: "Pikakonsoli",
+    moveUp: "Siirrä ylös",
+    moveDown: "Siirrä alas"
   },
   label: {
     id: {
@@ -210,14 +215,16 @@ const strings = {
     aiGroqApiKeyInfo: "Valinnainen. Oma Groq API-avain parempaan suorituskykyyn. Hanki ilmainen avain",
     aiGroqApiKeyPlaceholder: "gsk_...",
     aiGroqApiKeySaved: "AI API-avain tallennettu",
-    aiGroqApiKeyInvalid: "Invalid Groq API key",
+    aiGroqApiKeyInvalid: "Virheellinen Groq API-avain",
     aiGroqApiKeyNotSet: "Ei asetettu (palvelimen oletus)",
     aiEnabled: "AI käytössä",
     aiEnabledYes: "Kyllä",
     aiEnabledNo: "Ei",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
-    aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiRouteViaNetwork: "Reititä network.corifeus.comin kautta",
+    aiRoutingDirect: "Kyselyt menevät suoraan Groqiin omalla API-avaimellasi ohittaen network.corifeus.comin.",
+    aiRoutingNetwork: "AI-kyselyt reititetään network.corifeus.comin kautta. Jos sinulla on oma ilmainen Groq API-avain, voit kytkeä tämän pois päältä ja reitittää suoraan Groqiin ilman network.corifeus.comia.",
+    aiMaxTokens: "AI:n enimmäistokenit",
+    aiMaxTokensInfo: "AI-vastausten enimmäistokenimäärä. Suuremmat arvot mahdollistavat pidemmät vastaukset, mutta voivat kuluttaa enemmän API-krediittejä.",
     ssh: {
       on: "SSH päällä",
       off: "SSH pois päältä",
@@ -511,7 +518,10 @@ const strings = {
       indexInfo: "Indeksin tiedot",
       indexName: "Indeksin nimi",
       prefix: "Avaimen etuliite (valinnainen)",
-      fieldName: "Kentän nimi"
+      fieldName: "Kentän nimi",
+      hybridMode: "Hybridihaku (FT.HYBRID)",
+      vectorField: "Vektorikenttä",
+      vectorValues: "Vektoriarvot",
     },
     monitor: {
       title: "Seuranta",
@@ -535,7 +545,8 @@ const strings = {
       peak: "Huippu",
       fragmentation: "Fragmentoituminen",
       hitsAndMisses: "Osumat / Ohitukset",
-      noClients: "Ei asiakkaita"
+      noClients: "Ei asiakkaita",
+      slotStats: "Klusterin paikan tilastot",
     },
     analysis: {
       title: "Muistianalyysi",
@@ -695,6 +706,8 @@ const strings = {
         dimensions: "Ulottuvuudet",
         removeConfirm: "Poistetaanko tämä elementti VectorSet-rakenteesta?",
         noElements: "Ei elementtejä",
+        filter: "Suodatin",
+        searchComplete: "Haku valmis",
       }
     },
     treeControls: {
@@ -720,9 +733,6 @@ const strings = {
     }
   },
   time: {
-    type: "Tyyppi",
-    format: "Muoto",
-    loading: "Ladataan...",
     years: "vuotta",
     months: "kuukautta",
     days: "päivää",

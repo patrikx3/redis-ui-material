@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "서버 오류입니다. 다시 시도해 주세요."
+    server_error: "서버 오류입니다. 다시 시도해 주세요.",
+    aiPromptTooLong: "AI 프롬프트가 너무 깁니다 (최대 4096자)",
   },
   title: {
     donate: "기부",
@@ -32,7 +33,7 @@ const strings = {
   },
   confirm: {
     dropIndex: "이 인덱스를 삭제하시겠습니까?",
-    uploadBuffer: "이 바이너��� 데이터를 업로드하시겠습니까?",
+    uploadBuffer: "이 바이너리 데이터를 업로드하시겠습니까?",
     uploadBufferDone: "바이너리 데이터가 업로드되었습니다.",
     uploadBufferDoneAndSave: "바이너리 데이터가 서버에 업로드되어 저장됩니다.",
     title: "확인",
@@ -145,7 +146,7 @@ const strings = {
     pubsubMonitor: "PubSub",
     pulse: "Pulse",
     profiler: "Profiler",
-    memoryAnalysis: "Analysis",
+    memoryAnalysis: "분석",
     // When you translate the language, keep the Language in English
     // eg. Idioma / Language
     language: "언어",
@@ -170,7 +171,7 @@ const strings = {
     githubRepo: "저장소",
     githubRelease: "릴리스",
     githubChangelog: "변경 내역",
-    info: "Info",
+    info: "정보",
     settings: "설정",
     connect: "연결하다",
     disconnect: "연결 끊기",
@@ -187,6 +188,8 @@ const strings = {
     edit: "편집",
     save: "저장",
     ttl: "TTL 설정",
+    fieldTtl: "필드 TTL",
+    digest: "다이제스트",
     delete: "삭제",
     remove: "제거",
     areYouSure: "확실합니까?",
@@ -195,7 +198,9 @@ const strings = {
     getKey: "Redis 키 및 관련 데이터 로드 중...",
     jsonViewShow: "JSON 표시",
     jsonViewEditor: "JSON 편집",
-    quickConsole: "빠른 콘솔"
+    quickConsole: "빠른 콘솔",
+    moveUp: "위로 이동",
+    moveDown: "아래로 이동"
   },
   label: {
     id: {
@@ -203,7 +208,7 @@ const strings = {
       id: "연결 ID",
       info: "sshPassword, sshPrivateKey, 비밀번호, tlsCrt, tlsKey, tlsCa 속성을 변경하지 않으려면 해당 속성에 연결 ID를 입력하여 속성 값을 그대로 유지하세요. 노드 비밀번호에 동일한 논리를 적용하려면 노드 비밀번호에 노드 ID를 입력하세요."
     },
-    secureFeature: "P3X로 시작하는 값이 동일하게 보이면 이는 보안 기능입니다. 설정을 변경하려면 해당 설정을 ��어 있거나 다른 것으로 바꾸면 저장됩니다. 설정을 변경하지 않으면 설정이 서버에 있는 그대로 유지됩니다.",
+    secureFeature: "P3X로 시작하는 값이 동일하게 보이면 이는 보안 기능입니다. 설정을 변경하려면 해당 설정을 비워 두거나 다른 값으로 바꾸면 저장됩니다. 설정을 변경하지 않으면 설정이 서버에 있는 그대로 유지됩니다.",
     aiTranslating: "번역 중...",
     aiSettings: "AI 설정",
     aiGroqApiKey: "Groq API 키",
@@ -218,6 +223,8 @@ const strings = {
     aiRouteViaNetwork: "network.corifeus.com 경유",
     aiRoutingDirect: "자체 API 키를 사용하여 Groq에 직접 쿼리합니다. network.corifeus.com을 거치지 않습니다.",
     aiRoutingNetwork: "AI 쿼리는 network.corifeus.com을 통해 라우팅됩니다. 무료 Groq API 키가 있으면 이 스위치를 끄고 직접 사용할 수 있습니다.",
+    aiMaxTokens: "AI 최대 토큰",
+    aiMaxTokensInfo: "AI 응답에 사용할 최대 토큰 수입니다. 값을 높이면 더 긴 응답을 받을 수 있지만 API 크레딧을 더 사용할 수 있습니다.",
     ssh: {
       on: "SSH 켜짐",
       off: "SSH 꺼짐",
@@ -233,14 +240,14 @@ const strings = {
     unableToLoadKey: ({
       key
     }) => {
-      return `이 키를 로드할 수 없습니다: ${key}. 가능합니다. 키가 삭제되었습니다. 정확한 오류는 콘솔에 ���습니다.`;
+      return `이 키를 로드할 수 없습니다: ${key}. 키가 삭제되었을 수 있습니다. 정확한 오류는 콘솔에 있습니다.`;
     },
     bigJson: "이 JSON 개체는 10kb를 초과하므로 일부 기능은 렌더링 속도가 느려질 수 있으므로 수행 중인 작업을 알고 있는지 확인하세요.",
     addNode: "노드 추가",
     validateJson: "JSON 검증",
     reducedFunction: `기능 감소`,
     tooManyKeys: opts => {
-      return `전체 최대 기능에 대해 허용되는 키의 총계는 다음과 같습니다. ${opts.maxLightKeysCount} 카운트. 이 데이터베이스에는 허용된 총 키가 초과되었습니다. ${opts.count}. 키 정렬 및 추가 팬��� 트리 정보가 비활성화됩니다. 검색은 클라이언트 검색 대신 서버에서만 발생합니다.`;
+      return `전체 기능에 허용되는 최대 키 수는 ${opts.maxLightKeysCount}개입니다. 이 데이터베이스는 허용된 총 키 수 ${opts.count}개를 초과했습니다. 키 정렬과 추가 트리 정보가 비활성화되며, 검색은 클라이언트 대신 서버에서만 수행됩니다.`;
     },
     redisCommandNotFound: "일치하는 Redis 명령이 없습니다...",
     treeKeyStore: `정렬(자연 비교)은 클라이언트(일명 브라우저)에서 실행됩니다. 즉, 10,000개가 넘는 키와 같은 대규모 세트에 대한 페널티가 있으며 페이지 렌더링에 약간의 시간이 추가될 수 있습니다. Redis에는 이와 같은 키 정렬이 없습니다.`,
@@ -250,7 +257,7 @@ const strings = {
     resizerInfo: options => {
       return `왼쪽 또는 오른쪽 패널의 최소 너비는 다음과 같습니다. ${options.width}px`;
     },
-    jsonViewNotParsable: "이 값은 JSON 구문 분��이 불가능합니다.  ",
+    jsonViewNotParsable: "이 값은 JSON으로 파싱할 수 없습니다.",
     ttlTitle: "초 단위로 TTL 설정",
     passwordSecure: "비밀번호는 비어 있을 수 있지만 여전히 문자가 표시됩니다. 이는 보안 기능입니다.",
     tlsWithoutCert: "추가 인증서 없이 TLS 활성화",
@@ -309,12 +316,12 @@ const strings = {
     shortcutDisconnect: "연결 끊기",
     themeAuto: "Auto (system)",
     languageAuto: "Auto (system)",
-    shortcutCommandPalette: "Command Palette",
-    commandPalette: "Command Palette",
-    noResults: "No results",
+    shortcutCommandPalette: "명령 팔레트",
+    commandPalette: "명령 팔레트",
+    noResults: "결과 없음",
     redisCommandsReference: "Redis 명령어",
     ungrouped: "그룹 없음",
-    grouped: "Grouped",
+    grouped: "그룹화됨",
     connectFirst: "먼저 Redis 서버에 연결하세요",
     searchLanguage: "언어 검색...",
     exportProgress: "키 내보내는 중...",
@@ -381,7 +388,7 @@ const strings = {
     ttlChanged: "이 키의 TTL가 변경되었습니다.",
     notInteger: "이 입력은 정수가 아닙니다.",
     persisted: "이 키는 영원히 유지됩니다.",
-    set: "���가 설정/추가되었습니다.",
+    set: "키가 설정/추가되었습니다.",
     connectionRestored: "연결이 복원됨"
   },
   code: {
@@ -409,7 +416,7 @@ const strings = {
     connection: {
       label: {
         name: "이름",
-        group: "Group",
+        group: "그룹",
         host: "호스트 이름",
         port: "항구",
         password: "비밀번호",
@@ -511,7 +518,10 @@ const strings = {
       indexInfo: "인덱스 정보",
       indexName: "인덱스 이름",
       prefix: "키 접두사 (선택)",
-      fieldName: "필드 이름"
+      fieldName: "필드 이름",
+      hybridMode: "하이브리드 검색 (FT.HYBRID)",
+      vectorField: "벡터 필드",
+      vectorValues: "벡터 값",
     },
     monitor: {
       title: "모니터링",
@@ -535,7 +545,8 @@ const strings = {
       peak: "최대",
       fragmentation: "단편화",
       hitsAndMisses: "적중 / 미스",
-      noClients: "클라이언트 없음"
+      noClients: "클라이언트 없음",
+      slotStats: "클러스터 슬롯 통계",
     },
     analysis: {
       title: "메모리 분석",
@@ -593,7 +604,7 @@ const strings = {
         ttlNotExpire: "만료되지 않습니다",
         lengthString: "바이트",
         lengthItem: "아이템",
-        actions: "���업"
+        actions: "작업"
       },
       list: {
         table: {
@@ -695,6 +706,8 @@ const strings = {
         dimensions: "차원",
         removeConfirm: "이 요소를 VectorSet에서 제거하시겠습니까?",
         noElements: "요소 없음",
+        filter: "필터",
+        searchComplete: "검색 완료",
       }
     },
     treeControls: {
@@ -720,9 +733,6 @@ const strings = {
     }
   },
   time: {
-    type: "유형",
-    format: "형식",
-    loading: "로딩 중...",
     years: "년",
     months: "개월",
     days: "일",

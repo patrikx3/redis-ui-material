@@ -266,21 +266,29 @@ export default function ConsoleComponent({ embedded = false, collapsed = false }
 
     // --- AI query ---
     const handleAiQuery = useCallback(async (prompt: string, originalInput: string): Promise<boolean> => {
+        if (prompt.length > 4096) {
+            toast(strings?.error?.aiPromptTooLong || 'AI prompt too long (max 4096 characters)')
+            return false
+        }
         setAiLoading(true)
         inputRef.current?.focus()
         try {
             let indexes: string[] = []
             try { const r = await request({ action: 'search-list', payload: {} }); indexes = r.data || [] } catch {}
             const info = useRedisStateStore.getState().info || {}
+            const server = info.server || {}
+            const clients = info.clients || {}
+            const memory = info.memory || {}
+            const keyspace = info.keyspace || {}
             const modules = useRedisStateStore.getState().modules || []
             const ctx: any = { indexes }
-            if (info.redis_version) ctx.redisVersion = info.redis_version
-            if (info.redis_mode) ctx.redisMode = info.redis_mode
-            if (info.os) ctx.os = info.os
-            if (info.connected_clients) ctx.connectedClients = info.connected_clients
-            if (info.used_memory_human) ctx.usedMemory = info.used_memory_human
-            const dbKeys = Object.keys(info).filter((k: string) => /^db\d+$/.test(k))
-            if (dbKeys.length > 0) ctx.databases = dbKeys.map((k: string) => `${k}: ${info[k]}`)
+            if (server.redis_version) ctx.redisVersion = server.redis_version
+            if (server.redis_mode) ctx.redisMode = server.redis_mode
+            if (server.os) ctx.os = server.os
+            if (clients.connected_clients) ctx.connectedClients = clients.connected_clients
+            if (memory.used_memory_human) ctx.usedMemory = memory.used_memory_human
+            const dbKeys = Object.keys(keyspace).filter((k: string) => /^db\d+$/.test(k))
+            if (dbKeys.length > 0) ctx.databases = dbKeys.map((k: string) => `${k}: ${keyspace[k]}`)
             if (modules.length > 0) ctx.modules = modules
             ctx.uiLanguage = useI18nStore.getState().currentLang
 
@@ -573,15 +581,6 @@ export default function ConsoleComponent({ embedded = false, collapsed = false }
                 position: 'relative', width: '100%', flexShrink: 0,
                 minWidth: 0,
             }}>
-                {currentHint && (
-                    <Box className="p3xr-console-hint" sx={{
-                        fontFamily: "'Roboto Mono', monospace", fontSize: 12,
-                        px: '6px', py: '2px', opacity: 0.6,
-                        whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
-                    }}>
-                        {currentHint}
-                    </Box>
-                )}
                 <textarea
                     ref={inputRef}
                     id="p3xr-console-input"
@@ -613,6 +612,15 @@ export default function ConsoleComponent({ embedded = false, collapsed = false }
                         borderColor: aiLoading ? muiTheme.p3xr.matSysPrimary : muiTheme.p3xr.inputBorderColor,
                     }}
                 />
+                {currentHint && (
+                    <Box className="p3xr-console-hint" sx={{
+                        fontFamily: "'Roboto Mono', monospace", fontSize: 12,
+                        px: '6px', py: '2px', opacity: 0.6,
+                        whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+                    }}>
+                        {currentHint}
+                    </Box>
+                )}
             </Box>
         </Box>
     )

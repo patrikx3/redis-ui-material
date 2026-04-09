@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Chyba serveru, zkuste to prosím znovu"
+    server_error: "Chyba serveru, zkuste to prosím znovu",
+    aiPromptTooLong: "Výzva AI je příliš dlouhá (max. 4096 znaků)",
   },
   title: {
     donate: "Přispět",
@@ -189,6 +190,8 @@ const strings = {
     edit: "Upravit",
     save: "Uložit",
     ttl: "Nastavit TTL",
+    fieldTtl: "TTL pole",
+    digest: "Digest",
     delete: "Smazat",
     remove: "Odebrat",
     areYouSure: "Jste si jistí?",
@@ -197,7 +200,9 @@ const strings = {
     getKey: "Načítání Redis klíče a přidružených dat ...",
     jsonViewShow: "Zobrazit JSON",
     jsonViewEditor: "Upravit JSON",
-    quickConsole: "Rychlá konzole"
+    quickConsole: "Rychlá konzole",
+    moveUp: "Posunout nahoru",
+    moveDown: "Posunout dolů",
   },
   label: {
     id: {
@@ -217,9 +222,11 @@ const strings = {
     aiEnabled: "AI povoleno",
     aiEnabledYes: "Ano",
     aiEnabledNo: "Ne",
-    aiRouteViaNetwork: "Trasa přes network.corifeus.com",
-    aiRoutingDirect: "Dotazy jdou přímo do Groq s vaším vlastním API klíčem, bez network.corifeus.com.",
-    aiRoutingNetwork: "AI dotazy jsou směrovány přes network.corifeus.com. Pokud máte vlastní bezplatný klíč API Groq, můžete tento přepínač vypnout.",
+    aiRouteViaNetwork: "Směrování přes network.corifeus.com",
+    aiRoutingDirect: "Dotazy jdou přímo do Groq pomocí vašeho vlastního API klíče a obcházejí network.corifeus.com.",
+    aiRoutingNetwork: "AI dotazy jsou směrovány přes network.corifeus.com. Pokud máte vlastní bezplatný Groq API klíč, můžete tento přepínač vypnout a směrovat přímo do Groq bez network.corifeus.com.",
+    aiMaxTokens: "Max. počet tokenů AI",
+    aiMaxTokensInfo: "Maximální počet tokenů pro odpovědi AI. Vyšší hodnoty umožňují delší odpovědi, ale mohou spotřebovat více API kreditů.",
     ssh: {
       on: 'SSH zapnuto',
       off: 'SSH vypnuto',
@@ -310,7 +317,7 @@ const strings = {
     shortcutNewKey: "Nový klíč",
     shortcutDisconnect: "Odpojit",
     themeAuto: "Automaticky (systém)",
-    languageAuto: "Automaticky (systém)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Paleta příkazů",
     commandPalette: "Paleta příkazů",
     noResults: "Žádné výsledky",
@@ -513,7 +520,10 @@ const strings = {
       indexInfo: "Info o indexu",
       indexName: "Název indexu",
       prefix: "Prefix klíče (volitelné)",
-      fieldName: "Název pole"
+      fieldName: "Název pole",
+      hybridMode: "Hybridní vyhledávání (FT.HYBRID)",
+      vectorField: "Vektorové pole",
+      vectorValues: "Vektorové hodnoty",
     },
     monitor: {
       title: "Monitorování",
@@ -537,7 +547,8 @@ const strings = {
       peak: "Špička",
       fragmentation: "Fragmentace",
       hitsAndMisses: "Zásahy / Minutí",
-      noClients: "Žádní klienti"
+      noClients: "Žádní klienti",
+      slotStats: "Statistika slotů clusteru",
     },
     analysis: {
       title: "Analýza paměti",
@@ -697,6 +708,8 @@ const strings = {
         dimensions: "Dimenze",
         removeConfirm: "Odebrat tento element z VectorSet?",
         noElements: "Žádné elementy",
+        filter: "Filtr",
+        searchComplete: "Vyhledávání dokončeno",
       }
     },
     treeControls: {
@@ -722,9 +735,6 @@ const strings = {
     }
   },
   time: {
-    type: "Typ",
-    format: "Formát",
-    loading: "Načítání...",
     years: "let",
     months: "měsíců",
     days: "dní",

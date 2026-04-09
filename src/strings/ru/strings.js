@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Серверная ошибка, пожалуйсто попробуйте снова"
+    server_error: "Серверная ошибка, пожалуйсто попробуйте снова",
+    aiPromptTooLong: "Запрос AI слишком длинный (максимум 4096 символов)",
   },
   title: {
     donate: "Донат",
@@ -189,6 +190,8 @@ const strings = {
     edit: "Редактировать",
     save: "Сохранить",
     ttl: "Выбрать TTL",
+    fieldTtl: "TTL поля",
+    digest: "Дайджест",
     delete: "Удалить",
     remove: "Убрать",
     areYouSure: "Вы уверены?",
@@ -197,7 +200,9 @@ const strings = {
     getKey: "Загрузка ключа Redis и асоциированных данных ...",
     jsonViewShow: "Показать JSON",
     jsonViewEditor: "Редактировать JSON",
-    quickConsole: "Быстрый"
+    quickConsole: "Быстрый",
+    moveUp: "Переместить вверх",
+    moveDown: "Переместить вниз",
   },
   label: {
     id: {
@@ -220,6 +225,8 @@ const strings = {
     aiRouteViaNetwork: "Маршрут через network.corifeus.com",
     aiRoutingDirect: "Запросы идут напрямую в Groq с вашим собственным API-ключом, минуя network.corifeus.com.",
     aiRoutingNetwork: "AI-запросы маршрутизируются через network.corifeus.com. Если у вас есть собственный бесплатный ключ API Groq, вы можете отключить этот переключатель.",
+    aiMaxTokens: "Максимум токенов AI",
+    aiMaxTokensInfo: "Максимальное количество токенов для ответов AI. Более высокие значения позволяют получать более длинные ответы, но могут расходовать больше API-кредитов.",
     ssh: {
       on: 'SSH включен',
       off: 'SSH выключен',
@@ -310,7 +317,7 @@ const strings = {
     shortcutNewKey: "Новый ключ",
     shortcutDisconnect: "Отключится",
     themeAuto: "Авто (система)",
-    languageAuto: "Авто (система)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Палитра команд",
     commandPalette: "Палитра команд",
     noResults: "Нет результатов",
@@ -513,7 +520,10 @@ const strings = {
       indexInfo: "Информация об индексе",
       indexName: "Имя индекса",
       prefix: "Префикс ключа (необязательно)",
-      fieldName: "Имя поля"
+      fieldName: "Имя поля",
+      hybridMode: "Гибридный поиск (FT.HYBRID)",
+      vectorField: "Векторное поле",
+      vectorValues: "Значения вектора",
     },
     monitor: {
       title: "Мониторинг",
@@ -537,7 +547,8 @@ const strings = {
       peak: "Пик",
       fragmentation: "Фрагментация",
       hitsAndMisses: "Попадания / Промахи",
-      noClients: "Нет клиентов"
+      noClients: "Нет клиентов",
+      slotStats: "Статистика слотов кластера",
     },
     analysis: {
       title: "Анализ памяти",
@@ -697,6 +708,8 @@ const strings = {
         dimensions: "Размерности",
         removeConfirm: "Удалить этот элемент из VectorSet?",
         noElements: "Нет элементов",
+        filter: "Фильтр",
+        searchComplete: "Поиск завершён",
       }
     },
     treeControls: {
@@ -722,9 +735,6 @@ const strings = {
     }
   },
   time: {
-    type: "Тип",
-    format: "Формат",
-    loading: "Загрузка...",
     years: "года",
     months: "месяца",
     days: "дни",

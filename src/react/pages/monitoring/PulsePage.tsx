@@ -15,6 +15,7 @@ import {
 import 'uplot/dist/uPlot.min.css'
 import { useI18nStore } from '../../stores/i18n.store'
 import { useRedisStateStore } from '../../stores/redis-state.store'
+import { parseRedisVersion } from '../../../core/redis-version'
 import { useCommonStore } from '../../stores/common.store'
 import { request } from '../../stores/socket.service'
 import P3xrAccordion from '../../components/P3xrAccordion'
@@ -67,6 +68,9 @@ export default function PulsePage() {
     const [paused, setPaused] = useState(false)
     const [clientList, setClientList] = useState<any[]>([])
     const [topKeys, setTopKeys] = useState<any[]>([])
+    const [slotStats, setSlotStats] = useState<any[]>([])
+    const [slotStatsMetric, setSlotStatsMetric] = useState('KEY-COUNT')
+    const [slotStatsLoaded, setSlotStatsLoaded] = useState(false)
     const [clientListLoaded, setClientListLoaded] = useState(false)
     const [topKeysLoaded, setTopKeysLoaded] = useState(false)
     const [autoRefreshClients, setAutoRefreshClients] = useState(() => localStorage.getItem('p3xr-monitor-auto-clients') === 'true')
@@ -238,11 +242,23 @@ export default function PulsePage() {
         } catch { setTopKeysLoaded(true) }
     }, [])
 
+    const loadSlotStats = useCallback(async (metric?: string) => {
+        try {
+            const resp = await request({ action: 'cluster-slot-stats', payload: { metric: metric || slotStatsMetric, limit: 20 } })
+            setSlotStats(resp.slots || [])
+            setSlotStatsLoaded(true)
+        } catch { setSlotStatsLoaded(true); setSlotStats([]) }
+    }, [slotStatsMetric])
+
+    const isCluster = useRedisStateStore.getState().connection?.cluster === true
+    const rv = parseRedisVersion(useRedisStateStore.getState().info?.server?.redis_version)
+
     // --- Init ---
     useEffect(() => {
         fetchData()
         loadClientList()
         loadTopKeys()
+        if (isCluster && rv.isAtLeast(8, 2)) loadSlotStats()
 
         import('uplot').then(mod => {
             uPlotRef.current = mod.default
@@ -972,6 +988,48 @@ export default function PulsePage() {
                     </List>
                 )}
             </P3xrAccordion>
+
+            {/* Cluster Slot Stats (cluster + 8.2+ only) */}
+            {isCluster && rv.isAtLeast(8, 2) && (
+                <P3xrAccordion title={mon.slotStats || 'Cluster Slot Stats'} accordionKey="monitor-slot-stats"
+                    actions={<>
+                        <P3xrButton icon={<Refresh fontSize="small" />} label={strings?.intention?.refresh} onClick={e => { e.stopPropagation(); loadSlotStats() }} />
+                    </>}>
+                    <Box sx={{ px: 2, py: 1, display: 'flex', gap: 1, alignItems: 'center' }}>
+                        <select value={slotStatsMetric} onChange={e => { setSlotStatsMetric(e.target.value); loadSlotStats(e.target.value) }}
+                            style={{ padding: '6px 8px', borderRadius: 4, border: '1px solid rgba(128,128,128,0.3)', background: 'transparent', color: 'inherit', fontFamily: "'Roboto Mono', monospace", fontSize: 13 }}>
+                            <option value="KEY-COUNT">Key Count</option>
+                            <option value="CPU-USEC">CPU (μs)</option>
+                            <option value="MEMORY-BYTES">Memory (bytes)</option>
+                        </select>
+                    </Box>
+                    {slotStats.length === 0 && (
+                        <Box sx={{ p: 2, opacity: 0.5 }}>{slotStatsLoaded ? 'No slot data' : (strings?.label?.loading || 'Loading...')}</Box>
+                    )}
+                    {slotStats.length > 0 && (
+                        <List disablePadding>
+                            {slotStats.map((entry: any, i: number) => (
+                                <Box key={entry.slot}>
+                                    <ListItem sx={{ px: 2, py: 1 }}>
+                                        <Box sx={{ display: 'flex', width: '100%' }}>
+                                            <Box sx={{ flex: 1 }}>
+                                                <Box component="span" sx={{ opacity: 0.4, mr: 1 }}>#{i + 1}</Box>
+                                                <Box component="span" sx={{ fontFamily: "'Roboto Mono', monospace", fontSize: 13 }}>Slot {entry.slot}</Box>
+                                            </Box>
+                                            <Box sx={{ fontFamily: "'Roboto Mono', monospace", fontSize: 13 }}>
+                                                {slotStatsMetric === 'KEY-COUNT' && `${entry['key-count']} keys`}
+                                                {slotStatsMetric === 'CPU-USEC' && `${entry['cpu-usec']} μs`}
+                                                {slotStatsMetric === 'MEMORY-BYTES' && formatBytes(entry['memory-bytes'])}
+                                            </Box>
+                                        </Box>
+                                    </ListItem>
+                                    <Divider />
+                                </Box>
+                            ))}
+                        </List>
+                    )}
+                </P3xrAccordion>
+            )}
 
         </Box>
     )

@@ -1,5 +1,6 @@
 import { Injectable, Inject, signal, computed } from '@angular/core';
 import { SettingsService } from './settings.service';
+import { parseRedisVersion, RedisVersion } from '../../core/redis-version';
 
 declare const P3XR_API_PORT: number;
 declare const P3XR_DEV_MODE: boolean;
@@ -43,6 +44,11 @@ export class RedisStateService {
     readonly keysInfoFetchedAt = signal<number>(Date.now());
 
     // --- Computed values ---
+
+    /** Parsed Redis server version for feature gating (e.g. redisVersion().isAtLeast(8, 2)) */
+    readonly redisVersion = computed<RedisVersion>(() =>
+        parseRedisVersion(this.info()?.server?.redis_version)
+    );
 
     readonly themeLayout = computed(() => {
         const t = this.theme();

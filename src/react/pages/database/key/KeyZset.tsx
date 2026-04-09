@@ -11,7 +11,7 @@ import { useI18nStore } from '../../../stores/i18n.store'
 import { useRedisStateStore } from '../../../stores/redis-state.store'
 import { useCommonStore } from '../../../stores/common.store'
 import { request } from '../../../stores/socket.service'
-import { KeyTypeProps, createPaging, Paging, pagerAction, pageChange, formatValue, truncateDisplay, isTruncated, copyValue, downloadBuffer } from './key-type-base'
+import { KeyTypeProps, createPaging, rePaging, Paging, pagerAction, pageChange, formatValue, truncateDisplay, isTruncated, copyValue, downloadBuffer } from './key-type-base'
 import KeyPagerInline from './KeyPagerInline'
 import KeyNewOrSetDialog from '../../../dialogs/KeyNewOrSetDialog'
 import JsonViewDialog from '../../../dialogs/JsonViewDialog'
@@ -44,7 +44,7 @@ export default function KeyZset({ response, value, valueBuffer, keyName, valueFo
 
     useEffect(() => {
         if (!value) return
-        const p = createPaging(value.length, true)
+        const p = rePaging(paging, value.length, true)
         setPaging(p)
         setPagedItems(buildItems(value, p))
     }, [value])

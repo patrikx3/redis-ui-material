@@ -25,6 +25,18 @@ export function createPaging(valueLength: number, zsetMode = false): Paging {
     return { page: 1, pages, pageCount, startIndex: 0, endIndex: pageCount }
 }
 
+export function rePaging(paging: Paging, valueLength: number, zsetMode = false): Paging {
+    const pageCount = paging.pageCount
+    const itemCount = zsetMode ? Math.ceil(valueLength / 2) : valueLength
+    const pages = Math.max(Math.ceil(itemCount / pageCount), 1)
+    let page = paging.page
+    if (page > pages) page = pages
+    if (page < 1) page = 1
+    const startIndex = pageCount * (page - 1)
+    const endIndex = startIndex + pageCount
+    return { page, pages, pageCount, startIndex, endIndex }
+}
+
 export function pagerAction(paging: Paging, action: string): Paging {
     let { page, pages, pageCount } = paging
     switch (action) {

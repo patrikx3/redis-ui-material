@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "שגיאת שרת, אנא נסה שוב"
+    server_error: "שגיאת שרת, אנא נסה שוב",
+    aiPromptTooLong: "בקשת AI ארוכה מדי (מקסימום 4096 תווים)",
   },
   title: {
     donate: "לתרום",
@@ -187,6 +188,8 @@ const strings = {
     edit: "ערוך",
     save: "שמור",
     ttl: "הגדר TTL",
+    fieldTtl: "TTL שדה",
+    digest: "תקציר",
     delete: "מחק",
     remove: "הסר",
     areYouSure: "?האם אתה בטוח",
@@ -195,12 +198,14 @@ const strings = {
     getKey: "טוען מפתח Redis ונתונים קשורים...",
     jsonViewShow: "הצג את JSON",
     jsonViewEditor: "ערוך את JSON",
-    quickConsole: "קונסולה מהירה"
+    quickConsole: "קונסולה מהירה",
+    moveUp: "העבר למעלה",
+    moveDown: "העבר למטה"
   },
   label: {
     id: {
       nodeId: "מזהה צומת",
-      id: "מזה�� חיבור",
+      id: "מזהה חיבור",
       info: "אם אינך רוצה לשנות את המאפיינים של: sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa, אנא הזן את מזהה החיבור במאפיינים אלה כדי לשמור על ערכי הנכס ללא פגע. אם אתה רוצה את אותו היגיון בסיסמת הצומת, הזן את מזהה הצומת בסיסמת הצומת."
     },
     secureFeature: "אם אתה רואה ערך שמתחיל ב-P3X במראה זהה, זוהי תכונה מאובטחת. כדי לשנות את ההגדרות, פשוט החליפו את ההגדרות הללו בריקות או במשהו אחר והן יישמרו. אם לא תשנה את ההגדרות, ההגדרות יישמרו כפי שהן בשרת.",
@@ -210,14 +215,16 @@ const strings = {
     aiGroqApiKeyInfo: "אופציונלי. מפתח API Groq משלך לביצועים טובים יותר. קבל מפתח חינמי מ",
     aiGroqApiKeyPlaceholder: "gsk_...",
     aiGroqApiKeySaved: "מפתח API AI נשמר",
-    aiGroqApiKeyInvalid: "Invalid Groq API key",
+    aiGroqApiKeyInvalid: "מפתח Groq API לא תקין",
     aiGroqApiKeyNotSet: "לא הוגדר (ברירת מחדל של השרת)",
     aiEnabled: "AI מופעל",
     aiEnabledYes: "כן",
     aiEnabledNo: "לא",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
-    aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiRouteViaNetwork: "ניתוב דרך network.corifeus.com",
+    aiRoutingDirect: "השאילתות נשלחות ישירות ל-Groq באמצעות מפתח ה-API שלך, תוך עקיפת network.corifeus.com.",
+    aiRoutingNetwork: "שאילתות AI מנותבות דרך network.corifeus.com. אם יש לך מפתח Groq API חינמי משלך, אפשר לכבות את המתג הזה כדי לנתב ישירות ל-Groq ללא network.corifeus.com.",
+    aiMaxTokens: "מספר אסימוני AI מרבי",
+    aiMaxTokensInfo: "מספר האסימונים המרבי לתגובות AI. ערכים גבוהים יותר מאפשרים תגובות ארוכות יותר, אך עשויים לצרוך יותר קרדיט API.",
     ssh: {
       on: "SSH פועל",
       off: "SSH כבוי",
@@ -229,13 +236,13 @@ const strings = {
     },
     isBuffer: opts => `[object ArrayBuffer] פירושו שהערך הוא נתונים בינאריים או שהערך גדול מ- ${opts.maxValueAsBuffer}`,
     streamValue: `השדה והערך של זרם הם oneliner. לדוגמה: שדה1 ערך1 "שדה 2" "ערך 2"`,
-    streamTimestampId: `'*' פירושו ��נוצר אוטומטית או המפרט כ-<millisecondsTime>-<sequenceNumber>`,
+    streamTimestampId: `'*' פירושו נוצר אוטומטית או המפרט כ-<millisecondsTime>-<sequenceNumber>`,
     unableToLoadKey: ({
       key
     }) => {
       return `לא ניתן לטעון את המפתח הזה: ${key}. ייתכן, המפתח נמחק. השגיאה המדויקת נמצאת בקונסולה.`;
     },
-    bigJson: "��ובייקט JSON זה הוא מעל 10 קילובייט, אז ודא שאתה יודע מה אתה עושה, מכיוון שחלק מהפונקציות עשויות להיות עיבוד איטי.",
+    bigJson: "אובייקט JSON זה הוא מעל 10 קילובייט, אז ודא שאתה יודע מה אתה עושה, מכיוון שחלק מהפונקציות עשויות להיות בעיבוד איטי.",
     addNode: "הוסף צומת",
     validateJson: "אמת את JSON",
     reducedFunction: `פונקציונליות מופחתת`,
@@ -309,9 +316,9 @@ const strings = {
     shortcutDisconnect: "התנתק",
     themeAuto: "Auto (system)",
     languageAuto: "Auto (system)",
-    shortcutCommandPalette: "Command Palette",
-    commandPalette: "Command Palette",
-    noResults: "No results",
+    shortcutCommandPalette: "לוח פקודות",
+    commandPalette: "לוח פקודות",
+    noResults: "אין תוצאות",
     redisCommandsReference: "פקודות Redis",
     ungrouped: "ללא קבוצה",
     grouped: "Grouped",
@@ -369,7 +376,7 @@ const strings = {
       return `בחיבור הנוכחי הייתה שגיאה: ${opts.error.message}`;
     },
     dbChanged: opts => {
-      return `��ינדקס db מוגדר ל ${opts.db}. `;
+      return `אינדקס db מוגדר ל ${opts.db}. `;
     },
     treeDeleted: opts => {
       return `מפתח העץ נמחק (${opts.key}).`;
@@ -511,7 +518,10 @@ const strings = {
       indexInfo: "מידע אינדקס",
       indexName: "שם האינדקס",
       prefix: "תחילית מפתח (אופציונלי)",
-      fieldName: "שם השדה"
+      fieldName: "שם השדה",
+      hybridMode: "חיפוש היברידי (FT.HYBRID)",
+      vectorField: "שדה וקטור",
+      vectorValues: "ערכי וקטור",
     },
     monitor: {
       title: "ניטור",
@@ -535,7 +545,8 @@ const strings = {
       peak: "שיא",
       fragmentation: "פרגמנטציה",
       hitsAndMisses: "פגיעות / החטאות",
-      noClients: "אין לקוחות"
+      noClients: "אין לקוחות",
+      slotStats: "סטטיסטיקות חריצי אשכול",
     },
     analysis: {
       title: "ניתוח זיכרון",
@@ -570,7 +581,7 @@ const strings = {
     },
 
     overview: {
-      noConnected: "אין חי��ור ל-Redis.",
+      noConnected: "אין חיבור ל-Redis.",
       overviewClients: "רשום את המחוברים לפי ספירת הלקוחות",
       connectedCount: opt => {
         if (opt.length === 1) {
@@ -695,6 +706,8 @@ const strings = {
         dimensions: "ממדים",
         removeConfirm: "להסיר אלמנט זה מה-VectorSet?",
         noElements: "אין אלמנטים",
+        filter: "סינון",
+        searchComplete: "החיפוש הושלם",
       }
     },
     treeControls: {
@@ -720,9 +733,6 @@ const strings = {
     }
   },
   time: {
-    type: "סוג",
-    format: "פורמט",
-    loading: "טוען...",
     years: "שנים",
     months: "חודשים",
     days: "ימים",

@@ -9,7 +9,7 @@ import { useState, useCallback } from 'react'
 import { Box, Button, Tooltip, TextField, Switch, FormControlLabel, useMediaQuery } from '@mui/material'
 import {
     Upload, Download, TableChart, ContentCopy, FormatLineSpacing,
-    Description, Edit, Cancel, Save,
+    Description, Edit, Cancel, Save, Numbers,
 } from '@mui/icons-material'
 import { useI18nStore } from '../../../stores/i18n.store'
 import { useRedisStateStore } from '../../../stores/redis-state.store'
@@ -19,6 +19,7 @@ import { useCommonStore } from '../../../stores/common.store'
 import { useOverlayStore } from '../../../stores/overlay.store'
 import { request } from '../../../stores/socket.service'
 import { KeyTypeProps, formatValue, truncateDisplay, isTruncated, copyValue, downloadBuffer } from './key-type-base'
+import { parseRedisVersion } from '../../../../core/redis-version'
 import JsonViewDialog from '../../../dialogs/JsonViewDialog'
 import JsonEditorDialog from '../../../dialogs/JsonEditorDialog'
 
@@ -122,6 +123,13 @@ export default function KeyString({ response, value: initValue, valueBuffer: ini
         finally { overlay.hide() }
     }, [value, settings.jsonFormat, response, keyName, strings, onRefresh])
 
+    const showDigest = useCallback(async () => {
+        try {
+            const res = await request({ action: 'string-digest', payload: { key: keyName } })
+            toast(res.digest || 'No digest')
+        } catch (e) { generalHandleError(e) }
+    }, [keyName, toast, generalHandleError])
+
     const copyVal = useCallback(() => copyValue(value), [value])
 
     const downloadBufferFile = useCallback(() => downloadBuffer(valueBuffer, keyName), [valueBuffer, keyName])
@@ -164,6 +172,9 @@ export default function KeyString({ response, value: initValue, valueBuffer: ini
                         <Btn icon={<FormatLineSpacing fontSize="small" />} label={strings?.intention?.formatJson} onClick={formatJson} />
                     )}
                     <Btn icon={<Description fontSize="small" />} label={strings?.intention?.jsonViewEditor} onClick={jsonEditor} />
+                    {parseRedisVersion(useRedisStateStore.getState().info?.server?.redis_version).isAtLeast(8, 4) && (
+                        <Btn icon={<Numbers fontSize="small" />} label="Digest" color="secondary" onClick={showDigest} />
+                    )}
                     {!isReadonly && (
                         <Btn icon={<Edit fontSize="small" />} label={strings?.intention?.edit} onClick={edit} />
                     )}

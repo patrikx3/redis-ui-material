@@ -10,6 +10,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatInputModule } from '@angular/material/input';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { I18nService } from '../../services/i18n.service';
 import { SocketService } from '../../services/socket.service';
@@ -26,7 +27,7 @@ import { OverlayService } from '../../services/overlay.service';
         CommonModule, FormsModule,
         MatIconModule, MatButtonModule, MatTooltipModule,
         MatDividerModule, MatListModule, MatSelectModule,
-        MatFormFieldModule, MatInputModule,
+        MatFormFieldModule, MatInputModule, MatSlideToggleModule,
         P3xrAccordionComponent, P3xrButtonComponent,
     ],
     templateUrl: './search.component.html',
@@ -50,6 +51,12 @@ export class SearchComponent implements OnInit, OnDestroy {
     isGtSm = true;
 
     aiLoading = false;
+
+    // Hybrid search (FT.HYBRID, Redis 8.4+)
+    hybridMode = false;
+    vectorField = '';
+    vectorValues = '';
+    vectorCount = 10;
 
     // Index creation
     newIndexName = '';
@@ -125,15 +132,32 @@ export class SearchComponent implements OnInit, OnDestroy {
         this.searching = true;
         this.cdr.markForCheck();
         try {
-            const response = await this.socket.request({
-                action: 'search-query',
-                payload: {
-                    index: this.selectedIndex,
-                    query: this.query,
-                    offset: this.offset,
-                    limit: this.limit,
-                },
-            });
+            let response: any;
+            if (this.hybridMode && this.vectorField && this.vectorValues) {
+                const values = this.vectorValues.split(',').map((v: string) => parseFloat(v.trim())).filter((v: number) => !isNaN(v));
+                response = await this.socket.request({
+                    action: 'search-hybrid',
+                    payload: {
+                        index: this.selectedIndex,
+                        query: this.query,
+                        vectorField: this.vectorField,
+                        vectorValues: values,
+                        count: this.vectorCount,
+                        offset: this.offset,
+                        limit: this.limit,
+                    },
+                });
+            } else {
+                response = await this.socket.request({
+                    action: 'search-query',
+                    payload: {
+                        index: this.selectedIndex,
+                        query: this.query,
+                        offset: this.offset,
+                        limit: this.limit,
+                    },
+                });
+            }
             this.total = response.data.total;
             this.results = response.data.docs;
         } catch (e) {

@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Сервер қатесі, әрекетті қайталаңыз"
+    server_error: "Сервер қатесі, әрекетті қайталаңыз",
+    aiPromptTooLong: "AI сұрауы тым ұзын (ең көбі 4096 таңба)",
   },
   title: {
     donate: "Садақа беру",
@@ -13,7 +14,7 @@ const strings = {
     statistics: "Статистика",
     error: "Қате",
     connectingRedis: "Redis қосылуда ...",
-    socketioConnectError: "Socket.IO қ��тесі",
+    socketioConnectError: "Socket.IO қатесі",
     db: "DB",
     server: "Сервер",
     clients: "Клиенттер",
@@ -128,7 +129,7 @@ const strings = {
     ta: 'தமிழ் / Tamil'
   },
   intention: {
-    copy: "Көшір��",
+    copy: "Көшіру",
     downloadBuffer: "Екілік файлды жүктеп алыңыз",
     setBuffer: "Екілік файлды жүктеп салу",
     exportKeys: "Кілттерді экспорттау",
@@ -177,7 +178,7 @@ const strings = {
     logout: "Шығу",
     overview: "Шолу",
     console: "Консоль",
-    noConnections: "Қосылымд��р жоқ, қосылымды параметрлер мәзірінде қосыңыз.",
+    noConnections: "Қосылымдар жоқ, қосылымды параметрлер мәзірінде қосыңыз.",
     noConnectionsInSettings: "Қосылымдар жоқ, жоғарыдан ЖАҢА ҚОСЫЛЫМ қосуға болады.",
     connectionAdd: "Жаңа байланыс",
     addGroup: "Топ қосу",
@@ -187,6 +188,8 @@ const strings = {
     edit: "Өңдеу",
     save: "Сақтау",
     ttl: "TTL орнатыңыз",
+    fieldTtl: "Өріс TTL",
+    digest: "Дайджест",
     delete: "Жою",
     remove: "Жою",
     areYouSure: "Сенімдісіз бе?",
@@ -195,7 +198,9 @@ const strings = {
     getKey: "Redis кілті мен байланысты деректер жүктелуде ...",
     jsonViewShow: "JSON дисплейі",
     jsonViewEditor: "JSON өңдеу",
-    quickConsole: "Жылдам консоль"
+    quickConsole: "Жылдам консоль",
+    moveUp: "Жоғары жылжыту",
+    moveDown: "Төмен жылжыту"
   },
   label: {
     id: {
@@ -204,20 +209,22 @@ const strings = {
       info: "Мыналардың сипаттарын өзгерткіңіз келмесе: sshPassword, sshPrivateKey, құпия сөз, tlsCrt, tlsKey, tlsCa, сипат мәндерін өзгеріссіз сақтау үшін осы сипаттарға қосылым идентификаторын енгізіңіз. Түйін құпия сөзінде бірдей логиканы қаласаңыз, түйін құпия сөзіне түйін идентификаторын енгізіңіз."
     },
     secureFeature: "P3X-тен басталатын мәнді көрсеңіз, ұқсайды, ол қауіпсіз мүмкіндік болып табылады. Параметрлерді өзгерту үшін бұл параметрлерді бос немесе басқа нәрсемен ауыстырыңыз, сонда олар сақталады. Параметрлерді өзгертпесеңіз, параметрлер сервердегідей сақталады.",
-    aiTranslating: "Translating...",
+    aiTranslating: "Аударылуда...",
     aiSettings: "AI Параметрлер",
     aiGroqApiKey: "Groq API кілті",
     aiGroqApiKeyInfo: "Міндетті емес. Жақсы өнімділік үшін өз Groq API кілтіңіз. Тегін кілт алыңыз",
     aiGroqApiKeyPlaceholder: "gsk_...",
     aiGroqApiKeySaved: "AI API кілті сақталды",
-    aiGroqApiKeyInvalid: "Invalid Groq API key",
+    aiGroqApiKeyInvalid: "Жарамсыз Groq API кілті",
     aiGroqApiKeyNotSet: "Орнатылмаған (сервер әдепкісі)",
-    aiEnabled: "AI Enabled",
-    aiEnabledYes: "Yes",
-    aiEnabledNo: "No",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
-    aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiEnabled: "AI қосулы",
+    aiEnabledYes: "Иә",
+    aiEnabledNo: "Жоқ",
+    aiRouteViaNetwork: "network.corifeus.com арқылы бағыттау",
+    aiRoutingDirect: "Сұраулар жеке API кілтіңізді пайдаланып Groq-қа тікелей жіберіледі, network.corifeus.com айналып өтіледі.",
+    aiRoutingNetwork: "AI сұраулары network.corifeus.com арқылы бағытталады. Егер өзіңіздің тегін Groq API кілтіңіз болса, бұл ауыстырғышты өшіріп, network.corifeus.com қолданбай тікелей Groq-қа бағыттай аласыз.",
+    aiMaxTokens: "AI ең көп токендері",
+    aiMaxTokensInfo: "AI жауаптары үшін токендердің ең көп саны. Жоғары мәндер ұзағырақ жауаптарға мүмкіндік береді, бірақ API кредиттерін көбірек пайдалануы мүмкін.",
     ssh: {
       on: "SSH қосулы",
       off: "SSH өшірулі",
@@ -235,7 +242,7 @@ const strings = {
     }) => {
       return `Бұл кілтті жүктеу мүмкін емес: ${key}. Мүмкін, кілт жойылған. Нақты қате консольде.`;
     },
-    bigJson: "Бұл JSON нысаны 10 кб-тан жоғары, сондықт��н не істеп жатқаныңызды білетініңізге көз жеткізіңіз, себебі кейбір функциялар баяу көрсетуі мүмкін.",
+    bigJson: "Бұл JSON нысаны 10 кб-тан жоғары, сондықтан не істеп жатқаныңызды білетініңізге көз жеткізіңіз, себебі кейбір функциялар баяу көрсетуі мүмкін.",
     addNode: "Түйін қосу",
     validateJson: "JSON растау",
     reducedFunction: `Қысқартылған функционалдылық`,
@@ -243,7 +250,7 @@ const strings = {
       return `Толық максималды функциялар үшін рұқсат етілген пернелердің жалпы саны ${opts.maxLightKeysCount} санау. Бұл дерекқорда жалпы рұқсат етілген кілттер бар ${opts.count}. Кілттерді сұрыптау және қосымша сәнді ағаш ақпараты өшірілген. Іздеу клиентті іздеудің орнына серверде ғана орындалады.`;
     },
     redisCommandNotFound: "Redis пәрмен сәйкестігі табылмады ...",
-    treeKeyStore: `Сұрыптау (табиғи салыстыру) кли��нтте, яғни браузерде орындалады, яғни 10 мыңнан астам кілттер сияқты үлкен үлкен жиынтықтар үшін айыппұл бар дегенді білдіреді, ол бетті көрсетуге аз уақыт қосуы мүмкін. Redis ішінде кілт сұрыптау жоқ, тек осылай.`,
+    treeKeyStore: `Сұрыптау (табиғи салыстыру) клиентте, яғни браузерде орындалады, яғни 10 мыңнан астам кілттер сияқты үлкен жиынтықтар үшін айыппұл бар дегенді білдіреді, ол бетті көрсетуге аз уақыт қосуы мүмкін. Redis ішінде кілт сұрыптау жоқ, тек осылай.`,
     socketIoTimeout: options => {
       return `Socket.IO осы сұрау үшін уақыт бітті (макс ${options.timeout / 1000} секунд)...`;
     },
@@ -260,7 +267,7 @@ const strings = {
     treeSeparatorEmptyNote: "Кірістірілген түйіндер жоқ, тек таза тізім",
     welcomeConsole: "Redis консоліне қош келдіңіз",
     welcomeConsoleInfo: "Жүгіргіні ЖОҒАРЫ немесе ТӨМЕН журналы қосулы",
-    redisListIndexInfo: "Қосу үшін бос, алдына қо�� немесе оны көрсетілген орынға сақтау үшін -1.",
+    redisListIndexInfo: "Қосу үшін бос, алдына қосу немесе оны көрсетілген орынға сақтау үшін -1.",
     console: "Консоль",
     connectiondAdd: "Қосылым қосыңыз",
     connectiondEdit: "Қосылымды өңдеу",
@@ -309,9 +316,9 @@ const strings = {
     shortcutDisconnect: "Ажырату",
     themeAuto: "Auto (system)",
     languageAuto: "Auto (system)",
-    shortcutCommandPalette: "Command Palette",
-    commandPalette: "Command Palette",
-    noResults: "No results",
+    shortcutCommandPalette: "Пәрмендер палитрасы",
+    commandPalette: "Пәрмендер палитрасы",
+    noResults: "Нәтиже жоқ",
     redisCommandsReference: "Redis Командалары",
     ungrouped: "Топсыз",
     grouped: "Grouped",
@@ -511,7 +518,10 @@ const strings = {
       indexInfo: "Индекс ақпараты",
       indexName: "Индекс атауы",
       prefix: "Кілт префиксі (міндетті емес)",
-      fieldName: "Өріс атауы"
+      fieldName: "Өріс атауы",
+      hybridMode: "Гибридті іздеу (FT.HYBRID)",
+      vectorField: "Вектор өрісі",
+      vectorValues: "Вектор мәндері",
     },
     monitor: {
       title: "Мониторинг",
@@ -535,7 +545,8 @@ const strings = {
       peak: "Шың",
       fragmentation: "Фрагментация",
       hitsAndMisses: "Тапқандар / Жоғалтқандар",
-      noClients: "Клиенттер жоқ"
+      noClients: "Клиенттер жоқ",
+      slotStats: "Кластер слот статистикасы",
     },
     analysis: {
       title: "Жад талдауы",
@@ -695,6 +706,8 @@ const strings = {
         dimensions: "Өлшемдер",
         removeConfirm: "Бұл элементті VectorSet-тен жою керек пе?",
         noElements: "Элементтер жоқ",
+        filter: "Сүзгі",
+        searchComplete: "Іздеу аяқталды",
       }
     },
     treeControls: {
@@ -707,7 +720,7 @@ const strings = {
         clear: "Бос орнату үшін ағымдағы іздеуді өшіріңіз",
         placeholderClient: "Клиент жағынан іздеу",
         placeholderServer: "Сервер жағынан іздеу",
-        info: (opts) => "Клиенттік іздеу оның іздеу кірісіндегі мәтінге сәйкес келетінін б��лдіреді. Сервер жағынан іздеу дегеніміз, бұл *{search-text}* сияқты пернелер үлгілеріндегі іздеу сияқты. Үлкен іздеу жиындары үшін серверлік іздеуді қолданған дұрыс. Кішірек іздеу жиындары үшін клиенттік іздеу режимін қолданған дұрыс." + ` Егер кілттерді санау аяқталса ${opts?.maxLightKeysCount ?? 110000}, тек сервер жағынан іздеуге болады.`,
+        info: (opts) => "Клиенттік іздеу іздеу өрісіндегі мәтінге сәйкес келетінін білдіреді. Сервер жағынан іздеу *{search-text}* сияқты кілт үлгілері бойынша іздеуге ұқсайды. Үлкен іздеу жиындары үшін серверлік іздеуді қолданған дұрыс. Кішірек іздеу жиындары үшін клиенттік іздеу режимін қолданған дұрыс." + ` Егер кілттерді санау аяқталса ${opts?.maxLightKeysCount ?? 110000}, тек сервер жағынан іздеуге болады.`,
         largeSetInfo: "Үлкен жиынтықта клиенттік іздеу өшірілген. сондықтан дәл қазір тек сервер жағынан іздеу мүмкін.",
         infoDetails: "Іздеу қалай жұмыс істейтінін білу үшін параметрлерді тексеріңіз"
       },
@@ -720,9 +733,6 @@ const strings = {
     }
   },
   time: {
-    type: "Түрі",
-    format: "Формат",
-    loading: "Жүктелуде...",
     years: "жылдар",
     months: "айлар",
     days: "күндер",

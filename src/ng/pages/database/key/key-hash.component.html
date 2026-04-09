@@ -1,4 +1,4 @@
-<p3xr-key-pager-inline [paging]="paging" (pageChanged)="updatePagedItems()"></p3xr-key-pager-inline>
+<p3xr-key-pager-inline [paging]="paging" (pageChanged)="updatePagedItems(); loadFieldTtls()"></p3xr-key-pager-inline>
 
 <div class="p3xr-key-type-table">
     <div class="p3xr-key-type-header">
@@ -18,6 +18,13 @@
             <span class="p3xr-key-col" style="flex: 20%; cursor: pointer" (click)="editValue(item.key, item.value, $event)">{{ item.key }}</span>
             <span class="p3xr-value-col p3xr-pre"  style="flex: 60%; cursor: pointer" (click)="editValue(item.key, item.value, $event)">{{ formatValue(truncateDisplay(item.value)) }}@if (isTruncated(item.value)) {<span style="opacity: 0.5;">...</span>}</span>
             <span style="flex: 20%; text-align: right" class="p3xr-key-type-row-actions">
+                @if (!isReadonly && redisState.redisVersion().isAtLeast(8, 0)) {
+                    <mat-icon [style.color]="getFieldTtlColor(item.key) || null"
+                              [style.opacity]="hasFieldTtl(item.key) ? 0.7 : 0.3"
+                              [class.p3xr-tree-ttl-pulse]="isFieldTtlPulsing(item.key)"
+                              (click)="setFieldTtl(item.key, $event)"
+                              [matTooltip]="hasFieldTtl(item.key) ? ('TTL: ' + formatFieldTtl(item.key)) : (strings?.intention?.ttl || 'Set TTL')">schedule</mat-icon>
+                }
                 @if (!isReadonly) {
                     <mat-icon class="icon-warn" (click)="deleteHashKey(item.key, $event)" matTooltip="Delete">delete</mat-icon>
                 }

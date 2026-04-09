@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Σφάλμα διακομιστή, παρακαλώ δοκιμάστε ξανά"
+    server_error: "Σφάλμα διακομιστή, παρακαλώ δοκιμάστε ξανά",
+    aiPromptTooLong: "Η προτροπή AI είναι πολύ μεγάλη (μέγιστο 4096 χαρακτήρες)",
   },
   title: {
     donate: "Δωρεά",
@@ -189,6 +190,8 @@ const strings = {
     edit: "Επεξεργασία",
     save: "Αποθήκευση",
     ttl: "Ορισμός TTL",
+    fieldTtl: "TTL πεδίου",
+    digest: "Σύνοψη",
     delete: "Διαγραφή",
     remove: "Αφαίρεση",
     areYouSure: "Είσαι σίγουρος;",
@@ -197,7 +200,9 @@ const strings = {
     getKey: "Φόρτωση κλειδιού Redis και σχετικών δεδομένων ...",
     jsonViewShow: "Εμφάνιση JSON",
     jsonViewEditor: "Επεξεργασία JSON",
-    quickConsole: "Γρήγορη κονσόλα"
+    quickConsole: "Γρήγορη κονσόλα",
+    moveUp: "Μετακίνηση επάνω",
+    moveDown: "Μετακίνηση κάτω",
   },
   label: {
     id: {
@@ -212,14 +217,16 @@ const strings = {
     aiGroqApiKeyInfo: "Προαιρετικό. Δικό σας κλειδί API Groq για καλύτερη απόδοση. Αποκτήστε δωρεάν κλειδί από",
     aiGroqApiKeyPlaceholder: "gsk_...",
     aiGroqApiKeySaved: "Το κλειδί API AI αποθηκεύτηκε",
-    aiGroqApiKeyInvalid: "Invalid Groq API key",
+    aiGroqApiKeyInvalid: "Μη έγκυρο Groq API κλειδί",
     aiGroqApiKeyNotSet: "Δεν έχει οριστεί (προεπιλογή διακομιστή)",
     aiEnabled: "AI ενεργοποιημένο",
     aiEnabledYes: "Ναι",
     aiEnabledNo: "Όχι",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
-    aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiRouteViaNetwork: "Δρομολόγηση μέσω network.corifeus.com",
+    aiRoutingDirect: "Τα ερωτήματα πηγαίνουν απευθείας στο Groq με το δικό σας API κλειδί, παρακάμπτοντας το network.corifeus.com.",
+    aiRoutingNetwork: "Τα ερωτήματα AI δρομολογούνται μέσω του network.corifeus.com. Αν έχετε το δικό σας δωρεάν Groq API κλειδί, μπορείτε να απενεργοποιήσετε αυτόν τον διακόπτη ώστε να δρομολογείτε απευθείας στο Groq χωρίς το network.corifeus.com.",
+    aiMaxTokens: "Μέγιστα token AI",
+    aiMaxTokensInfo: "Μέγιστος αριθμός token για αποκρίσεις AI. Υψηλότερες τιμές επιτρέπουν μεγαλύτερες αποκρίσεις αλλά μπορεί να καταναλώνουν περισσότερα API credits.",
     ssh: {
       on: 'SSH ενεργό',
       off: 'SSH ανενεργό',
@@ -310,7 +317,7 @@ const strings = {
     shortcutNewKey: "Νέο κλειδί",
     shortcutDisconnect: "Αποσύνδεση",
     themeAuto: "Αυτόματο (σύστημα)",
-    languageAuto: "Αυτόματο (σύστημα)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Παλέτα εντολών",
     commandPalette: "Παλέτα εντολών",
     noResults: "Κανένα αποτέλεσμα",
@@ -513,7 +520,10 @@ const strings = {
       indexInfo: "Πληροφορίες ευρετηρίου",
       indexName: "Όνομα ευρετηρίου",
       prefix: "Πρόθεμα κλειδιού (προαιρετικό)",
-      fieldName: "Όνομα πεδίου"
+      fieldName: "Όνομα πεδίου",
+      hybridMode: "Υβριδική αναζήτηση (FT.HYBRID)",
+      vectorField: "Πεδίο διανύσματος",
+      vectorValues: "Τιμές διανύσματος",
     },
     monitor: {
       title: "Παρακολούθηση",
@@ -537,7 +547,8 @@ const strings = {
       peak: "Μέγιστο",
       fragmentation: "Κατακερματισμός",
       hitsAndMisses: "Επιτυχίες / Αποτυχίες",
-      noClients: "Χωρίς πελάτες"
+      noClients: "Χωρίς πελάτες",
+      slotStats: "Στατιστικά slot συμπλέγματος",
     },
     analysis: {
       title: "Ανάλυση Μνήμης",
@@ -697,6 +708,8 @@ const strings = {
         dimensions: "Διαστάσεις",
         removeConfirm: "Αφαίρεση αυτού του στοιχείου από το VectorSet;",
         noElements: "Δεν υπάρχουν στοιχεία",
+        filter: "Φίλτρο",
+        searchComplete: "Η αναζήτηση ολοκληρώθηκε",
       }
     },
     treeControls: {
@@ -722,9 +735,6 @@ const strings = {
     }
   },
   time: {
-    type: "Τύπος",
-    format: "Μορφή",
-    loading: "Φόρτωση...",
     years: "χρόνια",
     months: "μήνες",
     days: "ημέρες",

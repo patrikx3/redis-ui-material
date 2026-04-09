@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Lỗi máy chủ, vui lòng thử lại"
+    server_error: "Lỗi máy chủ, vui lòng thử lại",
+    aiPromptTooLong: "Lời nhắc AI quá dài (tối đa 4096 ký tự)",
   },
   title: {
     donate: "Đóng góp",
@@ -187,6 +188,8 @@ const strings = {
     edit: "Chỉnh sửa",
     save: "Lưu",
     ttl: "Đặt TTL",
+    fieldTtl: "TTL trường",
+    digest: "Tóm tắt",
     delete: "Xóa",
     remove: "Xóa",
     areYouSure: "Bạn có chắc không?",
@@ -195,7 +198,9 @@ const strings = {
     getKey: "Đang tải khóa Redis và dữ liệu liên quan ...",
     jsonViewShow: "Hiển thị JSON",
     jsonViewEditor: "Chỉnh sửa JSON",
-    quickConsole: "Bảng điều khiển nhanh"
+    quickConsole: "Bảng điều khiển nhanh",
+    moveUp: "Di chuyển lên",
+    moveDown: "Di chuyển xuống"
   },
   label: {
     id: {
@@ -210,14 +215,16 @@ const strings = {
     aiGroqApiKeyInfo: "Tùy chọn. Khóa API Groq riêng để có hiệu suất tốt hơn. Nhận khóa miễn phí từ",
     aiGroqApiKeyPlaceholder: "gsk_...",
     aiGroqApiKeySaved: "Đã lưu khóa API AI",
-    aiGroqApiKeyInvalid: "Invalid Groq API key",
+    aiGroqApiKeyInvalid: "Khóa Groq API không hợp lệ",
     aiGroqApiKeyNotSet: "Chưa đặt (mặc định máy chủ)",
     aiEnabled: "AI đã bật",
     aiEnabledYes: "Có",
     aiEnabledNo: "Không",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
-    aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiRouteViaNetwork: "Định tuyến qua network.corifeus.com",
+    aiRoutingDirect: "Truy vấn được gửi trực tiếp tới Groq bằng khóa API riêng của bạn, bỏ qua network.corifeus.com.",
+    aiRoutingNetwork: "Các truy vấn AI được định tuyến qua network.corifeus.com. Nếu bạn có khóa Groq API miễn phí của riêng mình, bạn có thể tắt công tắc này để định tuyến trực tiếp tới Groq mà không cần network.corifeus.com.",
+    aiMaxTokens: "Số token AI tối đa",
+    aiMaxTokensInfo: "Số lượng token tối đa cho phản hồi AI. Giá trị cao hơn cho phép phản hồi dài hơn nhưng có thể dùng nhiều tín dụng API hơn.",
     ssh: {
       on: "SSH đang bật",
       off: "Tắt SSH",
@@ -256,7 +263,7 @@ const strings = {
     tlsWithoutCert: "Kích hoạt TLS mà không cần chứng chỉ bổ sung",
     tlsRejectUnauthorized: "Từ chối chứng chỉ trái phép",
     tlsSecure: "Nếu bạn thấy cấu hình TLS bắt đầu bằng P3X hoặc tất cả cài đặt TLS trông giống nhau thì đó là một tính năng bảo mật. Để thay đổi cài đặt, chỉ cần thay thế các cài đặt này bằng trống hoặc cài đặt khác và chúng sẽ được lưu. Nếu bạn không thay đổi cài đặt TLS, cài đặt sẽ được giữ nguyên trên máy chủ.",
-    treeSeparatorEmpty: "Nếu dấu tách cây trống, cây sẽ không có nút l���ng nhau, chỉ có một danh sách thuần túy",
+    treeSeparatorEmpty: "Nếu dấu tách cây trống, cây sẽ không có nút lồng nhau, chỉ có một danh sách thuần túy",
     treeSeparatorEmptyNote: "Không có nút lồng nhau, chỉ có một danh sách thuần túy",
     welcomeConsole: "Chào mừng bạn đến với Bảng điều khiển Redis",
     welcomeConsoleInfo: "Lịch sử con trỏ LÊN hoặc XUỐNG được bật",
@@ -309,9 +316,9 @@ const strings = {
     shortcutDisconnect: "Ngắt kết nối",
     themeAuto: "Auto (system)",
     languageAuto: "Auto (system)",
-    shortcutCommandPalette: "Command Palette",
-    commandPalette: "Command Palette",
-    noResults: "No results",
+    shortcutCommandPalette: "Bảng lệnh",
+    commandPalette: "Bảng lệnh",
+    noResults: "Không có kết quả",
     redisCommandsReference: "Lệnh Redis",
     ungrouped: "Không nhóm",
     grouped: "Grouped",
@@ -511,7 +518,10 @@ const strings = {
       indexInfo: "Thông tin chỉ mục",
       indexName: "Tên chỉ mục",
       prefix: "Tiền tố khóa (tùy chọn)",
-      fieldName: "Tên trường"
+      fieldName: "Tên trường",
+      hybridMode: "Tìm kiếm kết hợp (FT.HYBRID)",
+      vectorField: "Trường vector",
+      vectorValues: "Giá trị vector",
     },
     monitor: {
       title: "Giám sát",
@@ -535,7 +545,8 @@ const strings = {
       peak: "Đỉnh",
       fragmentation: "Phân Mảnh",
       hitsAndMisses: "Trúng / Trượt",
-      noClients: "Không có kết nối"
+      noClients: "Không có kết nối",
+      slotStats: "Thống kê slot cụm",
     },
     analysis: {
       title: "Phân Tích Bộ Nhớ",
@@ -695,6 +706,8 @@ const strings = {
         dimensions: "Chiều",
         removeConfirm: "Xóa phần tử này khỏi VectorSet?",
         noElements: "Không có phần tử",
+        filter: "Bộ lọc",
+        searchComplete: "Tìm kiếm hoàn tất",
       }
     },
     treeControls: {
@@ -707,7 +720,7 @@ const strings = {
         clear: "Xóa tìm kiếm hiện tại để đặt trống",
         placeholderClient: "Tìm kiếm phía khách hàng",
         placeholderServer: "Phía máy chủ tìm kiếm",
-        info: (opts) => "Tìm kiếm phía máy khách có nghĩa là nó khớp với văn bản trong đầu vào tìm kiếm. Tìm kiếm phía máy chủ có nghĩa là nó giống như tìm kiếm trong c��c mẫu khóa dưới dạng *{search-text}*. Đối với các tập hợp tìm kiếm lớn, tốt hơn nên sử dụng tìm kiếm phía máy chủ. Đối với các tập hợp tìm kiếm nhỏ hơn, tốt hơn nên sử dụng chế độ tìm kiếm phía máy khách." + ` Nếu số lượng phím kết thúc ${opts?.maxLightKeysCount ?? 110000}, bạn chỉ có thể tìm kiếm ở phía máy chủ.`,
+        info: (opts) => "Tìm kiếm phía máy khách nghĩa là nó khớp với văn bản trong ô tìm kiếm. Tìm kiếm phía máy chủ nghĩa là nó giống như tìm trong các mẫu khóa dạng *{search-text}*. Với các tập kết quả lớn, nên dùng tìm kiếm phía máy chủ. Với các tập nhỏ hơn, nên dùng chế độ tìm kiếm phía máy khách." + ` Nếu số lượng khóa vượt quá ${opts?.maxLightKeysCount ?? 110000}, bạn chỉ có thể tìm kiếm ở phía máy chủ.`,
         largeSetInfo: "Trong một tập hợp lớn, tìm kiếm phía máy khách bị vô hiệu hóa. vì vậy hiện tại chỉ có thể tìm kiếm phía máy chủ.",
         infoDetails: "Để tìm hiểu cách hoạt động của tìm kiếm, vui lòng kiểm tra cài đặt"
       },
@@ -720,9 +733,6 @@ const strings = {
     }
   },
   time: {
-    type: "Loại",
-    format: "Định dạng",
-    loading: "Đang tải...",
     years: "năm",
     months: "tháng",
     days: "ngày",

@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Szerverhiba, kérjük próbálja újra"
+    server_error: "Szerverhiba, kérjük próbálja újra",
+    aiPromptTooLong: "Az AI kérés túl hosszú (max. 4096 karakter)",
   },
   title: {
     donate: "Adományozás",
@@ -185,6 +186,8 @@ const strings = {
     edit: "Szerkesztés",
     save: "Mentés",
     ttl: "TTL beállítása",
+    fieldTtl: "Mező TTL",
+    digest: "Kivonat",
     delete: "Törlés",
     remove: "Eltávolítás",
     areYouSure: "Biztos vagy benne?",
@@ -193,7 +196,9 @@ const strings = {
     getKey: "Redis kulcs és kapcsolódó adatok betöltése ...",
     jsonViewShow: "JSON megjelenítése",
     jsonViewEditor: "JSON szerkesztése",
-    quickConsole: "Gyors Konzol"
+    quickConsole: "Gyors Konzol",
+    moveUp: "Mozgatás felfelé",
+    moveDown: "Mozgatás lefelé"
   },
   label: {
     id: {
@@ -216,6 +221,8 @@ const strings = {
     aiRouteViaNetwork: "Útvonal a network.corifeus.com-on keresztül",
     aiRoutingDirect: "A lekérdezések közvetlenül a Groq-hoz mennek a saját API kulcsoddal, megkerülve a network.corifeus.com-ot.",
     aiRoutingNetwork: "Az AI lekérdezések a network.corifeus.com-on keresztül kerülnek továbbításra. Ha van saját ingyenes Groq API kulcsod, kikapcsolhatod ezt a kapcsolót, hogy közvetlenül a Groq-ot használd a network.corifeus.com nélkül.",
+    aiMaxTokens: "AI maximális tokenek",
+    aiMaxTokensInfo: "Az AI válaszokhoz használt tokenek maximális száma. A nagyobb értékek hosszabb válaszokat tesznek lehetővé, de több API-kreditet használhatnak.",
     ssh: {
       on: 'SSH be',
       off: 'SSH ki',
@@ -306,7 +313,7 @@ const strings = {
     shortcutNewKey: "Új kulcs",
     shortcutDisconnect: "Leválasztás",
     themeAuto: "Automatikus (rendszer)",
-    languageAuto: "Automatikus (rendszer)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Parancspaletta",
     commandPalette: "Parancspaletta",
     noResults: "Nincs találat",
@@ -509,7 +516,10 @@ const strings = {
       indexInfo: "Index info",
       indexName: "Index neve",
       prefix: "Kulcs előtag (opcionális)",
-      fieldName: "Mező neve"
+      fieldName: "Mező neve",
+      hybridMode: "Hibrid keresés (FT.HYBRID)",
+      vectorField: "Vektor mező",
+      vectorValues: "Vektor értékek",
     },
     monitor: {
       title: "Figyelés",
@@ -533,7 +543,8 @@ const strings = {
       peak: "Csúcs",
       fragmentation: "Töredezettség",
       hitsAndMisses: "Találatok / Tévesztések",
-      noClients: "Nincsenek kliensek"
+      noClients: "Nincsenek kliensek",
+      slotStats: "Klaszter slot statisztika",
     },
     analysis: {
       title: "Memória analízis",
@@ -693,6 +704,8 @@ const strings = {
         dimensions: "Dimenziók",
         removeConfirm: "Eltávolítja ezt az elemet a VectorSet-ből?",
         noElements: "Nincsenek elemek",
+        filter: "Szűrő",
+        searchComplete: "Keresés kész",
       }
     },
     treeControls: {

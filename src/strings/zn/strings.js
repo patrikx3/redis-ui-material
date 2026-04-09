@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "服务器错误，请重试"
+    server_error: "服务器错误，请重试",
+    aiPromptTooLong: "AI 提示过长（最多 4096 个字符）",
   },
   title: {
     donate: "捐赠",
@@ -185,6 +186,8 @@ const strings = {
     edit: "编辑",
     save: "保存",
     ttl: "设置 TTL",
+    fieldTtl: "字段 TTL",
+    digest: "摘要",
     delete: "删除",
     remove: "删除",
     areYouSure: "你确定吗？",
@@ -193,7 +196,9 @@ const strings = {
     getKey: "加载Redis键及相关数据...",
     jsonViewShow: "显示 JSON 树",
     jsonViewEditor: "编辑JSON",
-    quickConsole: "快的"
+    quickConsole: "快的",
+    moveUp: "上移",
+    moveDown: "下移",
   },
   label: {
     id: {
@@ -216,6 +221,8 @@ const strings = {
     aiRouteViaNetwork: "通过 network.corifeus.com 路由",
     aiRoutingDirect: "使用您自己的 API 密钥直接向 Groq 发送查询，绕过 network.corifeus.com。",
     aiRoutingNetwork: "AI 查询通过 network.corifeus.com 路由。如果您有自己的免费 Groq API 密钥，可以关闭此开关直接使用 Groq。",
+    aiMaxTokens: "AI 最大令牌数",
+    aiMaxTokensInfo: "用于 AI 回复的最大令牌数。更高的值可以生成更长的回复，但可能会消耗更多 API 额度。",
     ssh: {
       on: 'SSH 开启',
       off: 'SSH 关闭',
@@ -306,7 +313,7 @@ const strings = {
     shortcutNewKey: "新建键",
     shortcutDisconnect: "断开",
     themeAuto: "自动（系统）",
-    languageAuto: "自动（系统）",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "命令面板",
     commandPalette: "命令面板",
     noResults: "无结果",
@@ -509,7 +516,10 @@ const strings = {
       indexInfo: "索引信息",
       indexName: "索引名称",
       prefix: "键前缀（可选）",
-      fieldName: "字段名称"
+      fieldName: "字段名称",
+      hybridMode: "混合搜索 (FT.HYBRID)",
+      vectorField: "向量字段",
+      vectorValues: "向量值",
     },
     monitor: {
       title: "监控",
@@ -533,7 +543,8 @@ const strings = {
       peak: "峰值",
       fragmentation: "碎片化",
       hitsAndMisses: "命中 / 未命中",
-      noClients: "没有客户端"
+      noClients: "没有客户端",
+      slotStats: "集群槽统计",
     },
     analysis: {
       title: "内存分析",
@@ -693,6 +704,8 @@ const strings = {
         dimensions: "维度",
         removeConfirm: "从 VectorSet 中移除此元素？",
         noElements: "没有元素",
+        filter: "筛选",
+        searchComplete: "搜索完成",
       }
     },
     treeControls: {
@@ -718,9 +731,6 @@ const strings = {
     }
   },
   time: {
-    type: "类型",
-    format: "格式",
-    loading: "加载中...",
     years: "年份",
     months: "个月",
     days: "天",

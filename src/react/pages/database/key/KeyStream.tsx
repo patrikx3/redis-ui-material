@@ -10,7 +10,7 @@ import { useI18nStore } from '../../../stores/i18n.store'
 import { useRedisStateStore } from '../../../stores/redis-state.store'
 import { useCommonStore } from '../../../stores/common.store'
 import { request } from '../../../stores/socket.service'
-import { KeyTypeProps, createPaging, Paging, formatValue, truncateDisplay, isTruncated, copyValue } from './key-type-base'
+import { KeyTypeProps, createPaging, rePaging, Paging, formatValue, truncateDisplay, isTruncated, copyValue } from './key-type-base'
 import KeyPagerInline from './KeyPagerInline'
 import KeyNewOrSetDialog from '../../../dialogs/KeyNewOrSetDialog'
 import JsonViewDialog from '../../../dialogs/JsonViewDialog'
@@ -82,7 +82,7 @@ export default function KeyStream({ response, value, valueBuffer, keyName, value
     useEffect(() => {
         const entries = buildEntries(value)
         setAllEntries(entries)
-        const p = createPaging(entries.length)
+        const p = rePaging(paging, entries.length)
         setPaging(p)
         setPagedEntries(entries.slice(p.startIndex, p.endIndex))
     }, [value])

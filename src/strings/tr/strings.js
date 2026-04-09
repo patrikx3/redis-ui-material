@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Sunucu hatası, lütfen tekrar deneyin"
+    server_error: "Sunucu hatası, lütfen tekrar deneyin",
+    aiPromptTooLong: "AI istemi çok uzun (maksimum 4096 karakter)",
   },
   title: {
     donate: "Bağış Yap",
@@ -185,6 +186,8 @@ const strings = {
     edit: "Düzenle",
     save: "Kaydet",
     ttl: "TTL Ayarla",
+    fieldTtl: "Alan TTL",
+    digest: "Özet",
     delete: "Sil",
     remove: "Kaldır",
     areYouSure: "Emin misiniz?",
@@ -193,7 +196,9 @@ const strings = {
     getKey: "Redis anahtarı ve ilgili veriler yükleniyor ...",
     jsonViewShow: "JSON Görüntüle",
     jsonViewEditor: "JSON Düzenle",
-    quickConsole: "Hızlı Konsol"
+    quickConsole: "Hızlı Konsol",
+    moveUp: "Yukarı taşı",
+    moveDown: "Aşağı taşı",
   },
   label: {
     id: {
@@ -216,6 +221,8 @@ const strings = {
     aiRouteViaNetwork: "network.corifeus.com üzerinden yönlendir",
     aiRoutingDirect: "Sorgular kendi API anahtarınızla doğrudan Groq'a gider, network.corifeus.com kullanılmaz.",
     aiRoutingNetwork: "AI sorguları network.corifeus.com üzerinden yönlendirilir. Kendi ücretsiz Groq API anahtarınız varsa bu anahtarı kapatabilirsiniz.",
+    aiMaxTokens: "AI maksimum jeton sayısı",
+    aiMaxTokensInfo: "AI yanıtları için maksimum jeton sayısı. Daha yüksek değerler daha uzun yanıtlar sağlar ancak daha fazla API kredisi kullanabilir.",
     ssh: {
       on: 'SSH açık',
       off: 'SSH kapalı',
@@ -306,7 +313,7 @@ const strings = {
     shortcutNewKey: "Yeni anahtar",
     shortcutDisconnect: "Bağlantıyı kes",
     themeAuto: "Otomatik (sistem)",
-    languageAuto: "Otomatik (sistem)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Komut paleti",
     commandPalette: "Komut paleti",
     noResults: "Sonuç yok",
@@ -509,7 +516,10 @@ const strings = {
       indexInfo: "İndeks bilgisi",
       indexName: "İndeks adı",
       prefix: "Anahtar ön eki (isteğe bağlı)",
-      fieldName: "Alan adı"
+      fieldName: "Alan adı",
+      hybridMode: "Hibrit arama (FT.HYBRID)",
+      vectorField: "Vektör alanı",
+      vectorValues: "Vektör değerleri",
     },
     monitor: {
       title: "İzleme",
@@ -533,7 +543,8 @@ const strings = {
       peak: "Tepe",
       fragmentation: "Parçalanma",
       hitsAndMisses: "İsabet / Kaçırma",
-      noClients: "İstemci yok"
+      noClients: "İstemci yok",
+      slotStats: "Küme slot istatistikleri",
     },
     analysis: {
       title: "Bellek Analizi",
@@ -693,6 +704,8 @@ const strings = {
         dimensions: "Boyutlar",
         removeConfirm: "Bu eleman VectorSet'ten kaldırılsın mı?",
         noElements: "Eleman yok",
+        filter: "Filtre",
+        searchComplete: "Arama tamamlandı",
       }
     },
     treeControls: {
@@ -718,9 +731,6 @@ const strings = {
     }
   },
   time: {
-    type: "Tür",
-    format: "Biçim",
-    loading: "Yükleniyor...",
     years: "yıl",
     months: "ay",
     days: "gün",

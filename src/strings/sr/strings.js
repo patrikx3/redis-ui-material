@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "\u0413\u0440\u0435\u0448\u043A\u0430 \u0441\u0435\u0440\u0432\u0435\u0440\u0430, \u043C\u043E\u043B\u0438\u043C\u043E \u043F\u043E\u043A\u0443\u0448\u0430\u0458\u0442\u0435 \u043F\u043E\u043D\u043E\u0432\u043E"
+    server_error: "\u0413\u0440\u0435\u0448\u043A\u0430 \u0441\u0435\u0440\u0432\u0435\u0440\u0430, \u043C\u043E\u043B\u0438\u043C\u043E \u043F\u043E\u043A\u0443\u0448\u0430\u0458\u0442\u0435 \u043F\u043E\u043D\u043E\u0432\u043E",
+    aiPromptTooLong: "AI упит је предуг (максимално 4096 знакова)",
   },
   title: {
     donate: "\u0414\u043E\u043D\u0430\u0446\u0438\u0458\u0430",
@@ -187,6 +188,8 @@ const strings = {
     edit: "\u0423\u0440\u0435\u0434\u0438",
     save: "\u0421\u0430\u0447\u0443\u0432\u0430\u0458",
     ttl: "\u041F\u043E\u0441\u0442\u0430\u0432\u0438 TTL",
+    fieldTtl: "TTL поља",
+    digest: "Сажетак",
     delete: "\u041E\u0431\u0440\u0438\u0448\u0438",
     remove: "\u0423\u043A\u043B\u043E\u043D\u0438",
     areYouSure: "Да ли сте сигурни?",
@@ -195,7 +198,9 @@ const strings = {
     getKey: "\u0423\u0447\u0438\u0442\u0430\u0432\u0430\u045A\u0435 Redis \u043A\u0459\u0443\u0447\u0430 \u0438 \u043F\u043E\u0432\u0435\u0437\u0430\u043D\u0438\u0445 \u043F\u043E\u0434\u0430\u0442\u0430\u043A\u0430 ...",
     jsonViewShow: "\u041F\u0440\u0438\u043A\u0430\u0436\u0438 JSON",
     jsonViewEditor: "\u0423\u0440\u0435\u0434\u0438 JSON",
-    quickConsole: "\u0411\u0440\u0437\u0430 \u043A\u043E\u043D\u0437\u043E\u043B\u0430"
+    quickConsole: "\u0411\u0440\u0437\u0430 \u043A\u043E\u043D\u0437\u043E\u043B\u0430",
+    moveUp: "Помери горе",
+    moveDown: "Помери доле",
   },
   label: {
     id: {
@@ -210,14 +215,16 @@ const strings = {
     aiGroqApiKeyInfo: "Опционално. Сопствени Groq API кључ за боље перформансе. Набавите бесплатан кључ на",
     aiGroqApiKeyPlaceholder: "gsk_...",
     aiGroqApiKeySaved: "AI API кључ сачуван",
-    aiGroqApiKeyInvalid: "Invalid Groq API key",
+    aiGroqApiKeyInvalid: "Nevažeći Groq API ključ",
     aiGroqApiKeyNotSet: "Није подешено (подразумевано сервера)",
     aiEnabled: "AI omogućeno",
     aiEnabledYes: "Da",
     aiEnabledNo: "Ne",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
-    aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiRouteViaNetwork: "Usmeri preko network.corifeus.com",
+    aiRoutingDirect: "Upiti idu direktno u Groq koristeći vaš sopstveni API ključ, zaobilazeći network.corifeus.com.",
+    aiRoutingNetwork: "AI upiti se usmeravaju kroz network.corifeus.com. Ako imate sopstveni besplatni Groq API ključ, možete isključiti ovaj prekidač i usmeravati direktno u Groq bez network.corifeus.com.",
+    aiMaxTokens: "Maksimalan broj AI tokena",
+    aiMaxTokensInfo: "Maksimalan broj tokena za AI odgovore. Veće vrednosti omogućavaju duže odgovore, ali mogu potrošiti više API kredita.",
     ssh: {
       on: 'SSH \u0443\u043A\u0459\u0443\u0447\u0435\u043D',
       off: 'SSH \u0438\u0441\u043A\u0459\u0443\u0447\u0435\u043D',
@@ -308,7 +315,7 @@ const strings = {
     shortcutNewKey: "\u041D\u043E\u0432\u0438 \u043A\u0459\u0443\u0447",
     shortcutDisconnect: "\u041E\u0434\u0432\u043E\u0458\u0438",
     themeAuto: "Аутоматски (систем)",
-    languageAuto: "Аутоматски (систем)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "\u041F\u0430\u043B\u0435\u0442\u0430 \u043A\u043E\u043C\u0430\u043D\u0434\u0438",
     commandPalette: "\u041F\u0430\u043B\u0435\u0442\u0430 \u043A\u043E\u043C\u0430\u043D\u0434\u0438",
     noResults: "\u041D\u0435\u043C\u0430 \u0440\u0435\u0437\u0443\u043B\u0442\u0430\u0442\u0430",
@@ -511,7 +518,10 @@ const strings = {
       indexInfo: "Инфо о индексу",
       indexName: "Назив индекса",
       prefix: "Префикс кључа (опционално)",
-      fieldName: "Назив поља"
+      fieldName: "Назив поља",
+      hybridMode: "Хибридна претрага (FT.HYBRID)",
+      vectorField: "Векторско поље",
+      vectorValues: "Векторске вредности",
     },
     monitor: {
       title: "Надгледање",
@@ -535,7 +545,8 @@ const strings = {
       peak: "Врх",
       fragmentation: "Фрагментација",
       hitsAndMisses: "Погоци / Промашаји",
-      noClients: "Нема клијената"
+      noClients: "Нема клијената",
+      slotStats: "Статистика слотова кластера",
     },
     analysis: {
       title: "Анализа меморије",
@@ -695,6 +706,8 @@ const strings = {
         dimensions: "Димензије",
         removeConfirm: "Уклонити овај елемент из VectorSet?",
         noElements: "Нема елемената",
+        filter: "Филтер",
+        searchComplete: "Претрага завршена",
       }
     },
     treeControls: {
@@ -720,9 +733,6 @@ const strings = {
     }
   },
   time: {
-    type: "Тип",
-    format: "Формат",
-    loading: "Учитавање...",
     years: "\u0433\u043E\u0434\u0438\u043D\u0430",
     months: "\u043C\u0435\u0441\u0435\u0446\u0438",
     days: "\u0434\u0430\u043D\u0430",

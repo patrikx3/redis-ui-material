@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Serverfejl, prøv venligst igen"
+    server_error: "Serverfejl, prøv venligst igen",
+    aiPromptTooLong: "AI-prompten er for lang (maks. 4096 tegn)",
   },
   title: {
     donate: "Doner",
@@ -187,6 +188,8 @@ const strings = {
     edit: "Rediger",
     save: "Gem",
     ttl: "Indstil TTL",
+    fieldTtl: "Felt TTL",
+    digest: "Digest",
     delete: "Slet",
     remove: "Fjern",
     areYouSure: "Er du sikker?",
@@ -195,7 +198,9 @@ const strings = {
     getKey: "Indlæser Redis nøgle og tilhørende data ...",
     jsonViewShow: "Vis JSON",
     jsonViewEditor: "Rediger JSON",
-    quickConsole: "Hurtig konsol"
+    quickConsole: "Hurtig konsol",
+    moveUp: "Flyt op",
+    moveDown: "Flyt ned",
   },
   label: {
     id: {
@@ -210,14 +215,16 @@ const strings = {
     aiGroqApiKeyInfo: "Valgfrit. Egen Groq API-nøgle for bedre ydeevne. Få en gratis nøgle på",
     aiGroqApiKeyPlaceholder: "gsk_...",
     aiGroqApiKeySaved: "AI API-nøgle gemt",
-    aiGroqApiKeyInvalid: "Invalid Groq API key",
+    aiGroqApiKeyInvalid: "Ugyldig Groq API-nøgle",
     aiGroqApiKeyNotSet: "Ikke indstillet (serverstandard)",
     aiEnabled: "AI aktiveret",
     aiEnabledYes: "Ja",
     aiEnabledNo: "Nej",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
-    aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiRouteViaNetwork: "Rute via network.corifeus.com",
+    aiRoutingDirect: "Forespørgsler går direkte til Groq ved hjælp af din egen API-nøgle og omgår network.corifeus.com.",
+    aiRoutingNetwork: "AI-forespørgsler rutes gennem network.corifeus.com. Hvis du har din egen gratis Groq API-nøgle, kan du slå denne kontakt fra for at rute direkte til Groq uden network.corifeus.com.",
+    aiMaxTokens: "Maks. AI-tokens",
+    aiMaxTokensInfo: "Maksimalt antal tokens til AI-svar. Højere værdier giver længere svar, men kan bruge flere API-kreditter.",
     ssh: {
       on: "SSH tændt",
       off: "SSH slukket",
@@ -511,7 +518,10 @@ const strings = {
       indexInfo: "Indeksinfo",
       indexName: "Indeksnavn",
       prefix: "Nøglepræfiks (valgfrit)",
-      fieldName: "Feltnavn"
+      fieldName: "Feltnavn",
+      hybridMode: "Hybridsøgning (FT.HYBRID)",
+      vectorField: "Vektorfelt",
+      vectorValues: "Vektorværdier",
     },
     monitor: {
       title: "Overvågning",
@@ -535,7 +545,8 @@ const strings = {
       peak: "Maksimal",
       fragmentation: "Fragmentering",
       hitsAndMisses: "Træffere / Misser",
-      noClients: "Ingen klienter"
+      noClients: "Ingen klienter",
+      slotStats: "Klynge slot statistik",
     },
     analysis: {
       title: "Hukommelsesanalyse",
@@ -695,6 +706,8 @@ const strings = {
         dimensions: "Dimensioner",
         removeConfirm: "Fjern dette element fra VectorSet?",
         noElements: "Ingen elementer",
+        filter: "Filter",
+        searchComplete: "Søgning fuldført",
       }
     },
     treeControls: {
@@ -720,9 +733,6 @@ const strings = {
     }
   },
   time: {
-    type: "Type",
-    format: "Format",
-    loading: "Indlæser...",
     years: "år",
     months: "måneder",
     days: "dage",

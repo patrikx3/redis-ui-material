@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "සේවාදායක දෝෂයක්, කරුණාකර නැවත උත්සාහ කරන්න"
+    server_error: "සේවාදායක දෝෂයක්, කරුණාකර නැවත උත්සාහ කරන්න",
+    aiPromptTooLong: "AI විමසුම ඉතා දිගුය (උපරිම අක්ෂර 4096)",
   },
   title: {
     donate: "පරිත්\u200dයාග කරන්න",
@@ -189,6 +190,8 @@ const strings = {
     edit: "සංස්කරණය කරන්න",
     save: "සුරකින්න",
     ttl: "TTL සකසන්න",
+    fieldTtl: "ක්ෂේත්‍ර TTL",
+    digest: "සාරාංශය",
     delete: "මකන්න",
     remove: "ඉවත් කරන්න",
     areYouSure: "ඔබට විශ්වාසද?",
@@ -197,7 +200,9 @@ const strings = {
     getKey: "Redis යතුර සහ ආශ්\u200dරිත දත්ත පූරණය වෙමින් ...",
     jsonViewShow: "JSON පෙන්වන්න",
     jsonViewEditor: "JSON සංස්කරණය",
-    quickConsole: "ඉක්මන් කොන්සෝලය"
+    quickConsole: "ඉක්මන් කොන්සෝලය",
+    moveUp: "ඉහළට ගෙනයන්න",
+    moveDown: "පහළට ගෙනයන්න"
   },
   label: {
     id: {
@@ -206,20 +211,22 @@ const strings = {
       info: "ඔබට sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa හි ගුණාංග වෙනස් කිරීමට අවශ්\u200dය නැතිනම්, කරුණාකර ගුණාංග අගයන් නොවෙනස්ව තැබීමට එම ගුණාංගවල සම්බන්ධතා ID ඇතුළත් කරන්න. නෝඩ මුරපදයේ එම තර්කනයම අවශ්\u200dය නම්, නෝඩ මුරපදයේ නෝඩ ID ඇතුළත් කරන්න."
     },
     secureFeature: 'ඔබට P3X සමඟ ආරම්භ වන අගයක් පෙනෙන්නේ නම් සහ සියල්ල සමානව පෙනේ නම්, එය ආරක්ෂිත විශේෂාංගයකි. සැකසුම් වෙනස් කිරීමට, මෙම සැකසුම් හිස් හෝ වෙනත් දෙයකින් ආදේශ කරන්න, ඒවා සුරැකෙනු ඇත. ඔබ සැකසුම් වෙනස් නොකරන්නේ නම්, සැකසුම් සේවාදායකයේ ඇති ආකාරයටම පවතිනු ඇත.',
-    aiTranslating: "Translating...",
+    aiTranslating: "පරිවර්තනය වෙමින්...",
     aiSettings: "AI සැකසුම්",
     aiGroqApiKey: "Groq API යතුර",
     aiGroqApiKeyInfo: "විකල්ප. වඩා හොඳ ක්‍රියාකාරීත්වය සඳහා ඔබේම Groq API යතුර. නොමිලේ යතුරක් ලබා ගන්න",
     aiGroqApiKeyPlaceholder: "gsk_...",
     aiGroqApiKeySaved: "AI API යතුර සුරකින ලදී",
-    aiGroqApiKeyInvalid: "Invalid Groq API key",
+    aiGroqApiKeyInvalid: "වලංගු නොවන Groq API යතුර",
     aiGroqApiKeyNotSet: "සකසා නැත (සේවාදායක පෙරනිමිය)",
-    aiEnabled: "AI Enabled",
-    aiEnabledYes: "Yes",
-    aiEnabledNo: "No",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
-    aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiEnabled: "AI සක්‍රියයි",
+    aiEnabledYes: "ඔව්",
+    aiEnabledNo: "නැහැ",
+    aiRouteViaNetwork: "network.corifeus.com හරහා මාර්ගගත කරන්න",
+    aiRoutingDirect: "ඔබගේම API යතුර භාවිතා කර විමසුම් network.corifeus.com මඟ හැර සෘජුවම Groq වෙත යවයි.",
+    aiRoutingNetwork: "AI විමසුම් network.corifeus.com හරහා මාර්ගගත කෙරේ. ඔබට ඔබේම නොමිලේ Groq API යතුරක් තිබේ නම්, මෙම ස්විචය අක්‍රිය කර network.corifeus.com නොමැතිව සෘජුවම Groq වෙත මාර්ගගත කළ හැක.",
+    aiMaxTokens: "AI උපරිම ටෝකන",
+    aiMaxTokensInfo: "AI ප්‍රතිචාර සඳහා උපරිම ටෝකන ගණන. වැඩි අගයන් දිගු ප්‍රතිචාර ලබා දෙයි, නමුත් වැඩි API ක්‍රෙඩිට් භාවිත කළ හැක.",
     ssh: {
       on: 'SSH සක්\u200dරීයයි',
       off: 'SSH අක්\u200dරීයයි',
@@ -311,9 +318,9 @@ const strings = {
     shortcutDisconnect: "විසන්ධි කරන්න",
     themeAuto: "Auto (system)",
     languageAuto: "Auto (system)",
-    shortcutCommandPalette: "Command Palette",
-    commandPalette: "Command Palette",
-    noResults: "No results",
+    shortcutCommandPalette: "විධාන පුවරුව",
+    commandPalette: "විධාන පුවරුව",
+    noResults: "ප්‍රතිඵල නැත",
     redisCommandsReference: "Redis විධානය",
     ungrouped: "කණ්ඩායම් නොකළ",
     grouped: "Grouped",
@@ -513,7 +520,10 @@ const strings = {
       indexInfo: "සුචි තොරතුරු",
       indexName: "සුචි නම",
       prefix: "යතුරු උපසර්ගය (විකල්ප)",
-      fieldName: "ක්ෂේත්‍ර නම"
+      fieldName: "ක්ෂේත්‍ර නම",
+      hybridMode: "මිශ්‍ර සෙවීම (FT.HYBRID)",
+      vectorField: "දෛශික ක්ෂේත්‍රය",
+      vectorValues: "දෛශික අගයන්",
     },
     monitor: {
       title: "අධීක්ෂණය",
@@ -537,7 +547,8 @@ const strings = {
       peak: "උපරිම",
       fragmentation: "ඛණ්ඩනය",
       hitsAndMisses: "වාර / මග හැරීම්",
-      noClients: "සේවාදායකයින් නැත"
+      noClients: "සේවාදායකයින් නැත",
+      slotStats: "පොකුරු තව් සංඛ්‍යාලේඛන",
     },
     analysis: {
       title: "මතක විශ්ලේෂණය",
@@ -697,13 +708,15 @@ const strings = {
         dimensions: "මාන",
         removeConfirm: "මෙම මූලද්\u200dරව්\u200dය VectorSet වෙතින් ඉවත් කරන්නද?",
         noElements: "මූලද්\u200dරව්\u200dය නැත",
+        filter: "පෙරහන",
+        searchComplete: "සෙවීම සම්පූර්ණයි",
       }
     },
     treeControls: {
       settings: "ගස් සැකසුම්",
       expandAll: "සියල්ල පුළුල් කරන්න",
       collapseAll: "සියල්ල හකුළන්න",
-      level: "මටdelays",
+      level: "මට්ටම",
       search: {
         search: "යතුරු තුළ සොයන්න",
         clear: "වත්මන් සෙවුම හිස් කිරීමට මකන්න",
@@ -722,9 +735,6 @@ const strings = {
     }
   },
   time: {
-    type: "වර්ගය",
-    format: "ආකෘතිය",
-    loading: "පූරණය වෙමින්...",
     years: "අවුරුදු",
     months: "මාස",
     days: "දින",

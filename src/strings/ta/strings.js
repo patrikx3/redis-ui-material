@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "சேவையக பிழை, மீண்டும் முயற்சிக்கவும்"
+    server_error: "சேவையக பிழை, மீண்டும் முயற்சிக்கவும்",
+    aiPromptTooLong: "AI கோரிக்கை மிக நீளமாக உள்ளது (அதிகபட்சம் 4096 எழுத்துகள்)",
   },
   title: {
     donate: "நன்கொடை",
@@ -189,6 +190,8 @@ const strings = {
     edit: "திருத்து",
     save: "சேமி",
     ttl: "TTL அமை",
+    fieldTtl: "புல TTL",
+    digest: "சுருக்கம்",
     delete: "நீக்கு",
     remove: "அகற்று",
     areYouSure: "நீங்கள் உறுதியா?",
@@ -197,7 +200,9 @@ const strings = {
     getKey: "Redis விசை மற்றும் தொடர்புடைய தரவை ஏற்றுகிறது ...",
     jsonViewShow: "JSON காட்சி",
     jsonViewEditor: "JSON திருத்தம்",
-    quickConsole: "விரைவு கன்சோல்"
+    quickConsole: "விரைவு கன்சோல்",
+    moveUp: "மேலே நகர்த்து",
+    moveDown: "கீழே நகர்த்து"
   },
   label: {
     id: {
@@ -206,20 +211,22 @@ const strings = {
       info: "நீங்கள் sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa ஆகியவற்றின் பண்புகளை மாற்ற விரும்பவில்லை எனில், பண்பு மதிப்புகளை அப்படியே வைக்க அந்த பண்புகளில் இணைப்பு ID ஐ உள்ளிடவும். முனை கடவுச்சொல்லிலும் அதே தர்க்கம் வேண்டுமெனில், முனை கடவுச்சொல்லில் முனை ID ஐ உள்ளிடவும்."
     },
     secureFeature: 'P3X உடன் தொடங்கும் மதிப்பை நீங்கள் கண்டால் மற்றும் அனைத்தும் ஒரே மாதிரியாக தெரிந்தால், அது ஒரு பாதுகாப்பு அம்சம். அமைப்புகளை மாற்ற, இந்த அமைப்புகளை காலி அல்லது வேறு ஏதாவது மாற்றவும், அவை சேமிக்கப்படும். அமைப்புகளை மாற்றவில்லை என்றால், சேவையகத்தில் உள்ளபடியே இருக்கும்.',
-    aiTranslating: "Translating...",
+    aiTranslating: "மொழிபெயர்க்கப்படுகிறது...",
     aiSettings: "AI அமைப்புகள்",
     aiGroqApiKey: "Groq API விசை",
     aiGroqApiKeyInfo: "விருப்பத்தேர்வு. சிறந்த செயல்திறனுக்கு உங்கள் Groq API விசை. இலவச விசையைப் பெறுங்கள்",
     aiGroqApiKeyPlaceholder: "gsk_...",
     aiGroqApiKeySaved: "AI API விசை சேமிக்கப்பட்டது",
-    aiGroqApiKeyInvalid: "Invalid Groq API key",
+    aiGroqApiKeyInvalid: "செல்லுபடியாகாத Groq API விசை",
     aiGroqApiKeyNotSet: "அமைக்கப்படவில்லை (சேவையக இயல்புநிலை)",
-    aiEnabled: "AI Enabled",
-    aiEnabledYes: "Yes",
-    aiEnabledNo: "No",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
-    aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiEnabled: "AI இயக்கப்பட்டுள்ளது",
+    aiEnabledYes: "ஆம்",
+    aiEnabledNo: "இல்லை",
+    aiRouteViaNetwork: "network.corifeus.com வழியாக வழிமாற்று",
+    aiRoutingDirect: "உங்கள் சொந்த API விசையை பயன்படுத்தி கேள்விகள் நேரடியாக Groq-க்கு அனுப்பப்படுகின்றன; network.corifeus.com தவிர்க்கப்படுகிறது.",
+    aiRoutingNetwork: "AI கேள்விகள் network.corifeus.com வழியாக வழிமாற்றப்படுகின்றன. உங்களிடம் உங்கள் சொந்த இலவச Groq API விசை இருந்தால், இந்த சுவிட்சை அணைத்து network.corifeus.com இல்லாமல் நேரடியாக Groq-க்கு வழிமாற்றலாம்.",
+    aiMaxTokens: "AI அதிகபட்ச டோக்கன்கள்",
+    aiMaxTokensInfo: "AI பதில்களுக்கு அதிகபட்ச டோக்கன் எண்ணிக்கை. அதிக மதிப்புகள் நீளமான பதில்களை அனுமதிக்கும், ஆனால் அதிக API கடன் பயன்படுத்தப்படலாம்.",
     ssh: {
       on: 'SSH இயக்கப்பட்டது',
       off: 'SSH முடக்கப்பட்டது',
@@ -311,9 +318,9 @@ const strings = {
     shortcutDisconnect: "துண்டி",
     themeAuto: "Auto (system)",
     languageAuto: "Auto (system)",
-    shortcutCommandPalette: "Command Palette",
-    commandPalette: "Command Palette",
-    noResults: "No results",
+    shortcutCommandPalette: "கட்டளை பலகை",
+    commandPalette: "கட்டளை பலகை",
+    noResults: "முடிவுகள் இல்லை",
     redisCommandsReference: "Redis கட்டளைகள்",
     ungrouped: "குழுவில்லாது",
     grouped: "Grouped",
@@ -513,7 +520,10 @@ const strings = {
       indexInfo: "குறியீடு தகவல்",
       indexName: "குறியீடு பெயர்",
       prefix: "விசை முன்னொட்டு (விருப்பம்)",
-      fieldName: "புலப் பெயர்"
+      fieldName: "புலப் பெயர்",
+      hybridMode: "கலப்பின தேடல் (FT.HYBRID)",
+      vectorField: "வெக்டர் புலம்",
+      vectorValues: "வெக்டர் மதிப்புகள்",
     },
     monitor: {
       title: "கண்காணிப்பு",
@@ -537,7 +547,8 @@ const strings = {
       peak: "உச்சம்",
       fragmentation: "துண்டாக்கம்",
       hitsAndMisses: "வெற்றி / தோல்வி",
-      noClients: "வாடிக்கையாளர்கள் இல்லை"
+      noClients: "வாடிக்கையாளர்கள் இல்லை",
+      slotStats: "கிளஸ்டர் ஸ்லாட் புள்ளிவிவரங்கள்",
     },
     analysis: {
       title: "நினைவக பகுப்பாய்வு",
@@ -697,13 +708,15 @@ const strings = {
         dimensions: "பரிமாணங்கள்",
         removeConfirm: "இந்த உறுப்பை VectorSet இலிருந்து அகற்றவா?",
         noElements: "உறுப்புகள் இல்லை",
+        filter: "வடிகட்டி",
+        searchComplete: "தேடல் முடிந்தது",
       }
     },
     treeControls: {
       settings: "மர அமைப்புகள்",
       expandAll: "அனைத்தையும் விரிவாக்கு",
       collapseAll: "அனைத்தையும் சுருக்கு",
-      level: "நிdelays",
+      level: "நிலை",
       search: {
         search: "விசைகளில் தேடு",
         clear: "தற்போதைய தேடலை காலியாக்க அழி",
@@ -722,9 +735,6 @@ const strings = {
     }
   },
   time: {
-    type: "வகை",
-    format: "வடிவம்",
-    loading: "ஏற்றுகிறது...",
     years: "ஆண்டுகள்",
     months: "மாதங்கள்",
     days: "நாட்கள்",

@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "サーバーエラー、もう一度お試しください"
+    server_error: "サーバーエラー、もう一度お試しください",
+    aiPromptTooLong: "AIプロンプトが長すぎます（最大 4096 文字）",
   },
   title: {
     donate: "寄付",
@@ -185,6 +186,8 @@ const strings = {
     edit: "編集",
     save: "保存",
     ttl: "TTLを設定",
+    fieldTtl: "フィールドTTL",
+    digest: "ダイジェスト",
     delete: "削除",
     remove: "除去",
     areYouSure: "本当にいいですか？",
@@ -193,7 +196,9 @@ const strings = {
     getKey: "Redisキーと関連データを読み込み中 ...",
     jsonViewShow: "JSONを表示",
     jsonViewEditor: "JSONを編集",
-    quickConsole: "クイックコンソール"
+    quickConsole: "クイックコンソール",
+    moveUp: "上へ移動",
+    moveDown: "下へ移動"
   },
   label: {
     id: {
@@ -216,6 +221,8 @@ const strings = {
     aiRouteViaNetwork: "network.corifeus.com経由",
     aiRoutingDirect: "自分のAPIキーを使用してGroqに直接クエリを送信します。network.corifeus.comを経由しません。",
     aiRoutingNetwork: "AIクエリはnetwork.corifeus.comを経由します。無料のGroq APIキーをお持ちの場合、このスイッチをオフにして直接Groqを使用できます。",
+    aiMaxTokens: "AI 最大トークン数",
+    aiMaxTokensInfo: "AI応答の最大トークン数です。値を大きくすると長い応答が可能になりますが、APIクレジットを多く消費する場合があります。",
     ssh: {
       on: 'SSH オン',
       off: 'SSH オフ',
@@ -306,7 +313,7 @@ const strings = {
     shortcutNewKey: "新しいキー",
     shortcutDisconnect: "切断",
     themeAuto: "自動（システム）",
-    languageAuto: "自動（システム）",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "コマンドパレット",
     commandPalette: "コマンドパレット",
     noResults: "結果なし",
@@ -322,9 +329,9 @@ const strings = {
     importSkip: "スキップ",
     importConflict: "キーが既に存在する場合:",
     noKeysToExport: "エクスポートするキーがありません",
+    type: "種類",
     time: "時間",
-    type: "タイプ",
-    format: "フォーマット",
+    format: "形式",
     loading: "読み込み中...",
     autoRefresh: "自動",
     exportSearchHint: "現在の検索に一致するキーのみをエクスポート",
@@ -509,7 +516,10 @@ const strings = {
       indexInfo: "インデックス情報",
       indexName: "インデックス名",
       prefix: "キープレフィックス（任意）",
-      fieldName: "フィールド名"
+      fieldName: "フィールド名",
+      hybridMode: "ハイブリッド検索 (FT.HYBRID)",
+      vectorField: "ベクトルフィールド",
+      vectorValues: "ベクトル値",
     },
     monitor: {
       title: "モニタリング",
@@ -533,7 +543,8 @@ const strings = {
       peak: "ピーク",
       fragmentation: "フラグメンテーション",
       hitsAndMisses: "ヒット / ミス",
-      noClients: "クライアントがありません"
+      noClients: "クライアントがありません",
+      slotStats: "クラスタースロット統計",
     },
     analysis: {
       title: "メモリ分析",
@@ -693,6 +704,8 @@ const strings = {
         dimensions: "次元",
         removeConfirm: "この要素をVectorSetから削除しますか？",
         noElements: "要素なし",
+        filter: "フィルター",
+        searchComplete: "検索完了",
       }
     },
     treeControls: {
@@ -718,9 +731,6 @@ const strings = {
     }
   },
   time: {
-    type: "タイプ",
-    format: "フォーマット",
-    loading: "読み込み中...",
     years: "年",
     months: "ヶ月",
     days: "日",

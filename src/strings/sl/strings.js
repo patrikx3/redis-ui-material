@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Napaka strežnika, poskusite znova"
+    server_error: "Napaka strežnika, poskusite znova",
+    aiPromptTooLong: "AI poziv je predolg (največ 4096 znakov)",
   },
   title: {
     donate: "Donirajte",
@@ -187,6 +188,8 @@ const strings = {
     edit: "Uredi",
     save: "Shrani",
     ttl: "Nastavite TTL",
+    fieldTtl: "TTL polja",
+    digest: "Povzetek",
     delete: "Izbriši",
     remove: "Odstrani",
     areYouSure: "Ste prepričani?",
@@ -195,7 +198,9 @@ const strings = {
     getKey: "Nalaganje ključa Redis in povezanih podatkov ...",
     jsonViewShow: "Prikaz JSON",
     jsonViewEditor: "Uredi JSON",
-    quickConsole: "Hitra konzola"
+    quickConsole: "Hitra konzola",
+    moveUp: "Premakni gor",
+    moveDown: "Premakni dol"
   },
   label: {
     id: {
@@ -210,14 +215,16 @@ const strings = {
     aiGroqApiKeyInfo: "Izbirno. Lasten Groq API ključ za boljše delovanje. Pridobite brezplačen ključ na",
     aiGroqApiKeyPlaceholder: "gsk_...",
     aiGroqApiKeySaved: "AI API ključ shranjen",
-    aiGroqApiKeyInvalid: "Invalid Groq API key",
+    aiGroqApiKeyInvalid: "Neveljaven ključ Groq API",
     aiGroqApiKeyNotSet: "Ni nastavljeno (privzeto strežnika)",
-    aiEnabled: "AI omogućeno",
+    aiEnabled: "AI omogočeno",
     aiEnabledYes: "Da",
     aiEnabledNo: "Ne",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
-    aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiRouteViaNetwork: "Usmeri prek network.corifeus.com",
+    aiRoutingDirect: "Poizvedbe gredo neposredno v Groq z uporabo vašega ključa API in obidejo network.corifeus.com.",
+    aiRoutingNetwork: "Poizvedbe AI se usmerjajo prek network.corifeus.com. Če imate svoj brezplačni ključ Groq API, lahko izklopite to stikalo in usmerjate neposredno v Groq brez network.corifeus.com.",
+    aiMaxTokens: "Največje število žetonov AI",
+    aiMaxTokensInfo: "Največje število žetonov za odgovore AI. Višje vrednosti omogočajo daljše odgovore, vendar lahko porabijo več API dobropisa.",
     ssh: {
       on: "SSH vklopljen",
       off: "SSH izklopljen",
@@ -309,9 +316,9 @@ const strings = {
     shortcutDisconnect: "Prekini povezavo",
     themeAuto: "Auto (system)",
     languageAuto: "Auto (system)",
-    shortcutCommandPalette: "Command Palette",
-    commandPalette: "Command Palette",
-    noResults: "No results",
+    shortcutCommandPalette: "Paleta ukazov",
+    commandPalette: "Paleta ukazov",
+    noResults: "Ni rezultatov",
     redisCommandsReference: "Redis Ukazi",
     ungrouped: "Brez skupine",
     grouped: "Grouped",
@@ -511,7 +518,10 @@ const strings = {
       indexInfo: "Info o indeksu",
       indexName: "Ime indeksa",
       prefix: "Predpona ključa (neobvezno)",
-      fieldName: "Ime polja"
+      fieldName: "Ime polja",
+      hybridMode: "Hibridno iskanje (FT.HYBRID)",
+      vectorField: "Vektorsko polje",
+      vectorValues: "Vektorske vrednosti",
     },
     monitor: {
       title: "Nadzor",
@@ -535,7 +545,8 @@ const strings = {
       peak: "Vrhunec",
       fragmentation: "Fragmentacija",
       hitsAndMisses: "Zadetki / Zgrešitve",
-      noClients: "Ni odjemalcev"
+      noClients: "Ni odjemalcev",
+      slotStats: "Statistika rež gruče",
     },
     analysis: {
       title: "Analiza pomnilnika",
@@ -695,6 +706,8 @@ const strings = {
         dimensions: "Dimenzije",
         removeConfirm: "Odstraniti ta element iz VectorSet?",
         noElements: "Brez elementov",
+        filter: "Filter",
+        searchComplete: "Iskanje končano",
       }
     },
     treeControls: {
@@ -707,7 +720,7 @@ const strings = {
         clear: "Počistite trenutno iskanje, da nastavite prazno",
         placeholderClient: "Iskanje na strani odjemalca",
         placeholderServer: "Iskanje na strani strežnika",
-        info: (opts) => "Iskanje na strani odjemalca pomeni, da se ujema z besedilom v iskalnem vnosu. Iskanje na strani strežnika pomeni, da je podobno iskanju v vzorcih ključev kot *{search-text}*. Za velike iskalne nize je bolje uporabiti iskanje na strani strežnika. Za manjše iskalne nize je bolje uporabiti način iskanja na strani odjemalca." + ` Če je štetja ključev konec ${opts?.maxLightKeysCount ?? 110000}, lahko iš��ete samo na strani strežnika.`,
+        info: (opts) => "Iskanje na strani odjemalca pomeni, da se ujema z besedilom v iskalnem vnosu. Iskanje na strani strežnika pomeni, da je podobno iskanju v vzorcih ključev, kot je *{search-text}*. Za velike iskalne nize je bolje uporabiti iskanje na strani strežnika. Za manjše iskalne nize je bolje uporabiti način iskanja na strani odjemalca." + ` Če število ključev preseže ${opts?.maxLightKeysCount ?? 110000}, lahko iščete samo na strani strežnika.`,
         largeSetInfo: "V velikem nizu je iskanje na strani odjemalca onemogočeno. tako da je trenutno možno samo iskanje na strani strežnika.",
         infoDetails: "Če želite izvedeti, kako iskanje deluje, preverite nastavitve"
       },
@@ -720,9 +733,6 @@ const strings = {
     }
   },
   time: {
-    type: "Tip",
-    format: "Format",
-    loading: "Nalaganje...",
     years: "leta",
     months: "mesecih",
     days: "dni",

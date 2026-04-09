@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Грешка на сървъра, моля опитайте отново"
+    server_error: "Грешка на сървъра, моля опитайте отново",
+    aiPromptTooLong: "AI заявката е твърде дълга (максимум 4096 знака)",
   },
   title: {
     donate: "Дарение",
@@ -189,6 +190,8 @@ const strings = {
     edit: "Редактирай",
     save: "Запази",
     ttl: "Задай TTL",
+    fieldTtl: "TTL на полето",
+    digest: "Дайджест",
     delete: "Изтрий",
     remove: "Премахни",
     areYouSure: "Сигурни ли сте?",
@@ -197,7 +200,9 @@ const strings = {
     getKey: "Зареждане на Redis ключ и свързани данни ...",
     jsonViewShow: "Покажи JSON",
     jsonViewEditor: "Редактирай JSON",
-    quickConsole: "Бърза конзола"
+    quickConsole: "Бърза конзола",
+    moveUp: "Премести нагоре",
+    moveDown: "Премести надолу",
   },
   label: {
     id: {
@@ -212,14 +217,16 @@ const strings = {
     aiGroqApiKeyInfo: "По избор. Собствен Groq API ключ за по-добра производителност. Получете безплатен ключ от",
     aiGroqApiKeyPlaceholder: "gsk_...",
     aiGroqApiKeySaved: "AI API ключът е запазен",
-    aiGroqApiKeyInvalid: "Invalid Groq API key",
+    aiGroqApiKeyInvalid: "Невалиден Groq API ключ",
     aiGroqApiKeyNotSet: "Не е зададен (по подразбиране на сървъра)",
     aiEnabled: "AI активирано",
     aiEnabledYes: "Да",
     aiEnabledNo: "Не",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
-    aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiRouteViaNetwork: "Пренасочване чрез network.corifeus.com",
+    aiRoutingDirect: "Заявките отиват директно към Groq с вашия собствен API ключ, заобикаляйки network.corifeus.com.",
+    aiRoutingNetwork: "AI заявките се насочват през network.corifeus.com. Ако имате свой безплатен Groq API ключ, можете да изключите този превключвател, за да насочвате директно към Groq без network.corifeus.com.",
+    aiMaxTokens: "Макс. токени за AI",
+    aiMaxTokensInfo: "Максимален брой токени за отговорите на AI. По-високите стойности позволяват по-дълги отговори, но може да използват повече API кредити.",
     ssh: {
       on: 'SSH включен',
       off: 'SSH изключен',
@@ -310,7 +317,7 @@ const strings = {
     shortcutNewKey: "Нов ключ",
     shortcutDisconnect: "Прекъсни",
     themeAuto: "Автоматично (система)",
-    languageAuto: "Автоматично (система)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Палитра с команди",
     commandPalette: "Палитра с команди",
     noResults: "Няма резултати",
@@ -513,7 +520,10 @@ const strings = {
       indexInfo: "Инфо за индекс",
       indexName: "Име на индекс",
       prefix: "Префикс на ключ (по избор)",
-      fieldName: "Име на поле"
+      fieldName: "Име на поле",
+      hybridMode: "Хибридно търсене (FT.HYBRID)",
+      vectorField: "Векторно поле",
+      vectorValues: "Векторни стойности",
     },
     monitor: {
       title: "Мониторинг",
@@ -537,7 +547,8 @@ const strings = {
       peak: "Пик",
       fragmentation: "Фрагментация",
       hitsAndMisses: "Попадения / Пропуски",
-      noClients: "Няма клиенти"
+      noClients: "Няма клиенти",
+      slotStats: "Статистика на слотовете на клъстера",
     },
     analysis: {
       title: "Анализ на паметта",
@@ -697,6 +708,8 @@ const strings = {
         dimensions: "Размерности",
         removeConfirm: "Премахване на този елемент от VectorSet?",
         noElements: "Няма елементи",
+        filter: "Филтър",
+        searchComplete: "Търсенето е завършено",
       }
     },
     treeControls: {
@@ -722,9 +735,6 @@ const strings = {
     }
   },
   time: {
-    type: "Тип",
-    format: "Формат",
-    loading: "Зареждане...",
     years: "години",
     months: "месеци",
     days: "дни",

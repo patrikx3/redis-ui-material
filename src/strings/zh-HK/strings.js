@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "伺服器錯誤，請重試"
+    server_error: "伺服器錯誤，請重試",
+    aiPromptTooLong: "AI 提示過長（最多 4096 個字元）",
   },
   title: {
     donate: "捐贈",
@@ -141,7 +142,7 @@ const strings = {
     formatJson: "格式化Json",
     wrap: "包裹",
     unwrap: "展開",
-    downloadJson: "��載JSON",
+    downloadJson: "下載 JSON",
     pubsubMonitor: "PubSub",
     pulse: "Pulse",
     profiler: "Profiler",
@@ -187,6 +188,8 @@ const strings = {
     edit: "編輯",
     save: "儲存",
     ttl: "設定 TTL",
+    fieldTtl: "欄位 TTL",
+    digest: "摘要",
     delete: "刪除",
     remove: "刪除",
     areYouSure: "你確定嗎？",
@@ -195,7 +198,9 @@ const strings = {
     getKey: "正在載入 Redis 金鑰和相關資料...",
     jsonViewShow: "顯示 JSON",
     jsonViewEditor: "編輯JSON",
-    quickConsole: "快速控制台"
+    quickConsole: "快速控制台",
+    moveUp: "上移",
+    moveDown: "下移"
   },
   label: {
     id: {
@@ -217,7 +222,9 @@ const strings = {
     aiEnabledNo: "否",
     aiRouteViaNetwork: "透過 network.corifeus.com 路由",
     aiRoutingDirect: "使用您自己的 API 金鑰直接向 Groq 發送查詢，繞過 network.corifeus.com。",
-    aiRoutingNetwork: "AI 查詢透過 network.corifeus.com 路由。如果您有自己的免費 Groq API 金鑰，可以關閉此開關直接使用 Groq。",
+    aiRoutingNetwork: "AI 查詢透過 network.corifeus.com 路由。如果您有自己的免費 Groq API 金鑰，可以關閉此開關，無需經過 network.corifeus.com 直接連到 Groq。",
+    aiMaxTokens: "AI 最大 Token 數",
+    aiMaxTokensInfo: "AI 回應的最大 token 數量。較高的值可產生較長回應，但可能會使用更多 API 額度。",
     ssh: {
       on: "SSH 開啟",
       off: "SSH 關閉",
@@ -257,7 +264,7 @@ const strings = {
     tlsRejectUnauthorized: "拒絕未經授權的證書",
     tlsSecure: "如果您看到以 P3X 開頭的 TLS 設定或所有 TLS 設定看起來都相同，則這是一項安全功能。要更改設置，只需將這些設置替換為空或其他內容即可保存它們。如果您不更改 TLS 設置，這些設置將保留在伺服器上的原樣。",
     treeSeparatorEmpty: "如果樹分隔符號為空，則樹將沒有巢狀節點，只有一個純列表",
-    treeSeparatorEmptyNote: "沒有巢狀節點，只是一個純列��",
+    treeSeparatorEmptyNote: "沒有巢狀節點，只是一個純列表",
     welcomeConsole: "歡迎來到 Redis 控制台",
     welcomeConsoleInfo: "啟用遊標向上或向下歷史記錄",
     redisListIndexInfo: "為空表示附加，-1 表示新增或儲存到所示位置。",
@@ -309,9 +316,9 @@ const strings = {
     shortcutDisconnect: "斷開連接",
     themeAuto: "Auto (system)",
     languageAuto: "Auto (system)",
-    shortcutCommandPalette: "Command Palette",
-    commandPalette: "Command Palette",
-    noResults: "No results",
+    shortcutCommandPalette: "命令面板",
+    commandPalette: "命令面板",
+    noResults: "沒有結果",
     redisCommandsReference: "Redis 命令",
     ungrouped: "未分組",
     grouped: "Grouped",
@@ -511,7 +518,10 @@ const strings = {
       indexInfo: "索引資訊",
       indexName: "索引名稱",
       prefix: "鍵前綴（可選）",
-      fieldName: "欄位名稱"
+      fieldName: "欄位名稱",
+      hybridMode: "混合搜尋 (FT.HYBRID)",
+      vectorField: "向量欄位",
+      vectorValues: "向量值",
     },
     monitor: {
       title: "監控",
@@ -535,7 +545,8 @@ const strings = {
       peak: "峰值",
       fragmentation: "碎片化",
       hitsAndMisses: "命中 / 未中",
-      noClients: "沒有用戶端"
+      noClients: "沒有用戶端",
+      slotStats: "叢集槽統計",
     },
     analysis: {
       title: "記憶體分析",
@@ -695,6 +706,8 @@ const strings = {
         dimensions: "維度",
         removeConfirm: "從 VectorSet 中移除此元素？",
         noElements: "沒有元素",
+        filter: "篩選",
+        searchComplete: "搜尋完成",
       }
     },
     treeControls: {
@@ -720,9 +733,6 @@ const strings = {
     }
   },
   time: {
-    type: "類型",
-    format: "格式",
-    loading: "載入中...",
     years: "年",
     months: "月",
     days: "天",

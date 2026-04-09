@@ -71,6 +71,19 @@
                 <mat-icon>description</mat-icon>
             </button>
         }
+        @if (redisState.redisVersion().isAtLeast(8, 4)) {
+            @if (isGtSm) {
+                <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="showDigest()">
+                    <mat-icon>numbers</mat-icon>
+                    <span>Digest</span>
+                </button>
+            } @else {
+                <button mat-mini-fab class="btn-accent" type="button" (click)="showDigest()"
+                    matTooltip="Digest" matTooltipPosition="above">
+                    <mat-icon>numbers</mat-icon>
+                </button>
+            }
+        }
         @if (!isReadonly) {
             @if (isGtSm) {
                 <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="edit()">

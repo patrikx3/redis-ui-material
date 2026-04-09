@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Serverio klaida, bandykite dar kartą"
+    server_error: "Serverio klaida, bandykite dar kartą",
+    aiPromptTooLong: "AI užklausa per ilga (daugiausia 4096 simboliai)",
   },
   title: {
     donate: "Paaukoti",
@@ -187,6 +188,8 @@ const strings = {
     edit: "Redaguoti",
     save: "Išsaugoti",
     ttl: "Nustatyti TTL",
+    fieldTtl: "Lauko TTL",
+    digest: "Santrauka",
     delete: "Ištrinti",
     remove: "Pašalinti",
     areYouSure: "Ar esate tikri?",
@@ -195,7 +198,9 @@ const strings = {
     getKey: "Įkeliamas Redis raktas ir susiję duomenys...",
     jsonViewShow: "Ekranas JSON",
     jsonViewEditor: "Redaguoti JSON",
-    quickConsole: "Greitoji konsolė"
+    quickConsole: "Greitoji konsolė",
+    moveUp: "Perkelti aukštyn",
+    moveDown: "Perkelti žemyn"
   },
   label: {
     id: {
@@ -203,21 +208,23 @@ const strings = {
       id: "Ryšio ID",
       info: "Jei nenorite keisti ypatybių: sshPassword, sshPrivateKey, slaptažodžio, tlsCrt, tlsKey, tlsCa, įveskite ryšio ID šiose ypatybėse, kad ypatybių reikšmės liktų nepakitusios. Jei norite, kad mazgo slaptažodis būtų tokia pati, tada įveskite mazgo ID į mazgo slaptažodį."
     },
-    secureFeature: "Jei matote reikšmę, kuri prasideda P3X ir atrodo taip pat, tai yra saugi funkcija. Norėdami pakeisti nustatymus, tiesiog pakeiskite ��iuos nustatymus tuščiais ar kažkuo kitu ir jie bus išsaugoti. Jei nustatymų nepakeisite, nustatymai išliks tokie, kokie yra serveryje.",
-    aiTranslating: "Translating...",
+    secureFeature: "Jei matote reikšmę, kuri prasideda P3X ir atrodo taip pat, tai yra saugi funkcija. Norėdami pakeisti nustatymus, tiesiog pakeiskite šiuos nustatymus tuščiais ar kažkuo kitu ir jie bus išsaugoti. Jei nustatymų nepakeisite, nustatymai išliks tokie, kokie yra serveryje.",
+    aiTranslating: "Verčiama...",
     aiSettings: "AI nustatymai",
     aiGroqApiKey: "Groq API raktas",
     aiGroqApiKeyInfo: "Neprivaloma. Savo Groq API raktas geresniam veikimui. Gaukite nemokamą raktą",
     aiGroqApiKeyPlaceholder: "gsk_...",
     aiGroqApiKeySaved: "AI API raktas išsaugotas",
-    aiGroqApiKeyInvalid: "Invalid Groq API key",
+    aiGroqApiKeyInvalid: "Neteisingas Groq API raktas",
     aiGroqApiKeyNotSet: "Nenustatyta (serverio numatytasis)",
-    aiEnabled: "AI Enabled",
-    aiEnabledYes: "Yes",
-    aiEnabledNo: "No",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
-    aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiEnabled: "AI įjungtas",
+    aiEnabledYes: "Taip",
+    aiEnabledNo: "Ne",
+    aiRouteViaNetwork: "Nukreipti per network.corifeus.com",
+    aiRoutingDirect: "Užklausos siunčiamos tiesiai į Groq naudojant jūsų API raktą, apeinant network.corifeus.com.",
+    aiRoutingNetwork: "AI užklausos nukreipiamos per network.corifeus.com. Jei turite savo nemokamą Groq API raktą, galite išjungti šį jungiklį ir nukreipti tiesiai į Groq be network.corifeus.com.",
+    aiMaxTokens: "Didžiausias AI žetonų skaičius",
+    aiMaxTokensInfo: "Didžiausias žetonų skaičius AI atsakymams. Didesnės reikšmės leidžia gauti ilgesnius atsakymus, bet gali sunaudoti daugiau API kreditų.",
     ssh: {
       on: "SSH įjungta",
       off: "SSH išjungtas",
@@ -255,7 +262,7 @@ const strings = {
     passwordSecure: "Slaptažodis gali būti tuščias, bet vis tiek bus rodomi simboliai, tai yra saugos funkcija.",
     tlsWithoutCert: "Įgalinti TLS be papildomo sertifikato",
     tlsRejectUnauthorized: "Atmesti neteisėtą sertifikatą",
-    tlsSecure: "Jei matote TLS konfigūraciją, kuri prasideda P3X arba visi TLS nustatymai atrodo taip pat, tai yra saugi funkcija. Norėdami pakeisti nustatymus, tiesiog pakeiskite ��iuos nustatymus tuščiais ar kažkuo kitu ir jie bus išsaugoti. Jei nepakeisite TLS nustatymų, nustatymai išliks tokie, kokie yra serveryje.",
+    tlsSecure: "Jei matote TLS konfigūraciją, kuri prasideda P3X arba visi TLS nustatymai atrodo taip pat, tai yra saugi funkcija. Norėdami pakeisti nustatymus, tiesiog pakeiskite šiuos nustatymus tuščiais ar kažkuo kitu ir jie bus išsaugoti. Jei nepakeisite TLS nustatymų, nustatymai išliks tokie, kokie yra serveryje.",
     treeSeparatorEmpty: "Jei medžio separatorius tuščias, medis neturės įdėtų mazgų, tik gryną sąrašą",
     treeSeparatorEmptyNote: "Nėra įdėtų mazgų, tik grynas sąrašas",
     welcomeConsole: "Sveiki atvykę į Redis konsolę",
@@ -309,9 +316,9 @@ const strings = {
     shortcutDisconnect: "Atsijungti",
     themeAuto: "Auto (system)",
     languageAuto: "Auto (system)",
-    shortcutCommandPalette: "Command Palette",
-    commandPalette: "Command Palette",
-    noResults: "No results",
+    shortcutCommandPalette: "Komandų paletė",
+    commandPalette: "Komandų paletė",
+    noResults: "Nėra rezultatų",
     redisCommandsReference: "Redis Komandos",
     ungrouped: "Be grupės",
     grouped: "Grouped",
@@ -511,7 +518,10 @@ const strings = {
       indexInfo: "Indekso info",
       indexName: "Indekso pavadinimas",
       prefix: "Rakto prefiksas (neprivaloma)",
-      fieldName: "Lauko pavadinimas"
+      fieldName: "Lauko pavadinimas",
+      hybridMode: "Hibridinė paieška (FT.HYBRID)",
+      vectorField: "Vektorinis laukas",
+      vectorValues: "Vektoriaus reikšmės",
     },
     monitor: {
       title: "Stebėjimas",
@@ -535,7 +545,8 @@ const strings = {
       peak: "Didžiausias",
       fragmentation: "Fragmentacija",
       hitsAndMisses: "Pataik. / Praleid.",
-      noClients: "Nėra klientų"
+      noClients: "Nėra klientų",
+      slotStats: "Klasterio lizdo statistika",
     },
     analysis: {
       title: "Atminties analizė",
@@ -695,6 +706,8 @@ const strings = {
         dimensions: "Matmenys",
         removeConfirm: "Pašalinti šį elementą iš VectorSet?",
         noElements: "Nėra elementų",
+        filter: "Filtras",
+        searchComplete: "Paieška baigta",
       }
     },
     treeControls: {
@@ -720,9 +733,6 @@ const strings = {
     }
   },
   time: {
-    type: "Tipas",
-    format: "Formatas",
-    loading: "Kraunama...",
     years: "metų",
     months: "mėnesių",
     days: "dienų",

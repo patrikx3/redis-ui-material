@@ -28,6 +28,30 @@
                     <input matInput [(ngModel)]="query" (keydown.enter)="offset = 0; handleSearchEnter()" [disabled]="aiLoading" />
                 </mat-form-field>
 
+                @if (state.redisVersion().isAtLeast(8, 4)) {
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                        <mat-slide-toggle [(ngModel)]="hybridMode" color="primary">
+                            {{ strings().page?.search?.hybridMode || 'Hybrid Search (FT.HYBRID)' }}
+                        </mat-slide-toggle>
+                    </div>
+                    @if (hybridMode) {
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                            <mat-form-field style="flex: 1; min-width: 150px;">
+                                <mat-label>{{ strings().page?.search?.vectorField || 'Vector Field' }}</mat-label>
+                                <input matInput [(ngModel)]="vectorField" placeholder="embedding" />
+                            </mat-form-field>
+                            <mat-form-field style="flex: 2; min-width: 200px;">
+                                <mat-label>{{ strings().page?.search?.vectorValues || 'Vector Values' }}</mat-label>
+                                <input matInput [(ngModel)]="vectorValues" placeholder="0.1, 0.2, 0.3, ..." />
+                            </mat-form-field>
+                            <mat-form-field style="width: 80px;">
+                                <mat-label>Count</mat-label>
+                                <input matInput type="number" [(ngModel)]="vectorCount" />
+                            </mat-form-field>
+                        </div>
+                    }
+                }
+
                 <div style="margin-top: 8px; text-align: right;">
                     @if (isGtSm) {
                         <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="handleSearchEnter()" [disabled]="aiLoading">

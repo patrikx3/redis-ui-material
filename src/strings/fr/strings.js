@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Erreur du serveur, veuillez réessayer"
+    server_error: "Erreur du serveur, veuillez réessayer",
+    aiPromptTooLong: "Le prompt AI est trop long (max. 4096 caractères)",
   },
   title: {
     donate: "Don",
@@ -189,6 +190,8 @@ const strings = {
     edit: "Modifier",
     save: "Enregistrer",
     ttl: "Définir le TTL",
+    fieldTtl: "TTL du champ",
+    digest: "Résumé",
     delete: "Supprimer",
     remove: "Retirer",
     areYouSure: "Êtes-vous sûr ?",
@@ -197,7 +200,9 @@ const strings = {
     getKey: "Chargement de la clé Redis et des données associées ...",
     jsonViewShow: "Afficher JSON",
     jsonViewEditor: "Modifier JSON",
-    quickConsole: "Console rapide"
+    quickConsole: "Console rapide",
+    moveUp: "Monter",
+    moveDown: "Descendre"
   },
   label: {
     id: {
@@ -217,9 +222,11 @@ const strings = {
     aiEnabled: "IA activée",
     aiEnabledYes: "Oui",
     aiEnabledNo: "Non",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
+    aiRouteViaNetwork: "Acheminement via network.corifeus.com",
     aiRoutingDirect: "Les requêtes vont directement à Groq avec votre propre clé API, sans passer par network.corifeus.com.",
     aiRoutingNetwork: "Les requêtes IA sont acheminées via network.corifeus.com. Si vous avez votre propre clé API Groq gratuite, vous pouvez désactiver ce commutateur.",
+    aiMaxTokens: "Nombre maximal de jetons IA",
+    aiMaxTokensInfo: "Nombre maximal de jetons pour les réponses de l'IA. Des valeurs plus élevées permettent des réponses plus longues mais peuvent consommer plus de crédits API.",
     ssh: {
       on: 'SSH activé',
       off: 'SSH désactivé',
@@ -310,7 +317,7 @@ const strings = {
     shortcutNewKey: "Nouvelle clé",
     shortcutDisconnect: "Déconnecter",
     themeAuto: "Automatique (système)",
-    languageAuto: "Automatique (système)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Palette de commandes",
     commandPalette: "Palette de commandes",
     noResults: "Aucun résultat",
@@ -513,7 +520,10 @@ const strings = {
       indexInfo: "Info index",
       indexName: "Nom de l'index",
       prefix: "Préfixe de clé (optionnel)",
-      fieldName: "Nom du champ"
+      fieldName: "Nom du champ",
+      hybridMode: "Recherche hybride (FT.HYBRID)",
+      vectorField: "Champ vectoriel",
+      vectorValues: "Valeurs vectorielles",
     },
     monitor: {
       title: "Surveillance",
@@ -537,7 +547,8 @@ const strings = {
       peak: "Maximum",
       fragmentation: "Fragmentation",
       hitsAndMisses: "Succès / Échecs",
-      noClients: "Aucun client"
+      noClients: "Aucun client",
+      slotStats: "Statistiques des slots du cluster",
     },
     analysis: {
       title: "Analyse Mémoire",
@@ -697,6 +708,8 @@ const strings = {
         dimensions: "Dimensions",
         removeConfirm: "Supprimer cet élément du VectorSet ?",
         noElements: "Aucun élément",
+        filter: "Filtre",
+        searchComplete: "Recherche terminée",
       }
     },
     treeControls: {
@@ -722,9 +735,6 @@ const strings = {
     }
   },
   time: {
-    type: "Type",
-    format: "Format",
-    loading: "Chargement...",
     years: "ans",
     months: "mois",
     days: "jours",

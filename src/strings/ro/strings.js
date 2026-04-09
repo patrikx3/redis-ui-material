@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Eroare de server, va rugam incercati din nou"
+    server_error: "Eroare de server, va rugam incercati din nou",
+    aiPromptTooLong: "Promptul AI este prea lung (maximum 4096 caractere)",
   },
   title: {
     donate: "Donatie",
@@ -187,6 +188,8 @@ const strings = {
     edit: "Editare",
     save: "Salvare",
     ttl: "Setare TTL",
+    fieldTtl: "TTL câmp",
+    digest: "Rezumat",
     delete: "Stergere",
     remove: "Eliminare",
     areYouSure: "Ești sigur?",
@@ -195,7 +198,9 @@ const strings = {
     getKey: "Se incarca cheia Redis si datele asociate ...",
     jsonViewShow: "Afisare JSON",
     jsonViewEditor: "Editare JSON",
-    quickConsole: "Consola rapida"
+    quickConsole: "Consola rapida",
+    moveUp: "Mută în sus",
+    moveDown: "Mută în jos"
   },
   label: {
     id: {
@@ -210,14 +215,16 @@ const strings = {
     aiGroqApiKeyInfo: "Opțional. Cheia API Groq proprie pentru performanță mai bună. Obțineți o cheie gratuită de la",
     aiGroqApiKeyPlaceholder: "gsk_...",
     aiGroqApiKeySaved: "Cheie API AI salvată",
-    aiGroqApiKeyInvalid: "Invalid Groq API key",
+    aiGroqApiKeyInvalid: "Cheie API Groq nevalidă",
     aiGroqApiKeyNotSet: "Nesetat (implicit server)",
     aiEnabled: "AI activat",
     aiEnabledYes: "Da",
     aiEnabledNo: "Nu",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
-    aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiRouteViaNetwork: "Rutare prin network.corifeus.com",
+    aiRoutingDirect: "Interogările merg direct către Groq folosind propria cheie API, ocolind network.corifeus.com.",
+    aiRoutingNetwork: "Interogările AI sunt rutate prin network.corifeus.com. Dacă aveți propria cheie API Groq gratuită, puteți dezactiva acest comutator pentru a ruta direct către Groq fără network.corifeus.com.",
+    aiMaxTokens: "Număr maxim de tokeni AI",
+    aiMaxTokensInfo: "Numărul maxim de tokeni pentru răspunsurile AI. Valorile mai mari permit răspunsuri mai lungi, dar pot consuma mai multe credite API.",
     ssh: {
       on: 'SSH activat',
       off: 'SSH dezactivat',
@@ -308,7 +315,7 @@ const strings = {
     shortcutNewKey: "Cheie nouă",
     shortcutDisconnect: "Deconectare",
     themeAuto: "Automat (sistem)",
-    languageAuto: "Automat (sistem)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Paletă de comenzi",
     commandPalette: "Paletă de comenzi",
     noResults: "Fără rezultate",
@@ -324,8 +331,8 @@ const strings = {
     importSkip: "Omite",
     importConflict: "Dacă cheia există deja:",
     noKeysToExport: "Nu există chei de exportat",
-    time: "Timp",
     type: "Tip",
+    time: "Timp",
     format: "Format",
     loading: "Se încarcă...",
     autoRefresh: "Auto",
@@ -511,7 +518,10 @@ const strings = {
       indexInfo: "Info index",
       indexName: "Nume index",
       prefix: "Prefix cheie (opțional)",
-      fieldName: "Nume câmp"
+      fieldName: "Nume câmp",
+      hybridMode: "Căutare hibridă (FT.HYBRID)",
+      vectorField: "Câmp vectorial",
+      vectorValues: "Valori vectoriale",
     },
     monitor: {
       title: "Monitorizare",
@@ -535,7 +545,8 @@ const strings = {
       peak: "Vârf",
       fragmentation: "Fragmentare",
       hitsAndMisses: "Reușite / Ratări",
-      noClients: "Fără clienți"
+      noClients: "Fără clienți",
+      slotStats: "Statistici sloturi cluster",
     },
     analysis: {
       title: "Analiză Memorie",
@@ -695,6 +706,8 @@ const strings = {
         dimensions: "Dimensiuni",
         removeConfirm: "Eliminați acest element din VectorSet?",
         noElements: "Fără elemente",
+        filter: "Filtru",
+        searchComplete: "Căutare finalizată",
       }
     },
     treeControls: {
@@ -720,9 +733,6 @@ const strings = {
     }
   },
   time: {
-    type: "Tip",
-    format: "Format",
-    loading: "Se încarcă...",
     years: "ani",
     months: "luni",
     days: "zile",

@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Serveri viga, proovige uuesti"
+    server_error: "Serveri viga, proovige uuesti",
+    aiPromptTooLong: "AI viip on liiga pikk (max 4096 tähemärki)",
   },
   title: {
     donate: "Anneta",
@@ -187,6 +188,8 @@ const strings = {
     edit: "Muuda",
     save: "Salvesta",
     ttl: "Komplekt TTL",
+    fieldTtl: "Välja TTL",
+    digest: "Kokkuvõte",
     delete: "Kustuta",
     remove: "Eemalda",
     areYouSure: "Kas olete kindel?",
@@ -195,7 +198,9 @@ const strings = {
     getKey: "Võtme Redis ja seotud andmete laadimine ...",
     jsonViewShow: "Ekraan JSON",
     jsonViewEditor: "Redigeerige JSON",
-    quickConsole: "Kiirkonsool"
+    quickConsole: "Kiirkonsool",
+    moveUp: "Liiguta üles",
+    moveDown: "Liiguta alla"
   },
   label: {
     id: {
@@ -204,20 +209,22 @@ const strings = {
       info: "Kui te ei soovi muuta atribuute: sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa, sisestage atribuutide väärtuste muutmiseks nendesse atribuutidesse ühenduse ID. Kui soovid sõlme paroolis sama loogikat, siis sisesta sõlme paroolisse sõlme ID."
     },
     secureFeature: "Kui näete väärtust, mis algab P3X-iga ja näeb välja sama, on see turvaline funktsioon. Seadete muutmiseks lihtsalt asenda need sätted tühjade või millegi muuga ja need salvestatakse. Kui te sätteid ei muuda, säilitatakse sätted serveris nii, nagu need on.",
-    aiTranslating: "Translating...",
+    aiTranslating: "Tõlgitakse...",
     aiSettings: "AI seaded",
     aiGroqApiKey: "Groq API võti",
     aiGroqApiKeyInfo: "Valikuline. Oma Groq API võti parema jõudluse jaoks. Hankige tasuta võti",
     aiGroqApiKeyPlaceholder: "gsk_...",
     aiGroqApiKeySaved: "AI API võti salvestatud",
-    aiGroqApiKeyInvalid: "Invalid Groq API key",
+    aiGroqApiKeyInvalid: "Vale Groq API võti",
     aiGroqApiKeyNotSet: "Pole seatud (serveri vaikeväärtus)",
-    aiEnabled: "AI Enabled",
-    aiEnabledYes: "Yes",
-    aiEnabledNo: "No",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
-    aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiEnabled: "AI on lubatud",
+    aiEnabledYes: "Jah",
+    aiEnabledNo: "Ei",
+    aiRouteViaNetwork: "Suuna läbi network.corifeus.com-i",
+    aiRoutingDirect: "Päringud lähevad otse Groq'i teie oma API-võtmega, möödudes network.corifeus.com-ist.",
+    aiRoutingNetwork: "AI-päringud suunatakse läbi network.corifeus.com-i. Kui teil on oma tasuta Groq API-võti, saate selle lüliti välja lülitada, et minna otse Groq'i ilma network.corifeus.com-ita.",
+    aiMaxTokens: "AI maksimaalsed tokenid",
+    aiMaxTokensInfo: "Maksimaalne tokenite arv AI vastuste jaoks. Suuremad väärtused võimaldavad pikemaid vastuseid, kuid võivad kasutada rohkem API-krediite.",
     ssh: {
       on: "SSH sisse lülitatud",
       off: "SSH väljas",
@@ -511,7 +518,10 @@ const strings = {
       indexInfo: "Indeksi info",
       indexName: "Indeksi nimi",
       prefix: "Võtme prefiks (valikuline)",
-      fieldName: "Välja nimi"
+      fieldName: "Välja nimi",
+      hybridMode: "Hübriidotsing (FT.HYBRID)",
+      vectorField: "Vektoriväli",
+      vectorValues: "Vektori väärtused",
     },
     monitor: {
       title: "Seire",
@@ -535,7 +545,8 @@ const strings = {
       peak: "Tipp",
       fragmentation: "Fragmenteerumine",
       hitsAndMisses: "Tabamused / Möödapanekud",
-      noClients: "Kliente pole"
+      noClients: "Kliente pole",
+      slotStats: "Klastri pesa statistika",
     },
     analysis: {
       title: "Mälu analüüs",
@@ -695,6 +706,8 @@ const strings = {
         dimensions: "Mõõtmed",
         removeConfirm: "Eemaldada see element VectorSet-ist?",
         noElements: "Elemente pole",
+        filter: "Filter",
+        searchComplete: "Otsing lõpetatud",
       }
     },
     treeControls: {
@@ -720,9 +733,6 @@ const strings = {
     }
   },
   time: {
-    type: "Tüüp",
-    format: "Formaat",
-    loading: "Laadimine...",
     years: "aastat",
     months: "kuud",
     days: "päevadel",

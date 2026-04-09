@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Błąd serwera, spróbuj ponownie"
+    server_error: "Błąd serwera, spróbuj ponownie",
+    aiPromptTooLong: "Prompt AI jest za długi (maks. 4096 znaków)",
   },
   title: {
     donate: "Wspomóż",
@@ -187,6 +188,8 @@ const strings = {
     edit: "Edytuj",
     save: "Zapisz",
     ttl: "Ustaw TTL",
+    fieldTtl: "TTL pola",
+    digest: "Skrót",
     delete: "Usuń",
     remove: "Usuń",
     areYouSure: "Czy jesteś pewien?",
@@ -195,7 +198,9 @@ const strings = {
     getKey: "Ładowanie klucza Redis i powiązanych danych ...",
     jsonViewShow: "Wyświetl JSON",
     jsonViewEditor: "Edytuj JSON",
-    quickConsole: "Szybka Konsola"
+    quickConsole: "Szybka Konsola",
+    moveUp: "Przesuń w górę",
+    moveDown: "Przesuń w dół"
   },
   label: {
     id: {
@@ -216,8 +221,10 @@ const strings = {
     aiEnabledYes: "Tak",
     aiEnabledNo: "Nie",
     aiRouteViaNetwork: "Trasa przez network.corifeus.com",
-    aiRoutingDirect: "Zapytania kierowane bezpośrednio do Groq z własnym kluczem API, omijając network.corifeus.com.",
-    aiRoutingNetwork: "Zapytania AI kierowane przez network.corifeus.com. Jeśli masz własny darmowy klucz API Groq, możesz wyłączyć ten przełącznik.",
+    aiRoutingDirect: "Zapytania kierowane bezpośrednio do Groq przy użyciu własnego klucza API, z pominięciem network.corifeus.com.",
+    aiRoutingNetwork: "Zapytania AI są kierowane przez network.corifeus.com. Jeśli masz własny darmowy klucz API Groq, możesz wyłączyć ten przełącznik, aby kierować je bezpośrednio do Groq bez network.corifeus.com.",
+    aiMaxTokens: "Maksymalna liczba tokenów AI",
+    aiMaxTokensInfo: "Maksymalna liczba tokenów dla odpowiedzi AI. Wyższe wartości pozwalają na dłuższe odpowiedzi, ale mogą zużywać więcej kredytów API.",
     ssh: {
       on: 'SSH włączony',
       off: 'SSH wyłączony',
@@ -308,7 +315,7 @@ const strings = {
     shortcutNewKey: "Nowy klucz",
     shortcutDisconnect: "Rozłącz",
     themeAuto: "Automatyczny (system)",
-    languageAuto: "Automatyczny (system)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Paleta poleceń",
     commandPalette: "Paleta poleceń",
     noResults: "Brak wyników",
@@ -324,8 +331,8 @@ const strings = {
     importSkip: "Pomiń",
     importConflict: "Jeśli klucz już istnieje:",
     noKeysToExport: "Brak kluczy do eksportu",
-    time: "Czas",
     type: "Typ",
+    time: "Czas",
     format: "Format",
     loading: "Ładowanie...",
     autoRefresh: "Auto",
@@ -511,7 +518,10 @@ const strings = {
       indexInfo: "Info o indeksie",
       indexName: "Nazwa indeksu",
       prefix: "Prefiks klucza (opcjonalnie)",
-      fieldName: "Nazwa pola"
+      fieldName: "Nazwa pola",
+      hybridMode: "Wyszukiwanie hybrydowe (FT.HYBRID)",
+      vectorField: "Pole wektorowe",
+      vectorValues: "Wartości wektorowe",
     },
     monitor: {
       title: "Monitorowanie",
@@ -535,7 +545,8 @@ const strings = {
       peak: "Szczyt",
       fragmentation: "Fragmentacja",
       hitsAndMisses: "Trafienia / Chybienia",
-      noClients: "Brak klientów"
+      noClients: "Brak klientów",
+      slotStats: "Statystyki slotów klastra",
     },
     analysis: {
       title: "Analiza pamięci",
@@ -695,6 +706,8 @@ const strings = {
         dimensions: "Wymiary",
         removeConfirm: "Usunąć ten element z VectorSet?",
         noElements: "Brak elementów",
+        filter: "Filtr",
+        searchComplete: "Wyszukiwanie zakończone",
       }
     },
     treeControls: {
@@ -720,9 +733,6 @@ const strings = {
     }
   },
   time: {
-    type: "Typ",
-    format: "Format",
-    loading: "Ładowanie...",
     years: "lat",
     months: "miesięcy",
     days: "dni",

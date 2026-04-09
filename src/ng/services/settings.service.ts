@@ -42,8 +42,7 @@ export class SettingsService {
     // --- Utility methods ---
 
     prettyBytes(value: number): string {
-        let lang = this.language();
-        if (lang === 'auto') lang = this.resolveAutoLang();
+        const lang = this.resolveAutoLang();
         return prettyBytes(value, { locale: lang });
     }
 
@@ -90,10 +89,9 @@ export class SettingsService {
     }
 
     getHumanizeDurationOptions(): { language: string; languages: Record<string, any> } {
-        let lang = this.language();
-        if (lang === 'auto') {
-            lang = this.resolveAutoLang();
-        }
+        // Always read from I18nService for the current active language
+        // (SettingsService.language signal is only initialized at startup)
+        const lang = this.resolveAutoLang();
         return {
             language: this.humanizeDurationLanguageMap[lang] || lang || 'en',
             languages: this.humanizeDurationCustomLanguages,

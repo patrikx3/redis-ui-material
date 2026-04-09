@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Error sa server, pakisubukang muli"
+    server_error: "Error sa server, pakisubukang muli",
+    aiPromptTooLong: "Masyadong mahaba ang AI prompt (max 4096 character)",
   },
   title: {
     donate: "Mag-donate",
@@ -187,6 +188,8 @@ const strings = {
     edit: "I-edit",
     save: "I-save",
     ttl: "Itakda ang TTL",
+    fieldTtl: "TTL ng field",
+    digest: "Digest",
     delete: "Tanggalin",
     remove: "Alisin",
     areYouSure: "Sigurado ka ba?",
@@ -195,7 +198,9 @@ const strings = {
     getKey: "Nilo-load ang Redis key at nauugnay na data ...",
     jsonViewShow: "Ipakita ang JSON",
     jsonViewEditor: "I-edit ang JSON",
-    quickConsole: "Mabilis na Console"
+    quickConsole: "Mabilis na Console",
+    moveUp: "Itaas",
+    moveDown: "Pababa"
   },
   label: {
     id: {
@@ -204,20 +209,22 @@ const strings = {
       info: "Kung ayaw mong baguhin ang mga katangian ng: sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa, mangyaring ilagay ang ID ng koneksyon sa mga property na iyon upang mapanatiling buo ang mga value ng property. Kung gusto mo ng parehong logic sa node password, pagkatapos ay ilagay ang node ID sa node password."
     },
     secureFeature: "Kung makakita ka ng isang halaga na nagsisimula sa isang P3X na katulad ng hitsura, ito ay isang secure na tampok. Upang baguhin ang mga setting, palitan lamang ang mga setting na ito ng walang laman o iba pa at mase-save ang mga ito. Kung hindi mo babaguhin ang mga setting, ang mga setting ay pananatilihin habang ang mga ito ay nasa server.",
-    aiTranslating: "Translating...",
+    aiTranslating: "Isinasalin...",
     aiSettings: "Mga Setting ng AI",
     aiGroqApiKey: "Groq API Key",
     aiGroqApiKeyInfo: "Opsyonal. Sariling Groq API key para sa mas magandang performance. Kumuha ng libreng key mula sa",
     aiGroqApiKeyPlaceholder: "gsk_...",
     aiGroqApiKeySaved: "Na-save ang AI API key",
-    aiGroqApiKeyInvalid: "Invalid Groq API key",
+    aiGroqApiKeyInvalid: "Di-wastong Groq API key",
     aiGroqApiKeyNotSet: "Hindi nakatakda (server default)",
-    aiEnabled: "AI Enabled",
-    aiEnabledYes: "Yes",
-    aiEnabledNo: "No",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
-    aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiEnabled: "Naka-enable ang AI",
+    aiEnabledYes: "Oo",
+    aiEnabledNo: "Hindi",
+    aiRouteViaNetwork: "I-route sa pamamagitan ng network.corifeus.com",
+    aiRoutingDirect: "Ang mga query ay dumiretso sa Groq gamit ang sarili mong API key, nilalampasan ang network.corifeus.com.",
+    aiRoutingNetwork: "Ang mga AI query ay niruruta sa pamamagitan ng network.corifeus.com. Kung mayroon kang sarili mong libreng Groq API key, maaari mong i-off ang switch na ito para dumiretso sa Groq nang walang network.corifeus.com.",
+    aiMaxTokens: "Pinakamataas na token ng AI",
+    aiMaxTokensInfo: "Pinakamataas na bilang ng token para sa mga sagot ng AI. Ang mas mataas na halaga ay nagbibigay ng mas mahahabang sagot ngunit maaaring gumamit ng mas maraming API credit.",
     ssh: {
       on: "Naka-on ang SSH",
       off: "Naka-off ang SSH",
@@ -511,7 +518,10 @@ const strings = {
       indexInfo: "Info ng index",
       indexName: "Pangalan ng index",
       prefix: "Key prefix (opsyonal)",
-      fieldName: "Pangalan ng field"
+      fieldName: "Pangalan ng field",
+      hybridMode: "Hybrid na paghahanap (FT.HYBRID)",
+      vectorField: "Vector field",
+      vectorValues: "Mga vector value",
     },
     monitor: {
       title: "Monitoring",
@@ -535,7 +545,8 @@ const strings = {
       peak: "Pinakamataas",
       fragmentation: "Fragmentation",
       hitsAndMisses: "Hits / Misses",
-      noClients: "Walang client"
+      noClients: "Walang client",
+      slotStats: "Cluster slot statistics",
     },
     analysis: {
       title: "Pagsusuri ng Memory",
@@ -695,6 +706,8 @@ const strings = {
         dimensions: "Mga dimensyon",
         removeConfirm: "Alisin ang elementong ito mula sa VectorSet?",
         noElements: "Walang mga elemento",
+        filter: "Filter",
+        searchComplete: "Tapos na ang paghahanap",
       }
     },
     treeControls: {
@@ -720,9 +733,6 @@ const strings = {
     }
   },
   time: {
-    type: "Uri",
-    format: "Format",
-    loading: "Naglo-load...",
     years: "taon",
     months: "buwan",
     days: "araw",

@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Hitilafu ya seva, tafadhali jaribu tena"
+    server_error: "Hitilafu ya seva, tafadhali jaribu tena",
+    aiPromptTooLong: "AI ombi ni refu mno sana (kiwango cha juu herufi 4096)",
   },
   title: {
     donate: "Changia",
@@ -189,6 +190,8 @@ const strings = {
     edit: "Hariri",
     save: "Hifadhi",
     ttl: "Weka TTL",
+    fieldTtl: "TTL ya sehemu",
+    digest: "Muhtasari",
     delete: "Futa",
     remove: "Ondoa",
     areYouSure: "Je, una uhakika?",
@@ -197,7 +200,9 @@ const strings = {
     getKey: "Inapakia ufunguo wa Redis na data inayohusiana ...",
     jsonViewShow: "Onyesha JSON",
     jsonViewEditor: "Hariri JSON",
-    quickConsole: "Konsoli ya Haraka"
+    quickConsole: "Konsoli ya Haraka",
+    moveUp: "Hamisha juu",
+    moveDown: "Hamisha chini",
   },
   label: {
     id: {
@@ -206,20 +211,22 @@ const strings = {
       info: "Ikiwa hutaki kubadilisha mali za: sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa, tafadhali ingiza Kitambulisho cha muunganisho kwenye mali hizo ili kuhifadhi thamani za mali. Ikiwa unataka mantiki sawa katika nenosiri la nodi, basi ingiza Kitambulisho cha nodi kwenye nenosiri la nodi."
     },
     secureFeature: 'Ikiwa unaona thamani inayoanza na P3X na inaonekana sawa, ni kipengele cha usalama. Ili kubadilisha mipangilio, badilisha mipangilio hii na tupu au kitu kingine na itahifadhiwa. Ikiwa haubadilishi mipangilio, mipangilio itabaki kama ilivyo kwenye seva.',
-    aiTranslating: "Translating...",
+    aiTranslating: "Inatafsiri...",
     aiSettings: "Mipangilio ya AI",
     aiGroqApiKey: "Ufunguo wa API Groq",
     aiGroqApiKeyInfo: "Hiari. Ufunguo wako wa API Groq kwa utendaji bora. Pata ufunguo bila malipo kutoka",
     aiGroqApiKeyPlaceholder: "gsk_...",
     aiGroqApiKeySaved: "Ufunguo wa API AI umehifadhiwa",
-    aiGroqApiKeyInvalid: "Invalid Groq API key",
+    aiGroqApiKeyInvalid: "Ufunguo wa API Groq si sahihi",
     aiGroqApiKeyNotSet: "Haijawekwa (chaguo-msingi la seva)",
-    aiEnabled: "AI Enabled",
-    aiEnabledYes: "Yes",
-    aiEnabledNo: "No",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
-    aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiEnabled: "AI imewashwa",
+    aiEnabledYes: "Ndiyo",
+    aiEnabledNo: "Hapana",
+    aiRouteViaNetwork: "Pitia kupitia network.corifeus.com",
+    aiRoutingDirect: "Maswali yanaenda moja kwa moja kwa Groq kwa kutumia ufunguo wako wa API, bila kupitia network.corifeus.com.",
+    aiRoutingNetwork: "Maswali ya AI yanapitishwa kupitia network.corifeus.com. Ikiwa una ufunguo wako wa bure wa Groq API, unaweza kuzima swichi hii na kuelekeza moja kwa moja kwa Groq bila network.corifeus.com.",
+    aiMaxTokens: "Idadi ya juu ya tokeni za AI",
+    aiMaxTokensInfo: "Idadi ya juu ya tokeni kwa majibu ya AI. Thamani kubwa huruhusu majibu marefu zaidi lakini inaweza kutumia mikopo zaidi ya API.",
     ssh: {
       on: 'SSH imewashwa',
       off: 'SSH imezimwa',
@@ -299,24 +306,24 @@ const strings = {
     },
     tree: "Mti",
     askAuth: "Omba idhini",
-    keyboardShortcuts: "Keyboard Shortcuts",
-    about: "About",
-    supportedLanguages: "Supported Languages",
-    version: "Version",
-    redisVersion: "Redis Version",
+    keyboardShortcuts: "Vifupisho vya kibodi",
+    about: "Kuhusu",
+    supportedLanguages: "Lugha zinazotumika",
+    version: "Toleo",
+    redisVersion: "Toleo la Redis",
     modules: "Moduli",
-    shortcutRefresh: "Refresh",
-    shortcutSearch: "Focus Search",
-    shortcutNewKey: "New Key",
+    shortcutRefresh: "Onyesha upya",
+    shortcutSearch: "Lenga utafutaji",
+    shortcutNewKey: "Ufunguo mpya",
     shortcutDisconnect: "Tenganisha",
     themeAuto: "Auto (system)",
     languageAuto: "Auto (system)",
-    shortcutCommandPalette: "Command Palette",
-    commandPalette: "Command Palette",
-    noResults: "No results",
+    shortcutCommandPalette: "Jopo la amri",
+    commandPalette: "Jopo la amri",
+    noResults: "Hakuna matokeo",
     redisCommandsReference: "Amri za Redis",
     ungrouped: "Bila kikundi",
-    grouped: "Grouped",
+    grouped: "Zilizopangwa",
     connectFirst: "Unganisha kwanza kwa seva ya Redis",
     searchLanguage: "Tafuta lugha...",
     exportProgress: "Kuhamisha funguo...",
@@ -513,7 +520,10 @@ const strings = {
       indexInfo: "Maelezo ya faharasa",
       indexName: "Jina la faharasa",
       prefix: "Kiambishi awali cha ufunguo (hiari)",
-      fieldName: "Jina la uga"
+      fieldName: "Jina la uga",
+      hybridMode: "Utafutaji mseto (FT.HYBRID)",
+      vectorField: "Sehemu ya vekta",
+      vectorValues: "Thamani za vekta",
     },
     monitor: {
       title: "Ufuatiliaji",
@@ -537,7 +547,8 @@ const strings = {
       peak: "Kilele",
       fragmentation: "Mgawanyiko",
       hitsAndMisses: "Mapigo / Kukosa",
-      noClients: "Hakuna wateja"
+      noClients: "Hakuna wateja",
+      slotStats: "Takwimu za nafasi za klasta",
     },
     analysis: {
       title: "Uchambuzi wa Kumbukumbu",
@@ -697,6 +708,8 @@ const strings = {
         dimensions: "Vipimo",
         removeConfirm: "Ondoa kipengee hiki kutoka VectorSet?",
         noElements: "Hakuna vipengee",
+        filter: "Chujio",
+        searchComplete: "Utafutaji umekamilika",
       }
     },
     treeControls: {
@@ -722,9 +735,6 @@ const strings = {
     }
   },
   time: {
-    type: "Aina",
-    format: "Muundo",
-    loading: "Inapakia...",
     years: "miaka",
     months: "miezi",
     days: "siku",
@@ -736,7 +746,7 @@ const strings = {
     minute: "dakika",
     minutes: "dakika",
     hour: "saa",
-    hours: "masaa"
+    hours: "saa"
   },
   redisTypes: {
     string: "String",

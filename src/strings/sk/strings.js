@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Chyba servera, skuste to znovu"
+    server_error: "Chyba servera, skuste to znovu",
+    aiPromptTooLong: "AI výzva je príliš dlhá (max. 4096 znakov)",
   },
   title: {
     donate: "Prispiet",
@@ -187,6 +188,8 @@ const strings = {
     edit: "Upravit",
     save: "Ulozit",
     ttl: "Nastavit TTL",
+    fieldTtl: "TTL poľa",
+    digest: "Súhrn",
     delete: "Vymazat",
     remove: "Odstranit",
     areYouSure: "Ste si istý?",
@@ -195,7 +198,9 @@ const strings = {
     getKey: "Nacitavam Redis kluc a prisluchajuce data ...",
     jsonViewShow: "Zobrazit JSON",
     jsonViewEditor: "Upravit JSON",
-    quickConsole: "Rychla konzola"
+    quickConsole: "Rychla konzola",
+    moveUp: "Presunúť hore",
+    moveDown: "Presunúť dole",
   },
   label: {
     id: {
@@ -210,14 +215,16 @@ const strings = {
     aiGroqApiKeyInfo: "Voliteľné. Vlastný Groq API kľúč pre lepší výkon. Získajte bezplatný kľúč na",
     aiGroqApiKeyPlaceholder: "gsk_...",
     aiGroqApiKeySaved: "AI API kľúč uložený",
-    aiGroqApiKeyInvalid: "Invalid Groq API key",
+    aiGroqApiKeyInvalid: "Neplatný Groq API kľúč",
     aiGroqApiKeyNotSet: "Nenastavené (predvolené servera)",
     aiEnabled: "AI povolené",
     aiEnabledYes: "Áno",
     aiEnabledNo: "Nie",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
-    aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiRouteViaNetwork: "Presmerovať cez network.corifeus.com",
+    aiRoutingDirect: "Dotazy idú priamo do Groq pomocou vášho vlastného API kľúča, bez network.corifeus.com.",
+    aiRoutingNetwork: "AI dotazy sú smerované cez network.corifeus.com. Ak máte vlastný bezplatný Groq API kľúč, môžete tento prepínač vypnúť a smerovať priamo do Groq bez network.corifeus.com.",
+    aiMaxTokens: "Maximálny počet AI tokenov",
+    aiMaxTokensInfo: "Maximálny počet tokenov pre odpovede AI. Vyššie hodnoty umožňujú dlhšie odpovede, ale môžu spotrebovať viac API kreditov.",
     ssh: {
       on: 'SSH zapnute',
       off: 'SSH vypnute',
@@ -308,7 +315,7 @@ const strings = {
     shortcutNewKey: "Nový kľúč",
     shortcutDisconnect: "Odpojit",
     themeAuto: "Automaticky (systém)",
-    languageAuto: "Automaticky (systém)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Paleta príkazov",
     commandPalette: "Paleta príkazov",
     noResults: "Žiadne výsledky",
@@ -511,7 +518,10 @@ const strings = {
       indexInfo: "Info o indexe",
       indexName: "Názov indexu",
       prefix: "Prefix kľúča (voliteľné)",
-      fieldName: "Názov poľa"
+      fieldName: "Názov poľa",
+      hybridMode: "Hybridné vyhľadávanie (FT.HYBRID)",
+      vectorField: "Vektorové pole",
+      vectorValues: "Vektorové hodnoty",
     },
     monitor: {
       title: "Monitorovanie",
@@ -535,7 +545,8 @@ const strings = {
       peak: "Špička",
       fragmentation: "Fragmentácia",
       hitsAndMisses: "Zásahy / Minutia",
-      noClients: "Žiadni klienti"
+      noClients: "Žiadni klienti",
+      slotStats: "Štatistiky slotov klastra",
     },
     analysis: {
       title: "Analýza pamäte",
@@ -695,6 +706,8 @@ const strings = {
         dimensions: "Dimenzie",
         removeConfirm: "Odstrániť tento prvok z VectorSet?",
         noElements: "Žiadne prvky",
+        filter: "Filter",
+        searchComplete: "Vyhľadávanie dokončené",
       }
     },
     treeControls: {
@@ -720,9 +733,6 @@ const strings = {
     }
   },
   time: {
-    type: "Typ",
-    format: "Formát",
-    loading: "Načítavanie...",
     years: "rokov",
     months: "mesiacov",
     days: "dni",

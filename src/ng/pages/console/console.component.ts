@@ -310,6 +310,10 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private async handleAiQuery(prompt: string, originalInput: string): Promise<boolean> {
+        if (prompt.length > 4096) {
+            this.common.toast(this.i18n.strings()?.error?.aiPromptTooLong || 'AI prompt too long (max 4096 characters)');
+            return false;
+        }
         this.aiLoading = true;
         (this.inputEl as HTMLElement)?.focus();
 
@@ -321,16 +325,21 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
                 indexes = indexResponse.data || [];
             } catch { /* no search module, ignore */ }
 
-            // Gather Redis server info for context
+            // Gather Redis server info for context (INFO is parsed into nested sections)
             const info = this.state.info() || {};
+            const server = info.server || {};
+            const clients = info.clients || {};
+            const memory = info.memory || {};
+            const keyspace = info.keyspace || {};
             const redisContext: any = { indexes };
-            if (info.redis_version) redisContext.redisVersion = info.redis_version;
-            if (info.redis_mode) redisContext.redisMode = info.redis_mode;
-            if (info.os) redisContext.os = info.os;
-            if (info.connected_clients) redisContext.connectedClients = info.connected_clients;
-            if (info.used_memory_human) redisContext.usedMemory = info.used_memory_human;
-            if (info.db0 || info.db1) redisContext.databases = Object.keys(info).filter((k: string) => /^db\d+$/.test(k)).map((k: string) => `${k}: ${info[k]}`);
-            if (info.modules) redisContext.modules = info.modules;
+            if (server.redis_version) redisContext.redisVersion = server.redis_version;
+            if (server.redis_mode) redisContext.redisMode = server.redis_mode;
+            if (server.os) redisContext.os = server.os;
+            if (clients.connected_clients) redisContext.connectedClients = clients.connected_clients;
+            if (memory.used_memory_human) redisContext.usedMemory = memory.used_memory_human;
+            const dbKeys = Object.keys(keyspace).filter((k: string) => /^db\d+$/.test(k));
+            if (dbKeys.length > 0) redisContext.databases = dbKeys.map((k: string) => `${k}: ${keyspace[k]}`);
+            if (this.state.modules()?.length > 0) redisContext.modules = this.state.modules();
             redisContext.uiLanguage = this.i18n.currentLang();
 
             const response = await this.socket.request({

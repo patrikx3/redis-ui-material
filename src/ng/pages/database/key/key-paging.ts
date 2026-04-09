@@ -20,7 +20,12 @@ export class KeyPaging {
         const pageCount = this.settingsService?.keyPageCount() ?? 50;
         const itemCount = this.zsetMode ? Math.ceil(valueLength / 2) : valueLength;
         this.pages = Math.max(Math.ceil(itemCount / pageCount), 1);
-        this.page = 1;
+        // Keep current page if still valid, otherwise clamp to last page
+        if (this.page > this.pages) {
+            this.page = this.pages;
+        } else if (this.page < 1) {
+            this.page = 1;
+        }
     }
 
     get pageCount(): number {

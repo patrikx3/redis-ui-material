@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Server error, please try again"
+    server_error: "Server error, please try again",
+    aiPromptTooLong: "AI prompt too long (max 4096 characters)",
   },
   title: {
     donate: "Donate",
@@ -189,6 +190,8 @@ const strings = {
     edit: "Edit",
     save: "Save",
     ttl: "Set TTL",
+    fieldTtl: "Field TTL",
+    digest: "Digest",
     delete: "Delete",
     remove: "Remove",
     sure: "Sure",
@@ -518,6 +521,9 @@ const strings = {
       indexName: "Index Name",
       prefix: "Key Prefix (optional)",
       fieldName: "Field Name",
+      hybridMode: "Hybrid Search (FT.HYBRID)",
+      vectorField: "Vector Field",
+      vectorValues: "Vector Values",
     },
     monitor: {
       title: "Monitoring",
@@ -542,6 +548,7 @@ const strings = {
       fragmentation: "Fragmentation",
       hitsAndMisses: "Hits / Misses",
       noClients: "No clients",
+      slotStats: "Cluster Slot Stats",
     },
     analysis: {
       title: "Memory Analysis",
@@ -700,6 +707,8 @@ const strings = {
         dimensions: "Dimensions",
         removeConfirm: "Remove this element from the VectorSet?",
         noElements: "No elements",
+        filter: "Filter",
+        searchComplete: "Search complete",
       }
     },
     treeControls: {

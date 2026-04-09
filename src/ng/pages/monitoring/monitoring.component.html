@@ -317,5 +317,52 @@
             }
         </div>
     </p3xr-ng-accordion>
+
+    @if (isCluster && state.redisVersion().isAtLeast(8, 2)) {
+        <p3xr-ng-accordion [title]="strings().page?.monitor?.slotStats || 'Cluster Slot Stats'" accordionKey="monitor-slot-stats">
+            <div actions>
+                <p3xr-ng-button
+                    (click)="loadSlotStats(); $event.stopPropagation()"
+                    [label]="strings().intention?.refresh || 'Refresh'"
+                    mdIcon="refresh">
+                </p3xr-ng-button>
+            </div>
+            <div content>
+                <div style="padding: 8px 16px; display: flex; gap: 8px; align-items: center;">
+                    <mat-form-field subscriptSizing="dynamic" style="width: 180px;">
+                        <mat-label>Metric</mat-label>
+                        <select matNativeControl [(ngModel)]="slotStatsMetric" (change)="loadSlotStats()">
+                            <option value="KEY-COUNT">Key Count</option>
+                            <option value="CPU-USEC">CPU (μs)</option>
+                            <option value="MEMORY-BYTES">Memory (bytes)</option>
+                        </select>
+                    </mat-form-field>
+                </div>
+                @if (slotStats.length === 0 && slotStatsLoaded) {
+                    <div style="padding: 16px; opacity: 0.5;">No slot data</div>
+                }
+                @if (slotStats.length > 0) {
+                    <mat-list>
+                        @for (entry of slotStats; track entry.slot; let i = $index) {
+                            <mat-list-item>
+                                <div class="p3xr-settings-pair-row">
+                                    <div class="p3xr-settings-row-label">
+                                        <span style="opacity: 0.4; margin-right: 8px;">#{{ i + 1 }}</span>
+                                        <span class="p3xr-mono">Slot {{ entry.slot }}</span>
+                                    </div>
+                                    <div class="p3xr-settings-row-value p3xr-mono">
+                                        @if (slotStatsMetric === 'KEY-COUNT') { {{ entry['key-count'] }} keys }
+                                        @if (slotStatsMetric === 'CPU-USEC') { {{ entry['cpu-usec'] }} μs }
+                                        @if (slotStatsMetric === 'MEMORY-BYTES') { {{ formatBytes(entry['memory-bytes']) }} }
+                                    </div>
+                                </div>
+                            </mat-list-item>
+                            <mat-divider></mat-divider>
+                        }
+                    </mat-list>
+                }
+            </div>
+        </p3xr-ng-accordion>
+    }
 }
 

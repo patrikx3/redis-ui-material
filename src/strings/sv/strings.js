@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Serverfel, vänligen försök igen"
+    server_error: "Serverfel, vänligen försök igen",
+    aiPromptTooLong: "AI-prompten är för lång (max 4096 tecken)",
   },
   title: {
     donate: "Donera",
@@ -185,6 +186,8 @@ const strings = {
     edit: "Redigera",
     save: "Spara",
     ttl: "Ange TTL",
+    fieldTtl: "Fält TTL",
+    digest: "Sammandrag",
     delete: "Radera",
     remove: "Ta bort",
     areYouSure: "Är du säker?",
@@ -193,7 +196,9 @@ const strings = {
     getKey: "Laddar Redis-nyckel och tillhörande data ...",
     jsonViewShow: "Visa JSON",
     jsonViewEditor: "Redigera JSON",
-    quickConsole: "Snabbkonsol"
+    quickConsole: "Snabbkonsol",
+    moveUp: "Flytta upp",
+    moveDown: "Flytta ned",
   },
   label: {
     id: {
@@ -216,6 +221,8 @@ const strings = {
     aiRouteViaNetwork: "Dirigera via network.corifeus.com",
     aiRoutingDirect: "Frågor går direkt till Groq med din egen API-nyckel, utan network.corifeus.com.",
     aiRoutingNetwork: "AI-frågor dirigeras via network.corifeus.com. Om du har din egen gratis Groq API-nyckel kan du stänga av denna växel.",
+    aiMaxTokens: "Maximalt antal AI-token",
+    aiMaxTokensInfo: "Maximalt antal token för AI-svar. Högre värden ger längre svar men kan använda fler API-krediter.",
     ssh: {
       on: 'SSH på',
       off: 'SSH av',
@@ -306,7 +313,7 @@ const strings = {
     shortcutNewKey: "Ny nyckel",
     shortcutDisconnect: "Koppla från",
     themeAuto: "Automatisk (system)",
-    languageAuto: "Automatisk (system)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Kommandopalett",
     commandPalette: "Kommandopalett",
     noResults: "Inga resultat",
@@ -509,7 +516,10 @@ const strings = {
       indexInfo: "Indexinfo",
       indexName: "Indexnamn",
       prefix: "Nyckelprefix (valfritt)",
-      fieldName: "Fältnamn"
+      fieldName: "Fältnamn",
+      hybridMode: "Hybridsökning (FT.HYBRID)",
+      vectorField: "Vektorfält",
+      vectorValues: "Vektorvärden",
     },
     monitor: {
       title: "Övervakning",
@@ -533,7 +543,8 @@ const strings = {
       peak: "Topp",
       fragmentation: "Fragmentering",
       hitsAndMisses: "Träffar / Missar",
-      noClients: "Inga klienter"
+      noClients: "Inga klienter",
+      slotStats: "Kluster slot statistik",
     },
     analysis: {
       title: "Minnesanalys",
@@ -693,6 +704,8 @@ const strings = {
         dimensions: "Dimensioner",
         removeConfirm: "Ta bort detta element från VectorSet?",
         noElements: "Inga element",
+        filter: "Filter",
+        searchComplete: "Sökning slutförd",
       }
     },
     treeControls: {
@@ -718,9 +731,6 @@ const strings = {
     }
   },
   time: {
-    type: "Typ",
-    format: "Format",
-    loading: "Laddar...",
     years: "år",
     months: "månader",
     days: "dagar",

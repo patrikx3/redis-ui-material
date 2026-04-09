@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Server xətası, yenidən cəhd edin"
+    server_error: "Server xətası, yenidən cəhd edin",
+    aiPromptTooLong: "AI sorğusu çox uzundur (maksimum 4096 simvol)",
   },
   title: {
     donate: "Bağışlayın",
@@ -187,6 +188,8 @@ const strings = {
     edit: "Redaktə et",
     save: "Saxla",
     ttl: "TTL təyin edin",
+    fieldTtl: "Sahə TTL",
+    digest: "Xülasə",
     delete: "Sil",
     remove: "Sil",
     areYouSure: "Əminsiniz?",
@@ -195,29 +198,33 @@ const strings = {
     getKey: "Redis açarı və əlaqəli data yüklənir...",
     jsonViewShow: "JSON göstərin",
     jsonViewEditor: "JSON redaktə edin",
-    quickConsole: "Sürətli Konsol"
+    quickConsole: "Sürətli Konsol",
+    moveUp: "Yuxarı daşı",
+    moveDown: "Aşağı daşı"
   },
   label: {
     id: {
       nodeId: "Node ID",
       id: "Bağlantı ID",
-      info: "Əgər aşağıdakıların xassələrini dəyişmək istəmirsinizsə: sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa, xassə d��yərlərinin toxunulmazlığını qorumaq üçün lütfən, əlaqənin identifikatorunu həmin xüsusiyyətlərə daxil edin. Əgər qovşaq parolunda eyni məntiqin olmasını istəyirsinizsə, onda node parolunda node ID-ni daxil edin."
+      info: "Əgər aşağıdakıların xassələrini dəyişmək istəmirsinizsə: sshPassword, sshPrivateKey, password, tlsCrt, tlsKey, tlsCa, xassə dəyərlərinin toxunulmazlığını qorumaq üçün lütfən, əlaqənin identifikatorunu həmin xüsusiyyətlərə daxil edin. Əgər qovşaq parolunda eyni məntiqin olmasını istəyirsinizsə, onda node parolunda node ID-ni daxil edin."
     },
     secureFeature: "P3X ilə başlayan dəyərin eyni göründüyünü görsəniz, bu təhlükəsiz xüsusiyyətdir. Parametrləri dəyişdirmək üçün sadəcə bu parametrləri boş və ya başqa bir şeylə əvəz edin və onlar yadda saxlanılacaq. Parametrləri dəyişdirməsəniz, parametrlər serverdə olduğu kimi saxlanılacaq.",
-    aiTranslating: "Translating...",
+    aiTranslating: "Tərcümə edilir...",
     aiSettings: "AI Parametrlər",
     aiGroqApiKey: "Groq API açarı",
     aiGroqApiKeyInfo: "İstəyə bağlı. Daha yaxşı performans üçün öz Groq API açarınız. Pulsuz açar əldə edin",
     aiGroqApiKeyPlaceholder: "gsk_...",
     aiGroqApiKeySaved: "AI API açarı saxlanıldı",
-    aiGroqApiKeyInvalid: "Invalid Groq API key",
+    aiGroqApiKeyInvalid: "Yanlış Groq API açarı",
     aiGroqApiKeyNotSet: "Təyin edilməyib (server standartı)",
-    aiEnabled: "AI Enabled",
-    aiEnabledYes: "Yes",
-    aiEnabledNo: "No",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
-    aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiEnabled: "AI aktivdir",
+    aiEnabledYes: "Bəli",
+    aiEnabledNo: "Xeyr",
+    aiRouteViaNetwork: "network.corifeus.com vasitəsilə yönləndir",
+    aiRoutingDirect: "Sorğular öz API açarınızdan istifadə edərək birbaşa Groq-a göndərilir, network.corifeus.com yan keçilir.",
+    aiRoutingNetwork: "AI sorğuları network.corifeus.com vasitəsilə yönləndirilir. Öz pulsuz Groq API açarınız varsa, bu açarı söndürüb network.corifeus.com olmadan birbaşa Groq-a yönləndirə bilərsiniz.",
+    aiMaxTokens: "AI maksimum tokenləri",
+    aiMaxTokensInfo: "AI cavabları üçün maksimum token sayı. Daha yüksək dəyərlər daha uzun cavablara imkan verir, lakin daha çox API krediti istifadə edə bilər.",
     ssh: {
       on: "SSH aktivdir",
       off: "SSH deaktivdir",
@@ -309,9 +316,9 @@ const strings = {
     shortcutDisconnect: "Bağlantını kəsin",
     themeAuto: "Auto (system)",
     languageAuto: "Auto (system)",
-    shortcutCommandPalette: "Command Palette",
-    commandPalette: "Command Palette",
-    noResults: "No results",
+    shortcutCommandPalette: "Əmr palitrası",
+    commandPalette: "Əmr palitrası",
+    noResults: "Nəticə yoxdur",
     redisCommandsReference: "Redis Əmrləri",
     ungrouped: "Qruplaşdırılmamış",
     grouped: "Grouped",
@@ -378,7 +385,7 @@ const strings = {
       return `Açar silindi (${opts.key}).`;
     },
     renamedKey: "Bu açarın adı dəyişdirilib",
-    ttlChanged: "Bu açarın TTL d��yişdirildi",
+    ttlChanged: "Bu açarın TTL dəyişdirildi",
     notInteger: "Bu daxiletmə tam ədəd deyil",
     persisted: "Bu açar əbədi olaraq qalır",
     set: "Açar quraşdırılıb/əlavə edilib",
@@ -511,7 +518,10 @@ const strings = {
       indexInfo: "İndeks məlumatı",
       indexName: "İndeks adı",
       prefix: "Açar prefiksi (isteğe bağlı)",
-      fieldName: "Sahə adı"
+      fieldName: "Sahə adı",
+      hybridMode: "Hibrid Axtarış (FT.HYBRID)",
+      vectorField: "Vektor sahəsi",
+      vectorValues: "Vektor dəyərləri",
     },
     monitor: {
       title: "Monitorinq",
@@ -535,7 +545,8 @@ const strings = {
       peak: "Pik",
       fragmentation: "Fraqmentasiya",
       hitsAndMisses: "Uğurlu / Uğursuz",
-      noClients: "Müştəri yoxdur"
+      noClients: "Müştəri yoxdur",
+      slotStats: "Klaster slot statistikası",
     },
     analysis: {
       title: "Yaddaş Analizi",
@@ -695,6 +706,8 @@ const strings = {
         dimensions: "Ölçülər",
         removeConfirm: "Bu element VectorSet-dən silinsin?",
         noElements: "Element yoxdur",
+        filter: "Filtr",
+        searchComplete: "Axtarış tamamlandı",
       }
     },
     treeControls: {
@@ -720,9 +733,6 @@ const strings = {
     }
   },
   time: {
-    type: "Növ",
-    format: "Format",
-    loading: "Yüklənir...",
     years: "illər",
     months: "ay",
     days: "günlər",

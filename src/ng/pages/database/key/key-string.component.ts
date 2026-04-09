@@ -55,6 +55,18 @@ export class KeyStringComponent extends KeyTypeBase implements OnInit {
 
     ngOnInit(): void {}
 
+    async showDigest(): Promise<void> {
+        try {
+            const response = await this.socket.request({
+                action: 'string-digest',
+                payload: { key: this.p3xrKey },
+            });
+            this.common.toast(response.digest || 'No digest');
+        } catch (e: any) {
+            this.common.generalHandleError(e);
+        }
+    }
+
     edit(): void {
         const value = this.p3xrValue;
         if (typeof value === 'string' && value.length >= this.maxValueAsBuffer) {

@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Serverfehler, bitte versuchen Sie es erneut"
+    server_error: "Serverfehler, bitte versuchen Sie es erneut",
+    aiPromptTooLong: "AI-Eingabe ist zu lang (max. 4096 Zeichen)",
   },
   title: {
     donate: "Spenden",
@@ -189,6 +190,8 @@ const strings = {
     edit: "Bearbeiten",
     save: "Speichern",
     ttl: "TTL festlegen",
+    fieldTtl: "Feld-TTL",
+    digest: "Digest",
     delete: "Löschen",
     remove: "Entfernen",
     areYouSure: "Bist du sicher?",
@@ -197,7 +200,9 @@ const strings = {
     getKey: "Redis-Schlüssel und zugehörige Daten werden geladen ...",
     jsonViewShow: "JSON anzeigen",
     jsonViewEditor: "JSON bearbeiten",
-    quickConsole: "Schnellkonsole"
+    quickConsole: "Schnellkonsole",
+    moveUp: "Nach oben verschieben",
+    moveDown: "Nach unten verschieben",
   },
   label: {
     id: {
@@ -217,9 +222,11 @@ const strings = {
     aiEnabled: "AI aktiviert",
     aiEnabledYes: "Ja",
     aiEnabledNo: "Nein",
-    aiRouteViaNetwork: "Route über network.corifeus.com",
-    aiRoutingDirect: "Anfragen gehen direkt an Groq mit Ihrem eigenen API-Schlüssel, ohne network.corifeus.com.",
-    aiRoutingNetwork: "AI-Anfragen werden über network.corifeus.com weitergeleitet. Wenn Sie Ihren eigenen kostenlosen Groq API-Schlüssel haben, können Sie diesen Schalter ausschalten.",
+    aiRouteViaNetwork: "Weiterleitung über network.corifeus.com",
+    aiRoutingDirect: "Anfragen gehen direkt an Groq mit Ihrem eigenen API-Schlüssel und umgehen network.corifeus.com.",
+    aiRoutingNetwork: "AI-Anfragen werden über network.corifeus.com weitergeleitet. Wenn Sie Ihren eigenen kostenlosen Groq API-Schlüssel haben, können Sie diesen Schalter ausschalten, um direkt zu Groq ohne network.corifeus.com weiterzuleiten.",
+    aiMaxTokens: "Max. AI-Token",
+    aiMaxTokensInfo: "Maximale Anzahl von Token für AI-Antworten. Höhere Werte erlauben längere Antworten, können aber mehr API-Guthaben verbrauchen.",
     ssh: {
       on: 'SSH ein',
       off: 'SSH aus',
@@ -310,7 +317,7 @@ const strings = {
     shortcutNewKey: "Neuer Schlüssel",
     shortcutDisconnect: "Trennen",
     themeAuto: "Automatisch (System)",
-    languageAuto: "Automatisch (System)",
+    languageAuto: "Auto (system)",
     shortcutCommandPalette: "Befehlspalette",
     commandPalette: "Befehlspalette",
     noResults: "Keine Ergebnisse",
@@ -513,7 +520,10 @@ const strings = {
       indexInfo: "Index-Info",
       indexName: "Indexname",
       prefix: "Schlüsselpräfix (optional)",
-      fieldName: "Feldname"
+      fieldName: "Feldname",
+      hybridMode: "Hybridsuche (FT.HYBRID)",
+      vectorField: "Vektorfeld",
+      vectorValues: "Vektorwerte",
     },
     monitor: {
       title: "Überwachung",
@@ -537,7 +547,8 @@ const strings = {
       peak: "Spitze",
       fragmentation: "Fragmentierung",
       hitsAndMisses: "Treffer / Fehlschläge",
-      noClients: "Keine Clients"
+      noClients: "Keine Clients",
+      slotStats: "Cluster-Slot-Statistiken",
     },
     analysis: {
       title: "Speicheranalyse",
@@ -697,6 +708,8 @@ const strings = {
         dimensions: "Dimensionen",
         removeConfirm: "Dieses Element aus dem VectorSet entfernen?",
         noElements: "Keine Elemente",
+        filter: "Filter",
+        searchComplete: "Suche abgeschlossen",
       }
     },
     treeControls: {
@@ -722,9 +735,6 @@ const strings = {
     }
   },
   time: {
-    type: "Typ",
-    format: "Format",
-    loading: "Laden...",
     years: "Jahre",
     months: "Monate",
     days: "Tage",

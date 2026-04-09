@@ -1,6 +1,7 @@
 const strings = {
   error: {
-    server_error: "Хатогии сервер, лутфан бори дигар кӯшиш кунед"
+    server_error: "Хатогии сервер, лутфан бори дигар кӯшиш кунед",
+    aiPromptTooLong: "Дархости AI хеле дароз аст (ҳадди аксар 4096 аломат)",
   },
   title: {
     donate: "Садақа кунед",
@@ -66,7 +67,7 @@ const strings = {
       title: "Шумо мутмаин ҳастед, ки мехоҳед ин калиди TTL-ро иваз кунед?",
       textContent: "Тағйир додани TTL вақти зинда мондани ин калидро нав мекунад. Барои то абад нигоҳ доштани ин калид холӣ гузоред.",
       placeholder: "Калиди Redis TTL (шумораи бутун ё холӣ)",
-      placeholderPlaceholder: "Холӣ маънои онро дорад, ки он то абад боқӣ мемонад; дар акси ҳол адади бутун ворид ку��ед.",
+      placeholderPlaceholder: "Холӣ маънои онро дорад, ки он то абад боқӣ мемонад; дар акси ҳол адади бутун ворид кунед.",
       convertTextToTime: "Матнро ба вақт табдил диҳед",
       convertTextToTimePlaceholder: "Масалан. 1d 86400 хоҳад буд"
     }
@@ -187,7 +188,9 @@ const strings = {
     edit: "Таҳрир",
     save: "Захира кунед",
     ttl: "Танзими TTL",
-    delete: "Ноб��д кунед",
+    fieldTtl: "TTL майдон",
+    digest: "Хулоса",
+    delete: "Нобуд кунед",
     remove: "Хориҷ кунед",
     areYouSure: "Шумо мутмаин ҳастед?",
     sure: "Албатта",
@@ -195,7 +198,9 @@ const strings = {
     getKey: "Калиди Redis ва маълумоти алоқаманд бор карда мешавад ...",
     jsonViewShow: "Намоиши JSON",
     jsonViewEditor: "Таҳрири JSON",
-    quickConsole: "Консол зуд"
+    quickConsole: "Консоли зуд",
+    moveUp: "Ба боло ҳаракат диҳед",
+    moveDown: "Ба поён ҳаракат диҳед"
   },
   label: {
     id: {
@@ -204,20 +209,22 @@ const strings = {
       info: "Агар шумо нахоҳед, ки хосиятҳои зеринро тағир диҳед: sshPassword, sshPrivateKey, парол, tlsCrt, tlsKey, tlsCa, лутфан ID-и пайвастшавиро дар он хосиятҳо ворид кунед, то арзишҳои амвол бетағйир нигоҳ дошта шаванд. Агар шумо хоҳед, ки мантиқи якхела дар пароли гиреҳ бошад, пас ID-и гиреҳро дар пароли гиреҳ ворид кунед."
     },
     secureFeature: "Агар шумо арзишеро бинед, ки бо P3X оғоз мешавад ва ба як намуди он монанд аст, он хусусияти бехатар аст. Барои тағир додани танзимот, танҳо ин танзимотҳоро бо холӣ ё чизи дигар иваз кунед ва онҳо захира карда мешаванд. Агар шумо танзимотро тағир надиҳед, танзимот ҳамчунон дар сервер нигоҳ дошта мешаванд.",
-    aiTranslating: "Translating...",
+    aiTranslating: "Тарҷума шуда истодааст...",
     aiSettings: "Танзимоти AI",
     aiGroqApiKey: "Калиди API Groq",
     aiGroqApiKeyInfo: "Ихтиёрӣ. Калиди API Groq-и шахсӣ барои иҷроиши беҳтар. Калиди ройгонро гиред аз",
     aiGroqApiKeyPlaceholder: "gsk_...",
     aiGroqApiKeySaved: "Калиди API AI нигоҳ дошта шуд",
-    aiGroqApiKeyInvalid: "Invalid Groq API key",
+    aiGroqApiKeyInvalid: "Калиди Groq API нодуруст аст",
     aiGroqApiKeyNotSet: "Муқаррар нашудааст (пешфарзи сервер)",
-    aiEnabled: "AI Enabled",
-    aiEnabledYes: "Yes",
-    aiEnabledNo: "No",
-    aiRouteViaNetwork: "Route via network.corifeus.com",
-    aiRoutingDirect: "Queries go directly to Groq using your own API key, bypassing network.corifeus.com.",
-    aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
+    aiEnabled: "AI фаъол аст",
+    aiEnabledYes: "Ҳа",
+    aiEnabledNo: "Не",
+    aiRouteViaNetwork: "Масиргузорӣ тавассути network.corifeus.com",
+    aiRoutingDirect: "Дархостҳо бо истифода аз калиди шахсии API-и шумо бевосита ба Groq фиристода мешаванд ва network.corifeus.com давр зада мешавад.",
+    aiRoutingNetwork: "Дархостҳои AI тавассути network.corifeus.com масиргузорӣ мешаванд. Агар шумо калиди ройгони шахсии Groq API дошта бошед, метавонед ин гузаришро хомӯш карда, бидуни network.corifeus.com мустақиман ба Groq масир диҳед.",
+    aiMaxTokens: "Ҳадди аксари токенҳои AI",
+    aiMaxTokensInfo: "Шумораи ҳадди аксари токенҳо барои ҷавобҳои AI. Арзишҳои баландтар ба ҷавобҳои дарозтар имкон медиҳанд, аммо метавонанд кредити API-и бештарро истифода баранд.",
     ssh: {
       on: "SSH дар",
       off: "SSH хомӯш",
@@ -309,9 +316,9 @@ const strings = {
     shortcutDisconnect: "Қатъ кунед",
     themeAuto: "Auto (system)",
     languageAuto: "Auto (system)",
-    shortcutCommandPalette: "Command Palette",
-    commandPalette: "Command Palette",
-    noResults: "No results",
+    shortcutCommandPalette: "Палитраи фармонҳо",
+    commandPalette: "Палитраи фармонҳо",
+    noResults: "Натиҷа нест",
     redisCommandsReference: "Фармонҳои Redis",
     ungrouped: "Бе гурӯҳ",
     grouped: "Grouped",
@@ -357,7 +364,7 @@ const strings = {
       }
     },
     treeExpandAll: "Ҳама баргҳои дарахтонро васеъ кунед. Ин амалиёт метавонад қимат бошад ва метавонад вақтро талаб кунад ...",
-    noRedisKeys: "Да�� ин база ягон калид вуҷуд надорад.",
+    noRedisKeys: "Дар ин база ягон калид вуҷуд надорад.",
     redisConnected: "Redis бомуваффақият пайваст",
     reloadingDataInfo: "Бозборкунии маълумоти Redis",
     added: "Илова карда шуд",
@@ -391,7 +398,7 @@ const strings = {
     "readonly-connection-mode": "Ин пайвастшавӣ ҳолати танҳо барои хондан аст!",
     "list-out-of-bounds": "Ин шохиси рӯйхат берун аз ҳудуди аст",
     "invalid-json-value": "Қимат JSON эътибор надорад.",
-    "http_auth_required": "Иҷозатнома талаб карда мешавад: лутфан б�� HTTP Basic Auth аутентификатсия кунед ва аз нав бор кунед.",
+    "http_auth_required": "Иҷозатнома талаб карда мешавад: лутфан бо HTTP Basic Auth аутентификатсия кунед ва аз нав бор кунед.",
     "auto-connection-failed": "Эҳтимол аст, ки пайвастшавӣ хориҷ карда шуд ва пайвасти худкор аз ин сабаб ноком шуд.",
     invalid_console_command: "Ин фармон тавассути GUI кор намекунад.",
     "AI_DISABLED": "AI ғайрифаъол аст. Онро дар танзимоти AI фаъол кунед.",
@@ -481,7 +488,7 @@ const strings = {
       },
       error: {
         streamTimestamp: "Тамғаи вақт талаб карда мешавад, ё формати Redis ё ҳамчун *",
-        key: "Калид, ҳад��и аққал як аломат аст",
+        key: "Калид, ҳадди аққал як аломат аст",
         hashKey: "Калиди ҷадвали ҳаш ҳадди аққал як аломат аст",
         score: "Холи маҷмӯи мураттабшуда талаб карда мешавад",
         value: "Арзиш талаб карда мешавад",
@@ -511,7 +518,10 @@ const strings = {
       indexInfo: "Маълумоти индекс",
       indexName: "Номи индекс",
       prefix: "Пешванди калид (ихтиёрӣ)",
-      fieldName: "Номи майдон"
+      fieldName: "Номи майдон",
+      hybridMode: "Ҷустуҷӯи гибридӣ (FT.HYBRID)",
+      vectorField: "Майдони вектор",
+      vectorValues: "Қиматҳои вектор",
     },
     monitor: {
       title: "Мониторинг",
@@ -535,7 +545,8 @@ const strings = {
       peak: "Қулла",
       fragmentation: "Фрагментатсия",
       hitsAndMisses: "Ҳамлаҳо / Хатоҳо",
-      noClients: "Муштариён нест"
+      noClients: "Муштариён нест",
+      slotStats: "Омори слотҳои кластер",
     },
     analysis: {
       title: "Таҳлили хотира",
@@ -570,7 +581,7 @@ const strings = {
     },
 
     overview: {
-      noConnected: "Ба Redis пайв��ст нест.",
+      noConnected: "Ба Redis пайваст нест.",
       overviewClients: "Рӯйхати пайвастшавӣ аз рӯи шумораи муштариён",
       connectedCount: opt => {
         if (opt.length === 1) {
@@ -695,13 +706,15 @@ const strings = {
         dimensions: "Андозаҳо",
         removeConfirm: "Ин элементро аз VectorSet хориҷ кунед?",
         noElements: "Элементҳо нест",
+        filter: "Филтр",
+        searchComplete: "Ҷустуҷӯ ба итмом расид",
       }
     },
     treeControls: {
       settings: "Танзимоти дарахт",
       expandAll: "Ҳамаро васеъ кунед",
       collapseAll: "Ҳамаро вайрон кунед",
-      level: "Сатdelays",
+      level: "Сатҳ",
       search: {
         search: "Дар калидҳо ҷустуҷӯ кунед",
         clear: "Ҷустуҷӯи ҷориро тоза кунед, то холӣ таъин кунед",
@@ -720,9 +733,6 @@ const strings = {
     }
   },
   time: {
-    type: "Намуд",
-    format: "Формат",
-    loading: "Бор мешавад...",
     years: "сол",
     months: "моҳҳо",
     days: "рӯз",

@@ -10,7 +10,7 @@ import { useI18nStore } from '../../../stores/i18n.store'
 import { useRedisStateStore } from '../../../stores/redis-state.store'
 import { useCommonStore } from '../../../stores/common.store'
 import { request } from '../../../stores/socket.service'
-import { KeyTypeProps, createPaging, Paging, formatValue, truncateDisplay, isTruncated, copyValue, downloadBuffer } from './key-type-base'
+import { KeyTypeProps, createPaging, rePaging, Paging, formatValue, truncateDisplay, isTruncated, copyValue, downloadBuffer } from './key-type-base'
 import KeyPagerInline from './KeyPagerInline'
 import KeyNewOrSetDialog from '../../../dialogs/KeyNewOrSetDialog'
 import JsonViewDialog from '../../../dialogs/JsonViewDialog'
@@ -32,7 +32,7 @@ export default function KeySet({ response, value, valueBuffer, keyName, valueFor
 
     useEffect(() => {
         if (!value) return
-        const p = createPaging(value.length)
+        const p = rePaging(paging, value.length)
         setPaging(p)
         setPagedItems(value.slice(p.startIndex, p.endIndex)
             .map((v: any, i: number) => ({ index: p.startIndex + i, value: v })))

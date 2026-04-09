@@ -6,9 +6,10 @@
 import { useState, useEffect, useCallback } from 'react'
 import {
     Box, TextField, MenuItem, Select, FormControl, InputLabel, Button, Tooltip,
-    List, ListItem, Divider, useMediaQuery, useTheme,
+    List, ListItem, Divider, useMediaQuery, useTheme, FormControlLabel, Switch,
 } from '@mui/material'
 import { Search, Delete, Add, Remove, SkipPrevious, SkipNext, KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material'
+import { parseRedisVersion } from '../../../core/redis-version'
 import { useI18nStore } from '../../stores/i18n.store'
 import { useRedisStateStore } from '../../stores/redis-state.store'
 import { useCommonStore } from '../../stores/common.store'
@@ -37,6 +38,12 @@ export default function SearchPage() {
     const [indexInfo, setIndexInfo] = useState<any>(null)
     const [searchDone, setSearchDone] = useState(false)
     const [aiLoading, setAiLoading] = useState(false)
+
+    // Hybrid search (FT.HYBRID, Redis 8.4+)
+    const [hybridMode, setHybridMode] = useState(false)
+    const [vectorField, setVectorField] = useState('')
+    const [vectorValues, setVectorValues] = useState('')
+    const [vectorCount, setVectorCount] = useState(10)
 
     // Create index
     const [newIndexName, setNewIndexName] = useState('')
@@ -69,10 +76,19 @@ export default function SearchPage() {
     const doSearch = useCallback(async (off?: number) => {
         if (!selectedIndex || !query) return
         try {
-            const resp = await request({
-                action: 'search-query',
-                payload: { index: selectedIndex, query, offset: off ?? offset, limit },
-            })
+            let resp: any
+            if (hybridMode && vectorField && vectorValues) {
+                const values = vectorValues.split(',').map(v => parseFloat(v.trim())).filter(v => !isNaN(v))
+                resp = await request({
+                    action: 'search-hybrid',
+                    payload: { index: selectedIndex, query, vectorField, vectorValues: values, count: vectorCount, offset: off ?? offset, limit },
+                })
+            } else {
+                resp = await request({
+                    action: 'search-query',
+                    payload: { index: selectedIndex, query, offset: off ?? offset, limit },
+                })
+            }
             setTotal(resp.data.total)
             setResults(resp.data.docs)
         } catch (e) {
@@ -233,6 +249,28 @@ export default function SearchPage() {
                             <TextField fullWidth size="small" sx={{ mt: 1 }} label={s.query || 'Query'}
                                 value={query} onChange={e => setQuery(e.target.value)} disabled={aiLoading}
                                 onKeyDown={e => { if (e.key === 'Enter') { setOffset(0); handleSearchEnter() } }} />
+
+                            {parseRedisVersion(useRedisStateStore.getState().info?.server?.redis_version).isAtLeast(8, 4) && (
+                                <>
+                                    <FormControlLabel sx={{ mt: 1 }}
+                                        control={<Switch checked={hybridMode} onChange={(_, v) => setHybridMode(v)} color="primary" />}
+                                        label={s.hybridMode || 'Hybrid Search (FT.HYBRID)'} />
+                                    {hybridMode && (
+                                        <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mt: 1 }}>
+                                            <TextField size="small" sx={{ flex: 1, minWidth: 150 }}
+                                                label={s.vectorField || 'Vector Field'} placeholder="embedding"
+                                                value={vectorField} onChange={e => setVectorField(e.target.value)} />
+                                            <TextField size="small" sx={{ flex: 2, minWidth: 200 }}
+                                                label={s.vectorValues || 'Vector Values'} placeholder="0.1, 0.2, 0.3, ..."
+                                                value={vectorValues} onChange={e => setVectorValues(e.target.value)} />
+                                            <TextField size="small" sx={{ width: 80 }} type="number"
+                                                label="Count"
+                                                value={vectorCount} onChange={e => setVectorCount(parseInt(e.target.value) || 10)} />
+                                        </Box>
+                                    )}
+                                </>
+                            )}
+
                             <Box sx={{ mt: 1, textAlign: 'right' }}>
                                 <ActionBtn icon={<Search fontSize="small" />}
                                     label={aiLoading ? (strings?.label?.aiTranslating || 'Translating...') : (s.title || 'Search')}

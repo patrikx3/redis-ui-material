@@ -3,9 +3,10 @@ import { Box, TextField, List, ListItem, Divider, IconButton, Tooltip } from '@m
 import { Search, Delete, Add, Refresh, CheckBox, CheckBoxOutlineBlank, Info, Person, DataArray } from '@mui/icons-material'
 import { useI18nStore } from '../../../stores/i18n.store'
 import { useRedisStateStore } from '../../../stores/redis-state.store'
+import { parseRedisVersion } from '../../../../core/redis-version'
 import { useCommonStore } from '../../../stores/common.store'
 import { request } from '../../../stores/socket.service'
-import { KeyTypeProps, createPaging, Paging } from './key-type-base'
+import { KeyTypeProps, createPaging, rePaging, Paging } from './key-type-base'
 import KeyPagerInline from './KeyPagerInline'
 import P3xrAccordion from '../../../components/P3xrAccordion'
 import P3xrButton from '../../../components/P3xrButton'
@@ -23,6 +24,7 @@ export default function KeyVectorset({ response, value, keyName, onRefresh }: Ke
     const [elementInput, setElementInput] = useState('')
     const [vectorInput, setVectorInput] = useState('')
     const [simCountInput, setSimCountInput] = useState(10)
+    const [simFilterInput, setSimFilterInput] = useState('')
     const [simSearchInput, setSimSearchInput] = useState('')
     const [showAddForm, setShowAddForm] = useState(false)
     const autoRefreshRef = useRef<any>(null)
@@ -66,7 +68,7 @@ export default function KeyVectorset({ response, value, keyName, onRefresh }: Ke
             })
             const elems = resp.elements || []
             setElements(elems)
-            const p = createPaging(elems.length)
+            const p = rePaging(paging, elems.length)
             setPaging(p)
         } catch {
             setElements([])
@@ -78,7 +80,7 @@ export default function KeyVectorset({ response, value, keyName, onRefresh }: Ke
         try {
             const resp: any = await request({
                 action: 'vectorset-sim',
-                payload: { key: keyName, mode: 'element', element: simSearchInput.trim(), count: simCountInput },
+                payload: { key: keyName, mode: 'element', element: simSearchInput.trim(), count: simCountInput, filter: simFilterInput.trim() || undefined },
             })
             setSimResults(resp.results || [])
             toast(strings?.page?.key?.vectorset?.searchComplete || 'Search complete')
@@ -93,7 +95,7 @@ export default function KeyVectorset({ response, value, keyName, onRefresh }: Ke
             const values = simSearchInput.split(',').map(Number)
             const resp: any = await request({
                 action: 'vectorset-sim',
-                payload: { key: keyName, mode: 'vector', values, count: simCountInput },
+                payload: { key: keyName, mode: 'vector', values, count: simCountInput, filter: simFilterInput.trim() || undefined },
             })
             setSimResults(resp.results || [])
             toast(strings?.page?.key?.vectorset?.searchComplete || 'Search complete')
@@ -283,6 +285,15 @@ export default function KeyVectorset({ response, value, keyName, onRefresh }: Ke
                             label={strings?.page?.key?.vectorset?.count || 'Count'}
                             value={simCountInput}
                             onChange={e => setSimCountInput(parseInt(e.target.value) || 10)} />
+                        {parseRedisVersion(useRedisStateStore.getState().info?.server?.redis_version).isAtLeast(8, 2) && (
+                            <TextField size="small" margin="none"
+                                sx={{ flex: 1, minWidth: 150 }}
+                                label={strings?.page?.key?.vectorset?.filter || 'Filter'}
+                                placeholder="attr == 'value'"
+                                value={simFilterInput}
+                                onChange={e => setSimFilterInput(e.target.value)}
+                                onKeyUp={e => e.key === 'Enter' && searchByElement()} />
+                        )}
                         <P3xrButton icon={<Person fontSize="small" />}
                             label={strings?.page?.key?.vectorset?.byElement || 'By Element'}
                             raised color="primary" onClick={searchByElement} />
