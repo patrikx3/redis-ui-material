@@ -200,7 +200,18 @@ const strings = {
     jsonViewEditor: "JSON सम्पादन गर्नुहोस्",
     quickConsole: "द्रुत कन्सोल",
     moveUp: "माथि सार्नुहोस्",
-    moveDown: "तल सार्नुहोस्"
+    moveDown: "तल सार्नुहोस्",
+  },
+  diff: {
+    reviewChanges: "\u092a\u0930\u093f\u0935\u0930\u094d\u0924\u0928\u0939\u0930\u0942 \u0938\u092e\u0940\u0915\u094d\u0937\u093e \u0917\u0930\u094d\u0928\u0941\u0939\u094b\u0938\u094d",
+    inline: "\u0907\u0928\u0932\u093e\u0907\u0928",
+    sideBySide: "\u0938\u0901\u0917\u0938\u0901\u0917\u0948",
+    additions: "\u0925\u092a\u093f\u090f\u0915\u093e",
+    deletions: "\u0939\u091f\u093e\u0907\u090f\u0915\u093e",
+    unchangedLines: "\u0905\u092a\u0930\u093f\u0935\u0930\u094d\u0924\u093f\u0924 \u0932\u093e\u0907\u0928\u0939\u0930\u0942",
+    noChanges: "\u0915\u0941\u0928\u0948 \u092a\u0930\u093f\u0935\u0930\u094d\u0924\u0928 \u092b\u0947\u0932\u093e \u092a\u0930\u0947\u0928",
+    before: "\u0905\u0918\u093f",
+    after: "\u092a\u091b\u093f",
   },
   label: {
     id: {
@@ -366,6 +377,7 @@ const strings = {
     treeExpandAll: "सबै रूख पातहरू विस्तार गर्नुहोस्। यो अपरेशन महँगो हुन सक्छ र समय लाग्न सक्छ ...",
     noRedisKeys: "यस डाटाबेसमा कुनै कुञ्जीहरू छैनन्।",
     redisConnected: "Redis सफल जडान भयो",
+    reverted: "\u092b\u093f\u0930\u094d\u0924\u093e \u0917\u0930\u093f\u092f\u094b",
     reloadingDataInfo: "Redis डाटा जानकारी पुन: लोड गर्दै",
     added: "थपियो",
     saved: "अद्यावधिक गरियो",
@@ -434,6 +446,10 @@ const strings = {
       label: {
         animation: "एनिमेसन प्रयोग गर्नुहोस्",
         noAnimation: "एनिमेसन छैन",
+        undoEnabled: "\u092a\u0942\u0930\u094d\u0935\u0935\u0924\u094d \u0938\u0915\u094d\u0937\u092e \u091b",
+        undoDisabled: "\u092a\u0942\u0930\u094d\u0935\u0935\u0924\u094d \u0905\u0915\u094d\u0937\u092e \u091b",
+        diffEnabled: "\u0938\u0947\u092d \u0917\u0930\u094d\u0928\u0941 \u0905\u0918\u093f diff \u0926\u0947\u0916\u093e\u0909\u0928\u0941\u0939\u094b\u0938\u094d",
+        diffDisabled: "\u0938\u0947\u092d \u0917\u0930\u094d\u0928\u0941 \u0905\u0918\u093f diff \u0928\u093f\u0937\u094d\u0915\u094d\u0930\u093f\u092f \u091b",
         jsonFormatTwoSpace: "ढाँचा JSON २ खाली ठाउँहरू सहित",
         jsonFormatFourSpace: "ढाँचा JSON 4 खाली ठाउँहरू सहित",
         formName: "Redis सेटिङहरू",
@@ -442,6 +458,7 @@ const strings = {
         searchModeStartsWith: "खोज मोडको साथ सुरु हुन्छ",
         searchModeIncludes: "खोज मोड समावेश छ"
       },
+      undoHint: "\u092a\u0942\u0930\u094d\u0935\u0935\u0924\u094d string \u0930 JSON \u0915\u0941\u091e\u094d\u091c\u0940 \u092a\u094d\u0930\u0915\u093e\u0930\u0915\u093e \u0932\u093e\u0917\u093f \u092e\u093e\u0924\u094d\u0930 \u0909\u092a\u0932\u092c\u094d\u0927 \u091b",
       field: {
         treeSeparator: "रूख विभाजक",
         treeSeparatorSelector: "रूख विभाजक चयनकर्ता",

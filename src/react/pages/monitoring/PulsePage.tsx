@@ -58,6 +58,8 @@ export default function PulsePage() {
     const strings = useI18nStore(s => s.strings)
     const currentLang = useI18nStore(s => s.currentLang)
     const connection = useRedisStateStore(s => s.connection)
+    const info = useRedisStateStore(s => s.info)
+    const modules = useRedisStateStore(s => s.modules)
     const { toast, confirm, generalHandleError } = useCommonStore()
     const muiTheme = useTheme()
     const isDark = muiTheme.palette.mode === 'dark'
@@ -199,6 +201,9 @@ export default function PulsePage() {
             }, 50)
         })
         resizeObRef.current.observe(memEl)
+        resizeObRef.current.observe(opsEl)
+        resizeObRef.current.observe(cliEl)
+        resizeObRef.current.observe(netEl)
     }, [buildChartData, createOpts, destroyCharts]) // reads theme+strings from refs
 
     const updateCharts = useCallback(() => {
@@ -584,6 +589,45 @@ export default function PulsePage() {
                 `${mon.expired || 'Expired'}: ${c.stats.expiredKeys}`, `${mon.evicted || 'Evicted'}: ${c.stats.evictedKeys}`,
             )
 
+            // Dashboard sections
+            const storeInfo = useRedisStateStore.getState().info
+            const storeMods = useRedisStateStore.getState().modules || []
+            if (storeInfo?.server) {
+                const si = storeInfo.server, ci = storeInfo.cpu || {}
+                sections.push(``, `--- ${mon.serverInfo || 'Server Info'} ---`)
+                sections.push(`${mon.os || 'OS'}: ${si.os || ''}`, `${mon.port || 'Port'}: ${si.tcp_port || ''}`, `${mon.pid || 'Process ID'}: ${si.process_id || ''}`)
+                if (si.config_file) sections.push(`${mon.configFile || 'Config File'}: ${si.config_file}`)
+                sections.push(`${mon.cpuSys || 'System'} CPU: ${ci.used_cpu_sys || '0'}`, `${mon.cpuUser || 'User'} CPU: ${ci.used_cpu_user || '0'}`)
+            }
+            if (storeInfo?.persistence) {
+                const p = storeInfo.persistence
+                const lastSaveTs = parseInt(p.rdb_last_save_time, 10)
+                const lastSave = lastSaveTs ? new Date(lastSaveTs * 1000).toLocaleString() : 'N/A'
+                sections.push(``, `--- ${mon.persistence || 'Persistence'} ---`)
+                sections.push(`${mon.rdbLastSave || 'RDB Last Save'}: ${lastSave}`, `${mon.rdbStatus || 'RDB Status'}: ${p.rdb_last_bgsave_status || 'N/A'}`)
+                sections.push(`${mon.rdbChanges || 'Changes Since Last Save'}: ${p.rdb_changes_since_last_save ?? 'N/A'}`, `${mon.aofEnabled || 'AOF Enabled'}: ${p.aof_enabled === '1' ? 'Yes' : 'No'}`)
+                if (p.aof_enabled === '1') sections.push(`${mon.aofSize || 'AOF Size'}: ${formatBytes(parseInt(p.aof_current_size, 10) || 0)}`)
+            }
+            if (storeInfo?.replication) {
+                const r = storeInfo.replication
+                sections.push(``, `--- ${mon.replication || 'Replication'} ---`, `${mon.role || 'Role'}: ${r.role || 'unknown'}`)
+                if (r.role === 'master') sections.push(`${mon.replicas || 'Connected Replicas'}: ${r.connected_slaves ?? '0'}`)
+                if (r.role === 'slave') { if (r.master_host) sections.push(`${mon.masterHost || 'Master Host'}: ${r.master_host}:${r.master_port}`); if (r.master_link_status) sections.push(`${mon.linkStatus || 'Link Status'}: ${r.master_link_status}`) }
+            }
+            if (storeInfo?.keyspace) {
+                const ks = Object.keys(storeInfo.keyspace).filter((k: string) => k.startsWith('db')).sort((a: string, b: string) => parseInt(a.slice(2), 10) - parseInt(b.slice(2), 10))
+                if (ks.length > 0) {
+                    sections.push(``, `--- ${mon.keyspace || 'Keyspace'} ---`)
+                    sections.push(...ks.map((db: string) => { const e = storeInfo.keyspace[db]; return `${db}: ${mon.keys || 'Keys'}: ${typeof e === 'object' ? e.keys || '0' : '0'}, ${mon.expires || 'Expires'}: ${typeof e === 'object' ? e.expires || '0' : '0'}` }))
+                }
+            }
+            if (storeMods.length > 0) {
+                sections.push(``, `--- ${mon.modules || 'Loaded Modules'} ---`)
+                sections.push(...storeMods.map((m: any) => `${m.name || 'unknown'} v${m.ver ?? m.version ?? ''}`))
+            } else {
+                sections.push(``, `--- ${mon.modules || 'Loaded Modules'} ---`, mon.noModules || 'No modules loaded')
+            }
+
             if (c.slowlog.length > 0) {
                 sections.push(``, `--- ${mon.slowLog || 'Slow Log'} ---`)
                 sections.push(...c.slowlog.map(e => `${e.duration}\u00B5s ${e.command}`))
@@ -790,6 +834,84 @@ export default function PulsePage() {
         return pdf.output('blob') as unknown as Blob
     }
 
+    // --- Dashboard computed values ---
+    const serverInfoData = info ? (() => {
+        const s = info.server || {}, c = info.cpu || {}
+        return { os: s.os || '', port: s.tcp_port || '', pid: s.process_id || '', configFile: s.config_file || '', cpuSys: c.used_cpu_sys || '0', cpuUser: c.used_cpu_user || '0' }
+    })() : null
+
+    const persistenceData = info?.persistence ? (() => {
+        const p = info.persistence
+        const lastSaveTs = parseInt(p.rdb_last_save_time, 10)
+        const lastSave = lastSaveTs ? new Date(lastSaveTs * 1000).toLocaleString() : 'N/A'
+        return {
+            rdbLastSave: lastSave, rdbStatus: p.rdb_last_bgsave_status || 'N/A',
+            rdbChanges: p.rdb_changes_since_last_save ?? 'N/A',
+            aofEnabled: p.aof_enabled === '1' ? 'Yes' : 'No',
+            aofSize: p.aof_enabled === '1' ? formatBytes(parseInt(p.aof_current_size, 10) || 0) : '',
+        }
+    })() : null
+
+    const replicationData = info?.replication ? (() => {
+        const r = info.replication
+        const result: any = { role: r.role || 'unknown' }
+        if (r.role === 'master') result.replicas = r.connected_slaves ?? '0'
+        else if (r.role === 'slave') { result.masterHost = r.master_host; result.masterPort = r.master_port; result.linkStatus = r.master_link_status }
+        return result
+    })() : null
+
+    const keyspaceEntries = info?.keyspace ? Object.keys(info.keyspace)
+        .filter((k: string) => k.startsWith('db'))
+        .sort((a: string, b: string) => parseInt(a.slice(2), 10) - parseInt(b.slice(2), 10))
+        .map((db: string) => {
+            const entry = info.keyspace[db]
+            return { db, keys: typeof entry === 'object' ? (entry.keys || '0') : '0', expires: typeof entry === 'object' ? (entry.expires || '0') : '0' }
+        }) : []
+
+    const modulesList = (modules || []).map((m: any) => ({ name: m.name || 'unknown', ver: String(m.ver ?? m.version ?? '') }))
+
+    // --- Dashboard export functions ---
+    const exportServerInfo = useCallback(() => {
+        if (!serverInfoData) return
+        const s = serverInfoData, mon = stringsRef.current?.page?.monitor || {} as any
+        const lines = [`${mon.os || 'OS'}: ${s.os}`, `${mon.port || 'Port'}: ${s.port}`, `${mon.pid || 'Process ID'}: ${s.pid}`]
+        if (s.configFile) lines.push(`${mon.configFile || 'Config File'}: ${s.configFile}`)
+        lines.push(`${mon.cpuSys || 'System'} CPU: ${s.cpuSys}`, `${mon.cpuUser || 'User'} CPU: ${s.cpuUser}`)
+        downloadText(lines.join('\n'), `${connName}-server-info.txt`)
+    }, [connName, serverInfoData])
+
+    const exportPersistence = useCallback(() => {
+        if (!persistenceData) return
+        const p = persistenceData, mon = stringsRef.current?.page?.monitor || {} as any
+        const lines = [`${mon.rdbLastSave || 'RDB Last Save'}: ${p.rdbLastSave}`, `${mon.rdbStatus || 'RDB Status'}: ${p.rdbStatus}`,
+            `${mon.rdbChanges || 'Changes Since Last Save'}: ${p.rdbChanges}`, `${mon.aofEnabled || 'AOF Enabled'}: ${p.aofEnabled}`]
+        if (p.aofSize) lines.push(`${mon.aofSize || 'AOF Size'}: ${p.aofSize}`)
+        downloadText(lines.join('\n'), `${connName}-persistence.txt`)
+    }, [connName, persistenceData])
+
+    const exportReplication = useCallback(() => {
+        if (!replicationData) return
+        const r = replicationData, mon = stringsRef.current?.page?.monitor || {} as any
+        const lines = [`${mon.role || 'Role'}: ${r.role}`]
+        if (r.replicas !== undefined) lines.push(`${mon.replicas || 'Connected Replicas'}: ${r.replicas}`)
+        if (r.masterHost) lines.push(`${mon.masterHost || 'Master Host'}: ${r.masterHost}:${r.masterPort}`)
+        if (r.linkStatus) lines.push(`${mon.linkStatus || 'Link Status'}: ${r.linkStatus}`)
+        downloadText(lines.join('\n'), `${connName}-replication.txt`)
+    }, [connName, replicationData])
+
+    const exportKeyspace = useCallback(() => {
+        if (keyspaceEntries.length === 0) return
+        const mon = stringsRef.current?.page?.monitor || {} as any
+        const lines = keyspaceEntries.map((e: any) => `${e.db}: ${mon.keys || 'Keys'}: ${e.keys}, ${mon.expires || 'Expires'}: ${e.expires}`)
+        downloadText(lines.join('\n'), `${connName}-keyspace.txt`)
+    }, [connName, keyspaceEntries])
+
+    const exportModules = useCallback(() => {
+        const mon = stringsRef.current?.page?.monitor || {} as any
+        if (modulesList.length === 0) { downloadText(mon.noModules || 'No modules loaded', `${connName}-modules.txt`); return }
+        downloadText(modulesList.map((m: any) => `${m.name} v${m.ver}`).join('\n'), `${connName}-modules.txt`)
+    }, [connName, modulesList])
+
     // --- Render helpers ---
     const InfoRow = ({ label, value }: { label: string; value: string | number }) => (
         <>
@@ -843,6 +965,103 @@ export default function PulsePage() {
                     <InfoRow label={mon.expired || 'Expired'} value={current.stats.expiredKeys} />
                     <InfoRow label={mon.evicted || 'Evicted'} value={current.stats.evictedKeys} />
                 </List>
+            </P3xrAccordion>
+
+            {/* Server Info */}
+            {serverInfoData && (<>
+                <Box sx={{ mt: 1 }} />
+                <P3xrAccordion title={mon.serverInfo || 'Server Info'} accordionKey="monitor-server-info"
+                    actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
+                        color="inherit" onClick={(e) => { e.stopPropagation(); exportServerInfo() }} />}>
+                    <List disablePadding>
+                        {serverInfoData.os && <InfoRow label={mon.os || 'OS'} value={serverInfoData.os} />}
+                        {serverInfoData.port && <InfoRow label={mon.port || 'Port'} value={serverInfoData.port} />}
+                        {serverInfoData.pid && <InfoRow label={mon.pid || 'Process ID'} value={serverInfoData.pid} />}
+                        {serverInfoData.configFile && <InfoRow label={mon.configFile || 'Config File'} value={serverInfoData.configFile} />}
+                        <InfoRow label={`${mon.cpuSys || 'System'} CPU`} value={serverInfoData.cpuSys} />
+                        <InfoRow label={`${mon.cpuUser || 'User'} CPU`} value={serverInfoData.cpuUser} />
+                    </List>
+                </P3xrAccordion>
+            </>)}
+
+            {/* Persistence */}
+            {persistenceData && (<>
+                <Box sx={{ mt: 1 }} />
+                <P3xrAccordion title={mon.persistence || 'Persistence'} accordionKey="monitor-persistence"
+                    actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
+                        color="inherit" onClick={(e) => { e.stopPropagation(); exportPersistence() }} />}>
+                    <List disablePadding>
+                        <InfoRow label={mon.rdbLastSave || 'RDB Last Save'} value={persistenceData.rdbLastSave} />
+                        <InfoRow label={mon.rdbStatus || 'RDB Status'} value={persistenceData.rdbStatus} />
+                        <InfoRow label={mon.rdbChanges || 'Changes Since Last Save'} value={persistenceData.rdbChanges} />
+                        <InfoRow label={mon.aofEnabled || 'AOF Enabled'} value={persistenceData.aofEnabled} />
+                        {persistenceData.aofSize && <InfoRow label={mon.aofSize || 'AOF Size'} value={persistenceData.aofSize} />}
+                    </List>
+                </P3xrAccordion>
+            </>)}
+
+            {/* Replication */}
+            {replicationData && (<>
+                <Box sx={{ mt: 1 }} />
+                <P3xrAccordion title={mon.replication || 'Replication'} accordionKey="monitor-replication"
+                    actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
+                        color="inherit" onClick={(e) => { e.stopPropagation(); exportReplication() }} />}>
+                    <List disablePadding>
+                        <InfoRow label={mon.role || 'Role'} value={replicationData.role} />
+                        {replicationData.replicas !== undefined && <InfoRow label={mon.replicas || 'Connected Replicas'} value={replicationData.replicas} />}
+                        {replicationData.masterHost && <InfoRow label={mon.masterHost || 'Master Host'} value={`${replicationData.masterHost}:${replicationData.masterPort}`} />}
+                        {replicationData.linkStatus && <InfoRow label={mon.linkStatus || 'Link Status'} value={replicationData.linkStatus} />}
+                    </List>
+                </P3xrAccordion>
+            </>)}
+
+            {/* Keyspace */}
+            {keyspaceEntries.length > 0 && (<>
+                <Box sx={{ mt: 1 }} />
+                <P3xrAccordion title={mon.keyspace || 'Keyspace'} accordionKey="monitor-keyspace"
+                    actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
+                        color="inherit" onClick={(e) => { e.stopPropagation(); exportKeyspace() }} />}>
+                    <List disablePadding>
+                        {keyspaceEntries.map((entry: any, i: number) => (
+                            <Box key={entry.db}>
+                                <ListItem sx={{ px: 2, py: 1 }}>
+                                    <Box sx={{ display: 'flex', width: '100%' }}>
+                                        <Box sx={{ flex: 1 }}>{entry.db}</Box>
+                                        <Box sx={{ fontFamily: "'Roboto Mono', monospace", fontSize: 13 }}>
+                                            {mon.keys || 'Keys'}: {entry.keys} {'\u00B7'} {mon.expires || 'Expires'}: {entry.expires}
+                                        </Box>
+                                    </Box>
+                                </ListItem>
+                                {i < keyspaceEntries.length - 1 && <Divider />}
+                            </Box>
+                        ))}
+                    </List>
+                </P3xrAccordion>
+            </>)}
+
+            {/* Modules */}
+            <Box sx={{ mt: 1 }} />
+            <P3xrAccordion title={mon.modules || 'Loaded Modules'} accordionKey="monitor-modules"
+                actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
+                    color="inherit" onClick={(e) => { e.stopPropagation(); exportModules() }} />}>
+                {modulesList.length === 0 && (
+                    <Box sx={{ p: 2, opacity: 0.5 }}>{mon.noModules || 'No modules loaded'}</Box>
+                )}
+                {modulesList.length > 0 && (
+                    <List disablePadding>
+                        {modulesList.map((mod: any, i: number) => (
+                            <Box key={mod.name}>
+                                <ListItem sx={{ px: 2, py: 1 }}>
+                                    <Box sx={{ display: 'flex', width: '100%' }}>
+                                        <Box sx={{ flex: 1 }}>{mod.name}</Box>
+                                        <Box sx={{ fontFamily: "'Roboto Mono', monospace", fontSize: 13 }}>v{mod.ver}</Box>
+                                    </Box>
+                                </ListItem>
+                                {i < modulesList.length - 1 && <Divider />}
+                            </Box>
+                        ))}
+                    </List>
+                )}
             </P3xrAccordion>
 
             <Box sx={{ mt: 1 }} />

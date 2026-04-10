@@ -255,6 +255,137 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
         this.paused = !this.paused;
     }
 
+    // --- Dashboard computed properties ---
+
+    get serverInfo(): { os: string; port: string; pid: string; configFile: string; cpuSys: string; cpuUser: string } | null {
+        const info = this.state.info();
+        if (!info) return null;
+        const s = info.server || {};
+        const c = info.cpu || {};
+        return {
+            os: s.os || '',
+            port: s.tcp_port || '',
+            pid: s.process_id || '',
+            configFile: s.config_file || '',
+            cpuSys: c.used_cpu_sys || '0',
+            cpuUser: c.used_cpu_user || '0',
+        };
+    }
+
+    get persistenceInfo(): { rdbLastSave: string; rdbStatus: string; rdbChanges: string; aofEnabled: string; aofSize: string } | null {
+        const info = this.state.info();
+        if (!info?.persistence) return null;
+        const p = info.persistence;
+        const lastSaveTs = parseInt(p.rdb_last_save_time, 10);
+        const lastSave = lastSaveTs ? new Date(lastSaveTs * 1000).toLocaleString() : 'N/A';
+        return {
+            rdbLastSave: lastSave,
+            rdbStatus: p.rdb_last_bgsave_status || 'N/A',
+            rdbChanges: p.rdb_changes_since_last_save ?? 'N/A',
+            aofEnabled: p.aof_enabled === '1' ? 'Yes' : 'No',
+            aofSize: p.aof_enabled === '1' ? this.formatBytes(parseInt(p.aof_current_size, 10) || 0) : '',
+        };
+    }
+
+    get replicationInfo(): { role: string; replicas?: string; masterHost?: string; masterPort?: string; linkStatus?: string } | null {
+        const info = this.state.info();
+        if (!info?.replication) return null;
+        const r = info.replication;
+        const result: any = { role: r.role || 'unknown' };
+        if (r.role === 'master') {
+            result.replicas = r.connected_slaves ?? '0';
+        } else if (r.role === 'slave') {
+            result.masterHost = r.master_host;
+            result.masterPort = r.master_port;
+            result.linkStatus = r.master_link_status;
+        }
+        return result;
+    }
+
+    get keyspaceEntries(): Array<{ db: string; keys: string; expires: string }> {
+        const info = this.state.info();
+        if (!info?.keyspace) return [];
+        return Object.keys(info.keyspace)
+            .filter(k => k.startsWith('db'))
+            .sort((a, b) => parseInt(a.slice(2), 10) - parseInt(b.slice(2), 10))
+            .map(db => {
+                const entry = info.keyspace[db];
+                return {
+                    db,
+                    keys: typeof entry === 'object' ? (entry.keys || '0') : '0',
+                    expires: typeof entry === 'object' ? (entry.expires || '0') : '0',
+                };
+            });
+    }
+
+    get modulesList(): Array<{ name: string; ver: string }> {
+        return (this.state.modules() || []).map((m: any) => ({
+            name: m.name || 'unknown',
+            ver: String(m.ver ?? m.version ?? ''),
+        }));
+    }
+
+    // --- Dashboard export methods ---
+
+    exportServerInfo(): void {
+        const s = this.serverInfo;
+        if (!s) return;
+        const mon = this.strings().page?.monitor || {};
+        const lines = [
+            `${mon.os || 'OS'}: ${s.os}`,
+            `${mon.port || 'Port'}: ${s.port}`,
+            `${mon.pid || 'Process ID'}: ${s.pid}`,
+            `${mon.configFile || 'Config File'}: ${s.configFile}`,
+            `${mon.cpuSys || 'System'} CPU: ${s.cpuSys}`,
+            `${mon.cpuUser || 'User'} CPU: ${s.cpuUser}`,
+        ];
+        this.downloadText(lines.join('\n'), `${this.connName}-server-info.txt`);
+    }
+
+    exportPersistence(): void {
+        const p = this.persistenceInfo;
+        if (!p) return;
+        const mon = this.strings().page?.monitor || {};
+        const lines = [
+            `${mon.rdbLastSave || 'RDB Last Save'}: ${p.rdbLastSave}`,
+            `${mon.rdbStatus || 'RDB Status'}: ${p.rdbStatus}`,
+            `${mon.rdbChanges || 'Changes Since Last Save'}: ${p.rdbChanges}`,
+            `${mon.aofEnabled || 'AOF Enabled'}: ${p.aofEnabled}`,
+        ];
+        if (p.aofSize) lines.push(`${mon.aofSize || 'AOF Size'}: ${p.aofSize}`);
+        this.downloadText(lines.join('\n'), `${this.connName}-persistence.txt`);
+    }
+
+    exportReplication(): void {
+        const r = this.replicationInfo;
+        if (!r) return;
+        const mon = this.strings().page?.monitor || {};
+        const lines = [`${mon.role || 'Role'}: ${r.role}`];
+        if (r.replicas !== undefined) lines.push(`${mon.replicas || 'Connected Replicas'}: ${r.replicas}`);
+        if (r.masterHost) lines.push(`${mon.masterHost || 'Master Host'}: ${r.masterHost}:${r.masterPort}`);
+        if (r.linkStatus) lines.push(`${mon.linkStatus || 'Link Status'}: ${r.linkStatus}`);
+        this.downloadText(lines.join('\n'), `${this.connName}-replication.txt`);
+    }
+
+    exportKeyspace(): void {
+        const entries = this.keyspaceEntries;
+        if (entries.length === 0) return;
+        const mon = this.strings().page?.monitor || {};
+        const lines = entries.map(e => `${e.db}: ${mon.keys || 'Keys'}: ${e.keys}, ${mon.expires || 'Expires'}: ${e.expires}`);
+        this.downloadText(lines.join('\n'), `${this.connName}-keyspace.txt`);
+    }
+
+    exportModules(): void {
+        const mods = this.modulesList;
+        const mon = this.strings().page?.monitor || {};
+        if (mods.length === 0) {
+            this.downloadText(mon.noModules || 'No modules loaded', `${this.connName}-modules.txt`);
+            return;
+        }
+        const lines = mods.map(m => `${m.name} v${m.ver}`);
+        this.downloadText(lines.join('\n'), `${this.connName}-modules.txt`);
+    }
+
     private get connName(): string {
         return this.state.connection()?.name || 'redis';
     }
@@ -346,6 +477,42 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
                 `${mon.expired || 'Expired'}: ${c.stats.expiredKeys}`,
                 `${mon.evicted || 'Evicted'}: ${c.stats.evictedKeys}`,
             );
+
+            // Dashboard sections
+            const si = this.serverInfo;
+            if (si) {
+                sections.push(``, `--- ${mon.serverInfo || 'Server Info'} ---`);
+                sections.push(`${mon.os || 'OS'}: ${si.os}`, `${mon.port || 'Port'}: ${si.port}`, `${mon.pid || 'Process ID'}: ${si.pid}`);
+                if (si.configFile) sections.push(`${mon.configFile || 'Config File'}: ${si.configFile}`);
+                sections.push(`${mon.cpuSys || 'System'} CPU: ${si.cpuSys}`, `${mon.cpuUser || 'User'} CPU: ${si.cpuUser}`);
+            }
+            const pi = this.persistenceInfo;
+            if (pi) {
+                sections.push(``, `--- ${mon.persistence || 'Persistence'} ---`);
+                sections.push(`${mon.rdbLastSave || 'RDB Last Save'}: ${pi.rdbLastSave}`, `${mon.rdbStatus || 'RDB Status'}: ${pi.rdbStatus}`);
+                sections.push(`${mon.rdbChanges || 'Changes Since Last Save'}: ${pi.rdbChanges}`, `${mon.aofEnabled || 'AOF Enabled'}: ${pi.aofEnabled}`);
+                if (pi.aofSize) sections.push(`${mon.aofSize || 'AOF Size'}: ${pi.aofSize}`);
+            }
+            const ri = this.replicationInfo;
+            if (ri) {
+                sections.push(``, `--- ${mon.replication || 'Replication'} ---`);
+                sections.push(`${mon.role || 'Role'}: ${ri.role}`);
+                if (ri.replicas !== undefined) sections.push(`${mon.replicas || 'Connected Replicas'}: ${ri.replicas}`);
+                if (ri.masterHost) sections.push(`${mon.masterHost || 'Master Host'}: ${ri.masterHost}:${ri.masterPort}`);
+                if (ri.linkStatus) sections.push(`${mon.linkStatus || 'Link Status'}: ${ri.linkStatus}`);
+            }
+            const ks = this.keyspaceEntries;
+            if (ks.length > 0) {
+                sections.push(``, `--- ${mon.keyspace || 'Keyspace'} ---`);
+                sections.push(...ks.map(e => `${e.db}: ${mon.keys || 'Keys'}: ${e.keys}, ${mon.expires || 'Expires'}: ${e.expires}`));
+            }
+            const mods = this.modulesList;
+            if (mods.length > 0) {
+                sections.push(``, `--- ${mon.modules || 'Loaded Modules'} ---`);
+                sections.push(...mods.map(m => `${m.name} v${m.ver}`));
+            } else {
+                sections.push(``, `--- ${mon.modules || 'Loaded Modules'} ---`, mon.noModules || 'No modules loaded');
+            }
 
             if (c.slowlog.length > 0) {
                 sections.push(``, `--- ${mon.slowLog || 'Slow Log'} ---`);

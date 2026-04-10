@@ -25,6 +25,8 @@ export class SettingsService {
     readonly pageCount = signal<number>(this.getStorageInt('p3xr-main-treecontrol-page-size', 250));
     readonly keyPageCount = signal<number>(this.getStorageInt('p3xr-main-key-page-size', 5));
     readonly language = signal<string>(this.getStorage('p3xr-language', 'en'));
+    readonly undoEnabled = signal<boolean>(this.getStorageBool('p3xr-undo-enabled', true));
+    readonly showDiffBeforeSave = signal<boolean>(this.getStorageBool('p3xr-show-diff-before-save', false));
 
     // --- Static config ---
 
@@ -112,6 +114,8 @@ export class SettingsService {
         effect(() => { this.setStorage('p3xr-main-treecontrol-page-size', String(this.pageCount())); });
         effect(() => { this.setStorage('p3xr-main-key-page-size', String(this.keyPageCount())); });
         effect(() => { this.setStorage('p3xr-language', this.language()); });
+        effect(() => { this.setStorage('p3xr-undo-enabled', String(this.undoEnabled())); });
+        effect(() => { this.setStorage('p3xr-show-diff-before-save', String(this.showDiffBeforeSave())); });
     }
 
     // --- Storage helpers ---

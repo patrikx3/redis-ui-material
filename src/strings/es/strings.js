@@ -204,6 +204,17 @@ const strings = {
     moveUp: "Mover arriba",
     moveDown: "Mover abajo",
   },
+  diff: {
+    reviewChanges: "Revisar cambios",
+    inline: "En l\u00ednea",
+    sideBySide: "Lado a lado",
+    additions: "adiciones",
+    deletions: "eliminaciones",
+    unchangedLines: "l\u00edneas sin cambios",
+    noChanges: "No se detectaron cambios",
+    before: "Antes",
+    after: "Despu\u00e9s",
+  },
   label: {
     id: {
       nodeId: 'ID de nodo',
@@ -368,6 +379,7 @@ const strings = {
     treeExpandAll: "Expandir todas las hojas del árbol. Esta operación puede ser costosa y puede tomar tiempo ...",
     noRedisKeys: "No hay claves en esta base de datos.",
     redisConnected: "Conexión exitosa a Redis",
+    reverted: "Revertido",
     reloadingDataInfo: "Recargando datos de Redis",
     added: "Agregado",
     saved: "Actualizado",
@@ -436,6 +448,10 @@ const strings = {
       label: {
         animation: "Usar animación",
         noAnimation: "Sin animación",
+        undoEnabled: "Deshacer activado",
+        undoDisabled: "Deshacer desactivado",
+        diffEnabled: "Mostrar diff antes de guardar",
+        diffDisabled: "Diff antes de guardar desactivado",
         jsonFormatTwoSpace: "Formatear JSON con 2 espacios",
         jsonFormatFourSpace: "Formatear JSON con 4 espacios",
         formName: "Configuración de Redis",
@@ -444,6 +460,7 @@ const strings = {
         searchModeStartsWith: "Buscar con modo empieza con",
         searchModeIncludes: "Modo de búsqueda incluye"
       },
+      undoHint: "Deshacer est\u00e1 disponible solo para tipos de clave string y JSON",
       field: {
         treeSeparator: "Separador del árbol",
         treeSeparatorSelector: "Selector de separador del árbol",

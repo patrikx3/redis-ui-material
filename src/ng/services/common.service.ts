@@ -59,6 +59,23 @@ export class CommonService {
     }
 
     /**
+     * Show a toast with an "Undo" action button.
+     * Returns a Promise that resolves to true if Undo was clicked, false if dismissed.
+     */
+    toastWithUndo(message: string): Promise<boolean> {
+        return new Promise(resolve => {
+            const ref = this.snackBar.open(message, 'Undo', {
+                duration: 5000,
+                horizontalPosition: 'right',
+                verticalPosition: 'bottom',
+            });
+            let acted = false;
+            ref.onAction().subscribe(() => { acted = true; resolve(true); });
+            ref.afterDismissed().subscribe(() => { if (!acted) resolve(false); });
+        });
+    }
+
+    /**
      * Show a confirmation dialog with OK and Cancel buttons.
      * Returns a Promise that resolves on OK and rejects on Cancel.
      * Replaces AngularJS $mdDialog.confirm().

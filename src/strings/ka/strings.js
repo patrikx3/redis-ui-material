@@ -200,7 +200,18 @@ const strings = {
     jsonViewEditor: "JSON რედაქტირება",
     quickConsole: "სწრაფი კონსოლი",
     moveUp: "ზემოთ აწევა",
-    moveDown: "ქვემოთ ჩამოწევა"
+    moveDown: "ქვემოთ ჩამოწევა",
+  },
+  diff: {
+    reviewChanges: "\u10ea\u10d5\u10da\u10d8\u10da\u10d4\u10d1\u10d4\u10d1\u10d8\u10e1 \u10d2\u10d0\u10d3\u10d0\u10ee\u10d4\u10d3\u10d5\u10d0",
+    inline: "\u10e1\u10e2\u10e0\u10d8\u10e5\u10dd\u10dc\u10e8\u10d8",
+    sideBySide: "\u10d2\u10d5\u10d4\u10e0\u10d3\u10d8\u10d2\u10d5\u10d4\u10e0\u10d3",
+    additions: "\u10d3\u10d0\u10db\u10d0\u10e2\u10d4\u10d1\u10d4\u10d1\u10d8",
+    deletions: "\u10ec\u10d0\u10e8\u10da\u10d4\u10d1\u10d8",
+    unchangedLines: "\u10e3\u10ea\u10d5\u10da\u10d4\u10da\u10d8 \u10ee\u10d0\u10d6\u10d4\u10d1\u10d8",
+    noChanges: "\u10ea\u10d5\u10da\u10d8\u10da\u10d4\u10d1\u10d4\u10d1\u10d8 \u10d5\u10d4\u10e0 \u10db\u10dd\u10d8\u10eb\u10d4\u10d1\u10dc\u10d0",
+    before: "\u10db\u10d0\u10dc\u10d0\u10db\u10d3\u10d4",
+    after: "\u10e8\u10d4\u10db\u10d3\u10d4\u10d2",
   },
   label: {
     id: {
@@ -366,6 +377,7 @@ const strings = {
     treeExpandAll: "გააფართოვეთ ყველა ხის ფოთოლი. ეს ოპერაცია შეიძლება იყოს ძვირი და შეიძლება დრო დასჭირდეს ...",
     noRedisKeys: "ამ მონაცემთა ბაზაში გასაღებები არ არის.",
     redisConnected: "Redis დაკავშირებულია წარმატებით",
+    reverted: "\u10d3\u10d0\u10d1\u10e0\u10e3\u10dc\u10d4\u10d1\u10e3\u10da\u10d8\u10d0",
     reloadingDataInfo: "მიმდინარეობს Redis მონაცემთა ინფორმაციის გადატვირთვა",
     added: "დამატებულია",
     saved: "განახლებულია",
@@ -434,6 +446,10 @@ const strings = {
       label: {
         animation: "გამოიყენეთ ანიმაცია",
         noAnimation: "არავითარი ანიმაცია",
+        undoEnabled: "\u10d2\u10d0\u10e3\u10e5\u10db\u10d4\u10d1\u10d0 \u10e9\u10d0\u10e0\u10d7\u10e3\u10da\u10d8\u10d0",
+        undoDisabled: "\u10d2\u10d0\u10e3\u10e5\u10db\u10d4\u10d1\u10d0 \u10d2\u10d0\u10db\u10dd\u10e0\u10d7\u10e3\u10da\u10d8\u10d0",
+        diffEnabled: "\u10e8\u10d4\u10dc\u10d0\u10ee\u10d5\u10d0\u10db\u10d3\u10d4 diff-\u10d8\u10e1 \u10e9\u10d5\u10d4\u10dc\u10d4\u10d1\u10d0",
+        diffDisabled: "\u10e8\u10d4\u10dc\u10d0\u10ee\u10d5\u10d0\u10db\u10d3\u10d4 diff \u10d2\u10d0\u10db\u10dd\u10e0\u10d7\u10e3\u10da\u10d8\u10d0",
         jsonFormatTwoSpace: "ფორმატირება JSON 2 ინტერვალით",
         jsonFormatFourSpace: "ფორმატირება JSON 4 ინტერვალით",
         formName: "Redis პარამეტრები",
@@ -442,6 +458,7 @@ const strings = {
         searchModeStartsWith: "ძებნა იწყება რეჟიმით",
         searchModeIncludes: "ძებნა მოიცავს რეჟიმს"
       },
+      undoHint: "\u10d2\u10d0\u10e3\u10e5\u10db\u10d4\u10d1\u10d0 \u10ee\u10d4\u10da\u10db\u10d8\u10e1\u10d0\u10ec\u10d5\u10d3\u10dd\u10db\u10d8\u10d0 \u10db\u10ee\u10dd\u10da\u10dd\u10d3 string \u10d3\u10d0 JSON \u10d2\u10d0\u10e1\u10d0\u10e6\u10d4\u10d1\u10d8\u10e1 \u10e2\u10d8\u10de\u10d4\u10d1\u10d8\u10e1\u10d7\u10d5\u10d8\u10e1",
       field: {
         treeSeparator: "ხეების გამყოფი",
         treeSeparatorSelector: "ხეების გამყოფის სელექტორი",

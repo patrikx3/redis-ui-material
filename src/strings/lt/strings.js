@@ -200,7 +200,18 @@ const strings = {
     jsonViewEditor: "Redaguoti JSON",
     quickConsole: "Greitoji konsolė",
     moveUp: "Perkelti aukštyn",
-    moveDown: "Perkelti žemyn"
+    moveDown: "Perkelti žemyn",
+  },
+  diff: {
+    reviewChanges: "Per\u017ei\u016br\u0117ti pakeitimus",
+    inline: "Eilut\u0117je",
+    sideBySide: "Greta",
+    additions: "prid\u0117jimai",
+    deletions: "pa\u0161alinimai",
+    unchangedLines: "nepakeistos eilut\u0117s",
+    noChanges: "Pakeitim\u0173 nerasta",
+    before: "Prie\u0161",
+    after: "Po",
   },
   label: {
     id: {
@@ -366,6 +377,7 @@ const strings = {
     treeExpandAll: "Išskleiskite visus medžių lapus. Ši operacija gali būti brangi ir užtrukti...",
     noRedisKeys: "Šioje duomenų bazėje nėra raktų.",
     redisConnected: "Redis sėkmingai prijungtas",
+    reverted: "Atkurta",
     reloadingDataInfo: "Iš naujo įkeliama Redis duomenų informacija",
     added: "Pridėta",
     saved: "Atnaujinta",
@@ -434,6 +446,10 @@ const strings = {
       label: {
         animation: "Naudokite animaciją",
         noAnimation: "Nėra animacijos",
+        undoEnabled: "At\u0161aukimas \u012fjungtas",
+        undoDisabled: "At\u0161aukimas i\u0161jungtas",
+        diffEnabled: "Rodyti diff prie\u0161 i\u0161saugant",
+        diffDisabled: "Diff prie\u0161 i\u0161saugojim\u0105 i\u0161jungtas",
         jsonFormatTwoSpace: "Formatas JSON su 2 tarpais",
         jsonFormatFourSpace: "Formatas JSON su 4 tarpais",
         formName: "Redis nustatymai",
@@ -442,6 +458,7 @@ const strings = {
         searchModeStartsWith: "Paieška prasideda nuo režimo",
         searchModeIncludes: "Paieška apima režimą"
       },
+      undoHint: "At\u0161aukimas galimas tik string ir JSON rakt\u0173 tipams",
       field: {
         treeSeparator: "Medžių separatorius",
         treeSeparatorSelector: "Medžių separatoriaus parinkiklis",

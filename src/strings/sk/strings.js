@@ -202,6 +202,17 @@ const strings = {
     moveUp: "Presunúť hore",
     moveDown: "Presunúť dole",
   },
+  diff: {
+    reviewChanges: "Skontrolova\u0165 zmeny",
+    inline: "V riadku",
+    sideBySide: "Ved\u013ea seba",
+    additions: "pridania",
+    deletions: "odstr\u00e1nenia",
+    unchangedLines: "nezmenen\u00e9 riadky",
+    noChanges: "Neboli zisten\u00e9 \u017eiadne zmeny",
+    before: "Pred",
+    after: "Po",
+  },
   label: {
     id: {
       nodeId: 'ID uzla',
@@ -366,6 +377,7 @@ const strings = {
     treeExpandAll: "Rozbalit vsetky listy stromu. Tato operacia moze byt narocna a moze trvat ...",
     noRedisKeys: "V tejto databaze nie su ziadne kluce.",
     redisConnected: "Redis uspesne pripojeny",
+    reverted: "Vr\u00e1ten\u00e9",
     reloadingDataInfo: "Znovu nacitavam informacie o Redis datach",
     added: "Pridane",
     saved: "Aktualizovane",
@@ -434,6 +446,10 @@ const strings = {
       label: {
         animation: "Pouzit animaciu",
         noAnimation: "Bez animacie",
+        undoEnabled: "Vr\u00e1tenie sp\u00e4\u0165 zapnut\u00e9",
+        undoDisabled: "Vr\u00e1tenie sp\u00e4\u0165 vypnut\u00e9",
+        diffEnabled: "Zobrazi\u0165 diff pred ulo\u017een\u00edm",
+        diffDisabled: "Diff pred ulo\u017een\u00edm je vypnut\u00fd",
         jsonFormatTwoSpace: "Formatovat JSON s 2 medzerami",
         jsonFormatFourSpace: "Formatovat JSON so 4 medzerami",
         formName: "Nastavenia Redis",
@@ -442,6 +458,7 @@ const strings = {
         searchModeStartsWith: "Vyhladavanie zacina na",
         searchModeIncludes: "Vyhladavanie obsahuje"
       },
+      undoHint: "Vr\u00e1tenie sp\u00e4\u0165 je dostupn\u00e9 iba pre typy k\u013e\u00fa\u010dov string a JSON",
       field: {
         treeSeparator: "Separator stromu",
         treeSeparatorSelector: "Volba separatora stromu",

@@ -200,7 +200,18 @@ const strings = {
     jsonViewEditor: "Уреди JSON",
     quickConsole: "Брза конзола",
     moveUp: "Премести нагоре",
-    moveDown: "Премести надолу"
+    moveDown: "Премести надолу",
+  },
+  diff: {
+    reviewChanges: "\u041f\u0440\u0435\u0433\u043b\u0435\u0434\u0430\u0458 \u043f\u0440\u043e\u043c\u0435\u043d\u0438",
+    inline: "\u0412\u043e \u043b\u0438\u043d\u0438\u0458\u0430",
+    sideBySide: "\u0415\u0434\u043d\u043e \u0434\u043e \u0434\u0440\u0443\u0433\u043e",
+    additions: "\u0434\u043e\u0434\u0430\u0432\u0430\u045a\u0430",
+    deletions: "\u0431\u0440\u0438\u0448\u0435\u045a\u0430",
+    unchangedLines: "\u043d\u0435\u043f\u0440\u043e\u043c\u0435\u043d\u0435\u0442\u0438 \u043b\u0438\u043d\u0438\u0438",
+    noChanges: "\u041d\u0435 \u0441\u0435 \u043e\u0442\u043a\u0440\u0438\u0435\u043d\u0438 \u043f\u0440\u043e\u043c\u0435\u043d\u0438",
+    before: "\u041f\u0440\u0435\u0434",
+    after: "\u041f\u043e\u0442\u043e\u0430",
   },
   label: {
     id: {
@@ -366,6 +377,7 @@ const strings = {
     treeExpandAll: "Проширете ги сите лисја на дрвјата. Оваа операција може да биде скапа и може да потрае ...",
     noRedisKeys: "Нема клучеви во оваа база на податоци.",
     redisConnected: "Redis е поврзан успешно",
+    reverted: "\u0412\u0440\u0430\u0442\u0435\u043d\u043e",
     reloadingDataInfo: "Повторно вчитување податоци за Redis",
     added: "Додадено",
     saved: "Ажурирано",
@@ -434,6 +446,10 @@ const strings = {
       label: {
         animation: "Користете анимација",
         noAnimation: "Нема анимација",
+        undoEnabled: "\u041f\u043e\u043d\u0438\u0448\u0442\u0443\u0432\u0430\u045a\u0435\u0442\u043e \u0435 \u0432\u043a\u043b\u0443\u0447\u0435\u043d\u043e",
+        undoDisabled: "\u041f\u043e\u043d\u0438\u0448\u0442\u0443\u0432\u0430\u045a\u0435\u0442\u043e \u0435 \u0438\u0441\u043a\u043b\u0443\u0447\u0435\u043d\u043e",
+        diffEnabled: "\u041f\u0440\u0438\u043a\u0430\u0436\u0438 diff \u043f\u0440\u0435\u0434 \u0437\u0430\u0447\u0443\u0432\u0443\u0432\u0430\u045a\u0435",
+        diffDisabled: "Diff \u043f\u0440\u0435\u0434 \u0437\u0430\u0447\u0443\u0432\u0443\u0432\u0430\u045a\u0435 \u0435 \u0438\u0441\u043a\u043b\u0443\u0447\u0435\u043d",
         jsonFormatTwoSpace: "Форматирајте го JSON со 2 празни места",
         jsonFormatFourSpace: "Форматирајте го JSON со 4 празни места",
         formName: "Поставки за Redis",
@@ -442,6 +458,7 @@ const strings = {
         searchModeStartsWith: "Пребарувањето со започнува со режим",
         searchModeIncludes: "Пребарувањето вклучува режим"
       },
+      undoHint: "\u041f\u043e\u043d\u0438\u0448\u0442\u0443\u0432\u0430\u045a\u0435\u0442\u043e \u0435 \u0434\u043e\u0441\u0442\u0430\u043f\u043d\u043e \u0441\u0430\u043c\u043e \u0437\u0430 \u0442\u0438\u043f\u043e\u0432\u0438 \u043d\u0430 \u043a\u043b\u0443\u0447\u0435\u0432\u0438 string \u0438 JSON",
       field: {
         treeSeparator: "Сепаратор на дрвја",
         treeSeparatorSelector: "Избирач на сепаратор на дрвја",

@@ -47,6 +47,7 @@ export class DatabaseComponent implements OnInit, OnDestroy {
     resizeClicked = false;
     private resizerMouseoverOn = false;
     private resizeLeft: number | undefined = undefined;
+    private static readonly PANEL_WIDTH_KEY = 'p3xr-database-panel-width';
     private bottomConsoleExpanded = false;
     private screenSizeIsSmall = false;
 
@@ -153,6 +154,16 @@ export class DatabaseComponent implements OnInit, OnDestroy {
         this.headerEl = document.getElementById('p3xr-layout-header-container')!;
         this.footerEl = document.getElementById('p3xr-layout-footer-container')!;
         this.consoleHeaderEl = document.querySelector('p3xr-database-header') as HTMLElement;
+
+        // Load saved panel width and convert to absolute position
+        const savedWidth = localStorage.getItem(DatabaseComponent.PANEL_WIDTH_KEY);
+        if (savedWidth && this.containerEl) {
+            const width = parseInt(savedWidth, 10);
+            if (!isNaN(width) && width >= this.resizeMinWidth) {
+                const containerLeft = this.containerEl.getBoundingClientRect().left;
+                this.resizeLeft = containerLeft + width;
+            }
+        }
 
         this.rawResize();
         window.addEventListener('resize', this.boundRawResize);
@@ -346,6 +357,14 @@ export class DatabaseComponent implements OnInit, OnDestroy {
             document.documentElement.style.cursor = 'auto';
             this.resizeClicked = false;
             document.body.classList.remove('p3xr-not-selectable');
+            // Persist panel width
+            if (this.resizeLeft !== undefined && this.containerEl) {
+                const containerLeft = this.containerEl.getBoundingClientRect().left;
+                const width = this.resizeLeft - containerLeft;
+                if (width >= this.resizeMinWidth) {
+                    localStorage.setItem(DatabaseComponent.PANEL_WIDTH_KEY, String(width));
+                }
+            }
         }
         if (!this.resizeClicked) {
             this.rawResize();

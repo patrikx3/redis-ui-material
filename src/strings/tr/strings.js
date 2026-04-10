@@ -200,6 +200,17 @@ const strings = {
     moveUp: "Yukarı taşı",
     moveDown: "Aşağı taşı",
   },
+  diff: {
+    reviewChanges: "De\u011fi\u015fiklikleri incele",
+    inline: "Sat\u0131r i\u00e7i",
+    sideBySide: "Yan yana",
+    additions: "eklemeler",
+    deletions: "silmeler",
+    unchangedLines: "de\u011fi\u015fmeyen sat\u0131rlar",
+    noChanges: "De\u011fi\u015fiklik alg\u0131lanmad\u0131",
+    before: "\u00d6nce",
+    after: "Sonra",
+  },
   label: {
     id: {
       nodeId: 'Düğüm ID',
@@ -364,6 +375,7 @@ const strings = {
     treeExpandAll: "Tüm ağaç yapraklarını genişlet. Bu işlem maliyetli olabilir ve zaman alabilir ...",
     noRedisKeys: "Bu veritabanında anahtar bulunmuyor.",
     redisConnected: "Redis bağlantısı başarılı",
+    reverted: "Geri al\u0131nd\u0131",
     reloadingDataInfo: "Redis veri bilgisi yeniden yükleniyor",
     added: "Eklendi",
     saved: "Güncellendi",
@@ -432,6 +444,10 @@ const strings = {
       label: {
         animation: "Animasyon kullan",
         noAnimation: "Animasyon yok",
+        undoEnabled: "Geri alma etkin",
+        undoDisabled: "Geri alma devre d\u0131\u015f\u0131",
+        diffEnabled: "Kaydetmeden \u00f6nce diff g\u00f6ster",
+        diffDisabled: "Kaydetmeden \u00f6nce diff devre d\u0131\u015f\u0131",
         jsonFormatTwoSpace: "JSON'u 2 boşlukla biçimle",
         jsonFormatFourSpace: "JSON'u 4 boşlukla biçimle",
         formName: "Redis ayarları",
@@ -440,6 +456,7 @@ const strings = {
         searchModeStartsWith: "İle başlayan modda ara",
         searchModeIncludes: "İçeren modda ara"
       },
+      undoHint: "Geri alma yaln\u0131zca string ve JSON anahtar t\u00fcrleri i\u00e7in kullan\u0131labilir",
       field: {
         treeSeparator: "Ağaç ayırıcısı",
         treeSeparatorSelector: "Ağaç ayırıcı seçici",

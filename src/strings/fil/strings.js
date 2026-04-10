@@ -200,7 +200,18 @@ const strings = {
     jsonViewEditor: "I-edit ang JSON",
     quickConsole: "Mabilis na Console",
     moveUp: "Itaas",
-    moveDown: "Pababa"
+    moveDown: "Pababa",
+  },
+  diff: {
+    reviewChanges: "Suriin ang mga pagbabago",
+    inline: "Inline",
+    sideBySide: "Magkatabi",
+    additions: "mga dagdag",
+    deletions: "mga pagtanggal",
+    unchangedLines: "mga linyang hindi nagbago",
+    noChanges: "Walang natukoy na pagbabago",
+    before: "Bago",
+    after: "Pagkatapos",
   },
   label: {
     id: {
@@ -366,6 +377,7 @@ const strings = {
     treeExpandAll: "Palawakin ang lahat ng mga dahon ng puno. Maaaring magastos ang operasyong ito at maaaring magtagal...",
     noRedisKeys: "Walang mga susi sa database na ito.",
     redisConnected: "Matagumpay na nakakonekta ang Redis",
+    reverted: "Naibalik",
     reloadingDataInfo: "Nire-reload ang impormasyon ng data ng Redis",
     added: "Idinagdag",
     saved: "Na-update",
@@ -434,6 +446,10 @@ const strings = {
       label: {
         animation: "Gumamit ng animation",
         noAnimation: "Walang animation",
+        undoEnabled: "Naka-enable ang undo",
+        undoDisabled: "Naka-disable ang undo",
+        diffEnabled: "Ipakita ang diff bago i-save",
+        diffDisabled: "Naka-disable ang diff bago i-save",
         jsonFormatTwoSpace: "I-format ang JSON na may 2 espasyo",
         jsonFormatFourSpace: "I-format ang JSON na may 4 na espasyo",
         formName: "Mga setting ng Redis",
@@ -442,6 +458,7 @@ const strings = {
         searchModeStartsWith: "Ang paghahanap ay nagsisimula sa mode",
         searchModeIncludes: "Kasama sa paghahanap ang mode"
       },
+      undoHint: "Available lang ang undo para sa mga uri ng key na string at JSON",
       field: {
         treeSeparator: "Tagahiwalay ng puno",
         treeSeparatorSelector: "Tagapili ng tree separator",

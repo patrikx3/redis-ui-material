@@ -200,7 +200,18 @@ const strings = {
     jsonViewEditor: "Таҳрири JSON",
     quickConsole: "Консоли зуд",
     moveUp: "Ба боло ҳаракат диҳед",
-    moveDown: "Ба поён ҳаракат диҳед"
+    moveDown: "Ба поён ҳаракат диҳед",
+  },
+  diff: {
+    reviewChanges: "\u0422\u0430\u0493\u0439\u0438\u0440\u043e\u0442\u0440\u043e \u0431\u0430\u0440\u0440\u0430\u0441\u04e3 \u043a\u0443\u043d\u0435\u0434",
+    inline: "\u0414\u0430\u0440 \u0441\u0430\u0442\u0440",
+    sideBySide: "\u041f\u0430\u04b3\u043b\u04ef \u0431\u0430 \u043f\u0430\u04b3\u043b\u04ef",
+    additions: "\u0438\u043b\u043e\u0432\u0430\u04b3\u043e",
+    deletions: "\u04b3\u0430\u0437\u0444\u04b3\u043e",
+    unchangedLines: "\u0441\u0430\u0442\u0440\u04b3\u043e\u0438 \u0431\u0435\u0442\u0430\u0493\u0439\u0438\u0440",
+    noChanges: "\u042f\u0433\u043e\u043d \u0442\u0430\u0493\u0439\u0438\u0440\u043e\u0442 \u0451\u0444\u0442 \u043d\u0430\u0448\u0443\u0434",
+    before: "\u041f\u0435\u0448",
+    after: "\u0411\u0430\u044a\u0434",
   },
   label: {
     id: {
@@ -366,6 +377,7 @@ const strings = {
     treeExpandAll: "Ҳама баргҳои дарахтонро васеъ кунед. Ин амалиёт метавонад қимат бошад ва метавонад вақтро талаб кунад ...",
     noRedisKeys: "Дар ин база ягон калид вуҷуд надорад.",
     redisConnected: "Redis бомуваффақият пайваст",
+    reverted: "\u0411\u0430\u0440\u0433\u0430\u0440\u0434\u043e\u043d\u0434\u0430 \u0448\u0443\u0434",
     reloadingDataInfo: "Бозборкунии маълумоти Redis",
     added: "Илова карда шуд",
     saved: "Навсозӣ",
@@ -434,6 +446,10 @@ const strings = {
       label: {
         animation: "Аниматсияро истифода баред",
         noAnimation: "Аниматсия нест",
+        undoEnabled: "\u0411\u0435\u043a\u043e\u0440\u043a\u0443\u043d\u04e3 \u0444\u0430\u044a\u043e\u043b \u0430\u0441\u0442",
+        undoDisabled: "\u0411\u0435\u043a\u043e\u0440\u043a\u0443\u043d\u04e3 \u0493\u0430\u0439\u0440\u0438\u0444\u0430\u044a\u043e\u043b \u0430\u0441\u0442",
+        diffEnabled: "Diff-\u0440\u043e \u043f\u0435\u0448 \u0430\u0437 \u043d\u0438\u0433\u043e\u04b3\u0434\u043e\u0440\u04e3 \u043d\u0438\u0448\u043e\u043d \u0434\u0438\u04b3\u0435\u0434",
+        diffDisabled: "Diff \u043f\u0435\u0448 \u0430\u0437 \u043d\u0438\u0433\u043e\u04b3\u0434\u043e\u0440\u04e3 \u0493\u0430\u0439\u0440\u0438\u0444\u0430\u044a\u043e\u043b \u0430\u0441\u0442",
         jsonFormatTwoSpace: "Формат JSON бо 2 фосила",
         jsonFormatFourSpace: "Формат JSON бо 4 фосила",
         formName: "Танзимоти Redis",
@@ -442,6 +458,7 @@ const strings = {
         searchModeStartsWith: "Ҷустуҷӯ бо оғоз бо режим",
         searchModeIncludes: "Ҷустуҷӯ режимро дар бар мегирад"
       },
+      undoHint: "\u0411\u0435\u043a\u043e\u0440\u043a\u0443\u043d\u04e3 \u0442\u0430\u043d\u04b3\u043e \u0431\u0430\u0440\u043e\u0438 \u043d\u0430\u043c\u0443\u0434\u04b3\u043e\u0438 \u043a\u0430\u043b\u0438\u0434\u0438 string \u0432\u0430 JSON \u0434\u0430\u0441\u0442\u0440\u0430\u0441 \u0430\u0441\u0442",
       field: {
         treeSeparator: "Ҷудокунандаи дарахт",
         treeSeparatorSelector: "Интихобкунандаи ҷудокунандаи дарахт",

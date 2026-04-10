@@ -200,7 +200,18 @@ const strings = {
     jsonViewEditor: "កែសម្រួល JSON",
     quickConsole: "កុងសូលរហ័ស",
     moveUp: "ផ្លាស់ទីឡើង",
-    moveDown: "ផ្លាស់ទីចុះ"
+    moveDown: "ផ្លាស់ទីចុះ",
+  },
+  diff: {
+    reviewChanges: "\u1796\u17b7\u1793\u17b7\u178f\u17d2\u1799\u1798\u17be\u179b\u1780\u17b6\u179a\u1795\u17d2\u179b\u17b6\u179f\u17cb\u1794\u17d2\u178f\u17bc\u179a",
+    inline: "\u1780\u17d2\u1793\u17bb\u1784\u1794\u1793\u17d2\u1791\u17b6\u178f\u17cb",
+    sideBySide: "\u1787\u17b6\u1794\u17cb\u1782\u17d2\u1793\u17b6",
+    additions: "\u1780\u17b6\u179a\u1794\u1793\u17d2\u1790\u17c2\u1798",
+    deletions: "\u1780\u17b6\u179a\u179b\u17bb\u1794",
+    unchangedLines: "\u1794\u1793\u17d2\u1791\u17b6\u178f\u17cb\u1798\u17b7\u1793\u1795\u17d2\u179b\u17b6\u179f\u17cb\u1794\u17d2\u178f\u17bc\u179a",
+    noChanges: "\u1798\u17b7\u1793\u1794\u17b6\u1793\u179a\u1780\u1783\u17be\u1789\u1780\u17b6\u179a\u1795\u17d2\u179b\u17b6\u179f\u17cb\u1794\u17d2\u178f\u17bc\u179a",
+    before: "\u1798\u17bb\u1793",
+    after: "\u1794\u1793\u17d2\u1791\u17b6\u1794\u17cb\u1796\u17b8",
   },
   label: {
     id: {
@@ -366,6 +377,7 @@ const strings = {
     treeExpandAll: "ពង្រីកស្លឹកឈើទាំងអស់។ ប្រតិបត្តិការនេះអាចមានតម្លៃថ្លៃ ហើយអាចចំណាយពេល...",
     noRedisKeys: "មិនមានសោនៅក្នុងមូលដ្ឋានទិន្នន័យនេះទេ។",
     redisConnected: "ការតភ្ជាប់ Redis បានជោគជ័យ",
+    reverted: "\u1794\u17b6\u1793\u178f\u17d2\u179a\u17a1\u1794\u17cb\u179c\u17b7\u1789",
     reloadingDataInfo: "កំពុងផ្ទុកព័ត៌មានទិន្នន័យ Redis ឡើងវិញ",
     added: "បន្ថែម",
     saved: "បានធ្វើបច្ចុប្បន្នភាព",
@@ -434,6 +446,10 @@ const strings = {
       label: {
         animation: "ប្រើចលនា",
         noAnimation: "គ្មានចលនា",
+        undoEnabled: "\u1780\u17b6\u179a\u1798\u17b7\u1793\u1792\u17d2\u179c\u17be\u179c\u17b7\u1789\u178f\u17d2\u179a\u17bc\u179c\u1794\u17b6\u1793\u1794\u17be\u1780",
+        undoDisabled: "\u1780\u17b6\u179a\u1798\u17b7\u1793\u1792\u17d2\u179c\u17be\u179c\u17b7\u1789\u178f\u17d2\u179a\u17bc\u179c\u1794\u17b6\u1793\u1794\u17b7\u1791",
+        diffEnabled: "\u1794\u1784\u17d2\u17a0\u17b6\u1789 diff \u1798\u17bb\u1793\u1796\u17c1\u179b\u179a\u1780\u17d2\u179f\u17b6\u1791\u17bb\u1780",
+        diffDisabled: "\u1794\u17b6\u1793\u1794\u17b7\u1791 diff \u1798\u17bb\u1793\u1796\u17c1\u179b\u179a\u1780\u17d2\u179f\u17b6\u1791\u17bb\u1780",
         jsonFormatTwoSpace: "ធ្វើទ្រង់ទ្រាយ JSON ដែលមាន 2 ដកឃ្លា",
         jsonFormatFourSpace: "ធ្វើទ្រង់ទ្រាយ JSON ដែលមាន 4 ដកឃ្លា",
         formName: "ការកំណត់ Redis",
@@ -442,6 +458,7 @@ const strings = {
         searchModeStartsWith: "ស្វែងរកដោយចាប់ផ្តើមដោយរបៀប",
         searchModeIncludes: "ការស្វែងរករួមមានរបៀប"
       },
+      undoHint: "\u1780\u17b6\u179a\u1798\u17b7\u1793\u1792\u17d2\u179c\u17be\u179c\u17b7\u1789\u17a2\u17b6\u1785\u1794\u17d2\u179a\u17be\u1794\u17b6\u1793\u179f\u1798\u17d2\u179a\u17b6\u1794\u17cb\u1794\u17d2\u179a\u1797\u17c1\u1791\u179f\u17c4 string \u1793\u17b7\u1784 JSON \u1794\u17c9\u17bb\u178e\u17d2\u178e\u17c4\u17c7",
       field: {
         treeSeparator: "អ្នកបំបែកដើមឈើ",
         treeSeparatorSelector: "ឧបករណ៍ជ្រើសរើសសញ្ញាបំបែកដើមឈើ",

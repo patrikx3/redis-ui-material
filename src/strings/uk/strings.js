@@ -200,6 +200,17 @@ const strings = {
     moveUp: "Перемістити вгору",
     moveDown: "Перемістити вниз",
   },
+  diff: {
+    reviewChanges: "\u041f\u0435\u0440\u0435\u0433\u043b\u044f\u043d\u0443\u0442\u0438 \u0437\u043c\u0456\u043d\u0438",
+    inline: "\u0423 \u0440\u044f\u0434\u043a\u0443",
+    sideBySide: "\u041f\u043b\u0456\u0447-\u043e-\u043f\u043b\u0456\u0447",
+    additions: "\u0434\u043e\u0434\u0430\u0432\u0430\u043d\u043d\u044f",
+    deletions: "\u0432\u0438\u0434\u0430\u043b\u0435\u043d\u043d\u044f",
+    unchangedLines: "\u043d\u0435\u0437\u043c\u0456\u043d\u0435\u043d\u0456 \u0440\u044f\u0434\u043a\u0438",
+    noChanges: "\u0417\u043c\u0456\u043d \u043d\u0435 \u0432\u0438\u044f\u0432\u043b\u0435\u043d\u043e",
+    before: "\u0414\u043e",
+    after: "\u041f\u0456\u0441\u043b\u044f",
+  },
   label: {
     id: {
       nodeId: 'ID вузла',
@@ -364,6 +375,7 @@ const strings = {
     treeExpandAll: "Розгорнути всі гілки дерева. Ця операція може бути ресурсоємною і зайняти час ...",
     noRedisKeys: "У цій базі даних немає ключів.",
     redisConnected: "Redis підключено успішно",
+    reverted: "\u0421\u043a\u0430\u0441\u043e\u0432\u0430\u043d\u043e",
     reloadingDataInfo: "Перезавантаження інформації Redis",
     added: "Додано",
     saved: "Оновлено",
@@ -432,6 +444,10 @@ const strings = {
       label: {
         animation: "Використовувати анімацію",
         noAnimation: "Без анімації",
+        undoEnabled: "\u0421\u043a\u0430\u0441\u0443\u0432\u0430\u043d\u043d\u044f \u0443\u0432\u0456\u043c\u043a\u043d\u0435\u043d\u043e",
+        undoDisabled: "\u0421\u043a\u0430\u0441\u0443\u0432\u0430\u043d\u043d\u044f \u0432\u0438\u043c\u043a\u043d\u0435\u043d\u043e",
+        diffEnabled: "\u041f\u043e\u043a\u0430\u0437\u0443\u0432\u0430\u0442\u0438 diff \u043f\u0435\u0440\u0435\u0434 \u0437\u0431\u0435\u0440\u0435\u0436\u0435\u043d\u043d\u044f\u043c",
+        diffDisabled: "Diff \u043f\u0435\u0440\u0435\u0434 \u0437\u0431\u0435\u0440\u0435\u0436\u0435\u043d\u043d\u044f\u043c \u0432\u0438\u043c\u043a\u043d\u0435\u043d\u043e",
         jsonFormatTwoSpace: "Форматувати JSON з 2 пробілами",
         jsonFormatFourSpace: "Форматувати JSON з 4 пробілами",
         formName: "Налаштування Redis",
@@ -440,6 +456,7 @@ const strings = {
         searchModeStartsWith: "Пошук з режимом «починається з»",
         searchModeIncludes: "Пошук з режимом «містить»"
       },
+      undoHint: "\u0421\u043a\u0430\u0441\u0443\u0432\u0430\u043d\u043d\u044f \u0434\u043e\u0441\u0442\u0443\u043f\u043d\u0435 \u043b\u0438\u0448\u0435 \u0434\u043b\u044f \u0442\u0438\u043f\u0456\u0432 \u043a\u043b\u044e\u0447\u0456\u0432 string \u0456 JSON",
       field: {
         treeSeparator: "Роздільник дерева",
         treeSeparatorSelector: "Вибір роздільника дерева",

@@ -202,7 +202,18 @@ const strings = {
     jsonViewEditor: "JSON සංස්කරණය",
     quickConsole: "ඉක්මන් කොන්සෝලය",
     moveUp: "ඉහළට ගෙනයන්න",
-    moveDown: "පහළට ගෙනයන්න"
+    moveDown: "පහළට ගෙනයන්න",
+  },
+  diff: {
+    reviewChanges: "\u0dc0\u0dd9\u0db1\u0dc3\u0dca\u0d9a\u0db8\u0dca \u0dc3\u0db8\u0dcf\u0dbd\u0ddd\u0da0\u0db1\u0dba \u0d9a\u0dbb\u0db1\u0dca\u0db1",
+    inline: "\u0db4\u0dda\u0dc5\u0dd2\u0dba \u0dad\u0dd4\u0dc5",
+    sideBySide: "\u0db4\u0dd0\u0dad\u0dca\u0dad\u0dd9\u0db1\u0dca \u0db4\u0dd0\u0dad\u0dca\u0dad\u0da7",
+    additions: "\u0d91\u0d9a\u0dad\u0dd4 \u0d9a\u0dd2\u0dbb\u0dd3\u0db8\u0dca",
+    deletions: "\u0d89\u0dc0\u0dad\u0dca \u0d9a\u0dd2\u0dbb\u0dd3\u0db8\u0dca",
+    unchangedLines: "\u0dc0\u0dd9\u0db1\u0dc3\u0dca \u0db1\u0ddc\u0dc0\u0dd6 \u0db4\u0dda\u0dc5\u0dd2",
+    noChanges: "\u0dc0\u0dd9\u0db1\u0dc3\u0dca\u0d9a\u0db8\u0dca \u0dc4\u0db3\u0dd4\u0db1\u0dcf\u0d9c\u0dad \u0db1\u0ddc\u0dc4\u0dd0\u0d9a\u0dd2 \u0dc0\u0dd2\u0dba",
+    before: "\u0db4\u0dd9\u0dbb",
+    after: "\u0db4\u0dc3\u0dd4",
   },
   label: {
     id: {
@@ -368,6 +379,7 @@ const strings = {
     treeExpandAll: "සියලුම ගස් කොළ පුළුල් කරන්න. මෙම මෙහෙයුම මිල අධික විය හැකි අතර කාලය ගත විය හැක ...",
     noRedisKeys: "මෙම දත්ත සමුදායේ යතුරු නැත.",
     redisConnected: "Redis සාර්ථකව සම්බන්ධ විය",
+    reverted: "\u0d86\u0db4\u0dc3\u0dd4 \u0dc4\u0dbb\u0dc0\u0dcf \u0d87\u0dad",
     reloadingDataInfo: "Redis දත්ත තොරතුරු නැවත පූරණය වෙමින්",
     added: "එක් කරන ලදී",
     saved: "යාවත්කාලීන කරන ලදී",
@@ -436,6 +448,10 @@ const strings = {
       label: {
         animation: "සජීවිකරණය භාවිතා කරන්න",
         noAnimation: "සජීවිකරණය නැත",
+        undoEnabled: "\u0d86\u0db4\u0dc3\u0dd4 \u0dc4\u0dd0\u0dbb\u0dc0\u0dd3\u0db8 \u0dc3\u0d9a\u0dca\u200d\u0dbb\u0dd2\u0dba\u0dba\u0dd2",
+        undoDisabled: "\u0d86\u0db4\u0dc3\u0dd4 \u0dc4\u0dd0\u0dbb\u0dc0\u0dd3\u0db8 \u0d85\u0d9a\u0dca\u200d\u0dbb\u0dd2\u0dba\u0dba\u0dd2",
+        diffEnabled: "\u0dc3\u0dd4\u0dbb\u0dd0\u0d9a\u0dd3\u0db8\u0da7 \u0db4\u0dd9\u0dbb diff \u0db4\u0dd9\u0db1\u0dca\u0dc0\u0db1\u0dca\u0db1",
+        diffDisabled: "\u0dc3\u0dd4\u0dbb\u0dd0\u0d9a\u0dd3\u0db8\u0da7 \u0db4\u0dd9\u0dbb diff \u0d85\u0d9a\u0dca\u200d\u0dbb\u0dd2\u0dba\u0dba\u0dd2",
         jsonFormatTwoSpace: "හිස්තැන් 2 කින් JSON ආකෘතිකරණය",
         jsonFormatFourSpace: "හිස්තැන් 4 කින් JSON ආකෘතිකරණය",
         formName: "Redis සැකසුම්",
@@ -444,6 +460,7 @@ const strings = {
         searchModeStartsWith: "ආරම්භ වන ප්\u200dරකාරයෙන් සොයන්න",
         searchModeIncludes: "ඇතුළත් වන ප්\u200dරකාරයෙන් සොයන්න"
       },
+      undoHint: "\u0d86\u0db4\u0dc3\u0dd4 \u0dc4\u0dd0\u0dbb\u0dc0\u0dd3\u0db8 \u0dbd\u0db6\u0dcf\u0d9c\u0dad \u0dc4\u0dd0\u0d9a\u0dca\u0d9a\u0dda string \u0dc3\u0dc4 JSON key \u0dc0\u0dbb\u0dca\u0d9c \u0dc3\u0db3\u0dc4\u0dcf \u0db4\u0db8\u0dab\u0dd2",
       field: {
         treeSeparator: "ගස් වෙන්කරන්නා",
         treeSeparatorSelector: "ගස් වෙන්කරන්නා තෝරකය",

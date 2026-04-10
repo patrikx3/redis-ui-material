@@ -439,12 +439,23 @@ import { P3xrButtonComponent } from '../components/p3xr-button.component';
                     <mat-divider></mat-divider>
 
                     <mat-list-item (click)="openTreeSettings($event)">
-                        <div style="display: flex; width: 100%;">{{ settings.jsonFormat() === 2 ? strings().form?.treeSettings?.label?.jsonFormatTwoSpace : strings().form?.treeSettings?.label?.jsonFormatFourSpace }}</div>
+                        <div style="display: flex; width: 100%; font-weight: 500;">{{ settings.jsonFormat() === 2 ? strings().form?.treeSettings?.label?.jsonFormatTwoSpace : strings().form?.treeSettings?.label?.jsonFormatFourSpace }}</div>
                     </mat-list-item>
                     <mat-divider></mat-divider>
 
                     <mat-list-item (click)="openTreeSettings($event)">
-                        <div style="display: flex; width: 100%;">{{ settings.animation() ? strings().form?.treeSettings?.label?.animation : strings().form?.treeSettings?.label?.noAnimation }}</div>
+                        <div style="display: flex; width: 100%; font-weight: 500;">{{ settings.animation() ? strings().form?.treeSettings?.label?.animation : strings().form?.treeSettings?.label?.noAnimation }}</div>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+
+                    <mat-list-item (click)="openTreeSettings($event)">
+                        <div><div style="display: flex; width: 100%; font-weight: 500;">{{ settings.undoEnabled() ? (strings().form?.treeSettings?.label?.undoEnabled || 'Undo enabled') : (strings().form?.treeSettings?.label?.undoDisabled || 'Undo disabled') }}</div>
+                        <div class="p3xr-settings-hint">{{ strings().form?.treeSettings?.undoHint || 'Undo is available for string and JSON key types only' }}</div></div>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+
+                    <mat-list-item (click)="openTreeSettings($event)">
+                        <div style="display: flex; width: 100%; font-weight: 500;">{{ settings.showDiffBeforeSave() ? (strings().form?.treeSettings?.label?.diffEnabled || 'Show diff before saving') : (strings().form?.treeSettings?.label?.diffDisabled || 'Diff before save disabled') }}</div>
                     </mat-list-item>
                 </mat-list>
             </div>

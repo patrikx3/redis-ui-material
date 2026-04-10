@@ -27,7 +27,7 @@ export class JsonEditorDialogService {
 
         const dialogRef = this.dialog.open(JsonEditorDialogComponent, createDialogPopupSettings({
             data: { value: options.value, hideFormatSave: options.hideFormatSave },
-            disableClose: true,
+            disableClose: false,
             width: '90vw',
             height: '90vh',
         }));

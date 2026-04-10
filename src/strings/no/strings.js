@@ -200,7 +200,18 @@ const strings = {
     jsonViewEditor: "Rediger JSON",
     quickConsole: "Hurtigkonsoll",
     moveUp: "Flytt opp",
-    moveDown: "Flytt ned"
+    moveDown: "Flytt ned",
+  },
+  diff: {
+    reviewChanges: "Gjennomg\u00e5 endringer",
+    inline: "Innebygd",
+    sideBySide: "Side ved side",
+    additions: "tilf\u00f8yelser",
+    deletions: "slettinger",
+    unchangedLines: "uendrede linjer",
+    noChanges: "Ingen endringer oppdaget",
+    before: "F\u00f8r",
+    after: "Etter",
   },
   label: {
     id: {
@@ -366,6 +377,7 @@ const strings = {
     treeExpandAll: "Utvid alle trebladene. Denne operasjonen kan være dyr og kan ta tid ...",
     noRedisKeys: "Det er ingen nøkler i denne databasen.",
     redisConnected: "Redis tilkoblet vellykket",
+    reverted: "Angret",
     reloadingDataInfo: "Laster Redis datainfo på nytt",
     added: "Lagt til",
     saved: "Oppdatert",
@@ -434,6 +446,10 @@ const strings = {
       label: {
         animation: "Bruk animasjon",
         noAnimation: "Ingen animasjon",
+        undoEnabled: "Angre aktivert",
+        undoDisabled: "Angre deaktivert",
+        diffEnabled: "Vis diff f\u00f8r lagring",
+        diffDisabled: "Diff f\u00f8r lagring er deaktivert",
         jsonFormatTwoSpace: "Formater JSON med 2 mellomrom",
         jsonFormatFourSpace: "Formater JSON med 4 mellomrom",
         formName: "Redis-innstillinger",
@@ -442,6 +458,7 @@ const strings = {
         searchModeStartsWith: "Søk med starter med modus",
         searchModeIncludes: "Søk inkluderer modus"
       },
+      undoHint: "Angre er bare tilgjengelig for n\u00f8kkeltypene string og JSON",
       field: {
         treeSeparator: "Treskiller",
         treeSeparatorSelector: "Treskillevelger",

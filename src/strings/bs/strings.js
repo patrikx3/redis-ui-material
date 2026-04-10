@@ -204,6 +204,17 @@ const strings = {
     moveUp: "Pomjeri gore",
     moveDown: "Pomjeri dolje",
   },
+  diff: {
+    reviewChanges: "Pregledaj promjene",
+    inline: "U liniji",
+    sideBySide: "Jedno pored drugog",
+    additions: "dodavanja",
+    deletions: "brisanja",
+    unchangedLines: "nepromijenjene linije",
+    noChanges: "Nema otkrivenih promjena",
+    before: "Prije",
+    after: "Poslije",
+  },
   label: {
     id: {
       nodeId: 'ID čvora',
@@ -368,6 +379,7 @@ const strings = {
     treeExpandAll: "Proširi sve listove stabla. Ova operacija može biti skupa i može potrajati ...",
     noRedisKeys: "Nema ključeva u ovoj bazi podataka.",
     redisConnected: "Redis uspješno povezan",
+    reverted: "Vra\u0107eno",
     reloadingDataInfo: "Ponovno učitavanje informacija o Redis podacima",
     added: "Dodano",
     saved: "Ažurirano",
@@ -436,6 +448,10 @@ const strings = {
       label: {
         animation: "Koristi animaciju",
         noAnimation: "Bez animacije",
+        undoEnabled: "Poni\u0161tavanje uklju\u010deno",
+        undoDisabled: "Poni\u0161tavanje isklju\u010deno",
+        diffEnabled: "Prika\u017ei diff prije spremanja",
+        diffDisabled: "Diff prije spremanja je isklju\u010den",
         jsonFormatTwoSpace: "Formatiraj JSON sa 2 razmaka",
         jsonFormatFourSpace: "Formatiraj JSON sa 4 razmaka",
         formName: "Redis postavke",
@@ -444,6 +460,7 @@ const strings = {
         searchModeStartsWith: "Pretraga sa početkom",
         searchModeIncludes: "Pretraga sa uključivanjem"
       },
+      undoHint: "Poni\u0161tavanje je dostupno samo za string i JSON tipove klju\u010deva",
       field: {
         treeSeparator: "Separator stabla",
         treeSeparatorSelector: "Selektor separatora stabla",

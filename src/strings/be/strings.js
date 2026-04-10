@@ -200,7 +200,18 @@ const strings = {
     jsonViewEditor: "Рэдагаваць JSON",
     quickConsole: "Хуткая кансоль",
     moveUp: "Перамясціць уверх",
-    moveDown: "Перамясціць уніз"
+    moveDown: "Перамясціць уніз",
+  },
+  diff: {
+    reviewChanges: "\u041f\u0440\u0430\u0433\u043b\u044f\u0434\u0437\u0435\u0446\u044c \u0437\u043c\u0435\u043d\u044b",
+    inline: "\u0423 \u0440\u0430\u0434\u043e\u043a",
+    sideBySide: "\u041f\u043e\u0431\u0430\u0447",
+    additions: "\u0434\u0430\u0434\u0430\u0434\u0437\u0435\u043d\u0430",
+    deletions: "\u0432\u044b\u0434\u0430\u043b\u0435\u043d\u0430",
+    unchangedLines: "\u0440\u0430\u0434\u043a\u0456 \u0431\u0435\u0437 \u0437\u043c\u0435\u043d",
+    noChanges: "\u0417\u043c\u0435\u043d \u043d\u0435 \u0432\u044b\u044f\u045e\u043b\u0435\u043d\u0430",
+    before: "\u0414\u0430",
+    after: "\u041f\u0430\u0441\u043b\u044f",
   },
   label: {
     id: {
@@ -366,6 +377,7 @@ const strings = {
     treeExpandAll: "Разгарніце ўсе лісце дрэва. Гэтая аперацыя можа быць дарагой і можа заняць час ...",
     noRedisKeys: "У гэтай базе няма ключоў.",
     redisConnected: "Redis паспяхова падключыўся",
+    reverted: "\u0410\u0434\u043c\u0435\u043d\u0435\u043d\u0430",
     reloadingDataInfo: "Перазагрузка даных Redis",
     added: "Дададзена",
     saved: "Абноўлены",
@@ -434,6 +446,10 @@ const strings = {
       label: {
         animation: "Выкарыстоўвайце анімацыю",
         noAnimation: "Без анімацыі",
+        undoEnabled: "\u0410\u0434\u043c\u0435\u043d\u0430 \u045e\u043a\u043b\u044e\u0447\u0430\u043d\u0430",
+        undoDisabled: "\u0410\u0434\u043c\u0435\u043d\u0430 \u0432\u044b\u043a\u043b\u044e\u0447\u0430\u043d\u0430",
+        diffEnabled: "\u041f\u0430\u043a\u0430\u0437\u0432\u0430\u0446\u044c \u0430\u0434\u0440\u043e\u0437\u043d\u0435\u043d\u043d\u0456 \u043f\u0435\u0440\u0430\u0434 \u0437\u0430\u0445\u0430\u0432\u0430\u043d\u043d\u0435\u043c",
+        diffDisabled: "\u041f\u0430\u043a\u0430\u0437 \u0430\u0434\u0440\u043e\u0437\u043d\u0435\u043d\u043d\u044f\u045e \u043f\u0435\u0440\u0430\u0434 \u0437\u0430\u0445\u0430\u0432\u0430\u043d\u043d\u0435\u043c \u0432\u044b\u043a\u043b\u044e\u0447\u0430\u043d\u044b",
         jsonFormatTwoSpace: "Фармат JSON з 2 прабеламі",
         jsonFormatFourSpace: "Фармат JSON з 4 прабеламі",
         formName: "Налады Redis",
@@ -442,6 +458,7 @@ const strings = {
         searchModeStartsWith: "Пошук з пачынаецца з рэжыму",
         searchModeIncludes: "Пошук уключае рэжым"
       },
+      undoHint: "\u0410\u0434\u043c\u0435\u043d\u0430 \u0434\u0430\u0441\u0442\u0443\u043f\u043d\u0430\u044f \u0442\u043e\u043b\u044c\u043a\u0456 \u0434\u043b\u044f \u0442\u044b\u043f\u0430\u045e \u043a\u043b\u044e\u0447\u043e\u045e string \u0456 JSON",
       field: {
         treeSeparator: "Раздзяляльнік дрэў",
         treeSeparatorSelector: "Селектар падзельніка дрэва",

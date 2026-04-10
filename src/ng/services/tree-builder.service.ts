@@ -22,11 +22,12 @@ export class TreeBuilderService {
             ], { type: 'application/javascript' });
             this.worker = new Worker(URL.createObjectURL(blob));
             this.worker.onmessage = (e: MessageEvent) => {
-                const { _requestId, ...result } = e.data;
-                const resolve = this.pendingResolves.get(_requestId);
+                const data = e.data;
+                const requestId = data._requestId;
+                const resolve = this.pendingResolves.get(requestId);
                 if (resolve) {
-                    this.pendingResolves.delete(_requestId);
-                    resolve(result);
+                    this.pendingResolves.delete(requestId);
+                    resolve(data);
                 }
             };
             this.worker.onerror = () => {
@@ -178,7 +179,7 @@ function workerFn() {
             (self as any).postMessage({ _requestId, keys: sorted });
         } else if (data.action === 'buildTree') {
             const result = buildTree(data.keys, data.divider, data.keysInfo, data.savedExpandedNodes);
-            (self as any).postMessage({ _requestId, ...result });
+            (self as any).postMessage({ _requestId: _requestId, nodes: result.nodes, expandedNodes: result.expandedNodes });
         }
     };
 }

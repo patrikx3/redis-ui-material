@@ -200,7 +200,18 @@ const strings = {
     jsonViewEditor: "Chỉnh sửa JSON",
     quickConsole: "Bảng điều khiển nhanh",
     moveUp: "Di chuyển lên",
-    moveDown: "Di chuyển xuống"
+    moveDown: "Di chuyển xuống",
+  },
+  diff: {
+    reviewChanges: "Xem l\u1ea1i thay \u0111\u1ed5i",
+    inline: "Trong d\u00f2ng",
+    sideBySide: "C\u1ea1nh nhau",
+    additions: "ph\u1ea7n th\u00eam",
+    deletions: "ph\u1ea7n x\u00f3a",
+    unchangedLines: "d\u00f2ng kh\u00f4ng thay \u0111\u1ed5i",
+    noChanges: "Kh\u00f4ng ph\u00e1t hi\u1ec7n thay \u0111\u1ed5i",
+    before: "Tr\u01b0\u1edbc",
+    after: "Sau",
   },
   label: {
     id: {
@@ -366,6 +377,7 @@ const strings = {
     treeExpandAll: "Mở rộng tất cả các lá cây. Hoạt động này có thể tốn kém và có thể mất thời gian...",
     noRedisKeys: "Không có chìa khóa trong cơ sở dữ liệu này.",
     redisConnected: "Redis đã kết nối thành công",
+    reverted: "\u0110\u00e3 ho\u00e0n t\u00e1c",
     reloadingDataInfo: "Đang tải lại thông tin dữ liệu Redis",
     added: "Đã thêm",
     saved: "Đã cập nhật",
@@ -434,6 +446,10 @@ const strings = {
       label: {
         animation: "Sử dụng hoạt ảnh",
         noAnimation: "Không có hình ảnh động",
+        undoEnabled: "Ho\u00e0n t\u00e1c \u0111\u00e3 b\u1eadt",
+        undoDisabled: "Ho\u00e0n t\u00e1c \u0111\u00e3 t\u1eaft",
+        diffEnabled: "Hi\u1ec3n th\u1ecb diff tr\u01b0\u1edbc khi l\u01b0u",
+        diffDisabled: "Diff tr\u01b0\u1edbc khi l\u01b0u \u0111\u00e3 t\u1eaft",
         jsonFormatTwoSpace: "Định dạng JSON có 2 dấu cách",
         jsonFormatFourSpace: "Định dạng JSON có 4 dấu cách",
         formName: "Cài đặt Redis",
@@ -442,6 +458,7 @@ const strings = {
         searchModeStartsWith: "Tìm kiếm bằng chế độ bắt đầu",
         searchModeIncludes: "Tìm kiếm bao gồm chế độ"
       },
+      undoHint: "Ho\u00e0n t\u00e1c ch\u1ec9 kh\u1ea3 d\u1ee5ng cho lo\u1ea1i kh\u00f3a string v\u00e0 JSON",
       field: {
         treeSeparator: "Tách cây",
         treeSeparatorSelector: "Bộ chọn tách cây",

@@ -200,7 +200,18 @@ const strings = {
     jsonViewEditor: "JSON түзөтүү",
     quickConsole: "Ыкчам консол",
     moveUp: "Жогору жылдыруу",
-    moveDown: "Төмөн жылдыруу"
+    moveDown: "Төмөн жылдыруу",
+  },
+  diff: {
+    reviewChanges: "\u04e8\u0437\u0433\u04e9\u0440\u0442\u04af\u04af\u043b\u04e9\u0440\u0434\u04af \u043a\u0430\u0440\u0430\u043f \u0447\u044b\u0433\u0443\u0443",
+    inline: "\u0421\u0430\u043f \u0438\u0447\u0438\u043d\u0434\u0435",
+    sideBySide: "\u0416\u0430\u043d\u0430\u0448\u0430",
+    additions: "\u043a\u043e\u0448\u0443\u043c\u0447\u0430\u043b\u0430\u0440",
+    deletions: "\u04e9\u0447\u04af\u0440\u04af\u04af\u043b\u04e9\u0440",
+    unchangedLines: "\u04e9\u0437\u0433\u04e9\u0440\u0431\u04e9\u0433\u04e9\u043d \u0441\u0430\u043f\u0442\u0430\u0440",
+    noChanges: "\u04e8\u0437\u0433\u04e9\u0440\u0442\u04af\u04af \u0442\u0430\u0431\u044b\u043b\u0433\u0430\u043d \u0436\u043e\u043a",
+    before: "\u041c\u0443\u0440\u0443\u043d",
+    after: "\u041a\u0438\u0439\u0438\u043d",
   },
   label: {
     id: {
@@ -366,6 +377,7 @@ const strings = {
     treeExpandAll: "Бардык дарак жалбырактарын кеңейтүү. Бул операция кымбат болушу мүмкүн жана убакыт талап кылынышы мүмкүн ...",
     noRedisKeys: "Бул маалымат базасында ачкычтар жок.",
     redisConnected: "Redis ийгиликтүү туташты",
+    reverted: "\u0410\u0440\u0442\u043a\u0430 \u043a\u0430\u0439\u0442\u0430\u0440\u044b\u043b\u0434\u044b",
     reloadingDataInfo: "Redis маалыматы кайра жүктөлүүдө",
     added: "Кошулган",
     saved: "Жаңыртылган",
@@ -434,6 +446,10 @@ const strings = {
       label: {
         animation: "Анимацияны колдонуңуз",
         noAnimation: "Анимация жок",
+        undoEnabled: "\u0410\u0440\u0442\u043a\u0430 \u043a\u0430\u0439\u0442\u0430\u0440\u0443\u0443 \u043a\u04af\u0439\u0433\u04af\u0437\u04af\u043b\u0433\u04e9\u043d",
+        undoDisabled: "\u0410\u0440\u0442\u043a\u0430 \u043a\u0430\u0439\u0442\u0430\u0440\u0443\u0443 \u04e9\u0447\u04af\u0440\u04af\u043b\u0433\u04e9\u043d",
+        diffEnabled: "\u0421\u0430\u043a\u0442\u043e\u043e\u0434\u043e\u043d \u043c\u0443\u0440\u0434\u0430 diff \u043a\u04e9\u0440\u0441\u04e9\u0442",
+        diffDisabled: "\u0421\u0430\u043a\u0442\u043e\u043e\u0434\u043e\u043d \u043c\u0443\u0440\u0434\u0430 diff \u04e9\u0447\u04af\u0440\u04af\u043b\u0433\u04e9\u043d",
         jsonFormatTwoSpace: "JSON форматын 2 боштук менен түзүңүз",
         jsonFormatFourSpace: "4 боштук менен JSON форматтаңыз",
         formName: "Redis орнотуулары",
@@ -442,6 +458,7 @@ const strings = {
         searchModeStartsWith: "Издөө режими менен башталат",
         searchModeIncludes: "Издөө режимин камтыйт"
       },
+      undoHint: "\u0410\u0440\u0442\u043a\u0430 \u043a\u0430\u0439\u0442\u0430\u0440\u0443\u0443 string \u0436\u0430\u043d\u0430 JSON \u0430\u0447\u043a\u044b\u0447 \u0442\u04af\u0440\u043b\u04e9\u0440\u04af \u04af\u0447\u04af\u043d \u0433\u0430\u043d\u0430 \u0436\u0435\u0442\u043a\u0438\u043b\u0438\u043a\u0442\u04af\u04af",
       field: {
         treeSeparator: "Дарак бөлгүч",
         treeSeparatorSelector: "Дарак бөлгүч тандагыч",

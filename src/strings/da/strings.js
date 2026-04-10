@@ -202,6 +202,17 @@ const strings = {
     moveUp: "Flyt op",
     moveDown: "Flyt ned",
   },
+  diff: {
+    reviewChanges: "Gennemg\u00e5 \u00e6ndringer",
+    inline: "Integreret",
+    sideBySide: "Side om side",
+    additions: "tilf\u00f8jelser",
+    deletions: "sletninger",
+    unchangedLines: "u\u00e6ndrede linjer",
+    noChanges: "Ingen \u00e6ndringer fundet",
+    before: "F\u00f8r",
+    after: "Efter",
+  },
   label: {
     id: {
       nodeId: "Node ID",
@@ -366,6 +377,7 @@ const strings = {
     treeExpandAll: "Udvid alle træblade. Denne operation kan være dyr og kan tage tid ...",
     noRedisKeys: "Der er ingen nøgler i denne database.",
     redisConnected: "Redis tilsluttet lykkedes",
+    reverted: "Fortrudt",
     reloadingDataInfo: "Genindlæser Redis datainfo",
     added: "Tilføjet",
     saved: "Opdateret",
@@ -434,6 +446,10 @@ const strings = {
       label: {
         animation: "Brug animation",
         noAnimation: "Ingen animation",
+        undoEnabled: "Fortryd aktiveret",
+        undoDisabled: "Fortryd deaktiveret",
+        diffEnabled: "Vis diff f\u00f8r lagring",
+        diffDisabled: "Diff f\u00f8r lagring er deaktiveret",
         jsonFormatTwoSpace: "Formater JSON med 2 mellemrum",
         jsonFormatFourSpace: "Formater JSON med 4 mellemrum",
         formName: "Redis indstillinger",
@@ -442,6 +458,7 @@ const strings = {
         searchModeStartsWith: "Søg med starter med tilstand",
         searchModeIncludes: "Søgning inkluderer tilstand"
       },
+      undoHint: "Fortryd er kun tilg\u00e6ngelig for n\u00f8gletypeerne string og JSON",
       field: {
         treeSeparator: "Træudskiller",
         treeSeparatorSelector: "Træudskillervælger",

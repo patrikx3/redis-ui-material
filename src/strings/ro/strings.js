@@ -200,7 +200,18 @@ const strings = {
     jsonViewEditor: "Editare JSON",
     quickConsole: "Consola rapida",
     moveUp: "Mută în sus",
-    moveDown: "Mută în jos"
+    moveDown: "Mută în jos",
+  },
+  diff: {
+    reviewChanges: "Revizuie\u0219te modific\u0103rile",
+    inline: "\u00cen linie",
+    sideBySide: "Al\u0103turat",
+    additions: "ad\u0103ug\u0103ri",
+    deletions: "\u0219tergeri",
+    unchangedLines: "linii nemodificate",
+    noChanges: "Nu au fost detectate modific\u0103ri",
+    before: "\u00cenainte",
+    after: "Dup\u0103",
   },
   label: {
     id: {
@@ -366,6 +377,7 @@ const strings = {
     treeExpandAll: "Extindere toate ramurile arborelui. Aceasta operatie poate fi costisitoare si poate dura ...",
     noRedisKeys: "Nu exista chei in aceasta baza de date.",
     redisConnected: "Redis conectat cu succes",
+    reverted: "Restabilit",
     reloadingDataInfo: "Se reincarca informatiile de date Redis",
     added: "Adaugat",
     saved: "Actualizat",
@@ -434,6 +446,10 @@ const strings = {
       label: {
         animation: "Foloseste animatie",
         noAnimation: "Fara animatie",
+        undoEnabled: "Anulare activat\u0103",
+        undoDisabled: "Anulare dezactivat\u0103",
+        diffEnabled: "Afi\u0219eaz\u0103 diff \u00eenainte de salvare",
+        diffDisabled: "Diff \u00eenainte de salvare dezactivat",
         jsonFormatTwoSpace: "Formatare JSON cu 2 spatii",
         jsonFormatFourSpace: "Formatare JSON cu 4 spatii",
         formName: "Setari Redis",
@@ -442,6 +458,7 @@ const strings = {
         searchModeStartsWith: "Cautare cu incepe cu",
         searchModeIncludes: "Cautare cu include"
       },
+      undoHint: "Anularea este disponibil\u0103 doar pentru tipurile de chei string \u0219i JSON",
       field: {
         treeSeparator: "Separator arbore",
         treeSeparatorSelector: "Selector separator arbore",

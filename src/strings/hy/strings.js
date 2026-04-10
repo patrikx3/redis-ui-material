@@ -204,6 +204,17 @@ const strings = {
     moveUp: "Տեղափոխել վերև",
     moveDown: "Տեղափոխել ներքև",
   },
+  diff: {
+    reviewChanges: "\u054e\u0565\u0580\u0561\u0576\u0561\u0575\u0565\u056c \u0583\u0578\u0583\u0578\u056d\u0578\u0582\u0569\u0575\u0578\u0582\u0576\u0576\u0565\u0580\u0568",
+    inline: "\u0546\u0565\u0580\u056f\u0561\u057c\u0578\u0582\u0581\u057e\u0561\u056e",
+    sideBySide: "\u053f\u0578\u0572\u0584 \u056f\u0578\u0572\u0584\u056b",
+    additions: "\u0561\u057e\u0565\u056c\u0561\u0581\u0578\u0582\u0574\u0576\u0565\u0580",
+    deletions: "\u057b\u0576\u057b\u0578\u0582\u0574\u0576\u0565\u0580",
+    unchangedLines: "\u0561\u0576\u0583\u0578\u0583\u0578\u056d \u057f\u0578\u0572\u0565\u0580",
+    noChanges: "\u0553\u0578\u0583\u0578\u056d\u0578\u0582\u0569\u0575\u0578\u0582\u0576\u0576\u0565\u0580 \u0579\u0565\u0576 \u0570\u0561\u0575\u057f\u0576\u0561\u0562\u0565\u0580\u057e\u0565\u056c",
+    before: "\u0544\u056b\u0576\u0579\u0587",
+    after: "\u0540\u0565\u057f\u0578",
+  },
   label: {
     id: {
       nodeId: "Հանգույցի ID",
@@ -368,6 +379,7 @@ const strings = {
     treeExpandAll: "Բացվում են ծառի բոլոր տերևները։ Այս գործողությունը կարող է ծախսատար լինել և ժամանակ պահանջել ...",
     noRedisKeys: "Այս տվյալների բազայում բանալիներ չկան։",
     redisConnected: "Redis-ը հաջողությամբ միացավ",
+    reverted: "\u0540\u0565\u057f\u0561\u0580\u056f\u057e\u0565\u0581",
     connectionRestored: "Կապը վերականգնվեց",
     reloadingDataInfo: "Redis տվյալները վերաբեռնվում են",
     added: "Ավելացվեց",
@@ -436,6 +448,10 @@ const strings = {
       label: {
         animation: "Օգտագործել անիմացիա",
         noAnimation: "Առանց անիմացիայի",
+        undoEnabled: "\u0540\u0565\u057f\u0561\u0580\u056f\u0578\u0582\u0574\u0568 \u0574\u056b\u0561\u0581\u057e\u0561\u056e \u0567",
+        undoDisabled: "\u0540\u0565\u057f\u0561\u0580\u056f\u0578\u0582\u0574\u0568 \u0561\u0576\u057b\u0561\u057f\u057e\u0561\u056e \u0567",
+        diffEnabled: "\u0551\u0578\u0582\u0581\u0561\u0564\u0580\u0565\u056c diff-\u0568 \u057a\u0561\u0570\u0565\u056c\u0578\u0582\u0581 \u0561\u057c\u0561\u057b",
+        diffDisabled: "\u054a\u0561\u0570\u0565\u056c\u0578\u0582\u0581 \u0561\u057c\u0561\u057b diff-\u0568 \u0561\u0576\u057b\u0561\u057f\u057e\u0561\u056e \u0567",
         jsonFormatTwoSpace: "Ձևաչափել JSON-ը 2 բացատով",
         jsonFormatFourSpace: "Ձևաչափել JSON-ը 4 բացատով",
         formName: "Redis կարգավորումներ",
@@ -444,6 +460,7 @@ const strings = {
         searchModeStartsWith: "«Սկսվում է»-ով որոնման ռեժիմ",
         searchModeIncludes: "Պարունակում է որոնման ռեժիմ"
       },
+      undoHint: "\u0540\u0565\u057f\u0561\u0580\u056f\u0578\u0582\u0574\u0568 \u0570\u0561\u057d\u0561\u0576\u0565\u056c\u056b \u0567 \u0574\u056b\u0561\u0575\u0576 string \u0587 JSON \u0562\u0561\u0576\u0561\u056c\u056b\u056b \u057f\u0565\u057d\u0561\u056f\u0576\u0565\u0580\u056b \u0570\u0561\u0574\u0561\u0580",
       field: {
         treeSeparator: "Ծառի բաժանարար",
         treeSeparatorSelector: "Ծառի բաժանարարի ընտրիչ",

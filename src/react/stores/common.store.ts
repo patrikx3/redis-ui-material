@@ -43,6 +43,10 @@ interface CommonState {
     toastOpen: boolean
     toast: (message: string, hideDelay?: number) => void
     closeToast: () => void
+    toastUndoAction: string | null
+    toastWithUndo: (message: string) => Promise<boolean>
+    resolveToastUndo: ((clicked: boolean) => void) | null
+    handleToastUndoClick: () => void
 
     // Confirm dialog
     confirmOpen: boolean
@@ -80,7 +84,28 @@ export const useCommonStore = create<CommonState>((set, get) => ({
     toast: (message: string, _hideDelay?: number) => {
         set({ toastMessage: message, toastOpen: true })
     },
-    closeToast: () => set({ toastOpen: false }),
+    closeToast: () => {
+        const resolve = get().resolveToastUndo
+        if (resolve) {
+            resolve(false)
+            set({ resolveToastUndo: null, toastUndoAction: null })
+        }
+        set({ toastOpen: false })
+    },
+    toastUndoAction: null,
+    resolveToastUndo: null,
+    toastWithUndo: (message: string) => {
+        return new Promise<boolean>((resolve) => {
+            set({ toastMessage: message, toastOpen: true, toastUndoAction: 'Undo', resolveToastUndo: resolve })
+        })
+    },
+    handleToastUndoClick: () => {
+        const resolve = get().resolveToastUndo
+        if (resolve) {
+            resolve(true)
+            set({ resolveToastUndo: null, toastUndoAction: null, toastOpen: false })
+        }
+    },
 
     confirmOpen: false,
     confirmOptions: null,

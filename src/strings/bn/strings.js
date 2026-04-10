@@ -200,7 +200,18 @@ const strings = {
     jsonViewEditor: "JSON সম্পাদনা করুন",
     quickConsole: "দ্রুত কনসোল",
     moveUp: "উপরে সরান",
-    moveDown: "নিচে সরান"
+    moveDown: "নিচে সরান",
+  },
+  diff: {
+    reviewChanges: "\u09aa\u09b0\u09bf\u09ac\u09b0\u09cd\u09a4\u09a8\u0997\u09c1\u09b2\u09bf \u09aa\u09b0\u09cd\u09af\u09be\u09b2\u09cb\u099a\u09a8\u09be \u0995\u09b0\u09c1\u09a8",
+    inline: "\u0987\u09a8\u09b2\u09be\u0987\u09a8",
+    sideBySide: "\u09aa\u09be\u09b6\u09be\u09aa\u09be\u09b6\u09bf",
+    additions: "\u09b8\u0982\u09af\u09cb\u099c\u09a8",
+    deletions: "\u0985\u09aa\u09b8\u09be\u09b0\u09a3",
+    unchangedLines: "\u0985\u09aa\u09b0\u09bf\u09ac\u09b0\u09cd\u09a4\u09bf\u09a4 \u09b2\u09be\u0987\u09a8",
+    noChanges: "\u0995\u09cb\u09a8\u0993 \u09aa\u09b0\u09bf\u09ac\u09b0\u09cd\u09a4\u09a8 \u09b6\u09a8\u09be\u0995\u09cd\u09a4 \u09b9\u09af\u09bc\u09a8\u09bf",
+    before: "\u0986\u0997\u09c7",
+    after: "\u09aa\u09b0\u09c7",
   },
   label: {
     id: {
@@ -366,6 +377,7 @@ const strings = {
     treeExpandAll: "সমস্ত গাছের পাতা প্রসারিত করুন। এই অপারেশন ব্যয়বহুল হতে পারে এবং সময় লাগতে পারে...",
     noRedisKeys: "এই ডাটাবেসে কোন কী নেই।",
     redisConnected: "Redis সফলভাবে সংযুক্ত হয়েছে৷",
+    reverted: "\u09aa\u09c2\u09b0\u09cd\u09ac\u09be\u09ac\u09b8\u09cd\u09a5\u09be\u09af\u09bc \u09ab\u09c7\u09b0\u09be\u09a8\u09cb \u09b9\u09af\u09bc\u09c7\u099b\u09c7",
     reloadingDataInfo: "Redis ডেটা তথ্য পুনরায় লোড করা হচ্ছে",
     added: "যোগ করা হয়েছে",
     saved: "আপডেট করা হয়েছে",
@@ -434,6 +446,10 @@ const strings = {
       label: {
         animation: "অ্যানিমেশন ব্যবহার করুন",
         noAnimation: "অ্যানিমেশন নেই",
+        undoEnabled: "\u09aa\u09c2\u09b0\u09cd\u09ac\u09be\u09ac\u09b8\u09cd\u09a5\u09be\u09af\u09bc \u09ab\u09c7\u09b0\u09be\u09a8\u09cb \u099a\u09be\u09b2\u09c1",
+        undoDisabled: "\u09aa\u09c2\u09b0\u09cd\u09ac\u09be\u09ac\u09b8\u09cd\u09a5\u09be\u09af\u09bc \u09ab\u09c7\u09b0\u09be\u09a8\u09cb \u09ac\u09a8\u09cd\u09a7",
+        diffEnabled: "\u09b8\u0982\u09b0\u0995\u09cd\u09b7\u09a3\u09c7\u09b0 \u0986\u0997\u09c7 diff \u09a6\u09c7\u0996\u09be\u09a8",
+        diffDisabled: "\u09b8\u0982\u09b0\u0995\u09cd\u09b7\u09a3\u09c7\u09b0 \u0986\u0997\u09c7 diff \u09a8\u09bf\u09b7\u09cd\u0995\u09cd\u09b0\u09bf\u09af\u09bc",
         jsonFormatTwoSpace: "2 স্পেস সহ JSON ফর্ম্যাট করুন",
         jsonFormatFourSpace: "4টি স্পেস সহ JSON ফরম্যাট করুন",
         formName: "Redis সেটিংস",
@@ -442,6 +458,7 @@ const strings = {
         searchModeStartsWith: "মোড দিয়ে শুরু করে অনুসন্ধান করুন",
         searchModeIncludes: "অনুসন্ধান মোড অন্তর্ভুক্ত"
       },
+      undoHint: "\u09aa\u09c2\u09b0\u09cd\u09ac\u09be\u09ac\u09b8\u09cd\u09a5\u09be\u09af\u09bc \u09ab\u09c7\u09b0\u09be\u09a8\u09cb \u09b6\u09c1\u09a7\u09c1 string \u098f\u09ac\u0982 JSON \u0995\u09c0 \u099f\u09be\u0987\u09aa\u09c7\u09b0 \u099c\u09a8\u09cd\u09af \u0989\u09aa\u09b2\u09ad\u09cd\u09af",
       field: {
         treeSeparator: "গাছ বিভাজক",
         treeSeparatorSelector: "গাছ বিভাজক নির্বাচক",

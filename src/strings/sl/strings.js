@@ -200,7 +200,18 @@ const strings = {
     jsonViewEditor: "Uredi JSON",
     quickConsole: "Hitra konzola",
     moveUp: "Premakni gor",
-    moveDown: "Premakni dol"
+    moveDown: "Premakni dol",
+  },
+  diff: {
+    reviewChanges: "Preglej spremembe",
+    inline: "V vrstici",
+    sideBySide: "Vzporedno",
+    additions: "dodatki",
+    deletions: "brisi",
+    unchangedLines: "nespremenjene vrstice",
+    noChanges: "Ni zaznanih sprememb",
+    before: "Prej",
+    after: "Potem",
   },
   label: {
     id: {
@@ -366,6 +377,7 @@ const strings = {
     treeExpandAll: "Razširite vse drevesne liste. Ta operacija je lahko draga in lahko traja dolgo ...",
     noRedisKeys: "V tej bazi podatkov ni ključev.",
     redisConnected: "Redis povezava je bila uspešna",
+    reverted: "Razveljavljeno",
     reloadingDataInfo: "Ponovno nalaganje informacij o podatkih Redis",
     added: "Dodano",
     saved: "Posodobljeno",
@@ -434,6 +446,10 @@ const strings = {
       label: {
         animation: "Uporabite animacijo",
         noAnimation: "Brez animacije",
+        undoEnabled: "Razveljavitev omogo\u010dena",
+        undoDisabled: "Razveljavitev onemogo\u010dena",
+        diffEnabled: "Prika\u017ei diff pred shranjevanjem",
+        diffDisabled: "Diff pred shranjevanjem je onemogo\u010den",
         jsonFormatTwoSpace: "Oblika JSON z 2 presledkoma",
         jsonFormatFourSpace: "Oblika JSON s 4 presledki",
         formName: "nastavitve Redis",
@@ -442,6 +458,7 @@ const strings = {
         searchModeStartsWith: "Iskanje z se začne z načinom",
         searchModeIncludes: "Iskanje vključuje način"
       },
+      undoHint: "Razveljavitev je na voljo samo za tipe klju\u010dev string in JSON",
       field: {
         treeSeparator: "Ločevalec dreves",
         treeSeparatorSelector: "Izbirnik drevesnega ločila",

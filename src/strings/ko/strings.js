@@ -200,7 +200,18 @@ const strings = {
     jsonViewEditor: "JSON 편집",
     quickConsole: "빠른 콘솔",
     moveUp: "위로 이동",
-    moveDown: "아래로 이동"
+    moveDown: "아래로 이동",
+  },
+  diff: {
+    reviewChanges: "\ubcc0\uacbd \uc0ac\ud56d \uac80\ud1a0",
+    inline: "\uc778\ub77c\uc778",
+    sideBySide: "\ub098\ub780\ud788",
+    additions: "\ucd94\uac00",
+    deletions: "\uc0ad\uc81c",
+    unchangedLines: "\ubcc0\uacbd\ub418\uc9c0 \uc54a\uc740 \uc904",
+    noChanges: "\ubcc0\uacbd \uc0ac\ud56d\uc774 \uac10\uc9c0\ub418\uc9c0 \uc54a\uc558\uc2b5\ub2c8\ub2e4",
+    before: "\uc774\uc804",
+    after: "\uc774\ud6c4",
   },
   label: {
     id: {
@@ -366,6 +377,7 @@ const strings = {
     treeExpandAll: "모든 나무 잎을 확장하십시오. 이 작업은 비용이 많이 들고 시간이 걸릴 수 있습니다.",
     noRedisKeys: "이 데이터베이스에는 키가 없습니다.",
     redisConnected: "Redis 연결 성공",
+    reverted: "\ub418\ub3cc\ub9bc \uc644\ub8cc",
     reloadingDataInfo: "Redis 데이터 정보를 다시 로드하는 중",
     added: "추가됨",
     saved: "업데이트됨",
@@ -434,6 +446,10 @@ const strings = {
       label: {
         animation: "애니메이션 사용",
         noAnimation: "애니메이션 없음",
+        undoEnabled: "\uc2e4\ud589 \ucde8\uc18c \uc0ac\uc6a9",
+        undoDisabled: "\uc2e4\ud589 \ucde8\uc18c \uc0ac\uc6a9 \uc548 \ud568",
+        diffEnabled: "\uc800\uc7a5 \uc804\uc5d0 diff \ud45c\uc2dc",
+        diffDisabled: "\uc800\uc7a5 \uc804 diff \uc0ac\uc6a9 \uc548 \ud568",
         jsonFormatTwoSpace: "공백 2개로 JSON 형식을 지정하세요.",
         jsonFormatFourSpace: "공백 4개로 JSON 형식을 지정하세요.",
         formName: "Redis 설정",
@@ -442,6 +458,7 @@ const strings = {
         searchModeStartsWith: "모드로 시작으로 검색",
         searchModeIncludes: "검색 포함 모드"
       },
+      undoHint: "\uc2e4\ud589 \ucde8\uc18c\ub294 string \ubc0f JSON \ud0a4 \uc720\ud615\uc5d0\uc11c\ub9cc \uc0ac\uc6a9\ud560 \uc218 \uc788\uc2b5\ub2c8\ub2e4",
       field: {
         treeSeparator: "트리 구분 기호",
         treeSeparatorSelector: "트리 구분자 선택기",

@@ -97,17 +97,16 @@ export default function P3xrAccordion({
                 </Box>
             </Toolbar>
 
-            {/* Content */}
-            {extended && (
-                <Box sx={{
-                    border: 1, borderColor: theme.p3xr.accordionBg,
-                    borderRadius: '0 0 4px 4px',
-                    borderTop: 0,
-                    bgcolor: 'background.paper',
-                }}>
-                    {children}
-                </Box>
-            )}
+            {/* Content — hidden via CSS, not unmounted, to preserve uPlot chart DOM */}
+            <Box sx={{
+                border: 1, borderColor: theme.p3xr.accordionBg,
+                borderRadius: '0 0 4px 4px',
+                borderTop: 0,
+                bgcolor: 'background.paper',
+                display: extended ? 'block' : 'none',
+            }}>
+                {children}
+            </Box>
         </Box>
     )
 }

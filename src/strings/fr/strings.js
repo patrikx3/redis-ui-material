@@ -202,7 +202,18 @@ const strings = {
     jsonViewEditor: "Modifier JSON",
     quickConsole: "Console rapide",
     moveUp: "Monter",
-    moveDown: "Descendre"
+    moveDown: "Descendre",
+  },
+  diff: {
+    reviewChanges: "V\u00e9rifier les modifications",
+    inline: "En ligne",
+    sideBySide: "C\u00f4te \u00e0 c\u00f4te",
+    additions: "ajouts",
+    deletions: "suppressions",
+    unchangedLines: "lignes inchang\u00e9es",
+    noChanges: "Aucune modification d\u00e9tect\u00e9e",
+    before: "Avant",
+    after: "Apr\u00e8s",
   },
   label: {
     id: {
@@ -368,6 +379,7 @@ const strings = {
     treeExpandAll: "Développer toutes les feuilles de l'arbre. Cette opération peut être coûteuse et prendre du temps ...",
     noRedisKeys: "Il n'y a aucune clé dans cette base de données.",
     redisConnected: "Connexion à Redis réussie",
+    reverted: "R\u00e9tabli",
     reloadingDataInfo: "Rechargement des données Redis",
     added: "Ajouté",
     saved: "Mis à jour",
@@ -436,6 +448,10 @@ const strings = {
       label: {
         animation: "Utiliser l'animation",
         noAnimation: "Pas d'animation",
+        undoEnabled: "Annulation activ\u00e9e",
+        undoDisabled: "Annulation d\u00e9sactiv\u00e9e",
+        diffEnabled: "Afficher le diff avant l'enregistrement",
+        diffDisabled: "Diff avant enregistrement d\u00e9sactiv\u00e9",
         jsonFormatTwoSpace: "Formater JSON avec 2 espaces",
         jsonFormatFourSpace: "Formater JSON avec 4 espaces",
         formName: "Paramètres Redis",
@@ -444,6 +460,7 @@ const strings = {
         searchModeStartsWith: "Recherche avec mode commence par",
         searchModeIncludes: "Mode recherche inclut"
       },
+      undoHint: "L'annulation est disponible uniquement pour les types de cl\u00e9 string et JSON",
       field: {
         treeSeparator: "Séparateur d'arbre",
         treeSeparatorSelector: "Sélecteur de séparateur d'arbre",

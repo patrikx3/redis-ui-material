@@ -21,6 +21,7 @@ import { RedisStateService } from '../../../services/redis-state.service';
 import { SettingsService } from '../../../services/settings.service';
 import { KeyTypeBase } from './key-type-base';
 import { OverlayService } from '../../../services/overlay.service';
+import { DiffDialogService } from '../../../dialogs/diff-dialog.service';
 
 @Component({
     selector: 'p3xr-key-string',
@@ -49,6 +50,7 @@ export class KeyStringComponent extends KeyTypeBase implements OnInit {
         @Inject(RedisStateService) redisState: RedisStateService,
         @Inject(SettingsService) settingsService: SettingsService,
         @Inject(OverlayService) private overlay: OverlayService,
+        @Inject(DiffDialogService) private diffDialog: DiffDialogService,
     ) {
         super(i18n, socket, common, jsonViewDialog, keyNewOrSetDialog, breakpointObserver, cmd, cdr, redisState, settingsService);
     }
@@ -91,9 +93,14 @@ export class KeyStringComponent extends KeyTypeBase implements OnInit {
 
     async save(): Promise<void> {
         const valueToSave = this.buffer ? this.p3xrValueBuffer : this.p3xrValue;
+        const oldValue = this.originalValue;
         try {
             if (this.validateJson) {
                 JSON.parse(valueToSave);
+            }
+            if (oldValue !== undefined) {
+                const confirmed = await this.diffDialog.show({ keyName: this.p3xrKey, oldValue, newValue: valueToSave });
+                if (!confirmed) return;
             }
             this.overlay.show({ message: this.strings?.intention?.save ?? 'Saving...' });
             await this.socket.request({
@@ -108,9 +115,28 @@ export class KeyStringComponent extends KeyTypeBase implements OnInit {
             this.editable = false;
             this.buffer = false;
             this.refreshKey();
+            this.overlay.hide();
+
+            // Undo support
+            if (this.settingsService.undoEnabled() && oldValue !== undefined && oldValue !== valueToSave) {
+                const undoClicked = await this.common.toastWithUndo(this.strings?.status?.saved || 'Saved');
+                if (undoClicked) {
+                    this.overlay.show({ message: 'Undo...' });
+                    await this.socket.request({
+                        action: 'key-set',
+                        payload: {
+                            type: this.p3xrResponse?.type,
+                            key: this.p3xrKey,
+                            value: oldValue,
+                        },
+                    });
+                    this.refreshKey();
+                    this.overlay.hide();
+                    this.common.toast(this.strings?.status?.reverted || 'Reverted');
+                }
+            }
         } catch (e) {
             this.common.generalHandleError(e);
-        } finally {
             this.overlay.hide();
         }
     }
@@ -168,9 +194,33 @@ export class KeyStringComponent extends KeyTypeBase implements OnInit {
 
     async jsonEditor(): Promise<void> {
         try {
+            const oldValue = this.p3xrValue;
             const result = await this.jsonEditorDialog.show({ value: this.p3xrValue });
+            this.originalValue = undefined;
+            this.overlay.show({ message: this.strings?.intention?.save ?? 'Saving...' });
+            await this.socket.request({
+                action: 'key-set',
+                payload: { type: this.p3xrResponse?.type, key: this.p3xrKey, value: result.obj },
+            });
             this.p3xrValue = result.obj;
-            await this.save();
+            this.editable = false;
+            this.buffer = false;
+            this.refreshKey();
+            this.overlay.hide();
+
+            if (this.settingsService.undoEnabled() && oldValue !== undefined && oldValue !== result.obj) {
+                const undoClicked = await this.common.toastWithUndo(this.strings?.status?.saved || 'Saved');
+                if (undoClicked) {
+                    this.overlay.show({ message: 'Undo...' });
+                    await this.socket.request({
+                        action: 'key-set',
+                        payload: { type: this.p3xrResponse?.type, key: this.p3xrKey, value: oldValue },
+                    });
+                    this.refreshKey();
+                    this.overlay.hide();
+                    this.common.toast(this.strings?.status?.reverted || 'Reverted');
+                }
+            }
         } catch { /* cancelled */ }
     }
 

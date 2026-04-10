@@ -200,7 +200,18 @@ const strings = {
     jsonViewEditor: "Uredi JSON",
     quickConsole: "Brza konzola",
     moveUp: "Pomakni gore",
-    moveDown: "Pomakni dolje"
+    moveDown: "Pomakni dolje",
+  },
+  diff: {
+    reviewChanges: "Pregledaj promjene",
+    inline: "U retku",
+    sideBySide: "Jedno uz drugo",
+    additions: "dodavanja",
+    deletions: "brisanja",
+    unchangedLines: "nepromijenjeni redci",
+    noChanges: "Nema otkrivenih promjena",
+    before: "Prije",
+    after: "Poslije",
   },
   label: {
     id: {
@@ -366,6 +377,7 @@ const strings = {
     treeExpandAll: "Proširite sve listove drveća. Ova operacija može biti skupa i može potrajati ...",
     noRedisKeys: "U ovoj bazi podataka nema ključeva.",
     redisConnected: "Redis uspješno povezan",
+    reverted: "Vra\u0107eno",
     reloadingDataInfo: "Ponovno učitavanje podataka Redis",
     added: "Dodano",
     saved: "Ažurirano",
@@ -434,6 +446,10 @@ const strings = {
       label: {
         animation: "Koristite animaciju",
         noAnimation: "Nema animacije",
+        undoEnabled: "Poni\u0161tavanje uklju\u010deno",
+        undoDisabled: "Poni\u0161tavanje isklju\u010deno",
+        diffEnabled: "Prika\u017ei diff prije spremanja",
+        diffDisabled: "Diff prije spremanja je isklju\u010den",
         jsonFormatTwoSpace: "Format JSON s 2 razmaka",
         jsonFormatFourSpace: "Format JSON s 4 razmaka",
         formName: "Redis postavke",
@@ -442,6 +458,7 @@ const strings = {
         searchModeStartsWith: "Pretraga s počinje s načinom",
         searchModeIncludes: "Pretraga uključuje način"
       },
+      undoHint: "Poni\u0161tavanje je dostupno samo za string i JSON vrste klju\u010deva",
       field: {
         treeSeparator: "Razdjelnik stabala",
         treeSeparatorSelector: "Selektor separatora stabla",

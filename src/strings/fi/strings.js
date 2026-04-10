@@ -200,7 +200,18 @@ const strings = {
     jsonViewEditor: "Muokkaa JSON",
     quickConsole: "Pikakonsoli",
     moveUp: "Siirrä ylös",
-    moveDown: "Siirrä alas"
+    moveDown: "Siirrä alas",
+  },
+  diff: {
+    reviewChanges: "Tarkista muutokset",
+    inline: "Rivinsis\u00e4inen",
+    sideBySide: "Vierekk\u00e4in",
+    additions: "lis\u00e4ykset",
+    deletions: "poistot",
+    unchangedLines: "muuttumattomat rivit",
+    noChanges: "Muutoksia ei havaittu",
+    before: "Ennen",
+    after: "J\u00e4lkeen",
   },
   label: {
     id: {
@@ -366,6 +377,7 @@ const strings = {
     treeExpandAll: "Laajenna kaikki puun lehdet. Tämä toimenpide voi olla kallis ja voi viedä aikaa...",
     noRedisKeys: "Tässä tietokannassa ei ole avaimia.",
     redisConnected: "Redis yhdistäminen onnistui",
+    reverted: "Peruttu",
     reloadingDataInfo: "Ladataan uudelleen Redis-tietoja",
     added: "Lisätty",
     saved: "Päivitetty",
@@ -434,6 +446,10 @@ const strings = {
       label: {
         animation: "Käytä animaatiota",
         noAnimation: "Ei animaatiota",
+        undoEnabled: "Kumoaminen k\u00e4yt\u00f6ss\u00e4",
+        undoDisabled: "Kumoaminen pois k\u00e4yt\u00f6st\u00e4",
+        diffEnabled: "N\u00e4yt\u00e4 diff ennen tallennusta",
+        diffDisabled: "Diff ennen tallennusta pois k\u00e4yt\u00f6st\u00e4",
         jsonFormatTwoSpace: "Muoto JSON, jossa on 2 välilyöntiä",
         jsonFormatFourSpace: "Muoto JSON, jossa on 4 välilyöntiä",
         formName: "Redis-asetukset",
@@ -442,6 +458,7 @@ const strings = {
         searchModeStartsWith: "Haku alkaa tilalla",
         searchModeIncludes: "Haku sisältää tilan"
       },
+      undoHint: "Kumoaminen on k\u00e4ytett\u00e4viss\u00e4 vain string- ja JSON-avaintyypeille",
       field: {
         treeSeparator: "Puiden erotin",
         treeSeparatorSelector: "Puiden erottimen valitsin",

@@ -204,6 +204,17 @@ const strings = {
     moveUp: "Hamisha juu",
     moveDown: "Hamisha chini",
   },
+  diff: {
+    reviewChanges: "Kagua mabadiliko",
+    inline: "Ndani ya mstari",
+    sideBySide: "Kando kwa kando",
+    additions: "nyongeza",
+    deletions: "ufutaji",
+    unchangedLines: "mistari isiyobadilika",
+    noChanges: "Hakuna mabadiliko yaliyotambuliwa",
+    before: "Kabla",
+    after: "Baada",
+  },
   label: {
     id: {
       nodeId: 'Kitambulisho cha Nodi',
@@ -368,6 +379,7 @@ const strings = {
     treeExpandAll: "Panua majani yote ya mti. Operesheni hii inaweza kuwa ghali na inaweza kuchukua muda ...",
     noRedisKeys: "Hakuna funguo katika hifadhidata hii.",
     redisConnected: "Redis imeunganishwa kwa mafanikio",
+    reverted: "Imerejeshwa",
     reloadingDataInfo: "Inapakia upya taarifa za data za Redis",
     added: "Imeongezwa",
     saved: "Imesasishwa",
@@ -436,6 +448,10 @@ const strings = {
       label: {
         animation: "Tumia uhuishaji",
         noAnimation: "Hakuna uhuishaji",
+        undoEnabled: "Tendua imewashwa",
+        undoDisabled: "Tendua imezimwa",
+        diffEnabled: "Onyesha diff kabla ya kuhifadhi",
+        diffDisabled: "Diff kabla ya kuhifadhi imezimwa",
         jsonFormatTwoSpace: "Umbiza JSON na nafasi 2",
         jsonFormatFourSpace: "Umbiza JSON na nafasi 4",
         formName: "Mipangilio ya Redis",
@@ -444,6 +460,7 @@ const strings = {
         searchModeStartsWith: "Tafuta na hali ya kuanza na",
         searchModeIncludes: "Tafuta inajumuisha hali"
       },
+      undoHint: "Tendua inapatikana kwa aina za ufunguo za string na JSON pekee",
       field: {
         treeSeparator: "Kitenganishi cha mti",
         treeSeparatorSelector: "Kichaguzi cha kitenganishi cha mti",

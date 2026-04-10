@@ -204,6 +204,17 @@ const strings = {
     moveUp: "Μετακίνηση επάνω",
     moveDown: "Μετακίνηση κάτω",
   },
+  diff: {
+    reviewChanges: "\u0388\u03bb\u03b5\u03b3\u03c7\u03bf\u03c2 \u03b1\u03bb\u03bb\u03b1\u03b3\u03ce\u03bd",
+    inline: "\u0395\u03bd\u03c3\u03c9\u03bc\u03b1\u03c4\u03c9\u03bc\u03ad\u03bd\u03b1",
+    sideBySide: "\u0394\u03af\u03c0\u03bb\u03b1 \u03b4\u03af\u03c0\u03bb\u03b1",
+    additions: "\u03c0\u03c1\u03bf\u03c3\u03b8\u03ae\u03ba\u03b5\u03c2",
+    deletions: "\u03b4\u03b9\u03b1\u03b3\u03c1\u03b1\u03c6\u03ad\u03c2",
+    unchangedLines: "\u03b3\u03c1\u03b1\u03bc\u03bc\u03ad\u03c2 \u03c7\u03c9\u03c1\u03af\u03c2 \u03b1\u03bb\u03bb\u03b1\u03b3\u03ad\u03c2",
+    noChanges: "\u0394\u03b5\u03bd \u03b5\u03bd\u03c4\u03bf\u03c0\u03af\u03c3\u03c4\u03b7\u03ba\u03b1\u03bd \u03b1\u03bb\u03bb\u03b1\u03b3\u03ad\u03c2",
+    before: "\u03a0\u03c1\u03b9\u03bd",
+    after: "\u039c\u03b5\u03c4\u03ac",
+  },
   label: {
     id: {
       nodeId: 'ID κόμβου',
@@ -368,6 +379,7 @@ const strings = {
     treeExpandAll: "Ανάπτυξη όλων των κλαδιών δέντρου. Αυτή η λειτουργία μπορεί να είναι δαπανηρή και μπορεί να πάρει χρόνο ...",
     noRedisKeys: "Δεν υπάρχουν κλειδιά σε αυτή τη βάση δεδομένων.",
     redisConnected: "Επιτυχής σύνδεση στο Redis",
+    reverted: "\u0388\u03b3\u03b9\u03bd\u03b5 \u03b1\u03bd\u03b1\u03af\u03c1\u03b5\u03c3\u03b7",
     reloadingDataInfo: "Επαναφόρτωση δεδομένων Redis",
     added: "Προστέθηκε",
     saved: "Ενημερώθηκε",
@@ -436,6 +448,10 @@ const strings = {
       label: {
         animation: "Χρήση κίνησης",
         noAnimation: "Χωρίς κίνηση",
+        undoEnabled: "\u0397 \u03b1\u03bd\u03b1\u03af\u03c1\u03b5\u03c3\u03b7 \u03b5\u03af\u03bd\u03b1\u03b9 \u03b5\u03bd\u03b5\u03c1\u03b3\u03ae",
+        undoDisabled: "\u0397 \u03b1\u03bd\u03b1\u03af\u03c1\u03b5\u03c3\u03b7 \u03b5\u03af\u03bd\u03b1\u03b9 \u03b1\u03bd\u03b5\u03bd\u03b5\u03c1\u03b3\u03ae",
+        diffEnabled: "\u0395\u03bc\u03c6\u03ac\u03bd\u03b9\u03c3\u03b7 diff \u03c0\u03c1\u03b9\u03bd \u03b1\u03c0\u03cc \u03c4\u03b7\u03bd \u03b1\u03c0\u03bf\u03b8\u03ae\u03ba\u03b5\u03c5\u03c3\u03b7",
+        diffDisabled: "\u03a4\u03bf diff \u03c0\u03c1\u03b9\u03bd \u03b1\u03c0\u03cc \u03c4\u03b7\u03bd \u03b1\u03c0\u03bf\u03b8\u03ae\u03ba\u03b5\u03c5\u03c3\u03b7 \u03b5\u03af\u03bd\u03b1\u03b9 \u03b1\u03c0\u03b5\u03bd\u03b5\u03c1\u03b3\u03bf\u03c0\u03bf\u03b9\u03b7\u03bc\u03ad\u03bd\u03bf",
         jsonFormatTwoSpace: "Μορφοποίηση JSON με 2 κενά",
         jsonFormatFourSpace: "Μορφοποίηση JSON με 4 κενά",
         formName: "Ρυθμίσεις Redis",
@@ -444,6 +460,7 @@ const strings = {
         searchModeStartsWith: "Αναζήτηση με αρχίζει με",
         searchModeIncludes: "Αναζήτηση με περιέχει"
       },
+      undoHint: "\u0397 \u03b1\u03bd\u03b1\u03af\u03c1\u03b5\u03c3\u03b7 \u03b5\u03af\u03bd\u03b1\u03b9 \u03b4\u03b9\u03b1\u03b8\u03ad\u03c3\u03b9\u03bc\u03b7 \u03bc\u03cc\u03bd\u03bf \u03b3\u03b9\u03b1 \u03c4\u03cd\u03c0\u03bf\u03c5\u03c2 \u03ba\u03bb\u03b5\u03b9\u03b4\u03b9\u03ce\u03bd string \u03ba\u03b1\u03b9 JSON",
       field: {
         treeSeparator: "Διαχωριστής δέντρου",
         treeSeparatorSelector: "Επιλογέας διαχωριστή δέντρου",

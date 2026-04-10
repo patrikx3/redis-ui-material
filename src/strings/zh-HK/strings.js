@@ -200,7 +200,18 @@ const strings = {
     jsonViewEditor: "編輯JSON",
     quickConsole: "快速控制台",
     moveUp: "上移",
-    moveDown: "下移"
+    moveDown: "下移",
+  },
+  diff: {
+    reviewChanges: "\u6aa2\u8996\u8b8a\u66f4",
+    inline: "\u884c\u5167",
+    sideBySide: "\u4e26\u6392",
+    additions: "\u65b0\u589e",
+    deletions: "\u522a\u9664",
+    unchangedLines: "\u672a\u8b8a\u66f4\u7684\u884c",
+    noChanges: "\u672a\u5075\u6e2c\u5230\u8b8a\u66f4",
+    before: "\u8b8a\u66f4\u524d",
+    after: "\u8b8a\u66f4\u5f8c",
   },
   label: {
     id: {
@@ -366,6 +377,7 @@ const strings = {
     treeExpandAll: "展開所有樹葉。此操作可能會很昂貴並且可能需要時間...",
     noRedisKeys: "該資料庫中沒有密鑰。",
     redisConnected: "Redis 連線成功",
+    reverted: "\u5df2\u9084\u539f",
     reloadingDataInfo: "正在重新載入Redis資料訊息",
     added: "已新增",
     saved: "已更新",
@@ -434,6 +446,10 @@ const strings = {
       label: {
         animation: "使用動畫",
         noAnimation: "無動畫",
+        undoEnabled: "\u5df2\u555f\u7528\u5fa9\u539f",
+        undoDisabled: "\u5df2\u505c\u7528\u5fa9\u539f",
+        diffEnabled: "\u5132\u5b58\u524d\u986f\u793a diff",
+        diffDisabled: "\u5df2\u505c\u7528\u5132\u5b58\u524d diff",
         jsonFormatTwoSpace: "格式為 JSON，含 2 個空格",
         jsonFormatFourSpace: "格式為 JSON，有 4 個空格",
         formName: "Redis 設定",
@@ -442,6 +458,7 @@ const strings = {
         searchModeStartsWith: "搜尋以模式開頭",
         searchModeIncludes: "搜尋包含模式"
       },
+      undoHint: "\u5fa9\u539f\u50c5\u9069\u7528\u65bc string \u548c JSON \u985e\u578b\u7684\u9375",
       field: {
         treeSeparator: "樹分隔符",
         treeSeparatorSelector: "樹分隔符號選擇器",

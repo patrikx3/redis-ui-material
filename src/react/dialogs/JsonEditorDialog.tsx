@@ -8,6 +8,7 @@ import { useSettingsStore } from '../stores/settings.store'
 import { useThemeStore } from '../stores/theme.store'
 import { isDarkTheme } from '../themes'
 import P3xrDialog from '../components/P3xrDialog'
+import DiffDialog from './DiffDialog'
 
 interface Props {
     open: boolean
@@ -135,11 +136,22 @@ export default function JsonEditorDialog({ open, value, hideFormatSave, onClose 
         })
     }
 
-    const save = (format: boolean) => {
+    const [diffOpen, setDiffOpen] = useState(false)
+    const [diffNewValue, setDiffNewValue] = useState('')
+    const diffResolveRef = useRef<((v: boolean) => void) | null>(null)
+
+    const save = async (format: boolean) => {
         try {
             const text = viewRef.current.state.doc.toString()
             const parsed = JSON.parse(text)
             const result = JSON.stringify(parsed, null, format ? (jsonFormat || 2) : 0)
+            const settings = useSettingsStore.getState()
+            if (settings.showDiffBeforeSave && value !== result) {
+                setDiffNewValue(result)
+                setDiffOpen(true)
+                const confirmed = await new Promise<boolean>(resolve => { diffResolveRef.current = resolve })
+                if (!confirmed) return
+            }
             onClose({ obj: result })
         } catch (e) { generalHandleError(e) }
     }
@@ -149,6 +161,7 @@ export default function JsonEditorDialog({ open, value, hideFormatSave, onClose 
     const minHeight = isWide ? `${Math.max(10, window.innerHeight - 100)}px` : '100%'
 
     return (
+        <>
         <P3xrDialog open onClose={() => onClose(null)} contentPadding={!isJson}
             width="90vw" height="90vh"
             title={
@@ -192,5 +205,10 @@ export default function JsonEditorDialog({ open, value, hideFormatSave, onClose 
                 <Box sx={{ minHeight: 320 }}>{strings?.label?.jsonViewNotParsable}</Box>
             )}
         </P3xrDialog>
+        <DiffDialog open={diffOpen} keyName="JSON"
+            oldValue={value} newValue={diffNewValue}
+            onConfirm={() => { setDiffOpen(false); diffResolveRef.current?.(true) }}
+            onCancel={() => { setDiffOpen(false); diffResolveRef.current?.(false) }} />
+        </>
     )
 }

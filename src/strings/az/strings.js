@@ -200,7 +200,18 @@ const strings = {
     jsonViewEditor: "JSON redaktə edin",
     quickConsole: "Sürətli Konsol",
     moveUp: "Yuxarı daşı",
-    moveDown: "Aşağı daşı"
+    moveDown: "Aşağı daşı",
+  },
+  diff: {
+    reviewChanges: "D\u0259yi\u015fiklikl\u0259ri n\u0259z\u0259rd\u0259n ke\u00e7ir",
+    inline: "S\u0259tirdaxili",
+    sideBySide: "Yan-yana",
+    additions: "\u0259lav\u0259l\u0259r",
+    deletions: "silinm\u0259l\u0259r",
+    unchangedLines: "d\u0259yi\u015fm\u0259y\u0259n s\u0259tirl\u0259r",
+    noChanges: "He\u00e7 bir d\u0259yi\u015fiklik a\u015fkarlanmad\u0131",
+    before: "\u018fvv\u0259l",
+    after: "Sonra",
   },
   label: {
     id: {
@@ -366,6 +377,7 @@ const strings = {
     treeExpandAll: "Bütün ağac yarpaqlarını genişləndirin. Bu əməliyyat bahalı ola bilər və vaxt apara bilər...",
     noRedisKeys: "Bu verilənlər bazasında heç bir açar yoxdur.",
     redisConnected: "Redis uğurla qoşuldu",
+    reverted: "Geri qaytar\u0131ld\u0131",
     reloadingDataInfo: "Redis məlumatı yenidən yüklənir",
     added: "Əlavə edilib",
     saved: "Yenilənib",
@@ -434,6 +446,10 @@ const strings = {
       label: {
         animation: "Animasiyadan istifadə edin",
         noAnimation: "Animasiya yoxdur",
+        undoEnabled: "Geri alma aktivdir",
+        undoDisabled: "Geri alma deaktivdir",
+        diffEnabled: "Yadda saxlamadan \u0259vv\u0259l diff g\u00f6st\u0259r",
+        diffDisabled: "Yadda saxlamadan \u0259vv\u0259l diff deaktivdir",
         jsonFormatTwoSpace: "JSON-ni 2 boşluqla formatlayın",
         jsonFormatFourSpace: "JSON-ni 4 boşluqla formatlayın",
         formName: "Redis parametrləri",
@@ -442,6 +458,7 @@ const strings = {
         searchModeStartsWith: "Axtarış rejimi ilə başlayır",
         searchModeIncludes: "Axtarış rejimi daxildir"
       },
+      undoHint: "Geri alma yaln\u0131z string v\u0259 JSON a\u00e7ar tipl\u0259ri \u00fc\u00e7\u00fcn m\u00f6vcuddur",
       field: {
         treeSeparator: "Ağac ayırıcı",
         treeSeparatorSelector: "Ağac ayırıcı seçici",

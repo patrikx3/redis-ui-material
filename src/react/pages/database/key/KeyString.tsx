@@ -5,7 +5,7 @@
  * Edit mode: Validate JSON toggle, Cancel, Upload, Save
  * Display: truncated value with format toggle, click to edit
  */
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import { Box, Button, Tooltip, TextField, Switch, FormControlLabel, useMediaQuery } from '@mui/material'
 import {
     Upload, Download, TableChart, ContentCopy, FormatLineSpacing,
@@ -22,6 +22,7 @@ import { KeyTypeProps, formatValue, truncateDisplay, isTruncated, copyValue, dow
 import { parseRedisVersion } from '../../../../core/redis-version'
 import JsonViewDialog from '../../../dialogs/JsonViewDialog'
 import JsonEditorDialog from '../../../dialogs/JsonEditorDialog'
+import DiffDialog from '../../../dialogs/DiffDialog'
 
 export default function KeyString({ response, value: initValue, valueBuffer: initBuffer, keyName, valueFormat, onRefresh }: KeyTypeProps) {
     const strings = useI18nStore(s => s.strings)
@@ -40,6 +41,9 @@ export default function KeyString({ response, value: initValue, valueBuffer: ini
     const [originalValue, setOriginalValue] = useState<any>(null)
     const [jsonViewOpen, setJsonViewOpen] = useState(false)
     const [jsonEditorOpen, setJsonEditorOpen] = useState(false)
+    const [diffOpen, setDiffOpen] = useState(false)
+    const [diffData, setDiffData] = useState({ oldValue: '', newValue: '' })
+    const diffResolveRef = useRef<((v: boolean) => void) | null>(null)
 
     // --- Actions matching Angular exactly ---
 
@@ -61,19 +65,51 @@ export default function KeyString({ response, value: initValue, valueBuffer: ini
         setBuffer(false)
     }, [buffer, originalValue])
 
+    const showDiff = useCallback((oldValue: string, newValue: string): Promise<boolean> => {
+        if (!useSettingsStore.getState().showDiffBeforeSave) return Promise.resolve(true)
+        if (oldValue === newValue) return Promise.resolve(true)
+        setDiffData({ oldValue, newValue })
+        setDiffOpen(true)
+        return new Promise(resolve => { diffResolveRef.current = resolve })
+    }, [])
+
     const save = useCallback(async () => {
         const v = buffer ? valueBuffer : value
+        const oldVal = originalValue
         try {
             if (validateJson) JSON.parse(v)
+            if (oldVal != null) {
+                const confirmed = await showDiff(oldVal, v)
+                if (!confirmed) return
+            }
             overlay.show({ message: strings?.intention?.save })
             await request({ action: 'key-set', payload: { type: response?.type, key: keyName, value: v } })
             trackPage('/key-set')
             setEditable(false)
             setBuffer(false)
             onRefresh()
-        } catch (e) { generalHandleError(e) }
-        finally { overlay.hide() }
-    }, [buffer, value, valueBuffer, validateJson, response, keyName, strings, onRefresh, generalHandleError])
+            overlay.hide()
+
+            // Undo support
+            if (settings.undoEnabled && oldVal !== undefined && oldVal !== v) {
+                const undoClicked = await useCommonStore.getState().toastWithUndo(strings?.status?.saved || 'Saved')
+                if (undoClicked) {
+                    try {
+                        overlay.show({ message: 'Undo...' })
+                        await request({ action: 'key-set', payload: { type: response?.type, key: keyName, value: oldVal } })
+                        setValue(oldVal)
+                        setOriginalValue(oldVal)
+                        onRefresh()
+                        overlay.hide()
+                        useCommonStore.getState().toast(strings?.status?.reverted || 'Reverted')
+                    } catch(e) {
+                        useCommonStore.getState().generalHandleError(e)
+                        overlay.hide()
+                    }
+                }
+            }
+        } catch (e) { generalHandleError(e); overlay.hide() }
+    }, [buffer, value, valueBuffer, validateJson, response, keyName, strings, onRefresh, generalHandleError, originalValue, settings.undoEnabled])
 
     const setBufferUpload = useCallback(() => {
         const input = document.createElement('input')
@@ -257,17 +293,38 @@ export default function KeyString({ response, value: initValue, valueBuffer: ini
             {/* Dialogs */}
             <JsonViewDialog open={jsonViewOpen} value={String(value ?? '')} onClose={() => setJsonViewOpen(false)} />
             <JsonEditorDialog open={jsonEditorOpen} value={String(value ?? '')}
-                onClose={(result) => {
+                onClose={async (result) => {
                     setJsonEditorOpen(false)
                     if (result?.obj) {
+                        const oldVal = String(value ?? '')
+                        setOriginalValue(null)
+                        setEditable(false)
+                        setBuffer(false)
                         setValue(result.obj)
                         overlay.show({ message: strings?.intention?.save })
-                        request({ action: 'key-set', payload: { type: response?.type, key: keyName, value: result.obj } })
-                            .then(() => { trackPage('/key-set'); onRefresh() })
-                            .catch(e => generalHandleError(e))
-                            .finally(() => overlay.hide())
+                        try {
+                            await request({ action: 'key-set', payload: { type: response?.type, key: keyName, value: result.obj } })
+                            trackPage('/key-set')
+                            onRefresh()
+                            overlay.hide()
+                            if (settings.undoEnabled && oldVal !== result.obj) {
+                                const undoClicked = await useCommonStore.getState().toastWithUndo(strings?.status?.saved || 'Saved')
+                                if (undoClicked) {
+                                    overlay.show({ message: 'Undo...' })
+                                    await request({ action: 'key-set', payload: { type: response?.type, key: keyName, value: oldVal } })
+                                    onRefresh()
+                                    overlay.hide()
+                                    useCommonStore.getState().toast(strings?.status?.reverted || 'Reverted')
+                                }
+                            }
+                        } catch (e) { generalHandleError(e); overlay.hide() }
                     }
                 }} />
+
+            <DiffDialog open={diffOpen} keyName={keyName}
+                oldValue={diffData.oldValue} newValue={diffData.newValue}
+                onConfirm={() => { setDiffOpen(false); diffResolveRef.current?.(true) }}
+                onCancel={() => { setDiffOpen(false); diffResolveRef.current?.(false) }} />
         </Box>
     )
 }

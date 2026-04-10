@@ -198,7 +198,18 @@ const strings = {
     jsonViewEditor: "JSONを編集",
     quickConsole: "クイックコンソール",
     moveUp: "上へ移動",
-    moveDown: "下へ移動"
+    moveDown: "下へ移動",
+  },
+  diff: {
+    reviewChanges: "\u5909\u66f4\u3092\u78ba\u8a8d",
+    inline: "\u30a4\u30f3\u30e9\u30a4\u30f3",
+    sideBySide: "\u5de6\u53f3\u6bd4\u8f03",
+    additions: "\u8ffd\u52a0",
+    deletions: "\u524a\u9664",
+    unchangedLines: "\u5909\u66f4\u306a\u3057\u306e\u884c",
+    noChanges: "\u5909\u66f4\u306f\u691c\u51fa\u3055\u308c\u307e\u305b\u3093\u3067\u3057\u305f",
+    before: "\u5909\u66f4\u524d",
+    after: "\u5909\u66f4\u5f8c",
   },
   label: {
     id: {
@@ -364,6 +375,7 @@ const strings = {
     treeExpandAll: "すべてのツリーリーフを展開します。この操作は負荷が高く、時間がかかる場合があります ...",
     noRedisKeys: "このデータベースにはキーがありません。",
     redisConnected: "Redisの接続に成功しました",
+    reverted: "\u5143\u306b\u623b\u3057\u307e\u3057\u305f",
     reloadingDataInfo: "Redisデータ情報を再読み込み中",
     added: "追加済み",
     saved: "更新済み",
@@ -432,6 +444,10 @@ const strings = {
       label: {
         animation: "アニメーションを使用",
         noAnimation: "アニメーションなし",
+        undoEnabled: "\u5143\u306b\u623b\u3059\u3092\u6709\u52b9\u5316",
+        undoDisabled: "\u5143\u306b\u623b\u3059\u3092\u7121\u52b9\u5316",
+        diffEnabled: "\u4fdd\u5b58\u524d\u306b diff \u3092\u8868\u793a",
+        diffDisabled: "\u4fdd\u5b58\u524d\u306e diff \u306f\u7121\u52b9",
         jsonFormatTwoSpace: "2スペースでJSONをフォーマット",
         jsonFormatFourSpace: "4スペースでJSONをフォーマット",
         formName: "Redis設定",
@@ -440,6 +456,7 @@ const strings = {
         searchModeStartsWith: "前方一致検索モード",
         searchModeIncludes: "部分一致検索モード"
       },
+      undoHint: "\u5143\u306b\u623b\u3059\u306f string \u3068 JSON \u306e\u30ad\u30fc\u30bf\u30a4\u30d7\u3067\u306e\u307f\u5229\u7528\u3067\u304d\u307e\u3059",
       field: {
         treeSeparator: "ツリー区切り文字",
         treeSeparatorSelector: "ツリー区切り文字セレクター",

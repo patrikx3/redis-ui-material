@@ -18,6 +18,7 @@ import { useOverlayStore } from '../stores/overlay.store'
 import { request } from '../stores/socket.service'
 import P3xrDialog from '../components/P3xrDialog'
 import JsonViewDialog from './JsonViewDialog'
+import DiffDialog from './DiffDialog'
 import JsonEditorDialog from './JsonEditorDialog'
 
 export interface KeyNewOrSetData {
@@ -174,10 +175,24 @@ export default function KeyNewOrSetDialog({ open, data, onClose }: Props) {
         set('value', lines.join('\n'))
     }
 
+    const [diffOpen, setDiffOpen] = useState(false)
+    const [diffData, setDiffData] = useState({ oldValue: '', newValue: '', fieldName: '' })
+    const diffResolveRef = useRef<((v: boolean) => void) | null>(null)
+
     const submit = async () => {
         if (!model.key?.trim()) { toast(strings?.form?.key?.error?.key); return }
         if (validateJson) {
             try { JSON.parse(model.value) } catch { toast(strings?.label?.jsonViewNotParsable); return }
+        }
+        // Show diff for edits (not new keys)
+        if (data?.model?.value !== undefined && data.model.value !== model.value) {
+            const settings = useSettingsStore.getState()
+            if (settings.showDiffBeforeSave) {
+                setDiffData({ oldValue: String(data.model.value), newValue: String(model.value), fieldName: model.hashKey || '' })
+                setDiffOpen(true)
+                const confirmed = await new Promise<boolean>(resolve => { diffResolveRef.current = resolve })
+                if (!confirmed) return
+            }
         }
         try {
             overlay.show({ message: strings?.label?.saving })
@@ -202,6 +217,7 @@ export default function KeyNewOrSetDialog({ open, data, onClose }: Props) {
     const isAdd = data.type === 'add'
 
     return (
+        <>
         <P3xrDialog open onClose={() => onClose()} title={getTitle()}
             actions={
                 <>
@@ -464,5 +480,12 @@ export default function KeyNewOrSetDialog({ open, data, onClose }: Props) {
             <JsonEditorDialog open={jsonEditorOpen} value={String(model.value ?? '')}
                 onClose={(result) => { setJsonEditorOpen(false); if (result?.obj) set('value', result.obj) }} />
         </P3xrDialog>
+
+            <DiffDialog open={diffOpen} keyName={model.key}
+                fieldName={diffData.fieldName || undefined}
+                oldValue={diffData.oldValue} newValue={diffData.newValue}
+                onConfirm={() => { setDiffOpen(false); diffResolveRef.current?.(true) }}
+                onCancel={() => { setDiffOpen(false); diffResolveRef.current?.(false) }} />
+        </>
     )
 }

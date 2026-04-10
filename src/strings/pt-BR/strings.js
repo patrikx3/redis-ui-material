@@ -200,7 +200,18 @@ const strings = {
     jsonViewEditor: "Editar JSON",
     quickConsole: "Consola rápida",
     moveUp: "Mover para cima",
-    moveDown: "Mover para baixo"
+    moveDown: "Mover para baixo",
+  },
+  diff: {
+    reviewChanges: "Revisar altera\u00e7\u00f5es",
+    inline: "Em linha",
+    sideBySide: "Lado a lado",
+    additions: "adi\u00e7\u00f5es",
+    deletions: "remo\u00e7\u00f5es",
+    unchangedLines: "linhas inalteradas",
+    noChanges: "Nenhuma altera\u00e7\u00e3o detectada",
+    before: "Antes",
+    after: "Depois",
   },
   label: {
     id: {
@@ -366,6 +377,7 @@ const strings = {
     treeExpandAll: "Expanda todas as folhas das árvores. Esta operação pode ser cara e levar tempo ...",
     noRedisKeys: "Não há chaves neste banco de dados.",
     redisConnected: "Redis conectado com sucesso",
+    reverted: "Revertido",
     reloadingDataInfo: "Recarregando informações de dados Redis",
     added: "Adicionado",
     saved: "Atualizado",
@@ -434,6 +446,10 @@ const strings = {
       label: {
         animation: "Usar animação",
         noAnimation: "Sem animação",
+        undoEnabled: "Desfazer ativado",
+        undoDisabled: "Desfazer desativado",
+        diffEnabled: "Mostrar diff antes de salvar",
+        diffDisabled: "Diff antes de salvar desativado",
         jsonFormatTwoSpace: "Formate JSON com 2 espaços",
         jsonFormatFourSpace: "Formate JSON com 4 espaços",
         formName: "Configurações Redis",
@@ -442,6 +458,7 @@ const strings = {
         searchModeStartsWith: "Pesquisa com começa com modo",
         searchModeIncludes: "Pesquisa inclui modo"
       },
+      undoHint: "Desfazer est\u00e1 dispon\u00edvel apenas para tipos de chave string e JSON",
       field: {
         treeSeparator: "Separador de árvores",
         treeSeparatorSelector: "Seletor de separador de árvore",

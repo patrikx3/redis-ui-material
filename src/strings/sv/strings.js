@@ -200,6 +200,17 @@ const strings = {
     moveUp: "Flytta upp",
     moveDown: "Flytta ned",
   },
+  diff: {
+    reviewChanges: "Granska \u00e4ndringar",
+    inline: "Infogat",
+    sideBySide: "Sida vid sida",
+    additions: "till\u00e4gg",
+    deletions: "borttagningar",
+    unchangedLines: "of\u00f6r\u00e4ndrade rader",
+    noChanges: "Inga \u00e4ndringar uppt\u00e4cktes",
+    before: "F\u00f6re",
+    after: "Efter",
+  },
   label: {
     id: {
       nodeId: 'Nod-ID',
@@ -364,6 +375,7 @@ const strings = {
     treeExpandAll: "Expandera alla trädlöv. Denna operation kan vara kostsam och kan ta tid ...",
     noRedisKeys: "Det finns inga nycklar i denna databas.",
     redisConnected: "Redis anslutet framgångsrikt",
+    reverted: "\u00c5ngrad",
     reloadingDataInfo: "Laddar om Redis-datainfo",
     added: "Tillagd",
     saved: "Uppdaterad",
@@ -432,6 +444,10 @@ const strings = {
       label: {
         animation: "Använd animation",
         noAnimation: "Ingen animation",
+        undoEnabled: "\u00c5ngra aktiverat",
+        undoDisabled: "\u00c5ngra inaktiverat",
+        diffEnabled: "Visa diff f\u00f6re sparning",
+        diffDisabled: "Diff f\u00f6re sparning \u00e4r inaktiverat",
         jsonFormatTwoSpace: "Formatera JSON med 2 mellanslag",
         jsonFormatFourSpace: "Formatera JSON med 4 mellanslag",
         formName: "Redis-inställningar",
@@ -440,6 +456,7 @@ const strings = {
         searchModeStartsWith: "Sök med börjar-med-läge",
         searchModeIncludes: "Sök med innehåller-läge"
       },
+      undoHint: "\u00c5ngra \u00e4r bara tillg\u00e4ngligt f\u00f6r nyckeltyperna string och JSON",
       field: {
         treeSeparator: "Trädseparator",
         treeSeparatorSelector: "Trädseparatorväljare",

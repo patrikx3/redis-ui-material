@@ -204,6 +204,17 @@ const strings = {
     moveUp: "Переместить вверх",
     moveDown: "Переместить вниз",
   },
+  diff: {
+    reviewChanges: "\u041f\u0440\u043e\u0441\u043c\u043e\u0442\u0440\u0435\u0442\u044c \u0438\u0437\u043c\u0435\u043d\u0435\u043d\u0438\u044f",
+    inline: "\u0412 \u0441\u0442\u0440\u043e\u043a\u0435",
+    sideBySide: "\u0411\u043e\u043a \u043e \u0431\u043e\u043a",
+    additions: "\u0434\u043e\u0431\u0430\u0432\u043b\u0435\u043d\u0438\u044f",
+    deletions: "\u0443\u0434\u0430\u043b\u0435\u043d\u0438\u044f",
+    unchangedLines: "\u0441\u0442\u0440\u043e\u043a\u0438 \u0431\u0435\u0437 \u0438\u0437\u043c\u0435\u043d\u0435\u043d\u0438\u0439",
+    noChanges: "\u0418\u0437\u043c\u0435\u043d\u0435\u043d\u0438\u0439 \u043d\u0435 \u043e\u0431\u043d\u0430\u0440\u0443\u0436\u0435\u043d\u043e",
+    before: "\u0414\u043e",
+    after: "\u041f\u043e\u0441\u043b\u0435",
+  },
   label: {
     id: {
       nodeId: 'Идентификатор узла',
@@ -368,6 +379,7 @@ const strings = {
     treeExpandAll: "Развернуть все листья дерева, это имеет цену, временную ...",
     noRedisKeys: "Нету ключей в базе данных.",
     redisConnected: "Redis успешно подключен",
+    reverted: "\u041e\u0442\u043c\u0435\u043d\u0435\u043d\u043e",
     reloadingDataInfo: "Перезагружаем информацию о данных Redis",
     added: "Добавлено",
     saved: "Обновлено",
@@ -436,6 +448,10 @@ const strings = {
       label: {
         animation: "Использовать анимацию",
         noAnimation: "Выключить анимацию",
+        undoEnabled: "\u041e\u0442\u043c\u0435\u043d\u0430 \u0432\u043a\u043b\u044e\u0447\u0435\u043d\u0430",
+        undoDisabled: "\u041e\u0442\u043c\u0435\u043d\u0430 \u043e\u0442\u043a\u043b\u044e\u0447\u0435\u043d\u0430",
+        diffEnabled: "\u041f\u043e\u043a\u0430\u0437\u044b\u0432\u0430\u0442\u044c diff \u043f\u0435\u0440\u0435\u0434 \u0441\u043e\u0445\u0440\u0430\u043d\u0435\u043d\u0438\u0435\u043c",
+        diffDisabled: "Diff \u043f\u0435\u0440\u0435\u0434 \u0441\u043e\u0445\u0440\u0430\u043d\u0435\u043d\u0438\u0435\u043c \u043e\u0442\u043a\u043b\u044e\u0447\u0451\u043d",
         jsonFormatTwoSpace: "Форматировать JSON двумя пробелами",
         jsonFormatFourSpace: "Форматировать JSON четырьмя пробелами",
         formName: "Настройки Redis",
@@ -444,6 +460,7 @@ const strings = {
         searchModeStartsWith: "Поиск начала",
         searchModeIncludes: "Поиск содержимого"
       },
+      undoHint: "\u041e\u0442\u043c\u0435\u043d\u0430 \u0434\u043e\u0441\u0442\u0443\u043f\u043d\u0430 \u0442\u043e\u043b\u044c\u043a\u043e \u0434\u043b\u044f \u0442\u0438\u043f\u043e\u0432 \u043a\u043b\u044e\u0447\u0435\u0439 string \u0438 JSON",
       field: {
         treeSeparator: "Разделитель дерева",
         treeSeparatorSelector: "Избиратель разделителя дерева",

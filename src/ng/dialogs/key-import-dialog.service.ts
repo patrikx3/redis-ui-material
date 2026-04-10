@@ -14,7 +14,7 @@ export class KeyImportDialogService {
 
         const dialogRef = this.dialog.open(KeyImportDialogComponent, createDialogPopupSettings({
             data: options.data,
-            disableClose: true,
+            disableClose: false,
             width: '700px',
             maxWidth: '95vw',
             maxHeight: '90vh',

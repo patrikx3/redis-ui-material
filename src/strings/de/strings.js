@@ -204,6 +204,17 @@ const strings = {
     moveUp: "Nach oben verschieben",
     moveDown: "Nach unten verschieben",
   },
+  diff: {
+    reviewChanges: "\u00c4nderungen pr\u00fcfen",
+    inline: "Inline",
+    sideBySide: "Nebeneinander",
+    additions: "Erg\u00e4nzungen",
+    deletions: "L\u00f6schungen",
+    unchangedLines: "unver\u00e4nderte Zeilen",
+    noChanges: "Keine \u00c4nderungen erkannt",
+    before: "Vorher",
+    after: "Nachher",
+  },
   label: {
     id: {
       nodeId: 'Knoten-ID',
@@ -368,6 +379,7 @@ const strings = {
     treeExpandAll: "Alle Baumblätter aufklappen. Diese Operation kann aufwändig sein und Zeit in Anspruch nehmen ...",
     noRedisKeys: "Es gibt keine Schlüssel in dieser Datenbank.",
     redisConnected: "Redis erfolgreich verbunden",
+    reverted: "R\u00fcckg\u00e4ngig gemacht",
     reloadingDataInfo: "Redis-Dateninformationen werden neu geladen",
     added: "Hinzugefügt",
     saved: "Aktualisiert",
@@ -436,6 +448,10 @@ const strings = {
       label: {
         animation: "Animation verwenden",
         noAnimation: "Keine Animation",
+        undoEnabled: "R\u00fcckg\u00e4ngig aktiviert",
+        undoDisabled: "R\u00fcckg\u00e4ngig deaktiviert",
+        diffEnabled: "Diff vor dem Speichern anzeigen",
+        diffDisabled: "Diff vor dem Speichern deaktiviert",
         jsonFormatTwoSpace: "JSON mit 2 Leerzeichen formatieren",
         jsonFormatFourSpace: "JSON mit 4 Leerzeichen formatieren",
         formName: "Redis-Einstellungen",
@@ -444,6 +460,7 @@ const strings = {
         searchModeStartsWith: "Suche mit Beginnt-mit-Modus",
         searchModeIncludes: "Enthält-Suchmodus"
       },
+      undoHint: "R\u00fcckg\u00e4ngig machen ist nur f\u00fcr die Schl\u00fcsseltypen string und JSON verf\u00fcgbar",
       field: {
         treeSeparator: "Baumtrenner",
         treeSeparatorSelector: "Baumtrenner-Selektor",

@@ -202,7 +202,18 @@ const strings = {
     jsonViewEditor: "JSON திருத்தம்",
     quickConsole: "விரைவு கன்சோல்",
     moveUp: "மேலே நகர்த்து",
-    moveDown: "கீழே நகர்த்து"
+    moveDown: "கீழே நகர்த்து",
+  },
+  diff: {
+    reviewChanges: "\u0bae\u0bbe\u0bb1\u0bcd\u0bb1\u0b99\u0bcd\u0b95\u0bb3\u0bc8 \u0bae\u0ba4\u0bbf\u0baa\u0bcd\u0baa\u0bbe\u0baf\u0bcd\u0bb5\u0bc1 \u0b9a\u0bc6\u0baf\u0bcd",
+    inline: "\u0b89\u0bb3\u0bcd\u0bb3\u0b9f\u0b95\u0bcd\u0b95\u0bae\u0bbe\u0b95",
+    sideBySide: "\u0b85\u0bb0\u0bc1\u0b95\u0bb0\u0bc1\u0b95\u0bc7",
+    additions: "\u0b9a\u0bc7\u0bb0\u0bcd\u0ba4\u0bcd\u0ba4\u0bb2\u0bcd\u0b95\u0bb3\u0bcd",
+    deletions: "\u0ba8\u0bc0\u0b95\u0bcd\u0b95\u0bb2\u0bcd\u0b95\u0bb3\u0bcd",
+    unchangedLines: "\u0bae\u0bbe\u0bb1\u0bbe\u0ba4 \u0bb5\u0bb0\u0bbf\u0b95\u0bb3\u0bcd",
+    noChanges: "\u0bae\u0bbe\u0bb1\u0bcd\u0bb1\u0b99\u0bcd\u0b95\u0bb3\u0bcd \u0b8e\u0ba4\u0bc1\u0bb5\u0bc1\u0bae\u0bcd \u0b95\u0ba3\u0bcd\u0b9f\u0bb1\u0bbf\u0baf\u0baa\u0bcd\u0baa\u0b9f\u0bb5\u0bbf\u0bb2\u0bcd\u0bb2\u0bc8",
+    before: "\u0bae\u0bc1\u0ba9\u0bcd\u0baa\u0bc1",
+    after: "\u0baa\u0bbf\u0bb1\u0b95\u0bc1",
   },
   label: {
     id: {
@@ -368,6 +379,7 @@ const strings = {
     treeExpandAll: "அனைத்து மர இலைகளையும் விரிவாக்கு. இந்த செயல்பாடு விலை உயர்ந்ததாக இருக்கலாம் மற்றும் நேரம் எடுக்கலாம் ...",
     noRedisKeys: "இந்த தரவுத்தளத்தில் விசைகள் இல்லை.",
     redisConnected: "Redis வெற்றிகரமாக இணைக்கப்பட்டது",
+    reverted: "\u0bae\u0bc0\u0b9f\u0bcd\u0b9f\u0bae\u0bc8\u0b95\u0bcd\u0b95\u0baa\u0bcd\u0baa\u0b9f\u0bcd\u0b9f\u0ba4\u0bc1",
     reloadingDataInfo: "Redis தரவு தகவலை மீளேற்றம் செய்கிறது",
     added: "சேர்க்கப்பட்டது",
     saved: "புதுப்பிக்கப்பட்டது",
@@ -436,6 +448,10 @@ const strings = {
       label: {
         animation: "அசைவூட்டம் பயன்படுத்து",
         noAnimation: "அசைவூட்டம் இல்லை",
+        undoEnabled: "Undo \u0b87\u0baf\u0b95\u0bcd\u0b95\u0baa\u0bcd\u0baa\u0b9f\u0bcd\u0b9f\u0bc1\u0bb3\u0bcd\u0bb3\u0ba4\u0bc1",
+        undoDisabled: "Undo \u0bae\u0bc1\u0b9f\u0b95\u0bcd\u0b95\u0baa\u0bcd\u0baa\u0b9f\u0bcd\u0b9f\u0bc1\u0bb3\u0bcd\u0bb3\u0ba4\u0bc1",
+        diffEnabled: "\u0b9a\u0bc7\u0bae\u0bbf\u0baa\u0bcd\u0baa\u0ba4\u0bb1\u0bcd\u0b95\u0bc1 \u0bae\u0bc1\u0ba9\u0bcd diff \u0b90 \u0b95\u0bbe\u0b9f\u0bcd\u0b9f\u0bc1",
+        diffDisabled: "\u0b9a\u0bc7\u0bae\u0bbf\u0baa\u0bcd\u0baa\u0ba4\u0bb1\u0bcd\u0b95\u0bc1 \u0bae\u0bc1\u0ba9\u0bcd diff \u0bae\u0bc1\u0b9f\u0b95\u0bcd\u0b95\u0baa\u0bcd\u0baa\u0b9f\u0bcd\u0b9f\u0bc1\u0bb3\u0bcd\u0bb3\u0ba4\u0bc1",
         jsonFormatTwoSpace: "2 இடைவெளிகளுடன் JSON வடிவமை",
         jsonFormatFourSpace: "4 இடைவெளிகளுடன் JSON வடிவமை",
         formName: "Redis அமைப்புகள்",
@@ -444,6 +460,7 @@ const strings = {
         searchModeStartsWith: "தொடங்குவதன் மூலம் தேடு",
         searchModeIncludes: "உள்ளடக்கும் முறையில் தேடு"
       },
+      undoHint: "Undo string \u0bae\u0bb1\u0bcd\u0bb1\u0bc1\u0bae\u0bcd JSON key \u0bb5\u0b95\u0bc8\u0b95\u0bb3\u0bc1\u0b95\u0bcd\u0b95\u0bc1 \u0bae\u0b9f\u0bcd\u0b9f\u0bc1\u0bae\u0bcd \u0b95\u0bbf\u0b9f\u0bc8\u0b95\u0bcd\u0b95\u0bc1\u0bae\u0bcd",
       field: {
         treeSeparator: "மர பிரிப்பான்",
         treeSeparatorSelector: "மர பிரிப்பான் தேர்வி",

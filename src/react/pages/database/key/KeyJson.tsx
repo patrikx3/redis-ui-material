@@ -2,7 +2,7 @@
  * JSON (ReJSON) key type renderer — exact port of Angular key-json.component.
  * Inline JSON tree view with expand/collapse, wrap toggle, copy, download, edit.
  */
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { Box, Button, Tooltip, useMediaQuery, useTheme as useMuiTheme } from '@mui/material'
 import {
     ContentCopy, Download, UnfoldMore, UnfoldLess, WrapText, Notes, Edit,
@@ -11,11 +11,13 @@ import {
 import { useI18nStore } from '../../../stores/i18n.store'
 import { useRedisStateStore } from '../../../stores/redis-state.store'
 import { useCommonStore } from '../../../stores/common.store'
+import { useSettingsStore } from '../../../stores/settings.store'
 import { useOverlayStore } from '../../../stores/overlay.store'
 import { request } from '../../../stores/socket.service'
 import { trackPage } from '../../../stores/analytics'
 import { KeyTypeProps, truncateDisplay, copyValue } from './key-type-base'
 import JsonEditorDialog from '../../../dialogs/JsonEditorDialog'
+import DiffDialog from '../../../dialogs/DiffDialog'
 
 // --- Inline JSON Tree (reused from JsonViewDialog pattern) ---
 
@@ -128,6 +130,9 @@ export default function KeyJson({ response, value, valueBuffer, keyName, valueFo
     const [treeWrap, setTreeWrap] = useState(true)
     const [expandedKeys, setExpandedKeys] = useState<Set<string>>(new Set())
     const [editorOpen, setEditorOpen] = useState(false)
+    const [diffOpen, setDiffOpen] = useState(false)
+    const [diffData, setDiffData] = useState({ oldValue: '', newValue: '' })
+    const diffResolveRef = useRef<((v: boolean) => void) | null>(null)
 
     const rootLabel = strings?.label?.tree ?? 'root'
 
@@ -178,19 +183,39 @@ export default function KeyJson({ response, value, valueBuffer, keyName, valueFo
         URL.revokeObjectURL(url)
     }, [value, keyName])
 
+    const showDiff = useCallback((oldValue: string, newValue: string): Promise<boolean> => {
+        if (!useSettingsStore.getState().showDiffBeforeSave) return Promise.resolve(true)
+        if (oldValue === newValue) return Promise.resolve(true)
+        setDiffData({ oldValue, newValue })
+        setDiffOpen(true)
+        return new Promise(resolve => { diffResolveRef.current = resolve })
+    }, [])
+
     const handleEditorClose = useCallback(async (result?: { obj: string } | null) => {
         setEditorOpen(false)
         if (!result?.obj) return
+        const oldVal = value
         try {
             const val = typeof result.obj === 'string' ? result.obj : JSON.stringify(result.obj)
             overlay.show()
             await request({ action: 'key-json-set', payload: { key: keyName, path: '$', value: val } })
             trackPage('/key-json-set')
-            toast(strings?.status?.set)
             onRefresh()
-        } catch (e) { if (e) generalHandleError(e) }
-        finally { overlay.hide() }
-    }, [keyName, strings, toast, onRefresh, generalHandleError])
+            overlay.hide()
+
+            const settings = useSettingsStore.getState()
+            if (settings.undoEnabled && oldVal !== undefined && oldVal !== val) {
+                const undoClicked = await useCommonStore.getState().toastWithUndo(strings?.status?.set || 'Saved')
+                if (undoClicked) {
+                    overlay.show({ message: 'Undo...' })
+                    await request({ action: 'key-json-set', payload: { key: keyName, path: '$', value: oldVal } })
+                    onRefresh()
+                    overlay.hide()
+                    useCommonStore.getState().toast(strings?.status?.reverted || 'Reverted')
+                }
+            }
+        } catch (e) { if (e) generalHandleError(e); overlay.hide() }
+    }, [keyName, strings, value, onRefresh, generalHandleError])
 
     const Btn = ({ icon, label, color = 'secondary' as const, onClick }: {
         icon: React.ReactNode; label: string; color?: 'primary' | 'secondary'; onClick: () => void
@@ -233,6 +258,11 @@ export default function KeyJson({ response, value, valueBuffer, keyName, valueFo
             </Box>
 
             <JsonEditorDialog open={editorOpen} value={String(value ?? '')} hideFormatSave onClose={handleEditorClose} />
+
+            <DiffDialog open={diffOpen} keyName={keyName}
+                oldValue={diffData.oldValue} newValue={diffData.newValue}
+                onConfirm={() => { setDiffOpen(false); diffResolveRef.current?.(true) }}
+                onCancel={() => { setDiffOpen(false); diffResolveRef.current?.(false) }} />
         </Box>
     )
 }

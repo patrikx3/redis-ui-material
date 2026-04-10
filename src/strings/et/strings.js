@@ -200,7 +200,18 @@ const strings = {
     jsonViewEditor: "Redigeerige JSON",
     quickConsole: "Kiirkonsool",
     moveUp: "Liiguta üles",
-    moveDown: "Liiguta alla"
+    moveDown: "Liiguta alla",
+  },
+  diff: {
+    reviewChanges: "Vaata muudatused \u00fcle",
+    inline: "Reas",
+    sideBySide: "K\u00f5rvuti",
+    additions: "lisamised",
+    deletions: "kustutamised",
+    unchangedLines: "muutmata read",
+    noChanges: "Muudatusi ei tuvastatud",
+    before: "Enne",
+    after: "P\u00e4rast",
   },
   label: {
     id: {
@@ -366,6 +377,7 @@ const strings = {
     treeExpandAll: "Laiendage kõiki puulehti. See operatsioon võib olla kulukas ja võib võtta aega...",
     noRedisKeys: "Selles andmebaasis pole võtmeid.",
     redisConnected: "Redis ühendamine õnnestus",
+    reverted: "Ennistatud",
     reloadingDataInfo: "Redis andmete uuesti laadimine",
     added: "Lisatud",
     saved: "Uuendatud",
@@ -434,6 +446,10 @@ const strings = {
       label: {
         animation: "Kasutage animatsiooni",
         noAnimation: "Animatsiooni pole",
+        undoEnabled: "Tagasiv\u00f5tmine lubatud",
+        undoDisabled: "Tagasiv\u00f5tmine keelatud",
+        diffEnabled: "N\u00e4ita diffi enne salvestamist",
+        diffDisabled: "Diff enne salvestamist on keelatud",
         jsonFormatTwoSpace: "Vorming JSON 2 tühikuga",
         jsonFormatFourSpace: "Vorming JSON 4 tühikuga",
         formName: "Redis seaded",
@@ -442,6 +458,7 @@ const strings = {
         searchModeStartsWith: "Otsimine algab režiimiga",
         searchModeIncludes: "Otsing sisaldab režiimi"
       },
+      undoHint: "Tagasiv\u00f5tmine on saadaval ainult string- ja JSON-v\u00f5tmet\u00fc\u00fcpidele",
       field: {
         treeSeparator: "Puude eraldaja",
         treeSeparatorSelector: "Puude eraldaja valija",

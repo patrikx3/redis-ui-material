@@ -200,7 +200,18 @@ const strings = {
     jsonViewEditor: "Edit JSON",
     quickConsole: "Konsol Pantas",
     moveUp: "Alih ke atas",
-    moveDown: "Alih ke bawah"
+    moveDown: "Alih ke bawah",
+  },
+  diff: {
+    reviewChanges: "Semak perubahan",
+    inline: "Sejajar",
+    sideBySide: "Sebelah menyebelah",
+    additions: "penambahan",
+    deletions: "pemadaman",
+    unchangedLines: "baris yang tidak berubah",
+    noChanges: "Tiada perubahan dikesan",
+    before: "Sebelum",
+    after: "Selepas",
   },
   label: {
     id: {
@@ -366,6 +377,7 @@ const strings = {
     treeExpandAll: "Kembangkan semua daun pokok. Operasi ini mungkin mahal dan mungkin mengambil masa...",
     noRedisKeys: "Tiada kunci dalam pangkalan data ini.",
     redisConnected: "Redis berjaya disambungkan",
+    reverted: "Dikembalikan",
     reloadingDataInfo: "Memuat semula maklumat data Redis",
     added: "Ditambah",
     saved: "dikemas kini",
@@ -434,6 +446,10 @@ const strings = {
       label: {
         animation: "Gunakan animasi",
         noAnimation: "Tiada animasi",
+        undoEnabled: "Buat asal diaktifkan",
+        undoDisabled: "Buat asal dinyahaktifkan",
+        diffEnabled: "Tunjukkan diff sebelum menyimpan",
+        diffDisabled: "Diff sebelum simpan dinyahaktifkan",
         jsonFormatTwoSpace: "Format JSON dengan 2 ruang",
         jsonFormatFourSpace: "Format JSON dengan 4 ruang",
         formName: "Tetapan Redis",
@@ -442,6 +458,7 @@ const strings = {
         searchModeStartsWith: "Cari dengan bermula dengan mod",
         searchModeIncludes: "Carian termasuk mod"
       },
+      undoHint: "Buat asal tersedia untuk jenis kunci string dan JSON sahaja",
       field: {
         treeSeparator: "Pemisah pokok",
         treeSeparatorSelector: "Pemilih pemisah pokok",

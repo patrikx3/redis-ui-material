@@ -32,6 +32,8 @@ interface SettingsState {
     pageCount: number
     keyPageCount: number
     language: string
+    undoEnabled: boolean
+    showDiffBeforeSave: boolean
     googleAnalytics: string
     connectInfoStorageKey: string
     socketTimeout: number
@@ -58,6 +60,8 @@ export const useSettingsStore = create<SettingsState>((set) => ({
     pageCount: readLocalNum('p3xr-main-treecontrol-page-size', 250),
     keyPageCount: readLocalNum('p3xr-main-key-page-size', 5),
     language: readLocal('p3xr-language', 'en'),
+    undoEnabled: readLocalBool('p3xr-undo-enabled', true),
+    showDiffBeforeSave: readLocalBool('p3xr-show-diff-before-save', false),
     googleAnalytics: 'G-8M2CK7993T',
     connectInfoStorageKey: 'p3xr-connect-info',
     socketTimeout: 300000,
@@ -78,6 +82,8 @@ export const useSettingsStore = create<SettingsState>((set) => ({
             'p3xr-main-treecontrol-page-size': 'pageCount',
             'p3xr-main-key-page-size': 'keyPageCount',
             'p3xr-language': 'language',
+            'p3xr-undo-enabled': 'undoEnabled',
+            'p3xr-show-diff-before-save': 'showDiffBeforeSave',
         }
         const stateKey = map[key]
         if (stateKey) {

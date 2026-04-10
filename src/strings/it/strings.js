@@ -198,7 +198,18 @@ const strings = {
     jsonViewEditor: "Modifica JSON",
     quickConsole: "Console Rapida",
     moveUp: "Sposta su",
-    moveDown: "Sposta giù"
+    moveDown: "Sposta giù",
+  },
+  diff: {
+    reviewChanges: "Rivedi modifiche",
+    inline: "In linea",
+    sideBySide: "Affiancato",
+    additions: "aggiunte",
+    deletions: "eliminazioni",
+    unchangedLines: "righe invariate",
+    noChanges: "Nessuna modifica rilevata",
+    before: "Prima",
+    after: "Dopo",
   },
   label: {
     id: {
@@ -364,6 +375,7 @@ const strings = {
     treeExpandAll: "Espandi tutte le foglie dell'albero. Questa operazione può essere costosa e richiedere tempo ...",
     noRedisKeys: "Non ci sono chiavi in questo database.",
     redisConnected: "Redis connesso con successo",
+    reverted: "Ripristinato",
     reloadingDataInfo: "Ricaricamento informazioni dati Redis",
     added: "Aggiunto",
     saved: "Aggiornato",
@@ -432,6 +444,10 @@ const strings = {
       label: {
         animation: "Usa animazione",
         noAnimation: "Nessuna animazione",
+        undoEnabled: "Annulla abilitato",
+        undoDisabled: "Annulla disabilitato",
+        diffEnabled: "Mostra diff prima del salvataggio",
+        diffDisabled: "Diff prima del salvataggio disabilitato",
         jsonFormatTwoSpace: "Formatta JSON con 2 spazi",
         jsonFormatFourSpace: "Formatta JSON con 4 spazi",
         formName: "Impostazioni Redis",
@@ -440,6 +456,7 @@ const strings = {
         searchModeStartsWith: "Ricerca con modalità inizia con",
         searchModeIncludes: "Ricerca con modalità contiene"
       },
+      undoHint: "Annulla \u00e8 disponibile solo per i tipi di chiave string e JSON",
       field: {
         treeSeparator: "Separatore albero",
         treeSeparatorSelector: "Selettore separatore albero",

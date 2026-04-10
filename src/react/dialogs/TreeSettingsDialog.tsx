@@ -27,6 +27,8 @@ interface FormModel {
     searchStartsWith: boolean
     jsonFormat: boolean
     animation: boolean
+    undoEnabled: boolean
+    showDiffBeforeSave: boolean
 }
 
 interface FieldRange {
@@ -58,7 +60,7 @@ export default function TreeSettingsDialog({ open, onClose }: TreeSettingsDialog
         treeSeparator: '', pageCount: 250, keyPageCount: 5,
         maxValueDisplay: 1024, maxKeys: 1000, keysSort: true,
         searchClientSide: false, searchStartsWith: false,
-        jsonFormat: true, animation: true,
+        jsonFormat: true, animation: true, undoEnabled: true, showDiffBeforeSave: true,
     })
     const [errors, setErrors] = useState<Record<string, string>>({})
 
@@ -75,6 +77,8 @@ export default function TreeSettingsDialog({ open, onClose }: TreeSettingsDialog
                 searchStartsWith: settings.searchStartsWith,
                 jsonFormat: Number(settings.jsonFormat) !== 2,
                 animation: settings.animation,
+                undoEnabled: settings.undoEnabled,
+                showDiffBeforeSave: settings.showDiffBeforeSave,
             })
             setErrors({})
         }
@@ -129,6 +133,8 @@ export default function TreeSettingsDialog({ open, onClose }: TreeSettingsDialog
             s.setSetting('p3xr-main-treecontrol-search-starts-with', model.searchStartsWith)
             s.setSetting('p3xr-json-format', model.jsonFormat ? 4 : 2)
             s.setSetting('p3xr-animation-settings', model.animation ? '1' : '0')
+            s.setSetting('p3xr-undo-enabled', model.undoEnabled)
+            s.setSetting('p3xr-show-diff-before-save', model.showDiffBeforeSave)
             useRedisStateStore.setState({ page: 1, redisChanged: true })
             if (state.connection) await refresh()
             toast(strings?.status?.saved)
@@ -223,6 +229,17 @@ export default function TreeSettingsDialog({ open, onClose }: TreeSettingsDialog
                 label={model.animation
                     ? strings?.form?.treeSettings?.label?.animation
                     : strings?.form?.treeSettings?.label?.noAnimation} />
+            <FormControlLabel sx={{ display: 'block' }}
+                control={<Switch checked={model.undoEnabled} onChange={(_, v) => set('undoEnabled', v)} />}
+                label={model.undoEnabled
+                    ? (strings?.form?.treeSettings?.label?.undoEnabled || 'Undo enabled')
+                    : (strings?.form?.treeSettings?.label?.undoDisabled || 'Undo disabled')} />
+            <Box sx={{ fontSize: 12, opacity: 0.7, ml: '50px', mt: -0.5 }}>{strings?.form?.treeSettings?.undoHint || 'Undo is available for string and JSON key types only'}</Box>
+            <FormControlLabel sx={{ display: 'block' }}
+                control={<Switch checked={model.showDiffBeforeSave} onChange={(_, v) => set('showDiffBeforeSave', v)} />}
+                label={model.showDiffBeforeSave
+                    ? (strings?.form?.treeSettings?.label?.diffEnabled || 'Show diff before saving')
+                    : (strings?.form?.treeSettings?.label?.diffDisabled || 'Diff before save disabled')} />
         </P3xrDialog>
     )
 }

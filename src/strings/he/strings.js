@@ -200,7 +200,18 @@ const strings = {
     jsonViewEditor: "ערוך את JSON",
     quickConsole: "קונסולה מהירה",
     moveUp: "העבר למעלה",
-    moveDown: "העבר למטה"
+    moveDown: "העבר למטה",
+  },
+  diff: {
+    reviewChanges: "\u05e1\u05e7\u05d9\u05e8\u05ea \u05e9\u05d9\u05e0\u05d5\u05d9\u05d9\u05dd",
+    inline: "\u05d1\u05ea\u05d5\u05da \u05d4\u05e9\u05d5\u05e8\u05d4",
+    sideBySide: "\u05d6\u05d4 \u05dc\u05e6\u05d3 \u05d6\u05d4",
+    additions: "\u05ea\u05d5\u05e1\u05e4\u05d5\u05ea",
+    deletions: "\u05de\u05d7\u05d9\u05e7\u05d5\u05ea",
+    unchangedLines: "\u05e9\u05d5\u05e8\u05d5\u05ea \u05dc\u05dc\u05d0 \u05e9\u05d9\u05e0\u05d5\u05d9",
+    noChanges: "\u05dc\u05d0 \u05d6\u05d5\u05d4\u05d5 \u05e9\u05d9\u05e0\u05d5\u05d9\u05d9\u05dd",
+    before: "\u05dc\u05e4\u05e0\u05d9",
+    after: "\u05d0\u05d7\u05e8\u05d9",
   },
   label: {
     id: {
@@ -366,6 +377,7 @@ const strings = {
     treeExpandAll: "הרחב את כל עלי העץ. פעולה זו עשויה להיות יקרה ועשויה לקחת זמן...",
     noRedisKeys: "אין מפתחות במסד נתונים זה.",
     redisConnected: "Redis מחובר בהצלחה",
+    reverted: "\u05e9\u05d5\u05d7\u05d6\u05e8",
     reloadingDataInfo: "טוען מחדש את פרטי הנתונים של Redis",
     added: "נוסף",
     saved: "עודכן",
@@ -434,6 +446,10 @@ const strings = {
       label: {
         animation: "השתמש באנימציה",
         noAnimation: "אין אנימציה",
+        undoEnabled: "\u05d1\u05d9\u05d8\u05d5\u05dc \u05e4\u05e2\u05d9\u05dc",
+        undoDisabled: "\u05d1\u05d9\u05d8\u05d5\u05dc \u05de\u05d5\u05e9\u05d1\u05ea",
+        diffEnabled: "\u05d4\u05e6\u05d2 diff \u05dc\u05e4\u05e0\u05d9 \u05d4\u05e9\u05de\u05d9\u05e8\u05d4",
+        diffDisabled: "diff \u05dc\u05e4\u05e0\u05d9 \u05d4\u05e9\u05de\u05d9\u05e8\u05d4 \u05de\u05d5\u05e9\u05d1\u05ea",
         jsonFormatTwoSpace: "פורמט JSON עם 2 רווחים",
         jsonFormatFourSpace: "פורמט JSON עם 4 רווחים",
         formName: "הגדרות Redis",
@@ -442,6 +458,7 @@ const strings = {
         searchModeStartsWith: "חיפוש עם מתחיל עם מצב",
         searchModeIncludes: "החיפוש כולל מצב"
       },
+      undoHint: "\u05d4\u05d1\u05d9\u05d8\u05d5\u05dc \u05d6\u05de\u05d9\u05df \u05e8\u05e7 \u05e2\u05d1\u05d5\u05e8 \u05e1\u05d5\u05d2\u05d9 \u05de\u05e4\u05ea\u05d7 string \u05d5-JSON",
       field: {
         treeSeparator: "מפריד עצים",
         treeSeparatorSelector: "בורר מפריד עצים",

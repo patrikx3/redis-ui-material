@@ -563,18 +563,20 @@ export default function SettingsPage() {
                         { label: strings?.form?.treeSettings?.field?.searchModeStartsWith, value: settings.searchStartsWith ? strings?.form?.treeSettings?.label?.searchModeStartsWith : strings?.form?.treeSettings?.label?.searchModeIncludes },
                         { label: null, value: settings.jsonFormat === 2 ? strings?.form?.treeSettings?.label?.jsonFormatTwoSpace : strings?.form?.treeSettings?.label?.jsonFormatFourSpace },
                         { label: null, value: settings.animation ? strings?.form?.treeSettings?.label?.animation : strings?.form?.treeSettings?.label?.noAnimation },
-                    ].map((item, i) => (
+                        { label: null, value: settings.undoEnabled ? (strings?.form?.treeSettings?.label?.undoEnabled || 'Undo enabled') : (strings?.form?.treeSettings?.label?.undoDisabled || 'Undo disabled'), hint: strings?.form?.treeSettings?.undoHint || 'Undo is available for string and JSON key types only' },
+                        { label: null, value: settings.showDiffBeforeSave ? (strings?.form?.treeSettings?.label?.diffEnabled || 'Show diff before saving') : (strings?.form?.treeSettings?.label?.diffDisabled || 'Diff before save disabled') },
+                    ].map((item, i, arr) => (
                         <Box key={i}>
                             <ListItemButton onClick={() => setTreeDialogOpen(true)} sx={{ px: 2, py: 1 }}>
                                 <Box sx={{ width: '100%' }}>
                                     <Box sx={{ display: 'flex', width: '100%' }}>
                                         {item.label && <Box sx={{ flex: 1, fontWeight: 500 }}>{item.label}</Box>}
-                                        <Box sx={{ fontWeight: 400, opacity: 0.8 }}>{String(item.value)}</Box>
+                                        <Box sx={{ fontWeight: item.label ? 400 : 500, opacity: item.label ? 0.8 : 1 }}>{String(item.value)}</Box>
                                     </Box>
                                     {item.hint && <Box sx={{ fontSize: 12, opacity: 0.7 }}>{item.hint}</Box>}
                                 </Box>
                             </ListItemButton>
-                            {i < 9 && <Divider />}
+                            {i < arr.length - 1 && <Divider />}
                         </Box>
                     ))}
                 </List>

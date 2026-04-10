@@ -200,7 +200,18 @@ const strings = {
     jsonViewEditor: "JSON bewerken",
     quickConsole: "Snelle Console",
     moveUp: "Verplaats omhoog",
-    moveDown: "Verplaats omlaag"
+    moveDown: "Verplaats omlaag",
+  },
+  diff: {
+    reviewChanges: "Wijzigingen bekijken",
+    inline: "Inline",
+    sideBySide: "Naast elkaar",
+    additions: "toevoegingen",
+    deletions: "verwijderingen",
+    unchangedLines: "ongewijzigde regels",
+    noChanges: "Geen wijzigingen gedetecteerd",
+    before: "Voor",
+    after: "Na",
   },
   label: {
     id: {
@@ -366,6 +377,7 @@ const strings = {
     treeExpandAll: "Alle boomtakken uitvouwen. Deze bewerking kan duur zijn en kan enige tijd duren ...",
     noRedisKeys: "Er zijn geen sleutels in deze database.",
     redisConnected: "Redis succesvol verbonden",
+    reverted: "Teruggezet",
     reloadingDataInfo: "Redis-gegevens opnieuw laden",
     added: "Toegevoegd",
     saved: "Bijgewerkt",
@@ -434,6 +446,10 @@ const strings = {
       label: {
         animation: "Animatie gebruiken",
         noAnimation: "Geen animatie",
+        undoEnabled: "Ongedaan maken ingeschakeld",
+        undoDisabled: "Ongedaan maken uitgeschakeld",
+        diffEnabled: "Diff tonen v\u00f3\u00f3r opslaan",
+        diffDisabled: "Diff v\u00f3\u00f3r opslaan uitgeschakeld",
         jsonFormatTwoSpace: "JSON opmaken met 2 spaties",
         jsonFormatFourSpace: "JSON opmaken met 4 spaties",
         formName: "Redis-instellingen",
@@ -442,6 +458,7 @@ const strings = {
         searchModeStartsWith: "Zoeken met begint-met-modus",
         searchModeIncludes: "Zoeken met bevat-modus"
       },
+      undoHint: "Ongedaan maken is alleen beschikbaar voor string- en JSON-sleuteltypen",
       field: {
         treeSeparator: "Boomscheidingsteken",
         treeSeparatorSelector: "Boomscheidingstekenkiezer",

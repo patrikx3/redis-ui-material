@@ -128,6 +128,234 @@
         </div>
     </p3xr-ng-accordion>
 
+    <!-- Server Info -->
+    @if (serverInfo) {
+        <br />
+        <p3xr-ng-accordion [title]="strings().page?.monitor?.serverInfo || 'Server Info'" accordionKey="monitor-server-info">
+            <div actions>
+                <p3xr-ng-button
+                    (click)="exportServerInfo(); $event.stopPropagation()"
+                    [label]="strings().intention?.export || 'Export'"
+                    mdIcon="download">
+                </p3xr-ng-button>
+            </div>
+            <div content>
+                <mat-list>
+                    @if (serverInfo.os) {
+                        <mat-list-item>
+                            <div class="p3xr-settings-pair-row">
+                                <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.os || 'OS' }}</div>
+                                <div class="p3xr-settings-row-value p3xr-mono">{{ serverInfo.os }}</div>
+                            </div>
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
+                    }
+                    @if (serverInfo.port) {
+                        <mat-list-item>
+                            <div class="p3xr-settings-pair-row">
+                                <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.port || 'Port' }}</div>
+                                <div class="p3xr-settings-row-value p3xr-mono">{{ serverInfo.port }}</div>
+                            </div>
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
+                    }
+                    @if (serverInfo.pid) {
+                        <mat-list-item>
+                            <div class="p3xr-settings-pair-row">
+                                <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.pid || 'Process ID' }}</div>
+                                <div class="p3xr-settings-row-value p3xr-mono">{{ serverInfo.pid }}</div>
+                            </div>
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
+                    }
+                    @if (serverInfo.configFile) {
+                        <mat-list-item>
+                            <div class="p3xr-settings-pair-row">
+                                <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.configFile || 'Config File' }}</div>
+                                <div class="p3xr-settings-row-value p3xr-mono">{{ serverInfo.configFile }}</div>
+                            </div>
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
+                    }
+                    <mat-list-item>
+                        <div class="p3xr-settings-pair-row">
+                            <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.cpuSys || 'System' }} CPU</div>
+                            <div class="p3xr-settings-row-value p3xr-mono">{{ serverInfo.cpuSys }}</div>
+                        </div>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <mat-list-item>
+                        <div class="p3xr-settings-pair-row">
+                            <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.cpuUser || 'User' }} CPU</div>
+                            <div class="p3xr-settings-row-value p3xr-mono">{{ serverInfo.cpuUser }}</div>
+                        </div>
+                    </mat-list-item>
+                </mat-list>
+            </div>
+        </p3xr-ng-accordion>
+    }
+
+    <!-- Persistence & Replication -->
+    @if (persistenceInfo) {
+        <br />
+        <p3xr-ng-accordion [title]="strings().page?.monitor?.persistence || 'Persistence'" accordionKey="monitor-persistence">
+            <div actions>
+                <p3xr-ng-button
+                    (click)="exportPersistence(); $event.stopPropagation()"
+                    [label]="strings().intention?.export || 'Export'"
+                    mdIcon="download">
+                </p3xr-ng-button>
+            </div>
+            <div content>
+                <mat-list>
+                    <mat-list-item>
+                        <div class="p3xr-settings-pair-row">
+                            <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.rdbLastSave || 'RDB Last Save' }}</div>
+                            <div class="p3xr-settings-row-value p3xr-mono">{{ persistenceInfo.rdbLastSave }}</div>
+                        </div>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <mat-list-item>
+                        <div class="p3xr-settings-pair-row">
+                            <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.rdbStatus || 'RDB Status' }}</div>
+                            <div class="p3xr-settings-row-value p3xr-mono">{{ persistenceInfo.rdbStatus }}</div>
+                        </div>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <mat-list-item>
+                        <div class="p3xr-settings-pair-row">
+                            <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.rdbChanges || 'Changes Since Last Save' }}</div>
+                            <div class="p3xr-settings-row-value p3xr-mono">{{ persistenceInfo.rdbChanges }}</div>
+                        </div>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <mat-list-item>
+                        <div class="p3xr-settings-pair-row">
+                            <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.aofEnabled || 'AOF Enabled' }}</div>
+                            <div class="p3xr-settings-row-value p3xr-mono">{{ persistenceInfo.aofEnabled }}</div>
+                        </div>
+                    </mat-list-item>
+                    @if (persistenceInfo.aofSize) {
+                        <mat-divider></mat-divider>
+                        <mat-list-item>
+                            <div class="p3xr-settings-pair-row">
+                                <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.aofSize || 'AOF Size' }}</div>
+                                <div class="p3xr-settings-row-value p3xr-mono">{{ persistenceInfo.aofSize }}</div>
+                            </div>
+                        </mat-list-item>
+                    }
+                </mat-list>
+            </div>
+        </p3xr-ng-accordion>
+    }
+
+    @if (replicationInfo) {
+        <br />
+        <p3xr-ng-accordion [title]="strings().page?.monitor?.replication || 'Replication'" accordionKey="monitor-replication">
+            <div actions>
+                <p3xr-ng-button
+                    (click)="exportReplication(); $event.stopPropagation()"
+                    [label]="strings().intention?.export || 'Export'"
+                    mdIcon="download">
+                </p3xr-ng-button>
+            </div>
+            <div content>
+                <mat-list>
+                    <mat-list-item>
+                        <div class="p3xr-settings-pair-row">
+                            <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.role || 'Role' }}</div>
+                            <div class="p3xr-settings-row-value p3xr-mono">{{ replicationInfo.role }}</div>
+                        </div>
+                    </mat-list-item>
+                    @if (replicationInfo.replicas !== undefined) {
+                        <mat-divider></mat-divider>
+                        <mat-list-item>
+                            <div class="p3xr-settings-pair-row">
+                                <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.replicas || 'Connected Replicas' }}</div>
+                                <div class="p3xr-settings-row-value p3xr-mono">{{ replicationInfo.replicas }}</div>
+                            </div>
+                        </mat-list-item>
+                    }
+                    @if (replicationInfo.masterHost) {
+                        <mat-divider></mat-divider>
+                        <mat-list-item>
+                            <div class="p3xr-settings-pair-row">
+                                <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.masterHost || 'Master Host' }}</div>
+                                <div class="p3xr-settings-row-value p3xr-mono">{{ replicationInfo.masterHost }}:{{ replicationInfo.masterPort }}</div>
+                            </div>
+                        </mat-list-item>
+                    }
+                    @if (replicationInfo.linkStatus) {
+                        <mat-divider></mat-divider>
+                        <mat-list-item>
+                            <div class="p3xr-settings-pair-row">
+                                <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.linkStatus || 'Link Status' }}</div>
+                                <div class="p3xr-settings-row-value p3xr-mono">{{ replicationInfo.linkStatus }}</div>
+                            </div>
+                        </mat-list-item>
+                    }
+                </mat-list>
+            </div>
+        </p3xr-ng-accordion>
+    }
+
+    <!-- Keyspace -->
+    @if (keyspaceEntries.length > 0) {
+        <br />
+        <p3xr-ng-accordion [title]="strings().page?.monitor?.keyspace || 'Keyspace'" accordionKey="monitor-keyspace">
+            <div actions>
+                <p3xr-ng-button
+                    (click)="exportKeyspace(); $event.stopPropagation()"
+                    [label]="strings().intention?.export || 'Export'"
+                    mdIcon="download">
+                </p3xr-ng-button>
+            </div>
+            <div content>
+                <mat-list>
+                    @for (entry of keyspaceEntries; track entry.db; let last = $last) {
+                        <mat-list-item>
+                            <div class="p3xr-settings-pair-row">
+                                <div class="p3xr-settings-row-label">{{ entry.db }}</div>
+                                <div class="p3xr-settings-row-value p3xr-mono">{{ strings().page?.monitor?.keys || 'Keys' }}: {{ entry.keys }} · {{ strings().page?.monitor?.expires || 'Expires' }}: {{ entry.expires }}</div>
+                            </div>
+                        </mat-list-item>
+                        @if (!last) { <mat-divider></mat-divider> }
+                    }
+                </mat-list>
+            </div>
+        </p3xr-ng-accordion>
+    }
+
+    <!-- Modules -->
+    <br />
+    <p3xr-ng-accordion [title]="strings().page?.monitor?.modules || 'Loaded Modules'" accordionKey="monitor-modules">
+        <div actions>
+            <p3xr-ng-button
+                (click)="exportModules(); $event.stopPropagation()"
+                [label]="strings().intention?.export || 'Export'"
+                mdIcon="download">
+            </p3xr-ng-button>
+        </div>
+        <div content>
+            @if (modulesList.length === 0) {
+                <div style="padding: 16px; opacity: 0.5;">{{ strings().page?.monitor?.noModules || 'No modules loaded' }}</div>
+            }
+            @if (modulesList.length > 0) {
+                <mat-list>
+                    @for (mod of modulesList; track mod.name; let last = $last) {
+                        <mat-list-item>
+                            <div class="p3xr-settings-pair-row">
+                                <div class="p3xr-settings-row-label">{{ mod.name }}</div>
+                                <div class="p3xr-settings-row-value p3xr-mono">v{{ mod.ver }}</div>
+                            </div>
+                        </mat-list-item>
+                        @if (!last) { <mat-divider></mat-divider> }
+                    }
+                </mat-list>
+            }
+        </div>
+    </p3xr-ng-accordion>
+
     <br />
 
     <!-- Charts -->

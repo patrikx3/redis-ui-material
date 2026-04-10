@@ -20,6 +20,7 @@ import { SettingsService } from '../services/settings.service';
 import { JsonViewDialogService } from './json-view-dialog.service';
 import { JsonEditorDialogService } from './json-editor-dialog.service';
 import { OverlayService } from '../services/overlay.service';
+import { DiffDialogService } from './diff-dialog.service';
 
 export interface KeyNewOrSetDialogData {
     type: 'add' | 'edit' | 'append';
@@ -402,6 +403,7 @@ export class KeyNewOrSetDialogComponent implements OnInit {
         @Inject(RedisStateService) private state: RedisStateService,
         @Inject(SettingsService) private settings: SettingsService,
         @Inject(OverlayService) private overlay: OverlayService,
+        @Inject(DiffDialogService) private diffDialog: DiffDialogService,
     ) {
         this.strings = this.i18n.strings;
         this.options = data;
@@ -535,6 +537,17 @@ export class KeyNewOrSetDialogComponent implements OnInit {
         }
 
         try {
+            // Show diff for edits (not new keys)
+            if (this.data.model?.value !== undefined && this.data.model.value !== this.model.value) {
+                const confirmed = await this.diffDialog.show({
+                    keyName: this.model.key,
+                    fieldName: this.model.hashKey || undefined,
+                    oldValue: String(this.data.model.value),
+                    newValue: String(this.model.value),
+                });
+                if (!confirmed) return;
+            }
+
             this.overlay.show();
             const response = await this.socket.request({
                 action: 'key-new-or-set',

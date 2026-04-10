@@ -200,7 +200,18 @@ const strings = {
     jsonViewEditor: "แก้ไข JSON",
     quickConsole: "คอนโซลด่วน",
     moveUp: "เลื่อนขึ้น",
-    moveDown: "เลื่อนลง"
+    moveDown: "เลื่อนลง",
+  },
+  diff: {
+    reviewChanges: "\u0e15\u0e23\u0e27\u0e08\u0e2a\u0e2d\u0e1a\u0e01\u0e32\u0e23\u0e40\u0e1b\u0e25\u0e35\u0e48\u0e22\u0e19\u0e41\u0e1b\u0e25\u0e07",
+    inline: "\u0e43\u0e19\u0e1a\u0e23\u0e23\u0e17\u0e31\u0e14",
+    sideBySide: "\u0e40\u0e04\u0e35\u0e22\u0e07\u0e02\u0e49\u0e32\u0e07\u0e01\u0e31\u0e19",
+    additions: "\u0e2a\u0e48\u0e27\u0e19\u0e17\u0e35\u0e48\u0e40\u0e1e\u0e34\u0e48\u0e21",
+    deletions: "\u0e2a\u0e48\u0e27\u0e19\u0e17\u0e35\u0e48\u0e25\u0e1a",
+    unchangedLines: "\u0e1a\u0e23\u0e23\u0e17\u0e31\u0e14\u0e17\u0e35\u0e48\u0e44\u0e21\u0e48\u0e40\u0e1b\u0e25\u0e35\u0e48\u0e22\u0e19\u0e41\u0e1b\u0e25\u0e07",
+    noChanges: "\u0e44\u0e21\u0e48\u0e1e\u0e1a\u0e01\u0e32\u0e23\u0e40\u0e1b\u0e25\u0e35\u0e48\u0e22\u0e19\u0e41\u0e1b\u0e25\u0e07",
+    before: "\u0e01\u0e48\u0e2d\u0e19",
+    after: "\u0e2b\u0e25\u0e31\u0e07",
   },
   label: {
     id: {
@@ -366,6 +377,7 @@ const strings = {
     treeExpandAll: "ขยายใบต้นไม้ทั้งหมด การดำเนินการนี้อาจมีราคาแพงและอาจต้องใช้เวลา ...",
     noRedisKeys: "ไม่มีคีย์ในฐานข้อมูลนี้",
     redisConnected: "เชื่อมต่อ Redis สำเร็จแล้ว",
+    reverted: "\u0e22\u0e49\u0e2d\u0e19\u0e01\u0e25\u0e31\u0e1a\u0e41\u0e25\u0e49\u0e27",
     reloadingDataInfo: "กำลังโหลดข้อมูลข้อมูล Redis อีกครั้ง",
     added: "เพิ่มแล้ว",
     saved: "อัปเดตแล้ว",
@@ -434,6 +446,10 @@ const strings = {
       label: {
         animation: "ใช้ภาพเคลื่อนไหว",
         noAnimation: "ไม่มีภาพเคลื่อนไหว",
+        undoEnabled: "\u0e40\u0e1b\u0e34\u0e14\u0e43\u0e0a\u0e49\u0e07\u0e32\u0e19\u0e01\u0e32\u0e23\u0e40\u0e25\u0e34\u0e01\u0e17\u0e33",
+        undoDisabled: "\u0e1b\u0e34\u0e14\u0e43\u0e0a\u0e49\u0e07\u0e32\u0e19\u0e01\u0e32\u0e23\u0e40\u0e25\u0e34\u0e01\u0e17\u0e33",
+        diffEnabled: "\u0e41\u0e2a\u0e14\u0e07 diff \u0e01\u0e48\u0e2d\u0e19\u0e1a\u0e31\u0e19\u0e17\u0e36\u0e01",
+        diffDisabled: "\u0e1b\u0e34\u0e14 diff \u0e01\u0e48\u0e2d\u0e19\u0e1a\u0e31\u0e19\u0e17\u0e36\u0e01",
         jsonFormatTwoSpace: "จัดรูปแบบ JSON โดยเว้นวรรค 2 ช่อง",
         jsonFormatFourSpace: "จัดรูปแบบ JSON ด้วยช่องว่าง 4 ช่อง",
         formName: "การตั้งค่า Redis",
@@ -442,6 +458,7 @@ const strings = {
         searchModeStartsWith: "ค้นหาด้วยการเริ่มต้นด้วยโหมด",
         searchModeIncludes: "ค้นหารวมถึงโหมด"
       },
+      undoHint: "\u0e01\u0e32\u0e23\u0e40\u0e25\u0e34\u0e01\u0e17\u0e33\u0e43\u0e0a\u0e49\u0e44\u0e14\u0e49\u0e40\u0e09\u0e1e\u0e32\u0e30\u0e01\u0e31\u0e1a\u0e1b\u0e23\u0e30\u0e40\u0e20\u0e17\u0e04\u0e35\u0e22\u0e4c string \u0e41\u0e25\u0e30 JSON \u0e40\u0e17\u0e48\u0e32\u0e19\u0e31\u0e49\u0e19",
       field: {
         treeSeparator: "เครื่องแยกต้นไม้",
         treeSeparatorSelector: "ตัวเลือกตัวแยกต้นไม้",

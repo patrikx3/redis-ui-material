@@ -17,6 +17,7 @@ import { SettingsService } from '../../../services/settings.service';
 import { JsonTreeComponent } from '../../../components/json-tree.component';
 import { KeyTypeBase } from './key-type-base';
 import { OverlayService } from '../../../services/overlay.service';
+import { DiffDialogService } from '../../../dialogs/diff-dialog.service';
 
 @Component({
     selector: 'p3xr-key-json',
@@ -45,6 +46,7 @@ export class KeyJsonComponent extends KeyTypeBase implements OnInit, OnDestroy, 
         @Inject(RedisStateService) redisState: RedisStateService,
         @Inject(SettingsService) settingsService: SettingsService,
         @Inject(OverlayService) private overlay: OverlayService,
+        @Inject(DiffDialogService) private diffDialog: DiffDialogService,
     ) {
         super(i18n, socket, common, jsonViewDialog, keyNewOrSetDialog, breakpointObserver, cmd, cdr, redisState, settingsService);
     }
@@ -94,26 +96,34 @@ export class KeyJsonComponent extends KeyTypeBase implements OnInit, OnDestroy, 
 
     async jsonEditor(): Promise<void> {
         try {
+            const oldValue = this.p3xrValue;
             const result = await this.jsonEditorDialog.show({ value: this.p3xrValue, hideFormatSave: true });
             const value = typeof result.obj === 'string' ? result.obj : JSON.stringify(result.obj);
 
             this.overlay.show();
             await this.socket.request({
                 action: 'key-json-set',
-                payload: {
-                    key: this.p3xrKey,
-                    path: '$',
-                    value: value,
-                },
+                payload: { key: this.p3xrKey, path: '$', value },
             });
             this.gtag('/key-json-set');
-            this.common.toast(this.strings?.status?.set || 'Saved');
             this.refreshKey();
-        } catch (e) {
-            if (e) {
-                this.common.generalHandleError(e);
+            this.overlay.hide();
+
+            if (this.settingsService.undoEnabled() && oldValue !== undefined && oldValue !== value) {
+                const undoClicked = await this.common.toastWithUndo(this.strings?.status?.set || 'Saved');
+                if (undoClicked) {
+                    this.overlay.show({ message: 'Undo...' });
+                    await this.socket.request({
+                        action: 'key-json-set',
+                        payload: { key: this.p3xrKey, path: '$', value: oldValue },
+                    });
+                    this.refreshKey();
+                    this.overlay.hide();
+                    this.common.toast(this.strings?.status?.reverted || 'Reverted');
+                }
             }
-        } finally {
+        } catch (e) {
+            if (e) this.common.generalHandleError(e);
             this.overlay.hide();
         }
     }

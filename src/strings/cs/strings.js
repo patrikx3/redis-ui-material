@@ -204,6 +204,17 @@ const strings = {
     moveUp: "Posunout nahoru",
     moveDown: "Posunout dolů",
   },
+  diff: {
+    reviewChanges: "Zkontrolovat zm\u011bny",
+    inline: "V \u0159\u00e1dku",
+    sideBySide: "Vedle sebe",
+    additions: "p\u0159id\u00e1n\u00ed",
+    deletions: "odstran\u011bn\u00ed",
+    unchangedLines: "nezm\u011bn\u011bn\u00e9 \u0159\u00e1dky",
+    noChanges: "Nebyly zji\u0161t\u011bny \u017e\u00e1dn\u00e9 zm\u011bny",
+    before: "P\u0159ed",
+    after: "Po",
+  },
   label: {
     id: {
       nodeId: 'ID uzlu',
@@ -368,6 +379,7 @@ const strings = {
     treeExpandAll: "Rozbalit všechny listy stromě. Tato operace může být náročná a zabrat čas ...",
     noRedisKeys: "V této databázi nejsou žádné klíče.",
     redisConnected: "Redis úspěšně připojen",
+    reverted: "Vr\u00e1ceno",
     reloadingDataInfo: "Znovu načítání informací o Redis datech",
     added: "Přidáno",
     saved: "Aktualizováno",
@@ -436,6 +448,10 @@ const strings = {
       label: {
         animation: "Použít animaci",
         noAnimation: "Bez animace",
+        undoEnabled: "Vr\u00e1cen\u00ed zp\u011bt zapnuto",
+        undoDisabled: "Vr\u00e1cen\u00ed zp\u011bt vypnuto",
+        diffEnabled: "Zobrazit diff p\u0159ed ulo\u017een\u00edm",
+        diffDisabled: "Diff p\u0159ed ulo\u017een\u00edm je vypnut",
         jsonFormatTwoSpace: "Formátovat JSON se 2 mezerami",
         jsonFormatFourSpace: "Formátovat JSON se 4 mezerami",
         formName: "Redis nastavení",
@@ -444,6 +460,7 @@ const strings = {
         searchModeStartsWith: "Vyhledávání v režimu 'začíná na'",
         searchModeIncludes: "Režim vyhledávání 'obsahuje'"
       },
+      undoHint: "Vr\u00e1cen\u00ed zp\u011bt je dostupn\u00e9 pouze pro typy kl\u00ed\u010d\u016f string a JSON",
       field: {
         treeSeparator: "Oddělovač stromě",
         treeSeparatorSelector: "Selektor oddělovače stromě",

@@ -202,6 +202,17 @@ const strings = {
     moveUp: "نقل لأعلى",
     moveDown: "نقل لأسفل",
   },
+  diff: {
+    reviewChanges: "\u0645\u0631\u0627\u062c\u0639\u0629 \u0627\u0644\u062a\u063a\u064a\u064a\u0631\u0627\u062a",
+    inline: "\u0645\u0636\u0645\u0646",
+    sideBySide: "\u062c\u0646\u0628\u064b\u0627 \u0625\u0644\u0649 \u062c\u0646\u0628",
+    additions: "\u0625\u0636\u0627\u0641\u0627\u062a",
+    deletions: "\u0639\u0645\u0644\u064a\u0627\u062a \u062d\u0630\u0641",
+    unchangedLines: "\u0623\u0633\u0637\u0631 \u062f\u0648\u0646 \u062a\u063a\u064a\u064a\u0631",
+    noChanges: "\u0644\u0645 \u064a\u062a\u0645 \u0627\u0643\u062a\u0634\u0627\u0641 \u0623\u064a \u062a\u063a\u064a\u064a\u0631\u0627\u062a",
+    before: "\u0642\u0628\u0644",
+    after: "\u0628\u0639\u062f",
+  },
   label: {
     id: {
       nodeId: "معرف العقدة",
@@ -366,6 +377,7 @@ const strings = {
     treeExpandAll: "قم بتوسيع جميع أوراق الشجرة. قد تكون هذه العملية مكلفة وقد تستغرق وقتا طويلا..",
     noRedisKeys: "لا توجد مفاتيح في قاعدة البيانات هذه.",
     redisConnected: "تم توصيل Redis بنجاح",
+    reverted: "\u062a\u0645 \u0627\u0644\u062a\u0631\u0627\u062c\u0639",
     reloadingDataInfo: "إعادة تحميل معلومات بيانات Redis",
     added: "تمت الإضافة",
     saved: "تم التحديث",
@@ -434,6 +446,10 @@ const strings = {
       label: {
         animation: "استخدم الرسوم المتحركة",
         noAnimation: "لا الرسوم المتحركة",
+        undoEnabled: "\u0627\u0644\u062a\u0631\u0627\u062c\u0639 \u0645\u0641\u0639\u0651\u0644",
+        undoDisabled: "\u0627\u0644\u062a\u0631\u0627\u062c\u0639 \u0645\u0639\u0637\u0651\u0644",
+        diffEnabled: "\u0625\u0638\u0647\u0627\u0631 diff \u0642\u0628\u0644 \u0627\u0644\u062d\u0641\u0638",
+        diffDisabled: "\u062a\u0645 \u062a\u0639\u0637\u064a\u0644 diff \u0642\u0628\u0644 \u0627\u0644\u062d\u0641\u0638",
         jsonFormatTwoSpace: "قم بتنسيق JSON بمسافتين",
         jsonFormatFourSpace: "قم بتنسيق JSON بأربع مسافات",
         formName: "إعدادات Redis",
@@ -442,6 +458,7 @@ const strings = {
         searchModeStartsWith: "البحث مع يبدأ مع الوضع",
         searchModeIncludes: "البحث يشمل الوضع"
       },
+      undoHint: "\u0627\u0644\u062a\u0631\u0627\u062c\u0639 \u0645\u062a\u0627\u062d \u0641\u0642\u0637 \u0644\u0623\u0646\u0648\u0627\u0639 \u0627\u0644\u0645\u0641\u0627\u062a\u064a\u062d string \u0648JSON",
       field: {
         treeSeparator: "فاصل الشجرة",
         treeSeparatorSelector: "محدد فاصل الشجرة",

@@ -24,7 +24,7 @@ export class KeyNewOrSetDialogService {
 
         const dialogRef = this.dialog.open(KeyNewOrSetDialogComponent, createDialogPopupSettings({
             data: options,
-            disableClose: true,
+            disableClose: false,
             width: '75%',
             maxHeight: '90vh',
         }));

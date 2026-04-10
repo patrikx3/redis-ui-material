@@ -198,7 +198,18 @@ const strings = {
     jsonViewEditor: "JSON szerkesztése",
     quickConsole: "Gyors Konzol",
     moveUp: "Mozgatás felfelé",
-    moveDown: "Mozgatás lefelé"
+    moveDown: "Mozgatás lefelé",
+  },
+  diff: {
+    reviewChanges: "M\u00f3dos\u00edt\u00e1sok \u00e1ttekint\u00e9se",
+    inline: "Soron bel\u00fcl",
+    sideBySide: "Egym\u00e1s mellett",
+    additions: "hozz\u00e1ad\u00e1sok",
+    deletions: "t\u00f6rl\u00e9sek",
+    unchangedLines: "v\u00e1ltozatlan sorok",
+    noChanges: "Nem tal\u00e1lhat\u00f3k v\u00e1ltoz\u00e1sok",
+    before: "El\u0151tte",
+    after: "Ut\u00e1na",
   },
   label: {
     id: {
@@ -364,6 +375,7 @@ const strings = {
     treeExpandAll: "Összes fa ág kibontása. Ez a művelet költséges lehet és időbe telhet ...",
     noRedisKeys: "Nincsenek kulcsok ebben az adatbázisban.",
     redisConnected: "Redis sikeresen csatlakoztatva",
+    reverted: "Visszavonva",
     reloadingDataInfo: "Redis adatinformáció újratöltése",
     added: "Hozzáadva",
     saved: "Frissítve",
@@ -432,6 +444,10 @@ const strings = {
       label: {
         animation: "Animáció használata",
         noAnimation: "Nincs animáció",
+        undoEnabled: "Visszavon\u00e1s enged\u00e9lyezve",
+        undoDisabled: "Visszavon\u00e1s letiltva",
+        diffEnabled: "Diff megjelen\u00edt\u00e9se ment\u00e9s el\u0151tt",
+        diffDisabled: "Ment\u00e9s el\u0151tti diff kikapcsolva",
         jsonFormatTwoSpace: "JSON formázása 2 szóközzel",
         jsonFormatFourSpace: "JSON formázása 4 szóközzel",
         formName: "Redis beállítások",
@@ -440,6 +456,7 @@ const strings = {
         searchModeStartsWith: "Keresés kezdődik-e móddal",
         searchModeIncludes: "Keresés tartalmazza móddal"
       },
+      undoHint: "A visszavon\u00e1s csak string \u00e9s JSON kulcst\u00edpusokn\u00e1l \u00e9rhet\u0151 el",
       field: {
         treeSeparator: "Fa elválasztó",
         treeSeparatorSelector: "Fa elválasztó választó",

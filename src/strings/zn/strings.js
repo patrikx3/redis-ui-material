@@ -200,6 +200,17 @@ const strings = {
     moveUp: "上移",
     moveDown: "下移",
   },
+  diff: {
+    reviewChanges: "\u67e5\u770b\u66f4\u6539",
+    inline: "\u884c\u5185",
+    sideBySide: "\u5e76\u6392",
+    additions: "\u65b0\u589e",
+    deletions: "\u5220\u9664",
+    unchangedLines: "\u672a\u66f4\u6539\u7684\u884c",
+    noChanges: "\u672a\u68c0\u6d4b\u5230\u66f4\u6539",
+    before: "\u53d8\u66f4\u524d",
+    after: "\u53d8\u66f4\u540e",
+  },
   label: {
     id: {
       nodeId: '节点号',
@@ -364,6 +375,7 @@ const strings = {
     treeExpandAll: "展开所可能的原因是，连接已删除，自动连接失败有树,该操作的代价就是有点费时...",
     noRedisKeys: "此数据库中没有任何键。",
     redisConnected: "Redis 连接成功",
+    reverted: "\u5df2\u8fd8\u539f",
     reloadingDataInfo: "重新加载Redis数据信息",
     added: "已添加",
     saved: "已更新",
@@ -432,6 +444,10 @@ const strings = {
       label: {
         animation: "使用动画",
         noAnimation: "没有动画",
+        undoEnabled: "\u5df2\u542f\u7528\u64a4\u9500",
+        undoDisabled: "\u5df2\u7981\u7528\u64a4\u9500",
+        diffEnabled: "\u4fdd\u5b58\u524d\u663e\u793a diff",
+        diffDisabled: "\u4fdd\u5b58\u524d diff \u5df2\u7981\u7528",
         jsonFormatTwoSpace: "用2个空格格式化JSON",
         jsonFormatFourSpace: "用4个空格格式化JSON",
         formName: "Redis设置",
@@ -440,6 +456,7 @@ const strings = {
         searchModeStartsWith: "以模式启动搜索",
         searchModeIncludes: "搜索包括模式"
       },
+      undoHint: "\u64a4\u9500\u4ec5\u9002\u7528\u4e8e string \u548c JSON \u7c7b\u578b\u7684\u952e",
       field: {
         treeSeparator: "树分隔符",
         treeSeparatorSelector: "树分隔符选择器",

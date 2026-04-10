@@ -12,6 +12,7 @@ import ConsoleComponent from '../console/ConsoleComponent'
 
 const RESIZE_MIN_WIDTH = 315
 const CONSOLE_COLLAPSED_HEIGHT = 80
+const PANEL_WIDTH_KEY = 'p3xr-database-panel-width'
 
 export default function DatabasePage() {
     const strings = useI18nStore(s => s.strings)
@@ -24,8 +25,17 @@ export default function DatabasePage() {
     const hasConnection = !!connection
     const hasConnections = (connections?.list?.length ?? 0) > 0
 
-    // Resize state
-    const [leftWidth, setLeftWidth] = useState(RESIZE_MIN_WIDTH)
+    // Resize state — load saved width from localStorage
+    const [leftWidth, setLeftWidth] = useState(() => {
+        const saved = localStorage.getItem(PANEL_WIDTH_KEY)
+        if (saved) {
+            const width = parseInt(saved, 10)
+            if (!isNaN(width) && width >= RESIZE_MIN_WIDTH) {
+                return width
+            }
+        }
+        return RESIZE_MIN_WIDTH
+    })
     const [isDragging, setIsDragging] = useState(false)
     const [isHovering, setIsHovering] = useState(false)
     const containerRef = useRef<HTMLDivElement>(null)
@@ -78,6 +88,7 @@ export default function DatabasePage() {
 
     useEffect(() => {
         if (!isDragging) return
+        let lastWidth = RESIZE_MIN_WIDTH
         const handleMouseMove = (e: MouseEvent) => {
             const container = containerRef.current
             if (!container) return
@@ -88,12 +99,17 @@ export default function DatabasePage() {
                 return
             }
             document.documentElement.style.cursor = 'ew-resize'
+            lastWidth = newWidth
             setLeftWidth(newWidth)
         }
         const handleMouseUp = () => {
             setIsDragging(false)
             document.documentElement.style.cursor = 'auto'
             document.body.classList.remove('p3xr-not-selectable')
+            // Persist panel width
+            if (lastWidth >= RESIZE_MIN_WIDTH) {
+                localStorage.setItem(PANEL_WIDTH_KEY, String(lastWidth))
+            }
         }
         document.addEventListener('mousemove', handleMouseMove)
         document.addEventListener('mouseup', handleMouseUp)

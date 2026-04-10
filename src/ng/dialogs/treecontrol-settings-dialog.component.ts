@@ -163,12 +163,33 @@ import { TreeBuilderService } from '../services/tree-builder.service';
                         </mat-slide-toggle>
                     </div>
 
-                    <div class="p3xr-tree-settings-toggle-block p3xr-tree-settings-toggle-block-last">
+                    <div class="p3xr-tree-settings-toggle-block">
                         <mat-slide-toggle [(ngModel)]="model.animation" name="animation">
                             {{
                                 model.animation
                                     ? strings().form?.treeSettings?.label?.animation
                                     : strings().form?.treeSettings?.label?.noAnimation
+                            }}
+                        </mat-slide-toggle>
+                    </div>
+
+                    <div class="p3xr-tree-settings-toggle-block">
+                        <mat-slide-toggle [(ngModel)]="model.undoEnabled" name="undoEnabled">
+                            {{
+                                model.undoEnabled
+                                    ? (strings().form?.treeSettings?.label?.undoEnabled || 'Undo enabled')
+                                    : (strings().form?.treeSettings?.label?.undoDisabled || 'Undo disabled')
+                            }}
+                        </mat-slide-toggle>
+                        <div style="font-size: 12px; opacity: 0.7; margin-top: 4px;">{{ strings().form?.treeSettings?.undoHint || 'Undo is available for string and JSON key types only' }}</div>
+                    </div>
+
+                    <div class="p3xr-tree-settings-toggle-block p3xr-tree-settings-toggle-block-last">
+                        <mat-slide-toggle [(ngModel)]="model.showDiffBeforeSave" name="showDiffBeforeSave">
+                            {{
+                                model.showDiffBeforeSave
+                                    ? (strings().form?.treeSettings?.label?.diffEnabled || 'Show diff before saving')
+                                    : (strings().form?.treeSettings?.label?.diffDisabled || 'Diff before save disabled')
                             }}
                         </mat-slide-toggle>
                     </div>
@@ -250,6 +271,8 @@ export class TreecontrolSettingsDialogComponent implements OnInit, AfterViewInit
             maxKeys: this.settings.maxKeys(),
             jsonFormat: this.settings.jsonFormat() === 2,
             animation: this.settings.animation(),
+            undoEnabled: this.settings.undoEnabled(),
+            showDiffBeforeSave: this.settings.showDiffBeforeSave(),
         };
 
         // Read state from signals (with fallback to global)
@@ -350,6 +373,8 @@ export class TreecontrolSettingsDialogComponent implements OnInit, AfterViewInit
         this.settings.maxKeys.set(this.model.maxKeys);
         this.settings.jsonFormat.set(this.model.jsonFormat ? 2 : 4);
         this.settings.animation.set(this.model.animation);
+        this.settings.undoEnabled.set(this.model.undoEnabled);
+        this.settings.showDiffBeforeSave.set(this.model.showDiffBeforeSave);
 
         this.state.page.set(1);
         this.state.redisChanged.set(true);
