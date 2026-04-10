@@ -11,6 +11,7 @@ import { useRedisStateStore } from '../../../stores/redis-state.store'
 import { useCommonStore } from '../../../stores/common.store'
 import { request } from '../../../stores/socket.service'
 import { KeyTypeProps, createPaging, rePaging, Paging, formatValue, truncateDisplay, isTruncated, copyValue } from './key-type-base'
+import HexMonitor from './HexMonitor'
 import KeyPagerInline from './KeyPagerInline'
 import KeyNewOrSetDialog from '../../../dialogs/KeyNewOrSetDialog'
 import JsonViewDialog from '../../../dialogs/JsonViewDialog'
@@ -195,11 +196,11 @@ export default function KeyStream({ response, value, valueBuffer, keyName, value
                                     <Box component="span" sx={{ minWidth: 120, opacity: 0.7 }}>{field}</Box>
                                     <Box component="span" sx={{
                                         flex: 1, maxHeight: 200, overflow: 'auto',
-                                        whiteSpace: 'pre-wrap', wordBreak: 'break-all',
-                                        fontFamily: "'Roboto Mono', monospace",
+                                        ...(valueFormat !== 'hex' ? { whiteSpace: 'pre-wrap', wordBreak: 'break-all', fontFamily: "'Roboto Mono', monospace" } : {}),
                                     }}>
-                                        {formatValue(truncateDisplay(val), valueFormat)}
-                                        {isTruncated(val) && <span style={{ opacity: 0.5 }}>...</span>}
+                                        {valueFormat === 'hex'
+                                            ? <HexMonitor value={truncateDisplay(val)} truncated={isTruncated(val)} />
+                                            : <>{formatValue(truncateDisplay(val), valueFormat)}{isTruncated(val) && <span style={{ opacity: 0.5 }}>...</span>}</>}
                                     </Box>
                                 </Box>
                             ))}

@@ -35,7 +35,7 @@
                 @for (field of entry.fields; track field[0]) {
                     <div style="display: flex; gap: 8px; padding: 2px 0;">
                         <span style="min-width: 120px; opacity: 0.7;">{{ field[0] }}</span>
-                        <span class="p3xr-value-col p3xr-pre" style="flex: 1; max-height: 200px; word-break: break-all;">{{ formatValue(truncateDisplay(field[1])) }}@if (isTruncated(field[1])) {<span style="opacity: 0.5;">...</span>}</span>
+                        <span class="p3xr-value-col" [class.p3xr-pre]="valueFormat !== 'hex'" style="flex: 1; max-height: 200px; word-break: break-all;">@if (valueFormat === 'hex') {<p3xr-hex-monitor [value]="truncateDisplay(field[1])" [truncated]="isTruncated(field[1])"></p3xr-hex-monitor>} @else {{{ formatValue(truncateDisplay(field[1])) }}@if (isTruncated(field[1])) {<span style="opacity: 0.5;">...</span>}}</span>
                     </div>
                 }
             </div>

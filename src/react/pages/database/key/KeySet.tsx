@@ -11,6 +11,7 @@ import { useRedisStateStore } from '../../../stores/redis-state.store'
 import { useCommonStore } from '../../../stores/common.store'
 import { request } from '../../../stores/socket.service'
 import { KeyTypeProps, createPaging, rePaging, Paging, formatValue, truncateDisplay, isTruncated, copyValue, downloadBuffer } from './key-type-base'
+import HexMonitor from './HexMonitor'
 import KeyPagerInline from './KeyPagerInline'
 import KeyNewOrSetDialog from '../../../dialogs/KeyNewOrSetDialog'
 import JsonViewDialog from '../../../dialogs/JsonViewDialog'
@@ -101,10 +102,14 @@ export default function KeySet({ response, value, valueBuffer, keyName, valueFor
                         bgcolor: i % 2 === 0 ? oddBg : 'transparent',
                         '&:hover': { bgcolor: `${hoverBg} !important` },
                     }}>
-                        <Box component="span" sx={{ flex: '95%', cursor: 'pointer', overflow: 'auto', maxHeight: 200, whiteSpace: 'pre-wrap', wordBreak: 'break-all', userSelect: 'text', fontFamily: "'Roboto Mono', monospace" }}
-                            onClick={() => editValue(item.index, item.value)}>
-                            {formatValue(truncateDisplay(item.value), valueFormat)}
-                            {isTruncated(item.value) && <span style={{ opacity: 0.5 }}>...</span>}
+                        <Box component="span" sx={{
+                            flex: '95%', cursor: 'pointer', overflow: 'auto', maxHeight: 200,
+                            ...(valueFormat !== 'hex' ? { whiteSpace: 'pre-wrap', wordBreak: 'break-all', fontFamily: "'Roboto Mono', monospace" } : {}),
+                            userSelect: 'text',
+                        }} onClick={() => editValue(item.index, item.value)}>
+                            {valueFormat === 'hex'
+                                ? <HexMonitor value={truncateDisplay(item.value)} truncated={isTruncated(item.value)} />
+                                : <>{formatValue(truncateDisplay(item.value), valueFormat)}{isTruncated(item.value) && <span style={{ opacity: 0.5 }}>...</span>}</>}
                         </Box>
                         <Box component="span" sx={{ flex: '5%', textAlign: 'right', whiteSpace: 'nowrap' }}>
                             {!isReadonly && <Tooltip title={strings?.intention?.delete}><Delete sx={iconSx('error.main')} onClick={() => deleteSetMember(item.index)} /></Tooltip>}

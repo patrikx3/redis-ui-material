@@ -15,6 +15,7 @@ import { MainCommandService } from '../../../services/main-command.service';
 import { RedisStateService } from '../../../services/redis-state.service';
 import { SettingsService } from '../../../services/settings.service';
 import { KeyTypeBase } from './key-type-base';
+import { HexMonitorComponent } from './hex-monitor.component';
 import { KeyPaging } from './key-paging';
 import { KeyPagerInlineComponent } from './key-pager-inline.component';
 import { TtlDialogService } from '../../../dialogs/ttl-dialog.service';
@@ -23,7 +24,7 @@ import humanizeDuration from 'humanize-duration';
 @Component({
     selector: 'p3xr-key-hash',
     standalone: true,
-    imports: [CommonModule, FormsModule, MatButtonModule, MatIconModule, MatTooltipModule, KeyPagerInlineComponent],
+    imports: [CommonModule, FormsModule, MatButtonModule, MatIconModule, MatTooltipModule, KeyPagerInlineComponent, HexMonitorComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     templateUrl: './key-hash.component.html',
     encapsulation: ViewEncapsulation.None,

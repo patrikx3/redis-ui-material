@@ -20,13 +20,14 @@ import { KeyNewOrSetDialogService } from '../../../dialogs/key-new-or-set-dialog
 import { RedisStateService } from '../../../services/redis-state.service';
 import { SettingsService } from '../../../services/settings.service';
 import { KeyTypeBase } from './key-type-base';
+import { HexMonitorComponent } from './hex-monitor.component';
 import { OverlayService } from '../../../services/overlay.service';
 import { DiffDialogService } from '../../../dialogs/diff-dialog.service';
 
 @Component({
     selector: 'p3xr-key-string',
     standalone: true,
-    imports: [CommonModule, FormsModule, MatButtonModule, MatIconModule, MatTooltipModule, MatSlideToggleModule, MatInputModule, MatFormFieldModule, TextFieldModule],
+    imports: [CommonModule, FormsModule, MatButtonModule, MatIconModule, MatTooltipModule, MatSlideToggleModule, MatInputModule, MatFormFieldModule, TextFieldModule, HexMonitorComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     templateUrl: './key-string.component.html',
     encapsulation: ViewEncapsulation.None,

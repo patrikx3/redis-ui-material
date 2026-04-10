@@ -14,6 +14,7 @@ import { MainCommandService } from '../../../services/main-command.service';
 import { RedisStateService } from '../../../services/redis-state.service';
 import { SettingsService } from '../../../services/settings.service';
 import { KeyTypeBase } from './key-type-base';
+import { HexMonitorComponent } from './hex-monitor.component';
 import { KeyPaging } from './key-paging';
 import { KeyPagerInlineComponent } from './key-pager-inline.component';
 
@@ -22,7 +23,7 @@ const intlLocaleMap: Record<string, string> = { 'zn': 'zh-CN', 'no': 'nb', 'fil'
 @Component({
     selector: 'p3xr-key-stream',
     standalone: true,
-    imports: [CommonModule, FormsModule, MatButtonModule, MatIconModule, MatTooltipModule, KeyPagerInlineComponent],
+    imports: [CommonModule, FormsModule, MatButtonModule, MatIconModule, MatTooltipModule, KeyPagerInlineComponent, HexMonitorComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     templateUrl: './key-stream.component.html',
     encapsulation: ViewEncapsulation.None,

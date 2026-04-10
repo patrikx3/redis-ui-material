@@ -16,7 +16,7 @@
     @for (item of pagedItems; track item.key) {
         <div class="p3xr-key-type-row">
             <span class="p3xr-key-col" style="flex: 20%; cursor: pointer" (click)="editValue(item.key, item.value, $event)">{{ item.key }}</span>
-            <span class="p3xr-value-col p3xr-pre"  style="flex: 60%; cursor: pointer" (click)="editValue(item.key, item.value, $event)">{{ formatValue(truncateDisplay(item.value)) }}@if (isTruncated(item.value)) {<span style="opacity: 0.5;">...</span>}</span>
+            <span class="p3xr-value-col" [class.p3xr-pre]="valueFormat !== 'hex'" style="flex: 60%; cursor: pointer" (click)="editValue(item.key, item.value, $event)">@if (valueFormat === 'hex') {<p3xr-hex-monitor [value]="truncateDisplay(item.value)" [truncated]="isTruncated(item.value)"></p3xr-hex-monitor>} @else {{{ formatValue(truncateDisplay(item.value)) }}@if (isTruncated(item.value)) {<span style="opacity: 0.5;">...</span>}}</span>
             <span style="flex: 20%; text-align: right" class="p3xr-key-type-row-actions">
                 @if (!isReadonly && redisState.redisVersion().isAtLeast(8, 0)) {
                     <mat-icon [style.color]="getFieldTtlColor(item.key) || null"

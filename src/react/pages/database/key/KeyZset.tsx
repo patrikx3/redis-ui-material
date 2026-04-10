@@ -12,6 +12,7 @@ import { useRedisStateStore } from '../../../stores/redis-state.store'
 import { useCommonStore } from '../../../stores/common.store'
 import { request } from '../../../stores/socket.service'
 import { KeyTypeProps, createPaging, rePaging, Paging, pagerAction, pageChange, formatValue, truncateDisplay, isTruncated, copyValue, downloadBuffer } from './key-type-base'
+import HexMonitor from './HexMonitor'
 import KeyPagerInline from './KeyPagerInline'
 import KeyNewOrSetDialog from '../../../dialogs/KeyNewOrSetDialog'
 import JsonViewDialog from '../../../dialogs/JsonViewDialog'
@@ -113,10 +114,14 @@ export default function KeyZset({ response, value, valueBuffer, keyName, valueFo
                     }}>
                         <Box component="span" sx={{ flex: '20%', cursor: 'pointer', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', userSelect: 'text' }}
                             onClick={() => editValue(item)}>{item.score}</Box>
-                        <Box component="span" sx={{ flex: '60%', cursor: 'pointer', overflow: 'auto', maxHeight: 200, whiteSpace: 'pre-wrap', wordBreak: 'break-all', userSelect: 'text', fontFamily: "'Roboto Mono', monospace" }}
-                            onClick={() => editValue(item)}>
-                            {formatValue(truncateDisplay(item.member), valueFormat)}
-                            {isTruncated(item.member) && <span style={{ opacity: 0.5 }}>...</span>}
+                        <Box component="span" sx={{
+                            flex: '60%', cursor: 'pointer', overflow: 'auto', maxHeight: 200,
+                            ...(valueFormat !== 'hex' ? { whiteSpace: 'pre-wrap', wordBreak: 'break-all', fontFamily: "'Roboto Mono', monospace" } : {}),
+                            userSelect: 'text',
+                        }} onClick={() => editValue(item)}>
+                            {valueFormat === 'hex'
+                                ? <HexMonitor value={truncateDisplay(item.member)} truncated={isTruncated(item.member)} />
+                                : <>{formatValue(truncateDisplay(item.member), valueFormat)}{isTruncated(item.member) && <span style={{ opacity: 0.5 }}>...</span>}</>}
                         </Box>
                         <Box component="span" sx={{ flex: '20%', textAlign: 'right', whiteSpace: 'nowrap' }}>
                             {!isReadonly && <Tooltip title={strings?.intention?.delete}><Delete sx={iconSx('error.main')} onClick={() => deleteZSet(item)} /></Tooltip>}

@@ -19,6 +19,7 @@ import { useCommonStore } from '../../../stores/common.store'
 import { useOverlayStore } from '../../../stores/overlay.store'
 import { request } from '../../../stores/socket.service'
 import { KeyTypeProps, formatValue, truncateDisplay, isTruncated, copyValue, downloadBuffer } from './key-type-base'
+import HexMonitor from './HexMonitor'
 import { parseRedisVersion } from '../../../../core/redis-version'
 import JsonViewDialog from '../../../dialogs/JsonViewDialog'
 import JsonEditorDialog from '../../../dialogs/JsonEditorDialog'
@@ -272,19 +273,23 @@ export default function KeyString({ response, value: initValue, valueBuffer: ini
                     </Box>
                 ) : (
                     <Box className="p3xr-key-type-display" onClick={isReadonly ? undefined : edit}
-                        sx={{ cursor: isReadonly ? 'default' : 'pointer', maxWidth: '100%', overflow: 'auto' }}>
+                        sx={{ cursor: isReadonly ? 'default' : 'pointer', maxWidth: '100%', overflow: valueFormat === 'hex' ? 'visible' : 'auto' }}>
                         {settings.maxValueDisplay === -1 ? (
                             <Box sx={{ opacity: 0.5, fontStyle: 'italic' }}>
                                 {strings?.label?.hiddenUntilEdit}
                             </Box>
                         ) : (
-                            <Box component="span" className="p3xr-pre" sx={{
-                                wordBreak: 'break-all', whiteSpace: 'pre-wrap',
-                                fontFamily: "'Roboto Mono', monospace", fontSize: 16, lineHeight: '18px',
-                            }}>
-                                {formatValue(truncateDisplay(typeof value === 'string' ? value : ''), valueFormat)}
-                                {isTruncated(value) && <Box component="span" sx={{ opacity: 0.5 }}>...</Box>}
-                            </Box>
+                            valueFormat === 'hex' ? (
+                                <HexMonitor value={truncateDisplay(typeof value === 'string' ? value : '')} truncated={isTruncated(value)} />
+                            ) : (
+                                <Box component="span" className="p3xr-pre" sx={{
+                                    wordBreak: 'break-all', whiteSpace: 'pre-wrap',
+                                    fontFamily: "'Roboto Mono', monospace", fontSize: 16, lineHeight: '18px',
+                                }}>
+                                    {formatValue(truncateDisplay(typeof value === 'string' ? value : ''), valueFormat)}
+                                    {isTruncated(value) && <Box component="span" sx={{ opacity: 0.5 }}>...</Box>}
+                                </Box>
+                            )
                         )}
                     </Box>
                 )}

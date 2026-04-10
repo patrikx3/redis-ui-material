@@ -14,6 +14,7 @@ import { useSettingsStore } from '../../../stores/settings.store'
 import humanizeDuration from 'humanize-duration'
 import { request } from '../../../stores/socket.service'
 import { KeyTypeProps, createPaging, rePaging, Paging, formatValue, truncateDisplay, isTruncated, copyValue, downloadBuffer } from './key-type-base'
+import HexMonitor from './HexMonitor'
 import KeyPagerInline from './KeyPagerInline'
 import KeyNewOrSetDialog from '../../../dialogs/KeyNewOrSetDialog'
 import JsonViewDialog from '../../../dialogs/JsonViewDialog'
@@ -200,10 +201,14 @@ export default function KeyHash({ response, value, valueBuffer, keyName, valueFo
                     }}>
                         <Box component="span" sx={{ flex: '20%', cursor: 'pointer', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', userSelect: 'text' }}
                             onClick={() => editValue(item.key, item.value)}>{item.key}</Box>
-                        <Box component="span" sx={{ flex: '60%', cursor: 'pointer', overflow: 'auto', maxHeight: 200, whiteSpace: 'pre-wrap', wordBreak: 'break-all', userSelect: 'text', fontFamily: "'Roboto Mono', monospace" }}
-                            onClick={() => editValue(item.key, item.value)}>
-                            {formatValue(truncateDisplay(item.value), valueFormat)}
-                            {isTruncated(item.value) && <span style={{ opacity: 0.5 }}>...</span>}
+                        <Box component="span" sx={{
+                            flex: '60%', cursor: 'pointer', overflow: 'auto', maxHeight: 200,
+                            ...(valueFormat !== 'hex' ? { whiteSpace: 'pre-wrap', wordBreak: 'break-all', fontFamily: "'Roboto Mono', monospace" } : {}),
+                            userSelect: 'text',
+                        }} onClick={() => editValue(item.key, item.value)}>
+                            {valueFormat === 'hex'
+                                ? <HexMonitor value={truncateDisplay(item.value)} truncated={isTruncated(item.value)} />
+                                : <>{formatValue(truncateDisplay(item.value), valueFormat)}{isTruncated(item.value) && <span style={{ opacity: 0.5 }}>...</span>}</>}
                         </Box>
                         <Box component="span" sx={{ flex: '20%', textAlign: 'right', whiteSpace: 'nowrap' }}>
                             {!isReadonly && parseRedisVersion(useRedisStateStore.getState().info?.server?.redis_version).isAtLeast(8, 0) && (

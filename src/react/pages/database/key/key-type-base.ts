@@ -70,17 +70,6 @@ export function formatValue(value: any, format: string): string {
         case 'json':
             try { return JSON.stringify(JSON.parse(str), null, 2) }
             catch { return str }
-        case 'hex': {
-            const encoded = new TextEncoder().encode(str)
-            const lines: string[] = []
-            for (let i = 0; i < encoded.length; i += 16) {
-                const chunk = encoded.slice(i, i + 16)
-                const addr = i.toString(16).padStart(8, '0')
-                const hex = Array.from(chunk).map(b => b.toString(16).padStart(2, '0')).join(' ')
-                lines.push(`${addr}  ${hex}`)
-            }
-            return lines.join('\n')
-        }
         case 'base64': {
             const raw = new TextEncoder().encode(str)
             let binary = ''
