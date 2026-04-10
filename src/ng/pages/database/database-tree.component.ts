@@ -56,6 +56,23 @@ export class DatabaseTreeComponent implements OnInit, OnDestroy {
     private expandedKeys = new Set<string>();
     private expandedNodeObjects: any[] = [];
     private hierarchicalNodes: any[] = [];
+
+    private get expansionStorageKey(): string {
+        const connId = this.state.connection()?.id || 'none';
+        const db = this.state.currentDatabase() ?? 0;
+        return `p3xr-tree-expanded-${connId}-${db}`;
+    }
+
+    private saveExpansion(): void {
+        try { sessionStorage.setItem(this.expansionStorageKey, JSON.stringify([...this.expandedKeys])); } catch {}
+    }
+
+    private restoreExpansion(): void {
+        try {
+            const raw = sessionStorage.getItem(this.expansionStorageKey);
+            if (raw) this.expandedKeys = new Set(JSON.parse(raw));
+        } catch {}
+    }
     private readonly unsubs: Array<() => void> = [];
 
     constructor(
@@ -129,6 +146,7 @@ export class DatabaseTreeComponent implements OnInit, OnDestroy {
             this.expandedKeys = allFolderKeys;
             this.flattenVisibleNodes();
             this.syncExpandedNodesToGlobal();
+            this.saveExpansion();
             this.cdr.markForCheck();
         }));
         this.unsubs.push(() => subExpand.unsubscribe());
@@ -137,6 +155,7 @@ export class DatabaseTreeComponent implements OnInit, OnDestroy {
             this.expandedKeys = new Set();
             this.flattenVisibleNodes();
             this.syncExpandedNodesToGlobal();
+            this.saveExpansion();
             this.cdr.markForCheck();
         }));
         this.unsubs.push(() => subCollapse.unsubscribe());
@@ -157,6 +176,7 @@ export class DatabaseTreeComponent implements OnInit, OnDestroy {
             this.expandedKeys = keys;
             this.flattenVisibleNodes();
             this.syncExpandedNodesToGlobal();
+            this.saveExpansion();
             this.cdr.markForCheck();
         }));
         this.unsubs.push(() => subExpandLevel.unsubscribe());
@@ -259,6 +279,7 @@ export class DatabaseTreeComponent implements OnInit, OnDestroy {
         }
         this.flattenVisibleNodes();
         this.syncExpandedNodesToGlobal();
+        this.saveExpansion();
     }
 
     // --- Node actions ---
@@ -408,6 +429,11 @@ export class DatabaseTreeComponent implements OnInit, OnDestroy {
 
         const keys: string[] = this.state.paginatedKeys() ?? [];
         const keysInfo: any = this.state.keysInfo() ?? {};
+
+        // Restore saved expansion state if current set is empty (fresh mount or connection/db switch)
+        if (this.expandedKeys.size === 0) {
+            this.restoreExpansion();
+        }
 
         this.treeBuilder.keysToTreeControl({
             keys,

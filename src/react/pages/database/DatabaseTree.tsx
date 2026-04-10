@@ -61,12 +61,33 @@ export default function DatabaseTree({ resizeSignal }: { resizeSignal?: any }) {
     const isReadonly = connection?.readonly === true
     const divider = redisTreeDivider || ':'
 
-    const [expandedKeys, setExpandedKeys] = useState<Set<string>>(new Set())
+    const getExpansionKey = () => `p3xr-tree-expanded-${connection?.id || 'none'}-${useRedisStateStore.getState().currentDatabase ?? 0}`
+
+    const [expandedKeys, setExpandedKeys] = useState<Set<string>>(() => {
+        try {
+            const raw = sessionStorage.getItem(getExpansionKey())
+            return raw ? new Set(JSON.parse(raw)) : new Set()
+        } catch { return new Set() }
+    })
     const [keyNewDialogOpen, setKeyNewDialogOpen] = useState(false)
     const [keyNewDialogData, setKeyNewDialogData] = useState<any>(null)
     const [hierarchicalNodes, setHierarchicalNodes] = useState<any[]>([])
     const [, setTick] = useState(0) // for TTL repaints
     const parentRef = useRef<HTMLDivElement>(null)
+
+    // Persist expansion state to sessionStorage
+    useEffect(() => {
+        try { sessionStorage.setItem(getExpansionKey(), JSON.stringify([...expandedKeys])) } catch {}
+    }, [expandedKeys]) // eslint-disable-line react-hooks/exhaustive-deps
+
+    // Restore expansion state on connection/db change
+    const currentDb = useRedisStateStore(s => s.currentDatabase)
+    useEffect(() => {
+        try {
+            const raw = sessionStorage.getItem(getExpansionKey())
+            setExpandedKeys(raw ? new Set(JSON.parse(raw)) : new Set())
+        } catch { setExpandedKeys(new Set()) }
+    }, [connection?.id, currentDb]) // eslint-disable-line react-hooks/exhaustive-deps
 
     // Build tree when keys, divider, or page change
     useEffect(() => {
