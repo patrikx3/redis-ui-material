@@ -208,7 +208,7 @@ export default function KeyHash({ response, value, valueBuffer, keyName, valueFo
                         }} onClick={() => editValue(item.key, item.value)}>
                             {valueFormat === 'hex'
                                 ? <HexMonitor value={truncateDisplay(item.value)} truncated={isTruncated(item.value)} />
-                                : <>{formatValue(truncateDisplay(item.value), valueFormat)}{isTruncated(item.value) && <span style={{ opacity: 0.5 }}>...</span>}</>}
+                                : <>{truncateDisplay(formatValue(item.value, valueFormat))}{isTruncated(item.value) && <span style={{ opacity: 0.5 }}>...</span>}</>}
                         </Box>
                         <Box component="span" sx={{ flex: '20%', textAlign: 'right', whiteSpace: 'nowrap' }}>
                             {!isReadonly && parseRedisVersion(useRedisStateStore.getState().info?.server?.redis_version).isAtLeast(8, 0) && (

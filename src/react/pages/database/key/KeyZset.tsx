@@ -121,7 +121,7 @@ export default function KeyZset({ response, value, valueBuffer, keyName, valueFo
                         }} onClick={() => editValue(item)}>
                             {valueFormat === 'hex'
                                 ? <HexMonitor value={truncateDisplay(item.member)} truncated={isTruncated(item.member)} />
-                                : <>{formatValue(truncateDisplay(item.member), valueFormat)}{isTruncated(item.member) && <span style={{ opacity: 0.5 }}>...</span>}</>}
+                                : <>{truncateDisplay(formatValue(item.member, valueFormat))}{isTruncated(item.member) && <span style={{ opacity: 0.5 }}>...</span>}</>}
                         </Box>
                         <Box component="span" sx={{ flex: '20%', textAlign: 'right', whiteSpace: 'nowrap' }}>
                             {!isReadonly && <Tooltip title={strings?.intention?.delete}><Delete sx={iconSx('error.main')} onClick={() => deleteZSet(item)} /></Tooltip>}

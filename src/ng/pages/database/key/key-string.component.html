@@ -174,7 +174,7 @@
             @if (valueFormat === 'hex') {
                 <p3xr-hex-monitor [value]="truncateDisplay(p3xrValue)" [truncated]="isTruncated(p3xrValue)"></p3xr-hex-monitor>
             } @else {
-                <span class="p3xr-pre" style="word-break: break-all; white-space: pre-wrap;">{{ formatValue(truncateDisplay(p3xrValue)) }}@if (isTruncated(p3xrValue)) {<span style="opacity: 0.5;">...</span>}</span>
+                <span class="p3xr-pre" style="word-break: break-all; white-space: pre-wrap;">{{ truncateDisplay(formatValue(p3xrValue)) }}@if (isTruncated(p3xrValue)) {<span style="opacity: 0.5;">...</span>}</span>
             }
         </div>
     }

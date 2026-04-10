@@ -286,7 +286,7 @@ export default function KeyString({ response, value: initValue, valueBuffer: ini
                                     wordBreak: 'break-all', whiteSpace: 'pre-wrap',
                                     fontFamily: "'Roboto Mono', monospace", fontSize: 16, lineHeight: '18px',
                                 }}>
-                                    {formatValue(truncateDisplay(typeof value === 'string' ? value : ''), valueFormat)}
+                                    {truncateDisplay(formatValue(typeof value === 'string' ? value : '', valueFormat))}
                                     {isTruncated(value) && <Box component="span" sx={{ opacity: 0.5 }}>...</Box>}
                                 </Box>
                             )

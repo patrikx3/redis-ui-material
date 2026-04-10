@@ -14,7 +14,7 @@
     @for (item of pagedItems; track item.index) {
         <div class="p3xr-key-type-row">
             <span class="p3xr-key-col" style="flex: 20%; cursor: pointer" (click)="editValue(item.index, item.value, $event)">{{ item.index }}</span>
-            <span class="p3xr-value-col" [class.p3xr-pre]="valueFormat !== 'hex'" style="flex: 60%; cursor: pointer" (click)="editValue(item.index, item.value, $event)">@if (valueFormat === 'hex') {<p3xr-hex-monitor [value]="truncateDisplay(item.value)" [truncated]="isTruncated(item.value)"></p3xr-hex-monitor>} @else {{{ formatValue(truncateDisplay(item.value)) }}@if (isTruncated(item.value)) {<span style="opacity: 0.5;">...</span>}}</span>
+            <span class="p3xr-value-col" [class.p3xr-pre]="valueFormat !== 'hex'" style="flex: 60%; cursor: pointer" (click)="editValue(item.index, item.value, $event)">@if (valueFormat === 'hex') {<p3xr-hex-monitor [value]="truncateDisplay(item.value)" [truncated]="isTruncated(item.value)"></p3xr-hex-monitor>} @else {{{ truncateDisplay(formatValue(item.value)) }}@if (isTruncated(item.value)) {<span style="opacity: 0.5;">...</span>}}</span>
             <span style="flex: 20%; text-align: right" class="p3xr-key-type-row-actions">
                 @if (!isReadonly) { <mat-icon class="icon-warn" (click)="deleteListElement(item.index, $event)" matTooltip="Delete">delete</mat-icon> }
                 <mat-icon class="icon-accent" (click)="showJsonItem(item.value, $event)" matTooltip="JSON">table_chart</mat-icon>

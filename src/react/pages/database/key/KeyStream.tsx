@@ -200,7 +200,7 @@ export default function KeyStream({ response, value, valueBuffer, keyName, value
                                     }}>
                                         {valueFormat === 'hex'
                                             ? <HexMonitor value={truncateDisplay(val)} truncated={isTruncated(val)} />
-                                            : <>{formatValue(truncateDisplay(val), valueFormat)}{isTruncated(val) && <span style={{ opacity: 0.5 }}>...</span>}</>}
+                                            : <>{truncateDisplay(formatValue(val, valueFormat))}{isTruncated(val) && <span style={{ opacity: 0.5 }}>...</span>}</>}
                                     </Box>
                                 </Box>
                             ))}
