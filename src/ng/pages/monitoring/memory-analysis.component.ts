@@ -118,7 +118,7 @@ export class MemoryAnalysisComponent implements OnInit, OnDestroy, AfterViewInit
         this.safeDetectChanges();
         try {
             const response = await this.socket.request({
-                action: 'memory-analysis',
+                action: 'memory/analysis',
                 payload: { topN: this.topN, maxScanKeys: this.maxScanKeys },
             });
             this.data = response.data;

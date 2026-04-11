@@ -42,7 +42,7 @@ export const useMainCommandStore = create<MainCommandState>(() => ({
 
         useRedisStateStore.setState({ currentDatabase: dbIndex, page: 1, redisChanged: true })
         try {
-            await request({ action: 'console', payload: { command: `select ${dbIndex}` } })
+            await request({ action: 'redis/console', payload: { command: `select ${dbIndex}` } })
             const strings = useI18nStore.getState().strings
             const fn = strings?.status?.dbChanged
             const msg = typeof fn === 'function' ? fn({ db: dbIndex }) : ''
@@ -60,7 +60,7 @@ export const useMainCommandStore = create<MainCommandState>(() => ({
 
     save: async () => {
         try {
-            const response = await request({ action: 'save' })
+            const response = await request({ action: 'redis/save' })
             const info = parseRedisInfo(response.info)
             useRedisStateStore.setState({ info })
             const strings = useI18nStore.getState().strings
@@ -94,7 +94,7 @@ export const useMainCommandStore = create<MainCommandState>(() => ({
                 payload.match = settings.searchStartsWith ? searchValue + '*' : '*' + searchValue + '*'
             }
 
-            const response = await request({ action: 'refresh', payload })
+            const response = await request({ action: 'redis/refresh', payload })
             useRedisStateStore.setState({ dbsize: response.dbsize, redisChanged: true })
             useCommonStore.getState().loadRedisInfoResponse({ response })
 
@@ -118,7 +118,7 @@ export const useMainCommandStore = create<MainCommandState>(() => ({
 
         try {
             await request({
-                action: 'connection-disconnect',
+                action: 'connection/disconnect',
                 payload: { connectionId: state.connection?.id },
             })
         } catch {}

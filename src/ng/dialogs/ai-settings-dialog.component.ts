@@ -88,7 +88,7 @@ export class AiSettingsDialogComponent {
 
             if (key) {
                 const validation = await this.socket.request({
-                    action: 'validate-groq-api-key',
+                    action: 'ai/validate-groq-api-key',
                     payload: { apiKey: key },
                 });
                 if (!validation.valid) {
@@ -98,7 +98,7 @@ export class AiSettingsDialogComponent {
             }
 
             await this.socket.request({
-                action: 'set-groq-api-key',
+                action: 'ai/set-groq-api-key',
                 payload: { apiKey: key, aiEnabled: this.state.cfg()?.aiEnabled !== false, aiUseOwnKey: this.state.cfg()?.aiUseOwnKey === true },
             });
             const cfg = { ...this.state.cfg(), groqApiKey: key || '' };

@@ -171,7 +171,7 @@ export default function SettingsPage() {
         if (oldIndex === -1 || newIndex === -1) return
         const reordered = arrayMove(connectionsList, oldIndex, newIndex)
         try {
-            await request({ action: 'connections-reorder', payload: { ids: reordered.map((c: any) => c.id) } })
+            await request({ action: 'connection/reorder', payload: { ids: reordered.map((c: any) => c.id) } })
         } catch (e) { generalHandleError(e) }
     }
 
@@ -191,7 +191,7 @@ export default function SettingsPage() {
             }
         }
         try {
-            await request({ action: 'connections-reorder', payload: { ids: allIds } })
+            await request({ action: 'connection/reorder', payload: { ids: allIds } })
         } catch (e) { generalHandleError(e) }
     }
 
@@ -206,7 +206,7 @@ export default function SettingsPage() {
         if (oldIndex === -1 || newIndex === -1) return
         const reordered = arrayMove(group.connections, oldIndex, newIndex)
         try {
-            await request({ action: 'connections-reorder', payload: { group: groupName || undefined, ids: reordered.map((c: any) => c.id) } })
+            await request({ action: 'connection/reorder', payload: { group: groupName || undefined, ids: reordered.map((c: any) => c.id) } })
         } catch (e) { generalHandleError(e) }
     }
 
@@ -229,7 +229,7 @@ export default function SettingsPage() {
             overlay.show({ message: strings?.title?.connectingRedis })
 
             const response = await request({
-                action: 'connection-connect',
+                action: 'connection/connect',
                 payload: { connection: cloned, db },
             })
 
@@ -263,7 +263,7 @@ export default function SettingsPage() {
     const handleDelete = async (conn: any) => {
         try {
             await confirm({ message: strings?.confirm?.deleteConnectionText })
-            await request({ action: 'connection-delete', payload: { id: conn.id } })
+            await request({ action: 'connection/delete', payload: { id: conn.id } })
             toast(strings?.status?.deleted)
         } catch (e: any) {
             if (e !== undefined) generalHandleError(e)
@@ -288,7 +288,7 @@ export default function SettingsPage() {
 
     const toggleAiEnabled = async (enabled: boolean) => {
         try {
-            await request({ action: 'set-groq-api-key', payload: { apiKey: groqApiKey, aiEnabled: enabled } })
+            await request({ action: 'ai/set-groq-api-key', payload: { apiKey: groqApiKey, aiEnabled: enabled } })
             useRedisStateStore.setState({ cfg: { ...cfg, aiEnabled: enabled } })
         } catch (e) { generalHandleError(e) }
     }
@@ -296,7 +296,7 @@ export default function SettingsPage() {
     const toggleUseOwnKey = async (useOwn: boolean) => {
         if (useOwn && !hasGroqApiKey) return
         try {
-            await request({ action: 'set-groq-api-key', payload: { apiKey: groqApiKey, aiEnabled: isAiEnabled, aiUseOwnKey: useOwn } })
+            await request({ action: 'ai/set-groq-api-key', payload: { apiKey: groqApiKey, aiEnabled: isAiEnabled, aiUseOwnKey: useOwn } })
             useRedisStateStore.setState({ cfg: { ...cfg, aiUseOwnKey: useOwn } })
         } catch (e) { generalHandleError(e) }
     }

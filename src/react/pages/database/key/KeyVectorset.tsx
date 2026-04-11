@@ -63,7 +63,7 @@ export default function KeyVectorset({ response, value, keyName, onRefresh }: Ke
     async function loadElements() {
         try {
             const resp: any = await request({
-                action: 'vectorset-elements',
+                action: 'vectorset/elements',
                 payload: { key: keyName },
             })
             const elems = resp.elements || []
@@ -79,7 +79,7 @@ export default function KeyVectorset({ response, value, keyName, onRefresh }: Ke
         if (!simSearchInput.trim()) return
         try {
             const resp: any = await request({
-                action: 'vectorset-sim',
+                action: 'vectorset/sim',
                 payload: { key: keyName, mode: 'element', element: simSearchInput.trim(), count: simCountInput, filter: simFilterInput.trim() || undefined },
             })
             setSimResults(resp.results || [])
@@ -94,7 +94,7 @@ export default function KeyVectorset({ response, value, keyName, onRefresh }: Ke
         try {
             const values = simSearchInput.split(',').map(Number)
             const resp: any = await request({
-                action: 'vectorset-sim',
+                action: 'vectorset/sim',
                 payload: { key: keyName, mode: 'vector', values, count: simCountInput, filter: simFilterInput.trim() || undefined },
             })
             setSimResults(resp.results || [])
@@ -107,7 +107,7 @@ export default function KeyVectorset({ response, value, keyName, onRefresh }: Ke
     async function getAttributes(element: string) {
         try {
             const resp: any = await request({
-                action: 'vectorset-getattr',
+                action: 'vectorset/getattr',
                 payload: { key: keyName, element },
             })
             const attrs = resp.attributes
@@ -125,7 +125,7 @@ export default function KeyVectorset({ response, value, keyName, onRefresh }: Ke
         if (!elementInput.trim() || !vectorInput.trim()) return
         try {
             await request({
-                action: 'vectorset-add',
+                action: 'vectorset/add',
                 payload: { key: keyName, element: elementInput.trim(), values: vectorInput.split(',').map(Number) },
             })
             toast(strings?.page?.key?.vectorset?.addedSuccessfully || 'Element added successfully')
@@ -142,7 +142,7 @@ export default function KeyVectorset({ response, value, keyName, onRefresh }: Ke
         try {
             await confirm({ message: strings?.confirm?.delete || 'Delete?' })
             await request({
-                action: 'vectorset-remove',
+                action: 'vectorset/remove',
                 payload: { key: keyName, element },
             })
             toast(strings?.page?.key?.vectorset?.deletedSuccessfully || 'Element deleted successfully')
@@ -156,7 +156,7 @@ export default function KeyVectorset({ response, value, keyName, onRefresh }: Ke
     async function searchByElementDirect(element: string) {
         try {
             const resp: any = await request({
-                action: 'vectorset-sim',
+                action: 'vectorset/sim',
                 payload: { key: keyName, mode: 'element', element, count: simCountInput },
             })
             setSimResults(resp.results || [])

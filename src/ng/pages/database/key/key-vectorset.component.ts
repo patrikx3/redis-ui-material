@@ -145,7 +145,7 @@ export class KeyVectorsetComponent extends KeyTypeBase implements OnInit, OnChan
     async loadElements() {
         try {
             const response = await this.socket.request({
-                action: 'vectorset-elements',
+                action: 'vectorset/elements',
                 payload: {
                     key: this.p3xrKey,
                 },
@@ -166,7 +166,7 @@ export class KeyVectorsetComponent extends KeyTypeBase implements OnInit, OnChan
         if (!query.trim()) return;
         try {
             const response = await this.socket.request({
-                action: 'vectorset-sim',
+                action: 'vectorset/sim',
                 payload: {
                     key: this.p3xrKey,
                     query: query.trim(),
@@ -194,7 +194,7 @@ export class KeyVectorsetComponent extends KeyTypeBase implements OnInit, OnChan
         if (!this.elementInput.trim() || !this.vectorInput.trim()) return;
         try {
             await this.socket.request({
-                action: 'vectorset-add',
+                action: 'vectorset/add',
                 payload: {
                     key: this.p3xrKey,
                     element: this.elementInput.trim(),
@@ -217,7 +217,7 @@ export class KeyVectorsetComponent extends KeyTypeBase implements OnInit, OnChan
                 message: this.strings()?.confirm?.delete || 'Delete?',
             });
             await this.socket.request({
-                action: 'vectorset-remove',
+                action: 'vectorset/remove',
                 payload: {
                     key: this.p3xrKey,
                     element: element,
@@ -234,7 +234,7 @@ export class KeyVectorsetComponent extends KeyTypeBase implements OnInit, OnChan
     async getAttributes(element: string) {
         try {
             const response = await this.socket.request({
-                action: 'vectorset-getattr',
+                action: 'vectorset/getattr',
                 payload: {
                     key: this.p3xrKey,
                     element: element,

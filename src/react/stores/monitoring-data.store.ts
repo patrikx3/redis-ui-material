@@ -157,7 +157,7 @@ export async function startProfiler(): Promise<void> {
 
     const generation = ++profilerGeneration
     const startPromise = (async () => {
-        await request({ action: 'set-monitor', payload: { enabled: true } })
+        await request({ action: 'monitor/set', payload: { enabled: true } })
 
         // Ignore stale async completions from a previous mount/unmount cycle.
         if (generation !== profilerGeneration || !profilerDesired) return
@@ -183,7 +183,7 @@ export function stopProfiler(): void {
     getClient()?.removeListener('monitor-data', onMonitorData)
     useMonitoringDataStore.setState({ profilerStarted: false })
     if (wasStarted) {
-        request({ action: 'set-monitor', payload: { enabled: false } }).catch(() => {})
+        request({ action: 'monitor/set', payload: { enabled: false } }).catch(() => {})
     }
     if (profilerSaveTimeout) { clearTimeout(profilerSaveTimeout); profilerSaveTimeout = null }
     saveToStorage(PROFILER_STORAGE_KEY, useMonitoringDataStore.getState().profilerEntries)
@@ -197,7 +197,7 @@ export async function startPubSub(): Promise<void> {
     const generation = ++pubsubGeneration
     const pattern = useMonitoringDataStore.getState().pubsubPattern
     const startPromise = (async () => {
-        await request({ action: 'set-subscription', payload: { subscription: true, subscriberPattern: pattern } })
+        await request({ action: 'settings/subscription', payload: { subscription: true, subscriberPattern: pattern } })
 
         // Ignore stale async completions from a previous mount/unmount cycle.
         if (generation !== pubsubGeneration || !pubsubDesired) return
@@ -223,7 +223,7 @@ export function stopPubSub(): void {
     getClient()?.removeListener('pubsub-message', onPubSubMessage)
     useMonitoringDataStore.setState({ pubsubStarted: false })
     if (wasStarted) {
-        request({ action: 'set-subscription', payload: { subscription: false, subscriberPattern: '*' } }).catch(() => {})
+        request({ action: 'settings/subscription', payload: { subscription: false, subscriberPattern: '*' } }).catch(() => {})
     }
     if (pubsubSaveTimeout) { clearTimeout(pubsubSaveTimeout); pubsubSaveTimeout = null }
     saveToStorage(PUBSUB_STORAGE_KEY, useMonitoringDataStore.getState().pubsubEntries)

@@ -196,7 +196,7 @@ export class KeyTimeseriesComponent extends KeyTypeBase implements OnInit, OnCha
             }
 
             const response = await this.socket.request({
-                action: 'timeseries-range',
+                action: 'timeseries/range',
                 payload,
             });
 
@@ -213,7 +213,7 @@ export class KeyTimeseriesComponent extends KeyTypeBase implements OnInit, OnCha
                     if (this.aggregationType && this.aggregationBucket) {
                         overlayPayload.aggregation = { type: this.aggregationType, timeBucket: parseInt(this.aggregationBucket, 10) };
                     }
-                    const overlayResponse = await this.socket.request({ action: 'timeseries-range', payload: overlayPayload });
+                    const overlayResponse = await this.socket.request({ action: 'timeseries/range', payload: overlayPayload });
                     this.overlaySeries.push({ key: overlayKey, data: overlayResponse.data || [] });
                 } catch { /* skip invalid keys */ }
             }
@@ -227,7 +227,7 @@ export class KeyTimeseriesComponent extends KeyTypeBase implements OnInit, OnCha
                     if (this.aggregationType && this.aggregationBucket) {
                         mrangePayload.aggregation = { type: this.aggregationType, timeBucket: parseInt(this.aggregationBucket, 10) };
                     }
-                    const mrangeResponse = await this.socket.request({ action: 'timeseries-mrange', payload: mrangePayload });
+                    const mrangeResponse = await this.socket.request({ action: 'timeseries/mrange', payload: mrangePayload });
                     for (const entry of (mrangeResponse.data || [])) {
                         if (entry.key !== this.p3xrKey) {
                             this.overlaySeries.push({ key: entry.key, data: entry.data });
@@ -261,7 +261,7 @@ export class KeyTimeseriesComponent extends KeyTypeBase implements OnInit, OnCha
         if (labelCount === 0) {
             try {
                 await this.socket.request({
-                    action: 'timeseries-alter',
+                    action: 'timeseries/alter',
                     payload: {
                         key: this.p3xrKey,
                         labels: `key ${this.p3xrKey}`,
@@ -345,7 +345,7 @@ export class KeyTimeseriesComponent extends KeyTypeBase implements OnInit, OnCha
             // Default label if empty: key <keyname>
             const labels = this.alterLabels.trim().length > 0 ? this.alterLabels : `key ${this.p3xrKey}`;
             await this.socket.request({
-                action: 'timeseries-alter',
+                action: 'timeseries/alter',
                 payload: {
                     key: this.p3xrKey,
                     retention: this.alterRetention,
@@ -413,7 +413,7 @@ export class KeyTimeseriesComponent extends KeyTypeBase implements OnInit, OnCha
             });
 
             await this.socket.request({
-                action: 'timeseries-del',
+                action: 'timeseries/del',
                 payload: {
                     key: this.p3xrKey,
                     from: point.timestamp,
@@ -440,7 +440,7 @@ export class KeyTimeseriesComponent extends KeyTypeBase implements OnInit, OnCha
 
         try {
             await this.socket.request({
-                action: 'timeseries-add',
+                action: 'timeseries/add',
                 payload: {
                     key: this.p3xrKey,
                     timestamp: this.addTimestamp || '*',

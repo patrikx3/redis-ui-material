@@ -240,7 +240,7 @@ export class DatabaseTreecontrolControlsComponent implements OnInit, OnDestroy {
             });
 
             const response = await this.socket.request({
-                action: 'key-export',
+                action: 'key/export',
                 payload: { keys },
             });
 
@@ -289,7 +289,7 @@ export class DatabaseTreecontrolControlsComponent implements OnInit, OnDestroy {
                                 message: this.strings().label?.importProgress || 'Importing keys...',
                             });
                             const response = await this.socket.request({
-                                action: 'key-import',
+                                action: 'key/import',
                                 payload: {
                                     keys: result.keys,
                                     conflictMode: result.conflictMode,
@@ -357,7 +357,7 @@ export class DatabaseTreecontrolControlsComponent implements OnInit, OnDestroy {
             });
 
             const response = await this.socket.request({
-                action: 'delete-search-keys',
+                action: 'key/delete-search-keys',
                 payload: { match },
             });
 

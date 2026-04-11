@@ -218,7 +218,7 @@ export default function PulsePage() {
     // --- Data fetching ---
     const fetchData = useCallback(async () => {
         try {
-            const resp = await request({ action: 'monitor-info', payload: {} })
+            const resp = await request({ action: 'monitor/info', payload: {} })
             const data: MonitorSnapshot = resp.data
             setCurrent(data)
             historyRef.current.push(data)
@@ -233,7 +233,7 @@ export default function PulsePage() {
 
     const loadClientList = useCallback(async () => {
         try {
-            const resp = await request({ action: 'client-list', payload: {} })
+            const resp = await request({ action: 'client/list', payload: {} })
             setClientList(resp.data)
             setClientListLoaded(true)
         } catch { setClientListLoaded(true) }
@@ -241,7 +241,7 @@ export default function PulsePage() {
 
     const loadTopKeys = useCallback(async () => {
         try {
-            const resp = await request({ action: 'memory-top-keys', payload: { topN: 20 } })
+            const resp = await request({ action: 'memory/top-keys', payload: { topN: 20 } })
             setTopKeys(resp.data)
             setTopKeysLoaded(true)
         } catch { setTopKeysLoaded(true) }
@@ -249,7 +249,7 @@ export default function PulsePage() {
 
     const loadSlotStats = useCallback(async (metric?: string) => {
         try {
-            const resp = await request({ action: 'cluster-slot-stats', payload: { metric: metric || slotStatsMetric, limit: 20 } })
+            const resp = await request({ action: 'cluster/slot-stats', payload: { metric: metric || slotStatsMetric, limit: 20 } })
             setSlotStats(resp.slots || [])
             setSlotStatsLoaded(true)
         } catch { setSlotStatsLoaded(true); setSlotStats([]) }
@@ -313,7 +313,7 @@ export default function PulsePage() {
     const killClient = useCallback(async (id: string) => {
         try {
             await confirm({ message: strings?.page?.monitor?.confirmKillClient || 'Are you sure to kill this client?' })
-            await request({ action: 'client-kill', payload: { id } })
+            await request({ action: 'client/kill', payload: { id } })
             toast(strings?.page?.monitor?.clientKilled || 'Client killed')
             loadClientList()
         } catch (e: any) { if (e !== undefined) generalHandleError(e) }
@@ -644,7 +644,7 @@ export default function PulsePage() {
             // === ANALYSIS ===
             const analysisChartItems: Array<{ name: string; items: Array<{ label: string; value: number }> }> = []
             try {
-                const resp = await request({ action: 'memory-analysis', payload: { topN: 20, maxScanKeys: 5000 } })
+                const resp = await request({ action: 'memory/analysis', payload: { topN: 20, maxScanKeys: 5000 } })
                 const d = resp.data
                 if (d) {
                     const m = d.memoryInfo, exp = d.expirationOverview

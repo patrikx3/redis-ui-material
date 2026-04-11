@@ -138,7 +138,7 @@ export default function ConnectionDialog({ open, type, model: sourceModel, onClo
                 }
             }
             overlay.show({ message: strings?.title?.connectingRedis })
-            await request({ action: 'redis-test-connection', payload: { model: authModel } })
+            await request({ action: 'connection/test', payload: { model: authModel } })
             toast(strings?.status?.redisConnected)
         } catch (e) { generalHandleError(e) }
         finally { overlay.hide() }
@@ -156,7 +156,7 @@ export default function ConnectionDialog({ open, type, model: sourceModel, onClo
         }
         if (typeof saveModel.group === 'string') saveModel.group = saveModel.group.trim() || undefined
         try {
-            await request({ action: 'connection-save', payload: { model: saveModel } })
+            await request({ action: 'connection/save', payload: { model: saveModel } })
             toast(type === 'new' ? strings?.status?.added : strings?.status?.saved)
             onClose()
         } catch (e) { generalHandleError(e) }

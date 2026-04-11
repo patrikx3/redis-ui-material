@@ -48,7 +48,7 @@ export default function KeyHash({ response, value, valueBuffer, keyName, valueFo
         try {
             const fields = (items || pagedItems).map(item => item.key)
             if (fields.length === 0) return
-            const res = await request({ action: 'hash-field-ttls', payload: { key: keyName, fields } })
+            const res = await request({ action: 'hash-field/ttls', payload: { key: keyName, fields } })
             setFieldTtls(res.fieldTtls || {})
             fieldTtlsFetchedAtRef.current = Date.now()
         } catch { setFieldTtls({}) }
@@ -103,7 +103,7 @@ export default function KeyHash({ response, value, valueBuffer, keyName, valueFo
     const deleteHashKey = useCallback(async (hashKey: string) => {
         try {
             await confirm({ message: strings?.confirm?.deleteHashKey ?? strings?.confirm?.areYouSure ?? 'Are you sure?' })
-            await request({ action: 'key-hash-delete-field', payload: { key: keyName, hashKey } })
+            await request({ action: 'key/hash-delete-field', payload: { key: keyName, hashKey } })
             toast(strings?.status?.deletedHashKey)
             onRefresh()
         } catch (e) { generalHandleError(e) }
@@ -124,7 +124,7 @@ export default function KeyHash({ response, value, valueBuffer, keyName, valueFo
 
     const setFieldTtl = useCallback(async (hashKey: string) => {
         try {
-            const res = await request({ action: 'hash-field-ttl-get', payload: { key: keyName, field: hashKey } })
+            const res = await request({ action: 'hash-field/ttl-get', payload: { key: keyName, field: hashKey } })
             setTtlDialogField(hashKey)
             setTtlDialogValue(res.ttl ?? -1)
             setTtlDialogOpen(true)
@@ -135,7 +135,7 @@ export default function KeyHash({ response, value, valueBuffer, keyName, valueFo
         setTtlDialogOpen(false)
         if (!result) return
         try {
-            await request({ action: 'hash-field-ttl', payload: { key: keyName, field: ttlDialogField, ttl: result.model.ttl } })
+            await request({ action: 'hash-field/ttl', payload: { key: keyName, field: ttlDialogField, ttl: result.model.ttl } })
             toast(`${ttlDialogField}: TTL ${result.model.ttl === -1 ? 'removed' : result.model.ttl + 's'}`)
             loadFieldTtls()
         } catch (e) { generalHandleError(e) }

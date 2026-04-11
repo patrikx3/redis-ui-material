@@ -56,7 +56,7 @@ export default function KeyList({ response, value, valueBuffer, keyName, valueFo
     const deleteListElement = useCallback(async (index: number) => {
         try {
             await confirm({ message: strings?.confirm?.deleteListItem ?? strings?.confirm?.areYouSure ?? 'Are you sure?' })
-            await request({ action: 'key-list-delete-index', payload: { key: keyName, index } })
+            await request({ action: 'key/list-delete-index', payload: { key: keyName, index } })
             toast(strings?.status?.deletedListElement)
             onRefresh()
         } catch (e) { generalHandleError(e) }

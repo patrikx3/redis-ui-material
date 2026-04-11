@@ -74,7 +74,7 @@ export class KeyZsetComponent extends KeyTypeBase implements OnInit, OnChanges {
         try {
             await this.common.confirm({ message: this.i18n.strings().confirm?.deleteZSetMember });
             await this.socket.request({
-                action: 'key-zset-delete-member',
+                action: 'key/zset-delete-member',
                 payload: { key: this.p3xrKey, value: this.p3xrValueBuffer[item.index * 2] },
             });
             this.common.toast(this.i18n.strings().status?.deletedZSetMember);

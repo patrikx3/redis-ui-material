@@ -782,7 +782,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
         }
         try {
             await this.socket.request({
-                action: 'connections-reorder',
+                action: 'connection/reorder',
                 payload: { ids: allIds },
             });
         } catch (e) {
@@ -798,7 +798,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
         try {
             const reorderedIds = event.container.data.map((c: any) => c.id);
             await this.socket.request({
-                action: 'connections-reorder',
+                action: 'connection/reorder',
                 payload: { group: groupName || undefined, ids: reorderedIds },
             });
         } catch (e) {
@@ -829,7 +829,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
                 message: this.strings().confirm?.deleteConnectionText || 'Delete this connection?',
             });
             await this.socket.request({
-                action: 'connection-delete',
+                action: 'connection/delete',
                 payload: { id: connection.id },
             });
             this.common.toast(this.strings().status?.deleted || 'Deleted');
@@ -860,7 +860,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     async toggleAiEnabled(enabled: boolean): Promise<void> {
         try {
             await this.socket.request({
-                action: 'set-groq-api-key',
+                action: 'ai/set-groq-api-key',
                 payload: {
                     apiKey: this.state.cfg()?.groqApiKey || '',
                     aiEnabled: enabled,
@@ -891,7 +891,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
         }
         try {
             await this.socket.request({
-                action: 'set-groq-api-key',
+                action: 'ai/set-groq-api-key',
                 payload: {
                     apiKey: this.state.cfg()?.groqApiKey || '',
                     aiEnabled: this.state.cfg()?.aiEnabled !== false,

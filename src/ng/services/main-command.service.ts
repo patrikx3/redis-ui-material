@@ -73,7 +73,7 @@ export class MainCommandService {
         try {
             this.state.page.set(1);
             await this.socket.request({
-                action: 'console',
+                action: 'redis/console',
                 payload: { command: `select ${dbIndex}` }
             });
             const strings = this.i18n.strings();
@@ -90,7 +90,7 @@ export class MainCommandService {
 
     async save(): Promise<void> {
         try {
-            const response = await this.socket.request({ action: 'save' });
+            const response = await this.socket.request({ action: 'redis/save' });
             const info = this.redisParser.info(response.info);
             this.state.info.set(info);
             const strings = this.i18n.strings();
@@ -138,7 +138,7 @@ export class MainCommandService {
             }
 
             const response = await this.socket.request({
-                action: 'refresh',
+                action: 'redis/refresh',
                 payload
             });
 
@@ -182,7 +182,7 @@ export class MainCommandService {
 
         try {
             await this.socket.request({
-                action: 'connection-disconnect',
+                action: 'connection/disconnect',
                 payload: { connectionId: conn?.id },
             });
         } catch {

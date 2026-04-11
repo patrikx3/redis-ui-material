@@ -69,7 +69,7 @@ export class KeySetComponent extends KeyTypeBase implements OnInit, OnChanges {
     async deleteSetMember(index: number, event: Event): Promise<void> {
         try {
             await this.common.confirm({ message: this.i18n.strings().confirm?.deleteSetMember });
-            await this.socket.request({ action: 'key-set-delete-member', payload: { key: this.p3xrKey, value: this.p3xrValueBuffer[index] } });
+            await this.socket.request({ action: 'key/set-delete-member', payload: { key: this.p3xrKey, value: this.p3xrValueBuffer[index] } });
             this.common.toast(this.i18n.strings().status?.deletedSetMember);
             this.refreshKey();
         } catch (e) { this.common.generalHandleError(e); }

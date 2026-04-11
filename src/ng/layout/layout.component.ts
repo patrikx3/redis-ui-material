@@ -377,7 +377,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
         try {
             this.i18n.setLanguage(key);
             if (this.isElectron) {
-                await this.socket.request({ action: 'set-language', payload: { key } });
+                await this.socket.request({ action: 'settings/language', payload: { key } });
                 this.isElectronInitialized = true;
             }
             this.filterLanguages();
@@ -407,7 +407,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
             });
 
             const response = await this.socket.request({
-                action: 'connection-connect',
+                action: 'connection/connect',
                 payload: { connection, db },
             });
 

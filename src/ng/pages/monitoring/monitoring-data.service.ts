@@ -57,14 +57,14 @@ export class MonitoringDataService {
 
     async startProfiler(): Promise<void> {
         if (this.profilerStarted) return;
-        await this.socket.request({ action: 'set-monitor', payload: { enabled: true } });
+        await this.socket.request({ action: 'monitor/set', payload: { enabled: true } });
         this.profilerStarted = true;
         this.socket.getClient()?.on?.('monitor-data', this.onMonitorData);
     }
 
     stopProfiler(): void {
         if (!this.profilerStarted) return;
-        this.socket.request({ action: 'set-monitor', payload: { enabled: false } }).catch(() => {});
+        this.socket.request({ action: 'monitor/set', payload: { enabled: false } }).catch(() => {});
         this.socket.getClient()?.removeListener?.('monitor-data', this.onMonitorData);
         this.profilerStarted = false;
         this.saveProfilerNow();
@@ -73,7 +73,7 @@ export class MonitoringDataService {
     async startPubSub(): Promise<void> {
         if (this.pubsubStarted) return;
         await this.socket.request({
-            action: 'set-subscription',
+            action: 'settings/subscription',
             payload: { subscription: true, subscriberPattern: this.pubsubPattern },
         });
         this.pubsubStarted = true;
@@ -82,7 +82,7 @@ export class MonitoringDataService {
 
     stopPubSub(): void {
         if (!this.pubsubStarted) return;
-        this.socket.request({ action: 'set-subscription', payload: { subscription: false, subscriberPattern: '*' } }).catch(() => {});
+        this.socket.request({ action: 'settings/subscription', payload: { subscription: false, subscriberPattern: '*' } }).catch(() => {});
         this.socket.getClient()?.removeListener?.('pubsub-message', this.onPubSubMessage);
         this.pubsubStarted = false;
         this.savePubSubNow();

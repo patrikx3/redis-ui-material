@@ -63,7 +63,7 @@ export default function KeyZset({ response, value, valueBuffer, keyName, valueFo
     const deleteZSet = useCallback(async (item: ZsetItem) => {
         try {
             await confirm({ message: strings?.confirm?.deleteZSetMember ?? strings?.confirm?.areYouSure ?? 'Are you sure?' })
-            await request({ action: 'key-zset-delete-member', payload: { key: keyName, value: valueBuffer?.[item.index * 2] } })
+            await request({ action: 'key/zset-delete-member', payload: { key: keyName, value: valueBuffer?.[item.index * 2] } })
             toast(strings?.status?.deletedZSetMember)
             onRefresh()
         } catch (e) { generalHandleError(e) }

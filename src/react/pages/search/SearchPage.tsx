@@ -58,7 +58,7 @@ export default function SearchPage() {
     // --- Load indexes ---
     const loadIndexes = useCallback(async () => {
         try {
-            const resp = await request({ action: 'search-list', payload: {} })
+            const resp = await request({ action: 'search/list', payload: {} })
             setIndexes(resp.data)
             return resp.data as string[]
         } catch { return [] }
@@ -68,7 +68,7 @@ export default function SearchPage() {
         const index = idx || selectedIndex
         if (!index) return
         try {
-            const resp = await request({ action: 'search-index-info', payload: { index } })
+            const resp = await request({ action: 'search/index-info', payload: { index } })
             setIndexInfo(resp.data)
         } catch (e) { generalHandleError(e) }
     }, [selectedIndex, generalHandleError])
@@ -80,12 +80,12 @@ export default function SearchPage() {
             if (hybridMode && vectorField && vectorValues) {
                 const values = vectorValues.split(',').map(v => parseFloat(v.trim())).filter(v => !isNaN(v))
                 resp = await request({
-                    action: 'search-hybrid',
+                    action: 'search/hybrid',
                     payload: { index: selectedIndex, query, vectorField, vectorValues: values, count: vectorCount, offset: off ?? offset, limit },
                 })
             } else {
                 resp = await request({
-                    action: 'search-query',
+                    action: 'search/query',
                     payload: { index: selectedIndex, query, offset: off ?? offset, limit },
                 })
             }
@@ -102,14 +102,14 @@ export default function SearchPage() {
         setAiLoading(true)
         try {
             const resp = await request({
-                action: 'ai-redis-query',
+                action: 'ai/redis-query',
                 payload: { prompt, context: { indexes, schema: indexInfo } },
             })
             setQuery(resp.command || '*')
             if (resp.explanation) toast(resp.explanation)
             setOffset(0)
             // Search with new query
-            const sr = await request({ action: 'search-query', payload: { index: selectedIndex, query: resp.command || '*', offset: 0, limit } })
+            const sr = await request({ action: 'search/query', payload: { index: selectedIndex, query: resp.command || '*', offset: 0, limit } })
             setTotal(sr.data.total); setResults(sr.data.docs); setSearchDone(true)
             await loadIndexInfo()
         } catch (e) { generalHandleError(e) }
@@ -145,7 +145,7 @@ export default function SearchPage() {
         if (!selectedIndex) return
         try {
             await confirm({ message: strings?.confirm?.dropIndex || 'Are you sure to drop this index?' })
-            await request({ action: 'search-index-drop', payload: { index: selectedIndex } })
+            await request({ action: 'search/index-drop', payload: { index: selectedIndex } })
             toast(strings?.status?.indexDropped || 'Index dropped')
             setSelectedIndex(''); setResults([]); setTotal(0); setSearchDone(false); setIndexInfo(null)
             await loadIndexes()
@@ -167,7 +167,7 @@ export default function SearchPage() {
         if (schema.length === 0) return
         try {
             await request({
-                action: 'search-index-create',
+                action: 'search/index-create',
                 payload: { name: newIndexName.trim(), prefix: newIndexPrefix.trim() || undefined, schema },
             })
             toast(strings?.status?.indexCreated || 'Index created')

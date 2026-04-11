@@ -274,7 +274,7 @@ export default function ConsoleComponent({ embedded = false, collapsed = false }
         inputRef.current?.focus()
         try {
             let indexes: string[] = []
-            try { const r = await request({ action: 'search-list', payload: {} }); indexes = r.data || [] } catch {}
+            try { const r = await request({ action: 'search/list', payload: {} }); indexes = r.data || [] } catch {}
             const info = useRedisStateStore.getState().info || {}
             const server = info.server || {}
             const clients = info.clients || {}
@@ -292,7 +292,7 @@ export default function ConsoleComponent({ embedded = false, collapsed = false }
             if (modules.length > 0) ctx.modules = modules
             ctx.uiLanguage = useI18nStore.getState().currentLang
 
-            const response = await request({ action: 'ai-redis-query', payload: { prompt, context: ctx } })
+            const response = await request({ action: 'ai/redis-query', payload: { prompt, context: ctx } })
             const command = response.command || ''
             const explanation = response.explanation || ''
             outputAppend(htmlEncode(originalInput))
@@ -329,7 +329,7 @@ export default function ConsoleComponent({ embedded = false, collapsed = false }
             return
         }
         try {
-            const response = await request({ action: 'console', payload: { command: enter } })
+            const response = await request({ action: 'redis/console', payload: { command: enter } })
             const result = htmlEncode(String(consoleParse(response.result)))
             outputAppend(`${htmlEncode(enter)}<br/><pre>${result}</pre>`)
             if (response.hasOwnProperty('database')) {

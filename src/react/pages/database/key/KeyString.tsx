@@ -84,7 +84,7 @@ export default function KeyString({ response, value: initValue, valueBuffer: ini
                 if (!confirmed) return
             }
             overlay.show({ message: strings?.intention?.save })
-            await request({ action: 'key-set', payload: { type: response?.type, key: keyName, value: v } })
+            await request({ action: 'key/set', payload: { type: response?.type, key: keyName, value: v } })
             trackPage('/key-set')
             setEditable(false)
             setBuffer(false)
@@ -97,7 +97,7 @@ export default function KeyString({ response, value: initValue, valueBuffer: ini
                 if (undoClicked) {
                     try {
                         overlay.show({ message: 'Undo...' })
-                        await request({ action: 'key-set', payload: { type: response?.type, key: keyName, value: oldVal } })
+                        await request({ action: 'key/set', payload: { type: response?.type, key: keyName, value: oldVal } })
                         setValue(oldVal)
                         setOriginalValue(oldVal)
                         onRefresh()
@@ -132,7 +132,7 @@ export default function KeyString({ response, value: initValue, valueBuffer: ini
                     }
                     await confirm({ message: strings?.confirm?.uploadBuffer })
                     overlay.show()
-                    await request({ action: 'key-set', payload: { type: response?.type, value: arrayBuffer, key: keyName } })
+                    await request({ action: 'key/set', payload: { type: response?.type, value: arrayBuffer, key: keyName } })
                     trackPage('/key-set')
                     toast(strings?.confirm?.uploadBufferDoneAndSave)
                     onRefresh()
@@ -153,7 +153,7 @@ export default function KeyString({ response, value: initValue, valueBuffer: ini
             const formatted = JSON.stringify(JSON.parse(value), null, settings.jsonFormat || 2)
             setValue(formatted)
             overlay.show({ message: strings?.intention?.save })
-            await request({ action: 'key-set', payload: { type: response?.type, key: keyName, value: formatted } })
+            await request({ action: 'key/set', payload: { type: response?.type, key: keyName, value: formatted } })
             trackPage('/key-set')
             onRefresh()
         } catch { toast(strings?.label?.jsonViewNotParsable) }
@@ -162,7 +162,7 @@ export default function KeyString({ response, value: initValue, valueBuffer: ini
 
     const showDigest = useCallback(async () => {
         try {
-            const res = await request({ action: 'string-digest', payload: { key: keyName } })
+            const res = await request({ action: 'key/string-digest', payload: { key: keyName } })
             toast(res.digest || 'No digest')
         } catch (e) { generalHandleError(e) }
     }, [keyName, toast, generalHandleError])
@@ -308,7 +308,7 @@ export default function KeyString({ response, value: initValue, valueBuffer: ini
                         setValue(result.obj)
                         overlay.show({ message: strings?.intention?.save })
                         try {
-                            await request({ action: 'key-set', payload: { type: response?.type, key: keyName, value: result.obj } })
+                            await request({ action: 'key/set', payload: { type: response?.type, key: keyName, value: result.obj } })
                             trackPage('/key-set')
                             onRefresh()
                             overlay.hide()
@@ -316,7 +316,7 @@ export default function KeyString({ response, value: initValue, valueBuffer: ini
                                 const undoClicked = await useCommonStore.getState().toastWithUndo(strings?.status?.saved || 'Saved')
                                 if (undoClicked) {
                                     overlay.show({ message: 'Undo...' })
-                                    await request({ action: 'key-set', payload: { type: response?.type, key: keyName, value: oldVal } })
+                                    await request({ action: 'key/set', payload: { type: response?.type, key: keyName, value: oldVal } })
                                     onRefresh()
                                     overlay.hide()
                                     useCommonStore.getState().toast(strings?.status?.reverted || 'Reverted')

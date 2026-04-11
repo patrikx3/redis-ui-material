@@ -79,7 +79,7 @@ export default function Layout() {
             overlay.show({ message: strings?.title?.connectingRedis })
 
             const response = await request({
-                action: 'connection-connect',
+                action: 'connection/connect',
                 payload: { connection: cloned, db },
             })
 

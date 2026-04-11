@@ -286,7 +286,7 @@ export default function DatabaseTree({ resizeSignal }: { resizeSignal?: any }) {
         e.stopPropagation()
         try {
             await confirm({ message: strings?.confirm?.deleteKey })
-            await request({ action: 'delete', payload: { key } })
+            await request({ action: 'key/delete', payload: { key } })
             navigateTo('database.statistics')
             toast(typeof strings?.status?.deletedKey === 'function' ? strings.status.deletedKey({ key }) : '')
             await refresh()
@@ -302,7 +302,7 @@ export default function DatabaseTree({ resizeSignal }: { resizeSignal?: any }) {
                 ? strings.confirm.deleteAllKeys({ key: node.key }) : ''
             await confirm({ message: msg })
             await request({
-                action: 'key-del-tree',
+                action: 'key/del-tree',
                 payload: { key: node.key, redisTreeDivider: divider },
             })
             const toastMsg = typeof strings?.status?.treeDeleted === 'function'

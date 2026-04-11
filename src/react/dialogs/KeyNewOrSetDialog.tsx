@@ -197,7 +197,7 @@ export default function KeyNewOrSetDialog({ open, data, onClose }: Props) {
         try {
             overlay.show({ message: strings?.label?.saving })
             const response = await request({
-                action: 'key-new-or-set',
+                action: 'key/new-or-set',
                 payload: {
                     type: data?.type,
                     originalValue: data?.model?.value,

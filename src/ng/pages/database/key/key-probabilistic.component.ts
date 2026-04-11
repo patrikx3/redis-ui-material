@@ -138,7 +138,7 @@ export class KeyProbabilisticComponent extends KeyTypeBase implements OnInit, On
         if (!this.itemInput.trim()) return;
         try {
             await this.socket.request({
-                action: 'probabilistic-add',
+                action: 'probabilistic/add',
                 payload: {
                     key: this.p3xrKey,
                     type: this.type,
@@ -159,7 +159,7 @@ export class KeyProbabilisticComponent extends KeyTypeBase implements OnInit, On
         if (!this.itemInput.trim()) return;
         try {
             const response = await this.socket.request({
-                action: 'probabilistic-check',
+                action: 'probabilistic/check',
                 payload: {
                     key: this.p3xrKey,
                     type: this.type,
@@ -184,7 +184,7 @@ export class KeyProbabilisticComponent extends KeyTypeBase implements OnInit, On
                 message: this.strings()?.confirm?.delete || 'Delete?',
             });
             await this.socket.request({
-                action: 'probabilistic-delete',
+                action: 'probabilistic/delete',
                 payload: {
                     key: this.p3xrKey,
                     type: this.type,
@@ -204,7 +204,7 @@ export class KeyProbabilisticComponent extends KeyTypeBase implements OnInit, On
         if (!this.itemInput.trim()) return;
         try {
             const response = await this.socket.request({
-                action: 'probabilistic-check',
+                action: 'probabilistic/check',
                 payload: {
                     key: this.p3xrKey,
                     type: this.type,
@@ -222,7 +222,7 @@ export class KeyProbabilisticComponent extends KeyTypeBase implements OnInit, On
     async queryQuantile() {
         try {
             const response = await this.socket.request({
-                action: 'probabilistic-check',
+                action: 'probabilistic/check',
                 payload: {
                     key: this.p3xrKey,
                     type: this.type,
@@ -244,7 +244,7 @@ export class KeyProbabilisticComponent extends KeyTypeBase implements OnInit, On
                 message: this.strings()?.page?.key?.probabilistic?.resetConfirm || 'Reset all data in this T-Digest?',
             });
             await this.socket.request({
-                action: 'probabilistic-delete',
+                action: 'probabilistic/delete',
                 payload: {
                     key: this.p3xrKey,
                     type: 'tdigest',
@@ -261,7 +261,7 @@ export class KeyProbabilisticComponent extends KeyTypeBase implements OnInit, On
     async loadTopkList() {
         try {
             const response = await this.socket.request({
-                action: 'probabilistic-check',
+                action: 'probabilistic/check',
                 payload: {
                     key: this.p3xrKey,
                     type: 'topk',

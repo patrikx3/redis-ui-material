@@ -680,7 +680,7 @@ export class ConnectionDialogComponent implements AfterViewInit {
             });
 
             const response = await this.socketService.request({
-                action: 'redis-test-connection',
+                action: 'connection/test',
                 payload: {
                     model: authModel,
                 },
@@ -730,7 +730,7 @@ export class ConnectionDialogComponent implements AfterViewInit {
             }
 
             await this.socketService.request({
-                action: 'connection-save',
+                action: 'connection/save',
                 payload: {
                     model: saveModel,
                 },

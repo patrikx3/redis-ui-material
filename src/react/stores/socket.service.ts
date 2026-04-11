@@ -121,7 +121,7 @@ export function getClient(): Socket {
             }
 
             emit('redis-disconnected', data)
-            request({ action: 'trigger-redis-disconnect', enableResponse: false }).catch(() => {})
+            request({ action: 'connection/trigger-disconnect', enableResponse: false }).catch(() => {})
         }
     })
 

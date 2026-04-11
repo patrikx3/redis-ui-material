@@ -165,7 +165,7 @@ export class DatabaseKeyComponent implements OnInit, OnDestroy {
 
             const ttlStr = String(confirmResponse.model.ttl).trim();
             if (ttlStr === '' || confirmResponse.model.ttl == null) {
-                await this.socket.request({ action: 'persist', payload: { key: this.key } });
+                await this.socket.request({ action: 'key/persist', payload: { key: this.key } });
                 this.gtag('/persist');
                 await this.cmd.refresh();
                 await this.refresh({ withoutParent: true });
@@ -174,7 +174,7 @@ export class DatabaseKeyComponent implements OnInit, OnDestroy {
                 this.common.toast(this.i18n.strings().status.notInteger);
             } else {
                 await this.socket.request({
-                    action: 'expire',
+                    action: 'key/expire',
                     payload: { key: this.key, ttl: parseInt(ttlStr) },
                 });
                 this.gtag('/expire');
@@ -204,7 +204,7 @@ export class DatabaseKeyComponent implements OnInit, OnDestroy {
         let hadError: any;
         try {
             const response = await this.socket.request({
-                action: 'key-get',
+                action: 'key/get',
                 payload: { key: this.key },
             });
             this.response = response;

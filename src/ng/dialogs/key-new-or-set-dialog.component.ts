@@ -550,7 +550,7 @@ export class KeyNewOrSetDialogComponent implements OnInit {
 
             this.overlay.show();
             const response = await this.socket.request({
-                action: 'key-new-or-set',
+                action: 'key/new-or-set',
                 payload: {
                     type: this.options.type,
                     originalValue: this.data.model?.value,

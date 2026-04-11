@@ -169,7 +169,7 @@ export default function DatabaseKeyPage() {
         clearInterval(ttlIntervalRef.current)
         setLoading(true)
         try {
-            const resp = await request({ action: 'key-get', payload: { key } })
+            const resp = await request({ action: 'key/get', payload: { key } })
             if (resp.ttl === -2) {
                 toast(strings?.status?.keyIsNotExisting)
                 navigateTo('database.statistics')
@@ -227,7 +227,7 @@ export default function DatabaseKeyPage() {
         e.stopPropagation()
         try {
             await confirm({ message: strings?.confirm?.deleteKey })
-            await request({ action: 'delete', payload: { key } })
+            await request({ action: 'key/delete', payload: { key } })
             trackPage('/delete')
             navigateTo('database.statistics')
             toast(typeof strings?.status?.deletedKey === 'function' ? strings.status.deletedKey({ key }) : '')
@@ -245,7 +245,7 @@ export default function DatabaseKeyPage() {
                 okLabel: strings?.intention?.rename,
                 cancelLabel: strings?.intention?.cancel,
             })
-            await request({ action: 'rename', payload: { key, keyNew: newKey } })
+            await request({ action: 'key/rename', payload: { key, keyNew: newKey } })
             trackPage('/rename')
             navigateTo('database.key', { key: newKey })
             toast(strings?.status?.renamedKey)
@@ -265,7 +265,7 @@ export default function DatabaseKeyPage() {
             const ttlVal = result.model.ttl
             const ttlStr = String(ttlVal).trim()
             if (ttlStr === '' || ttlVal == null) {
-                await request({ action: 'persist', payload: { key } })
+                await request({ action: 'key/persist', payload: { key } })
                 trackPage('/persist')
                 await useMainCommandStore.getState().refresh({ withoutParent: true, force: true })
                 await loadKey()
@@ -274,7 +274,7 @@ export default function DatabaseKeyPage() {
                 toast(strings?.status?.notInteger)
                 return
             } else {
-                await request({ action: 'expire', payload: { key, ttl: parseInt(ttlStr) } })
+                await request({ action: 'key/expire', payload: { key, ttl: parseInt(ttlStr) } })
                 trackPage('/expire')
                 await useMainCommandStore.getState().refresh({ withoutParent: true, force: true })
                 await loadKey()
@@ -286,7 +286,7 @@ export default function DatabaseKeyPage() {
     const refreshKey = useCallback(async () => {
         trackPage('/refresh')
         try {
-            const resp = await request({ action: 'key-get', payload: { key } })
+            const resp = await request({ action: 'key/get', payload: { key } })
             if (resp.ttl === -2) return
             resp.size = 0
             decodeValueBuffer(resp, jsonFormat ? 2 : 0)

@@ -59,7 +59,7 @@ export default function KeyProbabilistic({ response, value, keyName, onRefresh }
         if (!itemInput.trim()) return
         try {
             await request({
-                action: 'probabilistic-add',
+                action: 'probabilistic/add',
                 payload: { key: keyName, type, item: itemInput.trim(), increment: incrementInput },
             })
             toast(strings?.page?.key?.probabilistic?.addedSuccessfully || 'Item added successfully')
@@ -75,7 +75,7 @@ export default function KeyProbabilistic({ response, value, keyName, onRefresh }
         if (!itemInput.trim()) return
         try {
             const resp: any = await request({
-                action: 'probabilistic-check',
+                action: 'probabilistic/check',
                 payload: { key: keyName, type, item: itemInput.trim() },
             })
             const exists = resp.result === 1
@@ -92,7 +92,7 @@ export default function KeyProbabilistic({ response, value, keyName, onRefresh }
         try {
             await confirm({ message: strings?.confirm?.delete || 'Delete?' })
             await request({
-                action: 'probabilistic-delete',
+                action: 'probabilistic/delete',
                 payload: { key: keyName, type, item: itemInput.trim() },
             })
             toast(strings?.page?.key?.probabilistic?.deletedSuccessfully || 'Item deleted successfully')
@@ -107,7 +107,7 @@ export default function KeyProbabilistic({ response, value, keyName, onRefresh }
         if (!itemInput.trim()) return
         try {
             const resp: any = await request({
-                action: 'probabilistic-check',
+                action: 'probabilistic/check',
                 payload: { key: keyName, type, item: itemInput.trim() },
             })
             const count = Array.isArray(resp.result) ? resp.result[0] : resp.result
@@ -120,7 +120,7 @@ export default function KeyProbabilistic({ response, value, keyName, onRefresh }
     async function queryQuantile() {
         try {
             const resp: any = await request({
-                action: 'probabilistic-check',
+                action: 'probabilistic/check',
                 payload: { key: keyName, type, quantile: quantileInput },
             })
             const result = Array.isArray(resp.result) ? resp.result[0] : resp.result
@@ -134,7 +134,7 @@ export default function KeyProbabilistic({ response, value, keyName, onRefresh }
         try {
             await confirm({ message: strings?.page?.key?.probabilistic?.resetConfirm || 'Reset all data in this T-Digest?' })
             await request({
-                action: 'probabilistic-delete',
+                action: 'probabilistic/delete',
                 payload: { key: keyName, type: 'tdigest' },
             })
             toast('Reset')
@@ -147,7 +147,7 @@ export default function KeyProbabilistic({ response, value, keyName, onRefresh }
     async function loadTopkList() {
         try {
             const resp: any = await request({
-                action: 'probabilistic-check',
+                action: 'probabilistic/check',
                 payload: { key: keyName, type: 'topk' },
             })
             setTopkItems(resp.result || [])

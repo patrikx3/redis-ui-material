@@ -300,7 +300,7 @@ export class DatabaseTreeComponent implements OnInit, OnDestroy {
             });
 
             await this.socket.request({
-                action: 'delete',
+                action: 'key/delete',
                 payload: { key },
             });
 
@@ -331,7 +331,7 @@ export class DatabaseTreeComponent implements OnInit, OnDestroy {
             });
 
             await this.socket.request({
-                action: 'rename',
+                action: 'key/rename',
                 payload: { key, keyNew: newKey },
             });
 
@@ -361,7 +361,7 @@ export class DatabaseTreeComponent implements OnInit, OnDestroy {
 
             const divider = this.settingsService.redisTreeDivider();
             await this.socket.request({
-                action: 'key-del-tree',
+                action: 'key/del-tree',
                 payload: {
                     key: node.key,
                     redisTreeDivider: divider,

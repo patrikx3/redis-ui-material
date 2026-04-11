@@ -61,7 +61,7 @@ export class KeyStringComponent extends KeyTypeBase implements OnInit {
     async showDigest(): Promise<void> {
         try {
             const response = await this.socket.request({
-                action: 'string-digest',
+                action: 'key/string-digest',
                 payload: { key: this.p3xrKey },
             });
             this.common.toast(response.digest || 'No digest');
@@ -105,7 +105,7 @@ export class KeyStringComponent extends KeyTypeBase implements OnInit {
             }
             this.overlay.show({ message: this.strings?.intention?.save ?? 'Saving...' });
             await this.socket.request({
-                action: 'key-set',
+                action: 'key/set',
                 payload: {
                     type: this.p3xrResponse?.type,
                     key: this.p3xrKey,
@@ -124,7 +124,7 @@ export class KeyStringComponent extends KeyTypeBase implements OnInit {
                 if (undoClicked) {
                     this.overlay.show({ message: 'Undo...' });
                     await this.socket.request({
-                        action: 'key-set',
+                        action: 'key/set',
                         payload: {
                             type: this.p3xrResponse?.type,
                             key: this.p3xrKey,
@@ -168,7 +168,7 @@ export class KeyStringComponent extends KeyTypeBase implements OnInit {
                     await this.common.confirm({ message: this.i18n.strings().confirm?.uploadBuffer });
                     this.overlay.show();
                     await this.socket.request({
-                        action: 'key-set',
+                        action: 'key/set',
                         payload: {
                             type: this.p3xrResponse?.type,
                             value: arrayBuffer,
@@ -200,7 +200,7 @@ export class KeyStringComponent extends KeyTypeBase implements OnInit {
             this.originalValue = undefined;
             this.overlay.show({ message: this.strings?.intention?.save ?? 'Saving...' });
             await this.socket.request({
-                action: 'key-set',
+                action: 'key/set',
                 payload: { type: this.p3xrResponse?.type, key: this.p3xrKey, value: result.obj },
             });
             this.p3xrValue = result.obj;
@@ -214,7 +214,7 @@ export class KeyStringComponent extends KeyTypeBase implements OnInit {
                 if (undoClicked) {
                     this.overlay.show({ message: 'Undo...' });
                     await this.socket.request({
-                        action: 'key-set',
+                        action: 'key/set',
                         payload: { type: this.p3xrResponse?.type, key: this.p3xrKey, value: oldValue },
                     });
                     this.refreshKey();

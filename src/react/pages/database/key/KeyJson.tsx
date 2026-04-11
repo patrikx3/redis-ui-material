@@ -198,7 +198,7 @@ export default function KeyJson({ response, value, valueBuffer, keyName, valueFo
         try {
             const val = typeof result.obj === 'string' ? result.obj : JSON.stringify(result.obj)
             overlay.show()
-            await request({ action: 'key-json-set', payload: { key: keyName, path: '$', value: val } })
+            await request({ action: 'key/json-set', payload: { key: keyName, path: '$', value: val } })
             trackPage('/key-json-set')
             onRefresh()
             overlay.hide()
@@ -208,7 +208,7 @@ export default function KeyJson({ response, value, valueBuffer, keyName, valueFo
                 const undoClicked = await useCommonStore.getState().toastWithUndo(strings?.status?.set || 'Saved')
                 if (undoClicked) {
                     overlay.show({ message: 'Undo...' })
-                    await request({ action: 'key-json-set', payload: { key: keyName, path: '$', value: oldVal } })
+                    await request({ action: 'key/json-set', payload: { key: keyName, path: '$', value: oldVal } })
                     onRefresh()
                     overlay.hide()
                     useCommonStore.getState().toast(strings?.status?.reverted || 'Reverted')

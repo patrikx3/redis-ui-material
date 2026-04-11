@@ -242,7 +242,7 @@ export default function KeyTimeseries({ response, value, keyName, onRefresh }: K
             if (aggregationType && aggregationBucket) {
                 payload.aggregation = { type: aggregationType, timeBucket: parseInt(aggregationBucket, 10) }
             }
-            const resp = await request({ action: 'timeseries-range', payload })
+            const resp = await request({ action: 'timeseries/range', payload })
             const data: DataPoint[] = resp.data || []
             setRangeData(data)
             rangeDataRef.current = data
@@ -258,7 +258,7 @@ export default function KeyTimeseries({ response, value, keyName, onRefresh }: K
                     if (aggregationType && aggregationBucket) {
                         op.aggregation = { type: aggregationType, timeBucket: parseInt(aggregationBucket, 10) }
                     }
-                    const or = await request({ action: 'timeseries-range', payload: op })
+                    const or = await request({ action: 'timeseries/range', payload: op })
                     newOverlays.push({ key: ok, data: or.data || [] })
                 } catch { /* skip */ }
             }
@@ -272,7 +272,7 @@ export default function KeyTimeseries({ response, value, keyName, onRefresh }: K
                     if (aggregationType && aggregationBucket) {
                         mp.aggregation = { type: aggregationType, timeBucket: parseInt(aggregationBucket, 10) }
                     }
-                    const mr = await request({ action: 'timeseries-mrange', payload: mp })
+                    const mr = await request({ action: 'timeseries/mrange', payload: mp })
                     for (const entry of (mr.data || [])) {
                         if (entry.key !== keyName) newOverlays.push({ key: entry.key, data: entry.data })
                     }
@@ -315,7 +315,7 @@ export default function KeyTimeseries({ response, value, keyName, onRefresh }: K
             const labelCount = labels && typeof labels === 'object' ? Object.keys(labels).length : 0
             if (labelCount === 0) {
                 request({
-                    action: 'timeseries-alter',
+                    action: 'timeseries/alter',
                     payload: { key: keyName, labels: `key ${keyName}` },
                 }).then(() => {
                     setTsInfo((prev: any) => ({ ...prev, labels: { key: keyName } }))
@@ -362,7 +362,7 @@ export default function KeyTimeseries({ response, value, keyName, onRefresh }: K
     const addDataPoint = useCallback(async () => {
         if (!addValue) return
         try {
-            await request({ action: 'timeseries-add', payload: { key: keyName, timestamp: addTimestamp || '*', value: parseFloat(addValue) } })
+            await request({ action: 'timeseries/add', payload: { key: keyName, timestamp: addTimestamp || '*', value: parseFloat(addValue) } })
             toast(strings?.status?.added || 'Added')
             setAddValue('')
             onRefresh()
@@ -372,7 +372,7 @@ export default function KeyTimeseries({ response, value, keyName, onRefresh }: K
     const deleteDataPoint = useCallback(async (point: DataPoint) => {
         try {
             await confirm({ message: strings?.confirm?.delete || 'Delete?' })
-            await request({ action: 'timeseries-del', payload: { key: keyName, from: point.timestamp, to: point.timestamp } })
+            await request({ action: 'timeseries/del', payload: { key: keyName, from: point.timestamp, to: point.timestamp } })
             toast(strings?.status?.deleted || 'Deleted')
             onRefresh()
         } catch (e: any) { if (e !== undefined && e !== null) generalHandleError(e) }
@@ -421,7 +421,7 @@ export default function KeyTimeseries({ response, value, keyName, onRefresh }: K
         try {
             const labels = alterLabels.trim().length > 0 ? alterLabels : `key ${keyName}`
             await request({
-                action: 'timeseries-alter',
+                action: 'timeseries/alter',
                 payload: { key: keyName, retention: alterRetention, duplicatePolicy: alterDuplicatePolicy, labels },
             })
             toast(strings?.status?.saved || 'Updated')

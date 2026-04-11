@@ -117,7 +117,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     async loadIndexes(): Promise<void> {
         try {
-            const response = await this.socket.request({ action: 'search-list', payload: {} });
+            const response = await this.socket.request({ action: 'search/list', payload: {} });
             this.indexes = response.data;
             if (this.indexes.length > 0 && !this.selectedIndex) {
                 this.selectedIndex = this.indexes[0];
@@ -136,7 +136,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             if (this.hybridMode && this.vectorField && this.vectorValues) {
                 const values = this.vectorValues.split(',').map((v: string) => parseFloat(v.trim())).filter((v: number) => !isNaN(v));
                 response = await this.socket.request({
-                    action: 'search-hybrid',
+                    action: 'search/hybrid',
                     payload: {
                         index: this.selectedIndex,
                         query: this.query,
@@ -149,7 +149,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                 });
             } else {
                 response = await this.socket.request({
-                    action: 'search-query',
+                    action: 'search/query',
                     payload: {
                         index: this.selectedIndex,
                         query: this.query,
@@ -185,7 +185,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         if (!this.selectedIndex) return;
         try {
             const response = await this.socket.request({
-                action: 'search-index-info',
+                action: 'search/index-info',
                 payload: { index: this.selectedIndex },
             });
             this.indexInfo = response.data;
@@ -202,7 +202,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                 message: this.strings().confirm?.dropIndex || 'Are you sure to drop this index?',
             });
             await this.socket.request({
-                action: 'search-index-drop',
+                action: 'search/index-drop',
                 payload: { index: this.selectedIndex },
             });
             this.common.toast({ message: this.strings().status?.indexDropped || 'Index dropped' });
@@ -239,7 +239,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         if (schema.length === 0) return;
         try {
             await this.socket.request({
-                action: 'search-index-create',
+                action: 'search/index-create',
                 payload: {
                     name: this.newIndexName.trim(),
                     prefix: this.newIndexPrefix.trim() || undefined,
@@ -293,7 +293,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             }
 
             const response = await this.socket.request({
-                action: 'ai-redis-query',
+                action: 'ai/redis-query',
                 payload: {
                     prompt,
                     context: {

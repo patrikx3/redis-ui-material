@@ -31,13 +31,18 @@ export default function AiSettingsDialog({ open, onClose }: AiSettingsDialogProp
             const trimmedKey = apiKey.trim()
             if (trimmedKey) {
                 overlay.show({ message: strings?.title?.connectingRedis })
+                let validation: any
                 try {
-                    await request({ action: 'validate-groq-api-key', payload: { apiKey: trimmedKey } })
+                    validation = await request({ action: 'ai/validate-groq-api-key', payload: { apiKey: trimmedKey } })
                 } catch (e) { generalHandleError(e); return }
                 finally { overlay.hide() }
+                if (!validation.valid) {
+                    toast(strings?.label?.aiGroqApiKeyInvalid || 'Invalid Groq API key')
+                    return
+                }
             }
             await request({
-                action: 'set-groq-api-key',
+                action: 'ai/set-groq-api-key',
                 payload: { apiKey: trimmedKey, aiEnabled: cfg?.aiEnabled !== false, aiUseOwnKey: cfg?.aiUseOwnKey === true },
             })
             useRedisStateStore.setState({ cfg: { ...cfg, groqApiKey: trimmedKey } })

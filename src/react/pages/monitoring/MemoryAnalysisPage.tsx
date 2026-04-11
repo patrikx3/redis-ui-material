@@ -112,7 +112,7 @@ export default function MemoryAnalysisPage() {
         if (loading) return
         setLoading(true)
         try {
-            const resp = await request({ action: 'memory-analysis', payload: { topN, maxScanKeys } })
+            const resp = await request({ action: 'memory/analysis', payload: { topN, maxScanKeys } })
             const d = resp.data
             setData(d)
             const entries = Object.keys(d.typeDistribution).map(type => ({

@@ -140,7 +140,7 @@ export class SocketService {
 
                 this.redisDisconnected$.next(data);
                 this.tick();
-                this.request({ action: 'trigger-redis-disconnect', enableResponse: false }).catch(() => {});
+                this.request({ action: 'connection/trigger-disconnect', enableResponse: false }).catch(() => {});
             }
         });
 

@@ -220,7 +220,7 @@ export class KeyStreamComponent extends KeyTypeBase implements OnInit, OnChanges
     async deleteStreamTimestamp(id: string, event: Event): Promise<void> {
         try {
             await this.common.confirm({ message: this.i18n.strings().confirm?.deleteStreamTimestamp });
-            await this.socket.request({ action: 'key-stream-delete-timestamp', payload: { key: this.p3xrKey, streamTimestamp: id } });
+            await this.socket.request({ action: 'key/stream-delete-timestamp', payload: { key: this.p3xrKey, streamTimestamp: id } });
             this.common.toast(this.i18n.strings().status?.deletedStreamTimestamp || this.i18n.strings().status?.deletedKey || 'Deleted');
             this.refreshKey();
         } catch (e) { if (e) this.common.generalHandleError(e); }

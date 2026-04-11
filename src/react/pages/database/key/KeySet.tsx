@@ -54,7 +54,7 @@ export default function KeySet({ response, value, valueBuffer, keyName, valueFor
     const deleteSetMember = useCallback(async (index: number) => {
         try {
             await confirm({ message: strings?.confirm?.deleteSetMember ?? strings?.confirm?.areYouSure ?? 'Are you sure?' })
-            await request({ action: 'key-set-delete-member', payload: { key: keyName, value: valueBuffer?.[index] } })
+            await request({ action: 'key/set-delete-member', payload: { key: keyName, value: valueBuffer?.[index] } })
             toast(strings?.status?.deletedSetMember)
             onRefresh()
         } catch (e) { generalHandleError(e) }

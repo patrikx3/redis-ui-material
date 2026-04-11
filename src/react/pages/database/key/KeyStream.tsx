@@ -113,7 +113,7 @@ export default function KeyStream({ response, value, valueBuffer, keyName, value
     const deleteStreamTimestamp = useCallback(async (id: string) => {
         try {
             await confirm({ message: strings?.confirm?.deleteStreamTimestamp ?? strings?.confirm?.areYouSure ?? 'Are you sure?' })
-            await request({ action: 'key-stream-delete-timestamp', payload: { key: keyName, streamTimestamp: id } })
+            await request({ action: 'key/stream-delete-timestamp', payload: { key: keyName, streamTimestamp: id } })
             toast(strings?.status?.deletedStreamTimestamp ?? strings?.status?.deletedKey)
             onRefresh()
         } catch (e) { if (e) generalHandleError(e) }

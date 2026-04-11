@@ -81,7 +81,7 @@ export class KeyHashComponent extends KeyTypeBase implements OnInit, OnChanges, 
     async deleteHashKey(hashKey: string, event: Event): Promise<void> {
         try {
             await this.common.confirm({ message: this.i18n.strings().confirm?.deleteHashKey });
-            await this.socket.request({ action: 'key-hash-delete-field', payload: { key: this.p3xrKey, hashKey } });
+            await this.socket.request({ action: 'key/hash-delete-field', payload: { key: this.p3xrKey, hashKey } });
             this.common.toast(this.i18n.strings().status?.deletedHashKey);
             this.refreshKey();
         } catch (e) { this.common.generalHandleError(e); }
@@ -145,7 +145,7 @@ export class KeyHashComponent extends KeyTypeBase implements OnInit, OnChanges, 
             const fields = this.pagedItems.map(item => item.key);
             if (fields.length === 0) return;
             const response = await this.socket.request({
-                action: 'hash-field-ttls',
+                action: 'hash-field/ttls',
                 payload: { key: this.p3xrKey, fields },
             });
             this.fieldTtls = (response as any).fieldTtls || {};
@@ -185,13 +185,13 @@ export class KeyHashComponent extends KeyTypeBase implements OnInit, OnChanges, 
         try {
             // Get current field TTL
             const ttlResponse = await this.socket.request({
-                action: 'hash-field-ttl-get',
+                action: 'hash-field/ttl-get',
                 payload: { key: this.p3xrKey, field: hashKey },
             });
             const currentTtl = ttlResponse.ttl ?? -1;
             const result = await this.ttlDialog.show({ $event: event, model: { ttl: currentTtl } });
             await this.socket.request({
-                action: 'hash-field-ttl',
+                action: 'hash-field/ttl',
                 payload: { key: this.p3xrKey, field: hashKey, ttl: result.model.ttl },
             });
             this.common.toast(`${hashKey}: TTL ${result.model.ttl === -1 ? 'removed' : result.model.ttl + 's'}`);

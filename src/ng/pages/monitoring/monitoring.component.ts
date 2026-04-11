@@ -185,7 +185,7 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
 
     async loadClientList(): Promise<void> {
         try {
-            const response = await this.socket.request({ action: 'client-list', payload: {} });
+            const response = await this.socket.request({ action: 'client/list', payload: {} });
             this.clientList = response.data;
             this.clientListLoaded = true;
             this.safeDetectChanges();
@@ -198,7 +198,7 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
             await this.common.confirm({
                 message: this.strings().page?.monitor?.confirmKillClient || 'Are you sure to kill this client?',
             });
-            await this.socket.request({ action: 'client-kill', payload: { id } });
+            await this.socket.request({ action: 'client/kill', payload: { id } });
             this.common.toast({ message: this.strings().page?.monitor?.clientKilled || 'Client killed' });
             await this.loadClientList();
         } catch (e) {
@@ -209,7 +209,7 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
     async loadSlotStats(): Promise<void> {
         try {
             const response = await this.socket.request({
-                action: 'cluster-slot-stats',
+                action: 'cluster/slot-stats',
                 payload: { metric: this.slotStatsMetric, limit: 20 },
             });
             this.slotStats = response.slots || [];
@@ -220,7 +220,7 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
 
     async loadTopKeys(): Promise<void> {
         try {
-            const response = await this.socket.request({ action: 'memory-top-keys', payload: { topN: 20 } });
+            const response = await this.socket.request({ action: 'memory/top-keys', payload: { topN: 20 } });
             this.topKeys = response.data;
             this.topKeysLoaded = true;
             this.safeDetectChanges();
@@ -532,7 +532,7 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
             // === ANALYSIS ===
             let analysisChartItems: Array<{ name: string; items: Array<{ label: string; value: number }> }> = [];
             try {
-                const resp = await this.socket.request({ action: 'memory-analysis', payload: { topN: 20, maxScanKeys: 5000 } });
+                const resp = await this.socket.request({ action: 'memory/analysis', payload: { topN: 20, maxScanKeys: 5000 } });
                 const d = resp.data;
                 if (d) {
                     const m = d.memoryInfo;
@@ -1059,7 +1059,7 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
     private async fetchData(): Promise<void> {
         try {
             const response = await this.socket.request({
-                action: 'monitor-info',
+                action: 'monitor/info',
                 payload: {},
             });
             const data: MonitorSnapshot = response.data;

@@ -179,7 +179,7 @@ export default function DatabaseTreeControls() {
         }
         try {
             overlay.show({ message: strings?.label?.exportProgress })
-            const response = await request({ action: 'key-export', payload: { keys: keysRaw } })
+            const response = await request({ action: 'key/export', payload: { keys: keysRaw } })
             const json = JSON.stringify(response.data, null, 2)
             const blob = new Blob([json], { type: 'application/json' })
             const url = URL.createObjectURL(blob)
@@ -233,7 +233,7 @@ export default function DatabaseTreeControls() {
         try {
             overlay.show({ message: strings?.label?.importProgress })
             const response = await request({
-                action: 'key-import',
+                action: 'key/import',
                 payload: { keys: result.keys, conflictMode: result.conflictMode },
             })
             const data = response.data
@@ -285,7 +285,7 @@ export default function DatabaseTreeControls() {
                 : `Are you sure to delete all keys matching "${match}"? Found ${keyCount} keys.`
             await useCommonStore.getState().confirm({ message: confirmMsg })
             overlay.show({ message: strings?.label?.deletingSearchKeys })
-            const response = await request({ action: 'delete-search-keys', payload: { match } })
+            const response = await request({ action: 'key/delete-search-keys', payload: { match } })
             const deletedCount = response.deletedCount || 0
             const statusFn = strings?.status?.deletedSearchKeys
             const message = typeof statusFn === 'function'

@@ -261,7 +261,7 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
 
         try {
             const response = await this.socket.request({
-                action: 'console',
+                action: 'redis/console',
                 payload: { command: enter },
             });
 
@@ -321,7 +321,7 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
             // Gather RediSearch indexes for context
             let indexes: string[] = [];
             try {
-                const indexResponse = await this.socket.request({ action: 'search-list', payload: {} });
+                const indexResponse = await this.socket.request({ action: 'search/list', payload: {} });
                 indexes = indexResponse.data || [];
             } catch { /* no search module, ignore */ }
 
@@ -343,7 +343,7 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
             redisContext.uiLanguage = this.i18n.currentLang();
 
             const response = await this.socket.request({
-                action: 'ai-redis-query',
+                action: 'ai/redis-query',
                 payload: {
                     prompt,
                     context: redisContext,

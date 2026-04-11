@@ -102,7 +102,7 @@ export class KeyJsonComponent extends KeyTypeBase implements OnInit, OnDestroy, 
 
             this.overlay.show();
             await this.socket.request({
-                action: 'key-json-set',
+                action: 'key/json-set',
                 payload: { key: this.p3xrKey, path: '$', value },
             });
             this.gtag('/key-json-set');
@@ -114,7 +114,7 @@ export class KeyJsonComponent extends KeyTypeBase implements OnInit, OnDestroy, 
                 if (undoClicked) {
                     this.overlay.show({ message: 'Undo...' });
                     await this.socket.request({
-                        action: 'key-json-set',
+                        action: 'key/json-set',
                         payload: { key: this.p3xrKey, path: '$', value: oldValue },
                     });
                     this.refreshKey();
