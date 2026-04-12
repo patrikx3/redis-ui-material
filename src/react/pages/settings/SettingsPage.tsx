@@ -21,6 +21,7 @@ import P3xrButton from '../../components/P3xrButton'
 import ConnectionDialog from '../../dialogs/ConnectionDialog'
 import AiSettingsDialog from '../../dialogs/AiSettingsDialog'
 import TreeSettingsDialog from '../../dialogs/TreeSettingsDialog'
+import { switchGui } from '../../../core/gui-switch'
 import { useI18nStore } from '../../stores/i18n.store'
 import { useRedisStateStore } from '../../stores/redis-state.store'
 import { useSettingsStore } from '../../stores/settings.store'
@@ -451,38 +452,32 @@ export default function SettingsPage() {
                         border: 1, borderColor: 'divider',
                     }}>
                         <Box component="span"
-                            onClick={() => {
-                                setPersistentItem('p3xr-frontend', 'ng')
-                                location.href = '/ng/settings'
-                            }}
+                            onClick={() => switchGui('ng')}
                             sx={{
-                                px: 3, py: 1, cursor: 'pointer', fontWeight: 500,
+                                px: 1.5, py: 1, cursor: 'pointer', fontWeight: 500,
                                 fontSize: 14, userSelect: 'none',
                                 display: 'inline-flex', alignItems: 'center',
-                                bgcolor: 'rgba(128,128,128,0.15)', color: 'text.primary',
+                                color: 'text.primary',
                                 '&:hover': { bgcolor: 'action.hover' },
                             }}>
                             <i className="fab fa-angular" style={{ color: '#dd0031', marginRight: 6, fontSize: 22 }} />Angular
                         </Box>
                         <Box component="span"
                             sx={{
-                                px: 3, py: 1, fontWeight: 700,
+                                px: 1.5, py: 1, fontWeight: 700,
                                 fontSize: 14, userSelect: 'none',
                                 display: 'inline-flex', alignItems: 'center',
-                                bgcolor: 'rgba(128,128,128,0.55)', color: 'text.primary',
+                                bgcolor: 'primary.main', color: 'primary.contrastText',
                             }}>
-                            <i className="fab fa-react" style={{ color: '#61dafb', marginRight: 6, fontSize: 20 }} />React
+                            <i className="fab fa-react" style={{ color: '#61dafb', marginRight: 6, fontSize: 20, textShadow: '0 0 3px rgba(0,0,0,0.6), 0 0 8px rgba(0,0,0,0.3)' }} />React
                         </Box>
                         <Box component="span"
-                            onClick={() => {
-                                setPersistentItem('p3xr-frontend', 'vue')
-                                location.href = '/vue/settings'
-                            }}
+                            onClick={() => switchGui('vue')}
                             sx={{
-                                px: 3, py: 1, cursor: 'pointer', fontWeight: 500,
+                                px: 1.5, py: 1, cursor: 'pointer', fontWeight: 500,
                                 fontSize: 14, userSelect: 'none',
                                 display: 'inline-flex', alignItems: 'center',
-                                bgcolor: 'rgba(128,128,128,0.15)', color: 'text.primary',
+                                color: 'text.primary',
                                 '&:hover': { bgcolor: 'action.hover' },
                             }}>
                             <i className="fab fa-vuejs" style={{ color: '#42b883', marginRight: 6, fontSize: 26 }} />Vue

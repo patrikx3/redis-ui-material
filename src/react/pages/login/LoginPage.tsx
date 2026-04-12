@@ -8,6 +8,7 @@ import { useTheme } from '@mui/material'
 import { useI18nStore } from '../../stores/i18n.store'
 import { useAuthStore } from '../../stores/auth.store'
 import { useThemeStore } from '../../stores/theme.store'
+import { switchGui as doSwitchGui } from '../../../core/gui-switch'
 
 export default function LoginPage() {
     const [username, setUsername] = useState('')
@@ -38,10 +39,7 @@ export default function LoginPage() {
         setLoading(false)
     }
 
-    const switchGui = (gui: string) => {
-        try { localStorage.setItem('p3xr-frontend', gui) } catch {}
-        location.href = gui === 'react' ? '/react/' : gui === 'vue' ? '/vue/' : '/ng/'
-    }
+    const switchGui = (gui: string) => doSwitchGui(gui)
 
     const getErrorMessage = (error: string) => {
         return strings?.confirm?.invalidCredentials || 'Invalid username or password.'

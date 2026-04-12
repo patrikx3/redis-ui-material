@@ -320,6 +320,22 @@ export default function Layout() {
         return unsub
     }, [])
 
+    // Prefetch other GUI frameworks — fetch HTML, parse script/style tags, cache all assets
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            for (const gui of ['/ng/', '/vue/']) {
+                fetch(gui).then(r => r.text()).then(html => {
+                    const doc = new DOMParser().parseFromString(html, 'text/html')
+                    doc.querySelectorAll('script[src], link[rel="stylesheet"]').forEach(el => {
+                        const url = (el as any).src || (el as any).href
+                        if (url) fetch(url).catch(() => {})
+                    })
+                }).catch(() => {})
+            }
+        }, 3000)
+        return () => clearTimeout(timer)
+    }, [])
+
     // Track route changes for analytics (matches Angular setupRouteTracking)
     useEffect(() => {
         const path = location.pathname.toLowerCase().startsWith('/database/key/')

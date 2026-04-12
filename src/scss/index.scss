@@ -1,6 +1,16 @@
 @use 'vars' as v;
 @use '../main';
 
+@view-transition {
+    navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation-duration: 400ms;
+    animation-timing-function: ease-in-out;
+}
+
 body {
     font-family: Roboto, 'Helvetica Neue', sans-serif;
     margin: 0;

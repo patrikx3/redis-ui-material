@@ -41,6 +41,10 @@ const rangeData = ref<DataPoint[]>([])
 const rangeFrom = ref('')
 const rangeTo = ref('')
 const aggregationType = ref('')
+const aggregationItems = computed(() => [
+    { title: str(strings.value?.page?.key?.timeseries?.none) || 'None', value: '' },
+    ...aggregationTypes.map(a => ({ title: a, value: a })),
+])
 const aggregationBucket = ref('')
 const addTimestamp = ref('*')
 const addValue = ref('')
@@ -410,14 +414,8 @@ const hoverBg = computed(() => isDark.value ? 'rgba(255,255,255,0.1)' : 'rgba(0,
                         v-model="rangeTo" @update:model-value="debouncedLoadRange()" />
                     <v-select density="compact" variant="outlined" hide-details class="p3xr-ts-field"
                         :label="str(strings?.page?.key?.timeseries?.aggregation) || 'Aggregation'"
-                        v-model="aggregationType" :items="['', ...aggregationTypes]" @update:model-value="loadRange()">
-                        <template #item="{ item, props: itemProps }">
-                            <v-list-item v-bind="itemProps" :title="item.value === '' ? (str(strings?.page?.key?.timeseries?.none) || 'None') : item.value" />
-                        </template>
-                        <template #selection="{ item }">
-                            {{ item.value === '' ? (str(strings?.page?.key?.timeseries?.none) || 'None') : item.value }}
-                        </template>
-                    </v-select>
+                        v-model="aggregationType" :items="aggregationItems" item-title="title" item-value="value"
+                        @update:model-value="loadRange()" />
                     <v-text-field v-if="aggregationType" density="compact" variant="outlined" hide-details class="p3xr-ts-field"
                         type="number" :label="str(strings?.page?.key?.timeseries?.timeBucket) || 'Bucket (ms)'" placeholder="5000"
                         v-model="aggregationBucket" @update:model-value="debouncedLoadRange()" />

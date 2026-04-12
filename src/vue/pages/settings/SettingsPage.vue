@@ -17,10 +17,12 @@ import ConnectionDialog from '../../dialogs/ConnectionDialog.vue'
 import AiSettingsDialog from '../../dialogs/AiSettingsDialog.vue'
 import TreeSettingsDialog from '../../dialogs/TreeSettingsDialog.vue'
 
-function switchGui(gui: string) {
-    setPersistentItem('p3xr-frontend', gui)
-    location.href = `/${gui}/settings`
+function openLink(url: string) {
+    globalThis.open(url, '_blank')
 }
+
+// @ts-ignore
+import { switchGui } from '../../../core/gui-switch'
 
 const i18n = useI18nStore()
 const strings = computed(() => i18n.strings)
@@ -236,7 +238,7 @@ const treeSettingsItems = computed(() => [
     <!-- Donate -->
     <P3xrAccordion :title="strings?.title?.donateTitle || 'Support P3X Redis UI'" accordion-key="donate" :collapsible="false">
         <template #actions>
-            <P3xrButton :label="`${strings?.title?.donate || 'Donate'} — PayPal`" icon="mdi-heart" @click="window.open('https://www.paypal.me/patrikx3', '_blank')" />
+            <P3xrButton :label="`${strings?.title?.donate || 'Donate'} — PayPal`" icon="mdi-heart" @click="openLink('https://www.paypal.me/patrikx3')" />
         </template>
         <div style="padding: 12px 16px; font-size: 13px; opacity: 0.85; line-height: 1.6;">
             {{ strings?.title?.donateDescription }}
@@ -489,7 +491,7 @@ const treeSettingsItems = computed(() => [
 }
 .p3xr-gui-toggle-active,
 .p3xr-gui-toggle-item {
-    padding: 8px 24px;
+    padding: 8px 12px;
     font-size: 14px;
     user-select: none;
     display: inline-flex;
@@ -499,15 +501,18 @@ const treeSettingsItems = computed(() => [
 }
 .p3xr-gui-toggle-active {
     font-weight: 700;
-    background-color: rgba(128,128,128,0.55);
+    background: rgb(var(--v-theme-primary));
+    color: rgb(var(--v-theme-on-primary));
+}
+.p3xr-gui-toggle-active i[class*="fa-"] {
+    text-shadow: 0 0 3px rgba(0,0,0,0.6), 0 0 8px rgba(0,0,0,0.3);
 }
 .p3xr-gui-toggle-item {
     font-weight: 500;
     cursor: pointer;
-    background-color: rgba(128,128,128,0.15);
 }
 .p3xr-gui-toggle-item:hover {
-    background: rgba(128, 128, 128, 0.25);
+    background: rgba(128, 128, 128, 0.1);
 }
 </style>
 

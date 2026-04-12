@@ -112,8 +112,22 @@ export class LayoutComponent implements OnInit, OnDestroy {
             }
         });
 
+
         // Initialize filtered languages list
         this.filterLanguages();
+
+        // Prefetch other GUI frameworks — fetch HTML, parse script/style tags, cache all assets
+        setTimeout(() => {
+            for (const gui of ['/react/', '/vue/']) {
+                fetch(gui).then(r => r.text()).then(html => {
+                    const doc = new DOMParser().parseFromString(html, 'text/html');
+                    doc.querySelectorAll('script[src], link[rel="stylesheet"]').forEach((el: Element) => {
+                        const url = (el as any).src || (el as any).href;
+                        if (url) fetch(url).catch(() => {});
+                    });
+                }).catch(() => {});
+            }
+        }, 3000);
 
         // Header: 720px (matches AngularJS p3xr-button component threshold)
         const sub720 = this.breakpointObserver.observe('(min-width: 720px)').subscribe(r => {

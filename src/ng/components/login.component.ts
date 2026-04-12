@@ -10,6 +10,7 @@ import { MatMenuModule } from '@angular/material/menu';
 
 import { I18nService } from '../services/i18n.service';
 import { AuthService } from '../services/auth.service';
+import { switchGui } from '../../core/gui-switch';
 
 @Component({
     selector: 'p3xr-login',
@@ -147,10 +148,7 @@ export class LoginComponent {
 
     switchGui(gui: string): void {
         this.currentGui = gui;
-        try {
-            localStorage.setItem('p3xr-frontend', gui);
-        } catch {}
-        location.href = gui === 'react' ? '/react/' : gui === 'vue' ? '/vue/' : '/ng/';
+        switchGui(gui);
     }
 
     getErrorMessage(error: string): string {

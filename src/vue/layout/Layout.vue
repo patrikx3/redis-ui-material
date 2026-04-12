@@ -234,6 +234,21 @@ watch(() => route.path, (p) => {
     trackPage(p.toLowerCase().startsWith('/database/key/') ? '/database/key' : p)
 }, { immediate: true })
 
+// Prefetch other GUI frameworks — fetch HTML, parse script/style tags, cache all assets
+onMounted(() => {
+    setTimeout(() => {
+        for (const gui of ['/ng/', '/react/']) {
+            fetch(gui).then(r => r.text()).then(html => {
+                const doc = new DOMParser().parseFromString(html, 'text/html')
+                doc.querySelectorAll('script[src], link[rel="stylesheet"]').forEach(el => {
+                    const url = (el as any).src || (el as any).href
+                    if (url) fetch(url).catch(() => {})
+                })
+            }).catch(() => {})
+        }
+    }, 3000)
+})
+
 // Group mode poll
 let groupInterval: any
 onMounted(() => {

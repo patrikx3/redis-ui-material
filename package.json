@@ -1,7 +1,7 @@
 {
     "name": "p3x-redis-ui-material",
-    "version": "2026.4.435",
-    "description": "💿 P3X Redis UI dual frontend — Angular + React/MUI with 54 languages, 7 themes, Socket.IO, desktop notifications, and full feature parity",
+    "version": "2026.4.436",
+    "description": "💿 P3X Redis UI triple frontend — Angular + React/MUI + Vue/Vuetify with 54 languages, 7 themes, Socket.IO, desktop notifications, and full feature parity",
     "corifeus": {
         "icon": "fas fa-palette",
         "code": "Fireball",

@@ -20,6 +20,7 @@ import { TreecontrolSettingsDialogService } from '../dialogs/treecontrol-setting
 import { AiSettingsDialogService } from '../dialogs/ai-settings-dialog.service';
 import { P3xrAccordionComponent } from '../components/p3xr-accordion.component';
 import { P3xrButtonComponent } from '../components/p3xr-button.component';
+import { switchGui } from '../../core/gui-switch';
 
 /**
  * Settings page — Angular replacement for AngularJS p3xrSettings.
@@ -486,7 +487,7 @@ import { P3xrButtonComponent } from '../components/p3xr-button.component';
         }
         .p3xr-gui-toggle-active,
         .p3xr-gui-toggle-item {
-            padding: 8px 24px;
+            padding: 8px 12px;
             font-size: 14px;
             user-select: none;
             display: inline-flex;
@@ -494,12 +495,15 @@ import { P3xrButtonComponent } from '../components/p3xr-button.component';
         }
         .p3xr-gui-toggle-active {
             font-weight: 700;
-            background-color: rgba(128,128,128,0.55);
+            background-color: var(--p3xr-btn-primary-bg);
+            color: var(--p3xr-btn-primary-color);
         }
         .p3xr-gui-toggle-item {
             font-weight: 500;
             cursor: pointer;
-            background-color: rgba(128,128,128,0.15);
+        }
+        .p3xr-gui-toggle-active i[class*="fa-"] {
+            text-shadow: 0 0 3px rgba(0,0,0,0.6), 0 0 8px rgba(0,0,0,0.3);
         }
         .p3xr-gui-toggle-item:hover {
             background-color: var(--p3xr-hover-bg);
@@ -946,22 +950,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
     // --- GUI Framework Switch ---
 
     switchToReact(): void {
-        try { localStorage.setItem('p3xr-frontend', 'react'); } catch {}
-        try {
-            if (window.parent && window.parent !== window) {
-                window.parent.postMessage({ type: 'p3x-ui-storage-set', key: 'p3xr-frontend', value: 'react' }, '*');
-            }
-        } catch {}
-        location.href = '/react/settings';
+        switchGui('react');
     }
 
     switchToVue(): void {
-        try { localStorage.setItem('p3xr-frontend', 'vue'); } catch {}
-        try {
-            if (window.parent && window.parent !== window) {
-                window.parent.postMessage({ type: 'p3x-ui-storage-set', key: 'p3xr-frontend', value: 'vue' }, '*');
-            }
-        } catch {}
-        location.href = '/vue/settings';
+        switchGui('vue');
     }
 }

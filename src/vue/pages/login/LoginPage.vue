@@ -42,10 +42,8 @@ async function handleLogin() {
     loading.value = false
 }
 
-function switchGui(gui: string) {
-    try { localStorage.setItem('p3xr-frontend', gui) } catch {}
-    location.href = gui === 'vue' ? '/vue/' : gui === 'react' ? '/react/' : '/ng/'
-}
+// @ts-ignore
+import { switchGui } from '../../../core/gui-switch'
 </script>
 
 <template>
