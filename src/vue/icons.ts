@@ -3,6 +3,7 @@ import type { IconSet, IconProps } from 'vuetify'
 
 import {
     mdiAccount,
+    mdiAccountPlus,
     mdiArchive,
     mdiBackspace,
     mdiBookOpenPageVariant,
@@ -76,6 +77,7 @@ import {
 // Map kebab-case mdi icon names to SVG paths (tree-shakeable)
 const iconMap: Record<string, string> = {
     'mdi-account': mdiAccount,
+    'mdi-account-plus': mdiAccountPlus,
     'mdi-archive': mdiArchive,
     'mdi-backspace': mdiBackspace,
     'mdi-book-open-page-variant': mdiBookOpenPageVariant,

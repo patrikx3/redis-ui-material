@@ -358,7 +358,7 @@ watch(
                 />
 
                 <!-- Node content wrapper -->
-                <span :data-p3xr-tree-key="dataSource[virtualRow.index].type === 'folder' ? '' : dataSource[virtualRow.index].key">
+                <span :data-p3xr-tree-key="dataSource[virtualRow.index].type === 'folder' ? '' : dataSource[virtualRow.index].key" style="display: inline-flex; align-items: center; height: 28px;">
                     <!-- Label with tooltip -->
                     <v-tooltip :text="nodeTooltip(dataSource[virtualRow.index])" location="right" :open-delay="500" :offset="36">
                         <template #activator="{ props: tp }">
@@ -519,6 +519,7 @@ watch(
 .p3xr-tree-ttl {
     display: inline-flex;
     align-items: center;
+    height: 28px;
     margin-left: 4px;
     cursor: default;
 }

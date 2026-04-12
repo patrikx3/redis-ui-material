@@ -39,6 +39,11 @@ export class MemoryAnalysisComponent implements OnInit, OnDestroy, AfterViewInit
     maxScanKeys = 5000;
     typeEntries: Array<{ type: string; count: number; bytes: number }> = [];
 
+    doctorText: string | null = null;
+    doctorLoading = false;
+    autoRefreshDoctor = false;
+    private doctorInterval: any = null;
+
     @ViewChild('typeChart') typeChartRef!: ElementRef<HTMLDivElement>;
     @ViewChild('prefixChart') prefixChartRef!: ElementRef<HTMLDivElement>;
 
@@ -69,10 +74,12 @@ export class MemoryAnalysisComponent implements OnInit, OnDestroy, AfterViewInit
     }
 
     ngOnInit(): void {
-        this.runAnalysis();
+        this.autoRefreshDoctor = localStorage.getItem('p3xr-monitor-auto-doctor') === 'true';
+        if (this.autoRefreshDoctor) this.startDoctorInterval();
+        if (this.state.connection()) this.runAnalysis();
         const sub = this.socket.stateChanged$.subscribe(() => {
             this.data = null;
-            this.runAnalysis();
+            if (this.state.connection()) this.runAnalysis();
         });
         this.unsubFns.push(() => sub.unsubscribe());
     }
@@ -95,6 +102,7 @@ export class MemoryAnalysisComponent implements OnInit, OnDestroy, AfterViewInit
     }
 
     ngOnDestroy(): void {
+        this.stopDoctorInterval();
         this.themeObserver?.disconnect();
         this.resizeObserver?.disconnect();
         this.unsubFns.forEach(fn => fn());
@@ -133,6 +141,48 @@ export class MemoryAnalysisComponent implements OnInit, OnDestroy, AfterViewInit
             this.safeDetectChanges();
             this.common.generalHandleError(e);
         }
+    }
+
+    async runDoctor(): Promise<void> {
+        this.doctorLoading = true;
+        this.safeDetectChanges();
+        try {
+            const resp = await this.socket.request({ action: 'memory/doctor' });
+            this.doctorText = resp.data.text;
+        } catch (e) {
+            this.common.generalHandleError(e);
+        } finally {
+            this.doctorLoading = false;
+            this.safeDetectChanges();
+        }
+    }
+
+    toggleAutoDoctor(): void {
+        this.autoRefreshDoctor = !this.autoRefreshDoctor;
+        localStorage.setItem('p3xr-monitor-auto-doctor', String(this.autoRefreshDoctor));
+        if (this.autoRefreshDoctor) {
+            this.runDoctor();
+            this.startDoctorInterval();
+        } else {
+            this.stopDoctorInterval();
+        }
+    }
+
+    private startDoctorInterval(): void {
+        this.stopDoctorInterval();
+        this.doctorInterval = setInterval(() => this.runDoctor(), 2000);
+    }
+
+    private stopDoctorInterval(): void {
+        if (this.doctorInterval) {
+            clearInterval(this.doctorInterval);
+            this.doctorInterval = null;
+        }
+    }
+
+    exportDoctor(): void {
+        if (!this.doctorText) return;
+        this.downloadText(this.doctorText, `${this.connName}-memory-doctor.txt`);
     }
 
     formatBytes(bytes: number): string {

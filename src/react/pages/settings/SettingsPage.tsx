@@ -6,7 +6,7 @@ import {
 import {
     Power, PowerOff, DeleteForever, Edit, ModeComment, AddBox,
     CheckBox, CheckBoxOutlineBlank,
-    ChevronRight, ExpandMore, Favorite,
+    ChevronRight, ExpandMore, Favorite, People, Delete, PersonAdd, Refresh,
 } from '@mui/icons-material'
 import {
     DndContext, closestCenter, PointerSensor, useSensor, useSensors,
@@ -20,6 +20,7 @@ import P3xrAccordion from '../../components/P3xrAccordion'
 import P3xrButton from '../../components/P3xrButton'
 import ConnectionDialog from '../../dialogs/ConnectionDialog'
 import AiSettingsDialog from '../../dialogs/AiSettingsDialog'
+import AclUserDialog from '../../dialogs/AclUserDialog'
 import TreeSettingsDialog from '../../dialogs/TreeSettingsDialog'
 import { switchGui } from '../../../core/gui-switch'
 import { useI18nStore } from '../../stores/i18n.store'
@@ -218,6 +219,29 @@ export default function SettingsPage() {
     const [aiDialogOpen, setAiDialogOpen] = useState(false)
     const [treeDialogOpen, setTreeDialogOpen] = useState(false)
     const [notifToggle, setNotifToggle] = useState(isNotificationsEnabled)
+    const [aclUsers, setAclUsers] = useState<any[] | null>(null)
+    const [aclCurrentUser, setAclCurrentUser] = useState('')
+    const [aclLoading, setAclLoading] = useState(false)
+    const [aclEditOpen, setAclEditOpen] = useState(false)
+    const [aclEditUsername, setAclEditUsername] = useState('')
+    const [aclEditRules, setAclEditRules] = useState('')
+    const [aclEditIsNew, setAclEditIsNew] = useState(false)
+    const currentConnectionName = useMemo(() => connectionsList.find((c: any) => c.id === currentConnectionId)?.name || '', [connectionsList, currentConnectionId])
+
+    const loadAclUsers = useCallback(async () => {
+        setAclLoading(true)
+        try {
+            const resp = await request({ action: 'acl/list' })
+            setAclUsers(resp.data.users)
+            setAclCurrentUser(resp.data.currentUser)
+        } catch { setAclUsers(null) }
+        setAclLoading(false)
+    }, [])
+
+    useEffect(() => {
+        if (currentConnectionId) { loadAclUsers() }
+        else { setAclUsers(null); setAclCurrentUser('') }
+    }, [currentConnectionId, loadAclUsers])
 
     const handleConnect = async (conn: any) => {
         const cloned = structuredClone(conn)
@@ -443,6 +467,93 @@ export default function SettingsPage() {
                     </DndContext>
                 )}
             </P3xrAccordion>
+            {currentConnectionId && <>
+                <br />
+                {/* === ACL Users === */}
+                <P3xrAccordion title={`${strings?.page?.acl?.title || 'ACL Users'} — ${currentConnectionName}`} accordionKey="acl-users"
+                    actions={<>
+                        <P3xrButton icon={<Refresh fontSize="small" />}
+                            label={strings?.intention?.refresh || 'Refresh'} color="inherit"
+                            onClick={(e) => { e.stopPropagation(); loadAclUsers() }} />
+                        {!readonlyConnections && <P3xrButton icon={<PersonAdd fontSize="small" />}
+                            label={strings?.page?.acl?.createUser || 'Create User'} color="inherit"
+                            onClick={(e) => {
+                                e.stopPropagation()
+                                setAclEditIsNew(true); setAclEditUsername(''); setAclEditRules('on >password +@all ~* &*'); setAclEditOpen(true)
+                            }} />}
+                    </>}>
+                    {aclLoading
+                        ? <Box sx={{ p: 2, opacity: 0.6 }}>{strings?.page?.acl?.loading || 'Loading...'}</Box>
+                        : !aclUsers
+                            ? <Box sx={{ p: 2, opacity: 0.6 }}>{strings?.page?.acl?.noUsers || 'ACL requires Redis 6.0+.'}</Box>
+                            : <Box>
+                                {aclUsers.map((user, idx) => (
+                                    <Box key={user.name}>
+                                        <Box sx={{
+                                            display: 'flex', alignItems: 'center', gap: 0.5,
+                                            px: 1, pl: 2, py: 1, minHeight: 56,
+                                            ...(!readonlyConnections ? { cursor: 'pointer', '&:hover': { bgcolor: 'action.hover' } } : {}),
+                                        }} onClick={!readonlyConnections ? () => {
+                                            setAclEditIsNew(false); setAclEditUsername(user.name)
+                                            setAclEditRules(user.raw.split(' ').slice(2).join(' ')); setAclEditOpen(true)
+                                        } : undefined}>
+                                            <Box sx={{ flex: 1, minWidth: 0 }}>
+                                                <Box component="span" sx={{ fontWeight: 700 }}>{user.name}</Box>
+                                                {user.name === aclCurrentUser && <Box component="span" sx={{ opacity: 0.5, ml: 0.5, fontSize: 11 }}>({strings?.page?.acl?.currentUser || 'Current'})</Box>}
+                                            </Box>
+                                            {!user.enabled && (
+                                                <Tooltip title={strings?.page?.acl?.disabled || 'Disabled'} placement="top">
+                                                    <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', color: 'warning.main' }}>
+                                                        <Box component="span" className="material-icons" sx={{ fontSize: 20 }}>warning</Box>
+                                                    </Box>
+                                                </Tooltip>
+                                            )}
+                                            {!readonlyConnections && (
+                                                <Box onClick={e => e.stopPropagation()} sx={{ display: 'flex', gap: 0.5 }}>
+                                                    {user.name !== 'default' && user.name !== aclCurrentUser && (
+                                                        <ActionBtn icon={<Delete fontSize="small" />}
+                                                            label={strings?.page?.acl?.deleteUser || 'Delete'} color="error"
+                                                            onClick={async () => {
+                                                                try {
+                                                                    await confirm({ message: `${strings?.page?.acl?.confirmDelete || 'Are you sure to delete ACL user'} "${user.name}"?` })
+                                                                    await request({ action: 'acl/del-user', payload: { username: user.name } })
+                                                                    toast(strings?.page?.acl?.userDeleted || 'ACL user deleted')
+                                                                    loadAclUsers()
+                                                                } catch {}
+                                                            }} />
+                                                    )}
+                                                    <ActionBtn icon={<Edit fontSize="small" />}
+                                                        label={strings?.page?.acl?.editUser || 'Edit'} color="primary"
+                                                        onClick={() => {
+                                                            setAclEditIsNew(false); setAclEditUsername(user.name)
+                                                            setAclEditRules(user.raw.split(' ').slice(2).join(' ')); setAclEditOpen(true)
+                                                        }} />
+                                                </Box>
+                                            )}
+                                        </Box>
+                                        {idx < aclUsers.length - 1 && <Divider />}
+                                    </Box>
+                                ))}
+                            </Box>
+                    }
+                </P3xrAccordion>
+                <AclUserDialog
+                    open={aclEditOpen}
+                    username={aclEditUsername}
+                    rules={aclEditRules}
+                    isNew={aclEditIsNew}
+                    onClose={async (result) => {
+                        setAclEditOpen(false)
+                        if (result) {
+                            try {
+                                await request({ action: 'acl/set-user', payload: { username: result.username, rules: result.rules } })
+                                toast(strings?.page?.acl?.userSaved || 'ACL user saved')
+                                loadAclUsers()
+                            } catch (err) { generalHandleError(err) }
+                        }
+                    }}
+                />
+            </>}
             <br />
             {/* === GUI Framework === */}
             <P3xrAccordion title="GUI" accordionKey="gui-framework">

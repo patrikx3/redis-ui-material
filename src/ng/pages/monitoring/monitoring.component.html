@@ -418,31 +418,41 @@
     </p3xr-ng-accordion>
 
     <!-- Slow Log -->
-    @if (current.slowlog.length > 0) {
-        <br />
-        <p3xr-ng-accordion [title]="strings().page?.monitor?.slowLog || 'Slow Log'" accordionKey="monitor-slowlog">
-            <div actions>
+    <br />
+    <p3xr-ng-accordion [title]="strings().page?.monitor?.slowLog || 'Slow Log'" accordionKey="monitor-slowlog">
+        <div actions>
+            @if (!isReadonly) {
                 <p3xr-ng-button
-                    (click)="exportSlowLog(); $event.stopPropagation()"
-                    [label]="strings().intention?.export || 'Export'"
-                    mdIcon="download">
+                    (click)="resetSlowLog(); $event.stopPropagation()"
+                    label="Reset"
+                    mdIcon="delete_sweep">
                 </p3xr-ng-button>
-            </div>
-            <div content>
-                <mat-list>
-                    @for (entry of current.slowlog; track entry.id) {
-                        <mat-list-item>
-                            <div class="p3xr-monitoring-slowlog-row">
-                                <kbd class="p3xr-kbd p3xr-kbd-small">{{ entry.duration }}µs</kbd>
-                                <span class="p3xr-monitoring-slowlog-cmd">{{ entry.command }}</span>
-                            </div>
-                        </mat-list-item>
-                        <mat-divider></mat-divider>
-                    }
-                </mat-list>
-            </div>
-        </p3xr-ng-accordion>
-    }
+            }
+            <p3xr-ng-button
+                (click)="exportSlowLog(); $event.stopPropagation()"
+                [label]="strings().intention?.export || 'Export'"
+                mdIcon="download">
+            </p3xr-ng-button>
+        </div>
+        <div content>
+            @if (current.slowlog.length === 0) {
+                <div style="padding: 12px 16px; opacity: 0.6;">
+                    {{ strings().page?.monitor?.noSlowQueries || 'No slow queries recorded' }}
+                </div>
+            }
+            <mat-list>
+                @for (entry of current.slowlog; track entry.id) {
+                    <mat-list-item>
+                        <div class="p3xr-monitoring-slowlog-row">
+                            <kbd class="p3xr-kbd p3xr-kbd-small">{{ entry.duration }}µs</kbd>
+                            <span class="p3xr-monitoring-slowlog-cmd">{{ entry.command }}</span>
+                        </div>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                }
+            </mat-list>
+        </div>
+    </p3xr-ng-accordion>
 
     <!-- Client List -->
     <br />
@@ -547,6 +557,7 @@
     </p3xr-ng-accordion>
 
     @if (isCluster && state.redisVersion().isAtLeast(8, 2)) {
+        <br />
         <p3xr-ng-accordion [title]="strings().page?.monitor?.slotStats || 'Cluster Slot Stats'" accordionKey="monitor-slot-stats">
             <div actions>
                 <p3xr-ng-button
@@ -588,6 +599,64 @@
                             <mat-divider></mat-divider>
                         }
                     </mat-list>
+                }
+            </div>
+        </p3xr-ng-accordion>
+    }
+
+    <!-- Cluster Slot Map -->
+    @if (isCluster) {
+        <br />
+        <p3xr-ng-accordion [title]="strings().page?.monitor?.clusterSlotMap || 'Cluster Slot Map'" accordionKey="monitor-cluster-slots">
+            <div actions>
+                <p3xr-ng-button
+                    (click)="toggleAutoRefreshShards(); $event.stopPropagation()"
+                    [label]="strings().label?.autoRefresh || 'Auto'"
+                    [mdIcon]="autoRefreshShards ? 'check_box' : 'check_box_outline_blank'">
+                </p3xr-ng-button>
+                @if (!autoRefreshShards) {
+                    <p3xr-ng-button
+                        (click)="loadClusterShards(); $event.stopPropagation()"
+                        [label]="strings().intention?.refresh || 'Refresh'"
+                        mdIcon="refresh">
+                    </p3xr-ng-button>
+                }
+                <p3xr-ng-button
+                    (click)="exportClusterSlots(); $event.stopPropagation()"
+                    [label]="strings().intention?.export || 'Export'"
+                    mdIcon="download">
+                </p3xr-ng-button>
+            </div>
+            <div content>
+                @if (!clusterShards) {
+                    <div style="padding: 12px 16px; opacity: 0.6;">
+                        {{ strings().page?.monitor?.noClusterData || 'No cluster data available' }}
+                    </div>
+                } @else {
+                    <mat-list>
+                        @for (shard of clusterShards; track shard.master.id) {
+                            <mat-list-item>
+                                <div class="p3xr-settings-pair-row">
+                                    <div class="p3xr-settings-row-label">
+                                        <span style="font-weight: 500;">{{ shard.master.host }}:{{ shard.master.port }}</span>
+                                        <span class="p3xr-analysis-sub">
+                                            {{ formatSlotRanges(shard) }}
+                                        </span>
+                                    </div>
+                                    <div class="p3xr-settings-row-value p3xr-mono">
+                                        {{ getSlotCount(shard) }} {{ strings().page?.monitor?.totalSlots || 'slots' }}
+                                        @if (shard.replicas.length > 0) {
+                                            <span style="opacity: 0.5; margin-left: 8px;">({{ formatReplicas(shard) }})</span>
+                                        }
+                                    </div>
+                                </div>
+                            </mat-list-item>
+                            <mat-divider></mat-divider>
+                        }
+                    </mat-list>
+                    <div style="padding: 8px 16px; opacity: 0.6; font-size: 12px;">
+                        16384 slots across {{ clusterShards.length }} masters
+                    </div>
                 }
             </div>
         </p3xr-ng-accordion>

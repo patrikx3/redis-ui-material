@@ -41,6 +41,9 @@ const slotStats = ref<any[]>([])
 const slotStatsMetric = ref('KEY-COUNT')
 const slotStatsLoaded = ref(false)
 const isCluster = ref(false)
+const clusterShards = ref<any[] | null>(null)
+const autoRefreshShards = ref(localStorage.getItem('p3xr-monitor-auto-shards') === 'true')
+let shardsInterval: any = null
 
 // Chart refs
 const memoryChartEl = ref<HTMLDivElement>()
@@ -166,6 +169,7 @@ async function fetchData() {
         const response = await request({ action: 'monitor/info', payload: {} })
         const data: MonitorSnapshot = response.data
         current.value = data
+        isCluster.value = state.connection?.cluster === true
         history.value.push(data)
         if (history.value.length > MAX_HISTORY) history.value.shift()
         if (chartsInitialized) {
@@ -330,6 +334,15 @@ function exportChart(chartEl: HTMLDivElement | undefined, name: string) {
     a.click()
 }
 
+async function resetSlowLog() {
+    try {
+        const mon = strings.value?.page?.monitor || {}
+        await common.confirm({ message: mon.confirmSlowLogReset || 'Are you sure to reset the slow log?' })
+        await request({ action: 'monitor/slowlog-reset' })
+        common.toast({ message: mon.slowLogResetDone || 'Slow log reset' })
+    } catch {}
+}
+
 function exportSlowLog() {
     if (!current.value) return
     const lines = current.value.slowlog.map(e => `${e.duration}\u00B5s ${e.command}`)
@@ -339,6 +352,40 @@ function exportSlowLog() {
 function exportClientList() {
     const lines = clientList.value.map(c => `${c.addr} ${c.name || ''} db${c.db} ${c.cmd} idle:${c.idle}s`)
     downloadText(lines.join('\n'), `${connName.value}-clients.txt`)
+}
+
+async function loadClusterShards() {
+    try {
+        const resp = await request({ action: 'cluster/shards' })
+        clusterShards.value = resp.data.shards
+    } catch (e) { common.generalHandleError(e) }
+}
+
+function toggleAutoRefreshShards() {
+    autoRefreshShards.value = !autoRefreshShards.value
+    localStorage.setItem('p3xr-monitor-auto-shards', String(autoRefreshShards.value))
+    if (autoRefreshShards.value) {
+        loadClusterShards()
+        shardsInterval = setInterval(() => loadClusterShards(), 2000)
+    } else {
+        clearInterval(shardsInterval)
+        shardsInterval = null
+    }
+}
+
+function getSlotCount(shard: any): number {
+    return shard.slotRanges.reduce((sum: number, [a, b]: [number, number]) => sum + (b - a + 1), 0)
+}
+
+function exportClusterSlots() {
+    if (!clusterShards.value) return
+    const lines = clusterShards.value.map(s => {
+        const slots = s.slotRanges.map(([a, b]: [number, number]) => `${a}-${b}`).join(', ')
+        const count = getSlotCount(s)
+        const replicas = s.replicas.map((r: any) => `${r.host}:${r.port}`).join(', ')
+        return `${s.master.host}:${s.master.port} | ${slots} | ${count} slots | replicas: ${replicas || 'none'}`
+    })
+    downloadText(lines.join('\n'), `${connName.value}-cluster-slots.txt`)
 }
 
 function exportTopKeys() {
@@ -845,6 +892,7 @@ onMounted(() => {
     // Reload all data on connection change
     unsubFns.push(onSocketEvent('connections', () => {
         isReadonly.value = state.connection?.readonly === true
+        isCluster.value = state.connection?.cluster === true
         history.value = []
         chartsInitialized = false
         memoryPlot?.destroy()
@@ -880,11 +928,16 @@ onMounted(() => {
     }, 500)
     unsubFns.push(() => clearInterval(langCheckInterval))
 
+    if (autoRefreshShards.value && isCluster.value) {
+        shardsInterval = setInterval(() => loadClusterShards(), 2000)
+    }
+
     nextTick(() => setTimeout(() => loadUPlot(), 500))
 })
 
 onUnmounted(() => {
     if (intervalId) clearInterval(intervalId)
+    if (shardsInterval) clearInterval(shardsInterval)
     unsubFns.forEach(fn => fn())
     themeObserver?.disconnect()
     resizeObserver?.disconnect()
@@ -1255,25 +1308,27 @@ onUnmounted(() => {
         </P3xrAccordion>
 
         <!-- Slow Log -->
-        <template v-if="current.slowlog.length > 0">
-            <br />
-            <P3xrAccordion :title="strings?.page?.monitor?.slowLog || 'Slow Log'" accordion-key="monitor-slowlog">
-                <template #actions>
-                    <P3xrButton @click="exportSlowLog(); $event.stopPropagation()" :label="strings?.intention?.export || 'Export'" icon="mdi-download" />
+        <br />
+        <P3xrAccordion :title="strings?.page?.monitor?.slowLog || 'Slow Log'" accordion-key="monitor-slowlog">
+            <template #actions>
+                <P3xrButton v-if="!isReadonly" @click="resetSlowLog(); $event.stopPropagation()" label="Reset" icon="mdi-delete-sweep" />
+                <P3xrButton @click="exportSlowLog(); $event.stopPropagation()" :label="strings?.intention?.export || 'Export'" icon="mdi-download" />
+            </template>
+            <div v-if="current.slowlog.length === 0" style="padding: 12px 16px; opacity: 0.6;">
+                {{ strings?.page?.monitor?.noSlowQueries || 'No slow queries recorded' }}
+            </div>
+            <v-list v-else density="compact" class="pa-0">
+                <template v-for="entry in current.slowlog" :key="entry.id">
+                    <v-list-item>
+                        <div class="p3xr-slowlog-row">
+                            <kbd class="p3xr-kbd p3xr-kbd-small">{{ entry.duration }}&micro;s</kbd>
+                            <span class="p3xr-slowlog-cmd">{{ entry.command }}</span>
+                        </div>
+                    </v-list-item>
+                    <v-divider />
                 </template>
-                <v-list density="compact" class="pa-0">
-                    <template v-for="entry in current.slowlog" :key="entry.id">
-                        <v-list-item>
-                            <div class="p3xr-slowlog-row">
-                                <kbd class="p3xr-kbd p3xr-kbd-small">{{ entry.duration }}&micro;s</kbd>
-                                <span class="p3xr-slowlog-cmd">{{ entry.command }}</span>
-                            </div>
-                        </v-list-item>
-                        <v-divider />
-                    </template>
-                </v-list>
-            </P3xrAccordion>
-        </template>
+            </v-list>
+        </P3xrAccordion>
 
         <!-- Client List -->
         <br />
@@ -1395,6 +1450,60 @@ onUnmounted(() => {
                         <v-divider />
                     </template>
                 </v-list>
+            </P3xrAccordion>
+        </template>
+
+        <!-- Cluster Slot Map -->
+        <template v-if="isCluster">
+            <br />
+            <P3xrAccordion :title="strings?.page?.monitor?.clusterSlotMap || 'Cluster Slot Map'" accordion-key="monitor-cluster-slots">
+                <template #actions>
+                    <P3xrButton
+                        @click="toggleAutoRefreshShards(); $event.stopPropagation()"
+                        :label="strings?.label?.autoRefresh || 'Auto'"
+                        :icon="autoRefreshShards ? 'mdi-checkbox-marked' : 'mdi-checkbox-blank-outline'"
+                    />
+                    <P3xrButton
+                        v-if="!autoRefreshShards"
+                        @click="loadClusterShards(); $event.stopPropagation()"
+                        :label="strings?.intention?.refresh || 'Refresh'"
+                        icon="mdi-refresh"
+                    />
+                    <P3xrButton
+                        @click="exportClusterSlots(); $event.stopPropagation()"
+                        :label="strings?.intention?.export || 'Export'"
+                        icon="mdi-download"
+                    />
+                </template>
+                <div v-if="!clusterShards" style="padding: 12px 16px; opacity: 0.6;">
+                    {{ strings?.page?.monitor?.noClusterData || 'No cluster data available' }}
+                </div>
+                <template v-else>
+                    <v-list density="compact" class="pa-0">
+                        <template v-for="shard in clusterShards" :key="shard.master.id">
+                            <v-list-item>
+                                <div class="p3xr-pair-row">
+                                    <div class="p3xr-pair-label">
+                                        <span style="font-weight: 500;">{{ shard.master.host }}:{{ shard.master.port }}</span>
+                                        <span style="opacity: 0.5; margin-left: 8px; font-size: 12px;">
+                                            {{ shard.slotRanges.map(r => r[0] + '-' + r[1]).join(', ') }}
+                                        </span>
+                                    </div>
+                                    <div class="p3xr-pair-value p3xr-mono">
+                                        {{ getSlotCount(shard) }} slots
+                                        <span v-if="shard.replicas.length > 0" style="opacity: 0.5; margin-left: 8px;">
+                                            ({{ shard.replicas.map(r => r.host + ':' + r.port).join(', ') }})
+                                        </span>
+                                    </div>
+                                </div>
+                            </v-list-item>
+                            <v-divider />
+                        </template>
+                    </v-list>
+                    <div style="padding: 8px 16px; opacity: 0.6; font-size: 12px;">
+                        16384 slots across {{ clusterShards.length }} masters
+                    </div>
+                </template>
             </P3xrAccordion>
         </template>
     </div>

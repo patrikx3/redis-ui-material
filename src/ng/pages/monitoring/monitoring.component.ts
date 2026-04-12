@@ -63,6 +63,9 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
     slotStatsMetric = 'KEY-COUNT';
     slotStatsLoaded = false;
     isCluster = false;
+    clusterShards: any[] | null = null;
+    autoRefreshShards = localStorage.getItem('p3xr-monitor-auto-shards') === 'true';
+    private shardsInterval: any = null;
 
     @ViewChild('memoryChart') memoryChartRef!: ElementRef<HTMLDivElement>;
     @ViewChild('opsChart') opsChartRef!: ElementRef<HTMLDivElement>;
@@ -107,6 +110,7 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
         // Reload all data when connection changes
         const sub = this.socket.stateChanged$.subscribe(() => {
             this.isReadonly = this.state.connection()?.readonly === true;
+            this.isCluster = this.state.connection()?.cluster === true;
             this.history = [];
             this.chartsInitialized = false;
             this.memoryPlot?.destroy();
@@ -157,6 +161,7 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
 
     ngOnDestroy(): void {
         if (this.intervalId) clearInterval(this.intervalId);
+        if (this.shardsInterval) clearInterval(this.shardsInterval);
         this.unsubFns.forEach(fn => fn());
         this.themeObserver?.disconnect();
         this.resizeObserver?.disconnect();
@@ -429,10 +434,61 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
         a.click();
     }
 
+    async resetSlowLog(): Promise<void> {
+        try {
+            await this.common.confirm({ message: this.strings().page?.monitor?.confirmSlowLogReset || 'Are you sure to reset the slow log?' });
+            await this.socket.request({ action: 'monitor/slowlog-reset' });
+            this.common.toast({ message: this.strings().page?.monitor?.slowLogResetDone || 'Slow log reset' });
+        } catch {}
+    }
+
     exportSlowLog(): void {
         if (!this.current) return;
         const lines = this.current.slowlog.map(e => `${e.duration}µs ${e.command}`);
         this.downloadText(lines.join('\n'), `${this.connName}-slowlog.txt`);
+    }
+
+    async loadClusterShards(): Promise<void> {
+        try {
+            const resp = await this.socket.request({ action: 'cluster/shards' });
+            this.clusterShards = resp.data.shards;
+            this.safeDetectChanges();
+        } catch (e) { this.common.generalHandleError(e); }
+    }
+
+    toggleAutoRefreshShards(): void {
+        this.autoRefreshShards = !this.autoRefreshShards;
+        localStorage.setItem('p3xr-monitor-auto-shards', String(this.autoRefreshShards));
+        if (this.autoRefreshShards) {
+            this.loadClusterShards();
+            this.shardsInterval = setInterval(() => this.loadClusterShards(), 2000);
+        } else {
+            clearInterval(this.shardsInterval);
+            this.shardsInterval = null;
+        }
+    }
+
+    getSlotCount(shard: any): number {
+        return shard.slotRanges.reduce((sum: number, [a, b]: [number, number]) => sum + (b - a + 1), 0);
+    }
+
+    formatSlotRanges(shard: any): string {
+        return shard.slotRanges.map(([a, b]: [number, number]) => `${a}-${b}`).join(', ');
+    }
+
+    formatReplicas(shard: any): string {
+        return shard.replicas.map((r: any) => `${r.host}:${r.port}`).join(', ');
+    }
+
+    exportClusterSlots(): void {
+        if (!this.clusterShards) return;
+        const lines = this.clusterShards.map(s => {
+            const slots = s.slotRanges.map(([a, b]: [number, number]) => `${a}-${b}`).join(', ');
+            const count = this.getSlotCount(s);
+            const replicas = s.replicas.map((r: any) => `${r.host}:${r.port}`).join(', ');
+            return `${s.master.host}:${s.master.port} | ${slots} | ${count} slots | replicas: ${replicas || 'none'}`;
+        });
+        this.downloadText(lines.join('\n'), `${this.connName}-cluster-slots.txt`);
     }
 
     exportClientList(): void {
@@ -1064,6 +1120,7 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
             });
             const data: MonitorSnapshot = response.data;
             this.current = data;
+            this.isCluster = this.state.connection()?.cluster === true;
             this.history.push(data);
             if (this.history.length > MAX_HISTORY) {
                 this.history.shift();

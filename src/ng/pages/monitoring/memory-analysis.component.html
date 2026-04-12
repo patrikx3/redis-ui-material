@@ -1,3 +1,38 @@
+<!-- Memory Doctor -->
+<p3xr-ng-accordion [title]="s().memoryDoctor || 'Memory Doctor'" accordionKey="analysis-doctor">
+    <div actions>
+        <p3xr-ng-button
+            (click)="toggleAutoDoctor(); $event.stopPropagation()"
+            [label]="strings().label?.autoRefresh || 'Auto'"
+            [mdIcon]="autoRefreshDoctor ? 'check_box' : 'check_box_outline_blank'">
+        </p3xr-ng-button>
+        @if (!autoRefreshDoctor) {
+            <p3xr-ng-button
+                (click)="runDoctor(); $event.stopPropagation()"
+                [label]="doctorLoading ? (strings().label?.loading || 'Loading...') : (strings().intention?.refresh || 'Refresh')"
+                [mdIcon]="doctorLoading ? 'hourglass_empty' : 'refresh'"
+                [disabled]="doctorLoading">
+            </p3xr-ng-button>
+        }
+        <p3xr-ng-button
+            (click)="exportDoctor(); $event.stopPropagation()"
+            [label]="strings().intention?.export || 'Export'"
+            mdIcon="download">
+        </p3xr-ng-button>
+    </div>
+    <div content>
+        @if (!doctorText) {
+            <div style="padding: 12px 16px; opacity: 0.6;">
+                {{ s().doctorNoData || 'Click Refresh to run Memory Doctor diagnostics.' }}
+            </div>
+        } @else {
+            <pre style="white-space: pre-wrap; font-family: 'Roboto Mono', monospace; font-size: 13px; padding: 12px 16px; margin: 0;">{{ doctorText }}</pre>
+        }
+    </div>
+</p3xr-ng-accordion>
+
+<br />
+
 @if (loading && !data) {
     <div class="p3xr-analysis-loading">
         <mat-icon>hourglass_empty</mat-icon>

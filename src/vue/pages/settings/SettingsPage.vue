@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useDisplay } from 'vuetify'
 import { useI18nStore } from '../../stores/i18n'
 import { useRedisStateStore } from '../../stores/redis-state'
@@ -15,6 +15,7 @@ import P3xrAccordion from '../../components/P3xrAccordion.vue'
 import P3xrButton from '../../components/P3xrButton.vue'
 import ConnectionDialog from '../../dialogs/ConnectionDialog.vue'
 import AiSettingsDialog from '../../dialogs/AiSettingsDialog.vue'
+import AclUserDialog from '../../dialogs/AclUserDialog.vue'
 import TreeSettingsDialog from '../../dialogs/TreeSettingsDialog.vue'
 
 function openLink(url: string) {
@@ -144,6 +145,67 @@ const dialogModel = ref<any>(undefined)
 const aiDialogOpen = ref(false)
 const treeDialogOpen = ref(false)
 const notifToggle = ref(isNotificationsEnabled())
+const aclUsers = ref<any[] | null>(null)
+const aclCurrentUser = ref('')
+const aclLoading = ref(false)
+const aclEditOpen = ref(false)
+const aclEditUsername = ref('')
+const aclEditRules = ref('')
+const aclEditIsNew = ref(false)
+const currentConnectionName = computed(() => connectionsList.value.find((c: any) => c.id === currentConnectionId.value)?.name || '')
+
+async function loadAclUsers() {
+    aclLoading.value = true
+    try {
+        const resp = await request({ action: 'acl/list' })
+        aclUsers.value = resp.data.users
+        aclCurrentUser.value = resp.data.currentUser
+    } catch {
+        aclUsers.value = null
+    }
+    aclLoading.value = false
+}
+
+// Auto-load ACL when connection changes
+watch(currentConnectionId, (newId, oldId) => {
+    if (newId && newId !== oldId) { loadAclUsers() }
+    else if (!newId) { aclUsers.value = null; aclCurrentUser.value = '' }
+}, { immediate: true })
+
+async function deleteAclUser(username: string) {
+    try {
+        const msg = (strings.value?.page?.acl?.confirmDelete || 'Are you sure to delete ACL user') + ` "${username}"?`
+        await common.confirm({ message: msg })
+        await request({ action: 'acl/del-user', payload: { username } })
+        common.toast({ message: strings.value?.page?.acl?.userDeleted || 'ACL user deleted' })
+        loadAclUsers()
+    } catch {}
+}
+
+function openAclCreate() {
+    aclEditIsNew.value = true
+    aclEditUsername.value = ''
+    aclEditRules.value = 'on >password +@all ~* &*'
+    aclEditOpen.value = true
+}
+
+function openAclEdit(user: any) {
+    aclEditIsNew.value = false
+    aclEditUsername.value = user.name
+    aclEditRules.value = user.raw.split(' ').slice(2).join(' ')
+    aclEditOpen.value = true
+}
+
+async function handleAclDialogClose(result?: { username: string; rules: string[] }) {
+    aclEditOpen.value = false
+    if (result) {
+        try {
+            await request({ action: 'acl/set-user', payload: { username: result.username, rules: result.rules } })
+            common.toast({ message: strings.value?.page?.acl?.userSaved || 'ACL user saved' })
+            loadAclUsers()
+        } catch (e) { common.generalHandleError(e) }
+    }
+}
 
 function handleConnectionForm(formType: 'new' | 'edit', formModel?: any) {
     dialogType.value = formType
@@ -355,6 +417,61 @@ const treeSettingsItems = computed(() => [
             </template>
         </draggable>
     </P3xrAccordion>
+
+    <template v-if="currentConnectionId">
+        <br />
+        <!-- ACL Users -->
+        <P3xrAccordion :title="`${strings?.page?.acl?.title || 'ACL Users'} — ${currentConnectionName}`" accordion-key="acl-users">
+            <template #actions>
+                <P3xrButton @click="loadAclUsers(); $event.stopPropagation()" :label="strings?.intention?.refresh || 'Refresh'" icon="mdi-refresh" />
+                <P3xrButton v-if="!readonlyConnections" @click="openAclCreate(); $event.stopPropagation()" :label="strings?.page?.acl?.createUser || 'Create User'" icon="mdi-account-plus" />
+            </template>
+            <div v-if="aclLoading" style="padding: 16px; opacity: 0.6;">
+                {{ strings?.page?.acl?.loading || 'Loading...' }}
+            </div>
+            <div v-else-if="!aclUsers" style="padding: 16px; opacity: 0.6;">
+                {{ strings?.page?.acl?.noUsers || 'ACL requires Redis 6.0+.' }}
+            </div>
+            <div v-else>
+                <template v-for="(user, idx) in aclUsers" :key="user.name">
+                    <div :class="{ 'p3xr-settings-list-item': !readonlyConnections }" style="display: flex; align-items: center; gap: 4px; padding: 8px 8px 8px 16px; min-height: 56px;" @click="!readonlyConnections && openAclEdit(user)">
+                        <div style="flex: 1; min-width: 0;">
+                            <span style="font-weight: 700;">{{ user.name }}</span>
+                            <span v-if="user.name === aclCurrentUser" style="opacity: 0.5; margin-left: 6px; font-size: 11px;">({{ strings?.page?.acl?.currentUser || 'Current' }})</span>
+                        </div>
+                        <v-tooltip v-if="!user.enabled" :text="strings?.page?.acl?.disabled || 'Disabled'" location="top">
+                            <template #activator="{ props: tp }">
+                                <v-icon v-bind="tp" color="warning" size="20">mdi-alert</v-icon>
+                            </template>
+                        </v-tooltip>
+                        <template v-if="!readonlyConnections">
+                            <v-btn v-if="user.name !== 'default' && user.name !== aclCurrentUser"
+                                variant="flat" color="error" size="small"
+                                @click.stop="deleteAclUser(user.name)"
+                                :style="isXs ? 'min-width:40px;width:40px;height:40px;padding:0;' : 'min-width:auto;padding:0 8px;'">
+                                <v-icon>mdi-delete</v-icon><span v-if="!isXs" style="margin-left:3px;">{{ strings?.page?.acl?.deleteUser || 'Delete' }}</span>
+                                <v-tooltip v-if="isXs" activator="parent" location="top">{{ strings?.page?.acl?.deleteUser || 'Delete' }}</v-tooltip>
+                            </v-btn>
+                            <v-btn variant="flat" color="primary" size="small"
+                                @click.stop="openAclEdit(user)"
+                                :style="isXs ? 'min-width:40px;width:40px;height:40px;padding:0;' : 'min-width:auto;padding:0 8px;'">
+                                <v-icon>mdi-pencil</v-icon><span v-if="!isXs" style="margin-left:3px;">{{ strings?.page?.acl?.editUser || 'Edit' }}</span>
+                                <v-tooltip v-if="isXs" activator="parent" location="top">{{ strings?.page?.acl?.editUser || 'Edit' }}</v-tooltip>
+                            </v-btn>
+                        </template>
+                    </div>
+                    <v-divider v-if="idx < aclUsers.length - 1" />
+                </template>
+            </div>
+        </P3xrAccordion>
+        <AclUserDialog
+            :open="aclEditOpen"
+            :username="aclEditUsername"
+            :rules="aclEditRules"
+            :is-new="aclEditIsNew"
+            @close="handleAclDialogClose"
+        />
+    </template>
 
     <br />
 

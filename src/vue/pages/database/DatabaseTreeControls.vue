@@ -370,6 +370,7 @@ async function deleteSearchKeys() {
                         :style="{ backgroundColor: inputBg, color: inputColor, borderColor: inputBorder }"
                         min="1" :max="pages"
                         @change="onPageChange()"
+                        @input="onPageChange()"
                     />
                     <span style="opacity: 0.6; font-family: 'Roboto Mono', monospace; font-size: 12px; margin: 0 2px;">/ {{ pages }}</span>
                     <v-tooltip :text="strings?.page?.treeControls?.pager?.next || 'Next'" location="top" :open-delay="300">

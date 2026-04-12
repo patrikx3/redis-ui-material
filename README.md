@@ -12,7 +12,7 @@ https://corifeus.com/redis-ui
 
 
 ---
-# 💿 P3X Redis UI triple frontend — Angular + React/MUI + Vue/Vuetify with 54 languages, 7 themes, Socket.IO, desktop notifications, and full feature parity v2026.4.436
+# 💿 P3X Redis UI triple frontend — Angular + React/MUI + Vue/Vuetify with 54 languages, 7 themes, Socket.IO, desktop notifications, and full feature parity v2026.4.437
 
 
   
@@ -82,6 +82,22 @@ The `p3x-redis-ui-material` package is the **triple frontend** for [p3x-redis-ui
 - **Desktop notifications** — Electron native + Web Notification API
 - **Playwright E2E tests** — run against all three frontends in parallel
 - **Live switching** — toggle between Angular, React, and Vue in Settings
+
+### ACL Management (Redis 6.0+)
+
+The first Redis GUI with a **visual ACL (Access Control List) editor**. No other Redis desktop tool provides this — not even RedisInsight.
+
+- **Auto-discovery** — ACL section appears in Settings only when connected to Redis 6.0+, auto-loads users
+- **Visual user list** — hoverable rows showing username, current user badge, disabled warning icon
+- **Chip-based permission editor** — commands, key patterns, and pub/sub channels as removable chips instead of raw text
+  - Color-coded command chips: blue for allow (`+@all`), red for deny (`-@dangerous`)
+  - Type and press Enter/Space/Comma to add chips
+- **Structured form** — enable/disable toggle, no-password checkbox, password field, separate fields for commands, keys, and channels
+- **Full CRUD** — create, edit, and delete ACL users with proper confirmation dialogs
+- **Safe editing** — resets permissions before applying changes so removed chips actually take effect
+- **Cluster-aware** — ACL SETUSER/DELUSER broadcast to all master nodes
+- **Readonly mode** — edit/delete/create buttons hidden when connection is readonly
+- **Guards** — cannot delete the `default` user or the currently connected user
 
 ### Project Structure
 
@@ -273,7 +289,7 @@ All my domains, including [patrikx3.com](https://patrikx3.com), [corifeus.eu](ht
 ---
 
 
-[**P3X-REDIS-UI-MATERIAL**](https://corifeus.com/redis-ui-material) Build v2026.4.436
+[**P3X-REDIS-UI-MATERIAL**](https://corifeus.com/redis-ui-material) Build v2026.4.437
 
  [![NPM](https://img.shields.io/npm/v/p3x-redis-ui-material.svg)](https://www.npmjs.com/package/p3x-redis-ui-material)  [![Donate for PatrikX3 / P3X](https://img.shields.io/badge/Donate-PatrikX3-003087.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QZVM4V6HVZJW6)  [![Contact Corifeus / P3X](https://img.shields.io/badge/Contact-P3X-ff9900.svg)](https://www.patrikx3.com/en/front/contact) [![Like Corifeus @ Facebook](https://img.shields.io/badge/LIKE-Corifeus-3b5998.svg)](https://www.facebook.com/corifeus.software)
 

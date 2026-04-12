@@ -6,7 +6,7 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import {
     Box, List, ListItem, Divider, TextField, useTheme,
 } from '@mui/material'
-import { PlayArrow, HourglassEmpty, Download, Analytics } from '@mui/icons-material'
+import { PlayArrow, HourglassEmpty, Download, Analytics, CheckBox, CheckBoxOutlineBlank, Refresh } from '@mui/icons-material'
 import { useI18nStore } from '../../stores/i18n.store'
 import { useRedisStateStore } from '../../stores/redis-state.store'
 import { useCommonStore } from '../../stores/common.store'
@@ -51,6 +51,11 @@ export default function MemoryAnalysisPage() {
     const [topN, setTopN] = useState(20)
     const [maxScanKeys, setMaxScanKeys] = useState(5000)
     const [typeEntries, setTypeEntries] = useState<Array<{ type: string; count: number; bytes: number }>>([])
+
+    const [doctorText, setDoctorText] = useState<string | null>(null)
+    const [doctorLoading, setDoctorLoading] = useState(false)
+    const [autoRefreshDoctor, setAutoRefreshDoctor] = useState(() => localStorage.getItem('p3xr-monitor-auto-doctor') === 'true')
+    const doctorIntervalRef = useRef<any>(null)
 
     const typeChartRef = useRef<HTMLDivElement>(null)
     const prefixChartRef = useRef<HTMLDivElement>(null)
@@ -134,11 +139,38 @@ export default function MemoryAnalysisPage() {
         }
     }, [topN, maxScanKeys, loading, drawCharts, generalHandleError])
 
+    const runDoctor = useCallback(async () => {
+        setDoctorLoading(true)
+        try {
+            const resp = await request({ action: 'memory/doctor' })
+            setDoctorText(resp.data.text)
+        } catch (e) { generalHandleError(e) }
+        finally { setDoctorLoading(false) }
+    }, [generalHandleError])
+
+    const toggleAutoDoctor = useCallback(() => {
+        setAutoRefreshDoctor(prev => {
+            const next = !prev
+            localStorage.setItem('p3xr-monitor-auto-doctor', String(next))
+            if (next) runDoctor()
+            return next
+        })
+    }, [runDoctor])
+
+    useEffect(() => {
+        if (autoRefreshDoctor) {
+            doctorIntervalRef.current = setInterval(() => runDoctor(), 2000)
+        } else {
+            clearInterval(doctorIntervalRef.current)
+        }
+        return () => clearInterval(doctorIntervalRef.current)
+    }, [autoRefreshDoctor, runDoctor])
+
     const connectionId = connection?.id
     useEffect(() => {
         setData(null)
         setTypeEntries([])
-        runAnalysis()
+        if (connectionId) runAnalysis()
     }, [connectionId]) // eslint-disable-line react-hooks/exhaustive-deps
 
     // Redraw charts on theme change
@@ -193,11 +225,30 @@ export default function MemoryAnalysisPage() {
         </>
     )
 
+    const doctorAccordion = (
+        <P3xrAccordion title={s.memoryDoctor || 'Memory Doctor'} accordionKey="analysis-doctor"
+            actions={<>
+                <P3xrButton icon={autoRefreshDoctor ? <CheckBox sx={{ fontSize: 18 }} /> : <CheckBoxOutlineBlank sx={{ fontSize: 18 }} />}
+                    label={strings?.label?.autoRefresh || 'Auto'} color="inherit"
+                    onClick={(e) => { e.stopPropagation(); toggleAutoDoctor() }} />
+                {!autoRefreshDoctor && <P3xrButton icon={doctorLoading ? <HourglassEmpty sx={{ fontSize: 18 }} /> : <Refresh sx={{ fontSize: 18 }} />}
+                    label={doctorLoading ? (strings?.label?.loading || 'Loading...') : (strings?.intention?.refresh || 'Refresh')}
+                    color="inherit" disabled={doctorLoading} onClick={(e) => { e.stopPropagation(); runDoctor() }} />}
+                <P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
+                    color="inherit" onClick={(e) => { e.stopPropagation(); if (doctorText) downloadText(doctorText, `${connName}-memory-doctor.txt`) }} />
+            </>}>
+            {!doctorText
+                ? <Box sx={{ p: 2, opacity: 0.6 }}>{s.doctorNoData || 'Click Refresh to run Memory Doctor diagnostics.'}</Box>
+                : <Box component="pre" sx={{ whiteSpace: 'pre-wrap', fontFamily: "'Roboto Mono', monospace", fontSize: 13, p: 2, m: 0 }}>{doctorText}</Box>
+            }
+        </P3xrAccordion>
+    )
+
     if (loading && !data) {
-        return <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, p: 4, opacity: 0.5 }}><HourglassEmpty /> {s.running || 'Analyzing...'}</Box>
+        return <Box>{doctorAccordion}<Box sx={{ mt: 2 }} /><Box sx={{ display: 'flex', alignItems: 'center', gap: 1, p: 4, opacity: 0.5 }}><HourglassEmpty /> {s.running || 'Analyzing...'}</Box></Box>
     }
     if (!loading && !data) {
-        return <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, p: 4, opacity: 0.5 }}><Analytics /> {s.noData || 'No data. Click Run Analysis to start.'}</Box>
+        return <Box>{doctorAccordion}<Box sx={{ mt: 2 }} /><Box sx={{ display: 'flex', alignItems: 'center', gap: 1, p: 4, opacity: 0.5 }}><Analytics /> {s.noData || 'No data. Click Run Analysis to start.'}</Box></Box>
     }
     if (!data) return null
 
@@ -206,6 +257,8 @@ export default function MemoryAnalysisPage() {
 
     return (
         <Box>
+            {doctorAccordion}
+            <Box sx={{ mt: 2 }} />
             {/* Controls */}
             <P3xrAccordion title={s.title || 'Memory Analysis'} accordionKey="analysis-controls"
                 actions={<>

@@ -10,7 +10,7 @@ import {
 } from '@mui/material'
 import {
     Pause, PlayArrow, Download, Archive, Refresh, Close,
-    CheckBox, CheckBoxOutlineBlank, HourglassEmpty,
+    CheckBox, CheckBoxOutlineBlank, HourglassEmpty, DeleteSweep,
 } from '@mui/icons-material'
 import 'uplot/dist/uPlot.min.css'
 import { useI18nStore } from '../../stores/i18n.store'
@@ -258,6 +258,48 @@ export default function PulsePage() {
     const isCluster = useRedisStateStore.getState().connection?.cluster === true
     const rv = parseRedisVersion(useRedisStateStore.getState().info?.server?.redis_version)
 
+    const [clusterShards, setClusterShards] = useState<any[] | null>(null)
+    const [autoRefreshShards, setAutoRefreshShards] = useState(() => localStorage.getItem('p3xr-monitor-auto-shards') === 'true')
+    const shardsIntervalRef = useRef<any>(null)
+
+    const loadClusterShards = useCallback(async () => {
+        try {
+            const resp = await request({ action: 'cluster/shards' })
+            setClusterShards(resp.data.shards)
+        } catch (e) { generalHandleError(e) }
+    }, [generalHandleError])
+
+    const toggleAutoRefreshShards = useCallback(() => {
+        setAutoRefreshShards(prev => {
+            const next = !prev
+            localStorage.setItem('p3xr-monitor-auto-shards', String(next))
+            if (next) loadClusterShards()
+            return next
+        })
+    }, [loadClusterShards])
+
+    useEffect(() => {
+        if (autoRefreshShards) {
+            shardsIntervalRef.current = setInterval(() => loadClusterShards(), 2000)
+        } else {
+            clearInterval(shardsIntervalRef.current)
+        }
+        return () => clearInterval(shardsIntervalRef.current)
+    }, [autoRefreshShards, loadClusterShards])
+
+    const getSlotCount = (shard: any) => shard.slotRanges.reduce((sum: number, [a, b]: [number, number]) => sum + (b - a + 1), 0)
+
+    const exportClusterSlots = useCallback(() => {
+        if (!clusterShards) return
+        const lines = clusterShards.map(s => {
+            const slots = s.slotRanges.map(([a, b]: [number, number]) => `${a}-${b}`).join(', ')
+            const count = getSlotCount(s)
+            const replicas = s.replicas.map((r: any) => `${r.host}:${r.port}`).join(', ')
+            return `${s.master.host}:${s.master.port} | ${slots} | ${count} slots | replicas: ${replicas || 'none'}`
+        })
+        downloadText(lines.join('\n'), `${connName}-cluster-slots.txt`)
+    }, [clusterShards, connName])
+
     // --- Init ---
     useEffect(() => {
         fetchData()
@@ -359,6 +401,15 @@ export default function PulsePage() {
         const a = document.createElement('a'); a.href = ec.toDataURL('image/png')
         a.download = `${connName}-${name}.png`; a.click()
     }, [connName, isDark])
+
+    const resetSlowLog = useCallback(async () => {
+        try {
+            const m = stringsRef.current?.page?.monitor || {}
+            await confirm({ message: m.confirmSlowLogReset || 'Are you sure to reset the slow log?' })
+            await request({ action: 'monitor/slowlog-reset' })
+            toast({ message: m.slowLogResetDone || 'Slow log reset' })
+        } catch {}
+    }, [confirm, toast])
 
     const exportSlowLog = useCallback(() => {
         if (!current) return
@@ -1101,32 +1152,35 @@ export default function PulsePage() {
             </P3xrAccordion>
 
             {/* Slow Log */}
-            {current.slowlog.length > 0 && (
-                <>
-                    <br />
-                    <P3xrAccordion title={mon.slowLog || 'Slow Log'} accordionKey="monitor-slowlog"
-                        actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
-                            color="inherit" onClick={(e) => { e.stopPropagation(); exportSlowLog() }} />}>
-                        <List disablePadding>
-                            {current.slowlog.map(entry => (
-                                <Box key={entry.id}>
-                                    <ListItem sx={{ px: 2, py: 1 }}>
-                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, width: '100%' }}>
-                                            <Box component="kbd" sx={{
-                                                px: '6px', py: '2px', borderRadius: '4px', fontSize: 11,
-                                                bgcolor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)',
-                                                fontFamily: "'Roboto Mono', monospace", whiteSpace: 'nowrap',
-                                            }}>{entry.duration}{'\u00B5'}s</Box>
-                                            <Box sx={{ fontFamily: "'Roboto Mono', monospace", fontSize: 13, wordBreak: 'break-all' }}>{entry.command}</Box>
-                                        </Box>
-                                    </ListItem>
-                                    <Divider />
-                                </Box>
-                            ))}
-                        </List>
-                    </P3xrAccordion>
-                </>
-            )}
+            <br />
+            <P3xrAccordion title={mon.slowLog || 'Slow Log'} accordionKey="monitor-slowlog"
+                actions={<>
+                    {!isReadonly && <P3xrButton icon={<DeleteSweep sx={{ fontSize: 18 }} />} label="Reset"
+                        color="inherit" onClick={(e) => { e.stopPropagation(); resetSlowLog() }} />}
+                    <P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
+                        color="inherit" onClick={(e) => { e.stopPropagation(); exportSlowLog() }} />
+                </>}>
+                {current.slowlog.length === 0
+                    ? <Box sx={{ p: 2, opacity: 0.6 }}>{mon.noSlowQueries || 'No slow queries recorded'}</Box>
+                    : <List disablePadding>
+                        {current.slowlog.map(entry => (
+                            <Box key={entry.id}>
+                                <ListItem sx={{ px: 2, py: 1 }}>
+                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, width: '100%' }}>
+                                        <Box component="kbd" sx={{
+                                            px: '6px', py: '2px', borderRadius: '4px', fontSize: 11,
+                                            bgcolor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)',
+                                            fontFamily: "'Roboto Mono', monospace", whiteSpace: 'nowrap',
+                                        }}>{entry.duration}{'\u00B5'}s</Box>
+                                        <Box sx={{ fontFamily: "'Roboto Mono', monospace", fontSize: 13, wordBreak: 'break-all' }}>{entry.command}</Box>
+                                    </Box>
+                                </ListItem>
+                                <Divider />
+                            </Box>
+                        ))}
+                    </List>
+                }
+            </P3xrAccordion>
 
             {/* Client List */}
             <br />
@@ -1209,7 +1263,8 @@ export default function PulsePage() {
             </P3xrAccordion>
 
             {/* Cluster Slot Stats (cluster + 8.2+ only) */}
-            {isCluster && rv.isAtLeast(8, 2) && (
+            {isCluster && rv.isAtLeast(8, 2) && (<>
+                <br />
                 <P3xrAccordion title={mon.slotStats || 'Cluster Slot Stats'} accordionKey="monitor-slot-stats"
                     actions={<>
                         <P3xrButton icon={<Refresh fontSize="small" />} label={strings?.intention?.refresh} onClick={e => { e.stopPropagation(); loadSlotStats() }} />
@@ -1248,7 +1303,53 @@ export default function PulsePage() {
                         </List>
                     )}
                 </P3xrAccordion>
-            )}
+            </>)}
+
+            {/* Cluster Slot Map */}
+            {isCluster && (<>
+                <br />
+                <P3xrAccordion title={mon.clusterSlotMap || 'Cluster Slot Map'} accordionKey="monitor-cluster-slots"
+                    actions={<>
+                        <P3xrButton icon={autoRefreshShards ? <CheckBox sx={{ fontSize: 18 }} /> : <CheckBoxOutlineBlank sx={{ fontSize: 18 }} />}
+                            label={strings?.label?.autoRefresh || 'Auto'} color="inherit"
+                            onClick={(e) => { e.stopPropagation(); toggleAutoRefreshShards() }} />
+                        {!autoRefreshShards && <P3xrButton icon={<Refresh sx={{ fontSize: 18 }} />}
+                            label={strings?.intention?.refresh || 'Refresh'} color="inherit"
+                            onClick={(e) => { e.stopPropagation(); loadClusterShards() }} />}
+                        <P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
+                            color="inherit" onClick={(e) => { e.stopPropagation(); exportClusterSlots() }} />
+                    </>}>
+                    {!clusterShards
+                        ? <Box sx={{ p: 2, opacity: 0.6 }}>{mon.noClusterData || 'No cluster data available'}</Box>
+                        : <>
+                            <List disablePadding>
+                                {clusterShards.map(shard => (
+                                    <Box key={shard.master.id}>
+                                        <ListItem sx={{ px: 2, py: 1 }}>
+                                            <Box sx={{ display: 'flex', width: '100%', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                                                <Box>
+                                                    <Box component="span" sx={{ fontWeight: 500 }}>{shard.master.host}:{shard.master.port}</Box>
+                                                    <Box component="span" sx={{ ml: 1, opacity: 0.5, fontSize: 12 }}>
+                                                        {shard.slotRanges.map(([a, b]: [number, number]) => `${a}-${b}`).join(', ')}
+                                                    </Box>
+                                                </Box>
+                                                <Box sx={{ fontFamily: "'Roboto Mono', monospace", fontSize: 13 }}>
+                                                    {getSlotCount(shard)} slots
+                                                    {shard.replicas.length > 0 && <Box component="span" sx={{ opacity: 0.5, ml: 1 }}>
+                                                        ({shard.replicas.map((r: any) => `${r.host}:${r.port}`).join(', ')})
+                                                    </Box>}
+                                                </Box>
+                                            </Box>
+                                        </ListItem>
+                                        <Divider />
+                                    </Box>
+                                ))}
+                            </List>
+                            <Box sx={{ p: 1, px: 2, opacity: 0.6, fontSize: 12 }}>16384 slots across {clusterShards.length} masters</Box>
+                        </>
+                    }
+                </P3xrAccordion>
+            </>)}
 
         </Box>
     )

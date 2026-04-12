@@ -1,4 +1,5 @@
 import { Component, Inject, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -6,6 +7,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDividerModule } from '@angular/material/divider';
+import { AclUserDialogService } from '../dialogs/acl-user-dialog.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { I18nService } from '../services/i18n.service';
@@ -35,6 +37,7 @@ import { switchGui } from '../../core/gui-switch';
     selector: 'p3xr-ng-settings',
     standalone: true,
     imports: [
+        FormsModule,
         MatToolbarModule, MatButtonModule, MatIconModule, MatListModule, MatSlideToggleModule,
         MatTooltipModule, MatDividerModule, DragDropModule,
         P3xrAccordionComponent, P3xrButtonComponent,
@@ -294,6 +297,82 @@ import { switchGui } from '../../core/gui-switch';
                 }
             </div>
         </p3xr-ng-accordion>
+
+        @if (currentConnectionId) {
+            <br />
+            <!-- ACL Users -->
+            <p3xr-ng-accordion [title]="(strings().page?.acl?.title || 'ACL Users') + ' — ' + currentConnectionName" accordionKey="acl-users">
+                <div actions>
+                    <p3xr-ng-button
+                        (click)="loadAclUsers(); $event.stopPropagation()"
+                        [label]="strings().intention?.refresh || 'Refresh'"
+                        mdIcon="refresh">
+                    </p3xr-ng-button>
+                    @if (!readonlyConnections) {
+                        <p3xr-ng-button
+                            (click)="openAclCreate(); $event.stopPropagation()"
+                            [label]="strings().page?.acl?.createUser || 'Create User'"
+                            mdIcon="person_add">
+                        </p3xr-ng-button>
+                    }
+                </div>
+                <div content>
+                    @if (aclLoading) {
+                        <div style="padding: 16px; opacity: 0.6;">{{ strings().page?.acl?.loading || 'Loading...' }}</div>
+                    } @else if (!aclUsers) {
+                        <div style="padding: 16px; opacity: 0.6;">{{ strings().page?.acl?.noUsers || 'ACL requires Redis 6.0+.' }}</div>
+                    } @else {
+                        <div class="p3xr-acl-users-list">
+                            @for (user of aclUsers; track user.name; let last = $last) {
+                                <div class="p3xr-connection-item" [class.p3xr-acl-clickable]="!readonlyConnections" (click)="!readonlyConnections && openAclEdit(user)">
+                                    <div class="p3xr-connection-info">
+                                        <span style="font-weight: 700;">{{ user.name }}</span>
+                                        @if (user.name === aclCurrentUser) {
+                                            <span style="opacity: 0.5; margin-left: 6px; font-size: 11px;">({{ strings().page?.acl?.currentUser || 'Current' }})</span>
+                                        }
+                                    </div>
+                                    @if (!user.enabled) {
+                                        <mat-icon style="color: var(--p3xr-btn-warn-bg, #f44336); font-size: 20px; width: 20px; height: 20px;"
+                                            [matTooltip]="strings().page?.acl?.disabled || 'Disabled'">
+                                            warning
+                                        </mat-icon>
+                                    }
+                                    @if (!readonlyConnections) {
+                                        @if (user.name !== 'default' && user.name !== aclCurrentUser) {
+                                            @if (isXs) {
+                                                <button mat-mini-fab class="btn-warn" (click)="deleteAclUser(user.name); $event.stopPropagation()"
+                                                    [matTooltip]="strings().page?.acl?.deleteUser || 'Delete'"
+                                                    [attr.aria-label]="strings().page?.acl?.deleteUser || 'Delete'">
+                                                    <mat-icon>delete</mat-icon>
+                                                </button>
+                                            } @else {
+                                                <button mat-flat-button class="btn-warn" (click)="deleteAclUser(user.name); $event.stopPropagation()">
+                                                    <mat-icon>delete</mat-icon>
+                                                    <span>{{ strings().page?.acl?.deleteUser || 'Delete' }}</span>
+                                                </button>
+                                            }
+                                        }
+                                        @if (isXs) {
+                                            <button mat-mini-fab class="btn-primary" (click)="openAclEdit(user); $event.stopPropagation()"
+                                                [matTooltip]="strings().page?.acl?.editUser || 'Edit'"
+                                                [attr.aria-label]="strings().page?.acl?.editUser || 'Edit'">
+                                                <mat-icon>edit</mat-icon>
+                                            </button>
+                                        } @else {
+                                            <button mat-flat-button class="btn-primary" (click)="openAclEdit(user); $event.stopPropagation()">
+                                                <mat-icon>edit</mat-icon>
+                                                <span>{{ strings().page?.acl?.editUser || 'Edit' }}</span>
+                                            </button>
+                                        }
+                                    }
+                                </div>
+                                @if (!last) { <mat-divider></mat-divider> }
+                            }
+                        </div>
+                    }
+                </div>
+            </p3xr-ng-accordion>
+        }
 
         <br />
 
@@ -566,6 +645,9 @@ import { switchGui } from '../../core/gui-switch';
         /* Only tree settings rows are clickable/hoverable. License rows stay static like AngularJS. */
         .p3xr-tree-settings-list mat-list-item { cursor: pointer; }
         .p3xr-tree-settings-list mat-list-item:hover { background-color: var(--p3xr-hover-bg); }
+        /* ACL users list: hoverable rows only when editable */
+        .p3xr-acl-users-list .p3xr-acl-clickable { cursor: pointer; }
+        .p3xr-acl-users-list .p3xr-acl-clickable:hover { background-color: var(--p3xr-hover-bg); }
         /* Settings list: bold label (left), normal value (right) */
         ::ng-deep .p3xr-tree-settings-list .mdc-list-item__primary-text {
             width: 100%;
@@ -593,6 +675,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
     isElectron = /electron/i.test(navigator.userAgent);
     readonlyConnections = false;
     currentConnectionId: string | undefined;
+    aclUsers: any[] | null = null;
+    aclCurrentUser = '';
+    aclLoading = false;
     isXs = false;
     private electronUiStorage: Record<string, string> | null = null;
 
@@ -608,6 +693,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
         @Inject(ConnectionDialogService) private connectionDialog: ConnectionDialogService,
         @Inject(TreecontrolSettingsDialogService) private treeSettingsDialog: TreecontrolSettingsDialogService,
         @Inject(AiSettingsDialogService) private aiSettingsDialog: AiSettingsDialogService,
+        @Inject(AclUserDialogService) private aclUserDialog: AclUserDialogService,
         @Inject(BreakpointObserver) private breakpointObserver: BreakpointObserver,
         @Inject(ChangeDetectorRef) private cdr: ChangeDetectorRef,
         @Inject(NotificationService) public notificationService: NotificationService,
@@ -637,10 +723,23 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this.unsubs.forEach(fn => fn());
     }
 
+    get currentConnectionName(): string {
+        const conn = this.connectionsList.find((c: any) => c.id === this.currentConnectionId);
+        return conn?.name || '';
+    }
+
     private refreshState(): void {
         this.connectionsList = this.state.connections()?.list || [];
         this.readonlyConnections = this.state.cfg()?.readonlyConnections === true;
+        const prevConnId = this.currentConnectionId;
         this.currentConnectionId = this.state.connection()?.id;
+        // Auto-load ACL when connection changes
+        if (this.currentConnectionId && this.currentConnectionId !== prevConnId) {
+            this.loadAclUsers();
+        } else if (!this.currentConnectionId && prevConnId) {
+            this.aclUsers = null;
+            this.aclCurrentUser = '';
+        }
         this.buildGroupedConnections();
         this.cdr.detectChanges();
     }
@@ -945,6 +1044,67 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
     openTreeSettings($event: any): void {
         this.treeSettingsDialog.show({ $event });
+    }
+
+    // --- ACL Management ---
+
+    async loadAclUsers(): Promise<void> {
+        this.aclLoading = true;
+        this.cdr.markForCheck();
+        try {
+            const resp = await this.socket.request({ action: 'acl/list' });
+            this.aclUsers = resp.data.users;
+            this.aclCurrentUser = resp.data.currentUser;
+        } catch {
+            this.aclUsers = null;
+        }
+        this.aclLoading = false;
+        this.cdr.markForCheck();
+    }
+
+    async deleteAclUser(username: string): Promise<void> {
+        try {
+            const msg = (this.strings().page?.acl?.confirmDelete || 'Are you sure to delete ACL user') + ` "${username}"?`;
+            await this.common.confirm({ message: msg });
+            await this.socket.request({ action: 'acl/del-user', payload: { username } });
+            this.common.toast({ message: this.strings().page?.acl?.userDeleted || 'ACL user deleted' });
+            this.loadAclUsers();
+        } catch {}
+    }
+
+    async openAclCreate(): Promise<void> {
+        const result = await this.aclUserDialog.show({
+            username: '',
+            rules: 'on >password +@all ~* &*',
+            isNew: true,
+        });
+        if (result) {
+            try {
+                await this.socket.request({ action: 'acl/set-user', payload: { username: result.username, rules: result.rules } });
+                this.common.toast({ message: this.strings().page?.acl?.userSaved || 'ACL user saved' });
+                this.loadAclUsers();
+            } catch (e) {
+                this.common.generalHandleError(e);
+            }
+        }
+    }
+
+    async openAclEdit(user: any): Promise<void> {
+        const parts = user.raw.split(' ');
+        const result = await this.aclUserDialog.show({
+            username: user.name,
+            rules: parts.slice(2).join(' '),
+            isNew: false,
+        });
+        if (result) {
+            try {
+                await this.socket.request({ action: 'acl/set-user', payload: { username: result.username, rules: result.rules } });
+                this.common.toast({ message: this.strings().page?.acl?.userSaved || 'ACL user saved' });
+                this.loadAclUsers();
+            } catch (e) {
+                this.common.generalHandleError(e);
+            }
+        }
     }
 
     // --- GUI Framework Switch ---

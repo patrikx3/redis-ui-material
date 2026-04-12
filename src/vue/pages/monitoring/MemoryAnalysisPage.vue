@@ -20,6 +20,11 @@ const topN = ref(20)
 const maxScanKeys = ref(5000)
 const typeEntries = ref<Array<{ type: string; count: number; bytes: number }>>([])
 
+const doctorText = ref<string | null>(null)
+const doctorLoading = ref(false)
+const autoRefreshDoctor = ref(localStorage.getItem('p3xr-monitor-auto-doctor') === 'true')
+let doctorInterval: any = null
+
 const typeChartEl = ref<HTMLDivElement>()
 const prefixChartEl = ref<HTMLDivElement>()
 const rootEl = ref<HTMLElement>()
@@ -176,6 +181,42 @@ async function runAnalysis() {
     }
 }
 
+// --- Memory Doctor ---
+
+async function runDoctor() {
+    doctorLoading.value = true
+    try {
+        const resp = await request({ action: 'memory/doctor' })
+        doctorText.value = resp.data.text
+    } catch (e) { common.generalHandleError(e) }
+    finally { doctorLoading.value = false }
+}
+
+function toggleAutoDoctor() {
+    autoRefreshDoctor.value = !autoRefreshDoctor.value
+    localStorage.setItem('p3xr-monitor-auto-doctor', String(autoRefreshDoctor.value))
+    if (autoRefreshDoctor.value) {
+        runDoctor()
+        startDoctorInterval()
+    } else {
+        stopDoctorInterval()
+    }
+}
+
+function startDoctorInterval() {
+    stopDoctorInterval()
+    doctorInterval = setInterval(() => runDoctor(), 2000)
+}
+
+function stopDoctorInterval() {
+    if (doctorInterval) { clearInterval(doctorInterval); doctorInterval = null }
+}
+
+function exportDoctor() {
+    if (!doctorText.value) return
+    downloadText(doctorText.value, `${connName.value}-memory-doctor.txt`)
+}
+
 // --- Exports ---
 
 function exportOverview() {
@@ -251,11 +292,12 @@ watch([rootEl, typeChartEl, prefixChartEl], () => {
 })
 
 onMounted(() => {
-    runAnalysis()
+    if (autoRefreshDoctor.value) startDoctorInterval()
+    if (state.connection) runAnalysis()
 
     unsubFns.push(onSocketEvent('connections', () => {
         data.value = null
-        runAnalysis()
+        if (state.connection) runAnalysis()
     }))
 
     themeObserver = new MutationObserver(() => {
@@ -265,6 +307,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
+    stopDoctorInterval()
     themeObserver?.disconnect()
     chartResizeObserver?.disconnect()
     unsubFns.forEach(fn => fn())
@@ -272,6 +315,35 @@ onUnmounted(() => {
 </script>
 
 <template>
+    <!-- Memory Doctor (always visible) -->
+    <P3xrAccordion :title="s.memoryDoctor || 'Memory Doctor'" accordion-key="analysis-doctor">
+        <template #actions>
+            <P3xrButton
+                @click="toggleAutoDoctor(); $event.stopPropagation()"
+                :label="strings?.label?.autoRefresh || 'Auto'"
+                :icon="autoRefreshDoctor ? 'mdi-checkbox-marked' : 'mdi-checkbox-blank-outline'"
+            />
+            <P3xrButton
+                v-if="!autoRefreshDoctor"
+                @click="runDoctor(); $event.stopPropagation()"
+                :label="doctorLoading ? (strings?.label?.loading || 'Loading...') : (strings?.intention?.refresh || 'Refresh')"
+                :icon="doctorLoading ? 'mdi-timer-sand' : 'mdi-refresh'"
+                :disabled="doctorLoading"
+            />
+            <P3xrButton
+                @click="exportDoctor(); $event.stopPropagation()"
+                :label="strings?.intention?.export || 'Export'"
+                icon="mdi-download"
+            />
+        </template>
+        <div v-if="!doctorText" style="padding: 12px 16px; opacity: 0.6;">
+            {{ s.doctorNoData || 'Click Refresh to run Memory Doctor diagnostics.' }}
+        </div>
+        <pre v-else style="white-space: pre-wrap; font-family: 'Roboto Mono', monospace; font-size: 13px; padding: 12px 16px; margin: 0;">{{ doctorText }}</pre>
+    </P3xrAccordion>
+
+    <br />
+
     <div v-if="loading && !data" class="p3xr-analysis-loading">
         <v-icon>mdi-timer-sand</v-icon>
         <span>{{ s.running || 'Analyzing...' }}</span>
