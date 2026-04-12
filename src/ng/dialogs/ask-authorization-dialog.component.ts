@@ -31,7 +31,7 @@ import { I18nService } from '../services/i18n.service';
                     {{ strings().label?.askAuth || 'Authorization' }}
                 </span>
                 <button mat-icon-button type="button" (click)="cancel()">
-                    <mat-icon svgIcon="close"></mat-icon>
+                    <mat-icon>close</mat-icon>
                 </button>
             </mat-toolbar>
 
@@ -52,7 +52,7 @@ import { I18nService } from '../services/i18n.service';
             <mat-dialog-actions class="p3xr-dialog-actions">
                 <p3xr-dialog-cancel (cancel)="cancel()"></p3xr-dialog-cancel>
                 <button mat-raised-button class="btn-primary" type="submit">
-                    <mat-icon svgIcon="done"></mat-icon>
+                    <mat-icon>done</mat-icon>
                     {{ strings().intention?.ok || 'OK' }}
                 </button>
             </mat-dialog-actions>

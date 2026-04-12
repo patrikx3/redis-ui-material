@@ -39,7 +39,7 @@ interface FlatJsonNode {
             <!-- Leaf nodes -->
             <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding [matTreeNodePaddingIndent]="20">
                 <button mat-icon-button disabled class="p3xr-json-tree-toggle p3xr-json-tree-toggle-hidden">
-                    <mat-icon svgIcon="chevron_right"></mat-icon>
+                    <mat-icon>chevron_right</mat-icon>
                 </button>
                 <span class="p3xr-json-tree-leaf-content">
                     <span class="p3xr-json-tree-leaf-key"><span class="p3xr-json-tree-key">{{ node.key }}</span><span class="p3xr-json-tree-colon">:</span></span>
@@ -50,7 +50,7 @@ interface FlatJsonNode {
             <!-- Expandable nodes -->
             <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding [matTreeNodePaddingIndent]="20">
                 <button mat-icon-button matTreeNodeToggle class="p3xr-json-tree-toggle">
-                    <mat-icon svgIcon="{{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}"></mat-icon>
+                    <mat-icon>{{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}</mat-icon>
                 </button>
                 <span class="p3xr-json-tree-key">{{ node.key }}</span>
                 <span class="p3xr-json-tree-colon">:&nbsp;</span>

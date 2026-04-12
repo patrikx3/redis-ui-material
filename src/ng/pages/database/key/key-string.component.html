@@ -4,96 +4,96 @@
         @if (!isReadonly) {
             @if (isGtSm) {
                 <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="setBufferUpload()">
-                    <mat-icon svgIcon="upload"></mat-icon>
+                    <mat-icon>upload</mat-icon>
                     <span>{{ strings?.intention?.setBuffer || 'Upload' }}</span>
                 </button>
             } @else {
                 <button mat-mini-fab class="btn-primary" type="button" (click)="setBufferUpload()"
                     [matTooltip]="strings?.intention?.setBuffer ?? 'Upload'" matTooltipPosition="above">
-                    <mat-icon svgIcon="upload"></mat-icon>
+                    <mat-icon>upload</mat-icon>
                 </button>
             }
         }
         @if (isGtSm) {
             <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="downloadBufferFile()">
-                <mat-icon svgIcon="download"></mat-icon>
+                <mat-icon>download</mat-icon>
                 <span>{{ strings?.intention?.downloadBuffer || 'Download' }}</span>
             </button>
         } @else {
             <button mat-mini-fab class="btn-accent" type="button" (click)="downloadBufferFile()"
                 [matTooltip]="strings?.intention?.downloadBuffer ?? 'Download'" matTooltipPosition="above">
-                <mat-icon svgIcon="download"></mat-icon>
+                <mat-icon>download</mat-icon>
             </button>
         }
         @if (isGtSm) {
             <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="jsonViewer($event)">
-                <mat-icon svgIcon="account_tree"></mat-icon>
+                <mat-icon>account_tree</mat-icon>
                 <span>{{ strings?.intention?.jsonViewShow || 'JSON' }}</span>
             </button>
         } @else {
             <button mat-mini-fab class="btn-accent" type="button" (click)="jsonViewer($event)"
                 [matTooltip]="strings?.intention?.jsonViewShow ?? 'JSON'" matTooltipPosition="above">
-                <mat-icon svgIcon="account_tree"></mat-icon>
+                <mat-icon>account_tree</mat-icon>
             </button>
         }
         @if (isGtSm) {
             <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="copyValue()">
-                <mat-icon svgIcon="content_copy"></mat-icon>
+                <mat-icon>content_copy</mat-icon>
                 <span>{{ strings?.intention?.copy || 'Copy' }}</span>
             </button>
         } @else {
             <button mat-mini-fab class="btn-accent" type="button" (click)="copyValue()"
                 [matTooltip]="strings?.intention?.copy ?? 'Copy'" matTooltipPosition="above">
-                <mat-icon svgIcon="content_copy"></mat-icon>
+                <mat-icon>content_copy</mat-icon>
             </button>
         }
         @if (!isReadonly) {
             @if (isGtSm) {
                 <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="formatJson()">
-                    <mat-icon svgIcon="format_line_spacing"></mat-icon>
+                    <mat-icon>format_line_spacing</mat-icon>
                     <span>{{ strings?.intention?.formatJson || 'Format' }}</span>
                 </button>
             } @else {
                 <button mat-mini-fab class="btn-primary" type="button" (click)="formatJson()"
                     [matTooltip]="strings?.intention?.formatJson ?? 'Format JSON'" matTooltipPosition="above">
-                    <mat-icon svgIcon="format_line_spacing"></mat-icon>
+                    <mat-icon>format_line_spacing</mat-icon>
                 </button>
             }
         }
         @if (isGtSm) {
             <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="jsonEditor()">
-                <mat-icon svgIcon="description"></mat-icon>
+                <mat-icon>description</mat-icon>
                 <span>{{ strings?.intention?.jsonViewEditor || 'Editor' }}</span>
             </button>
         } @else {
             <button mat-mini-fab class="btn-primary" type="button" (click)="jsonEditor()"
                 [matTooltip]="strings?.intention?.jsonViewEditor ?? 'JSON Editor'" matTooltipPosition="above">
-                <mat-icon svgIcon="description"></mat-icon>
+                <mat-icon>description</mat-icon>
             </button>
         }
         @if (redisState.redisVersion().isAtLeast(8, 4)) {
             @if (isGtSm) {
                 <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="showDigest()">
-                    <mat-icon svgIcon="numbers"></mat-icon>
+                    <mat-icon>numbers</mat-icon>
                     <span>Digest</span>
                 </button>
             } @else {
                 <button mat-mini-fab class="btn-accent" type="button" (click)="showDigest()"
                     matTooltip="Digest" matTooltipPosition="above">
-                    <mat-icon svgIcon="numbers"></mat-icon>
+                    <mat-icon>numbers</mat-icon>
                 </button>
             }
         }
         @if (!isReadonly) {
             @if (isGtSm) {
                 <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="edit()">
-                    <mat-icon svgIcon="edit"></mat-icon>
+                    <mat-icon>edit</mat-icon>
                     <span>{{ strings?.intention?.edit || 'Edit' }}</span>
                 </button>
             } @else {
                 <button mat-mini-fab class="btn-primary" type="button" (click)="edit()"
                     [matTooltip]="strings?.intention?.edit ?? 'Edit'" matTooltipPosition="above">
-                    <mat-icon svgIcon="edit"></mat-icon>
+                    <mat-icon>edit</mat-icon>
                 </button>
             }
         }
@@ -110,38 +110,38 @@
         }
         @if (isGtSm) {
             <button mat-raised-button class="btn-warn p3xr-action-btn" type="button" (click)="cancelEdit()">
-                <mat-icon svgIcon="cancel"></mat-icon>
+                <mat-icon>cancel</mat-icon>
                 <span>{{ strings?.intention?.cancel || 'Cancel' }}</span>
             </button>
         } @else {
             <button mat-mini-fab class="btn-warn" type="button" (click)="cancelEdit()"
                 [matTooltip]="strings?.intention?.cancel ?? 'Cancel'" matTooltipPosition="above">
-                <mat-icon svgIcon="cancel"></mat-icon>
+                <mat-icon>cancel</mat-icon>
             </button>
         }
         @if (!isReadonly) {
             @if (isGtSm) {
                 <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="setBufferUpload()">
-                    <mat-icon svgIcon="upload"></mat-icon>
+                    <mat-icon>upload</mat-icon>
                     <span>{{ strings?.intention?.setBuffer || 'Upload' }}</span>
                 </button>
             } @else {
                 <button mat-mini-fab class="btn-primary" type="button" (click)="setBufferUpload()"
                     [matTooltip]="strings?.intention?.setBuffer ?? 'Upload'" matTooltipPosition="above">
-                    <mat-icon svgIcon="upload"></mat-icon>
+                    <mat-icon>upload</mat-icon>
                 </button>
             }
         }
         @if (!isReadonly) {
             @if (isGtSm) {
                 <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="save()">
-                    <mat-icon svgIcon="save"></mat-icon>
+                    <mat-icon>save</mat-icon>
                     <span>{{ strings?.intention?.save || 'Save' }}</span>
                 </button>
             } @else {
                 <button mat-mini-fab class="btn-primary" type="button" (click)="save()"
                     [matTooltip]="strings?.intention?.save ?? 'Save'" matTooltipPosition="above">
-                    <mat-icon svgIcon="save"></mat-icon>
+                    <mat-icon>save</mat-icon>
                 </button>
             }
         }

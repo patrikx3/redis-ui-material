@@ -121,7 +121,7 @@
 
     <mat-menu #actionsMenu="matMenu">
         <button mat-menu-item (click)="exportKeys()">
-            <mat-icon svgIcon="file_download"></mat-icon>
+            <mat-icon>file_download</mat-icon>
             <span>{{ exportLabel() }}</span>
         </button>
         @if (search.length > 0) {
@@ -129,7 +129,7 @@
         }
         @if (!isReadonly) {
             <button mat-menu-item (click)="importKeys()">
-                <mat-icon svgIcon="file_upload"></mat-icon>
+                <mat-icon>file_upload</mat-icon>
                 <span>{{ strings().intention?.importKeys || 'Import keys' }}</span>
             </button>
             @if (search.length > 0) {
@@ -139,7 +139,7 @@
         @if (!isReadonly) {
             <mat-divider></mat-divider>
             <button mat-menu-item (click)="deleteSearchKeys()">
-                <mat-icon svgIcon="delete_sweep"></mat-icon>
+                <mat-icon>delete_sweep</mat-icon>
                 <span>{{ deleteSearchLabel() }}</span>
             </button>
             @if (search.length > 0) {

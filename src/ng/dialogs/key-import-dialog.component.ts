@@ -28,7 +28,7 @@ import { CommonService } from '../services/common.service';
                 {{ strings().intention?.importKeys || 'Import Keys' }}
             </span>
             <button mat-icon-button type="button" (click)="cancel()">
-                <mat-icon svgIcon="close"></mat-icon>
+                <mat-icon>close</mat-icon>
             </button>
         </mat-toolbar>
 
@@ -69,7 +69,7 @@ import { CommonService } from '../services/common.service';
         <mat-dialog-actions class="p3xr-dialog-actions">
             <p3xr-dialog-cancel (cancel)="cancel()"></p3xr-dialog-cancel>
             <button mat-raised-button class="btn-primary" (click)="doImport()" [disabled]="importing">
-                <mat-icon svgIcon="file_upload"></mat-icon>
+                <mat-icon>file_upload</mat-icon>
                 {{ importing ? (strings().label?.importProgress || 'Importing...') : (strings().intention?.importKeys || 'Import') }}
             </button>
         </mat-dialog-actions>

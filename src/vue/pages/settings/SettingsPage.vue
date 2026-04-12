@@ -360,9 +360,9 @@ const treeSettingsItems = computed(() => [
     <P3xrAccordion title="GUI" accordion-key="gui-framework">
         <div style="display: flex; justify-content: flex-end; padding: 16px;">
             <div class="p3xr-gui-toggle">
-                <span class="p3xr-gui-toggle-item" @click="switchGui('ng')">Angular</span>
-                <span class="p3xr-gui-toggle-item" @click="switchGui('react')">React</span>
-                <span class="p3xr-gui-toggle-active">Vue</span>
+                <span class="p3xr-gui-toggle-item" @click="switchGui('ng')"><i class="fab fa-angular" style="color:#dd0031;margin-right:6px;font-size:28px;line-height:1;"></i>Angular</span>
+                <span class="p3xr-gui-toggle-item" @click="switchGui('react')"><i class="fab fa-react" style="color:#61dafb;margin-right:6px;font-size:24px;line-height:1;"></i>React</span>
+                <span class="p3xr-gui-toggle-active"><i class="fab fa-vuejs" style="color:#42b883;margin-right:6px;font-size:26px;line-height:1;"></i>Vue</span>
             </div>
         </div>
     </P3xrAccordion>
@@ -487,23 +487,27 @@ const treeSettingsItems = computed(() => [
     overflow: hidden;
     border: 1px solid rgba(128, 128, 128, 0.3);
 }
+.p3xr-gui-toggle-active,
 .p3xr-gui-toggle-item {
     padding: 8px 24px;
-    cursor: pointer;
-    font-weight: 500;
     font-size: 14px;
     user-select: none;
-}
-.p3xr-gui-toggle-item:hover {
-    background: rgba(128, 128, 128, 0.1);
+    display: inline-flex;
+    align-items: center;
+    height: 40px;
+    box-sizing: border-box;
 }
 .p3xr-gui-toggle-active {
-    padding: 8px 24px;
     font-weight: 700;
-    font-size: 14px;
-    user-select: none;
-    background: rgb(var(--v-theme-primary));
-    color: rgb(var(--v-theme-on-primary));
+    background-color: rgba(128,128,128,0.55);
+}
+.p3xr-gui-toggle-item {
+    font-weight: 500;
+    cursor: pointer;
+    background-color: rgba(128,128,128,0.15);
+}
+.p3xr-gui-toggle-item:hover {
+    background: rgba(128, 128, 128, 0.25);
 }
 </style>
 

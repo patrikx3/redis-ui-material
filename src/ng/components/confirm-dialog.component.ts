@@ -22,7 +22,7 @@ export interface ConfirmDialogData {
         <mat-toolbar class="p3xr-dialog-toolbar p3xr-mat-layout-strong">
             <span mat-dialog-title class="p3xr-dialog-title">{{ data.title }}</span>
             <button mat-icon-button type="button" (click)="onCancel()">
-                <mat-icon svgIcon="close"></mat-icon>
+                <mat-icon>close</mat-icon>
             </button>
         </mat-toolbar>
         <mat-dialog-content class="p3xr-dialog-content">
@@ -33,7 +33,7 @@ export interface ConfirmDialogData {
                 <p3xr-dialog-cancel [label]="data.cancelButton || 'Cancel'" (cancel)="onCancel()"></p3xr-dialog-cancel>
             }
             <button mat-raised-button class="btn-primary" type="button" (click)="onOk()">
-                <mat-icon svgIcon="done"></mat-icon>
+                <mat-icon>done</mat-icon>
                 {{ data.okButton || 'OK' }}
             </button>
         </mat-dialog-actions>

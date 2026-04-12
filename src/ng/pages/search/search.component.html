@@ -18,7 +18,7 @@
                     </mat-form-field>
                     @if (!isReadonly && selectedIndex) {
                         <button mat-mini-fab class="btn-warn" (click)="dropIndex()" [matTooltip]="strings().page?.search?.dropIndex || 'Drop Index'" matTooltipPosition="above">
-                            <mat-icon svgIcon="delete"></mat-icon>
+                            <mat-icon>delete</mat-icon>
                         </button>
                     }
                 </div>
@@ -55,13 +55,13 @@
                 <div style="margin-top: 8px; text-align: right;">
                     @if (isGtSm) {
                         <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="handleSearchEnter()" [disabled]="aiLoading">
-                            <mat-icon svgIcon="search"></mat-icon>
+                            <mat-icon>search</mat-icon>
                             <span>{{ aiLoading ? (strings().label?.aiTranslating || 'Translating...') : (strings().page?.search?.title || 'Search') }}</span>
                         </button>
                     } @else {
                         <button mat-mini-fab class="btn-primary" type="button" (click)="handleSearchEnter()" [disabled]="aiLoading"
                                 [matTooltip]="strings().page?.search?.title || 'Search'" matTooltipPosition="above">
-                            <mat-icon svgIcon="search"></mat-icon>
+                            <mat-icon>search</mat-icon>
                         </button>
                     }
                 </div>
@@ -164,7 +164,7 @@
                 <div style="display: flex; align-items: center; gap: 8px; margin: 8px 0;">
                     <strong>Schema</strong>
                     <button mat-mini-fab class="btn-primary" (click)="addField()" type="button">
-                        <mat-icon svgIcon="add"></mat-icon>
+                        <mat-icon>add</mat-icon>
                     </button>
                 </div>
 
@@ -186,7 +186,7 @@
                                 </mat-select>
                             </mat-form-field>
                             <button mat-mini-fab class="btn-warn" (click)="confirmRemoveField(i)" [disabled]="newIndexFields.length <= 1" type="button">
-                                <mat-icon svgIcon="remove"></mat-icon>
+                                <mat-icon>remove</mat-icon>
                             </button>
                         </div>
                     </div>
@@ -195,13 +195,13 @@
                 <div style="margin-top: 8px; text-align: right;">
                     @if (isGtSm) {
                         <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="createIndex()" [disabled]="!newIndexName.trim()">
-                            <mat-icon svgIcon="add"></mat-icon>
+                            <mat-icon>add</mat-icon>
                             <span>{{ strings().page?.search?.createIndex || 'Create Index' }}</span>
                         </button>
                     } @else {
                         <button mat-mini-fab class="btn-accent" type="button" (click)="createIndex()" [disabled]="!newIndexName.trim()"
                                 [matTooltip]="strings().page?.search?.createIndex || 'Create Index'" matTooltipPosition="above">
-                            <mat-icon svgIcon="add"></mat-icon>
+                            <mat-icon>add</mat-icon>
                         </button>
                     }
                 </div>

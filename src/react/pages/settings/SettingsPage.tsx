@@ -447,7 +447,7 @@ export default function SettingsPage() {
             <P3xrAccordion title="GUI" accordionKey="gui-framework">
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
                     <Box sx={{
-                        display: 'inline-flex', borderRadius: '4px', overflow: 'hidden',
+                        display: 'inline-flex', alignItems: 'stretch', borderRadius: '4px', overflow: 'hidden',
                         border: 1, borderColor: 'divider',
                     }}>
                         <Box component="span"
@@ -458,18 +458,20 @@ export default function SettingsPage() {
                             sx={{
                                 px: 3, py: 1, cursor: 'pointer', fontWeight: 500,
                                 fontSize: 14, userSelect: 'none',
-                                bgcolor: 'transparent', color: 'text.primary',
+                                display: 'inline-flex', alignItems: 'center',
+                                bgcolor: 'rgba(128,128,128,0.15)', color: 'text.primary',
                                 '&:hover': { bgcolor: 'action.hover' },
                             }}>
-                            Angular
+                            <i className="fab fa-angular" style={{ color: '#dd0031', marginRight: 6, fontSize: 22 }} />Angular
                         </Box>
                         <Box component="span"
                             sx={{
                                 px: 3, py: 1, fontWeight: 700,
                                 fontSize: 14, userSelect: 'none',
-                                bgcolor: 'primary.main', color: 'primary.contrastText',
+                                display: 'inline-flex', alignItems: 'center',
+                                bgcolor: 'rgba(128,128,128,0.55)', color: 'text.primary',
                             }}>
-                            React
+                            <i className="fab fa-react" style={{ color: '#61dafb', marginRight: 6, fontSize: 20 }} />React
                         </Box>
                         <Box component="span"
                             onClick={() => {
@@ -479,10 +481,11 @@ export default function SettingsPage() {
                             sx={{
                                 px: 3, py: 1, cursor: 'pointer', fontWeight: 500,
                                 fontSize: 14, userSelect: 'none',
-                                bgcolor: 'transparent', color: 'text.primary',
+                                display: 'inline-flex', alignItems: 'center',
+                                bgcolor: 'rgba(128,128,128,0.15)', color: 'text.primary',
                                 '&:hover': { bgcolor: 'action.hover' },
                             }}>
-                            Vue
+                            <i className="fab fa-vuejs" style={{ color: '#42b883', marginRight: 6, fontSize: 26 }} />Vue
                         </Box>
                     </Box>
                 </Box>

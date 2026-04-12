@@ -31,7 +31,7 @@ export interface PromptDialogData {
         <mat-toolbar class="p3xr-dialog-toolbar p3xr-mat-layout-strong">
             <span mat-dialog-title class="p3xr-dialog-title">{{ data.title }}</span>
             <button mat-icon-button type="button" (click)="onCancel()">
-                <mat-icon svgIcon="close"></mat-icon>
+                <mat-icon>close</mat-icon>
             </button>
         </mat-toolbar>
         <mat-dialog-content class="p3xr-dialog-content">
@@ -47,7 +47,7 @@ export interface PromptDialogData {
             <p3xr-dialog-cancel [label]="data.cancelButton" (cancel)="onCancel()"></p3xr-dialog-cancel>
             <button mat-raised-button class="btn-primary" type="button" (click)="onOk()" [disabled]="!value?.trim()"
                 [matTooltip]="data.okButton" [matTooltipDisabled]="isWide">
-                <mat-icon svgIcon="done"></mat-icon>
+                <mat-icon>done</mat-icon>
                 @if (isWide) { <span>{{ data.okButton }}</span> }
             </button>
         </mat-dialog-actions>

@@ -40,7 +40,7 @@ const CONTEXT_LINES = 3;
     template: `
         <mat-toolbar class="p3xr-dialog-toolbar p3xr-mat-layout-strong">
             <span mat-dialog-title class="p3xr-dialog-title p3xr-dialog-title-with-icon" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                <mat-icon svgIcon="difference"></mat-icon>
+                <mat-icon>difference</mat-icon>
                 <span>{{ diffStrings().reviewChanges || 'Review changes' }}</span>
             </span>
             <span style="flex: 1;"></span>
@@ -52,7 +52,7 @@ const CONTEXT_LINES = 3;
                 <span class="p3xr-diff-count-add">+{{ additions() }}</span> {{ diffStrings().additions || 'additions' }},
                 <span class="p3xr-diff-count-del">-{{ deletions() }}</span> {{ diffStrings().deletions || 'deletions' }}
             </span>
-            <button mat-icon-button (click)="dialogRef.close(false)"><mat-icon svgIcon="close"></mat-icon></button>
+            <button mat-icon-button (click)="dialogRef.close(false)"><mat-icon>close</mat-icon></button>
         </mat-toolbar>
 
         <mat-dialog-content class="p3xr-dialog-content p3xr-diff-content" [class.p3xr-diff-sbs]="mode() === 'side-by-side'">
@@ -100,7 +100,7 @@ const CONTEXT_LINES = 3;
             <p3xr-dialog-cancel (cancel)="dialogRef.close(false)"></p3xr-dialog-cancel>
             <button mat-raised-button class="btn-primary" (click)="dialogRef.close(true)"
                 [matTooltip]="strings().intention?.save || 'Save'" [matTooltipDisabled]="isWide">
-                <mat-icon svgIcon="save"></mat-icon>
+                <mat-icon>save</mat-icon>
                 @if (isWide) { <span>{{ strings().intention?.save || 'Save' }}</span> }
             </button>
         </mat-dialog-actions>

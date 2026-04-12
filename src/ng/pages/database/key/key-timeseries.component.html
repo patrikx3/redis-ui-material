@@ -94,13 +94,13 @@
 
                     @if (isGtSm) {
                         <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="addDataPoint()" [disabled]="!addValue">
-                            <mat-icon svgIcon="add"></mat-icon>
+                            <mat-icon>add</mat-icon>
                             <span>{{ strings?.intention?.add || 'Add' }}</span>
                         </button>
                     } @else {
                         <button mat-mini-fab class="btn-primary" type="button" (click)="addDataPoint()" [disabled]="!addValue"
                                 [matTooltip]="strings?.intention?.add ?? 'Add'" matTooltipPosition="above">
-                            <mat-icon svgIcon="add"></mat-icon>
+                            <mat-icon>add</mat-icon>
                         </button>
                     }
                 </div>
@@ -182,7 +182,7 @@
                             <mat-hint>{{ strings?.page?.key?.timeseries?.labelsHint || 'key1 value1 key2 value2' }}</mat-hint>
                         </mat-form-field>
                         <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="saveAlter()">
-                            <mat-icon svgIcon="save"></mat-icon>
+                            <mat-icon>save</mat-icon>
                             <span>{{ strings?.intention?.save || 'Save' }}</span>
                         </button>
                     </div>

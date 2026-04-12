@@ -72,7 +72,7 @@ import { AuthService } from '../services/auth.service';
                                (keydown.enter)="onLogin()" />
                         <button mat-icon-button matSuffix type="button"
                                 (click)="hidePassword = !hidePassword">
-                            <mat-icon svgIcon="{{ hidePassword ? 'visibility_off' : 'visibility' }}"></mat-icon>
+                            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
                         </button>
                     </mat-form-field>
 
@@ -86,7 +86,7 @@ import { AuthService } from '../services/auth.service';
                 <div class="p3xr-dialog-actions" style="display: flex; justify-content: flex-end; padding: 8px; gap: 8px;">
                     <button mat-raised-button class="btn-primary" type="submit"
                             [disabled]="loading || !username || !password">
-                        <mat-icon svgIcon="login"></mat-icon>
+                        <mat-icon>login</mat-icon>
                         {{ i18n.strings().intention?.ok || 'Login' }}
                     </button>
                 </div>

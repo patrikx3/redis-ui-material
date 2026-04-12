@@ -523,5 +523,6 @@ onUnmounted(() => clearInterval(groupInterval))
                 <v-list-item @click="openLink('githubChangelog'); githubMenuOpen = false">{{ strings?.intention?.githubChangelog }}</v-list-item>
             </v-list>
         </v-menu>
+
     </v-toolbar>
 </template>

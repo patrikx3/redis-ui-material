@@ -10,62 +10,62 @@
         @if (!isReadonly) {
             @if (isGtSm) {
                 <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="addKey($event)">
-                    <mat-icon svgIcon="add"></mat-icon>
+                    <mat-icon>add</mat-icon>
                     <span>{{ strings()?.intention?.addKey }}</span>
                 </button>
             } @else {
                 <button mat-mini-fab class="btn-accent" type="button" (click)="addKey($event)"
                     [matTooltip]="strings()?.intention?.addKey ?? 'Add to this key'" matTooltipPosition="above">
-                    <mat-icon svgIcon="add"></mat-icon>
+                    <mat-icon>add</mat-icon>
                 </button>
             }
 
             @if (isGtSm) {
                 <button mat-raised-button class="btn-warn p3xr-action-btn" type="button" (click)="deleteKey($event)">
-                    <mat-icon svgIcon="delete"></mat-icon>
+                    <mat-icon>delete</mat-icon>
                     <span>{{ strings()?.intention?.delete }}</span>
                 </button>
             } @else {
                 <button mat-mini-fab class="btn-warn" type="button" (click)="deleteKey($event)"
                     [matTooltip]="strings()?.intention?.delete ?? 'Delete'" matTooltipPosition="above">
-                    <mat-icon svgIcon="delete"></mat-icon>
+                    <mat-icon>delete</mat-icon>
                 </button>
             }
 
             @if (isGtSm) {
                 <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="setTtl($event)">
-                    <mat-icon svgIcon="timer"></mat-icon>
+                    <mat-icon>timer</mat-icon>
                     <span>{{ strings()?.intention?.ttl }}</span>
                 </button>
             } @else {
                 <button mat-mini-fab class="btn-primary" type="button" (click)="setTtl($event)"
                     [matTooltip]="strings()?.intention?.ttl ?? 'Set TTL'" matTooltipPosition="above">
-                    <mat-icon svgIcon="timer"></mat-icon>
+                    <mat-icon>timer</mat-icon>
                 </button>
             }
 
             @if (isGtSm) {
                 <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="rename($event)">
-                    <mat-icon svgIcon="fingerprint"></mat-icon>
+                    <mat-icon>fingerprint</mat-icon>
                     <span>{{ strings()?.intention?.rename }}</span>
                 </button>
             } @else {
                 <button mat-mini-fab class="btn-primary" type="button" (click)="rename($event)"
                     [matTooltip]="strings()?.intention?.rename ?? 'Rename'" matTooltipPosition="above">
-                    <mat-icon svgIcon="fingerprint"></mat-icon>
+                    <mat-icon>fingerprint</mat-icon>
                 </button>
             }
         }
 
         @if (isGtSm) {
             <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="refresh()">
-                <mat-icon svgIcon="refresh"></mat-icon>
+                <mat-icon>refresh</mat-icon>
                 <span>{{ strings()?.intention?.reloadKey }}</span>
             </button>
         } @else {
             <button mat-mini-fab class="btn-accent" type="button" (click)="refresh()"
                 [matTooltip]="strings()?.intention?.reloadKey ?? 'Reload Key'" matTooltipPosition="above">
-                <mat-icon svgIcon="refresh"></mat-icon>
+                <mat-icon>refresh</mat-icon>
             </button>
         }
     </div>

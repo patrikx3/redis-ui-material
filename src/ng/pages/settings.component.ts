@@ -119,11 +119,11 @@ import { P3xrButtonComponent } from '../components/p3xr-button.component';
                                             <button mat-mini-fab class="btn-accent" (click)="connect(connection)"
                                                 [matTooltip]="strings().intention?.connect || 'Connect'"
                                                 [attr.aria-label]="strings().intention?.connect || 'Connect'">
-                                                <mat-icon svgIcon="power"></mat-icon>
+                                                <mat-icon>power</mat-icon>
                                             </button>
                                         } @else {
                                             <button mat-flat-button class="btn-accent" (click)="connect(connection)">
-                                                <mat-icon svgIcon="power"></mat-icon>
+                                                <mat-icon>power</mat-icon>
                                                 <span>{{ strings().intention?.connect || 'Connect' }}</span>
                                             </button>
                                         }
@@ -150,11 +150,11 @@ import { P3xrButtonComponent } from '../components/p3xr-button.component';
                                             <button mat-mini-fab class="btn-warn" (click)="deleteConnection(connection, $event)"
                                                 [matTooltip]="strings().intention?.delete || 'Delete'"
                                                 [attr.aria-label]="strings().intention?.delete || 'Delete'">
-                                                <mat-icon svgIcon="delete_forever"></mat-icon>
+                                                <mat-icon>delete_forever</mat-icon>
                                             </button>
                                         } @else {
                                             <button mat-flat-button class="btn-warn" (click)="deleteConnection(connection, $event)">
-                                                <mat-icon svgIcon="delete_forever"></mat-icon>
+                                                <mat-icon>delete_forever</mat-icon>
                                                 <span>{{ strings().intention?.delete || 'Delete' }}</span>
                                             </button>
                                         }
@@ -162,11 +162,11 @@ import { P3xrButtonComponent } from '../components/p3xr-button.component';
                                             <button mat-mini-fab class="btn-primary" (click)="connectionForm('edit', connection)"
                                                 [matTooltip]="strings().intention?.edit || 'Edit'"
                                                 [attr.aria-label]="strings().intention?.edit || 'Edit'">
-                                                <mat-icon svgIcon="edit"></mat-icon>
+                                                <mat-icon>edit</mat-icon>
                                             </button>
                                         } @else {
                                             <button mat-flat-button class="btn-primary" (click)="connectionForm('edit', connection)">
-                                                <mat-icon svgIcon="edit"></mat-icon>
+                                                <mat-icon>edit</mat-icon>
                                                 <span>{{ strings().intention?.edit || 'Edit' }}</span>
                                             </button>
                                         }
@@ -177,11 +177,11 @@ import { P3xrButtonComponent } from '../components/p3xr-button.component';
                                             <button mat-mini-fab class="btn-primary" (click)="connectionForm('edit', connection)"
                                                 [matTooltip]="strings().intention?.view || 'View'"
                                                 [attr.aria-label]="strings().intention?.view || 'View'">
-                                                <mat-icon svgIcon="mode_comment"></mat-icon>
+                                                <mat-icon>mode_comment</mat-icon>
                                             </button>
                                         } @else {
                                             <button mat-flat-button class="btn-primary" (click)="connectionForm('edit', connection)">
-                                                <mat-icon svgIcon="mode_comment"></mat-icon>
+                                                <mat-icon>mode_comment</mat-icon>
                                                 <span>{{ strings().intention?.view || 'View' }}</span>
                                             </button>
                                         }
@@ -217,11 +217,11 @@ import { P3xrButtonComponent } from '../components/p3xr-button.component';
                                             <button mat-mini-fab class="btn-accent" (click)="connect(connection)"
                                                 [matTooltip]="strings().intention?.connect || 'Connect'"
                                                 [attr.aria-label]="strings().intention?.connect || 'Connect'">
-                                                <mat-icon svgIcon="power"></mat-icon>
+                                                <mat-icon>power</mat-icon>
                                             </button>
                                         } @else {
                                             <button mat-flat-button class="btn-accent" (click)="connect(connection)">
-                                                <mat-icon svgIcon="power"></mat-icon>
+                                                <mat-icon>power</mat-icon>
                                                 <span>{{ strings().intention?.connect || 'Connect' }}</span>
                                             </button>
                                         }
@@ -248,11 +248,11 @@ import { P3xrButtonComponent } from '../components/p3xr-button.component';
                                             <button mat-mini-fab class="btn-warn" (click)="deleteConnection(connection, $event)"
                                                 [matTooltip]="strings().intention?.delete || 'Delete'"
                                                 [attr.aria-label]="strings().intention?.delete || 'Delete'">
-                                                <mat-icon svgIcon="delete_forever"></mat-icon>
+                                                <mat-icon>delete_forever</mat-icon>
                                             </button>
                                         } @else {
                                             <button mat-flat-button class="btn-warn" (click)="deleteConnection(connection, $event)">
-                                                <mat-icon svgIcon="delete_forever"></mat-icon>
+                                                <mat-icon>delete_forever</mat-icon>
                                                 <span>{{ strings().intention?.delete || 'Delete' }}</span>
                                             </button>
                                         }
@@ -260,11 +260,11 @@ import { P3xrButtonComponent } from '../components/p3xr-button.component';
                                             <button mat-mini-fab class="btn-primary" (click)="connectionForm('edit', connection)"
                                                 [matTooltip]="strings().intention?.edit || 'Edit'"
                                                 [attr.aria-label]="strings().intention?.edit || 'Edit'">
-                                                <mat-icon svgIcon="edit"></mat-icon>
+                                                <mat-icon>edit</mat-icon>
                                             </button>
                                         } @else {
                                             <button mat-flat-button class="btn-primary" (click)="connectionForm('edit', connection)">
-                                                <mat-icon svgIcon="edit"></mat-icon>
+                                                <mat-icon>edit</mat-icon>
                                                 <span>{{ strings().intention?.edit || 'Edit' }}</span>
                                             </button>
                                         }
@@ -275,11 +275,11 @@ import { P3xrButtonComponent } from '../components/p3xr-button.component';
                                             <button mat-mini-fab class="btn-primary" (click)="connectionForm('edit', connection)"
                                                 [matTooltip]="strings().intention?.view || 'View'"
                                                 [attr.aria-label]="strings().intention?.view || 'View'">
-                                                <mat-icon svgIcon="mode_comment"></mat-icon>
+                                                <mat-icon>mode_comment</mat-icon>
                                             </button>
                                         } @else {
                                             <button mat-flat-button class="btn-primary" (click)="connectionForm('edit', connection)">
-                                                <mat-icon svgIcon="mode_comment"></mat-icon>
+                                                <mat-icon>mode_comment</mat-icon>
                                                 <span>{{ strings().intention?.view || 'View' }}</span>
                                             </button>
                                         }
@@ -301,9 +301,9 @@ import { P3xrButtonComponent } from '../components/p3xr-button.component';
             <div content>
                 <div style="display: flex; justify-content: flex-end; padding: 16px;">
                     <div class="p3xr-gui-toggle">
-                        <span class="p3xr-gui-toggle-active">Angular</span>
-                        <span class="p3xr-gui-toggle-item" (click)="switchToReact()">React</span>
-                        <span class="p3xr-gui-toggle-item" (click)="switchToVue()">Vue</span>
+                        <span class="p3xr-gui-toggle-active"><i class="fab fa-angular" style="color:#dd0031;margin-right:6px;font-size:16px;"></i>Angular</span>
+                        <span class="p3xr-gui-toggle-item" (click)="switchToReact()"><i class="fab fa-react" style="color:#61dafb;margin-right:6px;font-size:18px;"></i>React</span>
+                        <span class="p3xr-gui-toggle-item" (click)="switchToVue()"><i class="fab fa-vuejs" style="color:#42b883;margin-right:6px;font-size:18px;"></i>Vue</span>
                     </div>
                 </div>
             </div>
@@ -479,24 +479,27 @@ import { P3xrButtonComponent } from '../components/p3xr-button.component';
         /* GUI toggle */
         .p3xr-gui-toggle {
             display: inline-flex;
+            align-items: stretch;
             border-radius: 4px;
             overflow: hidden;
             border: 1px solid var(--p3xr-border-color, rgba(0,0,0,0.12));
         }
-        .p3xr-gui-toggle-active {
-            padding: 8px 24px;
-            font-weight: 700;
-            font-size: 14px;
-            user-select: none;
-            background-color: var(--p3xr-btn-primary-bg);
-            color: var(--p3xr-btn-primary-color);
-        }
+        .p3xr-gui-toggle-active,
         .p3xr-gui-toggle-item {
             padding: 8px 24px;
-            font-weight: 500;
             font-size: 14px;
             user-select: none;
+            display: inline-flex;
+            align-items: center;
+        }
+        .p3xr-gui-toggle-active {
+            font-weight: 700;
+            background-color: rgba(128,128,128,0.55);
+        }
+        .p3xr-gui-toggle-item {
+            font-weight: 500;
             cursor: pointer;
+            background-color: rgba(128,128,128,0.15);
         }
         .p3xr-gui-toggle-item:hover {
             background-color: var(--p3xr-hover-bg);
