@@ -203,5 +203,5 @@ export class KeyHashComponent extends KeyTypeBase implements OnInit, OnChanges, 
 
     copyItem(value: any): void { this.copy(value); }
     showJsonItem(value: any, event: Event): void { this.showJson(value, event); }
-    downloadItem(hashKey: string): void { this.downloadBuffer(this.p3xrValueBuffer[hashKey], `${this.p3xrKey}-${hashKey}.bin`); }
+    downloadItem(hashKey: string): void { this.downloadBuffer(this.p3xrValueBuffer[hashKey], `${this.p3xrKey}-${hashKey}`); }
 }

@@ -3,7 +3,7 @@ import {
     Button, IconButton, Tooltip, TextField, useMediaQuery,
     InputAdornment,
 } from '@mui/material'
-import { Done, Cancel, Visibility, VisibilityOff } from '@mui/icons-material'
+import { Done, Cancel, Visibility, VisibilityOff, Person, Lock, Shield } from '@mui/icons-material'
 import { useCommonStore } from '../stores/common.store'
 import { useI18nStore } from '../stores/i18n.store'
 import P3xrDialog from '../components/P3xrDialog'
@@ -38,7 +38,7 @@ export default function AskAuthorizationDialog() {
         <P3xrDialog
             open
             onClose={handleCancel}
-            title={strings?.label?.askAuth || 'Authorization'}
+            title={<><Shield sx={{ mr: 1, verticalAlign: 'middle', fontSize: 20 }} />{strings?.label?.askAuth || 'Authorization'}</>}
             width="400px"
             actions={
                 <>
@@ -74,6 +74,13 @@ export default function AskAuthorizationDialog() {
                 onChange={e => setUsername(e.target.value)}
                 autoComplete="off"
                 onKeyDown={e => e.key === 'Enter' && handleOk()}
+                slotProps={{
+                    input: {
+                        startAdornment: (
+                            <InputAdornment position="start"><Person fontSize="small" /></InputAdornment>
+                        ),
+                    },
+                }}
             />
             <TextField
                 fullWidth margin="dense"
@@ -85,6 +92,9 @@ export default function AskAuthorizationDialog() {
                 onKeyDown={e => e.key === 'Enter' && handleOk()}
                 slotProps={{
                     input: {
+                        startAdornment: (
+                            <InputAdornment position="start"><Lock fontSize="small" /></InputAdornment>
+                        ),
                         endAdornment: (
                             <InputAdornment position="end">
                                 <IconButton onClick={() => setPwVisible(!pwVisible)} size="small">

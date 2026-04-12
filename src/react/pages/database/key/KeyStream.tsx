@@ -4,7 +4,7 @@
  */
 import { useState, useEffect, useCallback } from 'react'
 import { Box, Tooltip } from '@mui/material'
-import { Delete, TableChart, ContentCopy, Download, Add } from '@mui/icons-material'
+import { Delete, AccountTree, ContentCopy, Download, Add } from '@mui/icons-material'
 import { useTheme } from '@mui/material'
 import { useI18nStore } from '../../../stores/i18n.store'
 import { useRedisStateStore } from '../../../stores/redis-state.store'
@@ -146,7 +146,7 @@ export default function KeyStream({ response, value, valueBuffer, keyName, value
     const oddBg = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.04)'
     const hoverBg = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'
     const listBorder = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.06)'
-    const iconSx = (color: string) => ({ fontSize: 18, cursor: 'pointer', mx: '2px', opacity: 0.7, color, '&:hover': { opacity: 1 } })
+    const iconSx = (color: string) => ({ fontSize: 24, cursor: 'pointer', mx: '2px', opacity: 0.7, color, '&:hover': { opacity: 1 } })
 
     return (
         <Box>
@@ -180,12 +180,12 @@ export default function KeyStream({ response, value, valueBuffer, keyName, value
                                 <Box component="span" sx={{ opacity: 0.5, fontSize: 12 }}>{showTimestamp(entry.id)}</Box>
                             </Box>
                             <Box sx={{ whiteSpace: 'nowrap' }}>
-                                <Tooltip title={strings?.intention?.copy}><ContentCopy sx={iconSx('secondary.main')} onClick={() => copyEntry(entry)} /></Tooltip>
-                                <Tooltip title={strings?.intention?.downloadBuffer}><Download sx={iconSx('secondary.main')} onClick={() => downloadEntry(entry)} /></Tooltip>
-                                <Tooltip title={strings?.intention?.jsonViewShow}><TableChart sx={iconSx('secondary.main')} onClick={() => viewEntryJson(entry)} /></Tooltip>
                                 {!isReadonly && (
                                     <Tooltip title={strings?.intention?.delete}><Delete sx={iconSx('error.main')} onClick={() => deleteStreamTimestamp(entry.id)} /></Tooltip>
                                 )}
+                                <Tooltip title={strings?.intention?.jsonViewShow}><AccountTree sx={iconSx('secondary.main')} onClick={() => viewEntryJson(entry)} /></Tooltip>
+                                <Tooltip title={strings?.intention?.copy}><ContentCopy sx={iconSx('secondary.main')} onClick={() => copyEntry(entry)} /></Tooltip>
+                                <Tooltip title={strings?.intention?.downloadBuffer}><Download sx={iconSx('secondary.main')} onClick={() => downloadEntry(entry)} /></Tooltip>
                             </Box>
                         </Box>
 

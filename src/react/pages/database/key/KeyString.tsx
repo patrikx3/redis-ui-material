@@ -8,7 +8,7 @@
 import { useState, useCallback, useRef } from 'react'
 import { Box, Button, Tooltip, TextField, Switch, FormControlLabel, useMediaQuery } from '@mui/material'
 import {
-    Upload, Download, TableChart, ContentCopy, FormatLineSpacing,
+    Upload, Download, AccountTree, ContentCopy, FormatLineSpacing,
     Description, Edit, Cancel, Save, Numbers,
 } from '@mui/icons-material'
 import { useI18nStore } from '../../../stores/i18n.store'
@@ -203,7 +203,7 @@ export default function KeyString({ response, value: initValue, valueBuffer: ini
                         <Btn icon={<Upload fontSize="small" />} label={strings?.intention?.setBuffer} onClick={setBufferUpload} />
                     )}
                     <Btn icon={<Download fontSize="small" />} label={strings?.intention?.downloadBuffer} color="secondary" onClick={downloadBufferFile} />
-                    <Btn icon={<TableChart fontSize="small" />} label={strings?.intention?.jsonViewShow} color="secondary" onClick={jsonViewer} />
+                    <Btn icon={<AccountTree fontSize="small" />} label={strings?.intention?.jsonViewShow} color="secondary" onClick={jsonViewer} />
                     <Btn icon={<ContentCopy fontSize="small" />} label={strings?.intention?.copy} color="secondary" onClick={copyVal} />
                     {!isReadonly && (
                         <Btn icon={<FormatLineSpacing fontSize="small" />} label={strings?.intention?.formatJson} onClick={formatJson} />

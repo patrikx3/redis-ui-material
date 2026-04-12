@@ -7,48 +7,49 @@
          class="p3xr-database-tree-row"
          [style.padding-left.px]="node.level * 20 + 4">
 
-        <!-- Folder expand/collapse icon / leaf spacer for sibling alignment -->
+        <!-- Folder icon — at row level with its own click handler -->
         @if (node.expandable) {
             <span class="p3xr-tree-branch-head"
                   [class.tree-expanded]="isExpanded(node)"
                   [class.tree-collapsed]="!isExpanded(node)"
                   (click)="toggleExpand(node); $event.stopPropagation()">
             </span>
-        } 
+        } @else if (node.keysInfo) {
+            <!-- Type icon — clickable to select node (matches React/Vue) -->
+            <span (click)="selectNode(node)" style="cursor:pointer">
+                @switch (node.keysInfo.type) {
+                    @case ('hash') { <i class="fas fa-hashtag p3xr-tree-type-icon" aria-hidden="true"></i> }
+                    @case ('list') { <i class="fas fa-list-ol p3xr-tree-type-icon" aria-hidden="true"></i> }
+                    @case ('set') { <i class="fas fa-list p3xr-tree-type-icon" aria-hidden="true"></i> }
+                    @case ('string') { <i class="fas fa-ellipsis-h p3xr-tree-type-icon" aria-hidden="true"></i> }
+                    @case ('zset') { <i class="fas fa-chart-line p3xr-tree-type-icon" aria-hidden="true"></i> }
+                    @case ('stream') { <i class="fas fa-stream p3xr-tree-type-icon" aria-hidden="true"></i> }
+                    @case ('json') { <i class="fas fa-code p3xr-tree-type-icon" aria-hidden="true"></i> }
+                    @case ('timeseries') { <i class="fas fa-chart-area p3xr-tree-type-icon" aria-hidden="true"></i> }
+                    @case ('bloom') { <i class="fas fa-filter p3xr-tree-type-icon" aria-hidden="true"></i> }
+                    @case ('cuckoo') { <i class="fas fa-filter p3xr-tree-type-icon" aria-hidden="true"></i> }
+                    @case ('topk') { <i class="fas fa-trophy p3xr-tree-type-icon" aria-hidden="true"></i> }
+                    @case ('cms') { <i class="fas fa-chart-simple p3xr-tree-type-icon" aria-hidden="true"></i> }
+                    @case ('tdigest') { <i class="fas fa-chart-bar p3xr-tree-type-icon" aria-hidden="true"></i> }
+                    @case ('vectorset') { <i class="fas fa-brain p3xr-tree-type-icon" aria-hidden="true"></i> }
+                }
+            </span>
+        }
 
         <!-- Node content -->
-        <span [attr.data-p3xr-tree-key]="node.type === 'folder' ? '' : node.key">
+        <span [attr.data-p3xr-tree-key]="node.type === 'folder' ? '' : node.key"
+              style="display:inline-flex;align-items:center">
             <label class="p3xr-database-tree-node"
                    (click)="node.expandable ? toggleExpand(node) : selectNode(node)"
                    [matTooltip]="extractNodeTooltip(node)"
                    matTooltipPosition="right"
                    matTooltipClass="p3xr-tree-node-tooltip">
 
-                <!-- Type icon for elements -->
-                @if (node.type !== 'folder' && node.keysInfo) {
-                    @switch (node.keysInfo.type) {
-                        @case ('hash') { <i class="p3xr-database-treecontrol-node-icon fas fa-hashtag" aria-hidden="true"></i> }
-                        @case ('list') { <i class="p3xr-database-treecontrol-node-icon fas fa-list-ol" aria-hidden="true"></i> }
-                        @case ('set') { <i class="p3xr-database-treecontrol-node-icon fas fa-list" aria-hidden="true"></i> }
-                        @case ('string') { <i class="p3xr-database-treecontrol-node-icon fas fa-ellipsis-h" aria-hidden="true"></i> }
-                        @case ('zset') { <i class="p3xr-database-treecontrol-node-icon fas fa-chart-line" aria-hidden="true"></i> }
-                        @case ('stream') { <i class="p3xr-database-treecontrol-node-icon fas fa-stream" aria-hidden="true"></i> }
-                        @case ('json') { <i class="p3xr-database-treecontrol-node-icon fas fa-code" aria-hidden="true"></i> }
-                        @case ('timeseries') { <i class="p3xr-database-treecontrol-node-icon fas fa-chart-area" aria-hidden="true"></i> }
-                        @case ('bloom') { <i class="p3xr-database-treecontrol-node-icon fas fa-filter" aria-hidden="true"></i> }
-                        @case ('cuckoo') { <i class="p3xr-database-treecontrol-node-icon fas fa-filter" aria-hidden="true"></i> }
-                        @case ('topk') { <i class="p3xr-database-treecontrol-node-icon fas fa-trophy" aria-hidden="true"></i> }
-                        @case ('cms') { <i class="p3xr-database-treecontrol-node-icon fas fa-chart-simple" aria-hidden="true"></i> }
-                        @case ('tdigest') { <i class="p3xr-database-treecontrol-node-icon fas fa-chart-bar" aria-hidden="true"></i> }
-                        @case ('vectorset') { <i class="p3xr-database-treecontrol-node-icon fas fa-brain" aria-hidden="true"></i> }
-                    }
-                }
-
                 <span class="p3xr-database-tree-node-label">{{ node.label }}</span>
 
                 <!-- Folder child count -->
                 @if (node.type === 'folder') {
-                    <span class="p3xr-database-tree-node-count">{{ divider }}* <span style="opacity: 0.5;">({{ node.childCount }})</span></span>
+                    <span class="p3xr-database-tree-node-count">{{ divider }}* ({{ node.childCount }})</span>
                 }
 
                 <!-- Element length (non-string) -->

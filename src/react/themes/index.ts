@@ -43,25 +43,31 @@ const faIconBase = {
 }
 const faIconSmaller = { ...faIconBase, fontSize: 18 }
 
-// Toolbar button styles
-const toolbarButtonStyles = {
-    color: 'inherit !important', letterSpacing: '0.1px !important',
-    textTransform: 'uppercase' as const, height: 36, minHeight: 36, minWidth: 'auto',
-    padding: '0 4px', margin: '0 4px', display: 'inline-flex', alignItems: 'center',
-    justifyContent: 'center', whiteSpace: 'nowrap' as const, gap: 0, borderRadius: '4px',
-    '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.15) !important' },
-    '& .MuiSvgIcon-root, & i.fa, & i.fas, & i.far, & i.fab': { marginRight: 4, marginLeft: 0 },
-    '& .MuiSvgIcon-root:only-child, & i:only-child': { marginRight: 0 },
-}
-const toolbarIconButtonStyles = {
-    borderRadius: '4px !important', color: 'inherit !important', margin: '0 2px',
-    '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.15) !important', borderRadius: '4px !important' },
-    '& .MuiTouchRipple-root': { borderRadius: '4px !important' },
-    '& .MuiTouchRipple-child': { borderRadius: '4px !important' },
-    '&.Mui-focusVisible': { borderRadius: '4px !important' },
-}
-
 function makeShared(toolbarBg: string, toolbarColor: string): ThemeOptions['components'] {
+    // Matrix has dark text on bright toolbar — use black overlays; all others use white
+    const isDarkText = toolbarColor.includes('0,0,0')
+    const ov = isDarkText ? '0, 0, 0' : '255, 255, 255'
+
+    const toolbarButtonStyles = {
+        color: 'inherit !important', letterSpacing: '0.1px !important',
+        textTransform: 'uppercase' as const, height: 36, minHeight: 36, minWidth: 'auto',
+        padding: '0 4px', margin: '0 4px', display: 'inline-flex', alignItems: 'center',
+        justifyContent: 'center', whiteSpace: 'nowrap' as const, gap: 0, borderRadius: '4px',
+        '&:hover': { backgroundColor: `rgba(${ov}, 0.15) !important` },
+        '&.Mui-focusVisible': { backgroundColor: `rgba(${ov}, 0.15) !important` },
+        '&:active': { backgroundColor: `rgba(${ov}, 0.25) !important` },
+        '& .MuiTouchRipple-child': { backgroundColor: `rgba(${ov}, 0.3) !important` },
+        '& .MuiSvgIcon-root, & i.fa, & i.fas, & i.far, & i.fab': { marginRight: 4, marginLeft: 0 },
+        '& .MuiSvgIcon-root:only-child, & i:only-child': { marginRight: 0 },
+    }
+    const toolbarIconButtonStyles = {
+        borderRadius: '4px !important', color: 'inherit !important', margin: '0 2px',
+        '&:hover': { backgroundColor: `rgba(${ov}, 0.15) !important`, borderRadius: '4px !important' },
+        '&.Mui-focusVisible': { backgroundColor: `rgba(${ov}, 0.15) !important`, borderRadius: '4px !important' },
+        '&:active': { backgroundColor: `rgba(${ov}, 0.25) !important`, borderRadius: '4px !important' },
+        '& .MuiTouchRipple-root': { borderRadius: '4px !important' },
+        '& .MuiTouchRipple-child': { borderRadius: '4px !important', backgroundColor: `rgba(${ov}, 0.3) !important` },
+    }
     return {
         MuiCssBaseline: { styleOverrides: `
             body.p3xr-no-main-scroll { overflow: hidden; }
@@ -93,6 +99,7 @@ function makeShared(toolbarBg: string, toolbarColor: string): ThemeOptions['comp
             }
             #p3xr-console-content {
                 font-family: 'Roboto Mono', monospace;
+                font-size: 13px;
                 text-align: center;
             }
             #p3xr-console-content-output {
@@ -146,6 +153,19 @@ function makeShared(toolbarBg: string, toolbarColor: string): ThemeOptions['comp
                 margin: 0;
             }
         `},
+        // Global button sizing — match Angular mat-raised-button (36px, 14px, uppercase)
+        MuiButton: { styleOverrides: { root: {
+            height: 36,
+            minHeight: 36,
+            fontSize: '14px',
+            padding: '0 6px',
+            textTransform: 'uppercase' as const,
+            letterSpacing: '0.1px',
+            borderRadius: '4px',
+            gap: '3px',
+            '& .MuiSvgIcon-root': { marginRight: '4px' },
+            '& .MuiSvgIcon-root:only-child': { marginRight: 0 },
+        }}},
         MuiToolbar: { styleOverrides: { root: {
             minHeight: `${TOOLBAR_HEIGHT}px !important`, height: TOOLBAR_HEIGHT,
             '& i.fa, & i.fas, & i.far, & i.fab': faIconBase,

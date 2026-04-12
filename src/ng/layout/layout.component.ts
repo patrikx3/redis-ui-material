@@ -22,6 +22,7 @@ import { ShortcutsService } from '../services/shortcuts.service';
 import { OverlayService } from '../services/overlay.service';
 import { SettingsService } from '../services/settings.service';
 import { AuthService } from '../services/auth.service';
+import { IconRegistryService } from '../services/icon-registry.service';
 import { LoginComponent } from '../components/login.component';
 
 /**
@@ -86,7 +87,10 @@ export class LayoutComponent implements OnInit, OnDestroy {
         @Inject(OverlayService) private readonly overlay: OverlayService,
         @Inject(SettingsService) private readonly settings: SettingsService,
         @Inject(AuthService) readonly auth: AuthService,
-    ) {}
+        @Inject(IconRegistryService) iconRegistry: IconRegistryService,
+    ) {
+        iconRegistry.registerAll();
+    }
 
     @HostListener('document:keydown', ['$event'])
     onKeydown(event: KeyboardEvent): void {
@@ -94,8 +98,6 @@ export class LayoutComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        // Remove the loading splash shown before Angular bootstraps
-        document.getElementById('p3xr-loading')?.remove();
 
         // Check auth status — only proceed with app init when authenticated
         this.auth.checkAuthStatus().then(() => {

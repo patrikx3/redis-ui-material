@@ -1,0 +1,57 @@
+/* Shared table layout for key type renderers (hash, list, set, zset, stream) */
+.p3xr-key-table-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    font-weight: bold;
+    background-color: rgb(var(--v-theme-primary));
+    color: rgb(var(--v-theme-on-primary));
+    border-bottom: 2px solid rgba(var(--v-theme-on-surface), 0.05);
+}
+.p3xr-key-table-header-actions {
+    flex: 20%;
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.p3xr-key-table-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 6px 16px;
+    border-bottom: 1px solid rgba(var(--v-theme-on-surface), 0.05);
+}
+.p3xr-key-table-row:hover {
+    background-color: rgba(var(--v-theme-on-surface), 0.1) !important;
+}
+.p3xr-key-table-odd {
+    background-color: rgba(var(--v-theme-on-surface), 0.04);
+}
+.p3xr-key-table-value {
+    flex: 60%;
+    cursor: pointer;
+    overflow: auto;
+    max-height: 200px;
+    white-space: pre-wrap;
+    word-break: break-all;
+    font-family: 'Roboto Mono', monospace;
+    user-select: text;
+}
+.p3xr-key-table-actions {
+    flex: 20%;
+    text-align: right;
+    white-space: nowrap;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.p3xr-key-icon {
+    cursor: pointer;
+    margin: 0 2px;
+    opacity: 0.7;
+}
+.p3xr-key-icon:hover {
+    opacity: 1;
+}

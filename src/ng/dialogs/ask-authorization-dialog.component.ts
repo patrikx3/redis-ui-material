@@ -27,21 +27,24 @@ import { I18nService } from '../services/i18n.service';
         <form (ngSubmit)="submit()" novalidate>
             <mat-toolbar class="p3xr-dialog-toolbar p3xr-mat-layout-strong">
                 <span mat-dialog-title class="p3xr-dialog-title">
+                    <mat-icon style="margin-right: 8px; vertical-align: middle;">shield</mat-icon>
                     {{ strings().label?.askAuth || 'Authorization' }}
                 </span>
                 <button mat-icon-button type="button" (click)="cancel()">
-                    <mat-icon>close</mat-icon>
+                    <mat-icon svgIcon="close"></mat-icon>
                 </button>
             </mat-toolbar>
 
             <mat-dialog-content class="p3xr-dialog-content">
                 <mat-form-field class="full-width">
                     <mat-label>{{ strings().form?.connection?.label?.username || 'Username' }}</mat-label>
+                    <mat-icon matPrefix>person</mat-icon>
                     <input matInput name="username" type="text" [(ngModel)]="model.username" autocomplete="off" />
                 </mat-form-field>
 
                 <mat-form-field class="full-width">
                     <mat-label>{{ strings().form?.connection?.label?.password || 'Password' }}</mat-label>
+                    <mat-icon matPrefix>lock</mat-icon>
                     <input matInput name="password" type="password" [(ngModel)]="model.password" autocomplete="off" />
                 </mat-form-field>
             </mat-dialog-content>
@@ -49,7 +52,7 @@ import { I18nService } from '../services/i18n.service';
             <mat-dialog-actions class="p3xr-dialog-actions">
                 <p3xr-dialog-cancel (cancel)="cancel()"></p3xr-dialog-cancel>
                 <button mat-raised-button class="btn-primary" type="submit">
-                    <mat-icon>done</mat-icon>
+                    <mat-icon svgIcon="done"></mat-icon>
                     {{ strings().intention?.ok || 'OK' }}
                 </button>
             </mat-dialog-actions>

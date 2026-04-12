@@ -4,7 +4,7 @@
  */
 import { useState, useEffect, useCallback } from 'react'
 import { Box, Tooltip } from '@mui/material'
-import { Delete, TableChart, ContentCopy, Download, Edit, Add } from '@mui/icons-material'
+import { Delete, AccountTree, ContentCopy, Download, Edit, Add } from '@mui/icons-material'
 import { useTheme } from '@mui/material'
 import { useI18nStore } from '../../../stores/i18n.store'
 import { useRedisStateStore } from '../../../stores/redis-state.store'
@@ -129,25 +129,25 @@ export default function KeyList({ response, value, valueBuffer, keyName, valueFo
                         <Box component="span" sx={{ flex: '20%', textAlign: 'right', whiteSpace: 'nowrap' }}>
                             {!isReadonly && (
                                 <Tooltip title={strings?.intention?.delete}>
-                                    <Delete sx={{ fontSize: 18, cursor: 'pointer', mx: '2px', opacity: 0.7, color: 'error.main', '&:hover': { opacity: 1 } }}
+                                    <Delete sx={{ fontSize: 24, cursor: 'pointer', mx: '2px', opacity: 0.7, color: 'error.main', '&:hover': { opacity: 1 } }}
                                         onClick={() => deleteListElement(item.index)} />
                                 </Tooltip>
                             )}
                             <Tooltip title={strings?.intention?.jsonViewShow}>
-                                <TableChart sx={{ fontSize: 18, cursor: 'pointer', mx: '2px', opacity: 0.7, color: 'secondary.main', '&:hover': { opacity: 1 } }}
+                                <AccountTree sx={{ fontSize: 24, cursor: 'pointer', mx: '2px', opacity: 0.7, color: 'secondary.main', '&:hover': { opacity: 1 } }}
                                     onClick={() => { setJsonViewValue(String(item.value ?? '')); setJsonViewOpen(true) }} />
                             </Tooltip>
                             <Tooltip title={strings?.intention?.copy}>
-                                <ContentCopy sx={{ fontSize: 18, cursor: 'pointer', mx: '2px', opacity: 0.7, color: 'secondary.main', '&:hover': { opacity: 1 } }}
+                                <ContentCopy sx={{ fontSize: 24, cursor: 'pointer', mx: '2px', opacity: 0.7, color: 'secondary.main', '&:hover': { opacity: 1 } }}
                                     onClick={() => copyValue(item.value)} />
                             </Tooltip>
                             <Tooltip title={strings?.intention?.downloadBuffer}>
-                                <Download sx={{ fontSize: 18, cursor: 'pointer', mx: '2px', opacity: 0.7, color: 'secondary.main', '&:hover': { opacity: 1 } }}
+                                <Download sx={{ fontSize: 24, cursor: 'pointer', mx: '2px', opacity: 0.7, color: 'secondary.main', '&:hover': { opacity: 1 } }}
                                     onClick={() => downloadBuffer(valueBuffer?.[item.index], keyName)} />
                             </Tooltip>
                             {!isReadonly && (
                                 <Tooltip title={strings?.intention?.edit}>
-                                    <Edit sx={{ fontSize: 18, cursor: 'pointer', mx: '2px', opacity: 0.7, color: 'primary.main', '&:hover': { opacity: 1 } }}
+                                    <Edit sx={{ fontSize: 24, cursor: 'pointer', mx: '2px', opacity: 0.7, color: 'primary.main', '&:hover': { opacity: 1 } }}
                                         onClick={() => editValue(item.index, item.value)} />
                                 </Tooltip>
                             )}

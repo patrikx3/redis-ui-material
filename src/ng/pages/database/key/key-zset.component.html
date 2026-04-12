@@ -6,7 +6,7 @@
         <span style="flex: 20%; text-align: right">
             @if (!isReadonly) {
                 <button mat-icon-button (click)="addZSet($event)" matTooltip="Add">
-                    <mat-icon>add</mat-icon>
+                    <mat-icon svgIcon="add"></mat-icon>
                 </button>
             }
         </span>
@@ -17,7 +17,7 @@
             <span class="p3xr-value-col" [class.p3xr-pre]="valueFormat !== 'hex'" style="flex: 60%; cursor: pointer" (click)="editValue(item, $event)">@if (valueFormat === 'hex') {<p3xr-hex-monitor [value]="truncateDisplay(item.member)" [truncated]="isTruncated(item.member)"></p3xr-hex-monitor>} @else {{{ truncateDisplay(formatValue(item.member)) }}@if (isTruncated(item.member)) {<span style="opacity: 0.5;">...</span>}}</span>
             <span style="flex: 20%; text-align: right" class="p3xr-key-type-row-actions">
                 @if (!isReadonly) { <mat-icon class="icon-warn" (click)="deleteZSet(item, $event)" matTooltip="Delete">delete</mat-icon> }
-                <mat-icon class="icon-accent" (click)="showJsonItem(item.member, $event)" matTooltip="JSON">table_chart</mat-icon>
+                <mat-icon class="icon-accent" (click)="showJsonItem(item.member, $event)" matTooltip="JSON">account_tree</mat-icon>
                 <mat-icon class="icon-accent" (click)="copyItem(item.member)" matTooltip="Copy">content_copy</mat-icon>
                 <mat-icon class="icon-accent" (click)="downloadItem(item.index)" matTooltip="Download">download</mat-icon>
                 @if (!isReadonly) { <mat-icon class="icon-primary" (click)="editValue(item, $event)" matTooltip="Edit">edit</mat-icon> }

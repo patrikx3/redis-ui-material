@@ -45,7 +45,6 @@ async function run() {
     // Connect
     console.log('Connecting...')
     await page.goto(`${BASE}/ng/settings`, { waitUntil: 'networkidle', timeout: 30000 })
-    await page.waitForFunction(() => !document.getElementById('p3xr-loading'), { timeout: 15000 }).catch(() => {})
     await page.waitForTimeout(5000)
     await page.locator('button').nth(10).click({ force: true })
     await page.waitForTimeout(8000)

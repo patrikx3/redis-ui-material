@@ -9,6 +9,11 @@ p3xr-database-statistics > :first-child > .mat-mdc-tab-header {
     background-color: var(--p3xr-content-bg, #303030) !important;
 }
 
+p3xr-ng-main-statistics .mat-mdc-tab .mdc-tab__text-label,
+p3xr-database-statistics .mat-mdc-tab .mdc-tab__text-label {
+    text-transform: none !important;
+}
+
 .p3xr-statistics-list {
     padding: 8px 16px;
 }

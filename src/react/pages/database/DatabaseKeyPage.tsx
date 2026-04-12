@@ -300,7 +300,7 @@ export default function DatabaseKeyPage() {
     const ActionBtn = ({ icon, label, color, onClick }: {
         icon: React.ReactNode; label: string; color: 'primary' | 'secondary' | 'error'; onClick: (e: React.MouseEvent) => void
     }) => isGtSm ? (
-        <Button variant="contained" color={color} size="small" onClick={onClick} sx={{ gap: '3px' }}>
+        <Button variant="contained" color={color} onClick={onClick}>
             {icon}<span>{label}</span>
         </Button>
     ) : (
@@ -441,6 +441,7 @@ export default function DatabaseKeyPage() {
                             onChange={(_, v) => v && setValueFormat(v)}
                             sx={{
                                 borderRadius: '4px', overflow: 'hidden',
+                                border: `thin solid ${isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)'}`,
                                 '& .MuiToggleButton-root': {
                                     height: 32, fontSize: 13, px: 1.5, borderRadius: '0 !important',
                                     textTransform: 'none',

@@ -29,11 +29,11 @@ export interface JsonEditorDialogData {
     template: `
         <mat-toolbar class="p3xr-dialog-toolbar p3xr-mat-layout-strong">
             <span mat-dialog-title class="p3xr-dialog-title p3xr-dialog-title-with-icon">
-                <mat-icon>edit</mat-icon>
+                <mat-icon svgIcon="edit"></mat-icon>
                 <span>{{ strings().intention?.jsonViewEditor || 'JSON Editor' }}</span>
             </span>
             <button mat-icon-button (click)="close()">
-                <mat-icon>close</mat-icon>
+                <mat-icon svgIcon="close"></mat-icon>
             </button>
         </mat-toolbar>
 
@@ -50,7 +50,7 @@ export interface JsonEditorDialogData {
 
         <mat-dialog-actions class="p3xr-dialog-actions">
             <button mat-raised-button class="btn-accent" type="button" (click)="toggleWrap()">
-                <mat-icon>{{ lineWrap ? 'wrap_text' : 'notes' }}</mat-icon>
+                <mat-icon svgIcon="{{ lineWrap ? 'wrap_text' : 'notes' }}"></mat-icon>
                 <span class="hide-sm">{{ lineWrap ? (strings().intention?.unwrap || 'Unwrap') : (strings().intention?.wrap || 'Wrap') }}</span>
             </button>
             <span style="flex: 1"></span>
@@ -59,14 +59,14 @@ export interface JsonEditorDialogData {
             @if (isJson && !isReadonly) {
                 <button mat-raised-button class="btn-primary" type="button" (click)="save(false)"
                     [matTooltip]="strings().intention?.save || 'Save'">
-                    <mat-icon>save</mat-icon>
+                    <mat-icon svgIcon="save"></mat-icon>
                     <span class="hide-sm">{{ strings().intention?.save || 'Save' }}</span>
                 </button>
                 @if (!hideFormatSave) {
                     <button mat-raised-button class="btn-primary" type="button" (click)="save(true)"
                         [matTooltip]="strings().intention?.saveWithFormatJson || 'Save Formatted'">
-                        <mat-icon>save</mat-icon>
-                        <mat-icon>format_line_spacing</mat-icon>
+                        <mat-icon svgIcon="save"></mat-icon>
+                        <mat-icon svgIcon="format_line_spacing"></mat-icon>
                         <span class="hide-sm">{{ strings().intention?.saveWithFormatJson || 'Save Formatted' }}</span>
                     </button>
                 }

@@ -49,7 +49,7 @@ export interface KeyNewOrSetDialogData {
                     {{ getTitle() }}
                 </span>
                 <button mat-icon-button type="button" (click)="cancel()">
-                    <mat-icon>close</mat-icon>
+                    <mat-icon svgIcon="close"></mat-icon>
                 </button>
             </mat-toolbar>
 
@@ -219,7 +219,7 @@ export interface KeyNewOrSetDialogData {
                 @if (model.type !== 'stream' && model.type !== 'timeseries' && !isProbabilisticType()) {
                     <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="fileInput.click()"
                         [matTooltip]="isWide ? '' : (strings().intention?.setBuffer || 'Upload Binary')">
-                        <mat-icon>upload</mat-icon>
+                        <mat-icon svgIcon="upload"></mat-icon>
                         @if (isWide) { <span>{{ strings().intention?.setBuffer || 'Upload Binary' }}</span> }
                     </button>
                 }
@@ -227,19 +227,19 @@ export interface KeyNewOrSetDialogData {
                 @if (model.type !== 'timeseries' && !isProbabilisticType()) {
                     <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="openJsonEditor()"
                         [matTooltip]="isWide ? '' : (strings().intention?.jsonViewEditor || 'Edit JSON')">
-                        <mat-icon>description</mat-icon>
+                        <mat-icon svgIcon="description"></mat-icon>
                         @if (isWide) { <span>{{ strings().intention?.jsonViewEditor || 'Edit JSON' }}</span> }
                     </button>
 
                     <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="formatJson()"
                         [matTooltip]="isWide ? '' : (strings().intention?.formatJson || 'Format JSON')">
-                        <mat-icon>format_line_spacing</mat-icon>
+                        <mat-icon svgIcon="format_line_spacing"></mat-icon>
                         @if (isWide) { <span>{{ strings().intention?.formatJson || 'Format JSON' }}</span> }
                     </button>
 
                     <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="openJsonViewer()"
                         [matTooltip]="isWide ? '' : (strings().intention?.jsonViewShow || 'Display JSON')">
-                        <mat-icon>table_chart</mat-icon>
+                        <mat-icon svgIcon="account_tree"></mat-icon>
                         @if (isWide) { <span>{{ strings().intention?.jsonViewShow || 'Display JSON' }}</span> }
                     </button>
                 }
@@ -247,7 +247,7 @@ export interface KeyNewOrSetDialogData {
                 <div style="margin: 8px 0;">
                     <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="copy()"
                         [matTooltip]="isWide ? '' : (strings().intention?.copy || 'Copy')">
-                        <mat-icon>content_copy</mat-icon>
+                        <mat-icon svgIcon="content_copy"></mat-icon>
                         @if (isWide) { <span>{{ strings().intention?.copy || 'Copy' }}</span> }
                     </button>
                 </div>
@@ -311,7 +311,7 @@ export interface KeyNewOrSetDialogData {
                                 <input matInput type="number" name="tsFormulaOffset" [(ngModel)]="model.tsFormulaOffset" />
                             </mat-form-field>
                             <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="generateFormula()">
-                                <mat-icon>auto_graph</mat-icon>
+                                <mat-icon svgIcon="auto_graph"></mat-icon>
                                 @if (isWide) { <span>{{ strings().page?.key?.timeseries?.generate || 'Generate' }}</span> }
                             </button>
                         </div>
@@ -349,7 +349,7 @@ export interface KeyNewOrSetDialogData {
                 <p3xr-dialog-cancel (cancel)="cancel()"></p3xr-dialog-cancel>
                 @if (!isReadonly) {
                     <button mat-raised-button class="btn-primary" type="submit">
-                        <mat-icon>{{ options.type === 'edit' ? 'edit' : 'add' }}</mat-icon>
+                        <mat-icon svgIcon="{{ options.type === 'edit' ? 'edit' : 'add' }}"></mat-icon>
                         {{ options.type === 'edit' ? (strings().intention?.save || 'Save') : (strings().intention?.add || 'Add') }}
                     </button>
                 }

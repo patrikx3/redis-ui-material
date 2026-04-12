@@ -3,7 +3,7 @@ import {
     Box, TextField, Button, IconButton, Tooltip, Menu, MenuItem,
     InputAdornment, AppBar, Toolbar, useMediaQuery,
 } from '@mui/material'
-import { Done, Visibility, VisibilityOff, Close } from '@mui/icons-material'
+import { Done, Visibility, VisibilityOff, Close, Person, Lock, Login } from '@mui/icons-material'
 import { useTheme } from '@mui/material'
 import { useI18nStore } from '../../stores/i18n.store'
 import { useAuthStore } from '../../stores/auth.store'
@@ -40,7 +40,7 @@ export default function LoginPage() {
 
     const switchGui = (gui: string) => {
         try { localStorage.setItem('p3xr-frontend', gui) } catch {}
-        location.href = gui === 'react' ? '/react/' : '/ng/'
+        location.href = gui === 'react' ? '/react/' : gui === 'vue' ? '/vue/' : '/ng/'
     }
 
     const getErrorMessage = (error: string) => {
@@ -68,15 +68,22 @@ export default function LoginPage() {
                         minHeight: '48px !important', height: 48, px: 1,
                     }}>
                         <Box sx={{ flex: 1 }} />
-                        <Button color="inherit" size="small" onClick={e => setGuiAnchor(e.currentTarget)}>
+                        <Button color="inherit" size="small" onClick={e => setGuiAnchor(e.currentTarget)}
+                            startIcon={<i className="fas fa-desktop" style={{ fontSize: 14 }} />}>
                             GUI
                         </Button>
                         <Menu anchorEl={guiAnchor} open={!!guiAnchor} onClose={() => setGuiAnchor(null)}>
                             <MenuItem selected={currentGui === 'ng'} onClick={() => switchGui('ng')}>
+                                <i className="fab fa-angular" style={{ fontSize: 18, width: 24, textAlign: 'center', marginRight: 8, color: '#dd0031' }} />
                                 Angular
                             </MenuItem>
                             <MenuItem selected={currentGui === 'react'} onClick={() => switchGui('react')}>
+                                <i className="fab fa-react" style={{ fontSize: 18, width: 24, textAlign: 'center', marginRight: 8, color: '#61dafb' }} />
                                 React
+                            </MenuItem>
+                            <MenuItem selected={currentGui === 'vue'} onClick={() => switchGui('vue')}>
+                                <i className="fab fa-vuejs" style={{ fontSize: 18, width: 24, textAlign: 'center', marginRight: 8, color: '#42b883' }} />
+                                Vue
                             </MenuItem>
                         </Menu>
                     </Toolbar>
@@ -95,6 +102,15 @@ export default function LoginPage() {
                         onChange={e => setUsername(e.target.value)}
                         autoComplete="username"
                         onKeyDown={e => e.key === 'Enter' && handleLogin()}
+                        slotProps={{
+                            input: {
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <Person fontSize="small" />
+                                    </InputAdornment>
+                                ),
+                            },
+                        }}
                     />
                     <TextField
                         fullWidth margin="dense"
@@ -106,6 +122,11 @@ export default function LoginPage() {
                         onKeyDown={e => e.key === 'Enter' && handleLogin()}
                         slotProps={{
                             input: {
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <Lock fontSize="small" />
+                                    </InputAdornment>
+                                ),
                                 endAdornment: (
                                     <InputAdornment position="end">
                                         <IconButton onClick={() => setPwVisible(!pwVisible)} size="small">
@@ -132,7 +153,7 @@ export default function LoginPage() {
                     {isWide ? (
                         <Button variant="contained" color="primary" onClick={handleLogin}
                                 disabled={loading || !username || !password}>
-                            <Done fontSize="small" />
+                            <Login fontSize="small" />
                             <span style={{ marginLeft: 3 }}>{strings?.intention?.ok || 'Login'}</span>
                         </Button>
                     ) : (

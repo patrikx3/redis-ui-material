@@ -6,35 +6,35 @@
         <div class="p3xr-console-toolbar-tools">
 
             @if (type !== 'quick') {
+                <span class="material-icons" style="margin-right: 6px;">terminal</span>
                 <span class="p3xr-console-title">{{ strings().label?.console || 'Console' }}</span>
                 <span class="p3xr-toolbar-spacer"></span>
 
                 <span class="p3xr-console-toolbar-actions">
                     @if (isAiGloballyEnabled()) {
-                        <span class="p3xr-console-ai-toggle" (click)="aiAutoDetect = !aiAutoDetect"
-                              [matTooltip]="'Auto AI'">
+                        <span class="p3xr-console-ai-toggle" (click)="aiAutoDetect = !aiAutoDetect">
                             <span class="material-icons">{{ aiAutoDetect ? 'check_box' : 'check_box_outline_blank' }}</span>
                             <span>Auto AI</span>
                         </span>
                     }
-                    <p3xr-ng-button [label]="strings().label?.redisCommandsReference || 'Redis Commands'" mdIcon="terminal"
+                    <p3xr-ng-button [label]="strings().label?.redisCommandsReference || 'Redis Commands'" mdIcon="menu_book"
                         (click)="openCommands($event)"></p3xr-ng-button>
                     <p3xr-ng-button [label]="strings().intention?.clear || 'Clear'" mdIcon="backspace"
                         (click)="clearConsole()"></p3xr-ng-button>
                 </span>
             } @else {
+                <span class="material-icons" style="margin-right: 6px;">terminal</span>
                 <span class="p3xr-console-title">{{ embedded ? (strings().label?.console || 'Console') : (strings().intention?.quickConsole || 'Quick Console') }}</span>
                 <span class="p3xr-toolbar-spacer"></span>
 
                 <span class="p3xr-console-toolbar-actions">
                     @if (isAiGloballyEnabled()) {
-                        <span class="p3xr-console-ai-toggle" (click)="aiAutoDetect = !aiAutoDetect"
-                              [matTooltip]="'Auto AI'">
+                        <span class="p3xr-console-ai-toggle" (click)="aiAutoDetect = !aiAutoDetect">
                             <span class="material-icons">{{ aiAutoDetect ? 'check_box' : 'check_box_outline_blank' }}</span>
                             <span>Auto AI</span>
                         </span>
                     }
-                    <p3xr-ng-button [label]="strings().label?.redisCommandsReference || 'Redis Commands'" mdIcon="terminal"
+                    <p3xr-ng-button [label]="strings().label?.redisCommandsReference || 'Redis Commands'" mdIcon="menu_book"
                         (click)="openCommands($event)"></p3xr-ng-button>
                     <p3xr-ng-button [label]="strings().intention?.clear || 'Clear'" mdIcon="backspace"
                         (click)="clearConsole()"></p3xr-ng-button>
@@ -68,6 +68,9 @@
     <div id="p3xr-console-autocomplete"
          [class.p3xr-console-autocomplete-quick]="type === 'quick'"
          [class.p3xr-console-autocomplete-embedded]="embedded">
+        @if (currentHint) {
+            <div class="p3xr-console-hint">{{ currentHint }}</div>
+        }
         <textarea id="p3xr-console-input" class="p3xr-input"
                rows="1"
                [formControl]="searchControl"
@@ -78,9 +81,6 @@
                [style.background]="'var(--p3xr-input-bg)'"
                [style.color]="'var(--p3xr-input-color)'"
                [style.border-color]="aiLoading ? 'var(--mat-sys-primary, var(--p3xr-input-border-color))' : 'var(--p3xr-input-border-color, var(--p3xr-border-color))'"></textarea>
-        @if (currentHint) {
-            <div class="p3xr-console-hint">{{ currentHint }}</div>
-        }
         <mat-autocomplete #auto="matAutocomplete"
                           (optionSelected)="onAutocompleteSelected($event)"
                           class="p3xr-console-autocomplete-panel"

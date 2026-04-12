@@ -93,6 +93,9 @@ export class StatisticsComponent implements OnInit, OnDestroy {
                     this.infoSections.push({ key: 'modules', items: moduleItems });
                 }
             }
+
+            // Hide sections with no content
+            this.infoSections = this.infoSections.filter(s => s.items.length > 0);
         }
 
         // Responsive height

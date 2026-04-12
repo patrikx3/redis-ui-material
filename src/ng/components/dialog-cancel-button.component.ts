@@ -23,7 +23,7 @@ import { I18nService } from '../services/i18n.service';
         <button mat-raised-button class="btn-warn" type="button" (click)="cancel.emit()"
             [matTooltip]="label" [matTooltipDisabled]="isWide"
             [attr.aria-label]="label">
-            <mat-icon>{{ icon }}</mat-icon>
+            <mat-icon svgIcon="{{ icon }}"></mat-icon>
             @if (isWide) { <span>{{ label }}</span> }
         </button>
     `,

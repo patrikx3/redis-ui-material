@@ -63,41 +63,41 @@ import { RedisStateService } from '../../services/redis-state.service';
                     @if (!isReadonly) {
                         @if (isWide) {
                             <button mat-button (click)="save()">
-                                <mat-icon>save</mat-icon>
+                                <mat-icon svgIcon="save"></mat-icon>
                                 <span>{{ strings().intention?.save || 'Save' }}</span>
                             </button>
                         } @else {
                             <button mat-icon-button (click)="save()"
                                 [matTooltip]="strings().intention?.save || 'Save'"
                                 matTooltipPosition="below">
-                                <mat-icon>save</mat-icon>
+                                <mat-icon svgIcon="save"></mat-icon>
                             </button>
                         }
                     }
 
                     @if (isWide) {
                         <button mat-button (click)="goStatistics()">
-                            <mat-icon>show_chart</mat-icon>
+                            <mat-icon svgIcon="show_chart"></mat-icon>
                             <span>{{ strings().intention?.statistics || 'Statistics' }}</span>
                         </button>
                     } @else {
                         <button mat-icon-button (click)="goStatistics()"
                             [matTooltip]="strings().intention?.statistics || 'Statistics'"
                             matTooltipPosition="below">
-                            <mat-icon>show_chart</mat-icon>
+                            <mat-icon svgIcon="show_chart"></mat-icon>
                         </button>
                     }
 
                     @if (isWide) {
                         <button mat-button (click)="refresh()">
-                            <mat-icon>refresh</mat-icon>
+                            <mat-icon svgIcon="refresh"></mat-icon>
                             <span>{{ strings().intention?.refresh || 'Refresh' }}</span>
                         </button>
                     } @else {
                         <button mat-icon-button (click)="refresh()"
                             [matTooltip]="strings().intention?.refresh || 'Refresh'"
                             matTooltipPosition="below">
-                            <mat-icon>refresh</mat-icon>
+                            <mat-icon svgIcon="refresh"></mat-icon>
                         </button>
                     }
                 }

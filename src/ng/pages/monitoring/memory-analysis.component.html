@@ -1,13 +1,13 @@
 @if (loading && !data) {
     <div class="p3xr-analysis-loading">
-        <mat-icon>hourglass_empty</mat-icon>
+        <mat-icon svgIcon="hourglass_empty"></mat-icon>
         <span>{{ s().running || 'Analyzing...' }}</span>
     </div>
 }
 
 @if (!loading && !data) {
     <div class="p3xr-analysis-loading">
-        <mat-icon>analytics</mat-icon>
+        <mat-icon svgIcon="analytics"></mat-icon>
         <span>{{ s().noData || 'No data. Click Run Analysis to start.' }}</span>
     </div>
 }

@@ -14,6 +14,9 @@ node_modules/.yarn-integrity
 /.angular/**/*.*
 /dist
 /dist-react
+/dist-vue
+/dist-svelte
+
 /out-tsc
 
 .DS_Store

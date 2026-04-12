@@ -108,6 +108,7 @@ body.p3xr-theme-light .p3xr-database-key-info-row-clickable:hover {
 .p3xr-format-toggle {
     border-radius: 4px !important;
     overflow: hidden !important;
+    box-shadow: none !important;
 
     .mat-button-toggle {
         height: 32px !important;
@@ -132,3 +133,4 @@ body.p3xr-theme-light .p3xr-database-key-info-row-clickable:hover {
         border-radius: 0 4px 4px 0 !important;
     }
 }
+

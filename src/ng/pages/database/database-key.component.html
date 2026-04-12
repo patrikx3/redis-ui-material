@@ -10,62 +10,62 @@
         @if (!isReadonly) {
             @if (isGtSm) {
                 <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="addKey($event)">
-                    <mat-icon>add</mat-icon>
+                    <mat-icon svgIcon="add"></mat-icon>
                     <span>{{ strings()?.intention?.addKey }}</span>
                 </button>
             } @else {
                 <button mat-mini-fab class="btn-accent" type="button" (click)="addKey($event)"
                     [matTooltip]="strings()?.intention?.addKey ?? 'Add to this key'" matTooltipPosition="above">
-                    <mat-icon>add</mat-icon>
+                    <mat-icon svgIcon="add"></mat-icon>
                 </button>
             }
 
             @if (isGtSm) {
                 <button mat-raised-button class="btn-warn p3xr-action-btn" type="button" (click)="deleteKey($event)">
-                    <mat-icon>delete</mat-icon>
+                    <mat-icon svgIcon="delete"></mat-icon>
                     <span>{{ strings()?.intention?.delete }}</span>
                 </button>
             } @else {
                 <button mat-mini-fab class="btn-warn" type="button" (click)="deleteKey($event)"
                     [matTooltip]="strings()?.intention?.delete ?? 'Delete'" matTooltipPosition="above">
-                    <mat-icon>delete</mat-icon>
+                    <mat-icon svgIcon="delete"></mat-icon>
                 </button>
             }
 
             @if (isGtSm) {
                 <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="setTtl($event)">
-                    <mat-icon>timer</mat-icon>
+                    <mat-icon svgIcon="timer"></mat-icon>
                     <span>{{ strings()?.intention?.ttl }}</span>
                 </button>
             } @else {
                 <button mat-mini-fab class="btn-primary" type="button" (click)="setTtl($event)"
                     [matTooltip]="strings()?.intention?.ttl ?? 'Set TTL'" matTooltipPosition="above">
-                    <mat-icon>timer</mat-icon>
+                    <mat-icon svgIcon="timer"></mat-icon>
                 </button>
             }
 
             @if (isGtSm) {
                 <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="rename($event)">
-                    <mat-icon>fingerprint</mat-icon>
+                    <mat-icon svgIcon="fingerprint"></mat-icon>
                     <span>{{ strings()?.intention?.rename }}</span>
                 </button>
             } @else {
                 <button mat-mini-fab class="btn-primary" type="button" (click)="rename($event)"
                     [matTooltip]="strings()?.intention?.rename ?? 'Rename'" matTooltipPosition="above">
-                    <mat-icon>fingerprint</mat-icon>
+                    <mat-icon svgIcon="fingerprint"></mat-icon>
                 </button>
             }
         }
 
         @if (isGtSm) {
             <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="refresh()">
-                <mat-icon>refresh</mat-icon>
+                <mat-icon svgIcon="refresh"></mat-icon>
                 <span>{{ strings()?.intention?.reloadKey }}</span>
             </button>
         } @else {
             <button mat-mini-fab class="btn-accent" type="button" (click)="refresh()"
                 [matTooltip]="strings()?.intention?.reloadKey ?? 'Reload Key'" matTooltipPosition="above">
-                <mat-icon>refresh</mat-icon>
+                <mat-icon svgIcon="refresh"></mat-icon>
             </button>
         }
     </div>
@@ -129,9 +129,9 @@
                 <strong style="flex: 1;">{{ strings()?.label?.format || 'Format' }}:</strong>
                 <mat-button-toggle-group [(ngModel)]="valueFormat" hideSingleSelectionIndicator class="p3xr-format-toggle">
                     <mat-button-toggle value="raw">Raw</mat-button-toggle>
-                    <mat-button-toggle value="json">JSON</mat-button-toggle>
-                    <mat-button-toggle value="hex">Hex</mat-button-toggle>
-                    <mat-button-toggle value="base64">Base64</mat-button-toggle>
+                    <mat-button-toggle value="json" [style.border-left]="dividerBorder">JSON</mat-button-toggle>
+                    <mat-button-toggle value="hex" [style.border-left]="dividerBorder">Hex</mat-button-toggle>
+                    <mat-button-toggle value="base64" [style.border-left]="dividerBorder">Base64</mat-button-toggle>
                 </mat-button-toggle-group>
             </div>
         }

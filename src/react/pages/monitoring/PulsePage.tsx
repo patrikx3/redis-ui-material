@@ -969,7 +969,7 @@ export default function PulsePage() {
 
             {/* Server Info */}
             {serverInfoData && (<>
-                <Box sx={{ mt: 1 }} />
+                <br />
                 <P3xrAccordion title={mon.serverInfo || 'Server Info'} accordionKey="monitor-server-info"
                     actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
                         color="inherit" onClick={(e) => { e.stopPropagation(); exportServerInfo() }} />}>
@@ -986,7 +986,7 @@ export default function PulsePage() {
 
             {/* Persistence */}
             {persistenceData && (<>
-                <Box sx={{ mt: 1 }} />
+                <br />
                 <P3xrAccordion title={mon.persistence || 'Persistence'} accordionKey="monitor-persistence"
                     actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
                         color="inherit" onClick={(e) => { e.stopPropagation(); exportPersistence() }} />}>
@@ -1002,7 +1002,7 @@ export default function PulsePage() {
 
             {/* Replication */}
             {replicationData && (<>
-                <Box sx={{ mt: 1 }} />
+                <br />
                 <P3xrAccordion title={mon.replication || 'Replication'} accordionKey="monitor-replication"
                     actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
                         color="inherit" onClick={(e) => { e.stopPropagation(); exportReplication() }} />}>
@@ -1017,7 +1017,7 @@ export default function PulsePage() {
 
             {/* Keyspace */}
             {keyspaceEntries.length > 0 && (<>
-                <Box sx={{ mt: 1 }} />
+                <br />
                 <P3xrAccordion title={mon.keyspace || 'Keyspace'} accordionKey="monitor-keyspace"
                     actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
                         color="inherit" onClick={(e) => { e.stopPropagation(); exportKeyspace() }} />}>
@@ -1040,7 +1040,7 @@ export default function PulsePage() {
             </>)}
 
             {/* Modules */}
-            <Box sx={{ mt: 1 }} />
+            <br />
             <P3xrAccordion title={mon.modules || 'Loaded Modules'} accordionKey="monitor-modules"
                 actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
                     color="inherit" onClick={(e) => { e.stopPropagation(); exportModules() }} />}>
@@ -1064,7 +1064,7 @@ export default function PulsePage() {
                 )}
             </P3xrAccordion>
 
-            <Box sx={{ mt: 1 }} />
+            <br />
 
             {/* Memory Chart */}
             <P3xrAccordion title={`${mon.memory || 'Memory'} (MB)`} accordionKey="monitor-chart-memory"
@@ -1073,7 +1073,7 @@ export default function PulsePage() {
                 <Box ref={memChartRef} sx={{ minHeight: 180, width: '100%', overflow: 'hidden' }} />
             </P3xrAccordion>
 
-            <Box sx={{ mt: 1 }} />
+            <br />
 
             {/* Ops/sec Chart */}
             <P3xrAccordion title={mon.opsPerSec || 'Ops/sec'} accordionKey="monitor-chart-ops"
@@ -1082,7 +1082,7 @@ export default function PulsePage() {
                 <Box ref={opsChartRef} sx={{ minHeight: 180, width: '100%', overflow: 'hidden' }} />
             </P3xrAccordion>
 
-            <Box sx={{ mt: 1 }} />
+            <br />
 
             {/* Clients Chart */}
             <P3xrAccordion title={mon.clients || 'Clients'} accordionKey="monitor-chart-clients"
@@ -1091,7 +1091,7 @@ export default function PulsePage() {
                 <Box ref={cliChartRef} sx={{ minHeight: 180, width: '100%', overflow: 'hidden' }} />
             </P3xrAccordion>
 
-            <Box sx={{ mt: 1 }} />
+            <br />
 
             {/* Network I/O Chart */}
             <P3xrAccordion title={`${mon.networkIo || 'Network I/O'} (KB/s)`} accordionKey="monitor-chart-network"
@@ -1103,7 +1103,7 @@ export default function PulsePage() {
             {/* Slow Log */}
             {current.slowlog.length > 0 && (
                 <>
-                    <Box sx={{ mt: 1 }} />
+                    <br />
                     <P3xrAccordion title={mon.slowLog || 'Slow Log'} accordionKey="monitor-slowlog"
                         actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
                             color="inherit" onClick={(e) => { e.stopPropagation(); exportSlowLog() }} />}>
@@ -1129,7 +1129,7 @@ export default function PulsePage() {
             )}
 
             {/* Client List */}
-            <Box sx={{ mt: 1 }} />
+            <br />
             <P3xrAccordion title={mon.clientList || 'Client List'} accordionKey="monitor-clients-list"
                 actions={<>
                     <P3xrButton icon={autoRefreshClients ? <CheckBox sx={{ fontSize: 18 }} /> : <CheckBoxOutlineBlank sx={{ fontSize: 18 }} />}
@@ -1172,7 +1172,7 @@ export default function PulsePage() {
             </P3xrAccordion>
 
             {/* Top Keys by Memory */}
-            <Box sx={{ mt: 1 }} />
+            <br />
             <P3xrAccordion title={mon.topKeys || 'Top Keys by Memory'} accordionKey="monitor-top-keys"
                 actions={<>
                     <P3xrButton icon={autoRefreshTopKeys ? <CheckBox sx={{ fontSize: 18 }} /> : <CheckBoxOutlineBlank sx={{ fontSize: 18 }} />}

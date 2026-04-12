@@ -6,7 +6,7 @@ import {
 } from '@mui/material'
 import {
     Add, Edit, Upload, Description, FormatLineSpacing,
-    TableChart, ContentCopy, AutoGraph,
+    AccountTree, ContentCopy, AutoGraph,
 } from '@mui/icons-material'
 import { Cancel } from '@mui/icons-material'
 import { useI18nStore } from '../stores/i18n.store'
@@ -387,7 +387,7 @@ export default function KeyNewOrSetDialog({ open, data, onClose }: Props) {
                             {isWide && <span style={{ marginLeft: 3 }}>{strings?.intention?.formatJson}</span>}
                         </Button>
                         <Button variant="contained" color="secondary" size="small" onClick={() => setJsonViewOpen(true)}>
-                            <TableChart fontSize="small" />
+                            <AccountTree fontSize="small" />
                             {isWide && <span style={{ marginLeft: 3 }}>{strings?.intention?.jsonViewShow}</span>}
                         </Button>
                     </>

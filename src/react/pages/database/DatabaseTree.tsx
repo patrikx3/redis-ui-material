@@ -365,6 +365,7 @@ export default function DatabaseTree({ resizeSignal }: { resizeSignal?: any }) {
                                 cursor: 'default',
                                 pl: `${node.level * INDENT_PX + 4}px`,
                                 '&:hover .tree-actions': { visibility: 'visible' },
+                                '&:hover .p3xr-database-tree-node-label': { backgroundColor: 'action.hover' },
                             }}
                         >
                             {/* Folder icon (no spacer for elements — matches Angular) */}

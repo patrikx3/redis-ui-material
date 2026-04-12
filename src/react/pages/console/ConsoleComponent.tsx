@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { Box, Toolbar, Tooltip, Popper, Paper, ClickAwayListener } from '@mui/material'
-import { CheckBox, CheckBoxOutlineBlank, Terminal, Backspace } from '@mui/icons-material'
+import { CheckBox, CheckBoxOutlineBlank, Terminal, Backspace, MenuBook } from '@mui/icons-material'
 import { useTheme } from '@mui/material'
 import P3xrButton from '../../components/P3xrButton'
 import { useI18nStore } from '../../stores/i18n.store'
@@ -465,7 +465,7 @@ export default function ConsoleComponent({ embedded = false, collapsed = false }
                 backgroundImage: 'none !important',
                 color: 'rgba(255,255,255,0.87) !important',
                 minHeight: '48px !important', height: 48, maxHeight: 48,
-                px: 1, flexShrink: 0, zIndex: 2,
+                px: 0, flexShrink: 0, zIndex: 2,
                 '& *': { color: 'inherit' },
                 '& .MuiButton-root': {
                     color: 'inherit !important', textTransform: 'uppercase',
@@ -479,7 +479,8 @@ export default function ConsoleComponent({ embedded = false, collapsed = false }
                     '&:hover': { bgcolor: 'rgba(255,255,255,0.15) !important' },
                 },
             }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', width: '100%', height: '100%', px: 1 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', width: '100%', height: '100%', px: '3px' }}>
+                    <Terminal sx={{ mr: '6px' }} />
                     <Box className="p3xr-console-title" sx={{
                         fontSize: 20, fontWeight: 500,
                         whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
@@ -489,23 +490,21 @@ export default function ConsoleComponent({ embedded = false, collapsed = false }
                     <Box sx={{ flex: '1 1 auto' }} />
                     <Box className="p3xr-console-toolbar-actions" sx={{ display: 'inline-flex', alignItems: 'center', flexShrink: 0, whiteSpace: 'nowrap' }}>
                         {aiEnabled && (
-                            <Tooltip title="Auto AI" placement="top" enterDelay={300}>
-                                <Box className="p3xr-console-ai-toggle" onClick={toggleAiAutoDetect} sx={{
-                                    display: 'inline-flex', alignItems: 'center', gap: '4px',
-                                    mx: 1, px: 1, height: 36, cursor: 'pointer',
-                                    fontSize: 13, textTransform: 'uppercase', borderRadius: '4px',
-                                    userSelect: 'none', whiteSpace: 'nowrap', flexShrink: 0,
-                                    '&:hover': { bgcolor: 'rgba(255,255,255,0.15)' },
-                                }}>
-                                    {aiAutoDetect
-                                        ? <CheckBox sx={{ fontSize: 20, width: 20, height: 20 }} />
-                                        : <CheckBoxOutlineBlank sx={{ fontSize: 20, width: 20, height: 20 }} />}
-                                    <span>Auto AI</span>
-                                </Box>
-                            </Tooltip>
+                            <Box className="p3xr-console-ai-toggle" onClick={toggleAiAutoDetect} sx={{
+                                display: 'inline-flex', alignItems: 'center', gap: '4px',
+                                mx: 1, px: 1, height: 36, cursor: 'pointer',
+                                fontSize: 13, textTransform: 'uppercase', borderRadius: '4px',
+                                userSelect: 'none', whiteSpace: 'nowrap', flexShrink: 0,
+                                '&:hover': { bgcolor: 'rgba(255,255,255,0.15)' },
+                            }}>
+                                {aiAutoDetect
+                                    ? <CheckBox sx={{ fontSize: 20, width: 20, height: 20 }} />
+                                    : <CheckBoxOutlineBlank sx={{ fontSize: 20, width: 20, height: 20 }} />}
+                                <span>Auto AI</span>
+                            </Box>
                         )}
                         <P3xrButton label={strings?.label?.redisCommandsReference ?? 'Redis Commands'}
-                            icon={<Terminal fontSize="small" />}
+                            icon={<MenuBook fontSize="small" />}
                             onClick={() => window.open('https://redis.io/docs/latest/commands/', '_blank')} />
                         <P3xrButton label={strings?.intention?.clear ?? 'Clear'}
                             icon={<Backspace fontSize="small" />}
@@ -533,7 +532,7 @@ export default function ConsoleComponent({ embedded = false, collapsed = false }
             </Box>
 
             {/* Autocomplete dropdown — opens ABOVE input via Popper */}
-            {autocompleteOpen && inputRef.current && (
+            {autocompleteOpen && !collapsed && inputRef.current && (
                 <ClickAwayListener onClickAway={dismissAutocomplete}>
                     <Popper open anchorEl={inputRef.current} placement="top-start"
                         sx={{ zIndex: 1300, width: inputRef.current?.offsetWidth || '100%' }}>
@@ -581,6 +580,15 @@ export default function ConsoleComponent({ embedded = false, collapsed = false }
                 position: 'relative', width: '100%', flexShrink: 0,
                 minWidth: 0,
             }}>
+                {currentHint && !collapsed && (
+                    <Box className="p3xr-console-hint" sx={{
+                        fontFamily: "'Roboto Mono', monospace", fontSize: 12,
+                        px: '6px', py: '2px', opacity: 0.6,
+                        whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+                    }}>
+                        {currentHint}
+                    </Box>
+                )}
                 <textarea
                     ref={inputRef}
                     id="p3xr-console-input"
@@ -612,15 +620,6 @@ export default function ConsoleComponent({ embedded = false, collapsed = false }
                         borderColor: aiLoading ? muiTheme.p3xr.matSysPrimary : muiTheme.p3xr.inputBorderColor,
                     }}
                 />
-                {currentHint && (
-                    <Box className="p3xr-console-hint" sx={{
-                        fontFamily: "'Roboto Mono', monospace", fontSize: 12,
-                        px: '6px', py: '2px', opacity: 0.6,
-                        whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
-                    }}>
-                        {currentHint}
-                    </Box>
-                )}
             </Box>
         </Box>
     )

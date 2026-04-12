@@ -47,11 +47,15 @@ p3xr-database-tree {
 
 
 
-// Redis type icons
-.p3xr-database-treecontrol-node-icon {
-    display: inline-block;
-    min-width: 12px;
-    text-align: center;
+// Type icon — same box as folder icon, override global margin-left: 5px from index.scss
+.p3xr-tree-type-icon {
+    display: inline-block !important;
+    font-size: 14px !important;
+    line-height: 28px !important;
+    width: 28px !important;
+    text-align: center !important;
+    margin-left: 0 !important;
+    margin-right: 4px !important;
 }
 
 // Node label container
@@ -69,6 +73,7 @@ p3xr-database-tree {
 
 .p3xr-database-tree-node-count {
     opacity: 0.5;
+    margin-left: 4px;
 }
 
 // Hover action icons — shared sizing
@@ -98,13 +103,16 @@ p3xr-database-tree {
 .p3xr-tree-ttl-badge {
     display: inline-flex;
     align-items: center;
+    vertical-align: middle;
     margin-left: 4px;
     cursor: default;
+    height: 28px;
 }
 .p3xr-tree-ttl-icon {
-    font-size: 16px;
-    width: 16px;
-    height: 16px;
+    font-size: 16px !important;
+    width: 16px !important;
+    height: 16px !important;
+    vertical-align: middle !important;
 }
 .p3xr-tree-ttl-green .p3xr-tree-ttl-icon { color: var(--mat-sys-primary, #4caf50); }
 .p3xr-tree-ttl-yellow .p3xr-tree-ttl-icon { color: var(--mat-sys-tertiary, #ff9800); }

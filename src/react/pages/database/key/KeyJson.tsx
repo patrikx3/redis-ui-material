@@ -220,7 +220,7 @@ export default function KeyJson({ response, value, valueBuffer, keyName, valueFo
     const Btn = ({ icon, label, color = 'secondary' as const, onClick }: {
         icon: React.ReactNode; label: string; color?: 'primary' | 'secondary'; onClick: () => void
     }) => isGtSm ? (
-        <Button variant="contained" color={color} size="small" onClick={onClick} sx={{ gap: '3px' }}>
+        <Button variant="contained" color={color} onClick={onClick}>
             {icon}<span>{label}</span>
         </Button>
     ) : (

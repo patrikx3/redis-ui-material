@@ -70,6 +70,12 @@ export class DatabaseKeyComponent implements OnInit, OnDestroy {
     valueFormat: 'raw' | 'json' | 'hex' | 'base64' = 'raw';
     strings;
 
+    get dividerBorder(): string {
+        const currentTheme = this.theme.currentTheme() ?? '';
+        const isDark = currentTheme.includes('Dark') || currentTheme.includes('Matrix');
+        return `solid 1px ${isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)'}`;
+    }
+
     private ttlInterval: any;
     private wasExpiring = false;
     private readonly unsubFns: Array<() => void> = [];

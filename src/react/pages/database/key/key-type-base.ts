@@ -3,6 +3,7 @@
  * Exact port of Angular KeyTypeBase + KeyPaging.
  */
 
+import { detectFileType } from '../../../../core/detect-file-type'
 import { useSettingsStore } from '../../../stores/settings.store'
 import { useCommonStore } from '../../../stores/common.store'
 import { useRedisStateStore } from '../../../stores/redis-state.store'
@@ -112,11 +113,13 @@ export async function copyValue(value: any): Promise<void> {
 // --- Download buffer ---
 
 export function downloadBuffer(buffer: any, keyName: string, filename?: string): void {
-    const blob = new Blob([buffer])
+    const bytes = buffer instanceof Uint8Array ? buffer : new Uint8Array(buffer)
+    const { ext, mime } = detectFileType(bytes)
+    const blob = new Blob([bytes], { type: mime })
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = filename || `${keyName}.bin`
+    a.download = `${filename || keyName}.${ext}`
     a.click()
     URL.revokeObjectURL(url)
 }

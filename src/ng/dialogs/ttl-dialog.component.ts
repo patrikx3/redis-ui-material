@@ -39,7 +39,7 @@ export interface TtlDialogData {
                     {{ strings().confirm?.ttl?.title || 'TTL' }}
                 </span>
                 <button mat-icon-button type="button" (click)="cancel()">
-                    <mat-icon>close</mat-icon>
+                    <mat-icon svgIcon="close"></mat-icon>
                 </button>
             </mat-toolbar>
 
@@ -67,7 +67,7 @@ export interface TtlDialogData {
             <mat-dialog-actions class="p3xr-dialog-actions">
                 <p3xr-dialog-cancel (cancel)="cancel()"></p3xr-dialog-cancel>
                 <button mat-raised-button class="btn-primary" type="submit">
-                    <mat-icon>timer</mat-icon>
+                    <mat-icon svgIcon="timer"></mat-icon>
                     {{ strings().intention?.ttl || 'Set TTL' }}
                 </button>
             </mat-dialog-actions>

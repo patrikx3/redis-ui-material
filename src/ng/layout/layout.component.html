@@ -24,14 +24,14 @@
         @if (currentConnection) {
             @if (isWide) {
                 <button mat-button (click)="navigateTo('database.statistics')" [class.p3xr-nav-active]="isActivePage('database')">
-                    <mat-icon>storage</mat-icon>
+                    <mat-icon svgIcon="storage"></mat-icon>
                     <span>{{ i18n.strings().intention?.main }}</span>
                 </button>
             } @else {
                 <button mat-icon-button (click)="navigateTo('database.statistics')" [class.p3xr-nav-active]="isActivePage('database')"
                         [matTooltip]="i18n.strings().intention?.main ?? ''"
                         matTooltipPosition="below">
-                    <mat-icon>storage</mat-icon>
+                    <mat-icon svgIcon="storage"></mat-icon>
                 </button>
             }
         }
@@ -40,14 +40,14 @@
         @if (currentConnection) {
             @if (isWide) {
                 <button mat-button (click)="navigateTo('monitoring')" [class.p3xr-nav-active]="isActivePage('monitoring')">
-                    <mat-icon>monitor_heart</mat-icon>
+                    <mat-icon svgIcon="monitor_heart"></mat-icon>
                     <span>{{ i18n.strings().page?.monitor?.title || 'Monitoring' }}</span>
                 </button>
             } @else {
                 <button mat-icon-button (click)="navigateTo('monitoring')" [class.p3xr-nav-active]="isActivePage('monitoring')"
                         [matTooltip]="i18n.strings().page?.monitor?.title ?? 'Monitoring'"
                         matTooltipPosition="below">
-                    <mat-icon>monitor_heart</mat-icon>
+                    <mat-icon svgIcon="monitor_heart"></mat-icon>
                 </button>
             }
         }
@@ -56,14 +56,14 @@
         @if (currentConnection && hasRediSearch) {
             @if (isWide) {
                 <button mat-button (click)="navigateTo('search')" [class.p3xr-nav-active]="isActivePage('search')">
-                    <mat-icon>search</mat-icon>
+                    <mat-icon svgIcon="search"></mat-icon>
                     <span>{{ i18n.strings().page?.search?.title || 'Search' }}</span>
                 </button>
             } @else {
                 <button mat-icon-button (click)="navigateTo('search')" [class.p3xr-nav-active]="isActivePage('search')"
                         [matTooltip]="i18n.strings().page?.search?.title ?? 'Search'"
                         matTooltipPosition="below">
-                    <mat-icon>search</mat-icon>
+                    <mat-icon svgIcon="search"></mat-icon>
                 </button>
             }
         }
@@ -75,28 +75,28 @@
         <!-- Info button -->
         @if (isWide) {
             <button mat-button (click)="navigateTo('info')" [class.p3xr-nav-active]="isActivePage('info')">
-                <mat-icon>info</mat-icon>
+                <mat-icon svgIcon="info"></mat-icon>
                 <span>{{ i18n.strings().intention?.info || 'Info' }}</span>
             </button>
         } @else {
             <button mat-icon-button (click)="navigateTo('info')" [class.p3xr-nav-active]="isActivePage('info')"
                     [matTooltip]="i18n.strings().intention?.info ?? 'Info'"
                     matTooltipPosition="below">
-                <mat-icon>info</mat-icon>
+                <mat-icon svgIcon="info"></mat-icon>
             </button>
         }
 
         <!-- Settings button -->
         @if (isWide) {
             <button mat-button (click)="navigateTo('settings')" [class.p3xr-nav-active]="isActivePage('settings')">
-                <mat-icon>settings</mat-icon>
+                <mat-icon svgIcon="settings"></mat-icon>
                 <span>{{ i18n.strings().intention?.settings }}</span>
             </button>
         } @else {
             <button mat-icon-button (click)="navigateTo('settings')" [class.p3xr-nav-active]="isActivePage('settings')"
                     [matTooltip]="i18n.strings().intention?.settings ?? ''"
                     matTooltipPosition="below">
-                <mat-icon>settings</mat-icon>
+                <mat-icon svgIcon="settings"></mat-icon>
             </button>
         }
         }
@@ -106,7 +106,7 @@
             <button mat-icon-button (click)="logout()"
                     [matTooltip]="i18n.strings().intention?.logout || 'Logout'"
                     matTooltipPosition="below">
-                <mat-icon>logout</mat-icon>
+                <mat-icon svgIcon="logout"></mat-icon>
             </button>
         }
 
@@ -131,14 +131,14 @@
         @if (connectionsList.length > 0) {
             @if (isWide) {
                 <button mat-button [matMenuTriggerFor]="connectionMenu">
-                    <mat-icon>power</mat-icon>
+                    <mat-icon svgIcon="power"></mat-icon>
                     <span>{{ connectionName }}</span>
                 </button>
             } @else {
                 <button mat-icon-button [matMenuTriggerFor]="connectionMenu"
                         [matTooltip]="connectionName"
                         matTooltipPosition="above">
-                    <mat-icon>power</mat-icon>
+                    <mat-icon svgIcon="power"></mat-icon>
                 </button>
             }
             <mat-menu #connectionMenu>
@@ -197,14 +197,14 @@
         <!-- Language menu: text at >960px (AngularJS: hide-xs hide-sm) -->
         @if (isGtSm) {
                 <button mat-button [matMenuTriggerFor]="languageMenu" #languageMenuTrigger="matMenuTrigger" (menuOpened)="onLanguageMenuOpened()">
-                    <mat-icon>language</mat-icon>
+                    <mat-icon svgIcon="language"></mat-icon>
                     <span>{{ i18n.strings().intention?.language }}</span>
                 </button>
             } @else {
                 <button mat-icon-button [matMenuTriggerFor]="languageMenu" #languageMenuTrigger="matMenuTrigger" (menuOpened)="onLanguageMenuOpened()"
                         [matTooltip]="i18n.strings().intention?.language ?? ''"
                         matTooltipPosition="above">
-                    <mat-icon>language</mat-icon>
+                    <mat-icon svgIcon="language"></mat-icon>
                 </button>
             }
             <mat-menu #languageMenu class="p3xr-language-menu" (closed)="onLanguageMenuClosed()">
@@ -233,14 +233,14 @@
         <!-- Theme menu — text at >600px (AngularJS: hide-xs only — shows text earlier than others) -->
         @if (isGtXs) {
             <button mat-button [matMenuTriggerFor]="themeMenu">
-                <mat-icon>color_lens</mat-icon>
+                <mat-icon svgIcon="color_lens"></mat-icon>
                 <span>{{ i18n.strings().intention?.theme }}</span>
             </button>
         } @else {
             <button mat-icon-button [matMenuTriggerFor]="themeMenu"
                     [matTooltip]="i18n.strings().intention?.theme ?? ''"
                     matTooltipPosition="above">
-                <mat-icon>color_lens</mat-icon>
+                <mat-icon svgIcon="color_lens"></mat-icon>
             </button>
         }
         <mat-menu #themeMenu>

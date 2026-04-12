@@ -119,11 +119,11 @@ import { P3xrButtonComponent } from '../components/p3xr-button.component';
                                             <button mat-mini-fab class="btn-accent" (click)="connect(connection)"
                                                 [matTooltip]="strings().intention?.connect || 'Connect'"
                                                 [attr.aria-label]="strings().intention?.connect || 'Connect'">
-                                                <mat-icon>power</mat-icon>
+                                                <mat-icon svgIcon="power"></mat-icon>
                                             </button>
                                         } @else {
                                             <button mat-flat-button class="btn-accent" (click)="connect(connection)">
-                                                <mat-icon>power</mat-icon>
+                                                <mat-icon svgIcon="power"></mat-icon>
                                                 <span>{{ strings().intention?.connect || 'Connect' }}</span>
                                             </button>
                                         }
@@ -150,11 +150,11 @@ import { P3xrButtonComponent } from '../components/p3xr-button.component';
                                             <button mat-mini-fab class="btn-warn" (click)="deleteConnection(connection, $event)"
                                                 [matTooltip]="strings().intention?.delete || 'Delete'"
                                                 [attr.aria-label]="strings().intention?.delete || 'Delete'">
-                                                <mat-icon>delete_forever</mat-icon>
+                                                <mat-icon svgIcon="delete_forever"></mat-icon>
                                             </button>
                                         } @else {
                                             <button mat-flat-button class="btn-warn" (click)="deleteConnection(connection, $event)">
-                                                <mat-icon>delete_forever</mat-icon>
+                                                <mat-icon svgIcon="delete_forever"></mat-icon>
                                                 <span>{{ strings().intention?.delete || 'Delete' }}</span>
                                             </button>
                                         }
@@ -162,11 +162,11 @@ import { P3xrButtonComponent } from '../components/p3xr-button.component';
                                             <button mat-mini-fab class="btn-primary" (click)="connectionForm('edit', connection)"
                                                 [matTooltip]="strings().intention?.edit || 'Edit'"
                                                 [attr.aria-label]="strings().intention?.edit || 'Edit'">
-                                                <mat-icon>edit</mat-icon>
+                                                <mat-icon svgIcon="edit"></mat-icon>
                                             </button>
                                         } @else {
                                             <button mat-flat-button class="btn-primary" (click)="connectionForm('edit', connection)">
-                                                <mat-icon>edit</mat-icon>
+                                                <mat-icon svgIcon="edit"></mat-icon>
                                                 <span>{{ strings().intention?.edit || 'Edit' }}</span>
                                             </button>
                                         }
@@ -177,11 +177,11 @@ import { P3xrButtonComponent } from '../components/p3xr-button.component';
                                             <button mat-mini-fab class="btn-primary" (click)="connectionForm('edit', connection)"
                                                 [matTooltip]="strings().intention?.view || 'View'"
                                                 [attr.aria-label]="strings().intention?.view || 'View'">
-                                                <mat-icon>mode_comment</mat-icon>
+                                                <mat-icon svgIcon="mode_comment"></mat-icon>
                                             </button>
                                         } @else {
                                             <button mat-flat-button class="btn-primary" (click)="connectionForm('edit', connection)">
-                                                <mat-icon>mode_comment</mat-icon>
+                                                <mat-icon svgIcon="mode_comment"></mat-icon>
                                                 <span>{{ strings().intention?.view || 'View' }}</span>
                                             </button>
                                         }
@@ -196,8 +196,11 @@ import { P3xrButtonComponent } from '../components/p3xr-button.component';
                         </div>
                         }
                         @if (!groupModeEnabled) {
+                            <div cdkDropList
+                                 [cdkDropListData]="connectionsList"
+                                 (cdkDropListDropped)="dropUngroupedConnection($event)">
                             @for (connection of connectionsList; track connection.id; let last = $last) {
-                                <div class="p3xr-connection-item">
+                                <div class="p3xr-connection-item" cdkDrag [cdkDragData]="connection">
                                     <div class="p3xr-connection-info">
                                         <div style="font-weight: 700;">{{ connection.name }}</div>
                                         <div style="font-size: 13px; opacity: 0.7;">{{ connection.host }}:{{ connection.port }}</div>
@@ -214,11 +217,11 @@ import { P3xrButtonComponent } from '../components/p3xr-button.component';
                                             <button mat-mini-fab class="btn-accent" (click)="connect(connection)"
                                                 [matTooltip]="strings().intention?.connect || 'Connect'"
                                                 [attr.aria-label]="strings().intention?.connect || 'Connect'">
-                                                <mat-icon>power</mat-icon>
+                                                <mat-icon svgIcon="power"></mat-icon>
                                             </button>
                                         } @else {
                                             <button mat-flat-button class="btn-accent" (click)="connect(connection)">
-                                                <mat-icon>power</mat-icon>
+                                                <mat-icon svgIcon="power"></mat-icon>
                                                 <span>{{ strings().intention?.connect || 'Connect' }}</span>
                                             </button>
                                         }
@@ -245,11 +248,11 @@ import { P3xrButtonComponent } from '../components/p3xr-button.component';
                                             <button mat-mini-fab class="btn-warn" (click)="deleteConnection(connection, $event)"
                                                 [matTooltip]="strings().intention?.delete || 'Delete'"
                                                 [attr.aria-label]="strings().intention?.delete || 'Delete'">
-                                                <mat-icon>delete_forever</mat-icon>
+                                                <mat-icon svgIcon="delete_forever"></mat-icon>
                                             </button>
                                         } @else {
                                             <button mat-flat-button class="btn-warn" (click)="deleteConnection(connection, $event)">
-                                                <mat-icon>delete_forever</mat-icon>
+                                                <mat-icon svgIcon="delete_forever"></mat-icon>
                                                 <span>{{ strings().intention?.delete || 'Delete' }}</span>
                                             </button>
                                         }
@@ -257,11 +260,11 @@ import { P3xrButtonComponent } from '../components/p3xr-button.component';
                                             <button mat-mini-fab class="btn-primary" (click)="connectionForm('edit', connection)"
                                                 [matTooltip]="strings().intention?.edit || 'Edit'"
                                                 [attr.aria-label]="strings().intention?.edit || 'Edit'">
-                                                <mat-icon>edit</mat-icon>
+                                                <mat-icon svgIcon="edit"></mat-icon>
                                             </button>
                                         } @else {
                                             <button mat-flat-button class="btn-primary" (click)="connectionForm('edit', connection)">
-                                                <mat-icon>edit</mat-icon>
+                                                <mat-icon svgIcon="edit"></mat-icon>
                                                 <span>{{ strings().intention?.edit || 'Edit' }}</span>
                                             </button>
                                         }
@@ -272,11 +275,11 @@ import { P3xrButtonComponent } from '../components/p3xr-button.component';
                                             <button mat-mini-fab class="btn-primary" (click)="connectionForm('edit', connection)"
                                                 [matTooltip]="strings().intention?.view || 'View'"
                                                 [attr.aria-label]="strings().intention?.view || 'View'">
-                                                <mat-icon>mode_comment</mat-icon>
+                                                <mat-icon svgIcon="mode_comment"></mat-icon>
                                             </button>
                                         } @else {
                                             <button mat-flat-button class="btn-primary" (click)="connectionForm('edit', connection)">
-                                                <mat-icon>mode_comment</mat-icon>
+                                                <mat-icon svgIcon="mode_comment"></mat-icon>
                                                 <span>{{ strings().intention?.view || 'View' }}</span>
                                             </button>
                                         }
@@ -284,6 +287,7 @@ import { P3xrButtonComponent } from '../components/p3xr-button.component';
                                 </div>
                                 @if (!last) { <mat-divider></mat-divider> }
                             }
+                            </div>
                         }
                     </div>
                 }
@@ -299,6 +303,7 @@ import { P3xrButtonComponent } from '../components/p3xr-button.component';
                     <div class="p3xr-gui-toggle">
                         <span class="p3xr-gui-toggle-active">Angular</span>
                         <span class="p3xr-gui-toggle-item" (click)="switchToReact()">React</span>
+                        <span class="p3xr-gui-toggle-item" (click)="switchToVue()">Vue</span>
                     </div>
                 </div>
             </div>
@@ -349,7 +354,7 @@ import { P3xrButtonComponent } from '../components/p3xr-button.component';
                         <mat-list-item>
                             <div class="p3xr-settings-pair-row">
                                 <div class="p3xr-settings-row-label">{{ strings().label?.aiGroqApiKey || 'Groq API Key' }}</div>
-                                <div class="p3xr-settings-row-value" [style.font-family]="hasGroqApiKey() ? 'monospace' : 'inherit'">{{ getGroqApiKeyDisplay() }}</div>
+                                <div class="p3xr-settings-row-value" style="font-family: monospace;">{{ state.cfg()?.groqApiKeyMasked }}</div>
                             </div>
                         </mat-list-item>
                     }
@@ -807,6 +812,21 @@ export class SettingsComponent implements OnInit, OnDestroy {
         }
     }
 
+    async dropUngroupedConnection(event: CdkDragDrop<any[]>): Promise<void> {
+        if (event.previousIndex === event.currentIndex) return;
+        moveItemInArray(this.connectionsList, event.previousIndex, event.currentIndex);
+        try {
+            const reorderedIds = this.connectionsList.map((c: any) => c.id);
+            await this.socket.request({
+                action: 'connection/reorder',
+                payload: { ids: reorderedIds },
+            });
+        } catch (e) {
+            this.common.generalHandleError(e);
+            this.refreshState();
+        }
+    }
+
     // --- Connections ---
 
     connectionForm(type: string, model?: any): void {
@@ -862,7 +882,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
             await this.socket.request({
                 action: 'ai/set-groq-api-key',
                 payload: {
-                    apiKey: this.state.cfg()?.groqApiKey || '',
                     aiEnabled: enabled,
                 },
             });
@@ -875,17 +894,14 @@ export class SettingsComponent implements OnInit, OnDestroy {
     }
 
     hasGroqApiKey(): boolean {
-        const key = this.state.cfg()?.groqApiKey || '';
-        return key.startsWith('gsk_') && key.length > 20;
+        return this.state.cfg()?.hasGroqApiKey === true;
     }
 
     isUseOwnKey(): boolean {
-        // Can only use own key if one is actually set
         return this.state.cfg()?.aiUseOwnKey === true && this.hasGroqApiKey();
     }
 
     async toggleUseOwnKey(useOwn: boolean): Promise<void> {
-        // Can't use own key if no key is set
         if (useOwn && !this.hasGroqApiKey()) {
             return;
         }
@@ -893,7 +909,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
             await this.socket.request({
                 action: 'ai/set-groq-api-key',
                 payload: {
-                    apiKey: this.state.cfg()?.groqApiKey || '',
                     aiEnabled: this.state.cfg()?.aiEnabled !== false,
                     aiUseOwnKey: useOwn,
                 },
@@ -919,13 +934,6 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this.cdr.markForCheck();
     }
 
-    getGroqApiKeyDisplay(): string {
-        const key = this.state.cfg()?.groqApiKey || '';
-        if (!key) return this.strings().label?.aiGroqApiKeyNotSet || 'Not set';
-        if (key.length <= 8) return '****';
-        return `${key.slice(0, 4)}...${key.slice(-4)}`;
-    }
-
     // --- Tree Settings ---
 
     openTreeSettings($event: any): void {
@@ -942,5 +950,15 @@ export class SettingsComponent implements OnInit, OnDestroy {
             }
         } catch {}
         location.href = '/react/settings';
+    }
+
+    switchToVue(): void {
+        try { localStorage.setItem('p3xr-frontend', 'vue'); } catch {}
+        try {
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage({ type: 'p3x-ui-storage-set', key: 'p3xr-frontend', value: 'vue' }, '*');
+            }
+        } catch {}
+        location.href = '/vue/settings';
     }
 }

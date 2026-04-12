@@ -22,7 +22,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
         @if (raised) {
             @if (isWide) {
                 <button mat-flat-button [ngClass]="classes" [disabled]="disabled">
-                    @if (mdIcon) { <mat-icon>{{ mdIcon }}</mat-icon> }
+                    @if (mdIcon) { <mat-icon svgIcon="{{ mdIcon }}"></mat-icon> }
                     @if (faIcon) { <i [class]="faIcon"></i> }
                     <span>{{ label }}</span>
                 </button>
@@ -30,14 +30,14 @@ import { BreakpointObserver } from '@angular/cdk/layout';
                 <button mat-mini-fab [ngClass]="classes" [disabled]="disabled"
                     [matTooltip]="label" [matTooltipPosition]="tooltipPosition"
                     [matTooltipDisabled]="!label" [attr.aria-label]="label || null">
-                    @if (mdIcon) { <mat-icon>{{ mdIcon }}</mat-icon> }
+                    @if (mdIcon) { <mat-icon svgIcon="{{ mdIcon }}"></mat-icon> }
                     @if (faIcon) { <i [class]="faIcon"></i> }
                 </button>
             }
         } @else {
             @if (isWide) {
                 <button mat-button [ngClass]="classes" class="md-button-dark-hover-fix" [disabled]="disabled">
-                    @if (mdIcon) { <mat-icon>{{ mdIcon }}</mat-icon> }
+                    @if (mdIcon) { <mat-icon svgIcon="{{ mdIcon }}"></mat-icon> }
                     @if (faIcon) { <i [class]="faIcon"></i> }
                     <span>{{ label }}</span>
                 </button>
@@ -45,7 +45,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
                 <button mat-icon-button [ngClass]="classes" class="md-button-dark-hover-fix" [disabled]="disabled"
                     [matTooltip]="label" [matTooltipPosition]="tooltipPosition"
                     [matTooltipDisabled]="!label" [attr.aria-label]="label || null">
-                    @if (mdIcon) { <mat-icon>{{ mdIcon }}</mat-icon> }
+                    @if (mdIcon) { <mat-icon svgIcon="{{ mdIcon }}"></mat-icon> }
                     @if (faIcon) { <i [class]="faIcon"></i> }
                 </button>
             }

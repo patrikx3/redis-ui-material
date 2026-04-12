@@ -55,7 +55,7 @@ export interface ConnectionDialogData {
                     }
                 </span>
                 <button mat-icon-button type="button" (click)="cancel()">
-                    <mat-icon>close</mat-icon>
+                    <mat-icon svgIcon="close"></mat-icon>
                 </button>
             </mat-toolbar>
 
@@ -145,7 +145,7 @@ export interface ConnectionDialogData {
                                     @if (!readonlyConnections) {
                                         <button mat-icon-button matSuffix type="button"
                                                 (click)="sshPasswordVisible = !sshPasswordVisible">
-                                            <mat-icon>{{ sshPasswordVisible ? 'visibility_off' : 'visibility' }}</mat-icon>
+                                            <mat-icon svgIcon="{{ sshPasswordVisible ? 'visibility_off' : 'visibility' }}"></mat-icon>
                                         </button>
                                     }
                                 </mat-form-field>
@@ -209,7 +209,7 @@ export interface ConnectionDialogData {
                                 @if (!readonlyConnections) {
                                     <button mat-icon-button matSuffix type="button"
                                             (click)="passwordVisible = !passwordVisible">
-                                        <mat-icon>{{ passwordVisible ? 'visibility_off' : 'visibility' }}</mat-icon>
+                                        <mat-icon svgIcon="{{ passwordVisible ? 'visibility_off' : 'visibility' }}"></mat-icon>
                                     </button>
                                 }
                             </mat-form-field>
@@ -259,7 +259,7 @@ export interface ConnectionDialogData {
                             <div class="p3xr-connection-node-add" (click)="addNode()">
                                 {{ strings().label?.addNode }}
                                 <button mat-mini-fab class="btn-primary" type="button">
-                                    <mat-icon>add</mat-icon>
+                                    <mat-icon svgIcon="add"></mat-icon>
                                 </button>
                             </div>
                         }
@@ -289,12 +289,12 @@ export interface ConnectionDialogData {
                                             <button mat-mini-fab class="btn-warn" type="button"
                                                     (click)="removeNode($event, idx)"
                                                     [matTooltip]="strings().confirm?.deleteConnectionText">
-                                                <mat-icon>delete</mat-icon>
+                                                <mat-icon svgIcon="delete"></mat-icon>
                                             </button>
                                             <button mat-mini-fab class="btn-primary" type="button"
                                                     (click)="addNode(idx)"
                                                     [matTooltip]="strings().label?.addNode">
-                                                <mat-icon>add</mat-icon>
+                                                <mat-icon svgIcon="add"></mat-icon>
                                             </button>
                                         </div>
                                     }
@@ -345,7 +345,7 @@ export interface ConnectionDialogData {
                                         @if (!readonlyConnections) {
                                             <button mat-icon-button matSuffix type="button"
                                                     (click)="nodePasswordVisible[idx] = !nodePasswordVisible[idx]">
-                                                <mat-icon>{{ nodePasswordVisible[idx] ? 'visibility_off' : 'visibility' }}</mat-icon>
+                                                <mat-icon svgIcon="{{ nodePasswordVisible[idx] ? 'visibility_off' : 'visibility' }}"></mat-icon>
                                             </button>
                                         }
                                     </mat-form-field>

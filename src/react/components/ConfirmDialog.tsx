@@ -1,4 +1,4 @@
-import { Button, IconButton, Tooltip, useMediaQuery } from '@mui/material'
+import { Button, Tooltip, useMediaQuery } from '@mui/material'
 import { Done, Cancel } from '@mui/icons-material'
 import { useI18nStore } from '../stores/i18n.store'
 import { useCommonStore } from '../stores/common.store'
@@ -24,29 +24,16 @@ export default function ConfirmDialog() {
             actions={
                 <>
                     {!isAlert && (
-                        isWide ? (
-                            <Button variant="contained" color="error" onClick={() => resolveConfirm?.(false)}>
-                                <Cancel fontSize="small" /><span>{cancelLabel}</span>
+                        <Tooltip title={isWide ? '' : cancelLabel} placement="top">
+                            <Button variant="contained" color="warning" onClick={() => resolveConfirm?.(false)}>
+                                <Cancel sx={isWide ? { mr: 0.5 } : undefined} />
+                                {isWide && <span>{cancelLabel}</span>}
                             </Button>
-                        ) : (
-                            <Tooltip title={cancelLabel} placement="top">
-                                <IconButton color="error" onClick={() => resolveConfirm?.(false)} sx={{ borderRadius: '4px' }}>
-                                    <Cancel fontSize="small" />
-                                </IconButton>
-                            </Tooltip>
-                        )
-                    )}
-                    {isWide ? (
-                        <Button variant="contained" color="primary" onClick={() => resolveConfirm?.(true)}>
-                            <Done fontSize="small" /><span>{okLabel}</span>
-                        </Button>
-                    ) : (
-                        <Tooltip title={okLabel} placement="top">
-                            <IconButton color="primary" onClick={() => resolveConfirm?.(true)} sx={{ borderRadius: '4px' }}>
-                                <Done fontSize="small" />
-                            </IconButton>
                         </Tooltip>
                     )}
+                    <Button variant="contained" color="primary" onClick={() => resolveConfirm?.(true)}>
+                        <Done sx={{ mr: 0.5 }} /><span>{okLabel}</span>
+                    </Button>
                 </>
             }
         >

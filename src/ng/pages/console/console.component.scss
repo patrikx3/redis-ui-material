@@ -26,6 +26,7 @@ p3xr-console .mat-toolbar {
     color: white;
     position: relative;
     z-index: 2;
+    padding: 0;
 }
 
 p3xr-console .mat-toolbar * {
@@ -71,7 +72,7 @@ p3xr-console .mat-toolbar .material-icons {
     align-items: center;
     width: 100%;
     height: 100%;
-    padding: 0 8px;
+    padding: 0 3px;
 }
 
 .p3xr-console-toolbar-actions {
@@ -83,7 +84,7 @@ p3xr-console .mat-toolbar .material-icons {
 p3xr-console .mat-toolbar .p3xr-console-ai-toggle {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 2px;
     margin: 0 8px;
     padding: 0 8px;
     height: 36px;
@@ -120,6 +121,7 @@ p3xr-console .mat-toolbar .p3xr-console-ai-toggle {
 
 #p3xr-console-content {
     font-family: 'Roboto Mono', monospace;
+    font-size: 13px;
     text-align: center;
 
     #p3xr-console-content-resizer {
@@ -177,6 +179,10 @@ p3xr-console .mat-toolbar .p3xr-console-ai-toggle {
 p3xr-console.p3xr-console-embedded-collapsed #p3xr-console-autocomplete.p3xr-console-autocomplete-embedded #p3xr-console-input {
     min-width: calc(100% - 1px);
     width: calc(100% - 1px);
+}
+
+p3xr-console.p3xr-console-embedded-collapsed .p3xr-console-hint {
+    display: none;
 }
 
 #p3xr-console-input {

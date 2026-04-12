@@ -38,7 +38,7 @@ import { TreeBuilderService } from '../services/tree-builder.service';
                     {{ strings().form?.treeSettings?.label?.formName || 'Redis Settings' }}
                 </span>
                 <button mat-icon-button type="button" (click)="cancel()">
-                    <mat-icon>close</mat-icon>
+                    <mat-icon svgIcon="close"></mat-icon>
                 </button>
             </mat-toolbar>
 
@@ -199,7 +199,7 @@ import { TreeBuilderService } from '../services/tree-builder.service';
             <mat-dialog-actions class="p3xr-dialog-actions">
                 <p3xr-dialog-cancel (cancel)="cancel()"></p3xr-dialog-cancel>
                 <button mat-raised-button class="btn-primary" type="submit">
-                    <mat-icon>save</mat-icon>
+                    <mat-icon svgIcon="save"></mat-icon>
                     {{ strings().intention?.save || 'Save' }}
                 </button>
             </mat-dialog-actions>

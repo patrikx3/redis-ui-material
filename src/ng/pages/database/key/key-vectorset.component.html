@@ -46,7 +46,7 @@
                     <span style="flex: 30%; text-align: right">
                         @if (!readonly) {
                             <button mat-icon-button (click)="showAddForm = !showAddForm" matTooltip="Add">
-                                <mat-icon>add</mat-icon>
+                                <mat-icon svgIcon="add"></mat-icon>
                             </button>
                         }
                     </span>
@@ -80,13 +80,13 @@
 
                         @if (isGtSm) {
                             <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="addElement()">
-                                <mat-icon>add</mat-icon>
+                                <mat-icon svgIcon="add"></mat-icon>
                                 <span>{{ strings()?.intention?.add || 'Add' }}</span>
                             </button>
                         } @else {
                             <button mat-mini-fab class="btn-primary" type="button" (click)="addElement()"
                                     [matTooltip]="strings()?.intention?.add ?? 'Add'" matTooltipPosition="above">
-                                <mat-icon>add</mat-icon>
+                                <mat-icon svgIcon="add"></mat-icon>
                             </button>
                         }
                     </div>
@@ -119,21 +119,21 @@
 
                     @if (isGtSm) {
                         <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="simMode = 'element'; searchSimilar()">
-                            <mat-icon>person</mat-icon>
+                            <mat-icon svgIcon="person"></mat-icon>
                             <span>{{ strings()?.page?.key?.vectorset?.byElement || 'By Element' }}</span>
                         </button>
                         <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="simMode = 'vector'; searchSimilar()">
-                            <mat-icon>data_array</mat-icon>
+                            <mat-icon svgIcon="data_array"></mat-icon>
                             <span>{{ strings()?.page?.key?.vectorset?.byVector || 'By Vector' }}</span>
                         </button>
                     } @else {
                         <button mat-mini-fab class="btn-primary" type="button" (click)="simMode = 'element'; searchSimilar()"
                                 [matTooltip]="strings()?.page?.key?.vectorset?.byElement ?? 'By Element'" matTooltipPosition="above">
-                            <mat-icon>person</mat-icon>
+                            <mat-icon svgIcon="person"></mat-icon>
                         </button>
                         <button mat-mini-fab class="btn-primary" type="button" (click)="simMode = 'vector'; searchSimilar()"
                                 [matTooltip]="strings()?.page?.key?.vectorset?.byVector ?? 'By Vector'" matTooltipPosition="above">
-                            <mat-icon>data_array</mat-icon>
+                            <mat-icon svgIcon="data_array"></mat-icon>
                         </button>
                     }
                 </div>

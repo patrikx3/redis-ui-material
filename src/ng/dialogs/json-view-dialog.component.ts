@@ -26,23 +26,23 @@ export interface JsonViewDialogData {
     template: `
         <mat-toolbar class="p3xr-dialog-toolbar p3xr-mat-layout-strong">
             <span mat-dialog-title class="p3xr-dialog-title p3xr-dialog-title-with-icon">
-                <mat-icon>table_chart</mat-icon>
+                <mat-icon svgIcon="account_tree"></mat-icon>
                 <span>{{ strings().intention?.jsonViewShow || 'JSON View' }}</span>
             </span>
 
             @if (isJson) {
                 <button mat-icon-button (click)="expandAll()"
                     [matTooltip]="strings().page?.treeControls?.expandAll || 'Expand All'">
-                    <mat-icon>keyboard_arrow_down</mat-icon>
+                    <mat-icon svgIcon="keyboard_arrow_down"></mat-icon>
                 </button>
                 <button mat-icon-button (click)="collapseAll()"
                     [matTooltip]="strings().page?.treeControls?.collapseAll || 'Collapse All'">
-                    <mat-icon>keyboard_arrow_up</mat-icon>
+                    <mat-icon svgIcon="keyboard_arrow_up"></mat-icon>
                 </button>
             }
 
             <button mat-icon-button (click)="close()">
-                <mat-icon>close</mat-icon>
+                <mat-icon svgIcon="close"></mat-icon>
             </button>
         </mat-toolbar>
 
@@ -60,7 +60,7 @@ export interface JsonViewDialogData {
 
         <mat-dialog-actions class="p3xr-dialog-actions">
             <button mat-raised-button class="btn-accent" type="button" (click)="close()">
-                <mat-icon>close</mat-icon>
+                <mat-icon svgIcon="close"></mat-icon>
                 {{ strings().intention?.close || 'Close' }}
             </button>
         </mat-dialog-actions>

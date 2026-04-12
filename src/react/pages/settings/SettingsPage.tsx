@@ -278,17 +278,13 @@ export default function SettingsPage() {
 
     // AI settings
     const isAiEnabled = cfg?.aiEnabled !== false
-    const groqApiKey = cfg?.groqApiKey || ''
-    const hasGroqApiKey = groqApiKey.startsWith('gsk_') && groqApiKey.length > 20
+    const hasGroqApiKey = cfg?.hasGroqApiKey === true
     const isUseOwnKey = cfg?.aiUseOwnKey === true && hasGroqApiKey
     const isAiReadonly = readonlyConnections || cfg?.groqApiKeyReadonly === true
-    const groqApiKeyDisplay = !groqApiKey
-        ? strings?.label?.aiGroqApiKeyNotSet
-        : groqApiKey.length <= 8 ? '****' : `${groqApiKey.slice(0, 4)}...${groqApiKey.slice(-4)}`
 
     const toggleAiEnabled = async (enabled: boolean) => {
         try {
-            await request({ action: 'ai/set-groq-api-key', payload: { apiKey: groqApiKey, aiEnabled: enabled } })
+            await request({ action: 'ai/set-groq-api-key', payload: { aiEnabled: enabled } })
             useRedisStateStore.setState({ cfg: { ...cfg, aiEnabled: enabled } })
         } catch (e) { generalHandleError(e) }
     }
@@ -296,7 +292,7 @@ export default function SettingsPage() {
     const toggleUseOwnKey = async (useOwn: boolean) => {
         if (useOwn && !hasGroqApiKey) return
         try {
-            await request({ action: 'ai/set-groq-api-key', payload: { apiKey: groqApiKey, aiEnabled: isAiEnabled, aiUseOwnKey: useOwn } })
+            await request({ action: 'ai/set-groq-api-key', payload: { aiEnabled: isAiEnabled, aiUseOwnKey: useOwn } })
             useRedisStateStore.setState({ cfg: { ...cfg, aiUseOwnKey: useOwn } })
         } catch (e) { generalHandleError(e) }
     }
@@ -475,6 +471,19 @@ export default function SettingsPage() {
                             }}>
                             React
                         </Box>
+                        <Box component="span"
+                            onClick={() => {
+                                setPersistentItem('p3xr-frontend', 'vue')
+                                location.href = '/vue/settings'
+                            }}
+                            sx={{
+                                px: 3, py: 1, cursor: 'pointer', fontWeight: 500,
+                                fontSize: 14, userSelect: 'none',
+                                bgcolor: 'transparent', color: 'text.primary',
+                                '&:hover': { bgcolor: 'action.hover' },
+                            }}>
+                            Vue
+                        </Box>
                     </Box>
                 </Box>
             </P3xrAccordion>
@@ -518,7 +527,7 @@ export default function SettingsPage() {
                             <ListItem>
                                 <Box sx={{ display: 'flex', width: '100%' }}>
                                     <Box sx={{ flex: 1, fontWeight: 500 }}>{strings?.label?.aiGroqApiKey}</Box>
-                                    <Box sx={{ fontFamily: hasGroqApiKey ? 'monospace' : 'inherit' }}>{groqApiKeyDisplay}</Box>
+                                    <Box sx={{ fontFamily: 'monospace' }}>{cfg?.groqApiKeyMasked}</Box>
                                 </Box>
                             </ListItem>
                         </>

@@ -20,7 +20,7 @@ import { ShortcutsService, ShortcutDef } from '../services/shortcuts.service';
     template: `
         <div class="p3xr-command-palette">
             <div class="p3xr-command-palette-search">
-                <mat-icon>search</mat-icon>
+                <mat-icon svgIcon="search"></mat-icon>
                 <input #searchInput matInput
                     [(ngModel)]="search"
                     (keydown)="onKeydown($event)"

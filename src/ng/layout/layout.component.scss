@@ -49,6 +49,9 @@
 .p3xr-nav-active.mat-mdc-button {
     background-color: rgba(255, 255, 255, 0.1) !important;
 }
+body.p3xr-mat-theme-matrix .p3xr-nav-active.mat-mdc-button {
+    background-color: rgba(0, 0, 0, 0.15) !important;
+}
 
 // Toolbar icon buttons: fix icon centering and rectangular hover
 .mat-toolbar .mat-mdc-icon-button {
@@ -67,6 +70,9 @@
 .p3xr-nav-active {
     background-color: rgba(255, 255, 255, 0.1) !important;
     border-radius: 4px !important;
+}
+body.p3xr-mat-theme-matrix .p3xr-nav-active {
+    background-color: rgba(0, 0, 0, 0.15) !important;
 }
 
 #p3xr-layout-header-container {

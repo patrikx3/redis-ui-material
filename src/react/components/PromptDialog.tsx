@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Button, IconButton, Tooltip, TextField, useMediaQuery } from '@mui/material'
+import { Button, Tooltip, TextField, useMediaQuery } from '@mui/material'
 import { Done, Cancel } from '@mui/icons-material'
 import { useCommonStore } from '../stores/common.store'
 import P3xrDialog from './P3xrDialog'
@@ -30,28 +30,18 @@ export default function PromptDialog() {
             width="600px"
             actions={
                 <>
-                    {isWide ? (
-                        <Button variant="contained" color="error" onClick={() => resolvePrompt?.(null)}>
-                            <Cancel fontSize="small" /><span>{promptOptions.cancelLabel}</span>
+                    <Tooltip title={isWide ? '' : promptOptions.cancelLabel} placement="top">
+                        <Button variant="contained" color="warning" onClick={() => resolvePrompt?.(null)}>
+                            <Cancel sx={isWide ? { mr: 0.5 } : undefined} />
+                            {isWide && <span>{promptOptions.cancelLabel}</span>}
                         </Button>
-                    ) : (
-                        <Tooltip title={promptOptions.cancelLabel} placement="top">
-                            <IconButton color="error" onClick={() => resolvePrompt?.(null)} sx={{ borderRadius: '4px' }}>
-                                <Cancel fontSize="small" />
-                            </IconButton>
-                        </Tooltip>
-                    )}
-                    {isWide ? (
+                    </Tooltip>
+                    <Tooltip title={isWide ? '' : promptOptions.okLabel} placement="top">
                         <Button variant="contained" color="primary" disabled={!value.trim()} onClick={handleOk}>
-                            <Done fontSize="small" /><span>{promptOptions.okLabel}</span>
+                            <Done sx={isWide ? { mr: 0.5 } : undefined} />
+                            {isWide && <span>{promptOptions.okLabel}</span>}
                         </Button>
-                    ) : (
-                        <Tooltip title={promptOptions.okLabel} placement="top">
-                            <IconButton color="primary" disabled={!value.trim()} onClick={handleOk} sx={{ borderRadius: '4px' }}>
-                                <Done fontSize="small" />
-                            </IconButton>
-                        </Tooltip>
-                    )}
+                    </Tooltip>
                 </>
             }
         >

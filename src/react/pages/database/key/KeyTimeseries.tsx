@@ -481,7 +481,7 @@ export default function KeyTimeseries({ response, value, keyName, onRefresh }: K
     return (
         <Box className="p3xr-key-type-content">
             {/* Chart accordion */}
-            <Box sx={{ mt: 1 }} />
+            <br />
             <P3xrAccordion
                 title={strings?.page?.key?.timeseries?.chart || 'Chart'}
                 accordionKey="ts-chart"
@@ -564,7 +564,7 @@ export default function KeyTimeseries({ response, value, keyName, onRefresh }: K
             {/* Data table accordion */}
             {rangeData.length > 0 && (
                 <>
-                    <Box sx={{ mt: 1 }} />
+                    <br />
                     <P3xrAccordion
                         title={capitalize(strings?.page?.key?.timeseries?.dataPoints || 'Data') + ` (${rangeData.length})`}
                         accordionKey="ts-data"
@@ -619,7 +619,7 @@ export default function KeyTimeseries({ response, value, keyName, onRefresh }: K
             )}
 
             {/* TS.INFO accordion */}
-            <Box sx={{ mt: 1 }} />
+            <br />
             <P3xrAccordion
                 title={strings?.page?.key?.timeseries?.info || 'Info'}
                 accordionKey="ts-info"

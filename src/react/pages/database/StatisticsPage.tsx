@@ -102,7 +102,7 @@ export default function StatisticsPage() {
             }
         }
 
-        return sections
+        return sections.filter(s => s.items.length > 0)
     }, [info, modules, strings])
 
     // All top-level tabs: DB (if applicable) + info sections

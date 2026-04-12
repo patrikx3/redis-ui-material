@@ -1,4 +1,5 @@
 import { Input, Directive, ChangeDetectorRef } from '@angular/core';
+import { detectFileType } from '../../../../core/detect-file-type';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { I18nService } from '../../../services/i18n.service';
 import { SocketService } from '../../../services/socket.service';
@@ -63,11 +64,13 @@ export abstract class KeyTypeBase {
     }
 
     downloadBuffer(buffer: any, filename?: string): void {
-        const blob = new Blob([buffer]);
+        const bytes = buffer instanceof Uint8Array ? buffer : new Uint8Array(buffer);
+        const { ext, mime } = detectFileType(bytes);
+        const blob = new Blob([bytes], { type: mime });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = filename || `${this.p3xrKey}.bin`;
+        a.download = `${filename || this.p3xrKey}.${ext}`;
         a.click();
         URL.revokeObjectURL(url);
     }

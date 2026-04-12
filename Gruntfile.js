@@ -47,6 +47,19 @@ module.exports = (grunt) => {
                         './src/react/vite.config.ts',
                     ]
                 }),
+
+                // Vue → dist-vue/
+                gruntUtil.spawn({
+                    grunt: grunt,
+                    gruntThis: this,
+                }, {
+                    cmd: `${cwd}/node_modules/.bin/vite${gruntUtil.commandAddon}`,
+                    args: [
+                        'build',
+                        '--config',
+                        './src/vue/vite.config.ts',
+                    ]
+                }),
             ])
 
             done()

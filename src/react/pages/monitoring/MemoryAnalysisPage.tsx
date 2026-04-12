@@ -54,6 +54,8 @@ export default function MemoryAnalysisPage() {
 
     const typeChartRef = useRef<HTMLDivElement>(null)
     const prefixChartRef = useRef<HTMLDivElement>(null)
+    const resizeObRef = useRef<ResizeObserver | null>(null)
+    const redrawRef = useRef<() => void>(() => {})
 
     const getChartColors = useCallback(() => ({
         primary: muiTheme.palette.primary.main || (isDark ? '#90caf9' : '#1976d2'),
@@ -71,7 +73,7 @@ export default function MemoryAnalysisPage() {
     }, [getChartColors, isDark])
 
     const drawBarChart = useCallback((container: HTMLDivElement | null, items: Array<{ label: string; value: number }>) => {
-        if (!container || items.length === 0) return
+        if (!container || items.length === 0 || container.offsetWidth <= 0) return
         container.innerHTML = ''
         const colors = getChartColors()
         const barColors = getBarColors()
@@ -108,6 +110,11 @@ export default function MemoryAnalysisPage() {
         drawBarChart(prefixChartRef.current, (analysisData?.prefixMemory || []).slice(0, 20).map((p: any) => ({ label: p.prefix, value: p.totalBytes })))
     }, [drawBarChart])
 
+    // Keep redraw ref in sync for ResizeObserver (always reads latest closure values)
+    redrawRef.current = () => {
+        if (data && typeEntries.length > 0) drawCharts(data, typeEntries)
+    }
+
     const runAnalysis = useCallback(async () => {
         if (loading) return
         setLoading(true)
@@ -139,6 +146,25 @@ export default function MemoryAnalysisPage() {
     useEffect(() => {
         if (data) setTimeout(() => drawCharts(data, typeEntries), 100)
     }, [isDark, currentLang, primaryColor]) // eslint-disable-line react-hooks/exhaustive-deps
+
+    // ResizeObserver for responsive bar charts in accordions
+    const hasData = !!data
+    useEffect(() => {
+        if (!hasData) return
+        let rt: any
+        const ob = new ResizeObserver(() => {
+            clearTimeout(rt)
+            rt = setTimeout(() => redrawRef.current(), 50)
+        })
+        resizeObRef.current = ob
+        if (typeChartRef.current) ob.observe(typeChartRef.current)
+        if (prefixChartRef.current) ob.observe(prefixChartRef.current)
+        return () => {
+            clearTimeout(rt)
+            ob.disconnect()
+            resizeObRef.current = null
+        }
+    }, [hasData]) // eslint-disable-line react-hooks/exhaustive-deps
 
     const exportChart = useCallback((ref: React.RefObject<HTMLDivElement | null>, name: string) => {
         const canvas = ref.current?.querySelector('canvas') as HTMLCanvasElement
@@ -212,7 +238,7 @@ export default function MemoryAnalysisPage() {
                 </List>
             </P3xrAccordion>
 
-            <Box sx={{ mt: 1 }} />
+            <br />
 
             {/* Memory Breakdown */}
             <P3xrAccordion title={s.memoryBreakdown || 'Memory Breakdown'} accordionKey="analysis-memory-info"
@@ -235,7 +261,7 @@ export default function MemoryAnalysisPage() {
                 </List>
             </P3xrAccordion>
 
-            <Box sx={{ mt: 1 }} />
+            <br />
 
             {/* Type Distribution */}
             <P3xrAccordion title={s.typeDistribution || 'Type Distribution'} accordionKey="analysis-type-dist"
@@ -260,7 +286,7 @@ export default function MemoryAnalysisPage() {
                 </List>
             </P3xrAccordion>
 
-            <Box sx={{ mt: 1 }} />
+            <br />
 
             {/* Memory by Prefix */}
             <P3xrAccordion title={s.prefixMemory || 'Memory by Prefix'} accordionKey="analysis-prefix-mem"
@@ -286,7 +312,7 @@ export default function MemoryAnalysisPage() {
                 </List>
             </P3xrAccordion>
 
-            <Box sx={{ mt: 1 }} />
+            <br />
 
             {/* Key Expiration Overview */}
             <P3xrAccordion title={s.expirationOverview || 'Key Expiration'} accordionKey="analysis-expiration"

@@ -27,6 +27,7 @@
     "node_modules",
     "dist",
     "dist-react",
-    "src/react"
+    "src/react",
+    "src/vue"
   ]
 }

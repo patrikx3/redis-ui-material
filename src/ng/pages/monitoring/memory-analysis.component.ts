@@ -43,7 +43,7 @@ export class MemoryAnalysisComponent implements OnInit, OnDestroy, AfterViewInit
     @ViewChild('prefixChart') prefixChartRef!: ElementRef<HTMLDivElement>;
 
     private unsubFns: Array<() => void> = [];
-    private boundRecalcHost: (() => void) | null = null;
+    private resizeObserver: ResizeObserver | null = null;
     private themeObserver: MutationObserver | null = null;
     private resizeTimer: any;
 
@@ -79,11 +79,11 @@ export class MemoryAnalysisComponent implements OnInit, OnDestroy, AfterViewInit
 
     ngAfterViewInit(): void {
         this.ngZone.runOutsideAngular(() => {
-            this.boundRecalcHost = () => {
+            this.resizeObserver = new ResizeObserver(() => {
                 clearTimeout(this.resizeTimer);
                 this.resizeTimer = setTimeout(() => { if (this.data) this.drawCharts(); }, 150);
-            };
-            window.addEventListener('resize', this.boundRecalcHost);
+            });
+            this.resizeObserver.observe(this.elementRef.nativeElement);
         });
 
         this.ngZone.runOutsideAngular(() => {
@@ -96,9 +96,7 @@ export class MemoryAnalysisComponent implements OnInit, OnDestroy, AfterViewInit
 
     ngOnDestroy(): void {
         this.themeObserver?.disconnect();
-        if (this.boundRecalcHost) {
-            window.removeEventListener('resize', this.boundRecalcHost);
-        }
+        this.resizeObserver?.disconnect();
         this.unsubFns.forEach(fn => fn());
     }
 
@@ -278,7 +276,7 @@ export class MemoryAnalysisComponent implements OnInit, OnDestroy, AfterViewInit
     }
 
     private drawBarChart(container: HTMLDivElement | undefined, items: Array<{ label: string; value: number }>): void {
-        if (!container || items.length === 0) return;
+        if (!container || items.length === 0 || container.offsetWidth <= 0) return;
         container.innerHTML = '';
 
         const colors = this.getChartColors();

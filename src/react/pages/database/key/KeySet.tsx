@@ -4,7 +4,7 @@
  */
 import { useState, useEffect, useCallback } from 'react'
 import { Box, Tooltip } from '@mui/material'
-import { Delete, TableChart, ContentCopy, Download, Edit, Add } from '@mui/icons-material'
+import { Delete, AccountTree, ContentCopy, Download, Edit, Add } from '@mui/icons-material'
 import { useTheme } from '@mui/material'
 import { useI18nStore } from '../../../stores/i18n.store'
 import { useRedisStateStore } from '../../../stores/redis-state.store'
@@ -76,7 +76,7 @@ export default function KeySet({ response, value, valueBuffer, keyName, valueFor
     const hoverBg = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)'
     const oddBg = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.04)'
     const listBorder = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.06)'
-    const iconSx = (color: string) => ({ fontSize: 18, cursor: 'pointer', mx: '2px', opacity: 0.7, color, '&:hover': { opacity: 1 } })
+    const iconSx = (color: string) => ({ fontSize: 24, cursor: 'pointer', mx: '2px', opacity: 0.7, color, '&:hover': { opacity: 1 } })
 
     return (
         <Box>
@@ -113,7 +113,7 @@ export default function KeySet({ response, value, valueBuffer, keyName, valueFor
                         </Box>
                         <Box component="span" sx={{ flex: '5%', textAlign: 'right', whiteSpace: 'nowrap' }}>
                             {!isReadonly && <Tooltip title={strings?.intention?.delete}><Delete sx={iconSx('error.main')} onClick={() => deleteSetMember(item.index)} /></Tooltip>}
-                            <Tooltip title={strings?.intention?.jsonViewShow}><TableChart sx={iconSx('secondary.main')} onClick={() => { setJsonViewValue(String(item.value ?? '')); setJsonViewOpen(true) }} /></Tooltip>
+                            <Tooltip title={strings?.intention?.jsonViewShow}><AccountTree sx={iconSx('secondary.main')} onClick={() => { setJsonViewValue(String(item.value ?? '')); setJsonViewOpen(true) }} /></Tooltip>
                             <Tooltip title={strings?.intention?.copy}><ContentCopy sx={iconSx('secondary.main')} onClick={() => copyValue(item.value)} /></Tooltip>
                             <Tooltip title={strings?.intention?.downloadBuffer}><Download sx={iconSx('secondary.main')} onClick={() => downloadBuffer(valueBuffer?.[item.index], keyName)} /></Tooltip>
                             {!isReadonly && <Tooltip title={strings?.intention?.edit}><Edit sx={iconSx('primary.main')} onClick={() => editValue(item.index, item.value)} /></Tooltip>}

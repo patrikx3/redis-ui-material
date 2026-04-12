@@ -55,6 +55,10 @@ import { FormsModule, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/f
         }
 
 
+.p3xr-input::placeholder {
+    opacity: 0.5;
+}
+
 .p3xr-input:focus {
     margin: 0px;
     border-width: 3px;

@@ -301,7 +301,7 @@ export default function DatabaseTreeControls() {
     }, [localSearch, keyCount, strings, toast, refresh, generalHandleError, overlay])
 
     return (
-        <Box sx={{ borderBottom: 1, borderColor: 'divider', minHeight: 24 }}>
+        <Box sx={{ minHeight: 24 }}>
             {/* Leading row: controls + pager, single line */}
             <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', minHeight: 31 }}>
                 <Tooltip title={strings?.intention?.extend} placement="top" enterDelay={300}>

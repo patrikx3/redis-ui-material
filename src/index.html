@@ -5,7 +5,7 @@
     <title>P3X Redis UI</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com 'unsafe-inline' 'unsafe-eval'; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' ws: wss: http://localhost:* http://127.0.0.1:* https://www.google-analytics.com https://region1.google-analytics.com; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com 'unsafe-inline' 'unsafe-eval'; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.googletagmanager.com https://www.google-analytics.com; font-src 'self' data:; connect-src 'self' ws: wss: http://localhost:* http://127.0.0.1:* https://www.google-analytics.com https://region1.google-analytics.com https://analytics.google.com; object-src 'none'; base-uri 'self'; form-action 'self'">
     <base href="/ng/">
     <link rel="icon" type="image/svg+xml" href="public/images/redis.svg">
 
@@ -29,61 +29,8 @@
 
     <script>try { if (window.parent === window && location.port !== '8080' && localStorage.getItem('p3xr-frontend') === 'react' && !location.pathname.startsWith('/react')) location.replace('/react/' + location.search) } catch(e) {}</script>
 
-    <!-- Loading splash: shown before Angular bootstraps. LayoutComponent.ngOnInit() removes it.
-         IMPORTANT: Must be a SIBLING of <p3xr-layout>, NOT a child — placing content inside
-         <p3xr-layout> triggers downgradeComponent's transclude and corrupts the DOM. -->
-    <div id="p3xr-loading">
-        <style>
-            #p3xr-loading {
-                position: fixed;
-                inset: 0;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                background-color: rgba(0, 0, 0, 0.1);
-            }
-            .LoaderBalls {
-                width: 90px;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin: 20px auto;
-            }
-            .LoaderBalls__item {
-                width: 20px;
-                height: 20px;
-                border-radius: 50%;
-                background: rgba(0, 0, 0, 0.5);
-            }
-            .LoaderBalls__item:nth-child(1) { animation: bouncing 0.4s alternate infinite cubic-bezier(0.6, 0.05, 0.15, 0.95); }
-            .LoaderBalls__item:nth-child(2) { animation: bouncing 0.4s 0.1s alternate infinite cubic-bezier(0.6, 0.05, 0.15, 0.95) backwards; }
-            .LoaderBalls__item:nth-child(3) { animation: bouncing 0.4s 0.2s alternate infinite cubic-bezier(0.6, 0.05, 0.15, 0.95) backwards; }
-            @keyframes bouncing {
-                0%   { transform: translate3d(0, 10px, 0) scale(1.2, 0.85); }
-                100% { transform: translate3d(0, -20px, 0) scale(0.9, 1.1); }
-            }
-        </style>
-        <div class="LoaderBalls">
-            <div class="LoaderBalls__item"></div>
-            <div class="LoaderBalls__item"></div>
-            <div class="LoaderBalls__item"></div>
-        </div>
-        <div id="web-development" style="text-align: center;">
-            <a href="https://corifeus.hu/hu" style="opacity: 0.5; text-decoration: none;"><span lang="hu">Webfejlesztés</span></a><br />
-            <a href="https://corifeus.hu/en" style="opacity: 0.5; text-decoration: none;"><span lang="en">Web Development</span></a><br />
-            <a href="https://corifeus.hu/de" style="opacity: 0.5; text-decoration: none;"><span lang="de">Webentwicklung</span></a><br />
-            <a href="https://corifeus.hu/es" style="opacity: 0.5; text-decoration: none;"><span lang="es">Desarrollo Web</span></a><br />
-            <a href="https://corifeus.hu/fr" style="opacity: 0.5; text-decoration: none;"><span lang="fr">Développement Web</span></a><br />
-            <a href="https://corifeus.hu/ja" style="opacity: 0.5; text-decoration: none;"><span lang="jp">ウェブ開発</span></a><br />
-            <a href="https://corifeus.hu/it" style="opacity: 0.5; text-decoration: none;"><span lang="it">Sviluppo Web</span></a><br />
-            <a href="https://corifeus.hu/ru" style="opacity: 0.5; text-decoration: none;"><span lang="ru">Веб-разработка</span></a><br />
-            <a href="https://corifeus.hu/zn" style="opacity: 0.5; text-decoration: none;"><span lang="zh">网页开发</span></a>
-        </div>
-    </div>
+ 
 
-    <!-- Angular layout: fixed header + footer toolbars (replaces AngularJS p3xrLayout).
-         Must be EMPTY — no children here (see #p3xr-loading comment above). -->
     <p3xr-layout></p3xr-layout>
 
     <!-- Content area: Angular Router renders pages inside p3xr-layout -->

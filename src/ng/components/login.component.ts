@@ -33,16 +33,24 @@ import { AuthService } from '../services/auth.service';
                     <span class="p3xr-layout-spacer"></span>
                     <button mat-button type="button" [matMenuTriggerFor]="guiMenu"
                             style="color: rgba(255,255,255,0.87);">
+                        <mat-icon style="margin-right: 4px;">desktop_windows</mat-icon>
                         GUI
                     </button>
                     <mat-menu #guiMenu>
                         <button mat-menu-item (click)="switchGui('ng')"
                                 [class.p3xr-mat-menu-item-selected]="currentGui === 'ng'">
+                            <i class="fab fa-angular" style="font-size:18px;width:24px;text-align:center;margin-right:8px;color:#dd0031;"></i>
                             Angular
                         </button>
                         <button mat-menu-item (click)="switchGui('react')"
                                 [class.p3xr-mat-menu-item-selected]="currentGui === 'react'">
+                            <i class="fab fa-react" style="font-size:18px;width:24px;text-align:center;margin-right:8px;color:#61dafb;"></i>
                             React
+                        </button>
+                        <button mat-menu-item (click)="switchGui('vue')"
+                                [class.p3xr-mat-menu-item-selected]="currentGui === 'vue'">
+                            <i class="fab fa-vuejs" style="font-size:18px;width:24px;text-align:center;margin-right:8px;color:#42b883;"></i>
+                            Vue
                         </button>
                     </mat-menu>
                 </mat-toolbar>
@@ -50,19 +58,21 @@ import { AuthService } from '../services/auth.service';
                 <div class="p3xr-dialog-content">
                     <mat-form-field class="full-width">
                         <mat-label>{{ i18n.strings().form?.connection?.label?.username || 'Username' }}</mat-label>
+                        <mat-icon matPrefix>person</mat-icon>
                         <input matInput name="username" type="text"
                                [(ngModel)]="username" autocomplete="username" />
                     </mat-form-field>
 
                     <mat-form-field class="full-width">
                         <mat-label>{{ i18n.strings().form?.connection?.label?.password || 'Password' }}</mat-label>
+                        <mat-icon matPrefix>lock</mat-icon>
                         <input matInput name="password"
                                [type]="hidePassword ? 'password' : 'text'"
                                [(ngModel)]="password" autocomplete="current-password"
                                (keydown.enter)="onLogin()" />
                         <button mat-icon-button matSuffix type="button"
                                 (click)="hidePassword = !hidePassword">
-                            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                            <mat-icon svgIcon="{{ hidePassword ? 'visibility_off' : 'visibility' }}"></mat-icon>
                         </button>
                     </mat-form-field>
 
@@ -76,7 +86,7 @@ import { AuthService } from '../services/auth.service';
                 <div class="p3xr-dialog-actions" style="display: flex; justify-content: flex-end; padding: 8px; gap: 8px;">
                     <button mat-raised-button class="btn-primary" type="submit"
                             [disabled]="loading || !username || !password">
-                        <mat-icon>done</mat-icon>
+                        <mat-icon svgIcon="login"></mat-icon>
                         {{ i18n.strings().intention?.ok || 'Login' }}
                     </button>
                 </div>
@@ -140,7 +150,7 @@ export class LoginComponent {
         try {
             localStorage.setItem('p3xr-frontend', gui);
         } catch {}
-        location.href = gui === 'react' ? '/react/' : '/ng/';
+        location.href = gui === 'react' ? '/react/' : gui === 'vue' ? '/vue/' : '/ng/';
     }
 
     getErrorMessage(error: string): string {

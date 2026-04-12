@@ -103,13 +103,31 @@
         user-select: text;
     }
 
-    // Value column: multiline with scroll, matching AngularJS overflow:auto + max-height:200px
+    // Value column: multiline with scroll, scrollbar hidden by default, visible on hover
     .p3xr-value-col {
-        overflow: auto !important;
+        overflow-x: hidden;
+        overflow-y: auto;
         max-height: 200px;
         white-space: pre-wrap;
         word-break: break-all;
         user-select: text;
+
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: transparent;
+            border-radius: 3px;
+        }
+
+        &:hover::-webkit-scrollbar-thumb {
+            background: rgba(128, 128, 128, 0.4);
+        }
     }
 }
 
@@ -118,9 +136,9 @@
 
     mat-icon {
         cursor: pointer;
-        font-size: 18px;
-        width: 18px;
-        height: 18px;
+        font-size: 24px;
+        width: 24px;
+        height: 24px;
         margin: 0 2px;
         opacity: 0.7;
 

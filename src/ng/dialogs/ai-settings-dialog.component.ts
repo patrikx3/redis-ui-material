@@ -29,7 +29,7 @@ import { RedisStateService } from '../services/redis-state.service';
                     {{ strings().label?.aiSettings || 'AI Settings' }}
                 </span>
                 <button mat-icon-button type="button" (click)="cancel()">
-                    <mat-icon>close</mat-icon>
+                    <mat-icon svgIcon="close"></mat-icon>
                 </button>
             </mat-toolbar>
 
@@ -51,7 +51,7 @@ import { RedisStateService } from '../services/redis-state.service';
             <mat-dialog-actions class="p3xr-dialog-actions">
                 <p3xr-dialog-cancel (cancel)="cancel()"></p3xr-dialog-cancel>
                 <button mat-raised-button class="btn-primary" type="submit" [disabled]="saving">
-                    <mat-icon>save</mat-icon>
+                    <mat-icon svgIcon="save"></mat-icon>
                     {{ strings().intention?.save || 'Save' }}
                 </button>
             </mat-dialog-actions>

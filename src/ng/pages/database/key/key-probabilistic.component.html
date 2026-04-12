@@ -69,13 +69,13 @@
                 @if (!readonly) {
                     @if (isGtSm) {
                         <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="addItem()">
-                            <mat-icon>add</mat-icon>
+                            <mat-icon svgIcon="add"></mat-icon>
                             <span>{{ strings()?.intention?.add || 'Add' }}</span>
                         </button>
                     } @else {
                         <button mat-mini-fab class="btn-primary" type="button" (click)="addItem()"
                                 [matTooltip]="strings()?.intention?.add ?? 'Add'" matTooltipPosition="above">
-                            <mat-icon>add</mat-icon>
+                            <mat-icon svgIcon="add"></mat-icon>
                         </button>
                     }
                 }
@@ -83,13 +83,13 @@
                 @if (p3xrResponse.type === 'bloom' || p3xrResponse.type === 'cuckoo') {
                     @if (isGtSm) {
                         <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="checkItem()">
-                            <mat-icon>search</mat-icon>
+                            <mat-icon svgIcon="search"></mat-icon>
                             <span>{{ strings()?.page?.key?.probabilistic?.checkItem || 'Check' }}</span>
                         </button>
                     } @else {
                         <button mat-mini-fab class="btn-primary" type="button" (click)="checkItem()"
                                 [matTooltip]="strings()?.page?.key?.probabilistic?.checkItem ?? 'Check'" matTooltipPosition="above">
-                            <mat-icon>search</mat-icon>
+                            <mat-icon svgIcon="search"></mat-icon>
                         </button>
                     }
                 }
@@ -97,13 +97,13 @@
                 @if (p3xrResponse.type === 'cuckoo' && !readonly) {
                     @if (isGtSm) {
                         <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="deleteItem()">
-                            <mat-icon>delete</mat-icon>
+                            <mat-icon svgIcon="delete"></mat-icon>
                             <span>{{ strings()?.intention?.delete || 'Delete' }}</span>
                         </button>
                     } @else {
                         <button mat-mini-fab class="btn-primary" type="button" (click)="deleteItem()"
                                 [matTooltip]="strings()?.intention?.delete ?? 'Delete'" matTooltipPosition="above">
-                            <mat-icon>delete</mat-icon>
+                            <mat-icon svgIcon="delete"></mat-icon>
                         </button>
                     }
                 }
@@ -111,13 +111,13 @@
                 @if (p3xrResponse.type === 'cms') {
                     @if (isGtSm) {
                         <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="queryItem()">
-                            <mat-icon>search</mat-icon>
+                            <mat-icon svgIcon="search"></mat-icon>
                             <span>{{ strings()?.page?.key?.probabilistic?.queryCount || 'Query' }}</span>
                         </button>
                     } @else {
                         <button mat-mini-fab class="btn-primary" type="button" (click)="queryItem()"
                                 [matTooltip]="strings()?.page?.key?.probabilistic?.queryCount ?? 'Query'" matTooltipPosition="above">
-                            <mat-icon>search</mat-icon>
+                            <mat-icon svgIcon="search"></mat-icon>
                         </button>
                     }
                 }
@@ -125,13 +125,13 @@
                 @if (p3xrResponse.type === 'tdigest') {
                     @if (isGtSm) {
                         <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="queryQuantile()">
-                            <mat-icon>bar_chart</mat-icon>
+                            <mat-icon svgIcon="bar_chart"></mat-icon>
                             <span>{{ strings()?.page?.key?.probabilistic?.quantile || 'Quantile' }}</span>
                         </button>
                     } @else {
                         <button mat-mini-fab class="btn-primary" type="button" (click)="queryQuantile()"
                                 [matTooltip]="strings()?.page?.key?.probabilistic?.quantile ?? 'Quantile'" matTooltipPosition="above">
-                            <mat-icon>bar_chart</mat-icon>
+                            <mat-icon svgIcon="bar_chart"></mat-icon>
                         </button>
                     }
                 }
@@ -139,13 +139,13 @@
                 @if (p3xrResponse.type === 'tdigest' && !readonly) {
                     @if (isGtSm) {
                         <button mat-raised-button class="btn-warn p3xr-action-btn" type="button" (click)="resetTdigest()">
-                            <mat-icon>undo</mat-icon>
+                            <mat-icon svgIcon="undo"></mat-icon>
                             <span>Reset</span>
                         </button>
                     } @else {
                         <button mat-mini-fab class="btn-warn" type="button" (click)="resetTdigest()"
                                 matTooltip="Reset" matTooltipPosition="above">
-                            <mat-icon>undo</mat-icon>
+                            <mat-icon svgIcon="undo"></mat-icon>
                         </button>
                     }
                 }

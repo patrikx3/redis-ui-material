@@ -12,7 +12,7 @@ https://corifeus.com/redis-ui
 
 
 ---
-# 💿 P3X Redis UI dual frontend — Angular + React/MUI with 54 languages, 7 themes, Socket.IO, desktop notifications, and full feature parity v2026.4.428
+# 💿 P3X Redis UI dual frontend — Angular + React/MUI with 54 languages, 7 themes, Socket.IO, desktop notifications, and full feature parity v2026.4.434
 
 
   
@@ -48,7 +48,7 @@ v24.14.1
 [//]: #@corifeus-header:end
 
 
-The `p3x-redis-ui-material` package is the **dual frontend** for [p3x-redis-ui](https://github.com/patrikx3/redis-ui). It provides two fully independent, feature-parity GUIs that connect to `p3x-redis-ui-server` via Socket.IO:
+The `p3x-redis-ui-material` package is the **triple frontend** for [p3x-redis-ui](https://github.com/patrikx3/redis-ui). It provides three fully independent, feature-parity GUIs that connect to `p3x-redis-ui-server` via Socket.IO:
 
 ### Angular Frontend (`/ng/`)
 - **Angular** (latest LTS) with standalone components and Angular Signals
@@ -63,7 +63,15 @@ The `p3x-redis-ui-material` package is the **dual frontend** for [p3x-redis-ui](
 - **Zustand** lightweight state management replacing Angular services
 - **@tanstack/react-virtual** for virtual scrolling
 
-### Shared Across Both
+### Vue Frontend (`/vue/`)
+
+- **Vue 3** with Composition API and `<script setup>`
+- **Vuetify 3** component library matching Material Design
+- **Vite** bundler — instant dev server startup and fast production builds
+- **Pinia** state management replacing Angular services
+
+### Shared Across All Three
+
 - **54 languages** with auto browser/system locale detection and "Auto (system)" option
 - **7 themes** — Light, Enterprise, Redis (light) + Dark, Dark Neu, Darko Bluo, Matrix (dark) — with auto system preference detection
 - **Same Socket.IO protocol** — identical backend API
@@ -210,7 +218,7 @@ All dependencies track the latest LTS versions and are regularly upgraded.
 Playwright tests run against both frontends in parallel using a shared test spec:
 
 ```bash
-# Run all tests (Angular + React)
+# Run all tests (Angular + React + Vue)
 yarn run test:e2e
 
 # Run with Playwright UI
@@ -265,7 +273,7 @@ All my domains, including [patrikx3.com](https://patrikx3.com), [corifeus.eu](ht
 ---
 
 
-[**P3X-REDIS-UI-MATERIAL**](https://corifeus.com/redis-ui-material) Build v2026.4.428
+[**P3X-REDIS-UI-MATERIAL**](https://corifeus.com/redis-ui-material) Build v2026.4.434
 
  [![NPM](https://img.shields.io/npm/v/p3x-redis-ui-material.svg)](https://www.npmjs.com/package/p3x-redis-ui-material)  [![Donate for PatrikX3 / P3X](https://img.shields.io/badge/Donate-PatrikX3-003087.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QZVM4V6HVZJW6)  [![Contact Corifeus / P3X](https://img.shields.io/badge/Contact-P3X-ff9900.svg)](https://www.patrikx3.com/en/front/contact) [![Like Corifeus @ Facebook](https://img.shields.io/badge/LIKE-Corifeus-3b5998.svg)](https://www.facebook.com/corifeus.software)
 

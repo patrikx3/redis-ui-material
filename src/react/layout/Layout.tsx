@@ -299,11 +299,7 @@ export default function Layout() {
         return () => { window.removeEventListener('message', handler) }
     }, [isElectron])
 
-    // Remove loading splash
-    useEffect(() => {
-        document.getElementById('p3xr-loading')?.remove()
-    }, [])
-
+   
     // Auto-connect from localStorage on startup (only when authenticated)
     useEffect(() => {
         if (!isAuthenticated) return
@@ -346,7 +342,8 @@ export default function Layout() {
     }, [strings, showLogin])
 
     // --- Responsive button helpers ---
-    const activeSx = { bgcolor: 'rgba(255,255,255,0.1)' }
+    const isMatrixTheme = themeKey === 'matrix'
+    const activeSx = { bgcolor: isMatrixTheme ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.1)' }
 
     const NavBtn = ({ icon, label, tooltip, page, onClick }: {
         icon: React.ReactNode, label: string, tooltip?: string, page?: string, onClick: () => void
@@ -555,13 +552,13 @@ export default function Layout() {
                             list: { autoFocus: false, autoFocusItem: false, sx: { pt: 0, overflow: 'auto', maxHeight: 400 } },
                         }}>
                         <Box
-                            sx={{
+                            sx={(theme) => ({
                                 position: 'sticky', top: 0, zIndex: 1,
-                                bgcolor: 'background.paper',
-                                backgroundImage: 'inherit',
+                                bgcolor: theme.palette.mode === 'dark' ? theme.palette.background.paper : 'background.paper',
+                                backgroundImage: theme.palette.mode === 'dark' ? 'linear-gradient(rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.12))' : 'none',
                                 px: 1, py: 1,
                                 overflow: 'hidden',
-                            }}
+                            })}
                             onClick={e => e.stopPropagation()}
                             onKeyDown={onLanguageKeyDown}
                         >

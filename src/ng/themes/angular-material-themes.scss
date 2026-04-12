@@ -1502,3 +1502,9 @@ body [md-theme] md-dialog fieldset {
 .p3xr-tree-node-tooltip {
   margin-left: 36px !important;
 }
+
+// Format toggle divider — override Material's --mat-button-toggle-divider-color
+// Must be at end of file so it comes AFTER mat.all-component-colors() output
+.p3xr-format-toggle {
+  --mat-button-toggle-divider-color: var(--p3xr-content-border-color);
+}

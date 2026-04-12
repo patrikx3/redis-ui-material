@@ -35,22 +35,16 @@ export class RedisParserService {
         const obj: any = {};
         let section: string | undefined;
         let currentSectionObj: any = {};
-        let hadSection = false;
         let pikaIndex = 0;
 
         for (const line of lines) {
             if (line.startsWith('#')) {
-                if (hadSection) {
-                    continue;
-                }
-                hadSection = true;
                 if (section !== undefined) {
                     obj[section] = currentSectionObj;
                 }
                 section = line.substring(1).toLowerCase().trim();
                 currentSectionObj = {};
             } else if (line.length > 2) {
-                hadSection = false;
                 if (line.includes(':')) {
                     const lineArray = line.split(':');
                     const value = lineArray[1] ?? '';
