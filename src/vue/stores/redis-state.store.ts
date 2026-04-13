@@ -5,7 +5,7 @@ import { useSettingsStore } from './settings.store'
 function computeApiHost(): string {
     const apiUrl = new URL(location.toString())
     if ((globalThis as any).p3xrDevMode === true) {
-        const apiPort = (globalThis as any).p3xrApiPort || '7843'
+        const apiPort = (globalThis as any).p3xrApiPort
         return `http://${apiUrl.hostname}:${apiPort}`
     }
     return `${apiUrl.protocol}//${apiUrl.host}`

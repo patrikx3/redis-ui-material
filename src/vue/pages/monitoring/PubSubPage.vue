@@ -76,7 +76,7 @@ function clearPubSub(): void {
 }
 
 function exportPubSub(): void {
-    const connName = state.connection?.name || 'redis'
+    const connName = state.connection?.name
     const lines = monitorData.pubsubEntries.map(e => `${e.fullTimestamp} ${e.channel} ${e.message}`)
     const blob = new Blob([lines.join('\n')], { type: 'text/plain' })
     const url = URL.createObjectURL(blob)
@@ -120,12 +120,12 @@ onUnmounted(() => {
         <template #actions>
             <P3xrButton
                 @click="clearPubSub(); $event.stopPropagation()"
-                :label="strings()?.intention?.clear || 'Clear'"
+                :label="strings()?.intention?.clear"
                 icon="mdi-backspace"
             />
             <P3xrButton
                 @click="exportPubSub(); $event.stopPropagation()"
-                :label="strings()?.intention?.export || 'Export'"
+                :label="strings()?.intention?.export"
                 icon="mdi-download"
             />
         </template>

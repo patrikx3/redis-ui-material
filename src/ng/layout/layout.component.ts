@@ -373,7 +373,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
     async logout(): Promise<void> {
         try {
             await this.common.confirm({
-                message: this.i18n.strings()?.intention?.logout || 'Logout',
+                message: this.i18n.strings()?.intention?.logout,
             });
             this.auth.logout();
         } catch {

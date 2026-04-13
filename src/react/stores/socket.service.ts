@@ -57,7 +57,7 @@ export function getClient(): Socket {
     client.on('connect', () => {
         if (disconnected || connectErrorWas) {
             console.log('p3xr-socket RE-connected', client!.id)
-            notify(useI18nStore.getState().strings?.title?.name || 'P3X Redis UI', useI18nStore.getState().strings?.status?.connectionRestored || 'Connection restored')
+            notify(useI18nStore.getState().strings?.title?.name, useI18nStore.getState().strings?.status?.connectionRestored)
             disconnected = false
             connectErrorWas = false
             location.reload()
@@ -111,13 +111,13 @@ export function getClient(): Socket {
                 const fn = strings?.status?.redisDisconnected
                 const msg = typeof fn === 'function' ? fn(data) : 'Redis disconnected'
                 showToast(msg)
-                notify(strings?.title?.name || 'P3X Redis UI', msg)
+                notify(strings?.title?.name, msg)
             } else if (data.status === 'code') {
                 const strings = useI18nStore.getState().strings
                 const codes = strings?.code ?? {}
                 const msg = codes[data.code] ?? `unknown redis disconnect code: ${data.code}`
                 showToast(msg)
-                notify(strings?.title?.name || 'P3X Redis UI', msg)
+                notify(strings?.title?.name, msg)
             }
 
             emit('redis-disconnected', data)

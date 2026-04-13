@@ -110,7 +110,7 @@ export class KeyJsonComponent extends KeyTypeBase implements OnInit, OnDestroy, 
             this.overlay.hide();
 
             if (this.settingsService.undoEnabled() && oldValue !== undefined && oldValue !== value) {
-                const undoClicked = await this.common.toastWithUndo(this.strings?.status?.set || 'Saved');
+                const undoClicked = await this.common.toastWithUndo(this.strings?.status?.set);
                 if (undoClicked) {
                     this.overlay.show({ message: 'Undo...' });
                     await this.socket.request({
@@ -119,7 +119,7 @@ export class KeyJsonComponent extends KeyTypeBase implements OnInit, OnDestroy, 
                     });
                     this.refreshKey();
                     this.overlay.hide();
-                    this.common.toast(this.strings?.status?.reverted || 'Reverted');
+                    this.common.toast(this.strings?.status?.reverted);
                 }
             }
         } catch (e) {

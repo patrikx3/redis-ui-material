@@ -101,7 +101,7 @@ export const useSettingsStore = create<SettingsState>((set) => ({
 
     prettyBytes: (value: number) => {
         let lang = useSettingsStore.getState().language
-        if (lang === 'auto') lang = useI18nStore.getState().currentLang || 'en'
+        if (lang === 'auto') lang = useI18nStore.getState().currentLang
         return prettyBytes(value, { locale: lang })
     },
 
@@ -109,7 +109,7 @@ export const useSettingsStore = create<SettingsState>((set) => ({
         // Use resolved language from i18n store (not raw localStorage which may be 'auto')
         let lang = useSettingsStore.getState().language
         if (lang === 'auto') {
-            lang = useI18nStore.getState().currentLang || 'en'
+            lang = useI18nStore.getState().currentLang
         }
         const languageMap: Record<string, string> = {
             'pt-BR': 'pt', 'zn': 'zh_CN', 'zh-HK': 'zh_TW', 'zh-TW': 'zh_TW', 'pt-PT': 'pt',
@@ -129,7 +129,7 @@ export const useSettingsStore = create<SettingsState>((set) => ({
             nb: { y: (c: number) => c === 1 ? 'år' : 'år', mo: (c: number) => c === 1 ? 'måned' : 'måneder', w: (c: number) => c === 1 ? 'uke' : 'uker', d: (c: number) => c === 1 ? 'dag' : 'dager', h: (c: number) => c === 1 ? 'time' : 'timer', m: (c: number) => c === 1 ? 'minutt' : 'minutter', s: (c: number) => c === 1 ? 'sekund' : 'sekunder', ms: () => 'millisekund' },
         }
         return {
-            language: languageMap[lang] || lang || 'en',
+            language: languageMap[lang] || lang,
             languages: customLanguages,
         }
     },

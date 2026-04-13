@@ -4,6 +4,7 @@ import { useCommonStore } from './common.store'
 import { useRedisStateStore } from './redis-state.store'
 import { useSettingsStore } from './settings.store'
 import { useI18nStore } from './i18n.store'
+import { useOverlayStore } from './overlay.store'
 import { navigateTo } from './navigation.store'
 import { parseRedisInfo } from './redis-parser'
 
@@ -23,6 +24,7 @@ export function emitCommand(event: string, data?: any) {
 }
 
 interface MainCommandState {
+    connect: (conn: any) => Promise<void>
     selectDatabase: (dbIndex: number) => Promise<void>
     save: () => Promise<void>
     refresh: (options?: { withoutParent?: boolean; force?: boolean }) => Promise<void>
@@ -36,6 +38,60 @@ interface MainCommandState {
 let lastRefreshAt = 0
 
 export const useMainCommandStore = create<MainCommandState>(() => ({
+    connect: async (conn: any) => {
+        const cloned = structuredClone(conn)
+        const settings = useSettingsStore.getState()
+        const overlay = useOverlayStore.getState()
+        try {
+            const dbStorageKey = settings.getStorageKeyCurrentDatabase(cloned.id)
+            let db: string | undefined
+            try { db = localStorage.getItem(dbStorageKey) ?? undefined } catch {}
+
+            if (cloned.askAuth === true) {
+                try {
+                    const auth = await useCommonStore.getState().askAuth()
+                    cloned.username = auth.username || undefined
+                    cloned.password = auth.password || undefined
+                } catch { return }
+            }
+
+            const strings = useI18nStore.getState().strings
+            overlay.show({ message: strings?.title?.connectingRedis })
+
+            const response = await request({
+                action: 'connection/connect',
+                payload: { connection: cloned, db },
+            })
+
+            const databaseIndexes: number[] = []
+            let i = 0
+            while (i < response.databases) databaseIndexes.push(i++)
+            const commands: string[] = []
+            Object.keys(response.commands ?? {}).forEach(k => commands.push(response.commands[k][0]))
+            commands.sort()
+            const modules = Array.isArray(response.modules) ? response.modules : []
+
+            useRedisStateStore.setState({
+                page: 1, monitor: false, dbsize: response.dbsize,
+                databaseIndexes, connection: cloned, commands,
+                commandsMeta: response.commandsMeta ?? {}, modules,
+                hasReJSON: modules.some((m: any) => m.name === 'ReJSON'),
+                hasRediSearch: modules.some((m: any) => m.name === 'search'),
+                hasTimeSeries: modules.some((m: any) => m.name === 'timeseries' || m.name === 'Timeseries'),
+                hasBloom: modules.some((m: any) => m.name === 'bf'),
+            })
+
+            useCommonStore.getState().loadRedisInfoResponse({ response })
+            try { localStorage.setItem(settings.connectInfoStorageKey, JSON.stringify(cloned)) } catch {}
+        } catch (error) {
+            try { localStorage.removeItem(settings.connectInfoStorageKey) } catch {}
+            useRedisStateStore.setState({ connection: undefined })
+            useCommonStore.getState().generalHandleError(error)
+        } finally {
+            overlay.hide()
+        }
+    },
+
     selectDatabase: async (dbIndex: number) => {
         const state = useRedisStateStore.getState()
         const settings = useSettingsStore.getState()

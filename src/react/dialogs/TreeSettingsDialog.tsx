@@ -232,14 +232,14 @@ export default function TreeSettingsDialog({ open, onClose }: TreeSettingsDialog
             <FormControlLabel sx={{ display: 'block' }}
                 control={<Switch checked={model.undoEnabled} onChange={(_, v) => set('undoEnabled', v)} />}
                 label={model.undoEnabled
-                    ? (strings?.form?.treeSettings?.label?.undoEnabled || 'Undo enabled')
-                    : (strings?.form?.treeSettings?.label?.undoDisabled || 'Undo disabled')} />
-            <Box sx={{ fontSize: 12, opacity: 0.7, ml: '50px', mt: -0.5 }}>{strings?.form?.treeSettings?.undoHint || 'Undo is available for string and JSON key types only'}</Box>
+                    ? strings?.form?.treeSettings?.label?.undoEnabled
+                    : strings?.form?.treeSettings?.label?.undoDisabled} />
+            <Box sx={{ fontSize: 12, opacity: 0.7, ml: '50px', mt: -0.5 }}>{strings?.form?.treeSettings?.undoHint}</Box>
             <FormControlLabel sx={{ display: 'block' }}
                 control={<Switch checked={model.showDiffBeforeSave} onChange={(_, v) => set('showDiffBeforeSave', v)} />}
                 label={model.showDiffBeforeSave
-                    ? (strings?.form?.treeSettings?.label?.diffEnabled || 'Show diff before saving')
-                    : (strings?.form?.treeSettings?.label?.diffDisabled || 'Diff before save disabled')} />
+                    ? strings?.form?.treeSettings?.label?.diffEnabled
+                    : strings?.form?.treeSettings?.label?.diffDisabled} />
         </P3xrDialog>
     )
 }

@@ -47,14 +47,14 @@ export class ShortcutsService {
             action();
         } else {
             const strings = this.i18n.strings();
-            this.common.toast(strings?.label?.connectFirst || 'Connect to a Redis server first');
+            this.common.toast(strings?.label?.connectFirst);
         }
     }
 
     private requireConnectionAndHome(action: () => void): void {
         if (!this.isConnected) {
             const strings = this.i18n.strings();
-            this.common.toast(strings?.label?.connectFirst || 'Connect to a Redis server first');
+            this.common.toast(strings?.label?.connectFirst);
             return;
         }
         // Navigate to home if not already there

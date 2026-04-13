@@ -38,7 +38,7 @@ const keyDialogUnsubs: Array<() => void> = []
 
 function openKeyDialog(options: any) {
     keyDialogData.value = {
-        type: options.type || 'add',
+        type: options.type,
         node: options.node,
         model: options.model,
     }
@@ -78,7 +78,7 @@ const ACCORDION_BG: Record<string, string> = {
     dark: '#9e9e9e', darkNeu: '#90a4ae', darkoBluo: '#3f51b5',
     matrix: '#76ff03',
 }
-const resizerBg = computed(() => ACCORDION_BG[themeKey.value] || '#9e9e9e')
+const resizerBg = computed(() => ACCORDION_BG[themeKey.value])
 
 const isDark = computed(() => document.body.classList.contains('p3xr-theme-dark'))
 const resizerFilter = computed(() => {

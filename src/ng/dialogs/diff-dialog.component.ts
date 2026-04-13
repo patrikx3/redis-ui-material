@@ -41,16 +41,16 @@ const CONTEXT_LINES = 3;
         <mat-toolbar class="p3xr-dialog-toolbar p3xr-mat-layout-strong">
             <span mat-dialog-title class="p3xr-dialog-title p3xr-dialog-title-with-icon" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                 <mat-icon>difference</mat-icon>
-                <span>{{ diffStrings().reviewChanges || 'Review changes' }}</span>
+                <span>{{ diffStrings().reviewChanges }}</span>
             </span>
             <span style="flex: 1;"></span>
             <mat-button-toggle-group [value]="mode()" (change)="mode.set($event.value)" class="p3xr-diff-toggle" [hideSingleSelectionIndicator]="true">
-                <mat-button-toggle value="inline">{{ diffStrings().inline || 'Inline' }}</mat-button-toggle>
-                <mat-button-toggle value="side-by-side">{{ diffStrings().sideBySide || 'Side by side' }}</mat-button-toggle>
+                <mat-button-toggle value="inline">{{ diffStrings().inline }}</mat-button-toggle>
+                <mat-button-toggle value="side-by-side">{{ diffStrings().sideBySide }}</mat-button-toggle>
             </mat-button-toggle-group>
             <span class="p3xr-diff-summary-header">
-                <span class="p3xr-diff-count-add">+{{ additions() }}</span> {{ diffStrings().additions || 'additions' }},
-                <span class="p3xr-diff-count-del">-{{ deletions() }}</span> {{ diffStrings().deletions || 'deletions' }}
+                <span class="p3xr-diff-count-add">+{{ additions() }}</span> {{ diffStrings().additions }},
+                <span class="p3xr-diff-count-del">-{{ deletions() }}</span> {{ diffStrings().deletions }}
             </span>
             <button mat-icon-button (click)="dialogRef.close(false)"><mat-icon>close</mat-icon></button>
         </mat-toolbar>
@@ -59,7 +59,7 @@ const CONTEXT_LINES = 3;
             @if (mode() === 'inline') {
                 @for (block of blocks(); track $index) {
                     @if (block.type === 'collapse' && !block.expanded) {
-                        <div class="p3xr-diff-collapse" (click)="expandBlock($index)">... {{ block.collapsedCount }} {{ diffStrings().unchangedLines || 'unchanged lines' }} ...</div>
+                        <div class="p3xr-diff-collapse" (click)="expandBlock($index)">... {{ block.collapsedCount }} {{ diffStrings().unchangedLines }} ...</div>
                     } @else {
                         @for (line of block.lines; track $index) {
                             <div class="p3xr-diff-line" [class.p3xr-diff-added]="block.type === 'added'" [class.p3xr-diff-removed]="block.type === 'removed'" [class.p3xr-diff-unchanged]="block.type === 'unchanged' || block.type === 'collapse'">
@@ -70,10 +70,10 @@ const CONTEXT_LINES = 3;
                 }
             } @else {
                 <div class="p3xr-diff-side">
-                    <div class="p3xr-diff-side-header">{{ diffStrings().before || 'Before' }}</div>
+                    <div class="p3xr-diff-side-header">{{ diffStrings().before }}</div>
                     @for (block of blocks(); track $index) {
                         @if (block.type === 'collapse' && !block.expanded) {
-                            <div class="p3xr-diff-collapse" (click)="expandBlock($index)">... {{ block.collapsedCount }} {{ diffStrings().unchangedLines || 'unchanged lines' }} ...</div>
+                            <div class="p3xr-diff-collapse" (click)="expandBlock($index)">... {{ block.collapsedCount }} {{ diffStrings().unchangedLines }} ...</div>
                         } @else if (block.type !== 'added') {
                             @for (line of block.lines; track $index) {
                                 <div class="p3xr-diff-line" [class.p3xr-diff-removed]="block.type === 'removed'" [class.p3xr-diff-unchanged]="block.type === 'unchanged' || block.type === 'collapse'">{{ line }}</div>
@@ -82,10 +82,10 @@ const CONTEXT_LINES = 3;
                     }
                 </div>
                 <div class="p3xr-diff-side">
-                    <div class="p3xr-diff-side-header">{{ diffStrings().after || 'After' }}</div>
+                    <div class="p3xr-diff-side-header">{{ diffStrings().after }}</div>
                     @for (block of blocks(); track $index) {
                         @if (block.type === 'collapse' && !block.expanded) {
-                            <div class="p3xr-diff-collapse" (click)="expandBlock($index)">... {{ block.collapsedCount }} {{ diffStrings().unchangedLines || 'unchanged lines' }} ...</div>
+                            <div class="p3xr-diff-collapse" (click)="expandBlock($index)">... {{ block.collapsedCount }} {{ diffStrings().unchangedLines }} ...</div>
                         } @else if (block.type !== 'removed') {
                             @for (line of block.lines; track $index) {
                                 <div class="p3xr-diff-line" [class.p3xr-diff-added]="block.type === 'added'" [class.p3xr-diff-unchanged]="block.type === 'unchanged' || block.type === 'collapse'">{{ line }}</div>
@@ -99,9 +99,9 @@ const CONTEXT_LINES = 3;
         <mat-dialog-actions class="p3xr-dialog-actions">
             <p3xr-dialog-cancel (cancel)="dialogRef.close(false)"></p3xr-dialog-cancel>
             <button mat-raised-button class="btn-primary" (click)="dialogRef.close(true)"
-                [matTooltip]="strings().intention?.save || 'Save'" [matTooltipDisabled]="isWide">
+                [matTooltip]="strings().intention?.save" [matTooltipDisabled]="isWide">
                 <mat-icon>save</mat-icon>
-                @if (isWide) { <span>{{ strings().intention?.save || 'Save' }}</span> }
+                @if (isWide) { <span>{{ strings().intention?.save }}</span> }
             </button>
         </mat-dialog-actions>
     `,

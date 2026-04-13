@@ -26,11 +26,11 @@ const pages = computed(() => state.pages)
 
 // Local state synced from store
 const localSearch = ref(state.search || '')
-const localDivider = ref(settings.redisTreeDivider || ':')
+const localDivider = ref(settings.redisTreeDivider)
 const localPage = ref(state.page || 1)
 
 watch(() => state.search, (v) => { localSearch.value = v || '' })
-watch(() => settings.redisTreeDivider, (v) => { localDivider.value = v || ':' })
+watch(() => settings.redisTreeDivider, (v) => { localDivider.value = v })
 watch(() => state.page, (v) => { localPage.value = v || 1 })
 
 // Menus & dialogs
@@ -68,11 +68,11 @@ const COMMON_WARN: Record<string, string> = {
     matrix: '#4caf50',
 }
 
-const iconColor = computed(() => TREECONTROL_ICON_COLOR[themeKey.value] || 'rgba(255,255,255,0.7)')
-const inputBg = computed(() => INPUT_BG[themeKey.value] || 'rgba(64,64,64,1)')
-const inputColor = computed(() => INPUT_COLOR[themeKey.value] || 'white')
-const inputBorder = computed(() => INPUT_BORDER[themeKey.value] || '#9e9e9e')
-const warnColor = computed(() => COMMON_WARN[themeKey.value] || '#9fa8da')
+const iconColor = computed(() => TREECONTROL_ICON_COLOR[themeKey.value])
+const inputBg = computed(() => INPUT_BG[themeKey.value])
+const inputColor = computed(() => INPUT_COLOR[themeKey.value])
+const inputBorder = computed(() => INPUT_BORDER[themeKey.value])
+const warnColor = computed(() => COMMON_WARN[themeKey.value])
 
 const treeDividers = computed(() => state.cfg?.treeDividers || [':', '/', '-', '.', '_', '|'])
 
@@ -87,13 +87,13 @@ const keyCount = computed(() => state.keysRaw?.length ?? 0)
 
 const exportLabel = computed(() => {
     if (hasSearch.value) {
-        return str(strings.value?.intention?.exportSearchResults, { count: keyCount.value }) || `Export ${keyCount.value} results`
+        return str(strings.value?.intention?.exportSearchResults, { count: keyCount.value })
     }
-    return str(strings.value?.intention?.exportAllKeys, { count: keyCount.value }) || `Export ${keyCount.value} keys`
+    return str(strings.value?.intention?.exportAllKeys, { count: keyCount.value })
 })
 
 const deleteSearchLabel = computed(() => {
-    return str(strings.value?.intention?.deleteMatchingKeys, { count: keyCount.value }) || `Delete ${keyCount.value} matching keys`
+    return str(strings.value?.intention?.deleteMatchingKeys, { count: keyCount.value })
 })
 
 const keyCountLabel = computed(() => {
@@ -165,23 +165,23 @@ async function exportKeys() {
     moreMenuOpen.value = false
     const keys = state.keysRaw
     if (!Array.isArray(keys) || keys.length === 0) {
-        common.toast(str(strings.value?.label?.noKeysToExport) || 'No keys to export')
+        common.toast(str(strings.value?.label?.noKeysToExport))
         return
     }
     try {
-        overlay.show({ message: str(strings.value?.label?.exportProgress) || 'Exporting...' })
+        overlay.show({ message: str(strings.value?.label?.exportProgress) })
         const response = await request({ action: 'key/export', payload: { keys } })
         const json = JSON.stringify(response.data, null, 2)
         const blob = new Blob([json], { type: 'application/json' })
         const url = URL.createObjectURL(blob)
         const a = document.createElement('a')
         a.href = url
-        const connName = state.connection?.name || 'redis'
+        const connName = state.connection?.name
         const db = state.currentDatabase ?? 0
         a.download = `${connName}-db${db}-export.json`
         a.click()
         URL.revokeObjectURL(url)
-        common.toast(str(strings.value?.status?.exportDone) || 'Export complete')
+        common.toast(str(strings.value?.status?.exportDone))
     } catch (e) {
         common.generalHandleError(e)
     } finally {
@@ -203,7 +203,7 @@ function importKeys() {
             try {
                 const parsed = JSON.parse(e.target.result)
                 if (!parsed?.keys || !Array.isArray(parsed.keys) || parsed.keys.length === 0) {
-                    common.toast(str(strings.value?.label?.importNoKeys) || 'No keys found in file')
+                    common.toast(str(strings.value?.label?.importNoKeys))
                     return
                 }
                 importDialogData.value = parsed
@@ -222,14 +222,13 @@ async function handleImportDialogClose(result: { pending: boolean; keys: any[]; 
     importDialogData.value = null
     if (!result?.pending) return
     try {
-        overlay.show({ message: str(strings.value?.label?.importProgress) || 'Importing...' })
+        overlay.show({ message: str(strings.value?.label?.importProgress) })
         const response = await request({
             action: 'key/import',
             payload: { keys: result.keys, conflictMode: result.conflictMode },
         })
         const data = response.data || response
         const statusMsg = str(strings.value?.status?.importDone, data)
-            || `Import complete: ${data.created ?? 0} created, ${data.skipped ?? 0} skipped, ${data.errors ?? 0} errors`
         common.toast(statusMsg)
         await cmd.refresh({ force: true })
     } catch (e: any) {
@@ -252,13 +251,11 @@ async function deleteSearchKeys() {
     const keyCount = state.keysRaw?.length ?? 0
     try {
         const confirmMsg = str(strings.value?.confirm?.deleteSearchKeys, { count: keyCount, pattern: match })
-            || `Are you sure to delete all keys matching "${match}"? Found ${keyCount} keys.`
         await common.confirm({ message: confirmMsg })
-        overlay.show({ message: str(strings.value?.label?.deletingSearchKeys) || 'Deleting...' })
+        overlay.show({ message: str(strings.value?.label?.deletingSearchKeys) })
         const response = await request({ action: 'key/delete-search-keys', payload: { match } })
         const deletedCount = response.deletedCount || response.deleted || 0
         const toastMsg = str(strings.value?.status?.deletedSearchKeys, { count: deletedCount })
-            || `Deleted ${deletedCount} keys`
         common.toast(toastMsg)
         await cmd.refresh({ force: true })
     } catch (e) {
@@ -282,15 +279,15 @@ async function deleteSearchKeys() {
                 </template>
                 <v-list density="compact">
                     <v-list-item v-for="lvl in 5" :key="lvl" @click="expandToLevel(lvl)">
-                        {{ strings?.intention?.expandLevel || 'Level' }} {{ lvl }}
+                        {{ strings?.intention?.expandLevel }} {{ lvl }}
                     </v-list-item>
                     <v-divider />
-                    <v-list-item @click="expandAll()">{{ strings?.intention?.expandAll || 'Expand All' }}</v-list-item>
+                    <v-list-item @click="expandAll()">{{ strings?.intention?.expandAll }}</v-list-item>
                 </v-list>
             </v-menu>
 
             <!-- Collapse -->
-            <v-tooltip :text="strings?.page?.treeControls?.collapseAll || 'Collapse All'" location="top" :open-delay="300">
+            <v-tooltip :text="strings?.page?.treeControls?.collapseAll" location="top" :open-delay="300">
                 <template #activator="{ props: tp }">
                     <v-btn v-bind="tp" icon variant="text" class="p3xr-tc-btn" :style="{ color: iconColor }" @click="collapseAll()">
                         <v-icon>mdi-chevron-up</v-icon>
@@ -299,7 +296,7 @@ async function deleteSearchKeys() {
             </v-tooltip>
 
             <!-- Refresh -->
-            <v-tooltip :text="strings?.intention?.refresh || 'Refresh'" location="top" :open-delay="300">
+            <v-tooltip :text="strings?.intention?.refresh" location="top" :open-delay="300">
                 <template #activator="{ props: tp }">
                     <v-btn v-bind="tp" icon variant="text" class="p3xr-tc-btn" :style="{ color: iconColor }" @click="cmd.refresh({ force: true })">
                         <v-icon>mdi-refresh</v-icon>
@@ -308,7 +305,7 @@ async function deleteSearchKeys() {
             </v-tooltip>
 
             <!-- Settings (opens TreeSettingsDialog) -->
-            <v-tooltip :text="strings?.form?.treeSettings?.label?.formName || 'Tree Settings'" location="top" :open-delay="300">
+            <v-tooltip :text="strings?.form?.treeSettings?.label?.formName" location="top" :open-delay="300">
                 <template #activator="{ props: tp }">
                     <v-btn v-bind="tp" icon variant="text" class="p3xr-tc-btn" :style="{ color: iconColor }" @click="treeSettingsOpen = true">
                         <v-icon>mdi-cog</v-icon>
@@ -317,7 +314,7 @@ async function deleteSearchKeys() {
             </v-tooltip>
 
             <!-- Divider input -->
-            <v-tooltip :text="strings?.form?.treeSettings?.field?.treeSeparator || 'Tree separator'" location="top" :open-delay="300">
+            <v-tooltip :text="strings?.form?.treeSettings?.field?.treeSeparator" location="top" :open-delay="300">
                 <template #activator="{ props: tp }">
                     <input
                         v-bind="tp"
@@ -349,14 +346,14 @@ async function deleteSearchKeys() {
             <!-- Pagination (only if multiple pages) -->
             <template v-if="pages > 1">
                 <span style="display: inline-flex; align-items: center; white-space: nowrap; margin-left: 2px;">
-                    <v-tooltip :text="strings?.page?.treeControls?.pager?.first || 'First'" location="top" :open-delay="300">
+                    <v-tooltip :text="strings?.page?.treeControls?.pager?.first" location="top" :open-delay="300">
                         <template #activator="{ props: tp }">
                             <v-btn v-bind="tp" icon variant="text" class="p3xr-tc-btn-primary" :disabled="localPage <= 1" @click="pagerAction('first')">
                                 <v-icon size="18">mdi-skip-previous</v-icon>
                             </v-btn>
                         </template>
                     </v-tooltip>
-                    <v-tooltip :text="strings?.page?.treeControls?.pager?.prev || 'Previous'" location="top" :open-delay="300">
+                    <v-tooltip :text="strings?.page?.treeControls?.pager?.prev" location="top" :open-delay="300">
                         <template #activator="{ props: tp }">
                             <v-btn v-bind="tp" icon variant="text" class="p3xr-tc-btn" :style="{ color: iconColor }" :disabled="localPage <= 1" @click="pagerAction('prev')">
                                 <v-icon size="18">mdi-chevron-left</v-icon>
@@ -373,14 +370,14 @@ async function deleteSearchKeys() {
                         @input="onPageChange()"
                     />
                     <span style="opacity: 0.6; font-family: 'Roboto Mono', monospace; font-size: 12px; margin: 0 2px;">/ {{ pages }}</span>
-                    <v-tooltip :text="strings?.page?.treeControls?.pager?.next || 'Next'" location="top" :open-delay="300">
+                    <v-tooltip :text="strings?.page?.treeControls?.pager?.next" location="top" :open-delay="300">
                         <template #activator="{ props: tp }">
                             <v-btn v-bind="tp" icon variant="text" class="p3xr-tc-btn" :style="{ color: iconColor }" :disabled="localPage >= pages" @click="pagerAction('next')">
                                 <v-icon size="18">mdi-chevron-right</v-icon>
                             </v-btn>
                         </template>
                     </v-tooltip>
-                    <v-tooltip :text="strings?.page?.treeControls?.pager?.last || 'Last'" location="top" :open-delay="300">
+                    <v-tooltip :text="strings?.page?.treeControls?.pager?.last" location="top" :open-delay="300">
                         <template #activator="{ props: tp }">
                             <v-btn v-bind="tp" icon variant="text" class="p3xr-tc-btn-primary" :disabled="localPage >= pages" @click="pagerAction('last')">
                                 <v-icon size="18">mdi-skip-next</v-icon>
@@ -398,12 +395,12 @@ async function deleteSearchKeys() {
                 v-model="localSearch"
                 class="p3xr-tc-search-input"
                 :style="{ backgroundColor: inputBg, color: inputColor, borderColor: inputBorder }"
-                :placeholder="settings.searchClientSide ? (strings?.label?.searchKeys || 'Search keys') : (strings?.label?.searchKeysServer || 'Search keys on server')"
+                :placeholder="settings.searchClientSide ? strings?.label?.searchKeys : strings?.label?.searchKeysServer"
                 @keydown.enter="onSearchSubmit()"
             />
 
             <!-- Search button -->
-            <v-tooltip :text="strings?.page?.treeControls?.search?.search || 'Search'" location="top" :open-delay="300">
+            <v-tooltip :text="strings?.page?.treeControls?.search?.search" location="top" :open-delay="300">
                 <template #activator="{ props: tp }">
                     <v-btn v-bind="tp" icon variant="text" class="p3xr-tc-btn-primary" @click="onSearchSubmit()">
                         <v-icon>mdi-magnify</v-icon>
@@ -412,7 +409,7 @@ async function deleteSearchKeys() {
             </v-tooltip>
 
             <!-- Clear search -->
-            <v-tooltip v-if="localSearch" :text="strings?.page?.treeControls?.search?.clear || 'Clear'" location="top" :open-delay="300">
+            <v-tooltip v-if="localSearch" :text="strings?.page?.treeControls?.search?.clear" location="top" :open-delay="300">
                 <template #activator="{ props: tp }">
                     <v-btn v-bind="tp" icon variant="text" class="p3xr-tc-btn-primary" @click="clearSearch()">
                         <v-icon>mdi-close</v-icon>
@@ -421,7 +418,7 @@ async function deleteSearchKeys() {
             </v-tooltip>
 
             <!-- Add key (non-readonly) -->
-            <v-tooltip v-if="!isReadonly" :text="strings?.intention?.addKeyRoot || 'Add key'" location="top" :open-delay="300">
+            <v-tooltip v-if="!isReadonly" :text="strings?.intention?.addKeyRoot" location="top" :open-delay="300">
                 <template #activator="{ props: tp }">
                     <v-icon v-bind="tp" :style="{ fontSize: '24px', cursor: 'pointer', color: warnColor }" @click="cmdAddKey($event)">mdi-plus</v-icon>
                 </template>
@@ -439,14 +436,14 @@ async function deleteSearchKeys() {
                         <template #prepend><v-icon size="18" style="margin-right: 8px;">mdi-download</v-icon></template>
                         <v-list-item-title>{{ exportLabel }}</v-list-item-title>
                         <v-list-item-subtitle v-if="hasSearch" style="opacity: 0.5; font-size: 11px; font-style: italic; white-space: normal;">
-                            {{ str(strings?.label?.exportSearchHint) || 'Exporting only keys matching current search' }}
+                            {{ str(strings?.label?.exportSearchHint) }}
                         </v-list-item-subtitle>
                     </v-list-item>
                     <v-list-item v-if="!isReadonly" @click="importKeys()">
                         <template #prepend><v-icon size="18" style="margin-right: 8px;">mdi-upload</v-icon></template>
-                        <v-list-item-title>{{ str(strings?.intention?.importKeys) || 'Import keys' }}</v-list-item-title>
+                        <v-list-item-title>{{ str(strings?.intention?.importKeys) }}</v-list-item-title>
                         <v-list-item-subtitle v-if="hasSearch" style="opacity: 0.5; font-size: 11px; font-style: italic; white-space: normal;">
-                            {{ str(strings?.label?.importSearchHint) || 'Import applies to the full database, not just search results' }}
+                            {{ str(strings?.label?.importSearchHint) }}
                         </v-list-item-subtitle>
                     </v-list-item>
                     <template v-if="!isReadonly">
@@ -455,7 +452,7 @@ async function deleteSearchKeys() {
                             <template #prepend><v-icon size="18" color="error" style="margin-right: 8px;">mdi-delete-sweep</v-icon></template>
                             <v-list-item-title>{{ deleteSearchLabel }}</v-list-item-title>
                             <v-list-item-subtitle v-if="hasSearch" style="opacity: 0.5; font-size: 11px; font-style: italic; white-space: normal;">
-                                {{ str(strings?.label?.deleteSearchHint) || 'Deletes all keys matching the current search on the server' }}
+                                {{ str(strings?.label?.deleteSearchHint) }}
                             </v-list-item-subtitle>
                         </v-list-item>
                     </template>

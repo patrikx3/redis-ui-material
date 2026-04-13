@@ -65,7 +65,7 @@ const unsubFns: Array<() => void> = []
 const timeFormatter = new Intl.DateTimeFormat(undefined, { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })
 const formatTime = (ms: number) => timeFormatter.format(new Date(ms))
 
-const connName = computed(() => state.connection?.name || 'redis')
+const connName = computed(() => state.connection?.name)
 
 const uptimeFormatted = computed(() => {
     if (!current.value) return '-'
@@ -104,8 +104,8 @@ const serverInfo = computed(() => {
         port: s.tcp_port || '',
         pid: s.process_id || '',
         configFile: s.config_file || '',
-        cpuSys: c.used_cpu_sys || '0',
-        cpuUser: c.used_cpu_user || '0',
+        cpuSys: c.used_cpu_sys,
+        cpuUser: c.used_cpu_user,
     }
 })
 
@@ -117,7 +117,7 @@ const persistenceInfo = computed(() => {
     const lastSave = lastSaveTs ? new Date(lastSaveTs * 1000).toLocaleString() : 'N/A'
     return {
         rdbLastSave: lastSave,
-        rdbStatus: p.rdb_last_bgsave_status || 'N/A',
+        rdbStatus: p.rdb_last_bgsave_status,
         rdbChanges: p.rdb_changes_since_last_save ?? 'N/A',
         aofEnabled: p.aof_enabled === '1' ? 'Yes' : 'No',
         aofSize: p.aof_enabled === '1' ? formatBytes(parseInt(p.aof_current_size, 10) || 0) : '',
@@ -128,7 +128,7 @@ const replicationInfo = computed(() => {
     const info = state.info
     if (!info?.replication) return null
     const r = info.replication
-    const result: any = { role: r.role || 'unknown' }
+    const result: any = { role: r.role }
     if (r.role === 'master') {
         result.replicas = r.connected_slaves ?? '0'
     } else if (r.role === 'slave') {
@@ -149,15 +149,15 @@ const keyspaceEntries = computed(() => {
             const entry = info.keyspace[db]
             return {
                 db,
-                keys: typeof entry === 'object' ? (entry.keys || '0') : '0',
-                expires: typeof entry === 'object' ? (entry.expires || '0') : '0',
+                keys: typeof entry === 'object' ? (entry.keys) : '0',
+                expires: typeof entry === 'object' ? (entry.expires) : '0',
             }
         })
 })
 
 const modulesList = computed(() => {
     return (state.modules || []).map((m: any) => ({
-        name: m.name || 'unknown',
+        name: m.name,
         ver: String(m.ver ?? m.version ?? ''),
     }))
 })
@@ -211,10 +211,10 @@ async function killClient(id: string, event: Event) {
     event.stopPropagation()
     try {
         await common.confirm({
-            message: strings.value?.page?.monitor?.confirmKillClient || 'Are you sure to kill this client?',
+            message: strings.value?.page?.monitor?.confirmKillClient,
         })
         await request({ action: 'client/kill', payload: { id } })
-        common.toast(strings.value?.page?.monitor?.clientKilled || 'Client killed')
+        common.toast(strings.value?.page?.monitor?.clientKilled)
         await loadClientList()
     } catch (e) {
         if (e !== undefined) common.generalHandleError(e)
@@ -240,19 +240,19 @@ function exportOverview() {
     const c = current.value
     const mon = strings.value?.page?.monitor || {}
     const lines = [
-        `${mon.memory || 'Memory'}: ${c.memory.usedHuman}`,
-        `${mon.rss || 'RSS'}: ${c.memory.rssHuman}`,
-        `${mon.peak || 'Peak'}: ${c.memory.peakHuman}`,
-        `${mon.fragmentation || 'Fragmentation'}: ${c.memory.fragRatio}x`,
-        `${mon.opsPerSec || 'Ops/sec'}: ${c.stats.opsPerSec}`,
-        `${mon.totalCommands || 'Total'}: ${c.stats.totalCommands}`,
-        `${mon.clients || 'Clients'}: ${c.clients.connected}`,
-        `${mon.blocked || 'Blocked'}: ${c.clients.blocked}`,
-        `${mon.hitsMisses || 'Hit Rate'}: ${c.stats.hitRate}%`,
-        `${mon.hitsAndMisses || 'Hits / Misses'}: ${c.stats.hits} / ${c.stats.misses}`,
-        `${mon.networkIo || 'Network I/O'}: ${c.stats.inputKbps.toFixed(1)} / ${c.stats.outputKbps.toFixed(1)} KB/s`,
-        `${mon.expired || 'Expired'}: ${c.stats.expiredKeys}`,
-        `${mon.evicted || 'Evicted'}: ${c.stats.evictedKeys}`,
+        `${mon.memory}: ${c.memory.usedHuman}`,
+        `${mon.rss}: ${c.memory.rssHuman}`,
+        `${mon.peak}: ${c.memory.peakHuman}`,
+        `${mon.fragmentation}: ${c.memory.fragRatio}x`,
+        `${mon.opsPerSec}: ${c.stats.opsPerSec}`,
+        `${mon.totalCommands}: ${c.stats.totalCommands}`,
+        `${mon.clients}: ${c.clients.connected}`,
+        `${mon.blocked}: ${c.clients.blocked}`,
+        `${mon.hitsMisses}: ${c.stats.hitRate}%`,
+        `${mon.hitsAndMisses}: ${c.stats.hits} / ${c.stats.misses}`,
+        `${mon.networkIo}: ${c.stats.inputKbps.toFixed(1)} / ${c.stats.outputKbps.toFixed(1)} KB/s`,
+        `${mon.expired}: ${c.stats.expiredKeys}`,
+        `${mon.evicted}: ${c.stats.evictedKeys}`,
     ]
     downloadText(lines.join('\n'), `${connName.value}-overview.txt`)
 }
@@ -262,12 +262,12 @@ function exportServerInfo() {
     if (!s) return
     const mon = strings.value?.page?.monitor || {}
     const lines = [
-        `${mon.os || 'OS'}: ${s.os}`,
-        `${mon.port || 'Port'}: ${s.port}`,
-        `${mon.pid || 'Process ID'}: ${s.pid}`,
-        `${mon.configFile || 'Config File'}: ${s.configFile}`,
-        `${mon.cpuSys || 'System'} CPU: ${s.cpuSys}`,
-        `${mon.cpuUser || 'User'} CPU: ${s.cpuUser}`,
+        `${mon.os}: ${s.os}`,
+        `${mon.port}: ${s.port}`,
+        `${mon.pid}: ${s.pid}`,
+        `${mon.configFile}: ${s.configFile}`,
+        `${mon.cpuSys} CPU: ${s.cpuSys}`,
+        `${mon.cpuUser} CPU: ${s.cpuUser}`,
     ]
     downloadText(lines.join('\n'), `${connName.value}-server-info.txt`)
 }
@@ -277,12 +277,12 @@ function exportPersistence() {
     if (!p) return
     const mon = strings.value?.page?.monitor || {}
     const lines = [
-        `${mon.rdbLastSave || 'RDB Last Save'}: ${p.rdbLastSave}`,
-        `${mon.rdbStatus || 'RDB Status'}: ${p.rdbStatus}`,
-        `${mon.rdbChanges || 'Changes Since Last Save'}: ${p.rdbChanges}`,
-        `${mon.aofEnabled || 'AOF Enabled'}: ${p.aofEnabled}`,
+        `${mon.rdbLastSave}: ${p.rdbLastSave}`,
+        `${mon.rdbStatus}: ${p.rdbStatus}`,
+        `${mon.rdbChanges}: ${p.rdbChanges}`,
+        `${mon.aofEnabled}: ${p.aofEnabled}`,
     ]
-    if (p.aofSize) lines.push(`${mon.aofSize || 'AOF Size'}: ${p.aofSize}`)
+    if (p.aofSize) lines.push(`${mon.aofSize}: ${p.aofSize}`)
     downloadText(lines.join('\n'), `${connName.value}-persistence.txt`)
 }
 
@@ -290,10 +290,10 @@ function exportReplication() {
     const r = replicationInfo.value
     if (!r) return
     const mon = strings.value?.page?.monitor || {}
-    const lines = [`${mon.role || 'Role'}: ${r.role}`]
-    if (r.replicas !== undefined) lines.push(`${mon.replicas || 'Connected Replicas'}: ${r.replicas}`)
-    if (r.masterHost) lines.push(`${mon.masterHost || 'Master Host'}: ${r.masterHost}:${r.masterPort}`)
-    if (r.linkStatus) lines.push(`${mon.linkStatus || 'Link Status'}: ${r.linkStatus}`)
+    const lines = [`${mon.role}: ${r.role}`]
+    if (r.replicas !== undefined) lines.push(`${mon.replicas}: ${r.replicas}`)
+    if (r.masterHost) lines.push(`${mon.masterHost}: ${r.masterHost}:${r.masterPort}`)
+    if (r.linkStatus) lines.push(`${mon.linkStatus}: ${r.linkStatus}`)
     downloadText(lines.join('\n'), `${connName.value}-replication.txt`)
 }
 
@@ -301,7 +301,7 @@ function exportKeyspace() {
     const entries = keyspaceEntries.value
     if (entries.length === 0) return
     const mon = strings.value?.page?.monitor || {}
-    const lines = entries.map(e => `${e.db}: ${mon.keys || 'Keys'}: ${e.keys}, ${mon.expires || 'Expires'}: ${e.expires}`)
+    const lines = entries.map(e => `${e.db}: ${mon.keys}: ${e.keys}, ${mon.expires}: ${e.expires}`)
     downloadText(lines.join('\n'), `${connName.value}-keyspace.txt`)
 }
 
@@ -309,7 +309,7 @@ function exportModules() {
     const mods = modulesList.value
     const mon = strings.value?.page?.monitor || {}
     if (mods.length === 0) {
-        downloadText(mon.noModules || 'No modules loaded', `${connName.value}-modules.txt`)
+        downloadText(mon.noModules, `${connName.value}-modules.txt`)
         return
     }
     const lines = mods.map(m => `${m.name} v${m.ver}`)
@@ -337,9 +337,9 @@ function exportChart(chartEl: HTMLDivElement | undefined, name: string) {
 async function resetSlowLog() {
     try {
         const mon = strings.value?.page?.monitor || {}
-        await common.confirm({ message: mon.confirmSlowLogReset || 'Are you sure to reset the slow log?' })
+        await common.confirm({ message: mon.confirmSlowLogReset })
         await request({ action: 'monitor/slowlog-reset' })
-        common.toast({ message: mon.slowLogResetDone || 'Slow log reset' })
+        common.toast(mon.slowLogResetDone)
     } catch {}
 }
 
@@ -383,7 +383,7 @@ function exportClusterSlots() {
         const slots = s.slotRanges.map(([a, b]: [number, number]) => `${a}-${b}`).join(', ')
         const count = getSlotCount(s)
         const replicas = s.replicas.map((r: any) => `${r.host}:${r.port}`).join(', ')
-        return `${s.master.host}:${s.master.port} | ${slots} | ${count} slots | replicas: ${replicas || 'none'}`
+        return `${s.master.host}:${s.master.port} | ${slots} | ${count} slots | replicas: ${replicas}`
     })
     downloadText(lines.join('\n'), `${connName.value}-cluster-slots.txt`)
 }
@@ -452,7 +452,7 @@ function createOpts(width: number, seriesConfig: any[]): any {
             },
         ],
         series: [
-            { label: strings.value?.label?.time || 'Time', value: (_: any, rawValue: number) => rawValue ? formatTime(rawValue * 1000) : '' },
+            { label: strings.value?.label?.time, value: (_: any, rawValue: number) => rawValue ? formatTime(rawValue * 1000) : '' },
             ...seriesConfig,
         ],
     }
@@ -475,7 +475,7 @@ function initCharts() {
 
     memoryPlot = new uPlotLib(
         createOpts(getChartWidth(memEl), [
-            { label: s.memory || 'Memory', stroke: colors.primary, width: 2, fill: colors.primary + '15' },
+            { label: s.memory, stroke: colors.primary, width: 2, fill: colors.primary + '15' },
             { label: 'RSS', stroke: colors.accent, width: 2 },
         ]),
         [data.timestamps, data.memUsed, data.memRss],
@@ -484,7 +484,7 @@ function initCharts() {
 
     opsPlot = new uPlotLib(
         createOpts(getChartWidth(opsEl), [
-            { label: s.opsPerSec || 'Ops/s', stroke: colors.primary, width: 2, fill: colors.primary + '20' },
+            { label: s.opsPerSec, stroke: colors.primary, width: 2, fill: colors.primary + '20' },
         ]),
         [data.timestamps, data.ops],
         opsEl,
@@ -492,8 +492,8 @@ function initCharts() {
 
     clientsPlot = new uPlotLib(
         createOpts(getChartWidth(cliEl), [
-            { label: s.clients || 'Connected', stroke: colors.primary, width: 2 },
-            { label: s.blocked || 'Blocked', stroke: colors.warn, width: 2 },
+            { label: s.clients, stroke: colors.primary, width: 2 },
+            { label: s.blocked, stroke: colors.warn, width: 2 },
         ]),
         [data.timestamps, data.connected, data.blocked],
         cliEl,
@@ -647,10 +647,10 @@ function renderPulseChartsForExport(): Array<{ label: string; canvas: HTMLCanvas
         data = { timestamps: [now - 1, now], memUsed: [c.memory.used / (1024 * 1024), c.memory.used / (1024 * 1024)], memRss: [c.memory.rss / (1024 * 1024), c.memory.rss / (1024 * 1024)], ops: [c.stats.opsPerSec, c.stats.opsPerSec], connected: [c.clients.connected, c.clients.connected], blocked: [c.clients.blocked, c.clients.blocked], netIn: [c.stats.inputKbps, c.stats.inputKbps], netOut: [c.stats.outputKbps, c.stats.outputKbps] }
     } else { return [] }
     return [
-        { label: (s.memory || 'Memory') + ' (MB)', series: [{ label: s.memory || 'Memory', color: colors.primary, values: data.memUsed, fill: true }, { label: 'RSS', color: colors.accent, values: data.memRss }] },
-        { label: s.opsPerSec || 'Ops/sec', series: [{ label: s.opsPerSec || 'Ops/s', color: colors.primary, values: data.ops, fill: true }] },
-        { label: s.clients || 'Clients', series: [{ label: s.clients || 'Connected', color: colors.primary, values: data.connected }, { label: s.blocked || 'Blocked', color: colors.warn, values: data.blocked }] },
-        { label: (s.networkIo || 'Network I/O') + ' (KB/s)', series: [{ label: '\u2193 In', color: colors.primary, values: data.netIn, fill: true }, { label: '\u2191 Out', color: colors.accent, values: data.netOut }] },
+        { label: (s.memory) + ' (MB)', series: [{ label: s.memory, color: colors.primary, values: data.memUsed, fill: true }, { label: 'RSS', color: colors.accent, values: data.memRss }] },
+        { label: s.opsPerSec, series: [{ label: s.opsPerSec, color: colors.primary, values: data.ops, fill: true }] },
+        { label: s.clients, series: [{ label: s.clients, color: colors.primary, values: data.connected }, { label: s.blocked, color: colors.warn, values: data.blocked }] },
+        { label: (s.networkIo) + ' (KB/s)', series: [{ label: '\u2193 In', color: colors.primary, values: data.netIn, fill: true }, { label: '\u2191 Out', color: colors.accent, values: data.netOut }] },
     ].map(config => ({ label: config.label, canvas: renderLineChart(data.timestamps, config.series, colors) }))
 }
 
@@ -727,67 +727,67 @@ async function exportAll() {
         const a = strings.value?.page?.analysis || {}
         sections.push(
             `============================`, `  PULSE`, `============================`, ``,
-            `--- ${mon.title || 'Monitoring'} ---`,
+            `--- ${mon.title} ---`,
             `Redis ${c.server.version} \u00B7 ${c.server.mode} \u00B7 Uptime: ${uptimeFormatted.value}`,
-            `${mon.memory || 'Memory'}: ${c.memory.usedHuman}`,
-            `${mon.rss || 'RSS'}: ${c.memory.rssHuman}`,
-            `${mon.peak || 'Peak'}: ${c.memory.peakHuman}`,
-            `${mon.fragmentation || 'Fragmentation'}: ${c.memory.fragRatio}x`,
-            `${mon.opsPerSec || 'Ops/sec'}: ${c.stats.opsPerSec}`,
-            `${mon.totalCommands || 'Total'}: ${c.stats.totalCommands}`,
-            `${mon.clients || 'Clients'}: ${c.clients.connected}`,
-            `${mon.blocked || 'Blocked'}: ${c.clients.blocked}`,
-            `${mon.hitsMisses || 'Hit Rate'}: ${c.stats.hitRate}%`,
-            `${mon.hitsAndMisses || 'Hits / Misses'}: ${c.stats.hits} / ${c.stats.misses}`,
-            `${mon.networkIo || 'Network I/O'}: ${c.stats.inputKbps.toFixed(1)} / ${c.stats.outputKbps.toFixed(1)} KB/s`,
-            `${mon.expired || 'Expired'}: ${c.stats.expiredKeys}`,
-            `${mon.evicted || 'Evicted'}: ${c.stats.evictedKeys}`,
+            `${mon.memory}: ${c.memory.usedHuman}`,
+            `${mon.rss}: ${c.memory.rssHuman}`,
+            `${mon.peak}: ${c.memory.peakHuman}`,
+            `${mon.fragmentation}: ${c.memory.fragRatio}x`,
+            `${mon.opsPerSec}: ${c.stats.opsPerSec}`,
+            `${mon.totalCommands}: ${c.stats.totalCommands}`,
+            `${mon.clients}: ${c.clients.connected}`,
+            `${mon.blocked}: ${c.clients.blocked}`,
+            `${mon.hitsMisses}: ${c.stats.hitRate}%`,
+            `${mon.hitsAndMisses}: ${c.stats.hits} / ${c.stats.misses}`,
+            `${mon.networkIo}: ${c.stats.inputKbps.toFixed(1)} / ${c.stats.outputKbps.toFixed(1)} KB/s`,
+            `${mon.expired}: ${c.stats.expiredKeys}`,
+            `${mon.evicted}: ${c.stats.evictedKeys}`,
         )
 
         const si = serverInfo.value
         if (si) {
-            sections.push(``, `--- ${mon.serverInfo || 'Server Info'} ---`)
-            sections.push(`${mon.os || 'OS'}: ${si.os}`, `${mon.port || 'Port'}: ${si.port}`, `${mon.pid || 'Process ID'}: ${si.pid}`)
-            if (si.configFile) sections.push(`${mon.configFile || 'Config File'}: ${si.configFile}`)
-            sections.push(`${mon.cpuSys || 'System'} CPU: ${si.cpuSys}`, `${mon.cpuUser || 'User'} CPU: ${si.cpuUser}`)
+            sections.push(``, `--- ${mon.serverInfo} ---`)
+            sections.push(`${mon.os}: ${si.os}`, `${mon.port}: ${si.port}`, `${mon.pid}: ${si.pid}`)
+            if (si.configFile) sections.push(`${mon.configFile}: ${si.configFile}`)
+            sections.push(`${mon.cpuSys} CPU: ${si.cpuSys}`, `${mon.cpuUser} CPU: ${si.cpuUser}`)
         }
         const pi = persistenceInfo.value
         if (pi) {
-            sections.push(``, `--- ${mon.persistence || 'Persistence'} ---`)
-            sections.push(`${mon.rdbLastSave || 'RDB Last Save'}: ${pi.rdbLastSave}`, `${mon.rdbStatus || 'RDB Status'}: ${pi.rdbStatus}`)
-            sections.push(`${mon.rdbChanges || 'Changes Since Last Save'}: ${pi.rdbChanges}`, `${mon.aofEnabled || 'AOF Enabled'}: ${pi.aofEnabled}`)
-            if (pi.aofSize) sections.push(`${mon.aofSize || 'AOF Size'}: ${pi.aofSize}`)
+            sections.push(``, `--- ${mon.persistence} ---`)
+            sections.push(`${mon.rdbLastSave}: ${pi.rdbLastSave}`, `${mon.rdbStatus}: ${pi.rdbStatus}`)
+            sections.push(`${mon.rdbChanges}: ${pi.rdbChanges}`, `${mon.aofEnabled}: ${pi.aofEnabled}`)
+            if (pi.aofSize) sections.push(`${mon.aofSize}: ${pi.aofSize}`)
         }
         const ri = replicationInfo.value
         if (ri) {
-            sections.push(``, `--- ${mon.replication || 'Replication'} ---`)
-            sections.push(`${mon.role || 'Role'}: ${ri.role}`)
-            if (ri.replicas !== undefined) sections.push(`${mon.replicas || 'Connected Replicas'}: ${ri.replicas}`)
-            if (ri.masterHost) sections.push(`${mon.masterHost || 'Master Host'}: ${ri.masterHost}:${ri.masterPort}`)
-            if (ri.linkStatus) sections.push(`${mon.linkStatus || 'Link Status'}: ${ri.linkStatus}`)
+            sections.push(``, `--- ${mon.replication} ---`)
+            sections.push(`${mon.role}: ${ri.role}`)
+            if (ri.replicas !== undefined) sections.push(`${mon.replicas}: ${ri.replicas}`)
+            if (ri.masterHost) sections.push(`${mon.masterHost}: ${ri.masterHost}:${ri.masterPort}`)
+            if (ri.linkStatus) sections.push(`${mon.linkStatus}: ${ri.linkStatus}`)
         }
         const ks = keyspaceEntries.value
         if (ks.length > 0) {
-            sections.push(``, `--- ${mon.keyspace || 'Keyspace'} ---`)
-            sections.push(...ks.map(e => `${e.db}: ${mon.keys || 'Keys'}: ${e.keys}, ${mon.expires || 'Expires'}: ${e.expires}`))
+            sections.push(``, `--- ${mon.keyspace} ---`)
+            sections.push(...ks.map(e => `${e.db}: ${mon.keys}: ${e.keys}, ${mon.expires}: ${e.expires}`))
         }
         const mods = modulesList.value
         if (mods.length > 0) {
-            sections.push(``, `--- ${mon.modules || 'Loaded Modules'} ---`)
+            sections.push(``, `--- ${mon.modules} ---`)
             sections.push(...mods.map(m => `${m.name} v${m.ver}`))
         } else {
-            sections.push(``, `--- ${mon.modules || 'Loaded Modules'} ---`, mon.noModules || 'No modules loaded')
+            sections.push(``, `--- ${mon.modules} ---`, mon.noModules)
         }
         if (c.slowlog.length > 0) {
-            sections.push(``, `--- ${mon.slowLog || 'Slow Log'} ---`)
+            sections.push(``, `--- ${mon.slowLog} ---`)
             sections.push(...c.slowlog.map(e => `${e.duration}\u00B5s ${e.command}`))
         }
         if (clientList.value.length > 0) {
-            sections.push(``, `--- ${mon.clientList || 'Client List'} ---`)
+            sections.push(``, `--- ${mon.clientList} ---`)
             sections.push(...clientList.value.map(cl => `${cl.addr} ${cl.name || ''} db${cl.db} ${cl.cmd} idle:${cl.idle}s`))
         }
         if (topKeys.value.length > 0) {
-            sections.push(``, `--- ${mon.topKeys || 'Top Keys by Memory'} ---`)
+            sections.push(``, `--- ${mon.topKeys} ---`)
             sections.push(...topKeys.value.map((e: any, i: number) => `#${i + 1} ${e.key} ${formatBytes(e.bytes)}`))
         }
 
@@ -804,23 +804,23 @@ async function exportAll() {
                 })).sort((a: any, b: any) => b.bytes - a.bytes)
 
                 sections.push(``, ``, `============================`, `  ANALYSIS`, `============================`)
-                sections.push(``, `--- ${a.keysScanned || 'Keys Scanned'} ---`, `${a.keysScanned || 'Keys Scanned'}: ${d.totalScanned} / ${d.dbSize}`)
-                sections.push(``, `--- ${a.memoryBreakdown || 'Memory Breakdown'} ---`)
-                sections.push(`${a.totalMemory || 'Total'}: ${m.usedHuman}`, `${a.rssMemory || 'RSS'}: ${m.rssHuman}`, `${a.peakMemory || 'Peak'}: ${m.peakHuman}`)
-                sections.push(`${a.overheadMemory || 'Overhead'}: ${formatBytes(m.overhead)}`, `${a.datasetMemory || 'Dataset'}: ${formatBytes(m.dataset)}`)
-                sections.push(`${a.luaMemory || 'Lua'}: ${formatBytes(m.lua)}`, `${a.fragmentation || 'Fragmentation'}: ${m.fragRatio}x`, `${a.allocator || 'Allocator'}: ${m.allocator}`)
-                sections.push(``, `--- ${a.typeDistribution || 'Type Distribution'} ---`)
-                sections.push(...typeEntries.map((t: any) => `${t.type}: ${t.count} ${a.keyCount || 'keys'}, ${formatBytes(t.bytes)}`))
+                sections.push(``, `--- ${a.keysScanned} ---`, `${a.keysScanned}: ${d.totalScanned} / ${d.dbSize}`)
+                sections.push(``, `--- ${a.memoryBreakdown} ---`)
+                sections.push(`${a.totalMemory}: ${m.usedHuman}`, `${a.rssMemory}: ${m.rssHuman}`, `${a.peakMemory}: ${m.peakHuman}`)
+                sections.push(`${a.overheadMemory}: ${formatBytes(m.overhead)}`, `${a.datasetMemory}: ${formatBytes(m.dataset)}`)
+                sections.push(`${a.luaMemory}: ${formatBytes(m.lua)}`, `${a.fragmentation}: ${m.fragRatio}x`, `${a.allocator}: ${m.allocator}`)
+                sections.push(``, `--- ${a.typeDistribution} ---`)
+                sections.push(...typeEntries.map((t: any) => `${t.type}: ${t.count} ${a.keyCount}, ${formatBytes(t.bytes)}`))
                 if (d.prefixMemory?.length > 0) {
-                    sections.push(``, `--- ${a.prefixMemory || 'Memory by Prefix'} ---`)
-                    sections.push(...d.prefixMemory.map((p: any, i: number) => `#${i + 1} ${p.prefix} \u2014 ${p.keyCount} ${a.keyCount || 'keys'}, ${formatBytes(p.totalBytes)}`))
+                    sections.push(``, `--- ${a.prefixMemory} ---`)
+                    sections.push(...d.prefixMemory.map((p: any, i: number) => `#${i + 1} ${p.prefix} \u2014 ${p.keyCount} ${a.keyCount}, ${formatBytes(p.totalBytes)}`))
                 }
-                sections.push(``, `--- ${a.expirationOverview || 'Key Expiration'} ---`)
-                sections.push(`${a.withTTL || 'With TTL'}: ${exp.withTTL}`, `${a.persistent || 'Persistent'}: ${exp.persistent}`, `${a.avgTTL || 'Average TTL'}: ${exp.avgTTL}s`)
+                sections.push(``, `--- ${a.expirationOverview} ---`)
+                sections.push(`${a.withTTL}: ${exp.withTTL}`, `${a.persistent}: ${exp.persistent}`, `${a.avgTTL}: ${exp.avgTTL}s`)
 
                 analysisChartItems = [
-                    { name: a.typeDistribution || 'Type Distribution', items: typeEntries.map((t: any) => ({ label: t.type, value: t.bytes })) },
-                    { name: a.prefixMemory || 'Memory by Prefix', items: (d.prefixMemory || []).slice(0, 20).map((p: any) => ({ label: p.prefix, value: p.totalBytes })) },
+                    { name: a.typeDistribution, items: typeEntries.map((t: any) => ({ label: t.type, value: t.bytes })) },
+                    { name: a.prefixMemory, items: (d.prefixMemory || []).slice(0, 20).map((p: any) => ({ label: p.prefix, value: p.totalBytes })) },
                 ]
             }
         } catch { /* analysis optional */ }
@@ -951,26 +951,26 @@ onUnmounted(() => {
 <template>
     <div v-if="!current" class="p3xr-monitoring-loading">
         <v-icon>mdi-timer-sand</v-icon>
-        <span>{{ strings?.label?.loading || 'Loading...' }}</span>
+        <span>{{ strings?.label?.loading }}</span>
     </div>
 
     <div v-if="current">
         <!-- Overview -->
-        <P3xrAccordion :title="strings?.page?.monitor?.title || 'Monitoring'" accordion-key="monitor-overview">
+        <P3xrAccordion :title="strings?.page?.monitor?.title" accordion-key="monitor-overview">
             <template #actions>
                 <P3xrButton
                     @click="togglePause(); $event.stopPropagation()"
-                    :label="paused ? (strings?.intention?.resume || 'Resume') : (strings?.intention?.pause || 'Pause')"
+                    :label="paused ? (strings?.intention?.resume) : (strings?.intention?.pause)"
                     :icon="paused ? 'mdi-play' : 'mdi-pause'"
                 />
                 <P3xrButton
                     @click="exportOverview(); $event.stopPropagation()"
-                    :label="strings?.intention?.export || 'Export'"
+                    :label="strings?.intention?.export"
                     icon="mdi-download"
                 />
                 <P3xrButton
                     @click="exportAll(); $event.stopPropagation()"
-                    :label="strings?.page?.analysis?.exportAll || 'Export All'"
+                    :label="strings?.page?.analysis?.exportAll"
                     icon="mdi-archive"
                 />
             </template>
@@ -984,91 +984,91 @@ onUnmounted(() => {
                 <v-divider />
                 <v-list-item>
                     <div class="p3xr-pair-row">
-                        <div class="p3xr-pair-label">{{ strings?.page?.monitor?.memory || 'Memory' }}</div>
+                        <div class="p3xr-pair-label">{{ strings?.page?.monitor?.memory }}</div>
                         <div class="p3xr-pair-value p3xr-mono">{{ current.memory.usedHuman }}</div>
                     </div>
                 </v-list-item>
                 <v-divider />
                 <v-list-item>
                     <div class="p3xr-pair-row">
-                        <div class="p3xr-pair-label">{{ strings?.page?.monitor?.rss || 'RSS' }}</div>
+                        <div class="p3xr-pair-label">{{ strings?.page?.monitor?.rss }}</div>
                         <div class="p3xr-pair-value p3xr-mono">{{ current.memory.rssHuman }}</div>
                     </div>
                 </v-list-item>
                 <v-divider />
                 <v-list-item>
                     <div class="p3xr-pair-row">
-                        <div class="p3xr-pair-label">{{ strings?.page?.monitor?.peak || 'Peak' }}</div>
+                        <div class="p3xr-pair-label">{{ strings?.page?.monitor?.peak }}</div>
                         <div class="p3xr-pair-value p3xr-mono">{{ current.memory.peakHuman }}</div>
                     </div>
                 </v-list-item>
                 <v-divider />
                 <v-list-item>
                     <div class="p3xr-pair-row">
-                        <div class="p3xr-pair-label">{{ strings?.page?.monitor?.fragmentation || 'Fragmentation' }}</div>
+                        <div class="p3xr-pair-label">{{ strings?.page?.monitor?.fragmentation }}</div>
                         <div class="p3xr-pair-value p3xr-mono">{{ current.memory.fragRatio }}x</div>
                     </div>
                 </v-list-item>
                 <v-divider />
                 <v-list-item>
                     <div class="p3xr-pair-row">
-                        <div class="p3xr-pair-label">{{ strings?.page?.monitor?.opsPerSec || 'Ops/sec' }}</div>
+                        <div class="p3xr-pair-label">{{ strings?.page?.monitor?.opsPerSec }}</div>
                         <div class="p3xr-pair-value p3xr-mono">{{ current.stats.opsPerSec }}</div>
                     </div>
                 </v-list-item>
                 <v-divider />
                 <v-list-item>
                     <div class="p3xr-pair-row">
-                        <div class="p3xr-pair-label">{{ strings?.page?.monitor?.totalCommands || 'Total Commands' }}</div>
+                        <div class="p3xr-pair-label">{{ strings?.page?.monitor?.totalCommands }}</div>
                         <div class="p3xr-pair-value p3xr-mono">{{ current.stats.totalCommands }}</div>
                     </div>
                 </v-list-item>
                 <v-divider />
                 <v-list-item>
                     <div class="p3xr-pair-row">
-                        <div class="p3xr-pair-label">{{ strings?.page?.monitor?.clients || 'Clients' }}</div>
+                        <div class="p3xr-pair-label">{{ strings?.page?.monitor?.clients }}</div>
                         <div class="p3xr-pair-value p3xr-mono">{{ current.clients.connected }}</div>
                     </div>
                 </v-list-item>
                 <v-divider />
                 <v-list-item>
                     <div class="p3xr-pair-row">
-                        <div class="p3xr-pair-label">{{ strings?.page?.monitor?.blocked || 'Blocked' }}</div>
+                        <div class="p3xr-pair-label">{{ strings?.page?.monitor?.blocked }}</div>
                         <div class="p3xr-pair-value p3xr-mono">{{ current.clients.blocked }}</div>
                     </div>
                 </v-list-item>
                 <v-divider />
                 <v-list-item>
                     <div class="p3xr-pair-row">
-                        <div class="p3xr-pair-label">{{ strings?.page?.monitor?.hitsMisses || 'Hit Rate' }}</div>
+                        <div class="p3xr-pair-label">{{ strings?.page?.monitor?.hitsMisses }}</div>
                         <div class="p3xr-pair-value p3xr-mono">{{ current.stats.hitRate }}%</div>
                     </div>
                 </v-list-item>
                 <v-divider />
                 <v-list-item>
                     <div class="p3xr-pair-row">
-                        <div class="p3xr-pair-label">{{ strings?.page?.monitor?.hitsAndMisses || 'Hits / Misses' }}</div>
+                        <div class="p3xr-pair-label">{{ strings?.page?.monitor?.hitsAndMisses }}</div>
                         <div class="p3xr-pair-value p3xr-mono">{{ current.stats.hits }} / {{ current.stats.misses }}</div>
                     </div>
                 </v-list-item>
                 <v-divider />
                 <v-list-item>
                     <div class="p3xr-pair-row">
-                        <div class="p3xr-pair-label">{{ strings?.page?.monitor?.networkIo || 'Network I/O' }}</div>
+                        <div class="p3xr-pair-label">{{ strings?.page?.monitor?.networkIo }}</div>
                         <div class="p3xr-pair-value p3xr-mono">{{ current.stats.inputKbps.toFixed(1) }} / {{ current.stats.outputKbps.toFixed(1) }} KB/s</div>
                     </div>
                 </v-list-item>
                 <v-divider />
                 <v-list-item>
                     <div class="p3xr-pair-row">
-                        <div class="p3xr-pair-label">{{ strings?.page?.monitor?.expired || 'Expired' }}</div>
+                        <div class="p3xr-pair-label">{{ strings?.page?.monitor?.expired }}</div>
                         <div class="p3xr-pair-value p3xr-mono">{{ current.stats.expiredKeys }}</div>
                     </div>
                 </v-list-item>
                 <v-divider />
                 <v-list-item>
                     <div class="p3xr-pair-row">
-                        <div class="p3xr-pair-label">{{ strings?.page?.monitor?.evicted || 'Evicted' }}</div>
+                        <div class="p3xr-pair-label">{{ strings?.page?.monitor?.evicted }}</div>
                         <div class="p3xr-pair-value p3xr-mono">{{ current.stats.evictedKeys }}</div>
                     </div>
                 </v-list-item>
@@ -1078,15 +1078,15 @@ onUnmounted(() => {
         <!-- Server Info -->
         <template v-if="serverInfo">
             <br />
-            <P3xrAccordion :title="strings?.page?.monitor?.serverInfo || 'Server Info'" accordion-key="monitor-server-info">
+            <P3xrAccordion :title="strings?.page?.monitor?.serverInfo" accordion-key="monitor-server-info">
                 <template #actions>
-                    <P3xrButton @click="exportServerInfo(); $event.stopPropagation()" :label="strings?.intention?.export || 'Export'" icon="mdi-download" />
+                    <P3xrButton @click="exportServerInfo(); $event.stopPropagation()" :label="strings?.intention?.export" icon="mdi-download" />
                 </template>
                 <v-list density="compact" class="pa-0">
                     <template v-if="serverInfo.os">
                         <v-list-item>
                             <div class="p3xr-pair-row">
-                                <div class="p3xr-pair-label">{{ strings?.page?.monitor?.os || 'OS' }}</div>
+                                <div class="p3xr-pair-label">{{ strings?.page?.monitor?.os }}</div>
                                 <div class="p3xr-pair-value p3xr-mono">{{ serverInfo.os }}</div>
                             </div>
                         </v-list-item>
@@ -1095,7 +1095,7 @@ onUnmounted(() => {
                     <template v-if="serverInfo.port">
                         <v-list-item>
                             <div class="p3xr-pair-row">
-                                <div class="p3xr-pair-label">{{ strings?.page?.monitor?.port || 'Port' }}</div>
+                                <div class="p3xr-pair-label">{{ strings?.page?.monitor?.port }}</div>
                                 <div class="p3xr-pair-value p3xr-mono">{{ serverInfo.port }}</div>
                             </div>
                         </v-list-item>
@@ -1104,7 +1104,7 @@ onUnmounted(() => {
                     <template v-if="serverInfo.pid">
                         <v-list-item>
                             <div class="p3xr-pair-row">
-                                <div class="p3xr-pair-label">{{ strings?.page?.monitor?.pid || 'Process ID' }}</div>
+                                <div class="p3xr-pair-label">{{ strings?.page?.monitor?.pid }}</div>
                                 <div class="p3xr-pair-value p3xr-mono">{{ serverInfo.pid }}</div>
                             </div>
                         </v-list-item>
@@ -1113,7 +1113,7 @@ onUnmounted(() => {
                     <template v-if="serverInfo.configFile">
                         <v-list-item>
                             <div class="p3xr-pair-row">
-                                <div class="p3xr-pair-label">{{ strings?.page?.monitor?.configFile || 'Config File' }}</div>
+                                <div class="p3xr-pair-label">{{ strings?.page?.monitor?.configFile }}</div>
                                 <div class="p3xr-pair-value p3xr-mono">{{ serverInfo.configFile }}</div>
                             </div>
                         </v-list-item>
@@ -1121,14 +1121,14 @@ onUnmounted(() => {
                     </template>
                     <v-list-item>
                         <div class="p3xr-pair-row">
-                            <div class="p3xr-pair-label">{{ strings?.page?.monitor?.cpuSys || 'System' }} CPU</div>
+                            <div class="p3xr-pair-label">{{ strings?.page?.monitor?.cpuSys }} CPU</div>
                             <div class="p3xr-pair-value p3xr-mono">{{ serverInfo.cpuSys }}</div>
                         </div>
                     </v-list-item>
                     <v-divider />
                     <v-list-item>
                         <div class="p3xr-pair-row">
-                            <div class="p3xr-pair-label">{{ strings?.page?.monitor?.cpuUser || 'User' }} CPU</div>
+                            <div class="p3xr-pair-label">{{ strings?.page?.monitor?.cpuUser }} CPU</div>
                             <div class="p3xr-pair-value p3xr-mono">{{ serverInfo.cpuUser }}</div>
                         </div>
                     </v-list-item>
@@ -1139,35 +1139,35 @@ onUnmounted(() => {
         <!-- Persistence -->
         <template v-if="persistenceInfo">
             <br />
-            <P3xrAccordion :title="strings?.page?.monitor?.persistence || 'Persistence'" accordion-key="monitor-persistence">
+            <P3xrAccordion :title="strings?.page?.monitor?.persistence" accordion-key="monitor-persistence">
                 <template #actions>
-                    <P3xrButton @click="exportPersistence(); $event.stopPropagation()" :label="strings?.intention?.export || 'Export'" icon="mdi-download" />
+                    <P3xrButton @click="exportPersistence(); $event.stopPropagation()" :label="strings?.intention?.export" icon="mdi-download" />
                 </template>
                 <v-list density="compact" class="pa-0">
                     <v-list-item>
                         <div class="p3xr-pair-row">
-                            <div class="p3xr-pair-label">{{ strings?.page?.monitor?.rdbLastSave || 'RDB Last Save' }}</div>
+                            <div class="p3xr-pair-label">{{ strings?.page?.monitor?.rdbLastSave }}</div>
                             <div class="p3xr-pair-value p3xr-mono">{{ persistenceInfo.rdbLastSave }}</div>
                         </div>
                     </v-list-item>
                     <v-divider />
                     <v-list-item>
                         <div class="p3xr-pair-row">
-                            <div class="p3xr-pair-label">{{ strings?.page?.monitor?.rdbStatus || 'RDB Status' }}</div>
+                            <div class="p3xr-pair-label">{{ strings?.page?.monitor?.rdbStatus }}</div>
                             <div class="p3xr-pair-value p3xr-mono">{{ persistenceInfo.rdbStatus }}</div>
                         </div>
                     </v-list-item>
                     <v-divider />
                     <v-list-item>
                         <div class="p3xr-pair-row">
-                            <div class="p3xr-pair-label">{{ strings?.page?.monitor?.rdbChanges || 'Changes Since Last Save' }}</div>
+                            <div class="p3xr-pair-label">{{ strings?.page?.monitor?.rdbChanges }}</div>
                             <div class="p3xr-pair-value p3xr-mono">{{ persistenceInfo.rdbChanges }}</div>
                         </div>
                     </v-list-item>
                     <v-divider />
                     <v-list-item>
                         <div class="p3xr-pair-row">
-                            <div class="p3xr-pair-label">{{ strings?.page?.monitor?.aofEnabled || 'AOF Enabled' }}</div>
+                            <div class="p3xr-pair-label">{{ strings?.page?.monitor?.aofEnabled }}</div>
                             <div class="p3xr-pair-value p3xr-mono">{{ persistenceInfo.aofEnabled }}</div>
                         </div>
                     </v-list-item>
@@ -1175,7 +1175,7 @@ onUnmounted(() => {
                         <v-divider />
                         <v-list-item>
                             <div class="p3xr-pair-row">
-                                <div class="p3xr-pair-label">{{ strings?.page?.monitor?.aofSize || 'AOF Size' }}</div>
+                                <div class="p3xr-pair-label">{{ strings?.page?.monitor?.aofSize }}</div>
                                 <div class="p3xr-pair-value p3xr-mono">{{ persistenceInfo.aofSize }}</div>
                             </div>
                         </v-list-item>
@@ -1187,14 +1187,14 @@ onUnmounted(() => {
         <!-- Replication -->
         <template v-if="replicationInfo">
             <br />
-            <P3xrAccordion :title="strings?.page?.monitor?.replication || 'Replication'" accordion-key="monitor-replication">
+            <P3xrAccordion :title="strings?.page?.monitor?.replication" accordion-key="monitor-replication">
                 <template #actions>
-                    <P3xrButton @click="exportReplication(); $event.stopPropagation()" :label="strings?.intention?.export || 'Export'" icon="mdi-download" />
+                    <P3xrButton @click="exportReplication(); $event.stopPropagation()" :label="strings?.intention?.export" icon="mdi-download" />
                 </template>
                 <v-list density="compact" class="pa-0">
                     <v-list-item>
                         <div class="p3xr-pair-row">
-                            <div class="p3xr-pair-label">{{ strings?.page?.monitor?.role || 'Role' }}</div>
+                            <div class="p3xr-pair-label">{{ strings?.page?.monitor?.role }}</div>
                             <div class="p3xr-pair-value p3xr-mono">{{ replicationInfo.role }}</div>
                         </div>
                     </v-list-item>
@@ -1202,7 +1202,7 @@ onUnmounted(() => {
                         <v-divider />
                         <v-list-item>
                             <div class="p3xr-pair-row">
-                                <div class="p3xr-pair-label">{{ strings?.page?.monitor?.replicas || 'Connected Replicas' }}</div>
+                                <div class="p3xr-pair-label">{{ strings?.page?.monitor?.replicas }}</div>
                                 <div class="p3xr-pair-value p3xr-mono">{{ replicationInfo.replicas }}</div>
                             </div>
                         </v-list-item>
@@ -1211,7 +1211,7 @@ onUnmounted(() => {
                         <v-divider />
                         <v-list-item>
                             <div class="p3xr-pair-row">
-                                <div class="p3xr-pair-label">{{ strings?.page?.monitor?.masterHost || 'Master Host' }}</div>
+                                <div class="p3xr-pair-label">{{ strings?.page?.monitor?.masterHost }}</div>
                                 <div class="p3xr-pair-value p3xr-mono">{{ replicationInfo.masterHost }}:{{ replicationInfo.masterPort }}</div>
                             </div>
                         </v-list-item>
@@ -1220,7 +1220,7 @@ onUnmounted(() => {
                         <v-divider />
                         <v-list-item>
                             <div class="p3xr-pair-row">
-                                <div class="p3xr-pair-label">{{ strings?.page?.monitor?.linkStatus || 'Link Status' }}</div>
+                                <div class="p3xr-pair-label">{{ strings?.page?.monitor?.linkStatus }}</div>
                                 <div class="p3xr-pair-value p3xr-mono">{{ replicationInfo.linkStatus }}</div>
                             </div>
                         </v-list-item>
@@ -1232,16 +1232,16 @@ onUnmounted(() => {
         <!-- Keyspace -->
         <template v-if="keyspaceEntries.length > 0">
             <br />
-            <P3xrAccordion :title="strings?.page?.monitor?.keyspace || 'Keyspace'" accordion-key="monitor-keyspace">
+            <P3xrAccordion :title="strings?.page?.monitor?.keyspace" accordion-key="monitor-keyspace">
                 <template #actions>
-                    <P3xrButton @click="exportKeyspace(); $event.stopPropagation()" :label="strings?.intention?.export || 'Export'" icon="mdi-download" />
+                    <P3xrButton @click="exportKeyspace(); $event.stopPropagation()" :label="strings?.intention?.export" icon="mdi-download" />
                 </template>
                 <v-list density="compact" class="pa-0">
                     <template v-for="(entry, idx) in keyspaceEntries" :key="entry.db">
                         <v-list-item>
                             <div class="p3xr-pair-row">
                                 <div class="p3xr-pair-label">{{ entry.db }}</div>
-                                <div class="p3xr-pair-value p3xr-mono">{{ strings?.page?.monitor?.keys || 'Keys' }}: {{ entry.keys }} &middot; {{ strings?.page?.monitor?.expires || 'Expires' }}: {{ entry.expires }}</div>
+                                <div class="p3xr-pair-value p3xr-mono">{{ strings?.page?.monitor?.keys }}: {{ entry.keys }} &middot; {{ strings?.page?.monitor?.expires }}: {{ entry.expires }}</div>
                             </div>
                         </v-list-item>
                         <v-divider v-if="idx < keyspaceEntries.length - 1" />
@@ -1252,11 +1252,11 @@ onUnmounted(() => {
 
         <!-- Modules -->
         <br />
-        <P3xrAccordion :title="strings?.page?.monitor?.modules || 'Loaded Modules'" accordion-key="monitor-modules">
+        <P3xrAccordion :title="strings?.page?.monitor?.modules" accordion-key="monitor-modules">
             <template #actions>
-                <P3xrButton @click="exportModules(); $event.stopPropagation()" :label="strings?.intention?.export || 'Export'" icon="mdi-download" />
+                <P3xrButton @click="exportModules(); $event.stopPropagation()" :label="strings?.intention?.export" icon="mdi-download" />
             </template>
-            <div v-if="modulesList.length === 0" style="padding: 16px; opacity: 0.5;">{{ strings?.page?.monitor?.noModules || 'No modules loaded' }}</div>
+            <div v-if="modulesList.length === 0" style="padding: 16px; opacity: 0.5;">{{ strings?.page?.monitor?.noModules }}</div>
             <v-list v-if="modulesList.length > 0" density="compact" class="pa-0">
                 <template v-for="(mod, idx) in modulesList" :key="mod.name">
                     <v-list-item>
@@ -1273,49 +1273,49 @@ onUnmounted(() => {
         <br />
 
         <!-- Charts -->
-        <P3xrAccordion :title="(strings?.page?.monitor?.memory || 'Memory') + ' (MB)'" accordion-key="monitor-chart-memory">
+        <P3xrAccordion :title="(strings?.page?.monitor?.memory) + ' (MB)'" accordion-key="monitor-chart-memory">
             <template #actions>
-                <P3xrButton @click="exportChart(memoryChartEl, 'memory'); $event.stopPropagation()" :label="strings?.intention?.export || 'Export'" icon="mdi-download" />
+                <P3xrButton @click="exportChart(memoryChartEl, 'memory'); $event.stopPropagation()" :label="strings?.intention?.export" icon="mdi-download" />
             </template>
             <div ref="memoryChartEl" class="p3xr-monitoring-chart"></div>
         </P3xrAccordion>
 
         <br />
 
-        <P3xrAccordion :title="strings?.page?.monitor?.opsPerSec || 'Ops/sec'" accordion-key="monitor-chart-ops">
+        <P3xrAccordion :title="strings?.page?.monitor?.opsPerSec" accordion-key="monitor-chart-ops">
             <template #actions>
-                <P3xrButton @click="exportChart(opsChartEl, 'ops'); $event.stopPropagation()" :label="strings?.intention?.export || 'Export'" icon="mdi-download" />
+                <P3xrButton @click="exportChart(opsChartEl, 'ops'); $event.stopPropagation()" :label="strings?.intention?.export" icon="mdi-download" />
             </template>
             <div ref="opsChartEl" class="p3xr-monitoring-chart"></div>
         </P3xrAccordion>
 
         <br />
 
-        <P3xrAccordion :title="strings?.page?.monitor?.clients || 'Clients'" accordion-key="monitor-chart-clients">
+        <P3xrAccordion :title="strings?.page?.monitor?.clients" accordion-key="monitor-chart-clients">
             <template #actions>
-                <P3xrButton @click="exportChart(clientsChartEl, 'clients'); $event.stopPropagation()" :label="strings?.intention?.export || 'Export'" icon="mdi-download" />
+                <P3xrButton @click="exportChart(clientsChartEl, 'clients'); $event.stopPropagation()" :label="strings?.intention?.export" icon="mdi-download" />
             </template>
             <div ref="clientsChartEl" class="p3xr-monitoring-chart"></div>
         </P3xrAccordion>
 
         <br />
 
-        <P3xrAccordion :title="(strings?.page?.monitor?.networkIo || 'Network I/O') + ' (KB/s)'" accordion-key="monitor-chart-network">
+        <P3xrAccordion :title="(strings?.page?.monitor?.networkIo) + ' (KB/s)'" accordion-key="monitor-chart-network">
             <template #actions>
-                <P3xrButton @click="exportChart(networkChartEl, 'network'); $event.stopPropagation()" :label="strings?.intention?.export || 'Export'" icon="mdi-download" />
+                <P3xrButton @click="exportChart(networkChartEl, 'network'); $event.stopPropagation()" :label="strings?.intention?.export" icon="mdi-download" />
             </template>
             <div ref="networkChartEl" class="p3xr-monitoring-chart"></div>
         </P3xrAccordion>
 
         <!-- Slow Log -->
         <br />
-        <P3xrAccordion :title="strings?.page?.monitor?.slowLog || 'Slow Log'" accordion-key="monitor-slowlog">
+        <P3xrAccordion :title="strings?.page?.monitor?.slowLog" accordion-key="monitor-slowlog">
             <template #actions>
                 <P3xrButton v-if="!isReadonly" @click="resetSlowLog(); $event.stopPropagation()" label="Reset" icon="mdi-delete-sweep" />
-                <P3xrButton @click="exportSlowLog(); $event.stopPropagation()" :label="strings?.intention?.export || 'Export'" icon="mdi-download" />
+                <P3xrButton @click="exportSlowLog(); $event.stopPropagation()" :label="strings?.intention?.export" icon="mdi-download" />
             </template>
             <div v-if="current.slowlog.length === 0" style="padding: 12px 16px; opacity: 0.6;">
-                {{ strings?.page?.monitor?.noSlowQueries || 'No slow queries recorded' }}
+                {{ strings?.page?.monitor?.noSlowQueries }}
             </div>
             <v-list v-else density="compact" class="pa-0">
                 <template v-for="entry in current.slowlog" :key="entry.id">
@@ -1332,26 +1332,26 @@ onUnmounted(() => {
 
         <!-- Client List -->
         <br />
-        <P3xrAccordion :title="strings?.page?.monitor?.clientList || 'Client List'" accordion-key="monitor-clients-list">
+        <P3xrAccordion :title="strings?.page?.monitor?.clientList" accordion-key="monitor-clients-list">
             <template #actions>
                 <P3xrButton
                     @click="toggleAutoRefreshClients(); $event.stopPropagation()"
-                    :label="strings?.label?.autoRefresh || 'Auto'"
+                    :label="strings?.label?.autoRefresh"
                     :icon="autoRefreshClients ? 'mdi-checkbox-marked' : 'mdi-checkbox-blank-outline'"
                 />
                 <P3xrButton v-if="!autoRefreshClients"
                     @click="loadClientList(); $event.stopPropagation()"
-                    :label="strings?.intention?.refresh || 'Refresh'"
+                    :label="strings?.intention?.refresh"
                     icon="mdi-refresh"
                 />
                 <P3xrButton
                     @click="exportClientList(); $event.stopPropagation()"
-                    :label="strings?.intention?.export || 'Export'"
+                    :label="strings?.intention?.export"
                     icon="mdi-download"
                 />
             </template>
-            <div v-if="clientList.length === 0 && clientListLoaded" style="padding: 16px; opacity: 0.5;">{{ strings?.page?.monitor?.noClients || 'No clients' }}</div>
-            <div v-if="clientList.length === 0 && !clientListLoaded" style="padding: 16px; opacity: 0.5;">{{ strings?.label?.loading || 'Loading...' }}</div>
+            <div v-if="clientList.length === 0 && clientListLoaded" style="padding: 16px; opacity: 0.5;">{{ strings?.page?.monitor?.noClients }}</div>
+            <div v-if="clientList.length === 0 && !clientListLoaded" style="padding: 16px; opacity: 0.5;">{{ strings?.label?.loading }}</div>
             <v-list v-if="clientList.length > 0" density="compact" class="pa-0">
                 <template v-for="client in clientList" :key="client.id">
                     <v-list-item>
@@ -1371,26 +1371,26 @@ onUnmounted(() => {
 
         <!-- Memory Top Keys -->
         <br />
-        <P3xrAccordion :title="strings?.page?.monitor?.topKeys || 'Top Keys by Memory'" accordion-key="monitor-top-keys">
+        <P3xrAccordion :title="strings?.page?.monitor?.topKeys" accordion-key="monitor-top-keys">
             <template #actions>
                 <P3xrButton
                     @click="toggleAutoRefreshTopKeys(); $event.stopPropagation()"
-                    :label="strings?.label?.autoRefresh || 'Auto'"
+                    :label="strings?.label?.autoRefresh"
                     :icon="autoRefreshTopKeys ? 'mdi-checkbox-marked' : 'mdi-checkbox-blank-outline'"
                 />
                 <P3xrButton v-if="!autoRefreshTopKeys"
                     @click="loadTopKeys(); $event.stopPropagation()"
-                    :label="strings?.intention?.refresh || 'Refresh'"
+                    :label="strings?.intention?.refresh"
                     icon="mdi-refresh"
                 />
                 <P3xrButton
                     @click="exportTopKeys(); $event.stopPropagation()"
-                    :label="strings?.intention?.export || 'Export'"
+                    :label="strings?.intention?.export"
                     icon="mdi-download"
                 />
             </template>
-            <div v-if="topKeys.length === 0 && topKeysLoaded" style="padding: 16px; opacity: 0.5;">{{ strings?.page?.monitor?.noKeys || 'No keys' }}</div>
-            <div v-if="topKeys.length === 0 && !topKeysLoaded" style="padding: 16px; opacity: 0.5;">{{ strings?.label?.loading || 'Loading...' }}</div>
+            <div v-if="topKeys.length === 0 && topKeysLoaded" style="padding: 16px; opacity: 0.5;">{{ strings?.page?.monitor?.noKeys }}</div>
+            <div v-if="topKeys.length === 0 && !topKeysLoaded" style="padding: 16px; opacity: 0.5;">{{ strings?.label?.loading }}</div>
             <v-list v-if="topKeys.length > 0" density="compact" class="pa-0">
                 <template v-for="(entry, i) in topKeys" :key="entry.key">
                     <v-list-item>
@@ -1410,11 +1410,11 @@ onUnmounted(() => {
         <!-- Cluster Slot Stats (conditional) -->
         <template v-if="isCluster">
             <br />
-            <P3xrAccordion :title="strings?.page?.monitor?.slotStats || 'Cluster Slot Stats'" accordion-key="monitor-slot-stats">
+            <P3xrAccordion :title="strings?.page?.monitor?.slotStats" accordion-key="monitor-slot-stats">
                 <template #actions>
                     <P3xrButton
                         @click="loadSlotStats(); $event.stopPropagation()"
-                        :label="strings?.intention?.refresh || 'Refresh'"
+                        :label="strings?.intention?.refresh"
                         icon="mdi-refresh"
                     />
                 </template>
@@ -1456,27 +1456,27 @@ onUnmounted(() => {
         <!-- Cluster Slot Map -->
         <template v-if="isCluster">
             <br />
-            <P3xrAccordion :title="strings?.page?.monitor?.clusterSlotMap || 'Cluster Slot Map'" accordion-key="monitor-cluster-slots">
+            <P3xrAccordion :title="strings?.page?.monitor?.clusterSlotMap" accordion-key="monitor-cluster-slots">
                 <template #actions>
                     <P3xrButton
                         @click="toggleAutoRefreshShards(); $event.stopPropagation()"
-                        :label="strings?.label?.autoRefresh || 'Auto'"
+                        :label="strings?.label?.autoRefresh"
                         :icon="autoRefreshShards ? 'mdi-checkbox-marked' : 'mdi-checkbox-blank-outline'"
                     />
                     <P3xrButton
                         v-if="!autoRefreshShards"
                         @click="loadClusterShards(); $event.stopPropagation()"
-                        :label="strings?.intention?.refresh || 'Refresh'"
+                        :label="strings?.intention?.refresh"
                         icon="mdi-refresh"
                     />
                     <P3xrButton
                         @click="exportClusterSlots(); $event.stopPropagation()"
-                        :label="strings?.intention?.export || 'Export'"
+                        :label="strings?.intention?.export"
                         icon="mdi-download"
                     />
                 </template>
                 <div v-if="!clusterShards" style="padding: 12px 16px; opacity: 0.6;">
-                    {{ strings?.page?.monitor?.noClusterData || 'No cluster data available' }}
+                    {{ strings?.page?.monitor?.noClusterData }}
                 </div>
                 <template v-else>
                     <v-list density="compact" class="pa-0">

@@ -63,7 +63,7 @@ watch(() => props.value, () => {
 function showTimestamp(id: string): string {
     try {
         const ms = parseInt(id.slice(0, id.indexOf('-')))
-        const lang = i18n.currentLang || 'en'
+        const lang = i18n.currentLang
         const locale = intlLocaleMap[lang] || lang
         return new Date(ms).toLocaleString(locale, { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' })
     } catch { return id }

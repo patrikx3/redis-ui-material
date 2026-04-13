@@ -6,7 +6,7 @@ import {
 import {
     Power, PowerOff, DeleteForever, Edit, ModeComment, AddBox,
     CheckBox, CheckBoxOutlineBlank,
-    ChevronRight, ExpandMore, Favorite, People, Delete, PersonAdd, Refresh,
+    ChevronRight, ExpandMore, Favorite, People, Delete, PersonAdd, Refresh, Warning,
 } from '@mui/icons-material'
 import {
     DndContext, closestCenter, PointerSensor, useSensor, useSensors,
@@ -95,7 +95,7 @@ export default function SettingsPage() {
     const redisConnections = useRedisStateStore(s => s.redisConnections)
     const settings = useSettingsStore()
     const { toast, confirm, generalHandleError } = useCommonStore()
-    const { disconnect } = useMainCommandStore()
+    const { connect: storeConnect, disconnect } = useMainCommandStore()
 
     const isXs = useMediaQuery('(max-width: 599px)')
     const connectionsList = connections?.list ?? []
@@ -243,47 +243,7 @@ export default function SettingsPage() {
         else { setAclUsers(null); setAclCurrentUser('') }
     }, [currentConnectionId, loadAclUsers])
 
-    const handleConnect = async (conn: any) => {
-        const cloned = structuredClone(conn)
-        const overlay = useOverlayStore.getState()
-        try {
-            const dbStorageKey = settings.getStorageKeyCurrentDatabase(cloned.id)
-            let db: string | undefined
-            try { db = localStorage.getItem(dbStorageKey) ?? undefined } catch {}
-
-            overlay.show({ message: strings?.title?.connectingRedis })
-
-            const response = await request({
-                action: 'connection/connect',
-                payload: { connection: cloned, db },
-            })
-
-            const databaseIndexes: number[] = []
-            let i = 0
-            while (i < response.databases) databaseIndexes.push(i++)
-            const commands: string[] = []
-            Object.keys(response.commands ?? {}).forEach(k => commands.push(response.commands[k][0]))
-            commands.sort()
-            const modules = Array.isArray(response.modules) ? response.modules : []
-
-            useRedisStateStore.setState({
-                page: 1, monitor: false, dbsize: response.dbsize,
-                databaseIndexes, connection: cloned, commands,
-                commandsMeta: response.commandsMeta ?? {}, modules,
-                hasReJSON: modules.some((m: any) => m.name === 'ReJSON'),
-                hasRediSearch: modules.some((m: any) => m.name === 'search'),
-                hasTimeSeries: modules.some((m: any) => m.name === 'timeseries' || m.name === 'Timeseries'),
-            })
-            useCommonStore.getState().loadRedisInfoResponse({ response })
-            try { localStorage.setItem(settings.connectInfoStorageKey, JSON.stringify(cloned)) } catch {}
-        } catch (error: any) {
-            try { localStorage.removeItem(settings.connectInfoStorageKey) } catch {}
-            useRedisStateStore.setState({ connection: undefined })
-            generalHandleError(error)
-        } finally {
-            overlay.hide()
-        }
-    }
+    const handleConnect = (conn: any) => storeConnect(conn)
 
     const handleDelete = async (conn: any) => {
         try {
@@ -373,10 +333,10 @@ export default function SettingsPage() {
     return (
         <>
             {/* === Donate === */}
-            <P3xrAccordion title={strings?.title?.donateTitle || 'Support P3X Redis UI'} accordionKey="donate" collapsible={false}
+            <P3xrAccordion title={strings?.title?.donateTitle} accordionKey="donate" collapsible={false}
                 actions={
                     <P3xrButton
-                        label={`${strings?.title?.donate || 'Donate'} — PayPal`}
+                        label={`${strings?.title?.donate} — PayPal`}
                         icon={<Favorite fontSize="small" />}
                         onClick={() => window.open('https://www.paypal.me/patrikx3', '_blank')}
                     />
@@ -470,22 +430,22 @@ export default function SettingsPage() {
             {currentConnectionId && <>
                 <br />
                 {/* === ACL Users === */}
-                <P3xrAccordion title={`${strings?.page?.acl?.title || 'ACL Users'} — ${currentConnectionName}`} accordionKey="acl-users"
+                <P3xrAccordion title={`${strings?.page?.acl?.title} — ${currentConnectionName}`} accordionKey="acl-users"
                     actions={<>
                         <P3xrButton icon={<Refresh fontSize="small" />}
-                            label={strings?.intention?.refresh || 'Refresh'} color="inherit"
+                            label={strings?.intention?.refresh} color="inherit"
                             onClick={(e) => { e.stopPropagation(); loadAclUsers() }} />
                         {!readonlyConnections && <P3xrButton icon={<PersonAdd fontSize="small" />}
-                            label={strings?.page?.acl?.createUser || 'Create User'} color="inherit"
+                            label={strings?.page?.acl?.createUser} color="inherit"
                             onClick={(e) => {
                                 e.stopPropagation()
                                 setAclEditIsNew(true); setAclEditUsername(''); setAclEditRules('on >password +@all ~* &*'); setAclEditOpen(true)
                             }} />}
                     </>}>
                     {aclLoading
-                        ? <Box sx={{ p: 2, opacity: 0.6 }}>{strings?.page?.acl?.loading || 'Loading...'}</Box>
+                        ? <Box sx={{ p: 2, opacity: 0.6 }}>{strings?.page?.acl?.loading}</Box>
                         : !aclUsers
-                            ? <Box sx={{ p: 2, opacity: 0.6 }}>{strings?.page?.acl?.noUsers || 'ACL requires Redis 6.0+.'}</Box>
+                            ? <Box sx={{ p: 2, opacity: 0.6 }}>{strings?.page?.acl?.noUsers}</Box>
                             : <Box>
                                 {aclUsers.map((user, idx) => (
                                     <Box key={user.name}>
@@ -497,33 +457,31 @@ export default function SettingsPage() {
                                             setAclEditIsNew(false); setAclEditUsername(user.name)
                                             setAclEditRules(user.raw.split(' ').slice(2).join(' ')); setAclEditOpen(true)
                                         } : undefined}>
-                                            <Box sx={{ flex: 1, minWidth: 0 }}>
+                                            <Box sx={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center' }}>
                                                 <Box component="span" sx={{ fontWeight: 700 }}>{user.name}</Box>
-                                                {user.name === aclCurrentUser && <Box component="span" sx={{ opacity: 0.5, ml: 0.5, fontSize: 11 }}>({strings?.page?.acl?.currentUser || 'Current'})</Box>}
+                                                {user.name === aclCurrentUser && <Box component="span" sx={{ opacity: 0.5, ml: 0.5, fontSize: 11, lineHeight: 1 }}>({strings?.page?.acl?.currentUser})</Box>}
                                             </Box>
                                             {!user.enabled && (
-                                                <Tooltip title={strings?.page?.acl?.disabled || 'Disabled'} placement="top">
-                                                    <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center', color: 'warning.main' }}>
-                                                        <Box component="span" className="material-icons" sx={{ fontSize: 20 }}>warning</Box>
-                                                    </Box>
+                                                <Tooltip title={strings?.page?.acl?.disabled} placement="top">
+                                                    <Warning sx={{ fontSize: 20, color: 'warning.main' }} />
                                                 </Tooltip>
                                             )}
                                             {!readonlyConnections && (
                                                 <Box onClick={e => e.stopPropagation()} sx={{ display: 'flex', gap: 0.5 }}>
                                                     {user.name !== 'default' && user.name !== aclCurrentUser && (
                                                         <ActionBtn icon={<Delete fontSize="small" />}
-                                                            label={strings?.page?.acl?.deleteUser || 'Delete'} color="error"
+                                                            label={strings?.page?.acl?.deleteUser} color="error"
                                                             onClick={async () => {
                                                                 try {
-                                                                    await confirm({ message: `${strings?.page?.acl?.confirmDelete || 'Are you sure to delete ACL user'} "${user.name}"?` })
+                                                                    await confirm({ message: `${strings?.page?.acl?.confirmDelete} "${user.name}"?` })
                                                                     await request({ action: 'acl/del-user', payload: { username: user.name } })
-                                                                    toast(strings?.page?.acl?.userDeleted || 'ACL user deleted')
+                                                                    toast(strings?.page?.acl?.userDeleted)
                                                                     loadAclUsers()
                                                                 } catch {}
                                                             }} />
                                                     )}
                                                     <ActionBtn icon={<Edit fontSize="small" />}
-                                                        label={strings?.page?.acl?.editUser || 'Edit'} color="primary"
+                                                        label={strings?.page?.acl?.editUser} color="primary"
                                                         onClick={() => {
                                                             setAclEditIsNew(false); setAclEditUsername(user.name)
                                                             setAclEditRules(user.raw.split(' ').slice(2).join(' ')); setAclEditOpen(true)
@@ -547,7 +505,7 @@ export default function SettingsPage() {
                         if (result) {
                             try {
                                 await request({ action: 'acl/set-user', payload: { username: result.username, rules: result.rules } })
-                                toast(strings?.page?.acl?.userSaved || 'ACL user saved')
+                                toast(strings?.page?.acl?.userSaved)
                                 loadAclUsers()
                             } catch (err) { generalHandleError(err) }
                         }
@@ -645,17 +603,17 @@ export default function SettingsPage() {
             </P3xrAccordion>
             <br />
             {/* === Notifications === */}
-            <P3xrAccordion title={strings?.label?.desktopNotifications || 'Desktop Notifications'} accordionKey="desktop-notifications">
+            <P3xrAccordion title={strings?.label?.desktopNotifications} accordionKey="desktop-notifications">
                 <List disablePadding>
                     <ListItem>
                         <Box sx={{ display: 'flex', width: '100%', alignItems: 'center' }}>
-                            <Box sx={{ flex: 1, fontWeight: 500 }}>{strings?.label?.desktopNotificationsEnabled || 'Enable desktop notifications'}</Box>
+                            <Box sx={{ flex: 1, fontWeight: 500 }}>{strings?.label?.desktopNotificationsEnabled}</Box>
                             <Switch checked={isNotificationsEnabled()} onChange={(_, checked) => { setNotificationsEnabled(checked); setNotifToggle(checked) }} />
                         </Box>
                     </ListItem>
                     <Divider />
                     <ListItem>
-                        <Box sx={{ fontSize: 12, opacity: 0.7 }}>{strings?.label?.desktopNotificationsInfo || 'Receive OS notifications for Redis disconnections and reconnections when the app is not focused.'}</Box>
+                        <Box sx={{ fontSize: 12, opacity: 0.7 }}>{strings?.label?.desktopNotificationsInfo}</Box>
                     </ListItem>
                 </List>
             </P3xrAccordion>
@@ -681,8 +639,8 @@ export default function SettingsPage() {
                         { label: strings?.form?.treeSettings?.field?.searchModeStartsWith, value: settings.searchStartsWith ? strings?.form?.treeSettings?.label?.searchModeStartsWith : strings?.form?.treeSettings?.label?.searchModeIncludes },
                         { label: null, value: settings.jsonFormat === 2 ? strings?.form?.treeSettings?.label?.jsonFormatTwoSpace : strings?.form?.treeSettings?.label?.jsonFormatFourSpace },
                         { label: null, value: settings.animation ? strings?.form?.treeSettings?.label?.animation : strings?.form?.treeSettings?.label?.noAnimation },
-                        { label: null, value: settings.undoEnabled ? (strings?.form?.treeSettings?.label?.undoEnabled || 'Undo enabled') : (strings?.form?.treeSettings?.label?.undoDisabled || 'Undo disabled'), hint: strings?.form?.treeSettings?.undoHint || 'Undo is available for string and JSON key types only' },
-                        { label: null, value: settings.showDiffBeforeSave ? (strings?.form?.treeSettings?.label?.diffEnabled || 'Show diff before saving') : (strings?.form?.treeSettings?.label?.diffDisabled || 'Diff before save disabled') },
+                        { label: null, value: settings.undoEnabled ? (strings?.form?.treeSettings?.label?.undoEnabled) : (strings?.form?.treeSettings?.label?.undoDisabled), hint: strings?.form?.treeSettings?.undoHint },
+                        { label: null, value: settings.showDiffBeforeSave ? (strings?.form?.treeSettings?.label?.diffEnabled) : (strings?.form?.treeSettings?.label?.diffDisabled) },
                     ].map((item, i, arr) => (
                         <Box key={i}>
                             <ListItemButton onClick={() => setTreeDialogOpen(true)} sx={{ px: 2, py: 1 }}>

@@ -176,7 +176,7 @@ export class KeyVectorsetComponent extends KeyTypeBase implements OnInit, OnChan
                 },
             });
             this.simResults = (response as any).results || [];
-            this.common.toast(this.strings()?.page?.key?.vectorset?.searchComplete || 'Search complete');
+            this.common.toast(this.strings()?.page?.key?.vectorset?.searchComplete);
         } catch (e: any) {
             this.common.toast(e.message || 'Error');
             this.simResults = [];
@@ -201,7 +201,7 @@ export class KeyVectorsetComponent extends KeyTypeBase implements OnInit, OnChan
                     vector: this.vectorInput.trim(),
                 },
             });
-            this.common.toast(this.strings()?.page?.key?.vectorset?.addedSuccessfully || 'Element added successfully');
+            this.common.toast(this.strings()?.page?.key?.vectorset?.addedSuccessfully);
             this.elementInput = '';
             this.vectorInput = '';
             this.refresh();
@@ -214,7 +214,7 @@ export class KeyVectorsetComponent extends KeyTypeBase implements OnInit, OnChan
     async removeElement(element: string) {
         try {
             await this.common.confirm({
-                message: this.strings()?.confirm?.delete || 'Delete?',
+                message: this.strings()?.confirm?.delete,
             });
             await this.socket.request({
                 action: 'vectorset/remove',
@@ -223,7 +223,7 @@ export class KeyVectorsetComponent extends KeyTypeBase implements OnInit, OnChan
                     element: element,
                 },
             });
-            this.common.toast(this.strings()?.page?.key?.vectorset?.removedSuccessfully || 'Element removed successfully');
+            this.common.toast(this.strings()?.page?.key?.vectorset?.removedSuccessfully);
             this.refresh();
         } catch (e: any) {
             if (e?.message) this.common.toast(e.message);
@@ -244,7 +244,7 @@ export class KeyVectorsetComponent extends KeyTypeBase implements OnInit, OnChan
             if (attrs) {
                 this.common.toast(`${element}: ${JSON.stringify(attrs)}`);
             } else {
-                this.common.toast(`${element}: ${this.strings()?.page?.key?.vectorset?.noAttributes || 'No attributes'}`);
+                this.common.toast(`${element}: ${this.strings()?.page?.key?.vectorset?.noAttributes}`);
             }
         } catch (e: any) {
             this.common.toast(e.message || 'Error');

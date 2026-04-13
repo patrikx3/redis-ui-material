@@ -64,7 +64,7 @@ export default function PulsePage() {
     const muiTheme = useTheme()
     const isDark = muiTheme.palette.mode === 'dark'
     const isReadonly = connection?.readonly === true
-    const connName = connection?.name || 'redis'
+    const connName = connection?.name
 
     const [current, setCurrent] = useState<MonitorSnapshot | null>(null)
     const [paused, setPaused] = useState(false)
@@ -143,7 +143,7 @@ export default function PulsePage() {
                 { stroke: c.text, grid: { stroke: c.grid, width: 1 }, ticks: { stroke: c.grid }, font: '11px Roboto Mono', size: 55 },
             ],
             series: [
-                { label: stringsRef.current?.label?.time || 'Time', value: (_: any, v: number) => v ? formatTime(v * 1000) : '' },
+                { label: stringsRef.current?.label?.time, value: (_: any, v: number) => v ? formatTime(v * 1000) : '' },
                 ...seriesConfig,
             ],
         }
@@ -169,17 +169,17 @@ export default function PulsePage() {
         const s = stringsRef.current?.page?.monitor || {} as any
 
         memPlotRef.current = new uPlotRef.current(createOpts(memEl.offsetWidth || 500, [
-            { label: s.memory || 'Memory', stroke: c.primary, width: 2, fill: c.primary + '15' },
+            { label: s.memory, stroke: c.primary, width: 2, fill: c.primary + '15' },
             { label: 'RSS', stroke: c.accent, width: 2 },
         ]), [data.timestamps, data.memUsed, data.memRss], memEl)
 
         opsPlotRef.current = new uPlotRef.current(createOpts(opsEl.offsetWidth || 500, [
-            { label: s.opsPerSec || 'Ops/s', stroke: c.primary, width: 2, fill: c.primary + '20' },
+            { label: s.opsPerSec, stroke: c.primary, width: 2, fill: c.primary + '20' },
         ]), [data.timestamps, data.ops], opsEl)
 
         cliPlotRef.current = new uPlotRef.current(createOpts(cliEl.offsetWidth || 500, [
-            { label: s.clients || 'Connected', stroke: c.primary, width: 2 },
-            { label: s.blocked || 'Blocked', stroke: c.warn, width: 2 },
+            { label: s.clients, stroke: c.primary, width: 2 },
+            { label: s.blocked, stroke: c.warn, width: 2 },
         ]), [data.timestamps, data.connected, data.blocked], cliEl)
 
         netPlotRef.current = new uPlotRef.current(createOpts(netEl.offsetWidth || 500, [
@@ -295,7 +295,7 @@ export default function PulsePage() {
             const slots = s.slotRanges.map(([a, b]: [number, number]) => `${a}-${b}`).join(', ')
             const count = getSlotCount(s)
             const replicas = s.replicas.map((r: any) => `${r.host}:${r.port}`).join(', ')
-            return `${s.master.host}:${s.master.port} | ${slots} | ${count} slots | replicas: ${replicas || 'none'}`
+            return `${s.master.host}:${s.master.port} | ${slots} | ${count} slots | replicas: ${replicas}`
         })
         downloadText(lines.join('\n'), `${connName}-cluster-slots.txt`)
     }, [clusterShards, connName])
@@ -354,9 +354,9 @@ export default function PulsePage() {
     // --- Actions ---
     const killClient = useCallback(async (id: string) => {
         try {
-            await confirm({ message: strings?.page?.monitor?.confirmKillClient || 'Are you sure to kill this client?' })
+            await confirm({ message: strings?.page?.monitor?.confirmKillClient })
             await request({ action: 'client/kill', payload: { id } })
-            toast(strings?.page?.monitor?.clientKilled || 'Client killed')
+            toast(strings?.page?.monitor?.clientKilled)
             loadClientList()
         } catch (e: any) { if (e !== undefined) generalHandleError(e) }
     }, [strings, confirm, toast, loadClientList, generalHandleError])
@@ -377,14 +377,14 @@ export default function PulsePage() {
         if (!current) return
         const c = current, mon = strings?.page?.monitor || {} as any
         const lines = [
-            `${mon.memory || 'Memory'}: ${c.memory.usedHuman}`, `${mon.rss || 'RSS'}: ${c.memory.rssHuman}`,
-            `${mon.peak || 'Peak'}: ${c.memory.peakHuman}`, `${mon.fragmentation || 'Fragmentation'}: ${c.memory.fragRatio}x`,
-            `${mon.opsPerSec || 'Ops/sec'}: ${c.stats.opsPerSec}`, `${mon.totalCommands || 'Total'}: ${c.stats.totalCommands}`,
-            `${mon.clients || 'Clients'}: ${c.clients.connected}`, `${mon.blocked || 'Blocked'}: ${c.clients.blocked}`,
-            `${mon.hitsMisses || 'Hit Rate'}: ${c.stats.hitRate}%`,
-            `${mon.hitsAndMisses || 'Hits / Misses'}: ${c.stats.hits} / ${c.stats.misses}`,
-            `${mon.networkIo || 'Network I/O'}: ${c.stats.inputKbps.toFixed(1)} / ${c.stats.outputKbps.toFixed(1)} KB/s`,
-            `${mon.expired || 'Expired'}: ${c.stats.expiredKeys}`, `${mon.evicted || 'Evicted'}: ${c.stats.evictedKeys}`,
+            `${mon.memory}: ${c.memory.usedHuman}`, `${mon.rss}: ${c.memory.rssHuman}`,
+            `${mon.peak}: ${c.memory.peakHuman}`, `${mon.fragmentation}: ${c.memory.fragRatio}x`,
+            `${mon.opsPerSec}: ${c.stats.opsPerSec}`, `${mon.totalCommands}: ${c.stats.totalCommands}`,
+            `${mon.clients}: ${c.clients.connected}`, `${mon.blocked}: ${c.clients.blocked}`,
+            `${mon.hitsMisses}: ${c.stats.hitRate}%`,
+            `${mon.hitsAndMisses}: ${c.stats.hits} / ${c.stats.misses}`,
+            `${mon.networkIo}: ${c.stats.inputKbps.toFixed(1)} / ${c.stats.outputKbps.toFixed(1)} KB/s`,
+            `${mon.expired}: ${c.stats.expiredKeys}`, `${mon.evicted}: ${c.stats.evictedKeys}`,
         ]
         downloadText(lines.join('\n'), `${connName}-overview.txt`)
     }, [current, strings, connName])
@@ -405,9 +405,9 @@ export default function PulsePage() {
     const resetSlowLog = useCallback(async () => {
         try {
             const m = stringsRef.current?.page?.monitor || {}
-            await confirm({ message: m.confirmSlowLogReset || 'Are you sure to reset the slow log?' })
+            await confirm({ message: m.confirmSlowLogReset })
             await request({ action: 'monitor/slowlog-reset' })
-            toast({ message: m.slowLogResetDone || 'Slow log reset' })
+            toast({ message: m.slowLogResetDone })
         } catch {}
     }, [confirm, toast])
 
@@ -418,7 +418,7 @@ export default function PulsePage() {
     }, [current, connName])
 
     const exportClientList = useCallback(() => {
-        const lines = clientList.map(c => `${c.addr} ${c.name || ''} db${c.db} ${c.cmd} idle:${c.idle}s`)
+        const lines = clientList.map(c => `${c.addr} ${c.name} db${c.db} ${c.cmd} idle:${c.idle}s`)
         downloadText(lines.join('\n'), `${connName}-clients.txt`)
     }, [clientList, connName])
 
@@ -460,27 +460,27 @@ export default function PulsePage() {
             series: Array<{ label: string; color: string; values: number[]; fill?: boolean }>
         }> = [
             {
-                label: `${s.memory || 'Memory'} (MB)`,
+                label: `${s.memory} (MB)`,
                 series: [
-                    { label: s.memory || 'Memory', color: colors.primary, values: data.memUsed, fill: true },
+                    { label: s.memory, color: colors.primary, values: data.memUsed, fill: true },
                     { label: 'RSS', color: colors.accent, values: data.memRss },
                 ],
             },
             {
-                label: s.opsPerSec || 'Ops/sec',
+                label: s.opsPerSec,
                 series: [
-                    { label: s.opsPerSec || 'Ops/s', color: colors.primary, values: data.ops, fill: true },
+                    { label: s.opsPerSec, color: colors.primary, values: data.ops, fill: true },
                 ],
             },
             {
-                label: s.clients || 'Clients',
+                label: s.clients,
                 series: [
-                    { label: s.clients || 'Connected', color: colors.primary, values: data.connected },
-                    { label: s.blocked || 'Blocked', color: colors.warn, values: data.blocked },
+                    { label: s.clients, color: colors.primary, values: data.connected },
+                    { label: s.blocked, color: colors.warn, values: data.blocked },
                 ],
             },
             {
-                label: `${s.networkIo || 'Network I/O'} (KB/s)`,
+                label: `${s.networkIo} (KB/s)`,
                 series: [
                     { label: '\u2193 In', color: colors.primary, values: data.netIn, fill: true },
                     { label: '\u2191 Out', color: colors.accent, values: data.netOut },
@@ -628,16 +628,16 @@ export default function PulsePage() {
 
             // === PULSE ===
             sections.push(`============================`, `  PULSE`, `============================`, ``,
-                `--- ${mon.title || 'Monitoring'} ---`,
+                `--- ${mon.title} ---`,
                 `Redis ${c.server.version} \u00B7 ${c.server.mode} \u00B7 Uptime: ${uptimeFormatted(c.server.uptime)}`,
-                `${mon.memory || 'Memory'}: ${c.memory.usedHuman}`, `${mon.rss || 'RSS'}: ${c.memory.rssHuman}`,
-                `${mon.peak || 'Peak'}: ${c.memory.peakHuman}`, `${mon.fragmentation || 'Fragmentation'}: ${c.memory.fragRatio}x`,
-                `${mon.opsPerSec || 'Ops/sec'}: ${c.stats.opsPerSec}`, `${mon.totalCommands || 'Total'}: ${c.stats.totalCommands}`,
-                `${mon.clients || 'Clients'}: ${c.clients.connected}`, `${mon.blocked || 'Blocked'}: ${c.clients.blocked}`,
-                `${mon.hitsMisses || 'Hit Rate'}: ${c.stats.hitRate}%`,
-                `${mon.hitsAndMisses || 'Hits / Misses'}: ${c.stats.hits} / ${c.stats.misses}`,
-                `${mon.networkIo || 'Network I/O'}: ${c.stats.inputKbps.toFixed(1)} / ${c.stats.outputKbps.toFixed(1)} KB/s`,
-                `${mon.expired || 'Expired'}: ${c.stats.expiredKeys}`, `${mon.evicted || 'Evicted'}: ${c.stats.evictedKeys}`,
+                `${mon.memory}: ${c.memory.usedHuman}`, `${mon.rss}: ${c.memory.rssHuman}`,
+                `${mon.peak}: ${c.memory.peakHuman}`, `${mon.fragmentation}: ${c.memory.fragRatio}x`,
+                `${mon.opsPerSec}: ${c.stats.opsPerSec}`, `${mon.totalCommands}: ${c.stats.totalCommands}`,
+                `${mon.clients}: ${c.clients.connected}`, `${mon.blocked}: ${c.clients.blocked}`,
+                `${mon.hitsMisses}: ${c.stats.hitRate}%`,
+                `${mon.hitsAndMisses}: ${c.stats.hits} / ${c.stats.misses}`,
+                `${mon.networkIo}: ${c.stats.inputKbps.toFixed(1)} / ${c.stats.outputKbps.toFixed(1)} KB/s`,
+                `${mon.expired}: ${c.stats.expiredKeys}`, `${mon.evicted}: ${c.stats.evictedKeys}`,
             )
 
             // Dashboard sections
@@ -645,50 +645,50 @@ export default function PulsePage() {
             const storeMods = useRedisStateStore.getState().modules || []
             if (storeInfo?.server) {
                 const si = storeInfo.server, ci = storeInfo.cpu || {}
-                sections.push(``, `--- ${mon.serverInfo || 'Server Info'} ---`)
-                sections.push(`${mon.os || 'OS'}: ${si.os || ''}`, `${mon.port || 'Port'}: ${si.tcp_port || ''}`, `${mon.pid || 'Process ID'}: ${si.process_id || ''}`)
-                if (si.config_file) sections.push(`${mon.configFile || 'Config File'}: ${si.config_file}`)
-                sections.push(`${mon.cpuSys || 'System'} CPU: ${ci.used_cpu_sys || '0'}`, `${mon.cpuUser || 'User'} CPU: ${ci.used_cpu_user || '0'}`)
+                sections.push(``, `--- ${mon.serverInfo} ---`)
+                sections.push(`${mon.os}: ${si.os}`, `${mon.port}: ${si.tcp_port}`, `${mon.pid}: ${si.process_id}`)
+                if (si.config_file) sections.push(`${mon.configFile}: ${si.config_file}`)
+                sections.push(`${mon.cpuSys} CPU: ${ci.used_cpu_sys}`, `${mon.cpuUser} CPU: ${ci.used_cpu_user}`)
             }
             if (storeInfo?.persistence) {
                 const p = storeInfo.persistence
                 const lastSaveTs = parseInt(p.rdb_last_save_time, 10)
                 const lastSave = lastSaveTs ? new Date(lastSaveTs * 1000).toLocaleString() : 'N/A'
-                sections.push(``, `--- ${mon.persistence || 'Persistence'} ---`)
-                sections.push(`${mon.rdbLastSave || 'RDB Last Save'}: ${lastSave}`, `${mon.rdbStatus || 'RDB Status'}: ${p.rdb_last_bgsave_status || 'N/A'}`)
-                sections.push(`${mon.rdbChanges || 'Changes Since Last Save'}: ${p.rdb_changes_since_last_save ?? 'N/A'}`, `${mon.aofEnabled || 'AOF Enabled'}: ${p.aof_enabled === '1' ? 'Yes' : 'No'}`)
-                if (p.aof_enabled === '1') sections.push(`${mon.aofSize || 'AOF Size'}: ${formatBytes(parseInt(p.aof_current_size, 10) || 0)}`)
+                sections.push(``, `--- ${mon.persistence} ---`)
+                sections.push(`${mon.rdbLastSave}: ${lastSave}`, `${mon.rdbStatus}: ${p.rdb_last_bgsave_status}`)
+                sections.push(`${mon.rdbChanges}: ${p.rdb_changes_since_last_save ?? 'N/A'}`, `${mon.aofEnabled}: ${p.aof_enabled === '1' ? 'Yes' : 'No'}`)
+                if (p.aof_enabled === '1') sections.push(`${mon.aofSize}: ${formatBytes(parseInt(p.aof_current_size, 10) || 0)}`)
             }
             if (storeInfo?.replication) {
                 const r = storeInfo.replication
-                sections.push(``, `--- ${mon.replication || 'Replication'} ---`, `${mon.role || 'Role'}: ${r.role || 'unknown'}`)
-                if (r.role === 'master') sections.push(`${mon.replicas || 'Connected Replicas'}: ${r.connected_slaves ?? '0'}`)
-                if (r.role === 'slave') { if (r.master_host) sections.push(`${mon.masterHost || 'Master Host'}: ${r.master_host}:${r.master_port}`); if (r.master_link_status) sections.push(`${mon.linkStatus || 'Link Status'}: ${r.master_link_status}`) }
+                sections.push(``, `--- ${mon.replication} ---`, `${mon.role}: ${r.role}`)
+                if (r.role === 'master') sections.push(`${mon.replicas}: ${r.connected_slaves ?? '0'}`)
+                if (r.role === 'slave') { if (r.master_host) sections.push(`${mon.masterHost}: ${r.master_host}:${r.master_port}`); if (r.master_link_status) sections.push(`${mon.linkStatus}: ${r.master_link_status}`) }
             }
             if (storeInfo?.keyspace) {
                 const ks = Object.keys(storeInfo.keyspace).filter((k: string) => k.startsWith('db')).sort((a: string, b: string) => parseInt(a.slice(2), 10) - parseInt(b.slice(2), 10))
                 if (ks.length > 0) {
-                    sections.push(``, `--- ${mon.keyspace || 'Keyspace'} ---`)
-                    sections.push(...ks.map((db: string) => { const e = storeInfo.keyspace[db]; return `${db}: ${mon.keys || 'Keys'}: ${typeof e === 'object' ? e.keys || '0' : '0'}, ${mon.expires || 'Expires'}: ${typeof e === 'object' ? e.expires || '0' : '0'}` }))
+                    sections.push(``, `--- ${mon.keyspace} ---`)
+                    sections.push(...ks.map((db: string) => { const e = storeInfo.keyspace[db]; return `${db}: ${mon.keys}: ${typeof e === 'object' ? e.keys : '0'}, ${mon.expires}: ${typeof e === 'object' ? e.expires : '0'}` }))
                 }
             }
             if (storeMods.length > 0) {
-                sections.push(``, `--- ${mon.modules || 'Loaded Modules'} ---`)
-                sections.push(...storeMods.map((m: any) => `${m.name || 'unknown'} v${m.ver ?? m.version ?? ''}`))
+                sections.push(``, `--- ${mon.modules} ---`)
+                sections.push(...storeMods.map((m: any) => `${m.name} v${m.ver ?? m.version ?? ''}`))
             } else {
-                sections.push(``, `--- ${mon.modules || 'Loaded Modules'} ---`, mon.noModules || 'No modules loaded')
+                sections.push(``, `--- ${mon.modules} ---`, mon.noModules)
             }
 
             if (c.slowlog.length > 0) {
-                sections.push(``, `--- ${mon.slowLog || 'Slow Log'} ---`)
+                sections.push(``, `--- ${mon.slowLog} ---`)
                 sections.push(...c.slowlog.map(e => `${e.duration}\u00B5s ${e.command}`))
             }
             if (clientList.length > 0) {
-                sections.push(``, `--- ${mon.clientList || 'Client List'} ---`)
-                sections.push(...clientList.map(cl => `${cl.addr} ${cl.name || ''} db${cl.db} ${cl.cmd} idle:${cl.idle}s`))
+                sections.push(``, `--- ${mon.clientList} ---`)
+                sections.push(...clientList.map(cl => `${cl.addr} ${cl.name} db${cl.db} ${cl.cmd} idle:${cl.idle}s`))
             }
             if (topKeys.length > 0) {
-                sections.push(``, `--- ${mon.topKeys || 'Top Keys by Memory'} ---`)
+                sections.push(``, `--- ${mon.topKeys} ---`)
                 sections.push(...topKeys.map((e: any, i: number) => `#${i + 1} ${e.key} ${formatBytes(e.bytes)}`))
             }
 
@@ -704,23 +704,23 @@ export default function PulsePage() {
                     })).sort((x: any, y: any) => y.bytes - x.bytes)
 
                     sections.push(``, ``, `============================`, `  ANALYSIS`, `============================`)
-                    sections.push(``, `--- ${a.keysScanned || 'Keys Scanned'} ---`, `${a.keysScanned || 'Keys Scanned'}: ${d.totalScanned} / ${d.dbSize}`)
-                    sections.push(``, `--- ${a.memoryBreakdown || 'Memory Breakdown'} ---`)
-                    sections.push(`${a.totalMemory || 'Total'}: ${m.usedHuman}`, `${a.rssMemory || 'RSS'}: ${m.rssHuman}`, `${a.peakMemory || 'Peak'}: ${m.peakHuman}`)
-                    sections.push(`${a.overheadMemory || 'Overhead'}: ${formatBytes(m.overhead)}`, `${a.datasetMemory || 'Dataset'}: ${formatBytes(m.dataset)}`)
-                    sections.push(`${a.luaMemory || 'Lua'}: ${formatBytes(m.lua)}`, `${a.fragmentation || 'Fragmentation'}: ${m.fragRatio}x`, `${a.allocator || 'Allocator'}: ${m.allocator}`)
-                    sections.push(``, `--- ${a.typeDistribution || 'Type Distribution'} ---`)
+                    sections.push(``, `--- ${a.keysScanned} ---`, `${a.keysScanned}: ${d.totalScanned} / ${d.dbSize}`)
+                    sections.push(``, `--- ${a.memoryBreakdown} ---`)
+                    sections.push(`${a.totalMemory}: ${m.usedHuman}`, `${a.rssMemory}: ${m.rssHuman}`, `${a.peakMemory}: ${m.peakHuman}`)
+                    sections.push(`${a.overheadMemory}: ${formatBytes(m.overhead)}`, `${a.datasetMemory}: ${formatBytes(m.dataset)}`)
+                    sections.push(`${a.luaMemory}: ${formatBytes(m.lua)}`, `${a.fragmentation}: ${m.fragRatio}x`, `${a.allocator}: ${m.allocator}`)
+                    sections.push(``, `--- ${a.typeDistribution} ---`)
                     sections.push(...typeEntries.map((t: any) => `${t.type}: ${t.count} keys, ${formatBytes(t.bytes)}`))
                     if (d.prefixMemory?.length > 0) {
-                        sections.push(``, `--- ${a.prefixMemory || 'Memory by Prefix'} ---`)
+                        sections.push(``, `--- ${a.prefixMemory} ---`)
                         sections.push(...d.prefixMemory.map((p: any, i: number) => `#${i + 1} ${p.prefix} \u2014 ${p.keyCount} keys, ${formatBytes(p.totalBytes)}`))
                     }
-                    sections.push(``, `--- ${a.expirationOverview || 'Key Expiration'} ---`)
-                    sections.push(`${a.withTTL || 'With TTL'}: ${exp.withTTL}`, `${a.persistent || 'Persistent'}: ${exp.persistent}`, `${a.avgTTL || 'Average TTL'}: ${exp.avgTTL}s`)
+                    sections.push(``, `--- ${a.expirationOverview} ---`)
+                    sections.push(`${a.withTTL}: ${exp.withTTL}`, `${a.persistent}: ${exp.persistent}`, `${a.avgTTL}: ${exp.avgTTL}s`)
 
                     analysisChartItems.push(
-                        { name: a.typeDistribution || 'Type Distribution', items: typeEntries.map((t: any) => ({ label: t.type, value: t.bytes })) },
-                        { name: a.prefixMemory || 'Memory by Prefix', items: (d.prefixMemory || []).slice(0, 20).map((p: any) => ({ label: p.prefix, value: p.totalBytes })) },
+                        { name: a.typeDistribution, items: typeEntries.map((t: any) => ({ label: t.type, value: t.bytes })) },
+                        { name: a.prefixMemory, items: (d.prefixMemory || []).slice(0, 20).map((p: any) => ({ label: p.prefix, value: p.totalBytes })) },
                     )
                 }
             } catch { /* analysis optional */ }
@@ -888,7 +888,7 @@ export default function PulsePage() {
     // --- Dashboard computed values ---
     const serverInfoData = info ? (() => {
         const s = info.server || {}, c = info.cpu || {}
-        return { os: s.os || '', port: s.tcp_port || '', pid: s.process_id || '', configFile: s.config_file || '', cpuSys: c.used_cpu_sys || '0', cpuUser: c.used_cpu_user || '0' }
+        return { os: s.os, port: s.tcp_port, pid: s.process_id, configFile: s.config_file, cpuSys: c.used_cpu_sys, cpuUser: c.used_cpu_user }
     })() : null
 
     const persistenceData = info?.persistence ? (() => {
@@ -896,7 +896,7 @@ export default function PulsePage() {
         const lastSaveTs = parseInt(p.rdb_last_save_time, 10)
         const lastSave = lastSaveTs ? new Date(lastSaveTs * 1000).toLocaleString() : 'N/A'
         return {
-            rdbLastSave: lastSave, rdbStatus: p.rdb_last_bgsave_status || 'N/A',
+            rdbLastSave: lastSave, rdbStatus: p.rdb_last_bgsave_status,
             rdbChanges: p.rdb_changes_since_last_save ?? 'N/A',
             aofEnabled: p.aof_enabled === '1' ? 'Yes' : 'No',
             aofSize: p.aof_enabled === '1' ? formatBytes(parseInt(p.aof_current_size, 10) || 0) : '',
@@ -905,7 +905,7 @@ export default function PulsePage() {
 
     const replicationData = info?.replication ? (() => {
         const r = info.replication
-        const result: any = { role: r.role || 'unknown' }
+        const result: any = { role: r.role }
         if (r.role === 'master') result.replicas = r.connected_slaves ?? '0'
         else if (r.role === 'slave') { result.masterHost = r.master_host; result.masterPort = r.master_port; result.linkStatus = r.master_link_status }
         return result
@@ -925,41 +925,41 @@ export default function PulsePage() {
     const exportServerInfo = useCallback(() => {
         if (!serverInfoData) return
         const s = serverInfoData, mon = stringsRef.current?.page?.monitor || {} as any
-        const lines = [`${mon.os || 'OS'}: ${s.os}`, `${mon.port || 'Port'}: ${s.port}`, `${mon.pid || 'Process ID'}: ${s.pid}`]
-        if (s.configFile) lines.push(`${mon.configFile || 'Config File'}: ${s.configFile}`)
-        lines.push(`${mon.cpuSys || 'System'} CPU: ${s.cpuSys}`, `${mon.cpuUser || 'User'} CPU: ${s.cpuUser}`)
+        const lines = [`${mon.os}: ${s.os}`, `${mon.port}: ${s.port}`, `${mon.pid}: ${s.pid}`]
+        if (s.configFile) lines.push(`${mon.configFile}: ${s.configFile}`)
+        lines.push(`${mon.cpuSys} CPU: ${s.cpuSys}`, `${mon.cpuUser} CPU: ${s.cpuUser}`)
         downloadText(lines.join('\n'), `${connName}-server-info.txt`)
     }, [connName, serverInfoData])
 
     const exportPersistence = useCallback(() => {
         if (!persistenceData) return
         const p = persistenceData, mon = stringsRef.current?.page?.monitor || {} as any
-        const lines = [`${mon.rdbLastSave || 'RDB Last Save'}: ${p.rdbLastSave}`, `${mon.rdbStatus || 'RDB Status'}: ${p.rdbStatus}`,
-            `${mon.rdbChanges || 'Changes Since Last Save'}: ${p.rdbChanges}`, `${mon.aofEnabled || 'AOF Enabled'}: ${p.aofEnabled}`]
-        if (p.aofSize) lines.push(`${mon.aofSize || 'AOF Size'}: ${p.aofSize}`)
+        const lines = [`${mon.rdbLastSave}: ${p.rdbLastSave}`, `${mon.rdbStatus}: ${p.rdbStatus}`,
+            `${mon.rdbChanges}: ${p.rdbChanges}`, `${mon.aofEnabled}: ${p.aofEnabled}`]
+        if (p.aofSize) lines.push(`${mon.aofSize}: ${p.aofSize}`)
         downloadText(lines.join('\n'), `${connName}-persistence.txt`)
     }, [connName, persistenceData])
 
     const exportReplication = useCallback(() => {
         if (!replicationData) return
         const r = replicationData, mon = stringsRef.current?.page?.monitor || {} as any
-        const lines = [`${mon.role || 'Role'}: ${r.role}`]
-        if (r.replicas !== undefined) lines.push(`${mon.replicas || 'Connected Replicas'}: ${r.replicas}`)
-        if (r.masterHost) lines.push(`${mon.masterHost || 'Master Host'}: ${r.masterHost}:${r.masterPort}`)
-        if (r.linkStatus) lines.push(`${mon.linkStatus || 'Link Status'}: ${r.linkStatus}`)
+        const lines = [`${mon.role}: ${r.role}`]
+        if (r.replicas !== undefined) lines.push(`${mon.replicas}: ${r.replicas}`)
+        if (r.masterHost) lines.push(`${mon.masterHost}: ${r.masterHost}:${r.masterPort}`)
+        if (r.linkStatus) lines.push(`${mon.linkStatus}: ${r.linkStatus}`)
         downloadText(lines.join('\n'), `${connName}-replication.txt`)
     }, [connName, replicationData])
 
     const exportKeyspace = useCallback(() => {
         if (keyspaceEntries.length === 0) return
         const mon = stringsRef.current?.page?.monitor || {} as any
-        const lines = keyspaceEntries.map((e: any) => `${e.db}: ${mon.keys || 'Keys'}: ${e.keys}, ${mon.expires || 'Expires'}: ${e.expires}`)
+        const lines = keyspaceEntries.map((e: any) => `${e.db}: ${mon.keys}: ${e.keys}, ${mon.expires}: ${e.expires}`)
         downloadText(lines.join('\n'), `${connName}-keyspace.txt`)
     }, [connName, keyspaceEntries])
 
     const exportModules = useCallback(() => {
         const mon = stringsRef.current?.page?.monitor || {} as any
-        if (modulesList.length === 0) { downloadText(mon.noModules || 'No modules loaded', `${connName}-modules.txt`); return }
+        if (modulesList.length === 0) { downloadText(mon.noModules, `${connName}-modules.txt`); return }
         downloadText(modulesList.map((m: any) => `${m.name} v${m.ver}`).join('\n'), `${connName}-modules.txt`)
     }, [connName, modulesList])
 
@@ -979,7 +979,7 @@ export default function PulsePage() {
     if (!current) {
         return (
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, p: 4, opacity: 0.5 }}>
-                <HourglassEmpty /> {strings?.label?.loading || 'Loading...'}
+                <HourglassEmpty /> {strings?.label?.loading}
             </Box>
         )
     }
@@ -989,48 +989,48 @@ export default function PulsePage() {
     return (
         <Box>
             {/* Overview */}
-            <P3xrAccordion title={mon.title || 'Monitoring'} accordionKey="monitor-overview"
+            <P3xrAccordion title={mon.title} accordionKey="monitor-overview"
                 actions={<>
                     <P3xrButton icon={paused ? <PlayArrow sx={{ fontSize: 18 }} /> : <Pause sx={{ fontSize: 18 }} />}
-                        label={paused ? (strings?.intention?.resume || 'Resume') : (strings?.intention?.pause || 'Pause')}
+                        label={paused ? (strings?.intention?.resume) : (strings?.intention?.pause)}
                         color="inherit" onClick={(e) => { e.stopPropagation(); setPaused(p => !p) }} />
-                    <P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
+                    <P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export}
                         color="inherit" onClick={(e) => { e.stopPropagation(); exportOverview() }} />
-                    <P3xrButton icon={<Archive sx={{ fontSize: 18 }} />} label={strings?.page?.analysis?.exportAll || 'Export All'}
+                    <P3xrButton icon={<Archive sx={{ fontSize: 18 }} />} label={strings?.page?.analysis?.exportAll}
                         color="inherit" onClick={(e) => { e.stopPropagation(); exportAll() }} />
                 </>}
             >
                 <List disablePadding>
                     <InfoRow label={`Redis ${current.server.version} \u00B7 ${current.server.mode}`} value={uptimeFormatted(current.server.uptime)} />
-                    <InfoRow label={mon.memory || 'Memory'} value={current.memory.usedHuman} />
-                    <InfoRow label={mon.rss || 'RSS'} value={current.memory.rssHuman} />
-                    <InfoRow label={mon.peak || 'Peak'} value={current.memory.peakHuman} />
-                    <InfoRow label={mon.fragmentation || 'Fragmentation'} value={`${current.memory.fragRatio}x`} />
-                    <InfoRow label={mon.opsPerSec || 'Ops/sec'} value={current.stats.opsPerSec} />
-                    <InfoRow label={mon.totalCommands || 'Total Commands'} value={current.stats.totalCommands} />
-                    <InfoRow label={mon.clients || 'Clients'} value={current.clients.connected} />
-                    <InfoRow label={mon.blocked || 'Blocked'} value={current.clients.blocked} />
-                    <InfoRow label={mon.hitsMisses || 'Hit Rate'} value={`${current.stats.hitRate}%`} />
-                    <InfoRow label={mon.hitsAndMisses || 'Hits / Misses'} value={`${current.stats.hits} / ${current.stats.misses}`} />
-                    <InfoRow label={mon.networkIo || 'Network I/O'} value={`${current.stats.inputKbps.toFixed(1)} / ${current.stats.outputKbps.toFixed(1)} KB/s`} />
-                    <InfoRow label={mon.expired || 'Expired'} value={current.stats.expiredKeys} />
-                    <InfoRow label={mon.evicted || 'Evicted'} value={current.stats.evictedKeys} />
+                    <InfoRow label={mon.memory} value={current.memory.usedHuman} />
+                    <InfoRow label={mon.rss} value={current.memory.rssHuman} />
+                    <InfoRow label={mon.peak} value={current.memory.peakHuman} />
+                    <InfoRow label={mon.fragmentation} value={`${current.memory.fragRatio}x`} />
+                    <InfoRow label={mon.opsPerSec} value={current.stats.opsPerSec} />
+                    <InfoRow label={mon.totalCommands} value={current.stats.totalCommands} />
+                    <InfoRow label={mon.clients} value={current.clients.connected} />
+                    <InfoRow label={mon.blocked} value={current.clients.blocked} />
+                    <InfoRow label={mon.hitsMisses} value={`${current.stats.hitRate}%`} />
+                    <InfoRow label={mon.hitsAndMisses} value={`${current.stats.hits} / ${current.stats.misses}`} />
+                    <InfoRow label={mon.networkIo} value={`${current.stats.inputKbps.toFixed(1)} / ${current.stats.outputKbps.toFixed(1)} KB/s`} />
+                    <InfoRow label={mon.expired} value={current.stats.expiredKeys} />
+                    <InfoRow label={mon.evicted} value={current.stats.evictedKeys} />
                 </List>
             </P3xrAccordion>
 
             {/* Server Info */}
             {serverInfoData && (<>
                 <br />
-                <P3xrAccordion title={mon.serverInfo || 'Server Info'} accordionKey="monitor-server-info"
-                    actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
+                <P3xrAccordion title={mon.serverInfo} accordionKey="monitor-server-info"
+                    actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export}
                         color="inherit" onClick={(e) => { e.stopPropagation(); exportServerInfo() }} />}>
                     <List disablePadding>
-                        {serverInfoData.os && <InfoRow label={mon.os || 'OS'} value={serverInfoData.os} />}
-                        {serverInfoData.port && <InfoRow label={mon.port || 'Port'} value={serverInfoData.port} />}
-                        {serverInfoData.pid && <InfoRow label={mon.pid || 'Process ID'} value={serverInfoData.pid} />}
-                        {serverInfoData.configFile && <InfoRow label={mon.configFile || 'Config File'} value={serverInfoData.configFile} />}
-                        <InfoRow label={`${mon.cpuSys || 'System'} CPU`} value={serverInfoData.cpuSys} />
-                        <InfoRow label={`${mon.cpuUser || 'User'} CPU`} value={serverInfoData.cpuUser} />
+                        {serverInfoData.os && <InfoRow label={mon.os} value={serverInfoData.os} />}
+                        {serverInfoData.port && <InfoRow label={mon.port} value={serverInfoData.port} />}
+                        {serverInfoData.pid && <InfoRow label={mon.pid} value={serverInfoData.pid} />}
+                        {serverInfoData.configFile && <InfoRow label={mon.configFile} value={serverInfoData.configFile} />}
+                        <InfoRow label={`${mon.cpuSys} CPU`} value={serverInfoData.cpuSys} />
+                        <InfoRow label={`${mon.cpuUser} CPU`} value={serverInfoData.cpuUser} />
                     </List>
                 </P3xrAccordion>
             </>)}
@@ -1038,15 +1038,15 @@ export default function PulsePage() {
             {/* Persistence */}
             {persistenceData && (<>
                 <br />
-                <P3xrAccordion title={mon.persistence || 'Persistence'} accordionKey="monitor-persistence"
-                    actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
+                <P3xrAccordion title={mon.persistence} accordionKey="monitor-persistence"
+                    actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export}
                         color="inherit" onClick={(e) => { e.stopPropagation(); exportPersistence() }} />}>
                     <List disablePadding>
-                        <InfoRow label={mon.rdbLastSave || 'RDB Last Save'} value={persistenceData.rdbLastSave} />
-                        <InfoRow label={mon.rdbStatus || 'RDB Status'} value={persistenceData.rdbStatus} />
-                        <InfoRow label={mon.rdbChanges || 'Changes Since Last Save'} value={persistenceData.rdbChanges} />
-                        <InfoRow label={mon.aofEnabled || 'AOF Enabled'} value={persistenceData.aofEnabled} />
-                        {persistenceData.aofSize && <InfoRow label={mon.aofSize || 'AOF Size'} value={persistenceData.aofSize} />}
+                        <InfoRow label={mon.rdbLastSave} value={persistenceData.rdbLastSave} />
+                        <InfoRow label={mon.rdbStatus} value={persistenceData.rdbStatus} />
+                        <InfoRow label={mon.rdbChanges} value={persistenceData.rdbChanges} />
+                        <InfoRow label={mon.aofEnabled} value={persistenceData.aofEnabled} />
+                        {persistenceData.aofSize && <InfoRow label={mon.aofSize} value={persistenceData.aofSize} />}
                     </List>
                 </P3xrAccordion>
             </>)}
@@ -1054,14 +1054,14 @@ export default function PulsePage() {
             {/* Replication */}
             {replicationData && (<>
                 <br />
-                <P3xrAccordion title={mon.replication || 'Replication'} accordionKey="monitor-replication"
-                    actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
+                <P3xrAccordion title={mon.replication} accordionKey="monitor-replication"
+                    actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export}
                         color="inherit" onClick={(e) => { e.stopPropagation(); exportReplication() }} />}>
                     <List disablePadding>
-                        <InfoRow label={mon.role || 'Role'} value={replicationData.role} />
-                        {replicationData.replicas !== undefined && <InfoRow label={mon.replicas || 'Connected Replicas'} value={replicationData.replicas} />}
-                        {replicationData.masterHost && <InfoRow label={mon.masterHost || 'Master Host'} value={`${replicationData.masterHost}:${replicationData.masterPort}`} />}
-                        {replicationData.linkStatus && <InfoRow label={mon.linkStatus || 'Link Status'} value={replicationData.linkStatus} />}
+                        <InfoRow label={mon.role} value={replicationData.role} />
+                        {replicationData.replicas !== undefined && <InfoRow label={mon.replicas} value={replicationData.replicas} />}
+                        {replicationData.masterHost && <InfoRow label={mon.masterHost} value={`${replicationData.masterHost}:${replicationData.masterPort}`} />}
+                        {replicationData.linkStatus && <InfoRow label={mon.linkStatus} value={replicationData.linkStatus} />}
                     </List>
                 </P3xrAccordion>
             </>)}
@@ -1069,8 +1069,8 @@ export default function PulsePage() {
             {/* Keyspace */}
             {keyspaceEntries.length > 0 && (<>
                 <br />
-                <P3xrAccordion title={mon.keyspace || 'Keyspace'} accordionKey="monitor-keyspace"
-                    actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
+                <P3xrAccordion title={mon.keyspace} accordionKey="monitor-keyspace"
+                    actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export}
                         color="inherit" onClick={(e) => { e.stopPropagation(); exportKeyspace() }} />}>
                     <List disablePadding>
                         {keyspaceEntries.map((entry: any, i: number) => (
@@ -1079,7 +1079,7 @@ export default function PulsePage() {
                                     <Box sx={{ display: 'flex', width: '100%' }}>
                                         <Box sx={{ flex: 1 }}>{entry.db}</Box>
                                         <Box sx={{ fontFamily: "'Roboto Mono', monospace", fontSize: 13 }}>
-                                            {mon.keys || 'Keys'}: {entry.keys} {'\u00B7'} {mon.expires || 'Expires'}: {entry.expires}
+                                            {mon.keys}: {entry.keys} {'\u00B7'} {mon.expires}: {entry.expires}
                                         </Box>
                                     </Box>
                                 </ListItem>
@@ -1092,11 +1092,11 @@ export default function PulsePage() {
 
             {/* Modules */}
             <br />
-            <P3xrAccordion title={mon.modules || 'Loaded Modules'} accordionKey="monitor-modules"
-                actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
+            <P3xrAccordion title={mon.modules} accordionKey="monitor-modules"
+                actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export}
                     color="inherit" onClick={(e) => { e.stopPropagation(); exportModules() }} />}>
                 {modulesList.length === 0 && (
-                    <Box sx={{ p: 2, opacity: 0.5 }}>{mon.noModules || 'No modules loaded'}</Box>
+                    <Box sx={{ p: 2, opacity: 0.5 }}>{mon.noModules}</Box>
                 )}
                 {modulesList.length > 0 && (
                     <List disablePadding>
@@ -1118,8 +1118,8 @@ export default function PulsePage() {
             <br />
 
             {/* Memory Chart */}
-            <P3xrAccordion title={`${mon.memory || 'Memory'} (MB)`} accordionKey="monitor-chart-memory"
-                actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
+            <P3xrAccordion title={`${mon.memory} (MB)`} accordionKey="monitor-chart-memory"
+                actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export}
                     color="inherit" onClick={(e) => { e.stopPropagation(); exportChart(memChartRef, 'memory') }} />}>
                 <Box ref={memChartRef} sx={{ minHeight: 180, width: '100%', overflow: 'hidden' }} />
             </P3xrAccordion>
@@ -1127,8 +1127,8 @@ export default function PulsePage() {
             <br />
 
             {/* Ops/sec Chart */}
-            <P3xrAccordion title={mon.opsPerSec || 'Ops/sec'} accordionKey="monitor-chart-ops"
-                actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
+            <P3xrAccordion title={mon.opsPerSec} accordionKey="monitor-chart-ops"
+                actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export}
                     color="inherit" onClick={(e) => { e.stopPropagation(); exportChart(opsChartRef, 'ops') }} />}>
                 <Box ref={opsChartRef} sx={{ minHeight: 180, width: '100%', overflow: 'hidden' }} />
             </P3xrAccordion>
@@ -1136,8 +1136,8 @@ export default function PulsePage() {
             <br />
 
             {/* Clients Chart */}
-            <P3xrAccordion title={mon.clients || 'Clients'} accordionKey="monitor-chart-clients"
-                actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
+            <P3xrAccordion title={mon.clients} accordionKey="monitor-chart-clients"
+                actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export}
                     color="inherit" onClick={(e) => { e.stopPropagation(); exportChart(cliChartRef, 'clients') }} />}>
                 <Box ref={cliChartRef} sx={{ minHeight: 180, width: '100%', overflow: 'hidden' }} />
             </P3xrAccordion>
@@ -1145,23 +1145,23 @@ export default function PulsePage() {
             <br />
 
             {/* Network I/O Chart */}
-            <P3xrAccordion title={`${mon.networkIo || 'Network I/O'} (KB/s)`} accordionKey="monitor-chart-network"
-                actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
+            <P3xrAccordion title={`${mon.networkIo} (KB/s)`} accordionKey="monitor-chart-network"
+                actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export}
                     color="inherit" onClick={(e) => { e.stopPropagation(); exportChart(netChartRef, 'network') }} />}>
                 <Box ref={netChartRef} sx={{ minHeight: 180, width: '100%', overflow: 'hidden' }} />
             </P3xrAccordion>
 
             {/* Slow Log */}
             <br />
-            <P3xrAccordion title={mon.slowLog || 'Slow Log'} accordionKey="monitor-slowlog"
+            <P3xrAccordion title={mon.slowLog} accordionKey="monitor-slowlog"
                 actions={<>
                     {!isReadonly && <P3xrButton icon={<DeleteSweep sx={{ fontSize: 18 }} />} label="Reset"
                         color="inherit" onClick={(e) => { e.stopPropagation(); resetSlowLog() }} />}
-                    <P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
+                    <P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export}
                         color="inherit" onClick={(e) => { e.stopPropagation(); exportSlowLog() }} />
                 </>}>
                 {current.slowlog.length === 0
-                    ? <Box sx={{ p: 2, opacity: 0.6 }}>{mon.noSlowQueries || 'No slow queries recorded'}</Box>
+                    ? <Box sx={{ p: 2, opacity: 0.6 }}>{mon.noSlowQueries}</Box>
                     : <List disablePadding>
                         {current.slowlog.map(entry => (
                             <Box key={entry.id}>
@@ -1184,20 +1184,20 @@ export default function PulsePage() {
 
             {/* Client List */}
             <br />
-            <P3xrAccordion title={mon.clientList || 'Client List'} accordionKey="monitor-clients-list"
+            <P3xrAccordion title={mon.clientList} accordionKey="monitor-clients-list"
                 actions={<>
                     <P3xrButton icon={autoRefreshClients ? <CheckBox sx={{ fontSize: 18 }} /> : <CheckBoxOutlineBlank sx={{ fontSize: 18 }} />}
-                        label={strings?.label?.autoRefresh || 'Auto'} color="inherit"
+                        label={strings?.label?.autoRefresh} color="inherit"
                         onClick={(e) => { e.stopPropagation(); toggleAutoClients() }} />
                     {!autoRefreshClients && (
-                        <P3xrButton icon={<Refresh sx={{ fontSize: 18 }} />} label={strings?.intention?.refresh || 'Refresh'}
+                        <P3xrButton icon={<Refresh sx={{ fontSize: 18 }} />} label={strings?.intention?.refresh}
                             color="inherit" onClick={(e) => { e.stopPropagation(); loadClientList() }} />
                     )}
-                    <P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
+                    <P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export}
                         color="inherit" onClick={(e) => { e.stopPropagation(); exportClientList() }} />
                 </>}>
                 {clientList.length === 0 && (
-                    <Box sx={{ p: 2, opacity: 0.5 }}>{clientListLoaded ? (mon.noClients || 'No clients') : (strings?.label?.loading || 'Loading...')}</Box>
+                    <Box sx={{ p: 2, opacity: 0.5 }}>{clientListLoaded ? (mon.noClients) : (strings?.label?.loading)}</Box>
                 )}
                 {clientList.length > 0 && (
                     <List disablePadding>
@@ -1211,7 +1211,7 @@ export default function PulsePage() {
                                             db{client.db} {'\u00B7'} {client.cmd} {'\u00B7'} {client.idle}s
                                         </Box>
                                         {!isReadonly && (
-                                            <Tooltip title={mon.killClient || 'Kill client'}>
+                                            <Tooltip title={mon.killClient}>
                                                 <Close sx={{ fontSize: 18, width: 18, height: 18, cursor: 'pointer', color: 'error.main', '&:hover': { opacity: 1 } }}
                                                     onClick={() => killClient(client.id)} />
                                             </Tooltip>
@@ -1227,20 +1227,20 @@ export default function PulsePage() {
 
             {/* Top Keys by Memory */}
             <br />
-            <P3xrAccordion title={mon.topKeys || 'Top Keys by Memory'} accordionKey="monitor-top-keys"
+            <P3xrAccordion title={mon.topKeys} accordionKey="monitor-top-keys"
                 actions={<>
                     <P3xrButton icon={autoRefreshTopKeys ? <CheckBox sx={{ fontSize: 18 }} /> : <CheckBoxOutlineBlank sx={{ fontSize: 18 }} />}
-                        label={strings?.label?.autoRefresh || 'Auto'} color="inherit"
+                        label={strings?.label?.autoRefresh} color="inherit"
                         onClick={(e) => { e.stopPropagation(); toggleAutoTopKeys() }} />
                     {!autoRefreshTopKeys && (
-                        <P3xrButton icon={<Refresh sx={{ fontSize: 18 }} />} label={strings?.intention?.refresh || 'Refresh'}
+                        <P3xrButton icon={<Refresh sx={{ fontSize: 18 }} />} label={strings?.intention?.refresh}
                             color="inherit" onClick={(e) => { e.stopPropagation(); loadTopKeys() }} />
                     )}
-                    <P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
+                    <P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export}
                         color="inherit" onClick={(e) => { e.stopPropagation(); exportTopKeysFile() }} />
                 </>}>
                 {topKeys.length === 0 && (
-                    <Box sx={{ p: 2, opacity: 0.5 }}>{topKeysLoaded ? (mon.noKeys || 'No keys') : (strings?.label?.loading || 'Loading...')}</Box>
+                    <Box sx={{ p: 2, opacity: 0.5 }}>{topKeysLoaded ? (mon.noKeys) : (strings?.label?.loading)}</Box>
                 )}
                 {topKeys.length > 0 && (
                     <List disablePadding>
@@ -1265,7 +1265,7 @@ export default function PulsePage() {
             {/* Cluster Slot Stats (cluster + 8.2+ only) */}
             {isCluster && rv.isAtLeast(8, 2) && (<>
                 <br />
-                <P3xrAccordion title={mon.slotStats || 'Cluster Slot Stats'} accordionKey="monitor-slot-stats"
+                <P3xrAccordion title={mon.slotStats} accordionKey="monitor-slot-stats"
                     actions={<>
                         <P3xrButton icon={<Refresh fontSize="small" />} label={strings?.intention?.refresh} onClick={e => { e.stopPropagation(); loadSlotStats() }} />
                     </>}>
@@ -1278,7 +1278,7 @@ export default function PulsePage() {
                         </select>
                     </Box>
                     {slotStats.length === 0 && (
-                        <Box sx={{ p: 2, opacity: 0.5 }}>{slotStatsLoaded ? 'No slot data' : (strings?.label?.loading || 'Loading...')}</Box>
+                        <Box sx={{ p: 2, opacity: 0.5 }}>{slotStatsLoaded ? 'No slot data' : (strings?.label?.loading)}</Box>
                     )}
                     {slotStats.length > 0 && (
                         <List disablePadding>
@@ -1308,19 +1308,19 @@ export default function PulsePage() {
             {/* Cluster Slot Map */}
             {isCluster && (<>
                 <br />
-                <P3xrAccordion title={mon.clusterSlotMap || 'Cluster Slot Map'} accordionKey="monitor-cluster-slots"
+                <P3xrAccordion title={mon.clusterSlotMap} accordionKey="monitor-cluster-slots"
                     actions={<>
                         <P3xrButton icon={autoRefreshShards ? <CheckBox sx={{ fontSize: 18 }} /> : <CheckBoxOutlineBlank sx={{ fontSize: 18 }} />}
-                            label={strings?.label?.autoRefresh || 'Auto'} color="inherit"
+                            label={strings?.label?.autoRefresh} color="inherit"
                             onClick={(e) => { e.stopPropagation(); toggleAutoRefreshShards() }} />
                         {!autoRefreshShards && <P3xrButton icon={<Refresh sx={{ fontSize: 18 }} />}
-                            label={strings?.intention?.refresh || 'Refresh'} color="inherit"
+                            label={strings?.intention?.refresh} color="inherit"
                             onClick={(e) => { e.stopPropagation(); loadClusterShards() }} />}
-                        <P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
+                        <P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export}
                             color="inherit" onClick={(e) => { e.stopPropagation(); exportClusterSlots() }} />
                     </>}>
                     {!clusterShards
-                        ? <Box sx={{ p: 2, opacity: 0.6 }}>{mon.noClusterData || 'No cluster data available'}</Box>
+                        ? <Box sx={{ p: 2, opacity: 0.6 }}>{mon.noClusterData}</Box>
                         : <>
                             <List disablePadding>
                                 {clusterShards.map(shard => (

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import {
     Button, IconButton, Tooltip, TextField, useMediaQuery,
-    InputAdornment,
+    InputAdornment, Box,
 } from '@mui/material'
 import { Done, Cancel, Visibility, VisibilityOff, Person, Lock, Shield } from '@mui/icons-material'
 import { useCommonStore } from '../stores/common.store'
@@ -38,7 +38,7 @@ export default function AskAuthorizationDialog() {
         <P3xrDialog
             open
             onClose={handleCancel}
-            title={<><Shield sx={{ mr: 1, verticalAlign: 'middle', fontSize: 20 }} />{strings?.label?.askAuth || 'Authorization'}</>}
+            title={<><Shield sx={{ mr: 1, verticalAlign: 'middle', fontSize: 20 }} />{strings?.label?.askAuth}</>}
             width="400px"
             actions={
                 <>
@@ -55,10 +55,10 @@ export default function AskAuthorizationDialog() {
                     )}
                     {isWide ? (
                         <Button variant="contained" color="primary" onClick={handleOk}>
-                            <Done fontSize="small" /><span style={{ marginLeft: 3 }}>{strings?.intention?.ok || 'OK'}</span>
+                            <Done fontSize="small" /><span style={{ marginLeft: 3 }}>{strings?.intention?.ok}</span>
                         </Button>
                     ) : (
-                        <Tooltip title={strings?.intention?.ok || 'OK'} placement="top">
+                        <Tooltip title={strings?.intention?.ok} placement="top">
                             <IconButton color="primary" onClick={handleOk} sx={{ borderRadius: '4px' }}>
                                 <Done fontSize="small" />
                             </IconButton>
@@ -67,9 +67,10 @@ export default function AskAuthorizationDialog() {
                 </>
             }
         >
+            <Box sx={{ fontSize: 12, opacity: 0.7, mb: 0.5 }}>{strings?.label?.aclAuthHint}</Box>
             <TextField
                 autoFocus fullWidth margin="dense"
-                label={strings?.form?.connection?.label?.username || 'Username'}
+                label={strings?.form?.connection?.label?.username}
                 value={username}
                 onChange={e => setUsername(e.target.value)}
                 autoComplete="off"
@@ -84,7 +85,7 @@ export default function AskAuthorizationDialog() {
             />
             <TextField
                 fullWidth margin="dense"
-                label={strings?.form?.connection?.label?.password || 'Password'}
+                label={strings?.form?.connection?.label?.password}
                 type={pwVisible ? 'text' : 'password'}
                 value={password}
                 onChange={e => setPassword(e.target.value)}

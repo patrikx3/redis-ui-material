@@ -32,7 +32,7 @@ export default function InfoPage() {
     const shortcutsList = useMemo(() => getShortcutsWithDescriptions(), [strings])
 
     const isConnected = !!connection
-    const redisVersion = info?.server?.redis_version || '-'
+    const redisVersion = info?.server?.redis_version
     const moduleNames = (modules || []).map((m: any) => m.name)
 
     const languageList = useMemo(() => {

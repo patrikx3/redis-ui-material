@@ -20,7 +20,7 @@ import { RedisStateService } from '../services/redis-state.service';
     template: `
         <!-- Keyboard Shortcuts (Electron only) -->
         @if (isElectron) {
-            <p3xr-ng-accordion [title]="strings().label?.keyboardShortcuts || 'Keyboard Shortcuts'" accordionKey="info-shortcuts">
+            <p3xr-ng-accordion [title]="strings().label?.keyboardShortcuts" accordionKey="info-shortcuts">
                 <div content>
                     <mat-list>
                         @for (shortcut of shortcutsList; track shortcut.key) {
@@ -42,12 +42,12 @@ import { RedisStateService } from '../services/redis-state.service';
         }
 
         <!-- About -->
-        <p3xr-ng-accordion [title]="strings().label?.about || 'About'" accordionKey="info-about">
+        <p3xr-ng-accordion [title]="strings().label?.about" accordionKey="info-about">
             <div content>
                 <mat-list>
                     <mat-list-item>
                         <div class="p3xr-settings-pair-row">
-                            <div class="p3xr-settings-row-label">{{ strings().label?.version || 'Version' }}</div>
+                            <div class="p3xr-settings-row-label">{{ strings().label?.version }}</div>
                             <div class="p3xr-settings-row-value">{{ version }}</div>
                         </div>
                     </mat-list-item>
@@ -55,7 +55,7 @@ import { RedisStateService } from '../services/redis-state.service';
                     @if (isConnected) {
                         <mat-list-item>
                             <div class="p3xr-settings-pair-row">
-                                <div class="p3xr-settings-row-label">{{ strings().label?.redisVersion || 'Redis Version' }}</div>
+                                <div class="p3xr-settings-row-label">{{ strings().label?.redisVersion }}</div>
                                 <div class="p3xr-settings-row-value">{{ redisVersion }}</div>
                             </div>
                         </mat-list-item>
@@ -64,7 +64,7 @@ import { RedisStateService } from '../services/redis-state.service';
                     @if (isConnected && modules.length > 0) {
                         <mat-list-item>
                             <div class="p3xr-settings-pair-row">
-                                <div class="p3xr-settings-row-label">{{ strings().label?.modules || 'Modules' }}</div>
+                                <div class="p3xr-settings-row-label">{{ strings().label?.modules }}</div>
                                 <div class="p3xr-settings-row-value">{{ modules.join(', ') }}</div>
                             </div>
                         </mat-list-item>
@@ -81,7 +81,7 @@ import { RedisStateService } from '../services/redis-state.service';
                     <mat-divider></mat-divider>
                     <mat-list-item>
                         <div class="p3xr-settings-pair-row">
-                            <div class="p3xr-settings-row-label">{{ strings().title?.donate || 'Donate' }}</div>
+                            <div class="p3xr-settings-row-label">{{ strings().title?.donate }}</div>
                             <div class="p3xr-settings-row-value">
                                 <a href="https://www.paypal.me/patrikx3" target="_blank">PayPal</a>
                             </div>
@@ -90,7 +90,7 @@ import { RedisStateService } from '../services/redis-state.service';
                     <mat-divider></mat-divider>
                     <mat-list-item>
                         <div class="p3xr-settings-pair-row">
-                            <div class="p3xr-settings-row-label">{{ strings().intention?.githubChangelog || 'Changelog' }}</div>
+                            <div class="p3xr-settings-row-label">{{ strings().intention?.githubChangelog }}</div>
                             <div class="p3xr-settings-row-value">
                                 <a href="https://github.com/patrikx3/redis-ui/blob/master/change-log.md#change-log" target="_blank">change-log.md</a>
                             </div>
@@ -103,7 +103,7 @@ import { RedisStateService } from '../services/redis-state.service';
         <br />
 
         <!-- Supported Languages -->
-        <p3xr-ng-accordion [title]="strings().label?.supportedLanguages || 'Supported Languages (' + languageList.length + ')'" accordionKey="info-languages">
+        <p3xr-ng-accordion [title]="strings().label?.supportedLanguages + languageList.length + ')'" accordionKey="info-languages">
             <div content>
                 <mat-list>
                     @for (lang of languageList; track lang.code) {

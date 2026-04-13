@@ -4,6 +4,7 @@ import { useCommonStore } from './common.store'
 import { useRedisStateStore } from './redis-state.store'
 import { useSettingsStore } from './settings.store'
 import { useI18nStore } from './i18n.store'
+import { useOverlayStore } from './overlay.store'
 import { navigateTo } from './navigation.store'
 import { parseRedisInfo } from './redis-parser'
 
@@ -25,6 +26,66 @@ export function emitCommand(event: string, data?: any) {
 let lastRefreshAt = 0
 
 export const useMainCommandStore = defineStore('mainCommand', () => {
+    async function connect(conn: any) {
+        const cloned = JSON.parse(JSON.stringify(conn))
+        const settings = useSettingsStore()
+        const overlay = useOverlayStore()
+        const common = useCommonStore()
+        try {
+            const dbStorageKey = settings.getStorageKeyCurrentDatabase(cloned.id)
+            let db: string | undefined
+            try { db = localStorage.getItem(dbStorageKey) ?? undefined } catch {}
+
+            if (cloned.askAuth === true) {
+                try {
+                    const a = await common.askAuth()
+                    cloned.username = a.username || undefined
+                    cloned.password = a.password || undefined
+                } catch { return }
+            }
+
+            const i18n = useI18nStore()
+            overlay.show({ message: i18n.strings?.title?.connectingRedis })
+
+            const response = await request({
+                action: 'connection/connect',
+                payload: { connection: cloned, db },
+            })
+
+            const redisState = useRedisStateStore()
+            const databaseIndexes: number[] = []
+            let idx = 0
+            while (idx < response.databases) databaseIndexes.push(idx++)
+            const commands: string[] = []
+            Object.keys(response.commands ?? {}).forEach(k => commands.push(response.commands[k][0]))
+            commands.sort()
+            const modules = Array.isArray(response.modules) ? response.modules : []
+
+            redisState.page = 1
+            redisState.monitor = false
+            redisState.dbsize = response.dbsize
+            redisState.databaseIndexes = databaseIndexes
+            redisState.connection = cloned
+            redisState.commands = commands
+            redisState.commandsMeta = response.commandsMeta ?? {}
+            redisState.modules = modules
+            redisState.hasReJSON = modules.some((m: any) => m.name === 'ReJSON')
+            redisState.hasRediSearch = modules.some((m: any) => m.name === 'search')
+            redisState.hasTimeSeries = modules.some((m: any) => m.name === 'timeseries' || m.name === 'Timeseries')
+            redisState.hasBloom = modules.some((m: any) => m.name === 'bf')
+
+            common.loadRedisInfoResponse({ response })
+            try { localStorage.setItem(settings.connectInfoStorageKey, JSON.stringify(cloned)) } catch {}
+        } catch (error) {
+            const settings = useSettingsStore()
+            try { localStorage.removeItem(settings.connectInfoStorageKey) } catch {}
+            useRedisStateStore().connection = undefined
+            common.generalHandleError(error)
+        } finally {
+            overlay.hide()
+        }
+    }
+
     async function selectDatabase(dbIndex: number) {
         const redisState = useRedisStateStore()
         const settings = useSettingsStore()
@@ -146,6 +207,7 @@ export const useMainCommandStore = defineStore('mainCommand', () => {
     }
 
     return {
+        connect,
         selectDatabase,
         save,
         statistics,

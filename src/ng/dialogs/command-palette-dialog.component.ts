@@ -24,7 +24,7 @@ import { ShortcutsService, ShortcutDef } from '../services/shortcuts.service';
                 <input #searchInput matInput
                     [(ngModel)]="search"
                     (keydown)="onKeydown($event)"
-                    [placeholder]="strings().label?.commandPalette || 'Command Palette'"
+                    [placeholder]="strings().label?.commandPalette"
                     autocomplete="off" />
             </div>
             <div class="p3xr-command-palette-list">
@@ -38,7 +38,7 @@ import { ShortcutsService, ShortcutDef } from '../services/shortcuts.service';
                 }
                 @if (filtered.length === 0) {
                     <div class="p3xr-command-palette-empty">
-                        {{ strings().label?.noResults || 'No results' }}
+                        {{ strings().label?.noResults }}
                     </div>
                 }
             </div>

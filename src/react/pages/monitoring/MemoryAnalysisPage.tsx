@@ -226,29 +226,29 @@ export default function MemoryAnalysisPage() {
     )
 
     const doctorAccordion = (
-        <P3xrAccordion title={s.memoryDoctor || 'Memory Doctor'} accordionKey="analysis-doctor"
+        <P3xrAccordion title={s.memoryDoctor} accordionKey="analysis-doctor"
             actions={<>
                 <P3xrButton icon={autoRefreshDoctor ? <CheckBox sx={{ fontSize: 18 }} /> : <CheckBoxOutlineBlank sx={{ fontSize: 18 }} />}
-                    label={strings?.label?.autoRefresh || 'Auto'} color="inherit"
+                    label={strings?.label?.autoRefresh} color="inherit"
                     onClick={(e) => { e.stopPropagation(); toggleAutoDoctor() }} />
                 {!autoRefreshDoctor && <P3xrButton icon={doctorLoading ? <HourglassEmpty sx={{ fontSize: 18 }} /> : <Refresh sx={{ fontSize: 18 }} />}
-                    label={doctorLoading ? (strings?.label?.loading || 'Loading...') : (strings?.intention?.refresh || 'Refresh')}
+                    label={doctorLoading ? strings?.label?.loading : strings?.intention?.refresh}
                     color="inherit" disabled={doctorLoading} onClick={(e) => { e.stopPropagation(); runDoctor() }} />}
-                <P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
+                <P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export}
                     color="inherit" onClick={(e) => { e.stopPropagation(); if (doctorText) downloadText(doctorText, `${connName}-memory-doctor.txt`) }} />
             </>}>
             {!doctorText
-                ? <Box sx={{ p: 2, opacity: 0.6 }}>{s.doctorNoData || 'Click Refresh to run Memory Doctor diagnostics.'}</Box>
+                ? <Box sx={{ p: 2, opacity: 0.6 }}>{s.doctorNoData}</Box>
                 : <Box component="pre" sx={{ whiteSpace: 'pre-wrap', fontFamily: "'Roboto Mono', monospace", fontSize: 13, p: 2, m: 0 }}>{doctorText}</Box>
             }
         </P3xrAccordion>
     )
 
     if (loading && !data) {
-        return <Box>{doctorAccordion}<Box sx={{ mt: 2 }} /><Box sx={{ display: 'flex', alignItems: 'center', gap: 1, p: 4, opacity: 0.5 }}><HourglassEmpty /> {s.running || 'Analyzing...'}</Box></Box>
+        return <Box>{doctorAccordion}<Box sx={{ mt: 2 }} /><Box sx={{ display: 'flex', alignItems: 'center', gap: 1, p: 4, opacity: 0.5 }}><HourglassEmpty /> {s.running}</Box></Box>
     }
     if (!loading && !data) {
-        return <Box>{doctorAccordion}<Box sx={{ mt: 2 }} /><Box sx={{ display: 'flex', alignItems: 'center', gap: 1, p: 4, opacity: 0.5 }}><Analytics /> {s.noData || 'No data. Click Run Analysis to start.'}</Box></Box>
+        return <Box>{doctorAccordion}<Box sx={{ mt: 2 }} /><Box sx={{ display: 'flex', alignItems: 'center', gap: 1, p: 4, opacity: 0.5 }}><Analytics /> {s.noData}</Box></Box>
     }
     if (!data) return null
 
@@ -260,22 +260,22 @@ export default function MemoryAnalysisPage() {
             {doctorAccordion}
             <Box sx={{ mt: 2 }} />
             {/* Controls */}
-            <P3xrAccordion title={s.title || 'Memory Analysis'} accordionKey="analysis-controls"
+            <P3xrAccordion title={s.title} accordionKey="analysis-controls"
                 actions={<>
                     <P3xrButton icon={loading ? <HourglassEmpty sx={{ fontSize: 18 }} /> : <PlayArrow sx={{ fontSize: 18 }} />}
-                        label={loading ? (s.running || 'Analyzing...') : (s.runAnalysis || 'Run Analysis')}
+                        label={loading ? (s.running) : (s.runAnalysis)}
                         color="inherit" disabled={loading} onClick={(e) => { e.stopPropagation(); runAnalysis() }} />
-                    <P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
+                    <P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export}
                         color="inherit" onClick={(e) => { e.stopPropagation();
-                            downloadText([`${s.keysScanned || 'Keys Scanned'}: ${data.totalScanned} / ${data.dbSize}`,
-                                `${s.topN || 'Top N'}: ${topN}`, `${s.maxScanKeys || 'Max Scan Keys'}: ${maxScanKeys}`].join('\n'),
+                            downloadText([`${s.keysScanned}: ${data.totalScanned} / ${data.dbSize}`,
+                                `${s.topN}: ${topN}`, `${s.maxScanKeys}: ${maxScanKeys}`].join('\n'),
                                 `${connName}-analysis-overview.txt`) }} />
                 </>}>
                 <List disablePadding>
-                    <InfoRow label={s.keysScanned || 'Keys Scanned'} value={`${data.totalScanned} / ${data.dbSize}`} />
+                    <InfoRow label={s.keysScanned} value={`${data.totalScanned} / ${data.dbSize}`} />
                     <ListItem sx={{ px: 2, py: 1 }}>
                         <Box sx={{ display: 'flex', width: '100%', alignItems: 'center' }}>
-                            <Box sx={{ flex: 1 }}>{s.topN || 'Top N'}</Box>
+                            <Box sx={{ flex: 1 }}>{s.topN}</Box>
                             <TextField size="small" type="number" value={topN} onChange={e => setTopN(Number(e.target.value))}
                                 slotProps={{ htmlInput: { min: 5, max: 100 } }} sx={{ width: 80 }} />
                         </Box>
@@ -283,7 +283,7 @@ export default function MemoryAnalysisPage() {
                     <Divider />
                     <ListItem sx={{ px: 2, py: 1 }}>
                         <Box sx={{ display: 'flex', width: '100%', alignItems: 'center' }}>
-                            <Box sx={{ flex: 1 }}>{s.maxScanKeys || 'Max Scan Keys'}</Box>
+                            <Box sx={{ flex: 1 }}>{s.maxScanKeys}</Box>
                             <TextField size="small" type="number" value={maxScanKeys} onChange={e => setMaxScanKeys(Number(e.target.value))}
                                 slotProps={{ htmlInput: { min: 100, max: 100000, step: 1000 } }} sx={{ width: 100 }} />
                         </Box>
@@ -294,31 +294,31 @@ export default function MemoryAnalysisPage() {
             <br />
 
             {/* Memory Breakdown */}
-            <P3xrAccordion title={s.memoryBreakdown || 'Memory Breakdown'} accordionKey="analysis-memory-info"
-                actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
+            <P3xrAccordion title={s.memoryBreakdown} accordionKey="analysis-memory-info"
+                actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export}
                     color="inherit" onClick={(e) => { e.stopPropagation();
-                        downloadText([`${s.totalMemory || 'Total'}: ${m.usedHuman}`, `${s.rssMemory || 'RSS'}: ${m.rssHuman}`,
-                            `${s.peakMemory || 'Peak'}: ${m.peakHuman}`, `${s.overheadMemory || 'Overhead'}: ${formatBytes(m.overhead)}`,
-                            `${s.datasetMemory || 'Dataset'}: ${formatBytes(m.dataset)}`, `${s.luaMemory || 'Lua'}: ${formatBytes(m.lua)}`,
-                            `${s.fragmentation || 'Fragmentation'}: ${m.fragRatio}x`, `${s.allocator || 'Allocator'}: ${m.allocator}`].join('\n'),
+                        downloadText([`${s.totalMemory}: ${m.usedHuman}`, `${s.rssMemory}: ${m.rssHuman}`,
+                            `${s.peakMemory}: ${m.peakHuman}`, `${s.overheadMemory}: ${formatBytes(m.overhead)}`,
+                            `${s.datasetMemory}: ${formatBytes(m.dataset)}`, `${s.luaMemory}: ${formatBytes(m.lua)}`,
+                            `${s.fragmentation}: ${m.fragRatio}x`, `${s.allocator}: ${m.allocator}`].join('\n'),
                             `${connName}-memory-breakdown.txt`) }} />}>
                 <List disablePadding>
-                    <InfoRow label={s.totalMemory || 'Total Memory'} value={m.usedHuman} />
-                    <InfoRow label={s.rssMemory || 'RSS Memory'} value={m.rssHuman} />
-                    <InfoRow label={s.peakMemory || 'Peak Memory'} value={m.peakHuman} />
-                    <InfoRow label={s.overheadMemory || 'Overhead'} value={formatBytes(m.overhead)} />
-                    <InfoRow label={s.datasetMemory || 'Dataset'} value={formatBytes(m.dataset)} />
-                    <InfoRow label={s.luaMemory || 'Lua Memory'} value={formatBytes(m.lua)} />
-                    <InfoRow label={s.fragmentation || 'Fragmentation'} value={`${m.fragRatio}x`} />
-                    <InfoRow label={s.allocator || 'Allocator'} value={m.allocator} />
+                    <InfoRow label={s.totalMemory} value={m.usedHuman} />
+                    <InfoRow label={s.rssMemory} value={m.rssHuman} />
+                    <InfoRow label={s.peakMemory} value={m.peakHuman} />
+                    <InfoRow label={s.overheadMemory} value={formatBytes(m.overhead)} />
+                    <InfoRow label={s.datasetMemory} value={formatBytes(m.dataset)} />
+                    <InfoRow label={s.luaMemory} value={formatBytes(m.lua)} />
+                    <InfoRow label={s.fragmentation} value={`${m.fragRatio}x`} />
+                    <InfoRow label={s.allocator} value={m.allocator} />
                 </List>
             </P3xrAccordion>
 
             <br />
 
             {/* Type Distribution */}
-            <P3xrAccordion title={s.typeDistribution || 'Type Distribution'} accordionKey="analysis-type-dist"
-                actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
+            <P3xrAccordion title={s.typeDistribution} accordionKey="analysis-type-dist"
+                actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export}
                     color="inherit" onClick={(e) => { e.stopPropagation(); exportChart(typeChartRef, 'type-distribution') }} />}>
                 <Box ref={typeChartRef} sx={{ minHeight: 200, width: '100%' }} />
                 <List disablePadding>
@@ -342,8 +342,8 @@ export default function MemoryAnalysisPage() {
             <br />
 
             {/* Memory by Prefix */}
-            <P3xrAccordion title={s.prefixMemory || 'Memory by Prefix'} accordionKey="analysis-prefix-mem"
-                actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
+            <P3xrAccordion title={s.prefixMemory} accordionKey="analysis-prefix-mem"
+                actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export}
                     color="inherit" onClick={(e) => { e.stopPropagation(); exportChart(prefixChartRef, 'memory-by-prefix') }} />}>
                 <Box ref={prefixChartRef} sx={{ minHeight: 200, width: '100%' }} />
                 <List disablePadding>
@@ -368,15 +368,15 @@ export default function MemoryAnalysisPage() {
             <br />
 
             {/* Key Expiration Overview */}
-            <P3xrAccordion title={s.expirationOverview || 'Key Expiration'} accordionKey="analysis-expiration"
-                actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
+            <P3xrAccordion title={s.expirationOverview} accordionKey="analysis-expiration"
+                actions={<P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export}
                     color="inherit" onClick={(e) => { e.stopPropagation();
-                        downloadText([`${s.withTTL || 'With TTL'}: ${exp.withTTL}`, `${s.persistent || 'Persistent'}: ${exp.persistent}`,
-                            `${s.avgTTL || 'Average TTL'}: ${formatTTL(exp.avgTTL)}`].join('\n'), `${connName}-expiration.txt`) }} />}>
+                        downloadText([`${s.withTTL}: ${exp.withTTL}`, `${s.persistent}: ${exp.persistent}`,
+                            `${s.avgTTL}: ${formatTTL(exp.avgTTL)}`].join('\n'), `${connName}-expiration.txt`) }} />}>
                 <List disablePadding>
-                    <InfoRow label={s.withTTL || 'With TTL'} value={exp.withTTL} />
-                    <InfoRow label={s.persistent || 'Persistent'} value={exp.persistent} />
-                    <InfoRow label={s.avgTTL || 'Average TTL'} value={formatTTL(exp.avgTTL)} />
+                    <InfoRow label={s.withTTL} value={exp.withTTL} />
+                    <InfoRow label={s.persistent} value={exp.persistent} />
+                    <InfoRow label={s.avgTTL} value={formatTTL(exp.avgTTL)} />
                 </List>
             </P3xrAccordion>
 

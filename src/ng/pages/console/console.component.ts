@@ -311,7 +311,7 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
 
     private async handleAiQuery(prompt: string, originalInput: string): Promise<boolean> {
         if (prompt.length > 4096) {
-            this.common.toast(this.i18n.strings()?.error?.aiPromptTooLong || 'AI prompt too long (max 4096 characters)');
+            this.common.toast(this.i18n.strings()?.error?.aiPromptTooLong);
             return false;
         }
         this.aiLoading = true;
@@ -374,9 +374,9 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
             const errMsg = e.message || String(e);
             // Show user-friendly error for rate limits
             if (errMsg.includes('429') || errMsg.includes('rate_limit') || errMsg.includes('Rate limit')) {
-                this.common.toast(this.i18n.strings().page?.key?.label?.aiRateLimited || 'AI rate limit reached. Try again later or use your own Groq API key in Settings.');
+                this.common.toast(this.i18n.strings().page?.key?.label?.aiRateLimited);
             } else {
-                this.common.toast((this.i18n.strings().page?.key?.label?.aiError || 'AI query failed') + ': ' + errMsg);
+                this.common.toast((this.i18n.strings().page?.key?.label?.aiError) + ': ' + errMsg);
             }
             return false;
         } finally {

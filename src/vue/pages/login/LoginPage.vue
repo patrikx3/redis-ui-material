@@ -21,8 +21,8 @@ const ACCORDION_BG: Record<string, string> = {
     dark: '#9e9e9e', darkNeu: '#90a4ae', darkoBluo: '#3f51b5',
     matrix: '#76ff03',
 }
-const headerBg = computed(() => STRONG_BG[themeKey.value] || '#212121')
-const footerBg = computed(() => themeKey.value === 'matrix' ? '#0a2e0d' : (ACCORDION_BG[themeKey.value] || '#9e9e9e'))
+const headerBg = computed(() => STRONG_BG[themeKey.value])
+const footerBg = computed(() => themeKey.value === 'matrix' ? '#0a2e0d' : (ACCORDION_BG[themeKey.value]))
 
 const username = ref('')
 const password = ref('')
@@ -31,7 +31,7 @@ const loading = ref(false)
 const guiMenu = ref(false)
 
 const currentGui = (() => {
-    try { return localStorage.getItem('p3xr-frontend') || 'ng' } catch { return 'ng' }
+    try { return localStorage.getItem('p3xr-frontend') } catch { return 'ng' }
 })()
 
 async function handleLogin() {
@@ -80,7 +80,7 @@ import { switchGui } from '../../../core/gui-switch'
             <div class="p3xr-login-content">
                 <v-text-field
                     v-model="username" autofocus
-                    :label="str(strings?.form?.connection?.label?.username) || 'Username'"
+                    :label="str(strings?.form?.connection?.label?.username)"
                     autocomplete="username" density="comfortable" variant="outlined" hide-details class="mb-3"
                     @keydown.enter="handleLogin"
                 >
@@ -90,7 +90,7 @@ import { switchGui } from '../../../core/gui-switch'
                 </v-text-field>
                 <v-text-field
                     v-model="password"
-                    :label="str(strings?.form?.connection?.label?.password) || 'Password'"
+                    :label="str(strings?.form?.connection?.label?.password)"
                     :type="pwVisible ? 'text' : 'password'"
                     autocomplete="current-password" density="comfortable" variant="outlined" hide-details class="mb-3"
                     @keydown.enter="handleLogin"
@@ -105,7 +105,7 @@ import { switchGui } from '../../../core/gui-switch'
                     </template>
                 </v-text-field>
                 <div v-if="auth.loginError" class="p3xr-login-error">
-                    {{ strings?.confirm?.invalidCredentials || 'Invalid username or password.' }}
+                    {{ strings?.confirm?.invalidCredentials }}
                 </div>
             </div>
 
@@ -113,7 +113,7 @@ import { switchGui } from '../../../core/gui-switch'
             <div class="p3xr-login-footer" :style="{ backgroundColor: footerBg }">
                 <v-btn color="primary" variant="flat" :disabled="loading || !username || !password" @click="handleLogin">
                     <v-icon size="20" class="mr-1">mdi-login</v-icon>
-                    {{ strings?.intention?.ok || 'Login' }}
+                    {{ strings?.intention?.ok }}
                 </v-btn>
             </div>
         </div>

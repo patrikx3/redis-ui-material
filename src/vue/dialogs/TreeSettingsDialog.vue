@@ -122,7 +122,7 @@ const dbsize = computed(() => state.dbsize ?? 0)
 </script>
 
 <template>
-    <P3xrDialog v-if="open" :open="true" :title="strings?.form?.treeSettings?.label?.formName || 'Settings'" @close="emit('close')">
+    <P3xrDialog v-if="open" :open="true" :title="strings?.form?.treeSettings?.label?.formName" @close="emit('close')">
         <v-text-field v-model="model.treeSeparator" :label="strings?.form?.treeSettings?.field?.treeSeparator" variant="outlined" density="comfortable" hide-details class="mb-3" />
         <v-text-field v-model.number="model.pageCount" :label="strings?.form?.treeSettings?.field?.page" type="number" variant="outlined" density="comfortable"
             :error="!!errors.pageCount" :error-messages="errors.pageCount" :hint="!errors.pageCount ? strings?.form?.treeSettings?.error?.page : ''" persistent-hint
@@ -150,9 +150,9 @@ const dbsize = computed(() => state.dbsize ?? 0)
         <div class="p3xr-settings-switch-row"><v-switch v-model="model.searchStartsWith" :label="model.searchStartsWith ? strings?.form?.treeSettings?.label?.searchModeStartsWith : strings?.form?.treeSettings?.label?.searchModeIncludes" density="comfortable" hide-details /></div>
         <div class="p3xr-settings-switch-row"><v-switch v-model="model.jsonFormat" :label="model.jsonFormat ? strings?.form?.treeSettings?.label?.jsonFormatFourSpace : strings?.form?.treeSettings?.label?.jsonFormatTwoSpace" density="comfortable" hide-details /></div>
         <div class="p3xr-settings-switch-row"><v-switch v-model="model.animation" :label="model.animation ? strings?.form?.treeSettings?.label?.animation : strings?.form?.treeSettings?.label?.noAnimation" density="comfortable" hide-details /></div>
-        <div class="p3xr-settings-switch-row"><v-switch v-model="model.undoEnabled" :label="model.undoEnabled ? (strings?.form?.treeSettings?.label?.undoEnabled || 'Undo enabled') : (strings?.form?.treeSettings?.label?.undoDisabled || 'Undo disabled')" density="comfortable" hide-details /></div>
-        <div style="font-size: 12px; opacity: 0.7; margin-left: 50px; margin-top: -4px; margin-bottom: 4px;">{{ strings?.form?.treeSettings?.undoHint || 'Undo is available for string and JSON key types only' }}</div>
-        <div class="p3xr-settings-switch-row"><v-switch v-model="model.showDiffBeforeSave" :label="model.showDiffBeforeSave ? (strings?.form?.treeSettings?.label?.diffEnabled || 'Show diff before saving') : (strings?.form?.treeSettings?.label?.diffDisabled || 'Diff before save disabled')" density="comfortable" hide-details /></div>
+        <div class="p3xr-settings-switch-row"><v-switch v-model="model.undoEnabled" :label="model.undoEnabled ? strings?.form?.treeSettings?.label?.undoEnabled : strings?.form?.treeSettings?.label?.undoDisabled" density="comfortable" hide-details /></div>
+        <div style="font-size: 12px; opacity: 0.7; margin-left: 50px; margin-top: -4px; margin-bottom: 4px;">{{ strings?.form?.treeSettings?.undoHint }}</div>
+        <div class="p3xr-settings-switch-row"><v-switch v-model="model.showDiffBeforeSave" :label="model.showDiffBeforeSave ? strings?.form?.treeSettings?.label?.diffEnabled : strings?.form?.treeSettings?.label?.diffDisabled" density="comfortable" hide-details /></div>
 
         <template #actions>
             <v-btn variant="flat" color="warning" @click="emit('close')">

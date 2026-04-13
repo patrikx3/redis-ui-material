@@ -33,7 +33,7 @@ import { RedisStateService } from '../../services/redis-state.service';
                 @if (!isXs) {
                     <h2 class="p3xr-database-header-title">
                         <a (click)="goStatistics()" class="p3xr-database-header-link">
-                            {{ strings().intention?.main || 'P3X Redis UI' }}
+                            {{ strings().intention?.main }}
                         </a>
                     </h2>
                 }
@@ -43,7 +43,7 @@ import { RedisStateService } from '../../services/redis-state.service';
                             <span class="p3xr-database-header-db-label">DB:</span>
                             <mat-form-field class="p3xr-database-header-db-field" subscriptSizing="dynamic">
                                 <mat-select [value]="currentDatabase" (selectionChange)="selectDatabase($event.value)"
-                                    [attr.aria-label]="strings().form?.main?.label?.database || 'Database'"
+                                    [attr.aria-label]="strings().form?.main?.label?.database"
                                     panelClass="p3xr-database-db-select-container">
                                     <mat-select-trigger>
                                         <mat-icon class="p3xr-db-indicator">{{ hasKeys(currentDatabase) ? 'radio_button_checked' : 'radio_button_unchecked' }}</mat-icon>
@@ -64,11 +64,11 @@ import { RedisStateService } from '../../services/redis-state.service';
                         @if (isWide) {
                             <button mat-button (click)="save()">
                                 <mat-icon>save</mat-icon>
-                                <span>{{ strings().intention?.save || 'Save' }}</span>
+                                <span>{{ strings().intention?.save }}</span>
                             </button>
                         } @else {
                             <button mat-icon-button (click)="save()"
-                                [matTooltip]="strings().intention?.save || 'Save'"
+                                [matTooltip]="strings().intention?.save"
                                 matTooltipPosition="below">
                                 <mat-icon>save</mat-icon>
                             </button>
@@ -78,11 +78,11 @@ import { RedisStateService } from '../../services/redis-state.service';
                     @if (isWide) {
                         <button mat-button (click)="goStatistics()">
                             <mat-icon>show_chart</mat-icon>
-                            <span>{{ strings().intention?.statistics || 'Statistics' }}</span>
+                            <span>{{ strings().intention?.statistics }}</span>
                         </button>
                     } @else {
                         <button mat-icon-button (click)="goStatistics()"
-                            [matTooltip]="strings().intention?.statistics || 'Statistics'"
+                            [matTooltip]="strings().intention?.statistics"
                             matTooltipPosition="below">
                             <mat-icon>show_chart</mat-icon>
                         </button>
@@ -91,11 +91,11 @@ import { RedisStateService } from '../../services/redis-state.service';
                     @if (isWide) {
                         <button mat-button (click)="refresh()">
                             <mat-icon>refresh</mat-icon>
-                            <span>{{ strings().intention?.refresh || 'Refresh' }}</span>
+                            <span>{{ strings().intention?.refresh }}</span>
                         </button>
                     } @else {
                         <button mat-icon-button (click)="refresh()"
-                            [matTooltip]="strings().intention?.refresh || 'Refresh'"
+                            [matTooltip]="strings().intention?.refresh"
                             matTooltipPosition="below">
                             <mat-icon>refresh</mat-icon>
                         </button>

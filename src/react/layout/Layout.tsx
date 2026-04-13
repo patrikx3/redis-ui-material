@@ -42,9 +42,7 @@ export default function Layout() {
     const settings = useSettingsStore()
     const { generalHandleError } = useCommonStore()
     const overlay = useOverlayStore()
-    const { disconnect } = useMainCommandStore()
-
-    const { askAuth } = useCommonStore()
+    const { connect, disconnect } = useMainCommandStore()
 
     const { authChecked, authRequired, isAuthenticated, checkAuthStatus } = useAuthStore()
     const showLogin = authChecked && authRequired && !isAuthenticated
@@ -57,72 +55,6 @@ export default function Layout() {
             }
         })
     }, [checkAuthStatus])
-
-    // Connect to a Redis connection (exact port of Angular LayoutComponent.connect)
-    const connect = async (conn: any) => {
-        const cloned = structuredClone(conn)
-        try {
-            const dbStorageKey = settings.getStorageKeyCurrentDatabase(cloned.id)
-            let db: string | undefined
-            try { db = localStorage.getItem(dbStorageKey) ?? undefined } catch {}
-
-            if (cloned.askAuth === true) {
-                try {
-                    const auth = await askAuth()
-                    cloned.username = auth.username || undefined
-                    cloned.password = auth.password || undefined
-                } catch {
-                    return // user cancelled
-                }
-            }
-
-            overlay.show({ message: strings?.title?.connectingRedis })
-
-            const response = await request({
-                action: 'connection/connect',
-                payload: { connection: cloned, db },
-            })
-
-            // Update state
-            const databaseIndexes: number[] = []
-            let i = 0
-            while (i < response.databases) databaseIndexes.push(i++)
-
-            const commands: string[] = []
-            Object.keys(response.commands ?? {}).forEach(k => {
-                commands.push(response.commands[k][0])
-            })
-            commands.sort()
-
-            const modules = Array.isArray(response.modules) ? response.modules : []
-
-            useRedisStateStore.setState({
-                page: 1,
-                monitor: false,
-                dbsize: response.dbsize,
-                databaseIndexes,
-                connection: cloned,
-                commands,
-                commandsMeta: response.commandsMeta ?? {},
-                modules,
-                hasReJSON: modules.some((m: any) => m.name === 'ReJSON'),
-                hasRediSearch: modules.some((m: any) => m.name === 'search'),
-                hasTimeSeries: modules.some((m: any) => m.name === 'timeseries' || m.name === 'Timeseries'),
-                hasBloom: modules.some((m: any) => m.name === 'bf'),
-            })
-
-            useCommonStore.getState().loadRedisInfoResponse({ response })
-
-            // Save last connection to localStorage
-            try { localStorage.setItem(settings.connectInfoStorageKey, JSON.stringify(cloned)) } catch {}
-        } catch (error) {
-            try { localStorage.removeItem(settings.connectInfoStorageKey) } catch {}
-            useRedisStateStore.setState({ connection: undefined })
-            generalHandleError(error)
-        } finally {
-            overlay.hide()
-        }
-    }
 
     // Responsive breakpoints matching Angular layout
     const isWide = useMediaQuery('(min-width: 720px)')
@@ -348,11 +280,11 @@ export default function Layout() {
     useEffect(() => {
         const unsubDisconnect = onSocketEvent('disconnect', () => {
             if (showLogin) return
-            overlay.show({ message: strings?.status?.socketDisconnected || 'Disconnected' })
+            overlay.show({ message: strings?.status?.socketDisconnected })
         })
         const unsubError = onSocketEvent('socket-error', () => {
             if (showLogin) return
-            overlay.show({ message: strings?.status?.socketError || 'Connection error' })
+            overlay.show({ message: strings?.status?.socketError })
         })
         return () => { unsubDisconnect(); unsubError() }
     }, [strings, showLogin])
@@ -450,11 +382,11 @@ export default function Layout() {
 
                     {/* Logout button — rightmost in header */}
                     {authRequired && isAuthenticated && (
-                        <Tooltip title={strings?.intention?.logout || 'Logout'} placement="bottom">
+                        <Tooltip title={strings?.intention?.logout} placement="bottom">
                             <IconButton color="inherit" onClick={async () => {
                                 try {
                                     await useCommonStore.getState().confirm({
-                                        message: strings?.intention?.logout || 'Logout',
+                                        message: strings?.intention?.logout,
                                     })
                                     useAuthStore.getState().logout()
                                 } catch {}
@@ -611,7 +543,7 @@ export default function Layout() {
                         <MenuItem selected={isLangAuto}
                             sx={{ borderRadius: 0, '&:hover': { borderRadius: 0 }, '&.Mui-selected': { borderRadius: 0 } }}
                             onClick={() => { setLanguage('auto'); setLanguageAnchor(null) }}>
-                            {strings?.label?.languageAuto || 'Auto (system)'}
+                            {strings?.label?.languageAuto}
                         </MenuItem>
                         <Divider />
                         {filteredLanguages.map((key, i) => (

@@ -27,16 +27,16 @@ export interface JsonViewDialogData {
         <mat-toolbar class="p3xr-dialog-toolbar p3xr-mat-layout-strong">
             <span mat-dialog-title class="p3xr-dialog-title p3xr-dialog-title-with-icon">
                 <mat-icon>account_tree</mat-icon>
-                <span>{{ strings().intention?.jsonViewShow || 'JSON View' }}</span>
+                <span>{{ strings().intention?.jsonViewShow }}</span>
             </span>
 
             @if (isJson) {
                 <button mat-icon-button (click)="expandAll()"
-                    [matTooltip]="strings().page?.treeControls?.expandAll || 'Expand All'">
+                    [matTooltip]="strings().page?.treeControls?.expandAll">
                     <mat-icon>keyboard_arrow_down</mat-icon>
                 </button>
                 <button mat-icon-button (click)="collapseAll()"
-                    [matTooltip]="strings().page?.treeControls?.collapseAll || 'Collapse All'">
+                    [matTooltip]="strings().page?.treeControls?.collapseAll">
                     <mat-icon>keyboard_arrow_up</mat-icon>
                 </button>
             }
@@ -50,18 +50,18 @@ export interface JsonViewDialogData {
             @if (isJson) {
                 <p3xr-json-tree
                     [data]="obj"
-                    [label]="strings().label?.tree || 'root'"
+                    [label]="strings().label?.tree"
                     [expanded]="treeExpanded">
                 </p3xr-json-tree>
             } @else {
-                <div>{{ strings().label?.jsonViewNotParsable || 'Not valid JSON' }}</div>
+                <div>{{ strings().label?.jsonViewNotParsable }}</div>
             }
         </mat-dialog-content>
 
         <mat-dialog-actions class="p3xr-dialog-actions">
             <button mat-raised-button class="btn-accent" type="button" (click)="close()">
                 <mat-icon>close</mat-icon>
-                {{ strings().intention?.close || 'Close' }}
+                {{ strings().intention?.close }}
             </button>
         </mat-dialog-actions>
     `,

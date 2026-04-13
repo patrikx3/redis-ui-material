@@ -107,7 +107,7 @@ export default function KeyNewOrSetDialog({ open, data, onClose }: Props) {
 
     useEffect(() => {
         if (!open || !data) return
-        const divider = settings.redisTreeDivider || ':'
+        const divider = settings.redisTreeDivider
         const m: KeyModel = {
             type: 'string', key: data.node?.key ? data.node.key + divider : '',
             value: '', score: '', streamTimestamp: '*', tsTimestamp: '*',
@@ -131,7 +131,7 @@ export default function KeyNewOrSetDialog({ open, data, onClose }: Props) {
 
     const copy = async () => {
         let value = model.value
-        if (model.type === 'timeseries') value = `TS.ADD ${model.key} ${model.tsTimestamp || '*'} ${model.value}`
+        if (model.type === 'timeseries') value = `TS.ADD ${model.key} ${model.tsTimestamp} ${model.value}`
         try { await navigator.clipboard.writeText(String(value)) } catch {}
         toast(strings?.status?.dataCopied)
     }
@@ -307,18 +307,18 @@ export default function KeyNewOrSetDialog({ open, data, onClose }: Props) {
             {model.type === 'bloom' && (
                 <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
                     <TextField margin="dense" type="number" slotProps={{ htmlInput: { step: 0.001 } }}
-                        label={strings?.form?.key?.field?.errorRate || 'Error rate'}
+                        label={strings?.form?.key?.field?.errorRate}
                         value={model.bloomErrorRate} onChange={e => set('bloomErrorRate', parseFloat(e.target.value))}
                         placeholder="0.01 = 1%" sx={{ flex: 1, minWidth: 140 }} />
                     <TextField margin="dense" type="number"
-                        label={strings?.form?.key?.field?.capacity || 'Capacity'}
+                        label={strings?.form?.key?.field?.capacity}
                         value={model.bloomCapacity} onChange={e => set('bloomCapacity', parseInt(e.target.value))}
                         sx={{ flex: 1, minWidth: 140 }} />
                 </Box>
             )}
             {model.type === 'cuckoo' && (
                 <TextField fullWidth margin="dense" type="number"
-                    label={strings?.form?.key?.field?.capacity || 'Capacity'}
+                    label={strings?.form?.key?.field?.capacity}
                     value={model.cuckooCapacity} onChange={e => set('cuckooCapacity', parseInt(e.target.value))} />
             )}
             {model.type === 'topk' && (
@@ -326,41 +326,41 @@ export default function KeyNewOrSetDialog({ open, data, onClose }: Props) {
                     <TextField margin="dense" type="number" label="Top K"
                         value={model.topkK} onChange={e => set('topkK', parseInt(e.target.value))}
                         sx={{ flex: 1, minWidth: 100 }} />
-                    <TextField margin="dense" type="number" label={strings?.form?.key?.field?.width || 'Width'}
+                    <TextField margin="dense" type="number" label={strings?.form?.key?.field?.width}
                         value={model.topkWidth} onChange={e => set('topkWidth', parseInt(e.target.value))}
                         sx={{ flex: 1, minWidth: 100 }} />
-                    <TextField margin="dense" type="number" label={strings?.form?.key?.field?.depth || 'Depth'}
+                    <TextField margin="dense" type="number" label={strings?.form?.key?.field?.depth}
                         value={model.topkDepth} onChange={e => set('topkDepth', parseInt(e.target.value))}
                         sx={{ flex: 1, minWidth: 100 }} />
                     <TextField margin="dense" type="number" slotProps={{ htmlInput: { step: 0.1 } }}
-                        label={strings?.form?.key?.field?.decay || 'Decay'}
+                        label={strings?.form?.key?.field?.decay}
                         value={model.topkDecay} onChange={e => set('topkDecay', parseFloat(e.target.value))}
                         sx={{ flex: 1, minWidth: 100 }} />
                 </Box>
             )}
             {model.type === 'cms' && (
                 <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                    <TextField margin="dense" type="number" label={strings?.form?.key?.field?.width || 'Width'}
+                    <TextField margin="dense" type="number" label={strings?.form?.key?.field?.width}
                         value={model.cmsWidth} onChange={e => set('cmsWidth', parseInt(e.target.value))}
                         sx={{ flex: 1, minWidth: 140 }} />
-                    <TextField margin="dense" type="number" label={strings?.form?.key?.field?.depth || 'Depth'}
+                    <TextField margin="dense" type="number" label={strings?.form?.key?.field?.depth}
                         value={model.cmsDepth} onChange={e => set('cmsDepth', parseInt(e.target.value))}
                         sx={{ flex: 1, minWidth: 140 }} />
                 </Box>
             )}
             {model.type === 'tdigest' && (
                 <TextField fullWidth margin="dense" type="number"
-                    label={strings?.form?.key?.field?.compression || 'Compression'}
+                    label={strings?.form?.key?.field?.compression}
                     value={model.tdigestCompression} onChange={e => set('tdigestCompression', parseInt(e.target.value))} />
             )}
             {model.type === 'vectorset' && (
                 <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
                     <TextField margin="dense"
-                        label={strings?.page?.key?.vectorset?.elementName || 'Element name'}
+                        label={strings?.page?.key?.vectorset?.elementName}
                         value={model.vectorElement} onChange={e => set('vectorElement', e.target.value)}
                         sx={{ flex: 1, minWidth: 200 }} />
                     <TextField margin="dense"
-                        label={strings?.page?.key?.vectorset?.vectorValues || 'Vector values'}
+                        label={strings?.page?.key?.vectorset?.vectorValues}
                         placeholder="0.1, 0.2, 0.3"
                         value={model.vectorValues} onChange={e => set('vectorValues', e.target.value)}
                         sx={{ flex: 1, minWidth: 200 }} />

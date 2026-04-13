@@ -97,10 +97,10 @@ async function handleAiQuery(prompt: string) {
             action: 'ai/redis-query',
             payload: { prompt, context: { indexes: indexes.value, schema: indexInfo.value } },
         })
-        query.value = resp.command || '*'
+        query.value = resp.command
         if (resp.explanation) common.toast(resp.explanation)
         offset.value = 0
-        const sr = await request({ action: 'search/query', payload: { index: selectedIndex.value, query: resp.command || '*', offset: 0, limit } })
+        const sr = await request({ action: 'search/query', payload: { index: selectedIndex.value, query: resp.command, offset: 0, limit } })
         total.value = sr.data.total; results.value = sr.data.docs; searchDone.value = true
         await loadIndexInfo()
     } catch (e) { common.generalHandleError(e) }
@@ -135,9 +135,9 @@ function pageAction(action: string) {
 async function dropIndex() {
     if (!selectedIndex.value) return
     try {
-        await common.confirm({ message: strings.value?.confirm?.dropIndex || 'Are you sure to drop this index?' })
+        await common.confirm({ message: strings.value?.confirm?.dropIndex })
         await request({ action: 'search/index-drop', payload: { index: selectedIndex.value } })
-        common.toast(strings.value?.status?.indexDropped || 'Index dropped')
+        common.toast(strings.value?.status?.indexDropped)
         selectedIndex.value = ''; results.value = []; total.value = 0; searchDone.value = false; indexInfo.value = null
         await loadIndexes()
     } catch (e: any) { if (e !== undefined) common.generalHandleError(e) }
@@ -147,7 +147,7 @@ function addField() { newIndexFields.value.push({ name: '', type: 'TEXT', sortab
 
 async function confirmRemoveField(index: number) {
     try {
-        await common.confirm({ message: (strings.value?.intention?.delete || 'Delete') + '?' })
+        await common.confirm({ message: strings.value?.intention?.delete + '?' })
         newIndexFields.value.splice(index, 1)
     } catch (e: any) { if (e !== undefined) common.generalHandleError(e) }
 }
@@ -161,7 +161,7 @@ async function createIndex() {
             action: 'search/index-create',
             payload: { name: newIndexName.value.trim(), prefix: newIndexPrefix.value.trim() || undefined, schema },
         })
-        common.toast(strings.value?.status?.indexCreated || 'Index created')
+        common.toast(strings.value?.status?.indexCreated)
         newIndexName.value = ''; newIndexPrefix.value = ''
         newIndexFields.value = [{ name: '', type: 'TEXT', sortable: false }]
         await loadIndexes()
@@ -192,14 +192,14 @@ const supportsHybrid = computed(() => {
 <template>
     <div>
         <!-- Search Query -->
-        <P3xrAccordion :title="s.title || 'Search'" accordion-key="search-query">
+        <P3xrAccordion :title="s.title" accordion-key="search-query">
             <div style="padding: 16px;">
-                <div v-if="indexes.length === 0" style="opacity: 0.5;">{{ s.noIndex || 'No indexes found' }}</div>
+                <div v-if="indexes.length === 0" style="opacity: 0.5;">{{ s.noIndex }}</div>
                 <template v-if="indexes.length > 0">
                     <div style="display: flex; align-items: center; gap: 8px;">
-                        <v-select v-model="selectedIndex" :items="indexes" :label="s.index || 'Index'"
+                        <v-select v-model="selectedIndex" :items="indexes" :label="s.index"
                             density="compact" variant="outlined" hide-details @update:model-value="onIndexChange" />
-                        <v-tooltip v-if="!isReadonly && selectedIndex" :text="s.dropIndex || 'Drop Index'" location="top">
+                        <v-tooltip v-if="!isReadonly && selectedIndex" :text="s.dropIndex" location="top">
                             <template #activator="{ props: tp }">
                                 <v-btn v-bind="tp" color="error" variant="flat"
                                     style="min-width: 40px; width: 40px; height: 40px; padding: 0; border-radius: 4px;"
@@ -209,18 +209,18 @@ const supportsHybrid = computed(() => {
                             </template>
                         </v-tooltip>
                     </div>
-                    <v-text-field v-model="query" :label="s.query || 'Query'" density="compact" variant="outlined"
+                    <v-text-field v-model="query" :label="s.query" density="compact" variant="outlined"
                         hide-details :disabled="aiLoading" style="margin-top: 8px;"
                         @keydown.enter="offset = 0; handleSearchEnter()" />
 
                     <!-- Hybrid search (Redis 8.4+) -->
                     <template v-if="supportsHybrid">
-                        <v-switch v-model="hybridMode" :label="s.hybridMode || 'Hybrid Search (FT.HYBRID)'"
+                        <v-switch v-model="hybridMode" :label="s.hybridMode"
                             color="primary" style="margin-top: 8px;" />
                         <div v-if="hybridMode" style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px;">
-                            <v-text-field v-model="vectorField" :label="s.vectorField || 'Vector Field'" placeholder="embedding"
+                            <v-text-field v-model="vectorField" :label="s.vectorField" placeholder="embedding"
                                 density="compact" variant="outlined" hide-details style="flex: 1; min-width: 150px;" />
-                            <v-text-field v-model="vectorValues" :label="s.vectorValues || 'Vector Values'" placeholder="0.1, 0.2, 0.3, ..."
+                            <v-text-field v-model="vectorValues" :label="s.vectorValues" placeholder="0.1, 0.2, 0.3, ..."
                                 density="compact" variant="outlined" hide-details style="flex: 2; min-width: 200px;" />
                             <v-text-field v-model.number="vectorCount" label="Count" type="number"
                                 density="compact" variant="outlined" hide-details style="width: 80px; flex: none;" />
@@ -231,9 +231,9 @@ const supportsHybrid = computed(() => {
                         <v-btn v-if="isGtSm" color="primary" variant="flat" size="small" :disabled="aiLoading"
                             style="gap: 3px;" @click="offset = 0; handleSearchEnter()">
                             <v-icon size="small">mdi-magnify</v-icon>
-                            <span>{{ aiLoading ? (strings?.label?.aiTranslating || 'Translating...') : (s.title || 'Search') }}</span>
+                            <span>{{ aiLoading ? strings?.label?.aiTranslating : s.title }}</span>
                         </v-btn>
-                        <v-tooltip v-else :text="s.title || 'Search'" location="top">
+                        <v-tooltip v-else :text="s.title" location="top">
                             <template #activator="{ props: tp }">
                                 <v-btn v-bind="tp" color="primary" variant="flat" :disabled="aiLoading"
                                     style="min-width: 40px; width: 40px; height: 40px; padding: 0; border-radius: 4px;"
@@ -250,15 +250,15 @@ const supportsHybrid = computed(() => {
         <!-- Results - empty -->
         <template v-if="searchDone && total === 0">
             <div style="margin-top: 8px;" />
-            <P3xrAccordion :title="`${s.results || 'Results'} (0)`" accordion-key="search-results">
-                <div style="padding: 16px; opacity: 0.5;">{{ strings?.label?.noResults || 'No results' }}</div>
+            <P3xrAccordion :title="`${s.results} (0)`" accordion-key="search-results">
+                <div style="padding: 16px; opacity: 0.5;">{{ strings?.label?.noResults }}</div>
             </P3xrAccordion>
         </template>
 
         <!-- Results - with data -->
         <template v-if="results.length > 0 || total > 0">
             <div style="margin-top: 8px;" />
-            <P3xrAccordion :title="`${s.results || 'Results'} (${total})`" accordion-key="search-results">
+            <P3xrAccordion :title="`${s.results} (${total})`" accordion-key="search-results">
                 <template v-if="pages > 1" #actions>
                     <P3xrButton icon="mdi-skip-previous" label="" color="inherit" @click.stop="pageAction('first')" />
                     <P3xrButton icon="mdi-chevron-left" label="" color="inherit" @click.stop="pageAction('prev')" />
@@ -289,9 +289,9 @@ const supportsHybrid = computed(() => {
         <!-- Index Info -->
         <template v-if="selectedIndex && indexInfo">
             <div style="margin-top: 8px;" />
-            <P3xrAccordion :title="`${s.indexInfo || 'Index Info'}: ${selectedIndex}`" accordion-key="search-index-info">
+            <P3xrAccordion :title="`${s.indexInfo}: ${selectedIndex}`" accordion-key="search-index-info">
                 <template v-if="!isReadonly" #actions>
-                    <P3xrButton icon="mdi-delete" :label="s.dropIndex || 'Drop'" color="inherit" @click.stop="dropIndex" />
+                    <P3xrButton icon="mdi-delete" :label="s.dropIndex" color="inherit" @click.stop="dropIndex" />
                 </template>
                 <v-list density="compact" class="pa-0">
                     <template v-for="key in getDocKeys(indexInfo)" :key="key">
@@ -310,11 +310,11 @@ const supportsHybrid = computed(() => {
         <!-- Create Index -->
         <template v-if="!isReadonly">
             <div style="margin-top: 8px;" />
-            <P3xrAccordion :title="s.createIndex || 'Create Index'" accordion-key="search-create-index">
+            <P3xrAccordion :title="s.createIndex" accordion-key="search-create-index">
                 <div style="padding: 16px;">
-                    <v-text-field v-model="newIndexName" :label="s.indexName || 'Index Name'"
+                    <v-text-field v-model="newIndexName" :label="s.indexName"
                         density="compact" variant="outlined" hide-details />
-                    <v-text-field v-model="newIndexPrefix" :label="s.prefix || 'Key Prefix (optional)'" placeholder="e.g. doc:"
+                    <v-text-field v-model="newIndexPrefix" :label="s.prefix" placeholder="e.g. doc:"
                         density="compact" variant="outlined" hide-details style="margin-top: 8px;" />
 
                     <div style="display: flex; align-items: center; gap: 8px; margin: 8px 0;">
@@ -331,13 +331,13 @@ const supportsHybrid = computed(() => {
                     </div>
 
                     <div v-for="(field, i) in newIndexFields" :key="i" style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px; flex-wrap: wrap;">
-                        <v-text-field v-model="field.name" :label="s.fieldName || 'Field Name'"
+                        <v-text-field v-model="field.name" :label="s.fieldName"
                             density="compact" variant="outlined" hide-details style="flex: 1; min-width: 120px;" />
                         <div style="display: flex; align-items: center; gap: 8px; flex-shrink: 0;">
                             <v-select v-model="field.type" :items="['TEXT', 'NUMERIC', 'TAG', 'GEO', 'VECTOR']"
-                                :label="strings?.label?.type || 'Type'"
+                                :label="strings?.label?.type"
                                 density="compact" variant="outlined" hide-details style="width: 130px;" />
-                            <v-tooltip :text="strings?.intention?.delete || 'Delete'" location="top">
+                            <v-tooltip :text="strings?.intention?.delete" location="top">
                                 <template #activator="{ props: tp }">
                                     <v-btn v-bind="tp" color="error" variant="flat" :disabled="newIndexFields.length <= 1"
                                         style="min-width: 40px; width: 40px; height: 40px; padding: 0; border-radius: 4px;"
@@ -353,9 +353,9 @@ const supportsHybrid = computed(() => {
                         <v-btn v-if="isGtSm" color="secondary" variant="flat" size="small" :disabled="!newIndexName.trim()"
                             style="gap: 3px;" @click="createIndex">
                             <v-icon size="small">mdi-plus</v-icon>
-                            <span>{{ s.createIndex || 'Create Index' }}</span>
+                            <span>{{ s.createIndex }}</span>
                         </v-btn>
-                        <v-tooltip v-else :text="s.createIndex || 'Create Index'" location="top">
+                        <v-tooltip v-else :text="s.createIndex" location="top">
                             <template #activator="{ props: tp }">
                                 <v-btn v-bind="tp" color="secondary" variant="flat" :disabled="!newIndexName.trim()"
                                     style="min-width: 40px; width: 40px; height: 40px; padding: 0; border-radius: 4px;"

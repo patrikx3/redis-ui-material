@@ -92,11 +92,11 @@ export class CommonService {
         const isAlert = options.hasOwnProperty('disableCancel') && options.disableCancel;
 
         const data: ConfirmDialogData = {
-            title: options.title || (isAlert ? (strings.confirm?.info || 'Info') : (strings.confirm?.title || 'Confirm')),
+            title: options.title || (isAlert ? (strings.confirm?.info) : (strings.confirm?.title)),
             message: options.message,
             disableCancel: isAlert,
-            okButton: isAlert ? (strings.intention?.ok || 'OK') : (strings.intention?.sure || 'Sure'),
-            cancelButton: strings.intention?.cancel || 'Cancel',
+            okButton: isAlert ? (strings.intention?.ok) : (strings.intention?.sure),
+            cancelButton: strings.intention?.cancel,
         };
 
         const { ConfirmDialogComponent } = await import(
@@ -222,7 +222,7 @@ export class CommonService {
             }
 
             this.alert({
-                title: strings.title?.error || 'Error',
+                title: strings.title?.error,
                 message: '<pre>' + (error?.message || error) + '</pre>',
             });
             return false;

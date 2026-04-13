@@ -214,7 +214,7 @@ async function formatJson() {
 async function digest() {
     try {
         const res = await request({ action: 'key/string-digest', payload: { key: props.keyName } })
-        common.toast(res.digest || 'No digest')
+        common.toast(res.digest)
     } catch (e) {
         common.generalHandleError(e)
     }

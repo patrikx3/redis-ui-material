@@ -74,7 +74,7 @@ export class SocketService {
             if (this.disconnected || this.connectErrorWas) {
                 console.log('p3xr-socket RE-connected', this.ioClient.id);
                 const strings = this.i18n.strings();
-                this.notificationService.notify(strings?.title?.name || 'P3X Redis UI', strings?.status?.connectionRestored || 'Connection restored');
+                this.notificationService.notify(strings?.title?.name, strings?.status?.connectionRestored);
                 this.disconnected = false;
                 this.connectErrorWas = false;
                 location.reload();
@@ -129,13 +129,13 @@ export class SocketService {
                     const strings = this.i18n.strings();
                     const msg = strings?.status?.redisDisconnected?.(data) ?? 'Redis disconnected';
                     this.showToast(msg);
-                    this.notificationService.notify(strings?.title?.name || 'P3X Redis UI', msg);
+                    this.notificationService.notify(strings?.title?.name, msg);
                 } else if (data.status === 'code') {
                     const strings = this.i18n.strings();
                     const codes = strings?.code ?? {};
                     const msg = codes[data.code] ?? `unknown redis disconnect code: ${data.code}`;
                     this.showToast(msg);
-                    this.notificationService.notify(strings?.title?.name || 'P3X Redis UI', msg);
+                    this.notificationService.notify(strings?.title?.name, msg);
                 }
 
                 this.redisDisconnected$.next(data);

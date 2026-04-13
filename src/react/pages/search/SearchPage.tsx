@@ -105,11 +105,11 @@ export default function SearchPage() {
                 action: 'ai/redis-query',
                 payload: { prompt, context: { indexes, schema: indexInfo } },
             })
-            setQuery(resp.command || '*')
+            setQuery(resp.command)
             if (resp.explanation) toast(resp.explanation)
             setOffset(0)
             // Search with new query
-            const sr = await request({ action: 'search/query', payload: { index: selectedIndex, query: resp.command || '*', offset: 0, limit } })
+            const sr = await request({ action: 'search/query', payload: { index: selectedIndex, query: resp.command, offset: 0, limit } })
             setTotal(sr.data.total); setResults(sr.data.docs); setSearchDone(true)
             await loadIndexInfo()
         } catch (e) { generalHandleError(e) }
@@ -144,9 +144,9 @@ export default function SearchPage() {
     const dropIndex = useCallback(async () => {
         if (!selectedIndex) return
         try {
-            await confirm({ message: strings?.confirm?.dropIndex || 'Are you sure to drop this index?' })
+            await confirm({ message: strings?.confirm?.dropIndex })
             await request({ action: 'search/index-drop', payload: { index: selectedIndex } })
-            toast(strings?.status?.indexDropped || 'Index dropped')
+            toast(strings?.status?.indexDropped)
             setSelectedIndex(''); setResults([]); setTotal(0); setSearchDone(false); setIndexInfo(null)
             await loadIndexes()
         } catch (e: any) { if (e !== undefined) generalHandleError(e) }
@@ -156,7 +156,7 @@ export default function SearchPage() {
 
     const confirmRemoveField = useCallback(async (index: number) => {
         try {
-            await confirm({ message: (strings?.intention?.delete || 'Delete') + '?' })
+            await confirm({ message: (strings?.intention?.delete) + '?' })
             setNewIndexFields(f => f.filter((_, i) => i !== index))
         } catch (e: any) { if (e !== undefined) generalHandleError(e) }
     }, [strings, confirm, generalHandleError])
@@ -170,7 +170,7 @@ export default function SearchPage() {
                 action: 'search/index-create',
                 payload: { name: newIndexName.trim(), prefix: newIndexPrefix.trim() || undefined, schema },
             })
-            toast(strings?.status?.indexCreated || 'Index created')
+            toast(strings?.status?.indexCreated)
             setNewIndexName(''); setNewIndexPrefix('')
             setNewIndexFields([{ name: '', type: 'TEXT', sortable: false }])
             await loadIndexes()
@@ -222,23 +222,23 @@ export default function SearchPage() {
     return (
         <Box>
             {/* Search Query */}
-            <P3xrAccordion title={s.title || 'Search'} accordionKey="search-query">
+            <P3xrAccordion title={s.title} accordionKey="search-query">
                 <Box sx={{ p: 2 }}>
                     {indexes.length === 0 && (
-                        <Box sx={{ opacity: 0.5 }}>{s.noIndex || 'No indexes found'}</Box>
+                        <Box sx={{ opacity: 0.5 }}>{s.noIndex}</Box>
                     )}
                     {indexes.length > 0 && (
                         <>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                                 <FormControl fullWidth size="small">
-                                    <InputLabel>{s.index || 'Index'}</InputLabel>
-                                    <Select value={selectedIndex} label={s.index || 'Index'}
+                                    <InputLabel>{s.index}</InputLabel>
+                                    <Select value={selectedIndex} label={s.index}
                                         onChange={e => onIndexChange(e.target.value)}>
                                         {indexes.map(idx => <MenuItem key={idx} value={idx}>{idx}</MenuItem>)}
                                     </Select>
                                 </FormControl>
                                 {!isReadonly && selectedIndex && (
-                                    <Tooltip title={s.dropIndex || 'Drop Index'}>
+                                    <Tooltip title={s.dropIndex}>
                                         <Button variant="contained" color="error" onClick={dropIndex}
                                             sx={{ minWidth: 40, width: 40, height: 40, p: 0, borderRadius: '4px' }}>
                                             <Delete fontSize="small" />
@@ -246,7 +246,7 @@ export default function SearchPage() {
                                     </Tooltip>
                                 )}
                             </Box>
-                            <TextField fullWidth size="small" sx={{ mt: 1 }} label={s.query || 'Query'}
+                            <TextField fullWidth size="small" sx={{ mt: 1 }} label={s.query}
                                 value={query} onChange={e => setQuery(e.target.value)} disabled={aiLoading}
                                 onKeyDown={e => { if (e.key === 'Enter') { setOffset(0); handleSearchEnter() } }} />
 
@@ -254,14 +254,14 @@ export default function SearchPage() {
                                 <>
                                     <FormControlLabel sx={{ mt: 1 }}
                                         control={<Switch checked={hybridMode} onChange={(_, v) => setHybridMode(v)} color="primary" />}
-                                        label={s.hybridMode || 'Hybrid Search (FT.HYBRID)'} />
+                                        label={s.hybridMode} />
                                     {hybridMode && (
                                         <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mt: 1 }}>
                                             <TextField size="small" sx={{ flex: 1, minWidth: 150 }}
-                                                label={s.vectorField || 'Vector Field'} placeholder="embedding"
+                                                label={s.vectorField} placeholder="embedding"
                                                 value={vectorField} onChange={e => setVectorField(e.target.value)} />
                                             <TextField size="small" sx={{ flex: 2, minWidth: 200 }}
-                                                label={s.vectorValues || 'Vector Values'} placeholder="0.1, 0.2, 0.3, ..."
+                                                label={s.vectorValues} placeholder="0.1, 0.2, 0.3, ..."
                                                 value={vectorValues} onChange={e => setVectorValues(e.target.value)} />
                                             <TextField size="small" sx={{ width: 80 }} type="number"
                                                 label="Count"
@@ -273,7 +273,7 @@ export default function SearchPage() {
 
                             <Box sx={{ mt: 1, textAlign: 'right' }}>
                                 <ActionBtn icon={<Search fontSize="small" />}
-                                    label={aiLoading ? (strings?.label?.aiTranslating || 'Translating...') : (s.title || 'Search')}
+                                    label={aiLoading ? (strings?.label?.aiTranslating) : (s.title)}
                                     onClick={() => { setOffset(0); handleSearchEnter() }} disabled={aiLoading} />
                             </Box>
                         </>
@@ -285,8 +285,8 @@ export default function SearchPage() {
             {searchDone && total === 0 && (
                 <>
                     <Box sx={{ mt: 1 }} />
-                    <P3xrAccordion title={`${s.results || 'Results'} (0)`} accordionKey="search-results">
-                        <Box sx={{ p: 2, opacity: 0.5 }}>{strings?.label?.noResults || 'No results'}</Box>
+                    <P3xrAccordion title={`${s.results} (0)`} accordionKey="search-results">
+                        <Box sx={{ p: 2, opacity: 0.5 }}>{strings?.label?.noResults}</Box>
                     </P3xrAccordion>
                 </>
             )}
@@ -295,7 +295,7 @@ export default function SearchPage() {
             {(results.length > 0 || total > 0) && (
                 <>
                     <Box sx={{ mt: 1 }} />
-                    <P3xrAccordion title={`${s.results || 'Results'} (${total})`} accordionKey="search-results"
+                    <P3xrAccordion title={`${s.results} (${total})`} accordionKey="search-results"
                         actions={pages > 1 ? (<>
                             <P3xrButton icon={<SkipPrevious sx={{ fontSize: 18 }} />} label="" color="inherit"
                                 onClick={(e) => { e.stopPropagation(); pageAction('first') }} />
@@ -340,9 +340,9 @@ export default function SearchPage() {
             {selectedIndex && indexInfo && (
                 <>
                     <Box sx={{ mt: 1 }} />
-                    <P3xrAccordion title={`${s.indexInfo || 'Index Info'}: ${selectedIndex}`} accordionKey="search-index-info"
+                    <P3xrAccordion title={`${s.indexInfo}: ${selectedIndex}`} accordionKey="search-index-info"
                         actions={!isReadonly ? (
-                            <P3xrButton icon={<Delete sx={{ fontSize: 18 }} />} label={s.dropIndex || 'Drop'} color="inherit"
+                            <P3xrButton icon={<Delete sx={{ fontSize: 18 }} />} label={s.dropIndex} color="inherit"
                                 onClick={(e) => { e.stopPropagation(); dropIndex() }} />
                         ) : undefined}>
                         <List disablePadding>
@@ -366,11 +366,11 @@ export default function SearchPage() {
             {!isReadonly && (
                 <>
                     <Box sx={{ mt: 1 }} />
-                    <P3xrAccordion title={s.createIndex || 'Create Index'} accordionKey="search-create-index">
+                    <P3xrAccordion title={s.createIndex} accordionKey="search-create-index">
                         <Box sx={{ p: 2 }}>
-                            <TextField fullWidth size="small" label={s.indexName || 'Index Name'}
+                            <TextField fullWidth size="small" label={s.indexName}
                                 value={newIndexName} onChange={e => setNewIndexName(e.target.value)} />
-                            <TextField fullWidth size="small" sx={{ mt: 1 }} label={s.prefix || 'Key Prefix (optional)'}
+                            <TextField fullWidth size="small" sx={{ mt: 1 }} label={s.prefix}
                                 placeholder="e.g. doc:" value={newIndexPrefix} onChange={e => setNewIndexPrefix(e.target.value)} />
 
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, my: 1 }}>
@@ -385,14 +385,14 @@ export default function SearchPage() {
 
                             {newIndexFields.map((field, i) => (
                                 <Box key={i} sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.5, flexWrap: 'wrap' }}>
-                                    <TextField size="small" sx={{ flex: 1, minWidth: 120 }} label={s.fieldName || 'Field Name'}
+                                    <TextField size="small" sx={{ flex: 1, minWidth: 120 }} label={s.fieldName}
                                         value={field.name} onChange={e => {
                                             const f = [...newIndexFields]; f[i] = { ...f[i], name: e.target.value }; setNewIndexFields(f)
                                         }} />
                                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexShrink: 0 }}>
                                         <FormControl size="small" sx={{ width: 130 }}>
-                                            <InputLabel>{strings?.label?.type || 'Type'}</InputLabel>
-                                            <Select value={field.type} label={strings?.label?.type || 'Type'}
+                                            <InputLabel>{strings?.label?.type}</InputLabel>
+                                            <Select value={field.type} label={strings?.label?.type}
                                                 onChange={e => {
                                                     const f = [...newIndexFields]; f[i] = { ...f[i], type: e.target.value }; setNewIndexFields(f)
                                                 }}>
@@ -401,7 +401,7 @@ export default function SearchPage() {
                                                 )}
                                             </Select>
                                         </FormControl>
-                                        <Tooltip title={strings?.intention?.delete || 'Delete'}>
+                                        <Tooltip title={strings?.intention?.delete}>
                                             <span>
                                                 <Button variant="contained" color="error" onClick={() => confirmRemoveField(i)}
                                                     disabled={newIndexFields.length <= 1}
@@ -415,7 +415,7 @@ export default function SearchPage() {
                             ))}
 
                             <Box sx={{ mt: 1, textAlign: 'right' }}>
-                                <ActionBtn icon={<Add fontSize="small" />} label={s.createIndex || 'Create Index'}
+                                <ActionBtn icon={<Add fontSize="small" />} label={s.createIndex}
                                     color="secondary" onClick={createIndex} disabled={!newIndexName.trim()} />
                             </Box>
                         </Box>

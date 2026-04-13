@@ -508,7 +508,7 @@ export default function DatabaseKeyPage() {
 
             {response.type !== 'string' && response.type !== 'hash' && response.type !== 'set' && response.type !== 'zset' && response.type !== 'list' && response.type !== 'stream' && response.type !== 'json' && response.type !== 'timeseries' && !['bloom', 'cuckoo', 'topk', 'cms', 'tdigest'].includes(response.type) && response.type !== 'vectorset' && (
                     <Box sx={{ mt: 2, p: 2, opacity: 0.7 }}>
-                        {strings?.page?.key?.probabilistic?.noItems || 'This key type is not fully supported in the GUI. Use the console for commands.'}
+                        {strings?.page?.key?.probabilistic?.noItems}
                     </Box>
                 )}
 

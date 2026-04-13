@@ -10,9 +10,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule, MatChipInputEvent } from '@angular/material/chips';
+import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { COMMA, ENTER, SPACE } from '@angular/cdk/keycodes';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { I18nService } from '../services/i18n.service';
+import { CommonService } from '../services/common.service';
 import { DialogCancelButtonComponent } from '../components/dialog-cancel-button.component';
 
 export interface AclUserDialogData {
@@ -32,13 +34,13 @@ export interface AclUserDialogResult {
     imports: [
         FormsModule, MatDialogModule, MatFormFieldModule, MatInputModule,
         MatButtonModule, MatIconModule, MatToolbarModule, MatTooltipModule,
-        MatSlideToggleModule, MatCheckboxModule, MatChipsModule,
+        MatSlideToggleModule, MatCheckboxModule, MatChipsModule, MatAutocompleteModule,
         DialogCancelButtonComponent,
     ],
     template: `
         <mat-toolbar class="p3xr-dialog-toolbar p3xr-mat-layout-strong">
             <span mat-dialog-title class="p3xr-dialog-title">
-                {{ data.isNew ? (strings().page?.acl?.createUser || 'Create User') : (strings().page?.acl?.editUser || 'Edit User') }}
+                {{ data.isNew ? (strings().page?.acl?.createUser) : (strings().page?.acl?.editUser) }}
             </span>
             <button mat-icon-button type="button" (click)="onCancel()">
                 <mat-icon>close</mat-icon>
@@ -47,41 +49,41 @@ export interface AclUserDialogResult {
 
         <mat-dialog-content class="p3xr-dialog-content">
             <mat-form-field class="md-block">
-                <mat-label>{{ strings().page?.acl?.username || 'Username' }}</mat-label>
+                <mat-label>{{ strings().page?.acl?.username }}</mat-label>
                 <input matInput [(ngModel)]="username" [disabled]="!data.isNew" />
             </mat-form-field>
 
             @if (username === 'default') {
                 <div class="p3xr-acl-default-warning">
                     <mat-icon>info</mat-icon>
-                    <span>{{ strings().page?.acl?.defaultUserWarning || 'Caution: Modifying the default user can lock out all connections. If this happens, you will need to restart Redis or use redis-cli to restore access.' }}</span>
+                    <span>{{ strings().page?.acl?.defaultUserWarning }}</span>
                 </div>
             }
 
             <div style="margin-bottom: 16px;">
                 <mat-slide-toggle [(ngModel)]="enabled">
-                    {{ strings().page?.acl?.enabled || 'Enabled' }}
+                    {{ strings().page?.acl?.enabled }}
                 </mat-slide-toggle>
             </div>
 
             <div style="margin-bottom: 12px;">
                 <mat-checkbox [(ngModel)]="nopass">
-                    {{ strings().page?.acl?.noPassword || 'No password (nopass)' }}
+                    {{ strings().page?.acl?.noPassword }}
                 </mat-checkbox>
             </div>
 
             @if (!nopass) {
                 <mat-form-field class="md-block">
-                    <mat-label>{{ strings().page?.acl?.password || 'Password' }}</mat-label>
+                    <mat-label>{{ strings().page?.acl?.password }}</mat-label>
                     <input matInput [(ngModel)]="password" type="password" autocomplete="new-password" />
                     @if (!data.isNew) {
-                        <mat-hint>{{ strings().page?.acl?.passwordHint || 'Leave empty to keep current password' }}</mat-hint>
+                        <mat-hint>{{ strings().page?.acl?.passwordHint }}</mat-hint>
                     }
                 </mat-form-field>
             }
 
             <mat-form-field class="md-block">
-                <mat-label>{{ strings().page?.acl?.commands || 'Commands' }}</mat-label>
+                <mat-label>{{ strings().page?.acl?.commands }}</mat-label>
                 <mat-chip-grid #cmdGrid>
                     @for (rule of commandsList; track rule) {
                         <mat-chip-row (removed)="removeChip(commandsList, rule)"
@@ -95,12 +97,26 @@ export interface AclUserDialogResult {
                 <input matInput [matChipInputFor]="cmdGrid"
                     [matChipInputSeparatorKeyCodes]="separatorKeys"
                     (matChipInputTokenEnd)="addChip(commandsList, $event)"
+                    [matAutocomplete]="cmdAuto"
+                    (input)="filterOptions('cmd', $event)"
+                    (focus)="filterOptions('cmd', null)"
+                    #cmdInput
                     placeholder="+@all, -@dangerous, +get ..." />
-                <mat-hint>{{ strings().page?.acl?.commandsHint || 'e.g., +@all or +@read -@dangerous' }}</mat-hint>
+                <mat-autocomplete #cmdAuto="matAutocomplete"
+                    (optionSelected)="selectAutocomplete(commandsList, $event, cmdInput)">
+                    @for (group of filteredCmdGroups; track group.name) {
+                        <mat-optgroup [label]="group.name">
+                            @for (opt of group.options; track opt) {
+                                <mat-option [value]="opt">{{ opt }}</mat-option>
+                            }
+                        </mat-optgroup>
+                    }
+                </mat-autocomplete>
+                <mat-hint>{{ strings().page?.acl?.commandsHint }}</mat-hint>
             </mat-form-field>
 
             <mat-form-field class="md-block">
-                <mat-label>{{ strings().page?.acl?.keys || 'Key Patterns' }}</mat-label>
+                <mat-label>{{ strings().page?.acl?.keys }}</mat-label>
                 <mat-chip-grid #keyGrid>
                     @for (pattern of keysList; track pattern) {
                         <mat-chip-row (removed)="removeChip(keysList, pattern)"
@@ -113,12 +129,22 @@ export interface AclUserDialogResult {
                 <input matInput [matChipInputFor]="keyGrid"
                     [matChipInputSeparatorKeyCodes]="separatorKeys"
                     (matChipInputTokenEnd)="addChip(keysList, $event)"
+                    [matAutocomplete]="keyAuto"
+                    (input)="filterOptions('key', $event)"
+                    (focus)="filterOptions('key', null)"
+                    #keyInput
                     placeholder="~*, ~user:* ..." />
-                <mat-hint>{{ strings().page?.acl?.keysHint || 'e.g., ~* or ~user:*' }}</mat-hint>
+                <mat-autocomplete #keyAuto="matAutocomplete"
+                    (optionSelected)="selectAutocomplete(keysList, $event, keyInput)">
+                    @for (opt of filteredKeyOptions; track opt) {
+                        <mat-option [value]="opt">{{ opt }}</mat-option>
+                    }
+                </mat-autocomplete>
+                <mat-hint>{{ strings().page?.acl?.keysHint }}</mat-hint>
             </mat-form-field>
 
             <mat-form-field class="md-block">
-                <mat-label>{{ strings().page?.acl?.channels || 'Pub/Sub Channels' }}</mat-label>
+                <mat-label>{{ strings().page?.acl?.channels }}</mat-label>
                 <mat-chip-grid #chanGrid>
                     @for (pattern of channelsList; track pattern) {
                         <mat-chip-row (removed)="removeChip(channelsList, pattern)"
@@ -131,8 +157,18 @@ export interface AclUserDialogResult {
                 <input matInput [matChipInputFor]="chanGrid"
                     [matChipInputSeparatorKeyCodes]="separatorKeys"
                     (matChipInputTokenEnd)="addChip(channelsList, $event)"
+                    [matAutocomplete]="chanAuto"
+                    (input)="filterOptions('chan', $event)"
+                    (focus)="filterOptions('chan', null)"
+                    #chanInput
                     placeholder="&*, &notifications:* ..." />
-                <mat-hint>{{ strings().page?.acl?.channelsHint || 'e.g., &* or &notifications:*' }}</mat-hint>
+                <mat-autocomplete #chanAuto="matAutocomplete"
+                    (optionSelected)="selectAutocomplete(channelsList, $event, chanInput)">
+                    @for (opt of filteredChanOptions; track opt) {
+                        <mat-option [value]="opt">{{ opt }}</mat-option>
+                    }
+                </mat-autocomplete>
+                <mat-hint>{{ strings().page?.acl?.channelsHint }}</mat-hint>
             </mat-form-field>
         </mat-dialog-content>
 
@@ -140,9 +176,9 @@ export interface AclUserDialogResult {
             <p3xr-dialog-cancel (cancel)="onCancel()"></p3xr-dialog-cancel>
             <button mat-raised-button class="btn-primary" type="button" (click)="onSave()"
                 [disabled]="!username?.trim()"
-                [matTooltip]="strings().intention?.save || 'Save'" [matTooltipDisabled]="isWide">
+                [matTooltip]="strings().intention?.save" [matTooltipDisabled]="isWide">
                 <mat-icon>done</mat-icon>
-                @if (isWide) { <span>{{ strings().intention?.save || 'Save' }}</span> }
+                @if (isWide) { <span>{{ strings().intention?.save }}</span> }
             </button>
         </mat-dialog-actions>
     `,
@@ -192,11 +228,24 @@ export class AclUserDialogComponent {
     isWide = true;
     readonly separatorKeys = [ENTER, COMMA, SPACE];
 
+    private readonly cmdGroupDefs = [
+        { key: 'groupCommon', options: ['+@all', '-@all', '+@read', '-@read', '+@write', '-@write', '+@admin', '-@admin', '+@dangerous', '-@dangerous'] },
+        { key: 'groupDataTypes', options: ['+@string', '+@hash', '+@list', '+@set', '+@sortedset', '+@stream', '+@geo', '+@bitmap', '+@hyperloglog'] },
+        { key: 'groupOperations', options: ['+@keyspace', '+@pubsub', '+@connection', '+@transaction', '+@scripting', '+@fast', '+@slow', '+@blocking'] },
+    ];
+    private readonly allKeyOptions = ['~*', '%R~*', '%W~*', 'resetkeys'];
+    private readonly allChanOptions = ['&*', 'resetchannels'];
+
+    filteredCmdGroups: { name: string; options: string[] }[] = [];
+    filteredKeyOptions: string[] = [];
+    filteredChanOptions: string[] = [];
+
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: AclUserDialogData,
         @Inject(MatDialogRef) private dialogRef: MatDialogRef<AclUserDialogComponent>,
         @Inject(BreakpointObserver) private breakpointObserver: BreakpointObserver,
         @Inject(I18nService) private i18n: I18nService,
+        @Inject(CommonService) private common: CommonService,
         @Inject(ChangeDetectorRef) private cdr: ChangeDetectorRef,
     ) {
         this.strings = this.i18n.strings;
@@ -206,6 +255,27 @@ export class AclUserDialogComponent {
             this.isWide = r.matches;
             this.cdr.markForCheck();
         });
+    }
+
+    filterOptions(type: 'cmd' | 'key' | 'chan', event: Event | null): void {
+        const filter = event ? (event.target as HTMLInputElement).value.toLowerCase() : '';
+        if (type === 'cmd') {
+            const acl = this.strings()?.page?.acl || {} as any;
+            this.filteredCmdGroups = this.cmdGroupDefs
+                .map(g => ({ name: acl[g.key] || g.key, options: g.options.filter(o => !this.commandsList.includes(o) && o.toLowerCase().includes(filter)) }))
+                .filter(g => g.options.length > 0);
+        } else if (type === 'key') {
+            this.filteredKeyOptions = this.allKeyOptions.filter(o => !this.keysList.includes(o) && o.toLowerCase().includes(filter));
+        } else {
+            this.filteredChanOptions = this.allChanOptions.filter(o => !this.channelsList.includes(o) && o.toLowerCase().includes(filter));
+        }
+    }
+
+    selectAutocomplete(list: string[], event: MatAutocompleteSelectedEvent, input: HTMLInputElement): void {
+        const value = event.option.viewValue;
+        if (value && !list.includes(value)) list.push(value);
+        input.value = '';
+        this.filterOptions(list === this.commandsList ? 'cmd' : list === this.keysList ? 'key' : 'chan', null);
     }
 
     addChip(list: string[], event: MatChipInputEvent): void {
@@ -232,9 +302,12 @@ export class AclUserDialogComponent {
         }
     }
 
-    onSave(): void {
+    async onSave(): Promise<void> {
         const u = this.username?.trim();
         if (!u) return;
+        try {
+            await this.common.confirm({ message: this.strings().intention?.areYouSure });
+        } catch { return; }
         const rules: string[] = [this.enabled ? 'on' : 'off'];
         // When editing, reset permissions first so removals take effect
         if (!this.data.isNew) {

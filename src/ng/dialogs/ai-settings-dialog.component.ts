@@ -26,7 +26,7 @@ import { RedisStateService } from '../services/redis-state.service';
         <form (ngSubmit)="save()" novalidate>
             <mat-toolbar class="p3xr-dialog-toolbar p3xr-mat-layout-strong">
                 <span mat-dialog-title class="p3xr-dialog-title">
-                    {{ strings().label?.aiSettings || 'AI Settings' }}
+                    {{ strings().label?.aiSettings }}
                 </span>
                 <button mat-icon-button type="button" (click)="cancel()">
                     <mat-icon>close</mat-icon>
@@ -36,14 +36,14 @@ import { RedisStateService } from '../services/redis-state.service';
             <mat-dialog-content class="p3xr-dialog-content">
                 <div class="p3xr-padding">
                     <div style="margin-bottom: 16px; opacity: 0.8; font-size: 13px;">
-                        {{ strings().label?.aiGroqApiKeyInfo || 'Optional. Your own Groq API key for better performance. Get a free key from' }}
+                        {{ strings().label?.aiGroqApiKeyInfo }}
                         <a href="https://console.groq.com" target="_blank" style="color: inherit; text-decoration: underline;">console.groq.com</a>
                     </div>
 
                     <mat-form-field style="width: 100%;" subscriptSizing="dynamic">
-                        <mat-label>{{ strings().label?.aiGroqApiKey || 'Groq API Key' }}</mat-label>
+                        <mat-label>{{ strings().label?.aiGroqApiKey }}</mat-label>
                         <input matInput type="password" name="apiKey" [(ngModel)]="apiKey"
-                               [placeholder]="strings().label?.aiGroqApiKeyPlaceholder || 'gsk_...'" />
+                               [placeholder]="strings().label?.aiGroqApiKeyPlaceholder" />
                     </mat-form-field>
                 </div>
             </mat-dialog-content>
@@ -52,7 +52,7 @@ import { RedisStateService } from '../services/redis-state.service';
                 <p3xr-dialog-cancel (cancel)="cancel()"></p3xr-dialog-cancel>
                 <button mat-raised-button class="btn-primary" type="submit" [disabled]="saving">
                     <mat-icon>save</mat-icon>
-                    {{ strings().intention?.save || 'Save' }}
+                    {{ strings().intention?.save }}
                 </button>
             </mat-dialog-actions>
         </form>
@@ -92,7 +92,7 @@ export class AiSettingsDialogComponent {
                     payload: { apiKey: key },
                 });
                 if (!validation.valid) {
-                    this.common.toast({ message: this.strings().label?.aiGroqApiKeyInvalid || 'Invalid Groq API key' });
+                    this.common.toast({ message: this.strings().label?.aiGroqApiKeyInvalid });
                     return;
                 }
             }
@@ -103,7 +103,7 @@ export class AiSettingsDialogComponent {
             });
             const cfg = { ...this.state.cfg(), groqApiKey: key || '' };
             this.state.cfg.set(cfg);
-            this.common.toast({ message: this.strings().label?.aiGroqApiKeySaved || 'AI settings saved' });
+            this.common.toast({ message: this.strings().label?.aiGroqApiKeySaved });
             this.dialogRef.close();
         } catch (e: any) {
             this.common.generalHandleError(e);

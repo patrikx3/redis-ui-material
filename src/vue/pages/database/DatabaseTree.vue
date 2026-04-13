@@ -57,8 +57,8 @@ const { themeKey } = storeToRefs(useThemeStore())
 const strings = computed(() => i18n.strings)
 const isReadonly = computed(() => state.connection?.readonly === true)
 const divider = computed(() => settings.redisTreeDivider)
-const treeBranchColor = computed(() => TREE_BRANCH_COLOR[themeKey.value] || '#bec2ff')
-const warnColor = computed(() => COMMON_WARN_COLOR[themeKey.value] || '#9fa8da')
+const treeBranchColor = computed(() => TREE_BRANCH_COLOR[themeKey.value])
+const warnColor = computed(() => COMMON_WARN_COLOR[themeKey.value])
 
 // --- Expansion state (sessionStorage) ---
 const expandedKeys = ref(new Set<string>())
@@ -161,11 +161,11 @@ async function deleteKey(e: Event, key: string) {
     e.preventDefault()
     e.stopPropagation()
     try {
-        const msg = str(strings.value?.confirm?.deleteKey, { key }) || 'Delete this key?'
+        const msg = str(strings.value?.confirm?.deleteKey, { key })
         await common.confirm({ message: msg })
         await request({ action: 'key/delete', payload: { key } })
         navigateTo('database.statistics')
-        const toast = str(strings.value?.status?.deletedKey, { key }) || 'Key deleted'
+        const toast = str(strings.value?.status?.deletedKey, { key })
         common.toast(toast)
         await cmd.refresh({ force: true })
     } catch (err) {
@@ -176,10 +176,10 @@ async function deleteKey(e: Event, key: string) {
 async function deleteTree(e: Event, node: FlatTreeNode) {
     e.stopPropagation()
     try {
-        const msg = str(strings.value?.confirm?.deleteTree, { key: node.key }) || 'Delete all keys under this prefix?'
+        const msg = str(strings.value?.confirm?.deleteTree, { key: node.key })
         await common.confirm({ message: msg })
         await request({ action: 'key/del-tree', payload: { key: node.key, redisTreeDivider: divider.value } })
-        const toast = str(strings.value?.status?.deletedTree, { key: node.key }) || 'Tree deleted'
+        const toast = str(strings.value?.status?.deletedTree, { key: node.key })
         common.toast(toast)
         await cmd.refresh({ force: true })
     } catch (err) {
@@ -331,7 +331,7 @@ watch(
 
 <template>
     <div v-if="dataSource.length === 0" style="padding: 8px; opacity: 0.5; font-size: 13px;">
-        {{ strings?.label?.noKeys || 'No keys' }}
+        {{ strings?.label?.noKeys }}
     </div>
 
     <div v-else ref="parentRef" class="p3xr-tree-viewport">
@@ -414,7 +414,7 @@ watch(
                 <span v-if="!isReadonly" class="p3xr-tree-actions">
                     <!-- Delete tree (folder) -->
                     <v-tooltip v-if="dataSource[virtualRow.index].type === 'folder'"
-                        :text="strings?.confirm?.deleteAllKeys ? (typeof strings.confirm.deleteAllKeys === 'function' ? strings.confirm.deleteAllKeys({ key: dataSource[virtualRow.index].key }) : strings.confirm.deleteAllKeys) : 'Delete tree'"
+                        :text="typeof strings?.confirm?.deleteAllKeys === 'function' ? strings.confirm.deleteAllKeys({ key: dataSource[virtualRow.index].key }) : strings?.confirm?.deleteAllKeys"
                         location="right" :open-delay="300" :offset="36">
                         <template #activator="{ props: tp }">
                             <v-icon v-bind="tp" class="p3xr-tree-action-delete"
@@ -423,7 +423,7 @@ watch(
                     </v-tooltip>
                     <!-- Delete key (element) -->
                     <v-tooltip v-else
-                        :text="strings?.intention?.delete || 'Delete'"
+                        :text="strings?.intention?.delete"
                         location="right" :open-delay="300" :offset="36">
                         <template #activator="{ props: tp }">
                             <v-icon v-bind="tp" class="p3xr-tree-action-delete"
@@ -431,7 +431,7 @@ watch(
                         </template>
                     </v-tooltip>
                     <!-- Add key -->
-                    <v-tooltip :text="strings?.intention?.addKey || 'Add key'"
+                    <v-tooltip :text="strings?.intention?.addKey"
                         location="right" :open-delay="300" :offset="36">
                         <template #activator="{ props: tp }">
                             <v-icon v-bind="tp" class="p3xr-tree-action-add"

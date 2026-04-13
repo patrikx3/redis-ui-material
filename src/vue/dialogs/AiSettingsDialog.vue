@@ -34,7 +34,7 @@ async function submit() {
             } catch (e) { common.generalHandleError(e); return }
             finally { overlay.hide() }
             if (!validation.valid) {
-                common.toast(strings.value?.label?.aiGroqApiKeyInvalid || 'Invalid Groq API key')
+                common.toast(strings.value?.label?.aiGroqApiKeyInvalid)
                 return
             }
         }
@@ -50,7 +50,7 @@ async function submit() {
 </script>
 
 <template>
-    <P3xrDialog v-if="open" :open="true" :title="strings?.label?.aiSettings || 'AI Settings'" @close="emit('close')">
+    <P3xrDialog v-if="open" :open="true" :title="strings?.label?.aiSettings" @close="emit('close')">
         <div style="margin-bottom: 16px; font-size: 14px; opacity: 0.8;">
             {{ strings?.label?.aiGroqApiKeyInfo }}
             <a href="https://console.groq.com" target="_blank" rel="noreferrer"

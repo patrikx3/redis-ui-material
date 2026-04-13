@@ -111,7 +111,7 @@ export default function CommandPaletteDialog() {
                         setSelectedIndex(0)
                     }}
                     onKeyDown={onKeyDown}
-                    placeholder={strings?.label?.commandPalette || 'Command Palette'}
+                    placeholder={strings?.label?.commandPalette}
                     autoComplete="off"
                     sx={{
                         flex: 1, border: 'none', outline: 'none',
@@ -144,7 +144,7 @@ export default function CommandPaletteDialog() {
                 ))}
                 {filtered.length === 0 && (
                     <Box sx={{ p: 2, textAlign: 'center', opacity: 0.5 }}>
-                        {strings?.label?.noResults || 'No results'}
+                        {strings?.label?.noResults}
                     </Box>
                 )}
             </Box>

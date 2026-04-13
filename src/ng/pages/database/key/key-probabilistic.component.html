@@ -2,18 +2,18 @@
 
     <!-- INFO -->
     <br />
-    <p3xr-ng-accordion [title]="strings()?.page?.key?.probabilistic?.info || 'Info'" accordionKey="prob-info">
+    <p3xr-ng-accordion [title]="strings()?.page?.key?.probabilistic?.info" accordionKey="prob-info">
         <div actions>
             <p3xr-ng-button
                 (click)="toggleAutoRefresh(); $event.stopPropagation()"
-                [label]="strings()?.label?.autoRefresh || 'Auto'"
+                [label]="strings()?.label?.autoRefresh"
                 [mdIcon]="autoRefresh ? 'check_box' : 'check_box_outline_blank'"
                 [breakpoint]="1280">
             </p3xr-ng-button>
             @if (!autoRefresh) {
                 <p3xr-ng-button
                     (click)="refresh(); $event.stopPropagation()"
-                    [label]="strings()?.intention?.refresh || 'Refresh'"
+                    [label]="strings()?.intention?.refresh"
                     mdIcon="refresh"
                     [breakpoint]="1280">
                 </p3xr-ng-button>
@@ -36,32 +36,32 @@
 
     <!-- ACTIONS -->
     <br />
-    <p3xr-ng-accordion [title]="(p3xrResponse.type === 'topk' ? (strings()?.page?.key?.probabilistic?.topkList || 'Top Items') : (strings()?.page?.key?.probabilistic?.addItem || 'Actions'))" accordionKey="prob-actions">
+    <p3xr-ng-accordion [title]="(p3xrResponse.type === 'topk' ? (strings()?.page?.key?.probabilistic?.topkList) : (strings()?.page?.key?.probabilistic?.addItem))" accordionKey="prob-actions">
         <div content>
             <div style="padding: 16px;">
             <div class="p3xr-timeseries-controls">
                 @if (p3xrResponse.type === 'tdigest') {
                     <mat-form-field class="p3xr-timeseries-field" subscriptSizing="dynamic">
-                        <mat-label>{{ strings()?.form?.key?.field?.value || 'Value' }}</mat-label>
+                        <mat-label>{{ strings()?.form?.key?.field?.value }}</mat-label>
                         <input matInput type="number" [(ngModel)]="itemInput" (keydown.enter)="addItem()" />
                     </mat-form-field>
                 } @else {
                     <mat-form-field class="p3xr-timeseries-field" subscriptSizing="dynamic" style="flex: 1; min-width: 200px;">
-                        <mat-label>{{ strings()?.page?.key?.probabilistic?.item || 'Item' }}</mat-label>
+                        <mat-label>{{ strings()?.page?.key?.probabilistic?.item }}</mat-label>
                         <input matInput [(ngModel)]="itemInput" (keydown.enter)="addItem()" />
                     </mat-form-field>
                 }
 
                 @if (p3xrResponse.type === 'cms') {
                     <mat-form-field class="p3xr-timeseries-field" subscriptSizing="dynamic" style="max-width: 120px;">
-                        <mat-label>{{ strings()?.form?.key?.field?.increment || 'Increment' }}</mat-label>
+                        <mat-label>{{ strings()?.form?.key?.field?.increment }}</mat-label>
                         <input matInput type="number" [(ngModel)]="incrementInput" />
                     </mat-form-field>
                 }
 
                 @if (p3xrResponse.type === 'tdigest') {
                     <mat-form-field class="p3xr-timeseries-field" subscriptSizing="dynamic" style="max-width: 120px;">
-                        <mat-label>{{ strings()?.page?.key?.probabilistic?.quantile || 'Quantile' }}</mat-label>
+                        <mat-label>{{ strings()?.page?.key?.probabilistic?.quantile }}</mat-label>
                         <input matInput type="number" step="0.1" [(ngModel)]="quantileInput" (keydown.enter)="queryQuantile()" />
                     </mat-form-field>
                 }
@@ -70,7 +70,7 @@
                     @if (isGtSm) {
                         <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="addItem()">
                             <mat-icon>add</mat-icon>
-                            <span>{{ strings()?.intention?.add || 'Add' }}</span>
+                            <span>{{ strings()?.intention?.add }}</span>
                         </button>
                     } @else {
                         <button mat-mini-fab class="btn-primary" type="button" (click)="addItem()"
@@ -84,7 +84,7 @@
                     @if (isGtSm) {
                         <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="checkItem()">
                             <mat-icon>search</mat-icon>
-                            <span>{{ strings()?.page?.key?.probabilistic?.checkItem || 'Check' }}</span>
+                            <span>{{ strings()?.page?.key?.probabilistic?.checkItem }}</span>
                         </button>
                     } @else {
                         <button mat-mini-fab class="btn-primary" type="button" (click)="checkItem()"
@@ -98,7 +98,7 @@
                     @if (isGtSm) {
                         <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="deleteItem()">
                             <mat-icon>delete</mat-icon>
-                            <span>{{ strings()?.intention?.delete || 'Delete' }}</span>
+                            <span>{{ strings()?.intention?.delete }}</span>
                         </button>
                     } @else {
                         <button mat-mini-fab class="btn-primary" type="button" (click)="deleteItem()"
@@ -112,7 +112,7 @@
                     @if (isGtSm) {
                         <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="queryItem()">
                             <mat-icon>search</mat-icon>
-                            <span>{{ strings()?.page?.key?.probabilistic?.queryCount || 'Query' }}</span>
+                            <span>{{ strings()?.page?.key?.probabilistic?.queryCount }}</span>
                         </button>
                     } @else {
                         <button mat-mini-fab class="btn-primary" type="button" (click)="queryItem()"
@@ -126,7 +126,7 @@
                     @if (isGtSm) {
                         <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="queryQuantile()">
                             <mat-icon>bar_chart</mat-icon>
-                            <span>{{ strings()?.page?.key?.probabilistic?.quantile || 'Quantile' }}</span>
+                            <span>{{ strings()?.page?.key?.probabilistic?.quantile }}</span>
                         </button>
                     } @else {
                         <button mat-mini-fab class="btn-primary" type="button" (click)="queryQuantile()"

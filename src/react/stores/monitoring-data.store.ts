@@ -85,7 +85,7 @@ function restoreFromStorage(): { profiler: ProfilerEntry[]; pubsub: PubsubEntry[
 }
 
 const onMonitorData = (data: any) => {
-    const lang = langFn() || 'en'
+    const lang = langFn()
     const date = new Date(parseFloat(data.time) * 1000)
     const displayTime = date.toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false, fractionalSecondDigits: 3 } as any)
     const entry: ProfilerEntry = {
@@ -110,7 +110,7 @@ const onMonitorData = (data: any) => {
 }
 
 const onPubSubMessage = (data: any) => {
-    const lang = langFn() || 'en'
+    const lang = langFn()
     const date = new Date()
     const displayTime = date.toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })
     const entry: PubsubEntry = {

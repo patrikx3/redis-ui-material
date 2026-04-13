@@ -3,12 +3,12 @@
     <div actions>
         <p3xr-ng-button
             (click)="clearPubSub(); $event.stopPropagation()"
-            [label]="strings().intention?.clear || 'Clear'"
+            [label]="strings().intention?.clear"
             mdIcon="backspace">
         </p3xr-ng-button>
         <p3xr-ng-button
             (click)="exportPubSub(); $event.stopPropagation()"
-            [label]="strings().intention?.export || 'Export'"
+            [label]="strings().intention?.export"
             mdIcon="download">
         </p3xr-ng-button>
     </div>

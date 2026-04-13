@@ -58,7 +58,7 @@ export class KeyTimeseriesComponent extends KeyTypeBase implements OnInit, OnCha
     autoRefresh = false;
     alterMode = false;
     alterRetention = 0;
-    alterDuplicatePolicy = 'LAST';
+    alterDuplicatePolicy = '';
     alterLabels = '';
     overlayKeysInput = '';
     mrangeFilter = '';
@@ -101,9 +101,9 @@ export class KeyTimeseriesComponent extends KeyTypeBase implements OnInit, OnCha
         this.themeObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
 
         // Re-render chart on language change
-        let prevLang = this.i18n.currentLang();
+        let prevLang = this.i18n.currentLang() || 'en';
         this.langCheckInterval = setInterval(() => {
-            const currentLang = this.i18n.currentLang();
+            const currentLang = this.i18n.currentLang() || 'en';
             if (currentLang !== prevLang) {
                 prevLang = currentLang;
                 setTimeout(() => this.reinitChart(), 100);
@@ -353,7 +353,7 @@ export class KeyTimeseriesComponent extends KeyTypeBase implements OnInit, OnCha
                     labels: labels,
                 },
             });
-            this.common.toast(this.strings?.status?.saved || 'Updated');
+            this.common.toast(this.strings?.status?.saved);
             this.alterMode = false;
             this.refreshKey();
         } catch (e: any) {
@@ -409,7 +409,7 @@ export class KeyTimeseriesComponent extends KeyTypeBase implements OnInit, OnCha
     async deleteDataPoint(point: { timestamp: number; value: number }): Promise<void> {
         try {
             await this.common.confirm({
-                message: this.i18n.strings().confirm?.delete || 'Delete?',
+                message: this.i18n.strings().confirm?.delete,
             });
 
             await this.socket.request({
@@ -421,7 +421,7 @@ export class KeyTimeseriesComponent extends KeyTypeBase implements OnInit, OnCha
                 },
             });
 
-            this.common.toast(this.strings?.status?.deleted || 'Deleted');
+            this.common.toast(this.strings?.status?.deleted);
             this.refreshKey();
         } catch (e: any) {
             if (e !== undefined && e !== null) {
@@ -448,7 +448,7 @@ export class KeyTimeseriesComponent extends KeyTypeBase implements OnInit, OnCha
                 },
             });
 
-            this.common.toast(this.strings?.status?.added || 'Added');
+            this.common.toast(this.strings?.status?.added);
             this.addValue = '';
             this.refreshKey();
         } catch (e: any) {
@@ -487,7 +487,7 @@ export class KeyTimeseriesComponent extends KeyTypeBase implements OnInit, OnCha
 
         const seriesConfig: any[] = [
             {
-                label: this.strings?.label?.time || 'Time',
+                label: this.strings?.label?.time,
                 value: (_: any, v: number) => {
                     if (!v) return '';
                     const lang = this.i18n.currentLang() || 'en';
@@ -524,7 +524,7 @@ export class KeyTimeseriesComponent extends KeyTypeBase implements OnInit, OnCha
                     grid: { stroke: colors.grid, width: 1 },
                     ticks: { stroke: colors.grid },
                     font: '11px Roboto',
-                    values: (_: any, ticks: number[]) => ticks.map(t => new Date(t * 1000).toLocaleTimeString(this.i18n.currentLang() || 'en', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })),
+                    values: (_: any, ticks: number[]) => ticks.map(t => new Date(t * 1000).toLocaleTimeString(this.i18n.currentLang(), { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })),
                 },
                 {
                     stroke: colors.text,

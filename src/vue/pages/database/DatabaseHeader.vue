@@ -35,8 +35,8 @@ const ACCORDION_COLOR: Record<string, string> = {
     dark: 'rgba(0,0,0,0.87)', darkNeu: 'rgba(0,0,0,0.87)', darkoBluo: '#fff',
     matrix: 'rgba(0,0,0,0.87)',
 }
-const toolbarBg = computed(() => ACCORDION_BG[themeKey.value] || '#9e9e9e')
-const toolbarColor = computed(() => ACCORDION_COLOR[themeKey.value] || 'rgba(0,0,0,0.87)')
+const toolbarBg = computed(() => ACCORDION_BG[themeKey.value])
+const toolbarColor = computed(() => ACCORDION_COLOR[themeKey.value])
 </script>
 
 <template>
@@ -75,21 +75,21 @@ const toolbarColor = computed(() => ACCORDION_COLOR[themeKey.value] || 'rgba(0,0
             <!-- Save (non-readonly) -->
             <P3xrButton v-if="!isReadonly"
                 @click="cmd.save()"
-                :label="strings?.intention?.save || 'Save'"
+                :label="strings?.intention?.save"
                 icon="mdi-content-save"
             />
 
             <!-- Statistics -->
             <P3xrButton
                 @click="cmd.statistics()"
-                :label="strings?.intention?.statistics || 'Statistics'"
+                :label="strings?.intention?.statistics"
                 icon="mdi-chart-line"
             />
 
             <!-- Refresh -->
             <P3xrButton
                 @click="cmd.refresh()"
-                :label="strings?.intention?.refresh || 'Refresh'"
+                :label="strings?.intention?.refresh"
                 icon="mdi-refresh"
             />
         </div>

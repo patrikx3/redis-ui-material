@@ -101,7 +101,7 @@
 
         @if (response.compression) {
             <div class="p3xr-database-key-info-row p3xr-database-key-compression-row">
-                <strong>{{ strings()?.page?.key?.label?.compression || 'Compression' }}:</strong>
+                <strong>{{ strings()?.page?.key?.label?.compression }}:</strong>
                 <span class="p3xr-compression-badge">
                     <span class="p3xr-compression-algorithm">{{ response.compression.algorithm.toUpperCase() }}</span>
                     @if (response.compression.ratio >= 0) {
@@ -126,7 +126,7 @@
 
         @if (response.type !== 'timeseries' && response.type !== 'json' && response.type !== 'bloom' && response.type !== 'cuckoo' && response.type !== 'topk' && response.type !== 'cms' && response.type !== 'tdigest' && response.type !== 'vectorset') {
             <div class="p3xr-database-key-info-row" style="display: flex; align-items: center;">
-                <strong style="flex: 1;">{{ strings()?.label?.format || 'Format' }}:</strong>
+                <strong style="flex: 1;">{{ strings()?.label?.format }}:</strong>
                 <mat-button-toggle-group [(ngModel)]="valueFormat" hideSingleSelectionIndicator class="p3xr-format-toggle">
                     <mat-button-toggle value="raw">Raw</mat-button-toggle>
                     <mat-button-toggle value="json" [style.border-left]="dividerBorder">JSON</mat-button-toggle>
@@ -197,7 +197,7 @@
         }
         @default {
             <div class="p3xr-key-type-content" style="padding: 16px; opacity: 0.7;">
-                {{ strings()?.page?.key?.probabilistic?.noItems || 'This key type is not fully supported in the GUI. Use the console for commands.' }}
+                {{ strings()?.page?.key?.probabilistic?.noItems }}
             </div>
         }
     }

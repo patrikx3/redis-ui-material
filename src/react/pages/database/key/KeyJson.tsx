@@ -205,13 +205,13 @@ export default function KeyJson({ response, value, valueBuffer, keyName, valueFo
 
             const settings = useSettingsStore.getState()
             if (settings.undoEnabled && oldVal !== undefined && oldVal !== val) {
-                const undoClicked = await useCommonStore.getState().toastWithUndo(strings?.status?.set || 'Saved')
+                const undoClicked = await useCommonStore.getState().toastWithUndo(strings?.status?.set)
                 if (undoClicked) {
                     overlay.show({ message: 'Undo...' })
                     await request({ action: 'key/json-set', payload: { key: keyName, path: '$', value: oldVal } })
                     onRefresh()
                     overlay.hide()
-                    useCommonStore.getState().toast(strings?.status?.reverted || 'Reverted')
+                    useCommonStore.getState().toast(strings?.status?.reverted)
                 }
             }
         } catch (e) { if (e) generalHandleError(e); overlay.hide() }

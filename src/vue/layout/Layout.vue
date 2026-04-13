@@ -172,44 +172,8 @@ function openLink(target: string) {
     window.open(urls[target], '_blank')
 }
 
-// Connect
-async function connect(conn: any) {
-    const cloned = JSON.parse(JSON.stringify(conn))
-    try {
-        const dbStorageKey = settings.getStorageKeyCurrentDatabase(cloned.id)
-        let db: string | undefined
-        try { db = localStorage.getItem(dbStorageKey) ?? undefined } catch {}
-        if (cloned.askAuth === true) {
-            try {
-                const a = await common.askAuth()
-                cloned.username = a.username || undefined
-                cloned.password = a.password || undefined
-            } catch { return }
-        }
-        overlay.show({ message: strings.value?.title?.connectingRedis })
-        const response = await request({ action: 'connection/connect', payload: { connection: cloned, db } })
-        const databaseIndexes: number[] = []
-        let idx = 0; while (idx < response.databases) databaseIndexes.push(idx++)
-        const commands: string[] = []
-        Object.keys(response.commands ?? {}).forEach(k => commands.push(response.commands[k][0]))
-        commands.sort()
-        const modules = Array.isArray(response.modules) ? response.modules : []
-        state.$patch({
-            page: 1, monitor: false, dbsize: response.dbsize, databaseIndexes,
-            connection: cloned, commands, commandsMeta: response.commandsMeta ?? {}, modules,
-            hasReJSON: modules.some((m: any) => m.name === 'ReJSON'),
-            hasRediSearch: modules.some((m: any) => m.name === 'search'),
-            hasTimeSeries: modules.some((m: any) => m.name === 'timeseries' || m.name === 'Timeseries'),
-            hasBloom: modules.some((m: any) => m.name === 'bf'),
-        })
-        common.loadRedisInfoResponse({ response })
-        try { localStorage.setItem(settings.connectInfoStorageKey, JSON.stringify(cloned)) } catch {}
-    } catch (error) {
-        try { localStorage.removeItem(settings.connectInfoStorageKey) } catch {}
-        state.$patch({ connection: undefined })
-        common.generalHandleError(error)
-    } finally { overlay.hide() }
-}
+// Connect — delegates to shared store function
+const connect = (conn: any) => mainCommand.connect(conn)
 
 // Lifecycle
 onMounted(async () => {
@@ -226,8 +190,8 @@ watch(() => auth.isAuthenticated, (v) => {
 
 const unsubs: (() => void)[] = []
 unsubs.push(onSocketEvent('redis-disconnected', () => navigateTo('settings')))
-unsubs.push(onSocketEvent('disconnect', () => { if (!showLogin.value) overlay.show({ message: strings.value?.status?.socketDisconnected || 'Disconnected' }) }))
-unsubs.push(onSocketEvent('socket-error', () => { if (!showLogin.value) overlay.show({ message: strings.value?.status?.socketError || 'Error' }) }))
+unsubs.push(onSocketEvent('disconnect', () => { if (!showLogin.value) overlay.show({ message: strings.value?.status?.socketDisconnected }) }))
+unsubs.push(onSocketEvent('socket-error', () => { if (!showLogin.value) overlay.show({ message: strings.value?.status?.socketError }) }))
 onUnmounted(() => unsubs.forEach(u => u()))
 
 watch(() => route.path, (p) => {
@@ -368,9 +332,9 @@ onUnmounted(() => clearInterval(groupInterval))
         </template>
 
         <!-- Logout -->
-        <v-tooltip v-if="auth.authRequired && auth.isAuthenticated" :text="strings?.intention?.logout || 'Logout'" location="bottom">
+        <v-tooltip v-if="auth.authRequired && auth.isAuthenticated" :text="strings?.intention?.logout" location="bottom">
             <template #activator="{ props: tp }">
-                <v-btn v-bind="tp" variant="text" icon @click="async () => { try { await common.confirm({ message: strings?.intention?.logout || 'Logout' }); auth.logout() } catch {} }">
+                <v-btn v-bind="tp" variant="text" icon @click="async () => { try { await common.confirm({ message: strings?.intention?.logout }); auth.logout() } catch {} }">
                     <v-icon size="small">mdi-logout</v-icon>
                 </v-btn>
             </template>
@@ -478,7 +442,7 @@ onUnmounted(() => clearInterval(groupInterval))
                 <v-list ref="languageListRef" density="compact" style="overflow: auto; max-height: 340px; padding-top: 0;">
                     <v-list-item :active="i18n.isAuto"
                         @click="i18n.setLanguage('auto'); languageMenuOpen = false">
-                        {{ strings?.label?.languageAuto || 'Auto (system)' }}
+                        {{ strings?.label?.languageAuto }}
                     </v-list-item>
                     <v-divider />
                     <v-list-item v-for="(key, idx) in filteredLanguages" :key="key"

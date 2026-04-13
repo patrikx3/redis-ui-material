@@ -34,9 +34,9 @@ const INPUT_COLOR: Record<string, string> = {
     enterprise: 'black', light: 'black', redis: 'black',
     dark: 'white', darkNeu: 'white', darkoBluo: 'white', matrix: 'white',
 }
-const borderColor = computed(() => INPUT_BORDER[themeKey.value] || '#9e9e9e')
-const inputBg = computed(() => INPUT_BG[themeKey.value] || 'rgba(64,64,64,1)')
-const inputColor = computed(() => INPUT_COLOR[themeKey.value] || 'white')
+const borderColor = computed(() => INPUT_BORDER[themeKey.value])
+const inputBg = computed(() => INPUT_BG[themeKey.value])
+const inputColor = computed(() => INPUT_COLOR[themeKey.value])
 
 function doAction(action: 'first' | 'prev' | 'next' | 'last') {
     emit('pageChanged', pagerAction(props.paging, action))

@@ -174,7 +174,7 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
     serverInfoLabel(): string {
         if (!this.current) return '';
         const s = this.current.server;
-        const pause = this.paused ? (this.strings().intention?.resume || 'Resume') : (this.strings().intention?.pause || 'Pause');
+        const pause = this.paused ? (this.strings().intention?.resume) : (this.strings().intention?.pause);
         return `Redis ${s.version} · ${s.mode} · ${this.uptimeFormatted} · ${pause}`;
     }
 
@@ -201,10 +201,10 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
         event.stopPropagation();
         try {
             await this.common.confirm({
-                message: this.strings().page?.monitor?.confirmKillClient || 'Are you sure to kill this client?',
+                message: this.strings().page?.monitor?.confirmKillClient,
             });
             await this.socket.request({ action: 'client/kill', payload: { id } });
-            this.common.toast({ message: this.strings().page?.monitor?.clientKilled || 'Client killed' });
+            this.common.toast({ message: this.strings().page?.monitor?.clientKilled });
             await this.loadClientList();
         } catch (e) {
             if (e !== undefined) this.common.generalHandleError(e);
@@ -337,12 +337,12 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
         if (!s) return;
         const mon = this.strings().page?.monitor || {};
         const lines = [
-            `${mon.os || 'OS'}: ${s.os}`,
-            `${mon.port || 'Port'}: ${s.port}`,
-            `${mon.pid || 'Process ID'}: ${s.pid}`,
-            `${mon.configFile || 'Config File'}: ${s.configFile}`,
-            `${mon.cpuSys || 'System'} CPU: ${s.cpuSys}`,
-            `${mon.cpuUser || 'User'} CPU: ${s.cpuUser}`,
+            `${mon.os}: ${s.os}`,
+            `${mon.port}: ${s.port}`,
+            `${mon.pid}: ${s.pid}`,
+            `${mon.configFile}: ${s.configFile}`,
+            `${mon.cpuSys} CPU: ${s.cpuSys}`,
+            `${mon.cpuUser} CPU: ${s.cpuUser}`,
         ];
         this.downloadText(lines.join('\n'), `${this.connName}-server-info.txt`);
     }
@@ -352,12 +352,12 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
         if (!p) return;
         const mon = this.strings().page?.monitor || {};
         const lines = [
-            `${mon.rdbLastSave || 'RDB Last Save'}: ${p.rdbLastSave}`,
-            `${mon.rdbStatus || 'RDB Status'}: ${p.rdbStatus}`,
-            `${mon.rdbChanges || 'Changes Since Last Save'}: ${p.rdbChanges}`,
-            `${mon.aofEnabled || 'AOF Enabled'}: ${p.aofEnabled}`,
+            `${mon.rdbLastSave}: ${p.rdbLastSave}`,
+            `${mon.rdbStatus}: ${p.rdbStatus}`,
+            `${mon.rdbChanges}: ${p.rdbChanges}`,
+            `${mon.aofEnabled}: ${p.aofEnabled}`,
         ];
-        if (p.aofSize) lines.push(`${mon.aofSize || 'AOF Size'}: ${p.aofSize}`);
+        if (p.aofSize) lines.push(`${mon.aofSize}: ${p.aofSize}`);
         this.downloadText(lines.join('\n'), `${this.connName}-persistence.txt`);
     }
 
@@ -365,10 +365,10 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
         const r = this.replicationInfo;
         if (!r) return;
         const mon = this.strings().page?.monitor || {};
-        const lines = [`${mon.role || 'Role'}: ${r.role}`];
-        if (r.replicas !== undefined) lines.push(`${mon.replicas || 'Connected Replicas'}: ${r.replicas}`);
-        if (r.masterHost) lines.push(`${mon.masterHost || 'Master Host'}: ${r.masterHost}:${r.masterPort}`);
-        if (r.linkStatus) lines.push(`${mon.linkStatus || 'Link Status'}: ${r.linkStatus}`);
+        const lines = [`${mon.role}: ${r.role}`];
+        if (r.replicas !== undefined) lines.push(`${mon.replicas}: ${r.replicas}`);
+        if (r.masterHost) lines.push(`${mon.masterHost}: ${r.masterHost}:${r.masterPort}`);
+        if (r.linkStatus) lines.push(`${mon.linkStatus}: ${r.linkStatus}`);
         this.downloadText(lines.join('\n'), `${this.connName}-replication.txt`);
     }
 
@@ -376,7 +376,7 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
         const entries = this.keyspaceEntries;
         if (entries.length === 0) return;
         const mon = this.strings().page?.monitor || {};
-        const lines = entries.map(e => `${e.db}: ${mon.keys || 'Keys'}: ${e.keys}, ${mon.expires || 'Expires'}: ${e.expires}`);
+        const lines = entries.map(e => `${e.db}: ${mon.keys}: ${e.keys}, ${mon.expires}: ${e.expires}`);
         this.downloadText(lines.join('\n'), `${this.connName}-keyspace.txt`);
     }
 
@@ -384,7 +384,7 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
         const mods = this.modulesList;
         const mon = this.strings().page?.monitor || {};
         if (mods.length === 0) {
-            this.downloadText(mon.noModules || 'No modules loaded', `${this.connName}-modules.txt`);
+            this.downloadText(mon.noModules, `${this.connName}-modules.txt`);
             return;
         }
         const lines = mods.map(m => `${m.name} v${m.ver}`);
@@ -400,19 +400,19 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
         const c = this.current;
         const mon = this.strings().page?.monitor || {};
         const lines = [
-            `${mon.memory || 'Memory'}: ${c.memory.usedHuman}`,
-            `${mon.rss || 'RSS'}: ${c.memory.rssHuman}`,
-            `${mon.peak || 'Peak'}: ${c.memory.peakHuman}`,
-            `${mon.fragmentation || 'Fragmentation'}: ${c.memory.fragRatio}x`,
-            `${mon.opsPerSec || 'Ops/sec'}: ${c.stats.opsPerSec}`,
-            `${mon.totalCommands || 'Total'}: ${c.stats.totalCommands}`,
-            `${mon.clients || 'Clients'}: ${c.clients.connected}`,
-            `${mon.blocked || 'Blocked'}: ${c.clients.blocked}`,
-            `${mon.hitsMisses || 'Hit Rate'}: ${c.stats.hitRate}%`,
-            `${mon.hitsAndMisses || 'Hits / Misses'}: ${c.stats.hits} / ${c.stats.misses}`,
-            `${mon.networkIo || 'Network I/O'}: ${c.stats.inputKbps.toFixed(1)} / ${c.stats.outputKbps.toFixed(1)} KB/s`,
-            `${mon.expired || 'Expired'}: ${c.stats.expiredKeys}`,
-            `${mon.evicted || 'Evicted'}: ${c.stats.evictedKeys}`,
+            `${mon.memory}: ${c.memory.usedHuman}`,
+            `${mon.rss}: ${c.memory.rssHuman}`,
+            `${mon.peak}: ${c.memory.peakHuman}`,
+            `${mon.fragmentation}: ${c.memory.fragRatio}x`,
+            `${mon.opsPerSec}: ${c.stats.opsPerSec}`,
+            `${mon.totalCommands}: ${c.stats.totalCommands}`,
+            `${mon.clients}: ${c.clients.connected}`,
+            `${mon.blocked}: ${c.clients.blocked}`,
+            `${mon.hitsMisses}: ${c.stats.hitRate}%`,
+            `${mon.hitsAndMisses}: ${c.stats.hits} / ${c.stats.misses}`,
+            `${mon.networkIo}: ${c.stats.inputKbps.toFixed(1)} / ${c.stats.outputKbps.toFixed(1)} KB/s`,
+            `${mon.expired}: ${c.stats.expiredKeys}`,
+            `${mon.evicted}: ${c.stats.evictedKeys}`,
         ];
         this.downloadText(lines.join('\n'), `${this.connName}-overview.txt`);
     }
@@ -436,9 +436,9 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
 
     async resetSlowLog(): Promise<void> {
         try {
-            await this.common.confirm({ message: this.strings().page?.monitor?.confirmSlowLogReset || 'Are you sure to reset the slow log?' });
+            await this.common.confirm({ message: this.strings().page?.monitor?.confirmSlowLogReset });
             await this.socket.request({ action: 'monitor/slowlog-reset' });
-            this.common.toast({ message: this.strings().page?.monitor?.slowLogResetDone || 'Slow log reset' });
+            this.common.toast({ message: this.strings().page?.monitor?.slowLogResetDone });
         } catch {}
     }
 
@@ -517,71 +517,71 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
                 `  PULSE`,
                 `============================`,
                 ``,
-                `--- ${mon.title || 'Monitoring'} ---`,
+                `--- ${mon.title} ---`,
                 `Redis ${c.server.version} · ${c.server.mode} · Uptime: ${this.uptimeFormatted}`,
-                `${mon.memory || 'Memory'}: ${c.memory.usedHuman}`,
-                `${mon.rss || 'RSS'}: ${c.memory.rssHuman}`,
-                `${mon.peak || 'Peak'}: ${c.memory.peakHuman}`,
-                `${mon.fragmentation || 'Fragmentation'}: ${c.memory.fragRatio}x`,
-                `${mon.opsPerSec || 'Ops/sec'}: ${c.stats.opsPerSec}`,
-                `${mon.totalCommands || 'Total'}: ${c.stats.totalCommands}`,
-                `${mon.clients || 'Clients'}: ${c.clients.connected}`,
-                `${mon.blocked || 'Blocked'}: ${c.clients.blocked}`,
-                `${mon.hitsMisses || 'Hit Rate'}: ${c.stats.hitRate}%`,
-                `${mon.hitsAndMisses || 'Hits / Misses'}: ${c.stats.hits} / ${c.stats.misses}`,
-                `${mon.networkIo || 'Network I/O'}: ${c.stats.inputKbps.toFixed(1)} / ${c.stats.outputKbps.toFixed(1)} KB/s`,
-                `${mon.expired || 'Expired'}: ${c.stats.expiredKeys}`,
-                `${mon.evicted || 'Evicted'}: ${c.stats.evictedKeys}`,
+                `${mon.memory}: ${c.memory.usedHuman}`,
+                `${mon.rss}: ${c.memory.rssHuman}`,
+                `${mon.peak}: ${c.memory.peakHuman}`,
+                `${mon.fragmentation}: ${c.memory.fragRatio}x`,
+                `${mon.opsPerSec}: ${c.stats.opsPerSec}`,
+                `${mon.totalCommands}: ${c.stats.totalCommands}`,
+                `${mon.clients}: ${c.clients.connected}`,
+                `${mon.blocked}: ${c.clients.blocked}`,
+                `${mon.hitsMisses}: ${c.stats.hitRate}%`,
+                `${mon.hitsAndMisses}: ${c.stats.hits} / ${c.stats.misses}`,
+                `${mon.networkIo}: ${c.stats.inputKbps.toFixed(1)} / ${c.stats.outputKbps.toFixed(1)} KB/s`,
+                `${mon.expired}: ${c.stats.expiredKeys}`,
+                `${mon.evicted}: ${c.stats.evictedKeys}`,
             );
 
             // Dashboard sections
             const si = this.serverInfo;
             if (si) {
-                sections.push(``, `--- ${mon.serverInfo || 'Server Info'} ---`);
-                sections.push(`${mon.os || 'OS'}: ${si.os}`, `${mon.port || 'Port'}: ${si.port}`, `${mon.pid || 'Process ID'}: ${si.pid}`);
-                if (si.configFile) sections.push(`${mon.configFile || 'Config File'}: ${si.configFile}`);
-                sections.push(`${mon.cpuSys || 'System'} CPU: ${si.cpuSys}`, `${mon.cpuUser || 'User'} CPU: ${si.cpuUser}`);
+                sections.push(``, `--- ${mon.serverInfo} ---`);
+                sections.push(`${mon.os}: ${si.os}`, `${mon.port}: ${si.port}`, `${mon.pid}: ${si.pid}`);
+                if (si.configFile) sections.push(`${mon.configFile}: ${si.configFile}`);
+                sections.push(`${mon.cpuSys} CPU: ${si.cpuSys}`, `${mon.cpuUser} CPU: ${si.cpuUser}`);
             }
             const pi = this.persistenceInfo;
             if (pi) {
-                sections.push(``, `--- ${mon.persistence || 'Persistence'} ---`);
-                sections.push(`${mon.rdbLastSave || 'RDB Last Save'}: ${pi.rdbLastSave}`, `${mon.rdbStatus || 'RDB Status'}: ${pi.rdbStatus}`);
-                sections.push(`${mon.rdbChanges || 'Changes Since Last Save'}: ${pi.rdbChanges}`, `${mon.aofEnabled || 'AOF Enabled'}: ${pi.aofEnabled}`);
-                if (pi.aofSize) sections.push(`${mon.aofSize || 'AOF Size'}: ${pi.aofSize}`);
+                sections.push(``, `--- ${mon.persistence} ---`);
+                sections.push(`${mon.rdbLastSave}: ${pi.rdbLastSave}`, `${mon.rdbStatus}: ${pi.rdbStatus}`);
+                sections.push(`${mon.rdbChanges}: ${pi.rdbChanges}`, `${mon.aofEnabled}: ${pi.aofEnabled}`);
+                if (pi.aofSize) sections.push(`${mon.aofSize}: ${pi.aofSize}`);
             }
             const ri = this.replicationInfo;
             if (ri) {
-                sections.push(``, `--- ${mon.replication || 'Replication'} ---`);
-                sections.push(`${mon.role || 'Role'}: ${ri.role}`);
-                if (ri.replicas !== undefined) sections.push(`${mon.replicas || 'Connected Replicas'}: ${ri.replicas}`);
-                if (ri.masterHost) sections.push(`${mon.masterHost || 'Master Host'}: ${ri.masterHost}:${ri.masterPort}`);
-                if (ri.linkStatus) sections.push(`${mon.linkStatus || 'Link Status'}: ${ri.linkStatus}`);
+                sections.push(``, `--- ${mon.replication} ---`);
+                sections.push(`${mon.role}: ${ri.role}`);
+                if (ri.replicas !== undefined) sections.push(`${mon.replicas}: ${ri.replicas}`);
+                if (ri.masterHost) sections.push(`${mon.masterHost}: ${ri.masterHost}:${ri.masterPort}`);
+                if (ri.linkStatus) sections.push(`${mon.linkStatus}: ${ri.linkStatus}`);
             }
             const ks = this.keyspaceEntries;
             if (ks.length > 0) {
-                sections.push(``, `--- ${mon.keyspace || 'Keyspace'} ---`);
-                sections.push(...ks.map(e => `${e.db}: ${mon.keys || 'Keys'}: ${e.keys}, ${mon.expires || 'Expires'}: ${e.expires}`));
+                sections.push(``, `--- ${mon.keyspace} ---`);
+                sections.push(...ks.map(e => `${e.db}: ${mon.keys}: ${e.keys}, ${mon.expires}: ${e.expires}`));
             }
             const mods = this.modulesList;
             if (mods.length > 0) {
-                sections.push(``, `--- ${mon.modules || 'Loaded Modules'} ---`);
+                sections.push(``, `--- ${mon.modules} ---`);
                 sections.push(...mods.map(m => `${m.name} v${m.ver}`));
             } else {
-                sections.push(``, `--- ${mon.modules || 'Loaded Modules'} ---`, mon.noModules || 'No modules loaded');
+                sections.push(``, `--- ${mon.modules} ---`, mon.noModules);
             }
 
             if (c.slowlog.length > 0) {
-                sections.push(``, `--- ${mon.slowLog || 'Slow Log'} ---`);
+                sections.push(``, `--- ${mon.slowLog} ---`);
                 sections.push(...c.slowlog.map(e => `${e.duration}µs ${e.command}`));
             }
 
             if (this.clientList.length > 0) {
-                sections.push(``, `--- ${mon.clientList || 'Client List'} ---`);
+                sections.push(``, `--- ${mon.clientList} ---`);
                 sections.push(...this.clientList.map(cl => `${cl.addr} ${cl.name || ''} db${cl.db} ${cl.cmd} idle:${cl.idle}s`));
             }
 
             if (this.topKeys.length > 0) {
-                sections.push(``, `--- ${mon.topKeys || 'Top Keys by Memory'} ---`);
+                sections.push(``, `--- ${mon.topKeys} ---`);
                 sections.push(...this.topKeys.map((e, i) => `#${i + 1} ${e.key} ${this.formatBytes(e.bytes)}`));
             }
 
@@ -599,27 +599,27 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
 
                     sections.push(``, ``, `============================`, `  ANALYSIS`, `============================`);
 
-                    sections.push(``, `--- ${a.keysScanned || 'Keys Scanned'} ---`, `${a.keysScanned || 'Keys Scanned'}: ${d.totalScanned} / ${d.dbSize}`);
+                    sections.push(``, `--- ${a.keysScanned} ---`, `${a.keysScanned}: ${d.totalScanned} / ${d.dbSize}`);
 
-                    sections.push(``, `--- ${a.memoryBreakdown || 'Memory Breakdown'} ---`);
-                    sections.push(`${a.totalMemory || 'Total'}: ${m.usedHuman}`, `${a.rssMemory || 'RSS'}: ${m.rssHuman}`, `${a.peakMemory || 'Peak'}: ${m.peakHuman}`);
-                    sections.push(`${a.overheadMemory || 'Overhead'}: ${this.formatBytes(m.overhead)}`, `${a.datasetMemory || 'Dataset'}: ${this.formatBytes(m.dataset)}`);
-                    sections.push(`${a.luaMemory || 'Lua'}: ${this.formatBytes(m.lua)}`, `${a.fragmentation || 'Fragmentation'}: ${m.fragRatio}x`, `${a.allocator || 'Allocator'}: ${m.allocator}`);
+                    sections.push(``, `--- ${a.memoryBreakdown} ---`);
+                    sections.push(`${a.totalMemory}: ${m.usedHuman}`, `${a.rssMemory}: ${m.rssHuman}`, `${a.peakMemory}: ${m.peakHuman}`);
+                    sections.push(`${a.overheadMemory}: ${this.formatBytes(m.overhead)}`, `${a.datasetMemory}: ${this.formatBytes(m.dataset)}`);
+                    sections.push(`${a.luaMemory}: ${this.formatBytes(m.lua)}`, `${a.fragmentation}: ${m.fragRatio}x`, `${a.allocator}: ${m.allocator}`);
 
-                    sections.push(``, `--- ${a.typeDistribution || 'Type Distribution'} ---`);
-                    sections.push(...typeEntries.map((t: any) => `${t.type}: ${t.count} ${a.keyCount || 'keys'}, ${this.formatBytes(t.bytes)}`));
+                    sections.push(``, `--- ${a.typeDistribution} ---`);
+                    sections.push(...typeEntries.map((t: any) => `${t.type}: ${t.count} ${a.keyCount}, ${this.formatBytes(t.bytes)}`));
 
                     if (d.prefixMemory?.length > 0) {
-                        sections.push(``, `--- ${a.prefixMemory || 'Memory by Prefix'} ---`);
-                        sections.push(...d.prefixMemory.map((p: any, i: number) => `#${i + 1} ${p.prefix} \u2014 ${p.keyCount} ${a.keyCount || 'keys'}, ${this.formatBytes(p.totalBytes)}`));
+                        sections.push(``, `--- ${a.prefixMemory} ---`);
+                        sections.push(...d.prefixMemory.map((p: any, i: number) => `#${i + 1} ${p.prefix} \u2014 ${p.keyCount} ${a.keyCount}, ${this.formatBytes(p.totalBytes)}`));
                     }
 
-                    sections.push(``, `--- ${a.expirationOverview || 'Key Expiration'} ---`);
-                    sections.push(`${a.withTTL || 'With TTL'}: ${exp.withTTL}`, `${a.persistent || 'Persistent'}: ${exp.persistent}`, `${a.avgTTL || 'Average TTL'}: ${exp.avgTTL}s`);
+                    sections.push(``, `--- ${a.expirationOverview} ---`);
+                    sections.push(`${a.withTTL}: ${exp.withTTL}`, `${a.persistent}: ${exp.persistent}`, `${a.avgTTL}: ${exp.avgTTL}s`);
 
                     analysisChartItems = [
-                        { name: a.typeDistribution || 'Type Distribution', items: typeEntries.map((t: any) => ({ label: t.type, value: t.bytes })) },
-                        { name: a.prefixMemory || 'Memory by Prefix', items: (d.prefixMemory || []).slice(0, 20).map((p: any) => ({ label: p.prefix, value: p.totalBytes })) },
+                        { name: a.typeDistribution, items: typeEntries.map((t: any) => ({ label: t.type, value: t.bytes })) },
+                        { name: a.prefixMemory, items: (d.prefixMemory || []).slice(0, 20).map((p: any) => ({ label: p.prefix, value: p.totalBytes })) },
                     ];
                 }
             } catch { /* analysis optional */ }
@@ -763,27 +763,27 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
             series: Array<{ label: string; color: string; values: number[]; fill?: boolean }>;
         }> = [
             {
-                label: (s.memory || 'Memory') + ' (MB)',
+                label: (s.memory) + ' (MB)',
                 series: [
-                    { label: s.memory || 'Memory', color: colors.primary, values: data.memUsed, fill: true },
+                    { label: s.memory, color: colors.primary, values: data.memUsed, fill: true },
                     { label: 'RSS', color: colors.accent, values: data.memRss },
                 ],
             },
             {
-                label: s.opsPerSec || 'Ops/sec',
+                label: s.opsPerSec,
                 series: [
-                    { label: s.opsPerSec || 'Ops/s', color: colors.primary, values: data.ops, fill: true },
+                    { label: s.opsPerSec, color: colors.primary, values: data.ops, fill: true },
                 ],
             },
             {
-                label: s.clients || 'Clients',
+                label: s.clients,
                 series: [
-                    { label: s.clients || 'Connected', color: colors.primary, values: data.connected },
-                    { label: s.blocked || 'Blocked', color: colors.warn, values: data.blocked },
+                    { label: s.clients, color: colors.primary, values: data.connected },
+                    { label: s.blocked, color: colors.warn, values: data.blocked },
                 ],
             },
             {
-                label: (s.networkIo || 'Network I/O') + ' (KB/s)',
+                label: (s.networkIo) + ' (KB/s)',
                 series: [
                     { label: '\u2193 In', color: colors.primary, values: data.netIn, fill: true },
                     { label: '\u2191 Out', color: colors.accent, values: data.netOut },
@@ -1202,7 +1202,7 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
                 },
             ],
             series: [
-                { label: this.strings().label?.time || 'Time', value: (_: any, rawValue: number) => rawValue ? formatTime(rawValue * 1000) : '' },
+                { label: this.strings().label?.time, value: (_: any, rawValue: number) => rawValue ? formatTime(rawValue * 1000) : '' },
                 ...seriesConfig,
             ],
         };
@@ -1225,7 +1225,7 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
 
         this.memoryPlot = new this.uPlot(
             this.createOpts(this.getChartWidth(memEl), [
-                { label: s.memory || 'Memory', stroke: colors.primary, width: 2, fill: colors.primary + '15' },
+                { label: s.memory, stroke: colors.primary, width: 2, fill: colors.primary + '15' },
                 { label: 'RSS', stroke: colors.accent, width: 2 },
             ]),
             [data.timestamps, data.memUsed, data.memRss],
@@ -1234,7 +1234,7 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
 
         this.opsPlot = new this.uPlot(
             this.createOpts(this.getChartWidth(opsEl), [
-                { label: s.opsPerSec || 'Ops/s', stroke: colors.primary, width: 2, fill: colors.primary + '20' },
+                { label: s.opsPerSec, stroke: colors.primary, width: 2, fill: colors.primary + '20' },
             ]),
             [data.timestamps, data.ops],
             opsEl,
@@ -1242,8 +1242,8 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
 
         this.clientsPlot = new this.uPlot(
             this.createOpts(this.getChartWidth(cliEl), [
-                { label: s.clients || 'Connected', stroke: colors.primary, width: 2 },
-                { label: s.blocked || 'Blocked', stroke: colors.warn, width: 2 },
+                { label: s.clients, stroke: colors.primary, width: 2 },
+                { label: s.blocked, stroke: colors.warn, width: 2 },
             ]),
             [data.timestamps, data.connected, data.blocked],
             cliEl,

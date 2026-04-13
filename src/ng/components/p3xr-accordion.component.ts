@@ -31,7 +31,7 @@ import { I18nService } from '../services/i18n.service';
                     </div>
                     @if (collapsible) {
                         <button mat-icon-button (click)="toggle()" class="p3xr-accordion-toggle"
-                            [matTooltip]="extended ? (strings().intention?.collapse || 'Collapse') : (strings().intention?.extend || 'Extend')">
+                            [matTooltip]="extended ? (strings().intention?.collapse) : (strings().intention?.extend)">
                             <mat-icon>{{ extended ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon>
                         </button>
                     }

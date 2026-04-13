@@ -70,8 +70,8 @@ async function searchByElement() {
     try {
         const resp: any = await request({ action: 'vectorset/sim', payload: { key: props.keyName, mode: 'element', element: simSearchInput.value.trim(), count: simCountInput.value, filter: simFilterInput.value.trim() || undefined } })
         simResults.value = resp.results || []
-        common.toast(str(strings.value?.page?.key?.vectorset?.searchComplete) || 'Search complete')
-    } catch (e: any) { common.toast(e.message || 'Error') }
+        common.toast(str(strings.value?.page?.key?.vectorset?.searchComplete))
+    } catch (e: any) { common.toast(e.message) }
 }
 
 async function searchByVector() {
@@ -80,16 +80,16 @@ async function searchByVector() {
         const values = simSearchInput.value.split(',').map(Number)
         const resp: any = await request({ action: 'vectorset/sim', payload: { key: props.keyName, mode: 'vector', values, count: simCountInput.value, filter: simFilterInput.value.trim() || undefined } })
         simResults.value = resp.results || []
-        common.toast(str(strings.value?.page?.key?.vectorset?.searchComplete) || 'Search complete')
-    } catch (e: any) { common.toast(e.message || 'Error') }
+        common.toast(str(strings.value?.page?.key?.vectorset?.searchComplete))
+    } catch (e: any) { common.toast(e.message) }
 }
 
 async function searchByElementDirect(element: string) {
     try {
         const resp: any = await request({ action: 'vectorset/sim', payload: { key: props.keyName, mode: 'element', element, count: simCountInput.value } })
         simResults.value = resp.results || []
-        common.toast(str(strings.value?.page?.key?.vectorset?.searchComplete) || 'Search complete')
-    } catch (e: any) { common.toast(e.message || 'Error') }
+        common.toast(str(strings.value?.page?.key?.vectorset?.searchComplete))
+    } catch (e: any) { common.toast(e.message) }
 }
 
 async function getAttributes(element: string) {
@@ -98,7 +98,7 @@ async function getAttributes(element: string) {
         const attrs = resp.attributes
         common.toast(attrs && Object.keys(attrs).length > 0
             ? `${element}: ${JSON.stringify(attrs)}`
-            : `${element}: ${str(strings.value?.page?.key?.vectorset?.noAttributes) || 'No attributes'}`)
+            : `${element}: ${str(strings.value?.page?.key?.vectorset?.noAttributes)}`)
     } catch (e: any) { if (e?.message) common.toast(e.message) }
 }
 
@@ -106,17 +106,17 @@ async function addElement() {
     if (!elementInput.value.trim() || !vectorInput.value.trim()) return
     try {
         await request({ action: 'vectorset/add', payload: { key: props.keyName, element: elementInput.value.trim(), values: vectorInput.value.split(',').map(Number) } })
-        common.toast(str(strings.value?.page?.key?.vectorset?.addedSuccessfully) || 'Element added successfully')
+        common.toast(str(strings.value?.page?.key?.vectorset?.addedSuccessfully))
         elementInput.value = ''; vectorInput.value = ''
         emit('refresh'); loadElements()
-    } catch (e: any) { common.toast(e.message || 'Error') }
+    } catch (e: any) { common.toast(e.message) }
 }
 
 async function removeElement(element: string) {
     try {
-        await common.confirm({ message: str(strings.value?.confirm?.delete) || 'Delete?' })
+        await common.confirm({ message: str(strings.value?.confirm?.delete) })
         await request({ action: 'vectorset/remove', payload: { key: props.keyName, element } })
-        common.toast(str(strings.value?.page?.key?.vectorset?.deletedSuccessfully) || 'Element deleted successfully')
+        common.toast(str(strings.value?.page?.key?.vectorset?.deletedSuccessfully))
         emit('refresh'); loadElements()
     } catch (e: any) { if (e?.message) common.toast(e.message) }
 }
@@ -126,10 +126,10 @@ async function removeElement(element: string) {
     <div class="p3xr-key-type-content">
         <!-- INFO -->
         <br />
-        <P3xrAccordion :title="str(strings?.page?.key?.vectorset?.info) || 'Info'" accordion-key="vs-info">
+        <P3xrAccordion :title="str(strings?.page?.key?.vectorset?.info)" accordion-key="vs-info">
             <template #actions>
-                <P3xrButton :icon="autoRefresh ? 'mdi-checkbox-marked' : 'mdi-checkbox-blank-outline'" :label="str(strings?.label?.autoRefresh) || 'Auto'" :breakpoint="1280" color="inherit" @click.stop="autoRefresh = !autoRefresh" />
-                <P3xrButton v-if="!autoRefresh" icon="mdi-refresh" :label="str(strings?.intention?.refresh) || 'Refresh'" :breakpoint="1280" color="inherit" @click.stop="emit('refresh'); loadElements()" />
+                <P3xrButton :icon="autoRefresh ? 'mdi-checkbox-marked' : 'mdi-checkbox-blank-outline'" :label="str(strings?.label?.autoRefresh)" :breakpoint="1280" color="inherit" @click.stop="autoRefresh = !autoRefresh" />
+                <P3xrButton v-if="!autoRefresh" icon="mdi-refresh" :label="str(strings?.intention?.refresh)" :breakpoint="1280" color="inherit" @click.stop="emit('refresh'); loadElements()" />
             </template>
             <v-list density="compact">
                 <template v-for="(item, i) in infoItems" :key="item.key">
@@ -146,13 +146,13 @@ async function removeElement(element: string) {
 
         <!-- ELEMENTS -->
         <br />
-        <P3xrAccordion :title="(str(strings?.page?.key?.vectorset?.elements) || 'Elements') + ` (${elements.length})`" accordion-key="vs-elements">
+        <P3xrAccordion :title="str(strings?.page?.key?.vectorset?.elements) + ` (${elements.length})`" accordion-key="vs-elements">
             <KeyPagerInline :paging="paging" @page-changed="updatePaging" />
             <div class="p3xr-key-table-header">
-                <span style="flex: 50%;">{{ str(strings?.page?.key?.vectorset?.element) || 'Element' }}</span>
-                <span style="flex: 20%;">{{ str(strings?.page?.key?.vectorset?.score) || 'Score' }}</span>
+                <span style="flex: 50%;">{{ str(strings?.page?.key?.vectorset?.element) }}</span>
+                <span style="flex: 20%;">{{ str(strings?.page?.key?.vectorset?.score) }}</span>
                 <span style="flex: 30%; text-align: right; display: flex; justify-content: flex-end; align-items: center;">
-                    <v-tooltip v-if="!isReadonly" :text="str(strings?.intention?.add) || 'Add'" location="top">
+                    <v-tooltip v-if="!isReadonly" :text="str(strings?.intention?.add)" location="top">
                         <template #activator="{ props: tp }"><v-icon v-bind="tp" style="cursor:pointer;color:inherit;" @click="showAddForm = !showAddForm">mdi-plus</v-icon></template>
                     </v-tooltip>
                 </span>
@@ -165,10 +165,10 @@ async function removeElement(element: string) {
                     <v-tooltip :text="'Find similar'" location="top"><template #activator="{ props: tp }">
                         <v-icon v-bind="tp" size="24" class="p3xr-key-icon" style="color:rgb(var(--v-theme-secondary));" @click="simSearchInput = elem.element; searchByElementDirect(elem.element)">mdi-magnify</v-icon>
                     </template></v-tooltip>
-                    <v-tooltip :text="str(strings?.page?.key?.vectorset?.attributes) || 'Attributes'" location="top"><template #activator="{ props: tp }">
+                    <v-tooltip :text="str(strings?.page?.key?.vectorset?.attributes)" location="top"><template #activator="{ props: tp }">
                         <v-icon v-bind="tp" size="24" class="p3xr-key-icon" style="color:rgb(var(--v-theme-secondary));" @click="getAttributes(elem.element)">mdi-information</v-icon>
                     </template></v-tooltip>
-                    <v-tooltip v-if="!isReadonly" :text="str(strings?.intention?.delete) || 'Delete'" location="top"><template #activator="{ props: tp }">
+                    <v-tooltip v-if="!isReadonly" :text="str(strings?.intention?.delete)" location="top"><template #activator="{ props: tp }">
                         <v-icon v-bind="tp" size="24" class="p3xr-key-icon" style="color:rgb(var(--v-theme-error));" @click="removeElement(elem.element)">mdi-delete</v-icon>
                     </template></v-tooltip>
                 </span>
@@ -177,32 +177,32 @@ async function removeElement(element: string) {
             <div v-if="!isReadonly && showAddForm" style="padding: 16px;">
                 <div class="p3xr-vs-controls">
                     <v-text-field density="compact" variant="outlined" hide-details style="flex: 1; min-width: 200px;"
-                        :label="str(strings?.page?.key?.vectorset?.elementName) || 'Element name'"
+                        :label="str(strings?.page?.key?.vectorset?.elementName)"
                         v-model="elementInput" @keyup.enter="addElement()" />
                     <v-text-field density="compact" variant="outlined" hide-details style="flex: 1; min-width: 200px;"
-                        :label="str(strings?.page?.key?.vectorset?.vectorValues) || 'Vector values'" placeholder="0.1, 0.2, 0.3"
+                        :label="str(strings?.page?.key?.vectorset?.vectorValues)" placeholder="0.1, 0.2, 0.3"
                         v-model="vectorInput" @keyup.enter="addElement()" />
-                    <P3xrButton icon="mdi-plus" :label="str(strings?.intention?.add) || 'Add'" raised color="primary" @click="addElement()" />
+                    <P3xrButton icon="mdi-plus" :label="str(strings?.intention?.add)" raised color="primary" @click="addElement()" />
                 </div>
             </div>
         </P3xrAccordion>
 
         <!-- SIMILARITY SEARCH -->
         <br />
-        <P3xrAccordion :title="str(strings?.page?.key?.vectorset?.similaritySearch) || 'Similarity Search'" accordion-key="vs-sim">
+        <P3xrAccordion :title="str(strings?.page?.key?.vectorset?.similaritySearch)" accordion-key="vs-sim">
             <div style="padding: 16px;">
                 <div class="p3xr-vs-controls">
                     <v-text-field density="compact" variant="outlined" hide-details style="flex: 1; min-width: 200px;"
-                        :label="str(strings?.page?.key?.vectorset?.searchTerm) || 'Search term'"
+                        :label="str(strings?.page?.key?.vectorset?.searchTerm)"
                         v-model="simSearchInput" @keyup.enter="searchByElement()" />
                     <v-text-field density="compact" variant="outlined" hide-details type="number" style="width: 80px; max-width: 80px;"
-                        :label="str(strings?.page?.key?.vectorset?.count) || 'Count'"
+                        :label="str(strings?.page?.key?.vectorset?.count)"
                         v-model.number="simCountInput" />
                     <v-text-field v-if="supportsFilter" density="compact" variant="outlined" hide-details style="flex: 1; min-width: 150px;"
-                        :label="str(strings?.page?.key?.vectorset?.filter) || 'Filter'" placeholder="attr == 'value'"
+                        :label="str(strings?.page?.key?.vectorset?.filter)" placeholder="attr == 'value'"
                         v-model="simFilterInput" @keyup.enter="searchByElement()" />
-                    <P3xrButton icon="mdi-account" :label="str(strings?.page?.key?.vectorset?.byElement) || 'By Element'" raised color="primary" @click="searchByElement()" />
-                    <P3xrButton icon="mdi-code-array" :label="str(strings?.page?.key?.vectorset?.byVector) || 'By Vector'" raised color="primary" @click="searchByVector()" />
+                    <P3xrButton icon="mdi-account" :label="str(strings?.page?.key?.vectorset?.byElement)" raised color="primary" @click="searchByElement()" />
+                    <P3xrButton icon="mdi-code-array" :label="str(strings?.page?.key?.vectorset?.byVector)" raised color="primary" @click="searchByVector()" />
                 </div>
                 <template v-if="simResults.length > 0">
                     <v-divider class="my-2" />

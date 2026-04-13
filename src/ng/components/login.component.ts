@@ -58,14 +58,14 @@ import { switchGui } from '../../core/gui-switch';
 
                 <div class="p3xr-dialog-content">
                     <mat-form-field class="full-width">
-                        <mat-label>{{ i18n.strings().form?.connection?.label?.username || 'Username' }}</mat-label>
+                        <mat-label>{{ i18n.strings().form?.connection?.label?.username }}</mat-label>
                         <mat-icon matPrefix>person</mat-icon>
                         <input matInput name="username" type="text"
                                [(ngModel)]="username" autocomplete="username" />
                     </mat-form-field>
 
                     <mat-form-field class="full-width">
-                        <mat-label>{{ i18n.strings().form?.connection?.label?.password || 'Password' }}</mat-label>
+                        <mat-label>{{ i18n.strings().form?.connection?.label?.password }}</mat-label>
                         <mat-icon matPrefix>lock</mat-icon>
                         <input matInput name="password"
                                [type]="hidePassword ? 'password' : 'text'"
@@ -88,7 +88,7 @@ import { switchGui } from '../../core/gui-switch';
                     <button mat-raised-button class="btn-primary" type="submit"
                             [disabled]="loading || !username || !password">
                         <mat-icon>login</mat-icon>
-                        {{ i18n.strings().intention?.ok || 'Login' }}
+                        {{ i18n.strings().intention?.ok }}
                     </button>
                 </div>
             </form>
@@ -153,6 +153,6 @@ export class LoginComponent {
 
     getErrorMessage(error: string): string {
         const strings = this.i18n.strings();
-        return strings?.confirm?.invalidCredentials || 'Invalid username or password.';
+        return strings?.confirm?.invalidCredentials;
     }
 }

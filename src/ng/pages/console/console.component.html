@@ -7,7 +7,7 @@
 
             @if (type !== 'quick') {
                 <span class="material-icons" style="margin-right: 6px;">terminal</span>
-                <span class="p3xr-console-title">{{ strings().label?.console || 'Console' }}</span>
+                <span class="p3xr-console-title">{{ strings().label?.console }}</span>
                 <span class="p3xr-toolbar-spacer"></span>
 
                 <span class="p3xr-console-toolbar-actions">
@@ -17,14 +17,14 @@
                             <span>Auto AI</span>
                         </span>
                     }
-                    <p3xr-ng-button [label]="strings().label?.redisCommandsReference || 'Redis Commands'" mdIcon="menu_book"
+                    <p3xr-ng-button [label]="strings().label?.redisCommandsReference" mdIcon="menu_book"
                         (click)="openCommands($event)"></p3xr-ng-button>
-                    <p3xr-ng-button [label]="strings().intention?.clear || 'Clear'" mdIcon="backspace"
+                    <p3xr-ng-button [label]="strings().intention?.clear" mdIcon="backspace"
                         (click)="clearConsole()"></p3xr-ng-button>
                 </span>
             } @else {
                 <span class="material-icons" style="margin-right: 6px;">terminal</span>
-                <span class="p3xr-console-title">{{ embedded ? (strings().label?.console || 'Console') : (strings().intention?.quickConsole || 'Quick Console') }}</span>
+                <span class="p3xr-console-title">{{ embedded ? (strings().label?.console) : (strings().intention?.quickConsole) }}</span>
                 <span class="p3xr-toolbar-spacer"></span>
 
                 <span class="p3xr-console-toolbar-actions">
@@ -34,13 +34,13 @@
                             <span>Auto AI</span>
                         </span>
                     }
-                    <p3xr-ng-button [label]="strings().label?.redisCommandsReference || 'Redis Commands'" mdIcon="menu_book"
+                    <p3xr-ng-button [label]="strings().label?.redisCommandsReference" mdIcon="menu_book"
                         (click)="openCommands($event)"></p3xr-ng-button>
-                    <p3xr-ng-button [label]="strings().intention?.clear || 'Clear'" mdIcon="backspace"
+                    <p3xr-ng-button [label]="strings().intention?.clear" mdIcon="backspace"
                         (click)="clearConsole()"></p3xr-ng-button>
 
                     @if (!embedded) {
-                        <p3xr-ng-button [label]="strings().intention?.close || 'Close'" mdIcon="close"
+                        <p3xr-ng-button [label]="strings().intention?.close" mdIcon="close"
                             (click)="closeConsole()"></p3xr-ng-button>
                     }
                 </span>
@@ -77,7 +77,7 @@
                (keydown)="onKeyDown($event)"
                [matAutocomplete]="auto"
                autocomplete="off"
-               [placeholder]="aiLoading ? (strings().label?.aiTranslating || 'Translating...') : ''"
+               [placeholder]="aiLoading ? (strings().label?.aiTranslating) : ''"
                [style.background]="'var(--p3xr-input-bg)'"
                [style.color]="'var(--p3xr-input-color)'"
                [style.border-color]="aiLoading ? 'var(--mat-sys-primary, var(--p3xr-input-border-color))' : 'var(--p3xr-input-border-color, var(--p3xr-border-color))'"></textarea>

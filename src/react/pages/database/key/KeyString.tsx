@@ -93,7 +93,7 @@ export default function KeyString({ response, value: initValue, valueBuffer: ini
 
             // Undo support
             if (settings.undoEnabled && oldVal !== undefined && oldVal !== v) {
-                const undoClicked = await useCommonStore.getState().toastWithUndo(strings?.status?.saved || 'Saved')
+                const undoClicked = await useCommonStore.getState().toastWithUndo(strings?.status?.saved)
                 if (undoClicked) {
                     try {
                         overlay.show({ message: 'Undo...' })
@@ -102,7 +102,7 @@ export default function KeyString({ response, value: initValue, valueBuffer: ini
                         setOriginalValue(oldVal)
                         onRefresh()
                         overlay.hide()
-                        useCommonStore.getState().toast(strings?.status?.reverted || 'Reverted')
+                        useCommonStore.getState().toast(strings?.status?.reverted)
                     } catch(e) {
                         useCommonStore.getState().generalHandleError(e)
                         overlay.hide()
@@ -313,13 +313,13 @@ export default function KeyString({ response, value: initValue, valueBuffer: ini
                             onRefresh()
                             overlay.hide()
                             if (settings.undoEnabled && oldVal !== result.obj) {
-                                const undoClicked = await useCommonStore.getState().toastWithUndo(strings?.status?.saved || 'Saved')
+                                const undoClicked = await useCommonStore.getState().toastWithUndo(strings?.status?.saved)
                                 if (undoClicked) {
                                     overlay.show({ message: 'Undo...' })
                                     await request({ action: 'key/set', payload: { type: response?.type, key: keyName, value: oldVal } })
                                     onRefresh()
                                     overlay.hide()
-                                    useCommonStore.getState().toast(strings?.status?.reverted || 'Reverted')
+                                    useCommonStore.getState().toast(strings?.status?.reverted)
                                 }
                             }
                         } catch (e) { generalHandleError(e); overlay.hide() }

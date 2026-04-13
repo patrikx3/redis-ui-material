@@ -267,7 +267,7 @@ export default function ConsoleComponent({ embedded = false, collapsed = false }
     // --- AI query ---
     const handleAiQuery = useCallback(async (prompt: string, originalInput: string): Promise<boolean> => {
         if (prompt.length > 4096) {
-            toast(strings?.error?.aiPromptTooLong || 'AI prompt too long (max 4096 characters)')
+            toast(strings?.error?.aiPromptTooLong)
             return false
         }
         setAiLoading(true)
@@ -310,7 +310,7 @@ export default function ConsoleComponent({ embedded = false, collapsed = false }
         } catch (e: any) {
             const msg = e.message || String(e)
             if (msg.includes('429') || msg.includes('rate_limit')) toast(strings?.page?.key?.label?.aiRateLimited)
-            else toast((strings?.page?.key?.label?.aiError || 'AI query failed') + ': ' + msg)
+            else toast(strings?.page?.key?.label?.aiError + ': ' + msg)
             return false
         } finally {
             setAiLoading(false)

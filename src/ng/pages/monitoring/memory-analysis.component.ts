@@ -227,9 +227,9 @@ export class MemoryAnalysisComponent implements OnInit, OnDestroy, AfterViewInit
         if (!this.data) return;
         const t = this.s();
         this.downloadText([
-            `${t.keysScanned || 'Keys Scanned'}: ${this.data.totalScanned} / ${this.data.dbSize}`,
-            `${t.topN || 'Top N'}: ${this.topN}`,
-            `${t.maxScanKeys || 'Max Scan Keys'}: ${this.maxScanKeys}`,
+            `${t.keysScanned}: ${this.data.totalScanned} / ${this.data.dbSize}`,
+            `${t.topN}: ${this.topN}`,
+            `${t.maxScanKeys}: ${this.maxScanKeys}`,
         ].join('\n'), `${this.connName}-analysis-overview.txt`);
     }
 
@@ -238,14 +238,14 @@ export class MemoryAnalysisComponent implements OnInit, OnDestroy, AfterViewInit
         const t = this.s();
         const m = this.data.memoryInfo;
         this.downloadText([
-            `${t.totalMemory || 'Total'}: ${m.usedHuman}`,
-            `${t.rssMemory || 'RSS'}: ${m.rssHuman}`,
-            `${t.peakMemory || 'Peak'}: ${m.peakHuman}`,
-            `${t.overheadMemory || 'Overhead'}: ${this.formatBytes(m.overhead)}`,
-            `${t.datasetMemory || 'Dataset'}: ${this.formatBytes(m.dataset)}`,
-            `${t.luaMemory || 'Lua'}: ${this.formatBytes(m.lua)}`,
-            `${t.fragmentation || 'Fragmentation'}: ${m.fragRatio}x`,
-            `${t.allocator || 'Allocator'}: ${m.allocator}`,
+            `${t.totalMemory}: ${m.usedHuman}`,
+            `${t.rssMemory}: ${m.rssHuman}`,
+            `${t.peakMemory}: ${m.peakHuman}`,
+            `${t.overheadMemory}: ${this.formatBytes(m.overhead)}`,
+            `${t.datasetMemory}: ${this.formatBytes(m.dataset)}`,
+            `${t.luaMemory}: ${this.formatBytes(m.lua)}`,
+            `${t.fragmentation}: ${m.fragRatio}x`,
+            `${t.allocator}: ${m.allocator}`,
         ].join('\n'), `${this.connName}-memory-breakdown.txt`);
     }
 
@@ -254,9 +254,9 @@ export class MemoryAnalysisComponent implements OnInit, OnDestroy, AfterViewInit
         const t = this.s();
         const e = this.data.expirationOverview;
         this.downloadText([
-            `${t.withTTL || 'With TTL'}: ${e.withTTL}`,
-            `${t.persistent || 'Persistent'}: ${e.persistent}`,
-            `${t.avgTTL || 'Average TTL'}: ${this.formatTTL(e.avgTTL)}`,
+            `${t.withTTL}: ${e.withTTL}`,
+            `${t.persistent}: ${e.persistent}`,
+            `${t.avgTTL}: ${this.formatTTL(e.avgTTL)}`,
         ].join('\n'), `${this.connName}-expiration.txt`);
     }
 

@@ -146,7 +146,7 @@ export class KeyProbabilisticComponent extends KeyTypeBase implements OnInit, On
                     increment: this.incrementInput,
                 },
             });
-            this.common.toast(this.strings()?.page?.key?.probabilistic?.addedSuccessfully || 'Item added successfully');
+            this.common.toast(this.strings()?.page?.key?.probabilistic?.addedSuccessfully);
             this.itemInput = '';
             this.refresh();
         } catch (e: any) {
@@ -169,8 +169,8 @@ export class KeyProbabilisticComponent extends KeyTypeBase implements OnInit, On
             const strings = this.strings();
             const exists = (response as any).result === 1;
             this.common.toast(`"${this.itemInput}" — ${exists
-                ? (strings?.page?.key?.probabilistic?.exists || 'Exists')
-                : (strings?.page?.key?.probabilistic?.doesNotExist || 'Does not exist')}`);
+                ? (strings?.page?.key?.probabilistic?.exists)
+                : (strings?.page?.key?.probabilistic?.doesNotExist)}`);
         } catch (e: any) {
             this.common.toast(e.message || 'Error');
         }
@@ -181,7 +181,7 @@ export class KeyProbabilisticComponent extends KeyTypeBase implements OnInit, On
         if (!this.itemInput.trim()) return;
         try {
             await this.common.confirm({
-                message: this.strings()?.confirm?.delete || 'Delete?',
+                message: this.strings()?.confirm?.delete,
             });
             await this.socket.request({
                 action: 'probabilistic/delete',
@@ -191,11 +191,11 @@ export class KeyProbabilisticComponent extends KeyTypeBase implements OnInit, On
                     item: this.itemInput.trim(),
                 },
             });
-            this.common.toast(this.strings()?.page?.key?.probabilistic?.deletedSuccessfully || 'Item deleted successfully');
+            this.common.toast(this.strings()?.page?.key?.probabilistic?.deletedSuccessfully);
             this.itemInput = '';
             this.refresh();
         } catch (e: any) {
-            if (e?.message) this.common.toast(e.message);
+            if (e?.message) this.common.toast(e.message || 'Error');
         }
         this.cdr.markForCheck();
     }
@@ -212,7 +212,7 @@ export class KeyProbabilisticComponent extends KeyTypeBase implements OnInit, On
                 },
             });
             const count = Array.isArray((response as any).result) ? (response as any).result[0] : (response as any).result;
-            this.common.toast(`"${this.itemInput}" — ${this.strings()?.page?.key?.probabilistic?.topkCount || 'Count'}: ${count}`);
+            this.common.toast(`"${this.itemInput}" — ${this.strings()?.page?.key?.probabilistic?.topkCount}: ${count}`);
         } catch (e: any) {
             this.common.toast(e.message || 'Error');
         }
@@ -231,7 +231,7 @@ export class KeyProbabilisticComponent extends KeyTypeBase implements OnInit, On
             });
             const strings = this.strings();
             const result = Array.isArray((response as any).result) ? (response as any).result[0] : (response as any).result;
-            this.common.toast(`${strings?.page?.key?.probabilistic?.quantile || 'Quantile'} ${this.quantileInput} = ${result}`);
+            this.common.toast(`${strings?.page?.key?.probabilistic?.quantile} ${this.quantileInput} = ${result}`);
         } catch (e: any) {
             this.common.toast(e.message || 'Error');
         }
@@ -241,7 +241,7 @@ export class KeyProbabilisticComponent extends KeyTypeBase implements OnInit, On
     async resetTdigest() {
         try {
             await this.common.confirm({
-                message: this.strings()?.page?.key?.probabilistic?.resetConfirm || 'Reset all data in this T-Digest?',
+                message: this.strings()?.page?.key?.probabilistic?.resetConfirm,
             });
             await this.socket.request({
                 action: 'probabilistic/delete',
@@ -253,7 +253,7 @@ export class KeyProbabilisticComponent extends KeyTypeBase implements OnInit, On
             this.common.toast('Reset');
             this.refresh();
         } catch (e: any) {
-            if (e?.message) this.common.toast(e.message);
+            if (e?.message) this.common.toast(e.message || 'Error');
         }
         this.cdr.markForCheck();
     }

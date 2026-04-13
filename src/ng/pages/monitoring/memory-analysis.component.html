@@ -1,29 +1,29 @@
 <!-- Memory Doctor -->
-<p3xr-ng-accordion [title]="s().memoryDoctor || 'Memory Doctor'" accordionKey="analysis-doctor">
+<p3xr-ng-accordion [title]="s().memoryDoctor" accordionKey="analysis-doctor">
     <div actions>
         <p3xr-ng-button
             (click)="toggleAutoDoctor(); $event.stopPropagation()"
-            [label]="strings().label?.autoRefresh || 'Auto'"
+            [label]="strings().label?.autoRefresh"
             [mdIcon]="autoRefreshDoctor ? 'check_box' : 'check_box_outline_blank'">
         </p3xr-ng-button>
         @if (!autoRefreshDoctor) {
             <p3xr-ng-button
                 (click)="runDoctor(); $event.stopPropagation()"
-                [label]="doctorLoading ? (strings().label?.loading || 'Loading...') : (strings().intention?.refresh || 'Refresh')"
+                [label]="doctorLoading ? (strings().label?.loading) : (strings().intention?.refresh)"
                 [mdIcon]="doctorLoading ? 'hourglass_empty' : 'refresh'"
                 [disabled]="doctorLoading">
             </p3xr-ng-button>
         }
         <p3xr-ng-button
             (click)="exportDoctor(); $event.stopPropagation()"
-            [label]="strings().intention?.export || 'Export'"
+            [label]="strings().intention?.export"
             mdIcon="download">
         </p3xr-ng-button>
     </div>
     <div content>
         @if (!doctorText) {
             <div style="padding: 12px 16px; opacity: 0.6;">
-                {{ s().doctorNoData || 'Click Refresh to run Memory Doctor diagnostics.' }}
+                {{ s().doctorNoData }}
             </div>
         } @else {
             <pre style="white-space: pre-wrap; font-family: 'Roboto Mono', monospace; font-size: 13px; padding: 12px 16px; margin: 0;">{{ doctorText }}</pre>
@@ -36,30 +36,30 @@
 @if (loading && !data) {
     <div class="p3xr-analysis-loading">
         <mat-icon>hourglass_empty</mat-icon>
-        <span>{{ s().running || 'Analyzing...' }}</span>
+        <span>{{ s().running }}</span>
     </div>
 }
 
 @if (!loading && !data) {
     <div class="p3xr-analysis-loading">
         <mat-icon>analytics</mat-icon>
-        <span>{{ s().noData || 'No data. Click Run Analysis to start.' }}</span>
+        <span>{{ s().noData }}</span>
     </div>
 }
 
 @if (data) {
     <!-- Controls + Server Info -->
-    <p3xr-ng-accordion [title]="s().title || 'Memory Analysis'" accordionKey="analysis-controls">
+    <p3xr-ng-accordion [title]="s().title" accordionKey="analysis-controls">
         <div actions>
             <p3xr-ng-button
                 (click)="runAnalysis(); $event.stopPropagation()"
-                [label]="loading ? (s().running || 'Analyzing...') : (s().runAnalysis || 'Run Analysis')"
+                [label]="loading ? (s().running) : (s().runAnalysis)"
                 [mdIcon]="loading ? 'hourglass_empty' : 'play_arrow'"
                 [disabled]="loading">
             </p3xr-ng-button>
             <p3xr-ng-button
                 (click)="exportOverview(); $event.stopPropagation()"
-                [label]="strings().intention?.export || 'Export'"
+                [label]="strings().intention?.export"
                 mdIcon="download">
             </p3xr-ng-button>
         </div>
@@ -67,14 +67,14 @@
             <mat-list>
                 <mat-list-item>
                     <div class="p3xr-settings-pair-row">
-                        <div class="p3xr-settings-row-label">{{ s().keysScanned || 'Keys Scanned' }}</div>
+                        <div class="p3xr-settings-row-label">{{ s().keysScanned }}</div>
                         <div class="p3xr-settings-row-value p3xr-mono">{{ data.totalScanned | number }} / {{ data.dbSize | number }}</div>
                     </div>
                 </mat-list-item>
                 <mat-divider></mat-divider>
                 <mat-list-item>
                     <div class="p3xr-settings-pair-row">
-                        <div class="p3xr-settings-row-label">{{ s().topN || 'Top N' }}</div>
+                        <div class="p3xr-settings-row-label">{{ s().topN }}</div>
                         <div class="p3xr-settings-row-value">
                             <p3xr-ng-input type="number" [(ngModel)]="topN" min="5" max="100"></p3xr-ng-input>
                         </div>
@@ -83,7 +83,7 @@
                 <mat-divider></mat-divider>
                 <mat-list-item>
                     <div class="p3xr-settings-pair-row">
-                        <div class="p3xr-settings-row-label">{{ s().maxScanKeys || 'Max Scan Keys' }}</div>
+                        <div class="p3xr-settings-row-label">{{ s().maxScanKeys }}</div>
                         <div class="p3xr-settings-row-value">
                             <p3xr-ng-input type="number" [(ngModel)]="maxScanKeys" min="100" max="100000" step="1000"></p3xr-ng-input>
                         </div>
@@ -96,11 +96,11 @@
     <br />
 
     <!-- Memory Breakdown -->
-    <p3xr-ng-accordion [title]="s().memoryBreakdown || 'Memory Breakdown'" accordionKey="analysis-memory-info">
+    <p3xr-ng-accordion [title]="s().memoryBreakdown" accordionKey="analysis-memory-info">
         <div actions>
             <p3xr-ng-button
                 (click)="exportMemoryBreakdown(); $event.stopPropagation()"
-                [label]="strings().intention?.export || 'Export'"
+                [label]="strings().intention?.export"
                 mdIcon="download">
             </p3xr-ng-button>
         </div>
@@ -108,56 +108,56 @@
             <mat-list>
                 <mat-list-item>
                     <div class="p3xr-settings-pair-row">
-                        <div class="p3xr-settings-row-label">{{ s().totalMemory || 'Total Memory' }}</div>
+                        <div class="p3xr-settings-row-label">{{ s().totalMemory }}</div>
                         <div class="p3xr-settings-row-value p3xr-mono">{{ data.memoryInfo.usedHuman }}</div>
                     </div>
                 </mat-list-item>
                 <mat-divider></mat-divider>
                 <mat-list-item>
                     <div class="p3xr-settings-pair-row">
-                        <div class="p3xr-settings-row-label">{{ s().rssMemory || 'RSS Memory' }}</div>
+                        <div class="p3xr-settings-row-label">{{ s().rssMemory }}</div>
                         <div class="p3xr-settings-row-value p3xr-mono">{{ data.memoryInfo.rssHuman }}</div>
                     </div>
                 </mat-list-item>
                 <mat-divider></mat-divider>
                 <mat-list-item>
                     <div class="p3xr-settings-pair-row">
-                        <div class="p3xr-settings-row-label">{{ s().peakMemory || 'Peak Memory' }}</div>
+                        <div class="p3xr-settings-row-label">{{ s().peakMemory }}</div>
                         <div class="p3xr-settings-row-value p3xr-mono">{{ data.memoryInfo.peakHuman }}</div>
                     </div>
                 </mat-list-item>
                 <mat-divider></mat-divider>
                 <mat-list-item>
                     <div class="p3xr-settings-pair-row">
-                        <div class="p3xr-settings-row-label">{{ s().overheadMemory || 'Overhead' }}</div>
+                        <div class="p3xr-settings-row-label">{{ s().overheadMemory }}</div>
                         <div class="p3xr-settings-row-value p3xr-mono">{{ formatBytes(data.memoryInfo.overhead) }}</div>
                     </div>
                 </mat-list-item>
                 <mat-divider></mat-divider>
                 <mat-list-item>
                     <div class="p3xr-settings-pair-row">
-                        <div class="p3xr-settings-row-label">{{ s().datasetMemory || 'Dataset' }}</div>
+                        <div class="p3xr-settings-row-label">{{ s().datasetMemory }}</div>
                         <div class="p3xr-settings-row-value p3xr-mono">{{ formatBytes(data.memoryInfo.dataset) }}</div>
                     </div>
                 </mat-list-item>
                 <mat-divider></mat-divider>
                 <mat-list-item>
                     <div class="p3xr-settings-pair-row">
-                        <div class="p3xr-settings-row-label">{{ s().luaMemory || 'Lua Memory' }}</div>
+                        <div class="p3xr-settings-row-label">{{ s().luaMemory }}</div>
                         <div class="p3xr-settings-row-value p3xr-mono">{{ formatBytes(data.memoryInfo.lua) }}</div>
                     </div>
                 </mat-list-item>
                 <mat-divider></mat-divider>
                 <mat-list-item>
                     <div class="p3xr-settings-pair-row">
-                        <div class="p3xr-settings-row-label">{{ s().fragmentation || 'Fragmentation' }}</div>
+                        <div class="p3xr-settings-row-label">{{ s().fragmentation }}</div>
                         <div class="p3xr-settings-row-value p3xr-mono">{{ data.memoryInfo.fragRatio }}x</div>
                     </div>
                 </mat-list-item>
                 <mat-divider></mat-divider>
                 <mat-list-item>
                     <div class="p3xr-settings-pair-row">
-                        <div class="p3xr-settings-row-label">{{ s().allocator || 'Allocator' }}</div>
+                        <div class="p3xr-settings-row-label">{{ s().allocator }}</div>
                         <div class="p3xr-settings-row-value p3xr-mono">{{ data.memoryInfo.allocator }}</div>
                     </div>
                 </mat-list-item>
@@ -168,11 +168,11 @@
     <br />
 
     <!-- Type Distribution -->
-    <p3xr-ng-accordion [title]="s().typeDistribution || 'Type Distribution'" accordionKey="analysis-type-dist">
+    <p3xr-ng-accordion [title]="s().typeDistribution" accordionKey="analysis-type-dist">
         <div actions>
             <p3xr-ng-button
                 (click)="exportChart(typeChartRef, 'type-distribution'); $event.stopPropagation()"
-                [label]="strings().intention?.export || 'Export'"
+                [label]="strings().intention?.export"
                 mdIcon="download">
             </p3xr-ng-button>
         </div>
@@ -198,11 +198,11 @@
     <br />
 
     <!-- Memory by Prefix -->
-    <p3xr-ng-accordion [title]="s().prefixMemory || 'Memory by Prefix'" accordionKey="analysis-prefix-mem">
+    <p3xr-ng-accordion [title]="s().prefixMemory" accordionKey="analysis-prefix-mem">
         <div actions>
             <p3xr-ng-button
                 (click)="exportChart(prefixChartRef, 'memory-by-prefix'); $event.stopPropagation()"
-                [label]="strings().intention?.export || 'Export'"
+                [label]="strings().intention?.export"
                 mdIcon="download">
             </p3xr-ng-button>
         </div>
@@ -229,11 +229,11 @@
     <br />
 
     <!-- Key Expiration Overview -->
-    <p3xr-ng-accordion [title]="s().expirationOverview || 'Key Expiration'" accordionKey="analysis-expiration">
+    <p3xr-ng-accordion [title]="s().expirationOverview" accordionKey="analysis-expiration">
         <div actions>
             <p3xr-ng-button
                 (click)="exportExpiration(); $event.stopPropagation()"
-                [label]="strings().intention?.export || 'Export'"
+                [label]="strings().intention?.export"
                 mdIcon="download">
             </p3xr-ng-button>
         </div>
@@ -241,21 +241,21 @@
             <mat-list>
                 <mat-list-item>
                     <div class="p3xr-settings-pair-row">
-                        <div class="p3xr-settings-row-label">{{ s().withTTL || 'With TTL' }}</div>
+                        <div class="p3xr-settings-row-label">{{ s().withTTL }}</div>
                         <div class="p3xr-settings-row-value p3xr-mono">{{ data.expirationOverview.withTTL | number }}</div>
                     </div>
                 </mat-list-item>
                 <mat-divider></mat-divider>
                 <mat-list-item>
                     <div class="p3xr-settings-pair-row">
-                        <div class="p3xr-settings-row-label">{{ s().persistent || 'Persistent' }}</div>
+                        <div class="p3xr-settings-row-label">{{ s().persistent }}</div>
                         <div class="p3xr-settings-row-value p3xr-mono">{{ data.expirationOverview.persistent | number }}</div>
                     </div>
                 </mat-list-item>
                 <mat-divider></mat-divider>
                 <mat-list-item>
                     <div class="p3xr-settings-pair-row">
-                        <div class="p3xr-settings-row-label">{{ s().avgTTL || 'Average TTL' }}</div>
+                        <div class="p3xr-settings-row-label">{{ s().avgTTL }}</div>
                         <div class="p3xr-settings-row-value p3xr-mono">{{ formatTTL(data.expirationOverview.avgTTL) }}</div>
                     </div>
                 </mat-list-item>

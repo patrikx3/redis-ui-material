@@ -17,10 +17,10 @@ import { RedisStateService } from '../../services/redis-state.service';
     template: `
         <div class="p3xr-monitoring-shell-container">
             <mat-tab-group class="p3xr-monitoring-tabs" [selectedIndex]="selectedTab" (selectedIndexChange)="onTabChange($event)">
-                <mat-tab [label]="strings().intention?.pulse || 'Pulse'"></mat-tab>
-                <mat-tab [label]="strings().intention?.profiler || 'Profiler'"></mat-tab>
-                <mat-tab [label]="strings().intention?.pubsubMonitor || 'PubSub'"></mat-tab>
-                <mat-tab [label]="strings().intention?.memoryAnalysis || 'Analysis'"></mat-tab>
+                <mat-tab [label]="strings().intention?.pulse"></mat-tab>
+                <mat-tab [label]="strings().intention?.profiler"></mat-tab>
+                <mat-tab [label]="strings().intention?.pubsubMonitor"></mat-tab>
+                <mat-tab [label]="strings().intention?.memoryAnalysis"></mat-tab>
             </mat-tab-group>
             <div class="p3xr-monitoring-shell-content">
                 <router-outlet></router-outlet>

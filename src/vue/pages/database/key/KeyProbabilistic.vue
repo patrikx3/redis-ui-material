@@ -60,11 +60,11 @@ async function addItem() {
     if (!itemInput.value.trim()) return
     try {
         await request({ action: 'probabilistic/add', payload: { key: props.keyName, type: type.value, item: itemInput.value.trim(), increment: incrementInput.value } })
-        common.toast(str(strings.value?.page?.key?.probabilistic?.addedSuccessfully) || 'Item added successfully')
+        common.toast(str(strings.value?.page?.key?.probabilistic?.addedSuccessfully))
         itemInput.value = ''
         emit('refresh')
         if (type.value === 'topk') loadTopkList()
-    } catch (e: any) { common.toast(e.message || 'Error') }
+    } catch (e: any) { common.toast(e.message) }
 }
 
 async function checkItem() {
@@ -72,16 +72,16 @@ async function checkItem() {
     try {
         const resp: any = await request({ action: 'probabilistic/check', payload: { key: props.keyName, type: type.value, item: itemInput.value.trim() } })
         const exists = resp.result === 1
-        common.toast(`"${itemInput.value}" — ${exists ? (str(strings.value?.page?.key?.probabilistic?.exists) || 'Exists') : (str(strings.value?.page?.key?.probabilistic?.doesNotExist) || 'Does not exist')}`)
-    } catch (e: any) { common.toast(e.message || 'Error') }
+        common.toast(`"${itemInput.value}" — ${exists ? str(strings.value?.page?.key?.probabilistic?.exists) : str(strings.value?.page?.key?.probabilistic?.doesNotExist)}`)
+    } catch (e: any) { common.toast(e.message) }
 }
 
 async function deleteItem() {
     if (!itemInput.value.trim()) return
     try {
-        await common.confirm({ message: str(strings.value?.confirm?.delete) || 'Delete?' })
+        await common.confirm({ message: str(strings.value?.confirm?.delete) })
         await request({ action: 'probabilistic/delete', payload: { key: props.keyName, type: type.value, item: itemInput.value.trim() } })
-        common.toast(str(strings.value?.page?.key?.probabilistic?.deletedSuccessfully) || 'Item deleted successfully')
+        common.toast(str(strings.value?.page?.key?.probabilistic?.deletedSuccessfully))
         itemInput.value = ''
         emit('refresh')
     } catch (e: any) { if (e?.message) common.toast(e.message) }
@@ -92,21 +92,21 @@ async function queryItem() {
     try {
         const resp: any = await request({ action: 'probabilistic/check', payload: { key: props.keyName, type: type.value, item: itemInput.value.trim() } })
         const count = Array.isArray(resp.result) ? resp.result[0] : resp.result
-        common.toast(`"${itemInput.value}" — ${str(strings.value?.page?.key?.probabilistic?.topkCount) || 'Count'}: ${count}`)
-    } catch (e: any) { common.toast(e.message || 'Error') }
+        common.toast(`"${itemInput.value}" — ${str(strings.value?.page?.key?.probabilistic?.topkCount)}: ${count}`)
+    } catch (e: any) { common.toast(e.message) }
 }
 
 async function queryQuantile() {
     try {
         const resp: any = await request({ action: 'probabilistic/check', payload: { key: props.keyName, type: type.value, quantile: quantileInput.value } })
         const result = Array.isArray(resp.result) ? resp.result[0] : resp.result
-        common.toast(`${str(strings.value?.page?.key?.probabilistic?.quantile) || 'Quantile'} ${quantileInput.value} = ${result}`)
-    } catch (e: any) { common.toast(e.message || 'Error') }
+        common.toast(`${str(strings.value?.page?.key?.probabilistic?.quantile)} ${quantileInput.value} = ${result}`)
+    } catch (e: any) { common.toast(e.message) }
 }
 
 async function resetTdigest() {
     try {
-        await common.confirm({ message: str(strings.value?.page?.key?.probabilistic?.resetConfirm) || 'Reset all data in this T-Digest?' })
+        await common.confirm({ message: str(strings.value?.page?.key?.probabilistic?.resetConfirm) })
         await request({ action: 'probabilistic/delete', payload: { key: props.keyName, type: 'tdigest' } })
         common.toast('Reset')
         emit('refresh')
@@ -125,10 +125,10 @@ async function loadTopkList() {
     <div class="p3xr-key-type-content">
         <!-- INFO -->
         <br />
-        <P3xrAccordion :title="str(strings?.page?.key?.probabilistic?.info) || 'Info'" accordion-key="prob-info">
+        <P3xrAccordion :title="str(strings?.page?.key?.probabilistic?.info)" accordion-key="prob-info">
             <template #actions>
-                <P3xrButton :icon="autoRefresh ? 'mdi-checkbox-marked' : 'mdi-checkbox-blank-outline'" :label="str(strings?.label?.autoRefresh) || 'Auto'" :breakpoint="1280" color="inherit" @click.stop="autoRefresh = !autoRefresh" />
-                <P3xrButton v-if="!autoRefresh" icon="mdi-refresh" :label="str(strings?.intention?.refresh) || 'Refresh'" :breakpoint="1280" color="inherit" @click.stop="emit('refresh'); if (type === 'topk') loadTopkList()" />
+                <P3xrButton :icon="autoRefresh ? 'mdi-checkbox-marked' : 'mdi-checkbox-blank-outline'" :label="str(strings?.label?.autoRefresh)" :breakpoint="1280" color="inherit" @click.stop="autoRefresh = !autoRefresh" />
+                <P3xrButton v-if="!autoRefresh" icon="mdi-refresh" :label="str(strings?.intention?.refresh)" :breakpoint="1280" color="inherit" @click.stop="emit('refresh'); if (type === 'topk') loadTopkList()" />
             </template>
             <v-list density="compact">
                 <template v-for="(item, i) in infoItems" :key="item.key">
@@ -145,29 +145,29 @@ async function loadTopkList() {
 
         <!-- ACTIONS -->
         <br />
-        <P3xrAccordion :title="type === 'topk' ? (str(strings?.page?.key?.probabilistic?.topkList) || 'Top Items') : (str(strings?.page?.key?.probabilistic?.addItem) || 'Actions')" accordion-key="prob-actions">
+        <P3xrAccordion :title="type === 'topk' ? str(strings?.page?.key?.probabilistic?.topkList) : str(strings?.page?.key?.probabilistic?.addItem)" accordion-key="prob-actions">
             <div style="padding: 16px;">
                 <div class="p3xr-prob-controls">
                     <v-text-field v-if="type === 'tdigest'" density="compact" variant="outlined" hide-details type="number"
-                        class="p3xr-ts-field" :label="str(strings?.form?.key?.field?.value) || 'Value'"
+                        class="p3xr-ts-field" :label="str(strings?.form?.key?.field?.value)"
                         v-model="itemInput" @keyup.enter="addItem()" />
                     <v-text-field v-else density="compact" variant="outlined" hide-details
-                        style="flex: 1; min-width: 200px;" :label="str(strings?.page?.key?.probabilistic?.item) || 'Item'"
+                        style="flex: 1; min-width: 200px;" :label="str(strings?.page?.key?.probabilistic?.item)"
                         v-model="itemInput" @keyup.enter="addItem()" />
 
                     <v-text-field v-if="type === 'cms'" density="compact" variant="outlined" hide-details type="number"
-                        style="max-width: 120px;" :label="str(strings?.form?.key?.field?.increment) || 'Increment'"
+                        style="max-width: 120px;" :label="str(strings?.form?.key?.field?.increment)"
                         v-model.number="incrementInput" />
 
                     <v-text-field v-if="type === 'tdigest'" density="compact" variant="outlined" hide-details type="number" step="0.1"
-                        style="max-width: 120px;" :label="str(strings?.page?.key?.probabilistic?.quantile) || 'Quantile'"
+                        style="max-width: 120px;" :label="str(strings?.page?.key?.probabilistic?.quantile)"
                         v-model.number="quantileInput" @keyup.enter="queryQuantile()" />
 
-                    <P3xrButton v-if="!isReadonly" icon="mdi-plus" :label="str(strings?.intention?.add) || 'Add'" raised color="primary" @click="addItem()" />
-                    <P3xrButton v-if="type === 'bloom' || type === 'cuckoo'" icon="mdi-magnify" :label="str(strings?.page?.key?.probabilistic?.checkItem) || 'Check'" raised color="primary" @click="checkItem()" />
-                    <P3xrButton v-if="type === 'cuckoo' && !isReadonly" icon="mdi-delete" :label="str(strings?.intention?.delete) || 'Delete'" raised color="primary" @click="deleteItem()" />
-                    <P3xrButton v-if="type === 'cms'" icon="mdi-magnify" :label="str(strings?.page?.key?.probabilistic?.queryCount) || 'Query'" raised color="primary" @click="queryItem()" />
-                    <P3xrButton v-if="type === 'tdigest'" icon="mdi-chart-bar" :label="str(strings?.page?.key?.probabilistic?.quantile) || 'Quantile'" raised color="primary" @click="queryQuantile()" />
+                    <P3xrButton v-if="!isReadonly" icon="mdi-plus" :label="str(strings?.intention?.add)" raised color="primary" @click="addItem()" />
+                    <P3xrButton v-if="type === 'bloom' || type === 'cuckoo'" icon="mdi-magnify" :label="str(strings?.page?.key?.probabilistic?.checkItem)" raised color="primary" @click="checkItem()" />
+                    <P3xrButton v-if="type === 'cuckoo' && !isReadonly" icon="mdi-delete" :label="str(strings?.intention?.delete)" raised color="primary" @click="deleteItem()" />
+                    <P3xrButton v-if="type === 'cms'" icon="mdi-magnify" :label="str(strings?.page?.key?.probabilistic?.queryCount)" raised color="primary" @click="queryItem()" />
+                    <P3xrButton v-if="type === 'tdigest'" icon="mdi-chart-bar" :label="str(strings?.page?.key?.probabilistic?.quantile)" raised color="primary" @click="queryQuantile()" />
                     <P3xrButton v-if="type === 'tdigest' && !isReadonly" icon="mdi-undo" label="Reset" raised color="warning" @click="resetTdigest()" />
                 </div>
             </div>

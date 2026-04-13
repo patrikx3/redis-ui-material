@@ -43,12 +43,12 @@ function doImport() {
 
 <template>
     <P3xrDialog v-if="open && keys.length > 0" :open="true"
-        :title="strings?.intention?.importKeys || 'Import keys'"
+        :title="strings?.intention?.importKeys"
         @close="cancel()">
 
         <!-- Preview label -->
         <div style="margin-bottom: 8px; font-size: 13px; opacity: 0.7;">
-            {{ keys.length }} {{ strings?.label?.keysToImport || 'keys to import' }}
+            {{ keys.length }} {{ strings?.label?.keysToImport }}
         </div>
 
         <!-- Virtual scrolled key preview list (300px height, 40px rows) -->
@@ -73,20 +73,20 @@ function doImport() {
         <!-- Conflict mode radio -->
         <div style="margin-top: 12px;">
             <v-radio-group v-model="conflictMode" inline hide-details>
-                <v-radio value="overwrite" :label="strings?.label?.importOverwrite || 'Overwrite existing keys'" />
-                <v-radio value="skip" :label="strings?.label?.importSkip || 'Skip existing keys'" />
+                <v-radio value="overwrite" :label="strings?.label?.importOverwrite" />
+                <v-radio value="skip" :label="strings?.label?.importSkip" />
             </v-radio-group>
         </div>
 
         <template #actions>
             <v-btn variant="flat" color="warning" @click="cancel()">
                 <v-icon :class="{ 'mr-1': isWide }">mdi-close-circle</v-icon>
-                <span v-if="isWide">{{ strings?.intention?.cancel || 'Cancel' }}</span>
+                <span v-if="isWide">{{ strings?.intention?.cancel }}</span>
                 <v-tooltip v-if="!isWide" activator="parent" location="top">{{ strings?.intention?.cancel }}</v-tooltip>
             </v-btn>
             <v-btn variant="flat" color="primary" @click="doImport()">
                 <v-icon class="mr-1">mdi-upload</v-icon>
-                <span>{{ strings?.intention?.import || 'Import' }}</span>
+                <span>{{ strings?.intention?.import }}</span>
             </v-btn>
         </template>
     </P3xrDialog>

@@ -11,8 +11,8 @@ const { width } = useDisplay()
 const isWide = computed(() => width.value >= 600)
 
 const isAlert = computed(() => commonStore.confirmOptions?.disableCancel === true)
-const okLabel = computed(() => isAlert.value ? (i18n.strings?.intention?.ok || 'OK') : (i18n.strings?.intention?.sure || 'Sure'))
-const cancelLabel = computed(() => i18n.strings?.intention?.cancel || 'Cancel')
+const okLabel = computed(() => isAlert.value ? i18n.strings?.intention?.ok : i18n.strings?.intention?.sure)
+const cancelLabel = computed(() => i18n.strings?.intention?.cancel)
 
 function handleOk() {
     commonStore.resolveConfirm?.(true)

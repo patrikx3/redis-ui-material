@@ -2,8 +2,8 @@
 
 <div class="p3xr-key-type-table">
     <div class="p3xr-key-type-header">
-        <span style="flex: 20%">{{ strings?.page?.key?.hash?.table?.hashkey || 'Hash Key' }}</span>
-        <span style="flex: 60%">{{ strings?.page?.key?.hash?.table?.value || 'Value' }}</span>
+        <span style="flex: 20%">{{ strings?.page?.key?.hash?.table?.hashkey }}</span>
+        <span style="flex: 60%">{{ strings?.page?.key?.hash?.table?.value }}</span>
         <span style="flex: 20%; text-align: right">
             @if (!isReadonly) {
                 <button mat-icon-button (click)="addHash($event)" matTooltip="Add">
@@ -23,7 +23,7 @@
                               [style.opacity]="hasFieldTtl(item.key) ? 0.7 : 0.3"
                               [class.p3xr-tree-ttl-pulse]="isFieldTtlPulsing(item.key)"
                               (click)="setFieldTtl(item.key, $event)"
-                              [matTooltip]="hasFieldTtl(item.key) ? ('TTL: ' + formatFieldTtl(item.key)) : (strings?.intention?.ttl || 'Set TTL')">schedule</mat-icon>
+                              [matTooltip]="hasFieldTtl(item.key) ? ('TTL: ' + formatFieldTtl(item.key)) : (strings?.intention?.ttl)">schedule</mat-icon>
                 }
                 @if (!isReadonly) {
                     <mat-icon class="icon-warn" (click)="deleteHashKey(item.key, $event)" matTooltip="Delete">delete</mat-icon>

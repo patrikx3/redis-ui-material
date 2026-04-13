@@ -29,7 +29,7 @@ const typeChartEl = ref<HTMLDivElement>()
 const prefixChartEl = ref<HTMLDivElement>()
 const rootEl = ref<HTMLElement>()
 
-const connName = computed(() => state.connection?.name || 'redis')
+const connName = computed(() => state.connection?.name)
 
 let themeObserver: MutationObserver | null = null
 let chartResizeObserver: ResizeObserver | null = null
@@ -223,9 +223,9 @@ function exportOverview() {
     if (!data.value) return
     const t = s.value
     downloadText([
-        `${t.keysScanned || 'Keys Scanned'}: ${data.value.totalScanned} / ${data.value.dbSize}`,
-        `${t.topN || 'Top N'}: ${topN.value}`,
-        `${t.maxScanKeys || 'Max Scan Keys'}: ${maxScanKeys.value}`,
+        `${t.keysScanned}: ${data.value.totalScanned} / ${data.value.dbSize}`,
+        `${t.topN}: ${topN.value}`,
+        `${t.maxScanKeys}: ${maxScanKeys.value}`,
     ].join('\n'), `${connName.value}-analysis-overview.txt`)
 }
 
@@ -234,14 +234,14 @@ function exportMemoryBreakdown() {
     const t = s.value
     const m = data.value.memoryInfo
     downloadText([
-        `${t.totalMemory || 'Total'}: ${m.usedHuman}`,
-        `${t.rssMemory || 'RSS'}: ${m.rssHuman}`,
-        `${t.peakMemory || 'Peak'}: ${m.peakHuman}`,
-        `${t.overheadMemory || 'Overhead'}: ${formatBytes(m.overhead)}`,
-        `${t.datasetMemory || 'Dataset'}: ${formatBytes(m.dataset)}`,
-        `${t.luaMemory || 'Lua'}: ${formatBytes(m.lua)}`,
-        `${t.fragmentation || 'Fragmentation'}: ${m.fragRatio}x`,
-        `${t.allocator || 'Allocator'}: ${m.allocator}`,
+        `${t.totalMemory}: ${m.usedHuman}`,
+        `${t.rssMemory}: ${m.rssHuman}`,
+        `${t.peakMemory}: ${m.peakHuman}`,
+        `${t.overheadMemory}: ${formatBytes(m.overhead)}`,
+        `${t.datasetMemory}: ${formatBytes(m.dataset)}`,
+        `${t.luaMemory}: ${formatBytes(m.lua)}`,
+        `${t.fragmentation}: ${m.fragRatio}x`,
+        `${t.allocator}: ${m.allocator}`,
     ].join('\n'), `${connName.value}-memory-breakdown.txt`)
 }
 
@@ -250,9 +250,9 @@ function exportExpiration() {
     const t = s.value
     const e = data.value.expirationOverview
     downloadText([
-        `${t.withTTL || 'With TTL'}: ${e.withTTL}`,
-        `${t.persistent || 'Persistent'}: ${e.persistent}`,
-        `${t.avgTTL || 'Average TTL'}: ${formatTTL(e.avgTTL)}`,
+        `${t.withTTL}: ${e.withTTL}`,
+        `${t.persistent}: ${e.persistent}`,
+        `${t.avgTTL}: ${formatTTL(e.avgTTL)}`,
     ].join('\n'), `${connName.value}-expiration.txt`)
 }
 
@@ -316,28 +316,28 @@ onUnmounted(() => {
 
 <template>
     <!-- Memory Doctor (always visible) -->
-    <P3xrAccordion :title="s.memoryDoctor || 'Memory Doctor'" accordion-key="analysis-doctor">
+    <P3xrAccordion :title="s.memoryDoctor" accordion-key="analysis-doctor">
         <template #actions>
             <P3xrButton
                 @click="toggleAutoDoctor(); $event.stopPropagation()"
-                :label="strings?.label?.autoRefresh || 'Auto'"
+                :label="strings?.label?.autoRefresh"
                 :icon="autoRefreshDoctor ? 'mdi-checkbox-marked' : 'mdi-checkbox-blank-outline'"
             />
             <P3xrButton
                 v-if="!autoRefreshDoctor"
                 @click="runDoctor(); $event.stopPropagation()"
-                :label="doctorLoading ? (strings?.label?.loading || 'Loading...') : (strings?.intention?.refresh || 'Refresh')"
+                :label="doctorLoading ? strings?.label?.loading : strings?.intention?.refresh"
                 :icon="doctorLoading ? 'mdi-timer-sand' : 'mdi-refresh'"
                 :disabled="doctorLoading"
             />
             <P3xrButton
                 @click="exportDoctor(); $event.stopPropagation()"
-                :label="strings?.intention?.export || 'Export'"
+                :label="strings?.intention?.export"
                 icon="mdi-download"
             />
         </template>
         <div v-if="!doctorText" style="padding: 12px 16px; opacity: 0.6;">
-            {{ s.doctorNoData || 'Click Refresh to run Memory Doctor diagnostics.' }}
+            {{ s.doctorNoData }}
         </div>
         <pre v-else style="white-space: pre-wrap; font-family: 'Roboto Mono', monospace; font-size: 13px; padding: 12px 16px; margin: 0;">{{ doctorText }}</pre>
     </P3xrAccordion>
@@ -346,41 +346,41 @@ onUnmounted(() => {
 
     <div v-if="loading && !data" class="p3xr-analysis-loading">
         <v-icon>mdi-timer-sand</v-icon>
-        <span>{{ s.running || 'Analyzing...' }}</span>
+        <span>{{ s.running }}</span>
     </div>
 
     <div v-if="!loading && !data" class="p3xr-analysis-loading">
         <v-icon>mdi-chart-bar</v-icon>
-        <span>{{ s.noData || 'No data. Click Run Analysis to start.' }}</span>
+        <span>{{ s.noData }}</span>
     </div>
 
     <div v-if="data" ref="rootEl">
         <!-- Controls + Overview -->
-        <P3xrAccordion :title="s.title || 'Memory Analysis'" accordion-key="analysis-controls">
+        <P3xrAccordion :title="s.title" accordion-key="analysis-controls">
             <template #actions>
                 <P3xrButton
                     @click="runAnalysis(); $event.stopPropagation()"
-                    :label="loading ? (s.running || 'Analyzing...') : (s.runAnalysis || 'Run Analysis')"
+                    :label="loading ? s.running : s.runAnalysis"
                     :icon="loading ? 'mdi-timer-sand' : 'mdi-play'"
                     :disabled="loading"
                 />
                 <P3xrButton
                     @click="exportOverview(); $event.stopPropagation()"
-                    :label="strings?.intention?.export || 'Export'"
+                    :label="strings?.intention?.export"
                     icon="mdi-download"
                 />
             </template>
             <v-list density="compact" class="pa-0">
                 <v-list-item>
                     <div class="p3xr-pair-row">
-                        <div class="p3xr-pair-label">{{ s.keysScanned || 'Keys Scanned' }}</div>
+                        <div class="p3xr-pair-label">{{ s.keysScanned }}</div>
                         <div class="p3xr-pair-value p3xr-mono">{{ data.totalScanned?.toLocaleString() }} / {{ data.dbSize?.toLocaleString() }}</div>
                     </div>
                 </v-list-item>
                 <v-divider />
                 <v-list-item>
                     <div class="p3xr-pair-row">
-                        <div class="p3xr-pair-label">{{ s.topN || 'Top N' }}</div>
+                        <div class="p3xr-pair-label">{{ s.topN }}</div>
                         <div class="p3xr-pair-value">
                             <v-text-field
                                 v-model.number="topN"
@@ -396,7 +396,7 @@ onUnmounted(() => {
                 <v-divider />
                 <v-list-item>
                     <div class="p3xr-pair-row">
-                        <div class="p3xr-pair-label">{{ s.maxScanKeys || 'Max Scan Keys' }}</div>
+                        <div class="p3xr-pair-label">{{ s.maxScanKeys }}</div>
                         <div class="p3xr-pair-value">
                             <v-text-field
                                 v-model.number="maxScanKeys"
@@ -416,63 +416,63 @@ onUnmounted(() => {
         <br />
 
         <!-- Memory Breakdown -->
-        <P3xrAccordion :title="s.memoryBreakdown || 'Memory Breakdown'" accordion-key="analysis-memory-info">
+        <P3xrAccordion :title="s.memoryBreakdown" accordion-key="analysis-memory-info">
             <template #actions>
-                <P3xrButton @click="exportMemoryBreakdown(); $event.stopPropagation()" :label="strings?.intention?.export || 'Export'" icon="mdi-download" />
+                <P3xrButton @click="exportMemoryBreakdown(); $event.stopPropagation()" :label="strings?.intention?.export" icon="mdi-download" />
             </template>
             <v-list density="compact" class="pa-0">
                 <v-list-item>
                     <div class="p3xr-pair-row">
-                        <div class="p3xr-pair-label">{{ s.totalMemory || 'Total Memory' }}</div>
+                        <div class="p3xr-pair-label">{{ s.totalMemory }}</div>
                         <div class="p3xr-pair-value p3xr-mono">{{ data.memoryInfo.usedHuman }}</div>
                     </div>
                 </v-list-item>
                 <v-divider />
                 <v-list-item>
                     <div class="p3xr-pair-row">
-                        <div class="p3xr-pair-label">{{ s.rssMemory || 'RSS Memory' }}</div>
+                        <div class="p3xr-pair-label">{{ s.rssMemory }}</div>
                         <div class="p3xr-pair-value p3xr-mono">{{ data.memoryInfo.rssHuman }}</div>
                     </div>
                 </v-list-item>
                 <v-divider />
                 <v-list-item>
                     <div class="p3xr-pair-row">
-                        <div class="p3xr-pair-label">{{ s.peakMemory || 'Peak Memory' }}</div>
+                        <div class="p3xr-pair-label">{{ s.peakMemory }}</div>
                         <div class="p3xr-pair-value p3xr-mono">{{ data.memoryInfo.peakHuman }}</div>
                     </div>
                 </v-list-item>
                 <v-divider />
                 <v-list-item>
                     <div class="p3xr-pair-row">
-                        <div class="p3xr-pair-label">{{ s.overheadMemory || 'Overhead' }}</div>
+                        <div class="p3xr-pair-label">{{ s.overheadMemory }}</div>
                         <div class="p3xr-pair-value p3xr-mono">{{ formatBytes(data.memoryInfo.overhead) }}</div>
                     </div>
                 </v-list-item>
                 <v-divider />
                 <v-list-item>
                     <div class="p3xr-pair-row">
-                        <div class="p3xr-pair-label">{{ s.datasetMemory || 'Dataset' }}</div>
+                        <div class="p3xr-pair-label">{{ s.datasetMemory }}</div>
                         <div class="p3xr-pair-value p3xr-mono">{{ formatBytes(data.memoryInfo.dataset) }}</div>
                     </div>
                 </v-list-item>
                 <v-divider />
                 <v-list-item>
                     <div class="p3xr-pair-row">
-                        <div class="p3xr-pair-label">{{ s.luaMemory || 'Lua Memory' }}</div>
+                        <div class="p3xr-pair-label">{{ s.luaMemory }}</div>
                         <div class="p3xr-pair-value p3xr-mono">{{ formatBytes(data.memoryInfo.lua) }}</div>
                     </div>
                 </v-list-item>
                 <v-divider />
                 <v-list-item>
                     <div class="p3xr-pair-row">
-                        <div class="p3xr-pair-label">{{ s.fragmentation || 'Fragmentation' }}</div>
+                        <div class="p3xr-pair-label">{{ s.fragmentation }}</div>
                         <div class="p3xr-pair-value p3xr-mono">{{ data.memoryInfo.fragRatio }}x</div>
                     </div>
                 </v-list-item>
                 <v-divider />
                 <v-list-item>
                     <div class="p3xr-pair-row">
-                        <div class="p3xr-pair-label">{{ s.allocator || 'Allocator' }}</div>
+                        <div class="p3xr-pair-label">{{ s.allocator }}</div>
                         <div class="p3xr-pair-value p3xr-mono">{{ data.memoryInfo.allocator }}</div>
                     </div>
                 </v-list-item>
@@ -482,9 +482,9 @@ onUnmounted(() => {
         <br />
 
         <!-- Type Distribution -->
-        <P3xrAccordion :title="s.typeDistribution || 'Type Distribution'" accordion-key="analysis-type-dist">
+        <P3xrAccordion :title="s.typeDistribution" accordion-key="analysis-type-dist">
             <template #actions>
-                <P3xrButton @click="exportChart(typeChartEl, 'type-distribution'); $event.stopPropagation()" :label="strings?.intention?.export || 'Export'" icon="mdi-download" />
+                <P3xrButton @click="exportChart(typeChartEl, 'type-distribution'); $event.stopPropagation()" :label="strings?.intention?.export" icon="mdi-download" />
             </template>
             <div ref="typeChartEl" class="p3xr-analysis-chart"></div>
             <v-list density="compact" class="pa-0">
@@ -506,9 +506,9 @@ onUnmounted(() => {
         <br />
 
         <!-- Memory by Prefix -->
-        <P3xrAccordion :title="s.prefixMemory || 'Memory by Prefix'" accordion-key="analysis-prefix-mem">
+        <P3xrAccordion :title="s.prefixMemory" accordion-key="analysis-prefix-mem">
             <template #actions>
-                <P3xrButton @click="exportChart(prefixChartEl, 'memory-by-prefix'); $event.stopPropagation()" :label="strings?.intention?.export || 'Export'" icon="mdi-download" />
+                <P3xrButton @click="exportChart(prefixChartEl, 'memory-by-prefix'); $event.stopPropagation()" :label="strings?.intention?.export" icon="mdi-download" />
             </template>
             <div ref="prefixChartEl" class="p3xr-analysis-chart"></div>
             <v-list density="compact" class="pa-0">
@@ -531,28 +531,28 @@ onUnmounted(() => {
         <br />
 
         <!-- Key Expiration Overview -->
-        <P3xrAccordion :title="s.expirationOverview || 'Key Expiration'" accordion-key="analysis-expiration">
+        <P3xrAccordion :title="s.expirationOverview" accordion-key="analysis-expiration">
             <template #actions>
-                <P3xrButton @click="exportExpiration(); $event.stopPropagation()" :label="strings?.intention?.export || 'Export'" icon="mdi-download" />
+                <P3xrButton @click="exportExpiration(); $event.stopPropagation()" :label="strings?.intention?.export" icon="mdi-download" />
             </template>
             <v-list density="compact" class="pa-0">
                 <v-list-item>
                     <div class="p3xr-pair-row">
-                        <div class="p3xr-pair-label">{{ s.withTTL || 'With TTL' }}</div>
+                        <div class="p3xr-pair-label">{{ s.withTTL }}</div>
                         <div class="p3xr-pair-value p3xr-mono">{{ data.expirationOverview.withTTL?.toLocaleString() }}</div>
                     </div>
                 </v-list-item>
                 <v-divider />
                 <v-list-item>
                     <div class="p3xr-pair-row">
-                        <div class="p3xr-pair-label">{{ s.persistent || 'Persistent' }}</div>
+                        <div class="p3xr-pair-label">{{ s.persistent }}</div>
                         <div class="p3xr-pair-value p3xr-mono">{{ data.expirationOverview.persistent?.toLocaleString() }}</div>
                     </div>
                 </v-list-item>
                 <v-divider />
                 <v-list-item>
                     <div class="p3xr-pair-row">
-                        <div class="p3xr-pair-label">{{ s.avgTTL || 'Average TTL' }}</div>
+                        <div class="p3xr-pair-label">{{ s.avgTTL }}</div>
                         <div class="p3xr-pair-value p3xr-mono">{{ formatTTL(data.expirationOverview.avgTTL) }}</div>
                     </div>
                 </v-list-item>

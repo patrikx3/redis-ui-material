@@ -199,13 +199,13 @@ export class SearchComponent implements OnInit, OnDestroy {
         if (!this.selectedIndex) return;
         try {
             await this.common.confirm({
-                message: this.strings().confirm?.dropIndex || 'Are you sure to drop this index?',
+                message: this.strings().confirm?.dropIndex,
             });
             await this.socket.request({
                 action: 'search/index-drop',
                 payload: { index: this.selectedIndex },
             });
-            this.common.toast({ message: this.strings().status?.indexDropped || 'Index dropped' });
+            this.common.toast({ message: this.strings().status?.indexDropped });
             this.selectedIndex = '';
             this.results = [];
             this.total = 0;
@@ -223,7 +223,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     async confirmRemoveField(index: number): Promise<void> {
         try {
-            const label = this.strings().intention?.delete || 'Delete';
+            const label = this.strings().intention?.delete;
             await this.common.confirm({ message: label + '?' });
             this.newIndexFields.splice(index, 1);
             this.newIndexFields = [...this.newIndexFields];
@@ -246,7 +246,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                     schema,
                 },
             });
-            this.common.toast({ message: this.strings().status?.indexCreated || 'Index created' });
+            this.common.toast({ message: this.strings().status?.indexCreated });
             this.newIndexName = '';
             this.newIndexPrefix = '';
             this.newIndexFields = [{ name: '', type: 'TEXT', sortable: false }];

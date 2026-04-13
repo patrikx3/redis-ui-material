@@ -212,7 +212,7 @@ export default function KeyHash({ response, value, valueBuffer, keyName, valueFo
                         </Box>
                         <Box component="span" sx={{ flex: '20%', textAlign: 'right', whiteSpace: 'nowrap' }}>
                             {!isReadonly && parseRedisVersion(useRedisStateStore.getState().info?.server?.redis_version).isAtLeast(8, 0) && (
-                                <Tooltip title={hasFieldTtl(item.key) ? `TTL: ${formatFieldTtl(item.key)}` : (strings?.intention?.ttl || 'Set TTL')}>
+                                <Tooltip title={hasFieldTtl(item.key) ? `TTL: ${formatFieldTtl(item.key)}` : (strings?.intention?.ttl)}>
                                     <ScheduleIcon
                                         style={{
                                             fontSize: 24, cursor: 'pointer', marginLeft: 2, marginRight: 2,

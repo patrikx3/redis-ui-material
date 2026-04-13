@@ -13,7 +13,7 @@ const isElectron = isShortcutsEnabled()
 const shortcutsList = computed(() => getShortcutsWithDescriptions())
 
 const isConnected = computed(() => !!state.connection)
-const redisVersion = computed(() => state.info?.server?.redis_version || '-')
+const redisVersion = computed(() => state.info?.server?.redis_version)
 const moduleNames = computed(() => (state.modules || []).map((m: any) => m.name))
 
 const languageList = computed(() => {
@@ -26,7 +26,7 @@ const languageList = computed(() => {
     <div style="padding-bottom: 8px;">
         <!-- Keyboard Shortcuts (Electron only) -->
         <template v-if="isElectron">
-            <P3xrAccordion :title="strings?.label?.keyboardShortcuts || 'Keyboard Shortcuts'" accordion-key="info-shortcuts">
+            <P3xrAccordion :title="strings?.label?.keyboardShortcuts" accordion-key="info-shortcuts">
                 <v-list density="compact" class="pa-0">
                     <template v-for="s in shortcutsList" :key="s.key">
                         <v-list-item>
@@ -45,11 +45,11 @@ const languageList = computed(() => {
         </template>
 
         <!-- About -->
-        <P3xrAccordion :title="strings?.label?.about || 'About'" accordion-key="info-about">
+        <P3xrAccordion :title="strings?.label?.about" accordion-key="info-about">
             <v-list density="compact" class="pa-0">
                 <v-list-item>
                     <div class="p3xr-info-row">
-                        <div class="p3xr-info-label">{{ strings?.label?.version || 'Version' }}</div>
+                        <div class="p3xr-info-label">{{ strings?.label?.version }}</div>
                         <div class="p3xr-info-value">{{ state.version }}</div>
                     </div>
                 </v-list-item>
@@ -58,7 +58,7 @@ const languageList = computed(() => {
                 <template v-if="isConnected">
                     <v-list-item>
                         <div class="p3xr-info-row">
-                            <div class="p3xr-info-label">{{ strings?.label?.redisVersion || 'Redis Version' }}</div>
+                            <div class="p3xr-info-label">{{ strings?.label?.redisVersion }}</div>
                             <div class="p3xr-info-value">{{ redisVersion }}</div>
                         </div>
                     </v-list-item>
@@ -68,7 +68,7 @@ const languageList = computed(() => {
                 <template v-if="isConnected && moduleNames.length > 0">
                     <v-list-item>
                         <div class="p3xr-info-row">
-                            <div class="p3xr-info-label">{{ strings?.label?.modules || 'Modules' }}</div>
+                            <div class="p3xr-info-label">{{ strings?.label?.modules }}</div>
                             <div class="p3xr-info-value">{{ moduleNames.join(', ') }}</div>
                         </div>
                     </v-list-item>
@@ -87,7 +87,7 @@ const languageList = computed(() => {
 
                 <v-list-item>
                     <div class="p3xr-info-row">
-                        <div class="p3xr-info-label">{{ strings?.title?.donate || 'Donate' }}</div>
+                        <div class="p3xr-info-label">{{ strings?.title?.donate }}</div>
                         <div class="p3xr-info-value">
                             <a href="https://www.paypal.me/patrikx3" target="_blank" rel="noreferrer" style="color: inherit;">PayPal</a>
                         </div>
@@ -97,7 +97,7 @@ const languageList = computed(() => {
 
                 <v-list-item>
                     <div class="p3xr-info-row">
-                        <div class="p3xr-info-label">{{ strings?.intention?.githubChangelog || 'Changelog' }}</div>
+                        <div class="p3xr-info-label">{{ strings?.intention?.githubChangelog }}</div>
                         <div class="p3xr-info-value">
                             <a href="https://github.com/patrikx3/redis-ui/blob/master/change-log.md#change-log" target="_blank" rel="noreferrer" style="color: inherit;">change-log.md</a>
                         </div>
@@ -109,7 +109,7 @@ const languageList = computed(() => {
         <br />
 
         <!-- Supported Languages -->
-        <P3xrAccordion :title="`${strings?.label?.supportedLanguages || 'Supported Languages'} (${languageList.length})`" accordion-key="info-languages">
+        <P3xrAccordion :title="`${strings?.label?.supportedLanguages} (${languageList.length})`" accordion-key="info-languages">
             <v-list density="compact" class="pa-0">
                 <template v-for="lang in languageList" :key="lang.code">
                     <v-list-item>

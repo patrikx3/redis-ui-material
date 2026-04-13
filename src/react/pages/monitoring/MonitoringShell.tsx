@@ -73,10 +73,10 @@ export default function MonitoringShell() {
             <Tabs value={selectedTab} onChange={onTabChange}
                 variant="fullWidth"
                 sx={{ bgcolor: 'background.paper', borderBottom: 1, borderColor: 'divider', flexShrink: 0 }}>
-                <Tab label={strings?.intention?.pulse || 'Pulse'} />
-                <Tab label={strings?.intention?.profiler || 'Profiler'} />
-                <Tab label={strings?.intention?.pubsubMonitor || 'PubSub'} />
-                <Tab label={strings?.intention?.memoryAnalysis || 'Analysis'} />
+                <Tab label={strings?.intention?.pulse} />
+                <Tab label={strings?.intention?.profiler} />
+                <Tab label={strings?.intention?.pubsubMonitor} />
+                <Tab label={strings?.intention?.memoryAnalysis} />
             </Tabs>
             <Box id="p3xr-monitoring-content" sx={{ flex: 1, minHeight: 0, overflow: 'auto', p: '5px' }}>
                 <Outlet />

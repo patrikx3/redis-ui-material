@@ -235,7 +235,7 @@ export function copyToClipboard(value: string) {
     const common = useCommonStore()
     navigator.clipboard.writeText(value).then(() => {
         const fn = i18n.strings?.status?.dataCopied
-        common.toast(typeof fn === 'function' ? fn() : (fn || 'Copied'))
+        common.toast(typeof fn === 'function' ? fn() : fn)
     }).catch(() => {})
 }
 

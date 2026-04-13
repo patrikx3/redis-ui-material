@@ -41,7 +41,7 @@
             @if (isWide) {
                 <button mat-button (click)="navigateTo('monitoring')" [class.p3xr-nav-active]="isActivePage('monitoring')">
                     <mat-icon>monitor_heart</mat-icon>
-                    <span>{{ i18n.strings().page?.monitor?.title || 'Monitoring' }}</span>
+                    <span>{{ i18n.strings().page?.monitor?.title }}</span>
                 </button>
             } @else {
                 <button mat-icon-button (click)="navigateTo('monitoring')" [class.p3xr-nav-active]="isActivePage('monitoring')"
@@ -57,7 +57,7 @@
             @if (isWide) {
                 <button mat-button (click)="navigateTo('search')" [class.p3xr-nav-active]="isActivePage('search')">
                     <mat-icon>search</mat-icon>
-                    <span>{{ i18n.strings().page?.search?.title || 'Search' }}</span>
+                    <span>{{ i18n.strings().page?.search?.title }}</span>
                 </button>
             } @else {
                 <button mat-icon-button (click)="navigateTo('search')" [class.p3xr-nav-active]="isActivePage('search')"
@@ -76,7 +76,7 @@
         @if (isWide) {
             <button mat-button (click)="navigateTo('info')" [class.p3xr-nav-active]="isActivePage('info')">
                 <mat-icon>info</mat-icon>
-                <span>{{ i18n.strings().intention?.info || 'Info' }}</span>
+                <span>{{ i18n.strings().intention?.info }}</span>
             </button>
         } @else {
             <button mat-icon-button (click)="navigateTo('info')" [class.p3xr-nav-active]="isActivePage('info')"
@@ -104,7 +104,7 @@
         <!-- Logout button — rightmost, shown when auth is enabled and user is authenticated -->
         @if (auth.authRequired() && auth.isAuthenticated()) {
             <button mat-icon-button (click)="logout()"
-                    [matTooltip]="i18n.strings().intention?.logout || 'Logout'"
+                    [matTooltip]="i18n.strings().intention?.logout"
                     matTooltipPosition="below">
                 <mat-icon>logout</mat-icon>
             </button>
@@ -145,7 +145,7 @@
                 @for (group of groupedConnectionsList; track group.name) {
                     @if (groupedConnectionsList.length > 1) {
                         <div class="p3xr-connection-menu-group-label">
-                            {{ group.name || (i18n.strings().label?.ungrouped || 'Ungrouped') }}
+                            {{ group.name || (i18n.strings().label?.ungrouped) }}
                         </div>
                     }
                     @for (conn of group.connections; track conn.id) {
@@ -211,14 +211,14 @@
                 <div class="p3xr-language-search-container" (click)="$event.stopPropagation()" (keydown)="onLanguageSearchKeydown($event)">
                     <input #languageSearchInput
                            class="p3xr-language-search-input"
-                           [placeholder]="i18n.strings().label?.searchLanguage || 'Search...'"
+                           [placeholder]="i18n.strings().label?.searchLanguage"
                            [value]="languageSearch"
                            (input)="onLanguageSearchInput(languageSearchInput.value)"
                            autocomplete="off" />
                 </div>
                 <button mat-menu-item (click)="setLanguage('auto')"
                         [class.p3xr-mat-menu-item-selected]="i18n.isAuto()">
-                    {{ i18n.strings().label?.languageAuto || 'Auto (system)' }}
+                    {{ i18n.strings().label?.languageAuto }}
                 </button>
                 <mat-divider></mat-divider>
                 @for (langKey of filteredLanguages; track langKey; let i = $index) {
@@ -246,7 +246,7 @@
         <mat-menu #themeMenu>
             <button mat-menu-item (click)="setThemeAuto()"
                     [class.p3xr-mat-menu-item-selected]="theme.isAuto()">
-                {{ i18n.strings().label?.themeAuto || 'Auto (system)' }}
+                {{ i18n.strings().label?.themeAuto }}
             </button>
             <mat-divider></mat-divider>
             @for (key of sortedThemeKeys; track key) {

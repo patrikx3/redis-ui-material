@@ -85,7 +85,7 @@ const activeBg = computed(() => isDark.value ? 'rgba(255,255,255,0.12)' : 'rgba(
                     :value="search"
                     @input="onSearchInput"
                     @keydown="onKeyDown"
-                    :placeholder="strings?.label?.commandPalette || 'Command Palette'"
+                    :placeholder="strings?.label?.commandPalette"
                     autocomplete="off"
                     style="flex: 1; border: none; outline: none; background: transparent; color: inherit; font-size: 16px; font-family: inherit;"
                 />
@@ -104,7 +104,7 @@ const activeBg = computed(() => isDark.value ? 'rgba(255,255,255,0.12)' : 'rgba(
                     <kbd style="padding: 2px 8px; border-radius: 4px; font-size: 12px; font-family: 'Roboto Mono', monospace; white-space: nowrap; background-color: rgba(var(--v-theme-on-surface), 0.08);">{{ item.label }}</kbd>
                 </div>
                 <div v-if="filtered.length === 0" style="padding: 16px; text-align: center; opacity: 0.5;">
-                    {{ strings?.label?.noResults || 'No results' }}
+                    {{ strings?.label?.noResults }}
                 </div>
             </div>
         </v-card>

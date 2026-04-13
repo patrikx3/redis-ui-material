@@ -2,7 +2,7 @@
 
 <div class="p3xr-key-type-table">
     <div class="p3xr-key-type-header">
-        <span style="flex: 1">{{ strings?.page?.key?.stream?.table?.timestamp || 'Timestamp ID' }}</span>
+        <span style="flex: 1">{{ strings?.page?.key?.stream?.table?.timestamp }}</span>
         <span style="text-align: right">
             @if (!isReadonly) {
                 <button mat-icon-button (click)="addStream($event)" [matTooltip]="strings?.intention?.add ?? 'Add'">

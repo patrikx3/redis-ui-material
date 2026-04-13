@@ -1,27 +1,27 @@
 @if (!current) {
     <div class="p3xr-monitoring-loading">
         <mat-icon>hourglass_empty</mat-icon>
-        <span>{{ strings().label?.loading || 'Loading...' }}</span>
+        <span>{{ strings().label?.loading }}</span>
     </div>
 }
 
 @if (current) {
     <!-- Overview -->
-    <p3xr-ng-accordion [title]="strings().page?.monitor?.title || 'Monitoring'" accordionKey="monitor-overview">
+    <p3xr-ng-accordion [title]="strings().page?.monitor?.title" accordionKey="monitor-overview">
         <div actions>
             <p3xr-ng-button
                 (click)="togglePause(); $event.stopPropagation()"
-                [label]="paused ? (strings().intention?.resume || 'Resume') : (strings().intention?.pause || 'Pause')"
+                [label]="paused ? (strings().intention?.resume) : (strings().intention?.pause)"
                 [mdIcon]="paused ? 'play_arrow' : 'pause'">
             </p3xr-ng-button>
             <p3xr-ng-button
                 (click)="exportOverview(); $event.stopPropagation()"
-                [label]="strings().intention?.export || 'Export'"
+                [label]="strings().intention?.export"
                 mdIcon="download">
             </p3xr-ng-button>
             <p3xr-ng-button
                 (click)="exportAll(); $event.stopPropagation()"
-                [label]="strings().page?.analysis?.exportAll || 'Export All'"
+                [label]="strings().page?.analysis?.exportAll"
                 mdIcon="archive">
             </p3xr-ng-button>
         </div>
@@ -36,91 +36,91 @@
                 <mat-divider></mat-divider>
                 <mat-list-item>
                     <div class="p3xr-settings-pair-row">
-                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.memory || 'Memory' }}</div>
+                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.memory }}</div>
                         <div class="p3xr-settings-row-value p3xr-mono">{{ current.memory.usedHuman }}</div>
                     </div>
                 </mat-list-item>
                 <mat-divider></mat-divider>
                 <mat-list-item>
                     <div class="p3xr-settings-pair-row">
-                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.rss || 'RSS' }}</div>
+                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.rss }}</div>
                         <div class="p3xr-settings-row-value p3xr-mono">{{ current.memory.rssHuman }}</div>
                     </div>
                 </mat-list-item>
                 <mat-divider></mat-divider>
                 <mat-list-item>
                     <div class="p3xr-settings-pair-row">
-                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.peak || 'Peak' }}</div>
+                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.peak }}</div>
                         <div class="p3xr-settings-row-value p3xr-mono">{{ current.memory.peakHuman }}</div>
                     </div>
                 </mat-list-item>
                 <mat-divider></mat-divider>
                 <mat-list-item>
                     <div class="p3xr-settings-pair-row">
-                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.fragmentation || 'Fragmentation' }}</div>
+                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.fragmentation }}</div>
                         <div class="p3xr-settings-row-value p3xr-mono">{{ current.memory.fragRatio }}x</div>
                     </div>
                 </mat-list-item>
                 <mat-divider></mat-divider>
                 <mat-list-item>
                     <div class="p3xr-settings-pair-row">
-                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.opsPerSec || 'Ops/sec' }}</div>
+                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.opsPerSec }}</div>
                         <div class="p3xr-settings-row-value p3xr-mono">{{ current.stats.opsPerSec }}</div>
                     </div>
                 </mat-list-item>
                 <mat-divider></mat-divider>
                 <mat-list-item>
                     <div class="p3xr-settings-pair-row">
-                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.totalCommands || 'Total Commands' }}</div>
+                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.totalCommands }}</div>
                         <div class="p3xr-settings-row-value p3xr-mono">{{ current.stats.totalCommands }}</div>
                     </div>
                 </mat-list-item>
                 <mat-divider></mat-divider>
                 <mat-list-item>
                     <div class="p3xr-settings-pair-row">
-                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.clients || 'Clients' }}</div>
+                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.clients }}</div>
                         <div class="p3xr-settings-row-value p3xr-mono">{{ current.clients.connected }}</div>
                     </div>
                 </mat-list-item>
                 <mat-divider></mat-divider>
                 <mat-list-item>
                     <div class="p3xr-settings-pair-row">
-                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.blocked || 'Blocked' }}</div>
+                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.blocked }}</div>
                         <div class="p3xr-settings-row-value p3xr-mono">{{ current.clients.blocked }}</div>
                     </div>
                 </mat-list-item>
                 <mat-divider></mat-divider>
                 <mat-list-item>
                     <div class="p3xr-settings-pair-row">
-                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.hitsMisses || 'Hit Rate' }}</div>
+                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.hitsMisses }}</div>
                         <div class="p3xr-settings-row-value p3xr-mono">{{ current.stats.hitRate }}%</div>
                     </div>
                 </mat-list-item>
                 <mat-divider></mat-divider>
                 <mat-list-item>
                     <div class="p3xr-settings-pair-row">
-                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.hitsAndMisses || 'Hits / Misses' }}</div>
+                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.hitsAndMisses }}</div>
                         <div class="p3xr-settings-row-value p3xr-mono">{{ current.stats.hits }} / {{ current.stats.misses }}</div>
                     </div>
                 </mat-list-item>
                 <mat-divider></mat-divider>
                 <mat-list-item>
                     <div class="p3xr-settings-pair-row">
-                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.networkIo || 'Network I/O' }}</div>
+                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.networkIo }}</div>
                         <div class="p3xr-settings-row-value p3xr-mono">{{ current.stats.inputKbps | number:'1.1-1' }} / {{ current.stats.outputKbps | number:'1.1-1' }} KB/s</div>
                     </div>
                 </mat-list-item>
                 <mat-divider></mat-divider>
                 <mat-list-item>
                     <div class="p3xr-settings-pair-row">
-                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.expired || 'Expired' }}</div>
+                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.expired }}</div>
                         <div class="p3xr-settings-row-value p3xr-mono">{{ current.stats.expiredKeys }}</div>
                     </div>
                 </mat-list-item>
                 <mat-divider></mat-divider>
                 <mat-list-item>
                     <div class="p3xr-settings-pair-row">
-                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.evicted || 'Evicted' }}</div>
+                        <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.evicted }}</div>
                         <div class="p3xr-settings-row-value p3xr-mono">{{ current.stats.evictedKeys }}</div>
                     </div>
                 </mat-list-item>
@@ -131,11 +131,11 @@
     <!-- Server Info -->
     @if (serverInfo) {
         <br />
-        <p3xr-ng-accordion [title]="strings().page?.monitor?.serverInfo || 'Server Info'" accordionKey="monitor-server-info">
+        <p3xr-ng-accordion [title]="strings().page?.monitor?.serverInfo" accordionKey="monitor-server-info">
             <div actions>
                 <p3xr-ng-button
                     (click)="exportServerInfo(); $event.stopPropagation()"
-                    [label]="strings().intention?.export || 'Export'"
+                    [label]="strings().intention?.export"
                     mdIcon="download">
                 </p3xr-ng-button>
             </div>
@@ -144,7 +144,7 @@
                     @if (serverInfo.os) {
                         <mat-list-item>
                             <div class="p3xr-settings-pair-row">
-                                <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.os || 'OS' }}</div>
+                                <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.os }}</div>
                                 <div class="p3xr-settings-row-value p3xr-mono">{{ serverInfo.os }}</div>
                             </div>
                         </mat-list-item>
@@ -153,7 +153,7 @@
                     @if (serverInfo.port) {
                         <mat-list-item>
                             <div class="p3xr-settings-pair-row">
-                                <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.port || 'Port' }}</div>
+                                <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.port }}</div>
                                 <div class="p3xr-settings-row-value p3xr-mono">{{ serverInfo.port }}</div>
                             </div>
                         </mat-list-item>
@@ -162,7 +162,7 @@
                     @if (serverInfo.pid) {
                         <mat-list-item>
                             <div class="p3xr-settings-pair-row">
-                                <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.pid || 'Process ID' }}</div>
+                                <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.pid }}</div>
                                 <div class="p3xr-settings-row-value p3xr-mono">{{ serverInfo.pid }}</div>
                             </div>
                         </mat-list-item>
@@ -171,7 +171,7 @@
                     @if (serverInfo.configFile) {
                         <mat-list-item>
                             <div class="p3xr-settings-pair-row">
-                                <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.configFile || 'Config File' }}</div>
+                                <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.configFile }}</div>
                                 <div class="p3xr-settings-row-value p3xr-mono">{{ serverInfo.configFile }}</div>
                             </div>
                         </mat-list-item>
@@ -179,14 +179,14 @@
                     }
                     <mat-list-item>
                         <div class="p3xr-settings-pair-row">
-                            <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.cpuSys || 'System' }} CPU</div>
+                            <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.cpuSys }} CPU</div>
                             <div class="p3xr-settings-row-value p3xr-mono">{{ serverInfo.cpuSys }}</div>
                         </div>
                     </mat-list-item>
                     <mat-divider></mat-divider>
                     <mat-list-item>
                         <div class="p3xr-settings-pair-row">
-                            <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.cpuUser || 'User' }} CPU</div>
+                            <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.cpuUser }} CPU</div>
                             <div class="p3xr-settings-row-value p3xr-mono">{{ serverInfo.cpuUser }}</div>
                         </div>
                     </mat-list-item>
@@ -198,11 +198,11 @@
     <!-- Persistence & Replication -->
     @if (persistenceInfo) {
         <br />
-        <p3xr-ng-accordion [title]="strings().page?.monitor?.persistence || 'Persistence'" accordionKey="monitor-persistence">
+        <p3xr-ng-accordion [title]="strings().page?.monitor?.persistence" accordionKey="monitor-persistence">
             <div actions>
                 <p3xr-ng-button
                     (click)="exportPersistence(); $event.stopPropagation()"
-                    [label]="strings().intention?.export || 'Export'"
+                    [label]="strings().intention?.export"
                     mdIcon="download">
                 </p3xr-ng-button>
             </div>
@@ -210,28 +210,28 @@
                 <mat-list>
                     <mat-list-item>
                         <div class="p3xr-settings-pair-row">
-                            <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.rdbLastSave || 'RDB Last Save' }}</div>
+                            <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.rdbLastSave }}</div>
                             <div class="p3xr-settings-row-value p3xr-mono">{{ persistenceInfo.rdbLastSave }}</div>
                         </div>
                     </mat-list-item>
                     <mat-divider></mat-divider>
                     <mat-list-item>
                         <div class="p3xr-settings-pair-row">
-                            <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.rdbStatus || 'RDB Status' }}</div>
+                            <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.rdbStatus }}</div>
                             <div class="p3xr-settings-row-value p3xr-mono">{{ persistenceInfo.rdbStatus }}</div>
                         </div>
                     </mat-list-item>
                     <mat-divider></mat-divider>
                     <mat-list-item>
                         <div class="p3xr-settings-pair-row">
-                            <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.rdbChanges || 'Changes Since Last Save' }}</div>
+                            <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.rdbChanges }}</div>
                             <div class="p3xr-settings-row-value p3xr-mono">{{ persistenceInfo.rdbChanges }}</div>
                         </div>
                     </mat-list-item>
                     <mat-divider></mat-divider>
                     <mat-list-item>
                         <div class="p3xr-settings-pair-row">
-                            <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.aofEnabled || 'AOF Enabled' }}</div>
+                            <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.aofEnabled }}</div>
                             <div class="p3xr-settings-row-value p3xr-mono">{{ persistenceInfo.aofEnabled }}</div>
                         </div>
                     </mat-list-item>
@@ -239,7 +239,7 @@
                         <mat-divider></mat-divider>
                         <mat-list-item>
                             <div class="p3xr-settings-pair-row">
-                                <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.aofSize || 'AOF Size' }}</div>
+                                <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.aofSize }}</div>
                                 <div class="p3xr-settings-row-value p3xr-mono">{{ persistenceInfo.aofSize }}</div>
                             </div>
                         </mat-list-item>
@@ -251,11 +251,11 @@
 
     @if (replicationInfo) {
         <br />
-        <p3xr-ng-accordion [title]="strings().page?.monitor?.replication || 'Replication'" accordionKey="monitor-replication">
+        <p3xr-ng-accordion [title]="strings().page?.monitor?.replication" accordionKey="monitor-replication">
             <div actions>
                 <p3xr-ng-button
                     (click)="exportReplication(); $event.stopPropagation()"
-                    [label]="strings().intention?.export || 'Export'"
+                    [label]="strings().intention?.export"
                     mdIcon="download">
                 </p3xr-ng-button>
             </div>
@@ -263,7 +263,7 @@
                 <mat-list>
                     <mat-list-item>
                         <div class="p3xr-settings-pair-row">
-                            <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.role || 'Role' }}</div>
+                            <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.role }}</div>
                             <div class="p3xr-settings-row-value p3xr-mono">{{ replicationInfo.role }}</div>
                         </div>
                     </mat-list-item>
@@ -271,7 +271,7 @@
                         <mat-divider></mat-divider>
                         <mat-list-item>
                             <div class="p3xr-settings-pair-row">
-                                <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.replicas || 'Connected Replicas' }}</div>
+                                <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.replicas }}</div>
                                 <div class="p3xr-settings-row-value p3xr-mono">{{ replicationInfo.replicas }}</div>
                             </div>
                         </mat-list-item>
@@ -280,7 +280,7 @@
                         <mat-divider></mat-divider>
                         <mat-list-item>
                             <div class="p3xr-settings-pair-row">
-                                <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.masterHost || 'Master Host' }}</div>
+                                <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.masterHost }}</div>
                                 <div class="p3xr-settings-row-value p3xr-mono">{{ replicationInfo.masterHost }}:{{ replicationInfo.masterPort }}</div>
                             </div>
                         </mat-list-item>
@@ -289,7 +289,7 @@
                         <mat-divider></mat-divider>
                         <mat-list-item>
                             <div class="p3xr-settings-pair-row">
-                                <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.linkStatus || 'Link Status' }}</div>
+                                <div class="p3xr-settings-row-label">{{ strings().page?.monitor?.linkStatus }}</div>
                                 <div class="p3xr-settings-row-value p3xr-mono">{{ replicationInfo.linkStatus }}</div>
                             </div>
                         </mat-list-item>
@@ -302,11 +302,11 @@
     <!-- Keyspace -->
     @if (keyspaceEntries.length > 0) {
         <br />
-        <p3xr-ng-accordion [title]="strings().page?.monitor?.keyspace || 'Keyspace'" accordionKey="monitor-keyspace">
+        <p3xr-ng-accordion [title]="strings().page?.monitor?.keyspace" accordionKey="monitor-keyspace">
             <div actions>
                 <p3xr-ng-button
                     (click)="exportKeyspace(); $event.stopPropagation()"
-                    [label]="strings().intention?.export || 'Export'"
+                    [label]="strings().intention?.export"
                     mdIcon="download">
                 </p3xr-ng-button>
             </div>
@@ -316,7 +316,7 @@
                         <mat-list-item>
                             <div class="p3xr-settings-pair-row">
                                 <div class="p3xr-settings-row-label">{{ entry.db }}</div>
-                                <div class="p3xr-settings-row-value p3xr-mono">{{ strings().page?.monitor?.keys || 'Keys' }}: {{ entry.keys }} · {{ strings().page?.monitor?.expires || 'Expires' }}: {{ entry.expires }}</div>
+                                <div class="p3xr-settings-row-value p3xr-mono">{{ strings().page?.monitor?.keys }}: {{ entry.keys }} · {{ strings().page?.monitor?.expires }}: {{ entry.expires }}</div>
                             </div>
                         </mat-list-item>
                         @if (!last) { <mat-divider></mat-divider> }
@@ -328,17 +328,17 @@
 
     <!-- Modules -->
     <br />
-    <p3xr-ng-accordion [title]="strings().page?.monitor?.modules || 'Loaded Modules'" accordionKey="monitor-modules">
+    <p3xr-ng-accordion [title]="strings().page?.monitor?.modules" accordionKey="monitor-modules">
         <div actions>
             <p3xr-ng-button
                 (click)="exportModules(); $event.stopPropagation()"
-                [label]="strings().intention?.export || 'Export'"
+                [label]="strings().intention?.export"
                 mdIcon="download">
             </p3xr-ng-button>
         </div>
         <div content>
             @if (modulesList.length === 0) {
-                <div style="padding: 16px; opacity: 0.5;">{{ strings().page?.monitor?.noModules || 'No modules loaded' }}</div>
+                <div style="padding: 16px; opacity: 0.5;">{{ strings().page?.monitor?.noModules }}</div>
             }
             @if (modulesList.length > 0) {
                 <mat-list>
@@ -359,11 +359,11 @@
     <br />
 
     <!-- Charts -->
-    <p3xr-ng-accordion [title]="(strings().page?.monitor?.memory || 'Memory') + ' (MB)'" accordionKey="monitor-chart-memory">
+    <p3xr-ng-accordion [title]="(strings().page?.monitor?.memory) + ' (MB)'" accordionKey="monitor-chart-memory">
         <div actions>
             <p3xr-ng-button
                 (click)="exportChart(memoryChartRef, 'memory'); $event.stopPropagation()"
-                [label]="strings().intention?.export || 'Export'"
+                [label]="strings().intention?.export"
                 mdIcon="download">
             </p3xr-ng-button>
         </div>
@@ -374,11 +374,11 @@
 
     <br />
 
-    <p3xr-ng-accordion [title]="strings().page?.monitor?.opsPerSec || 'Ops/sec'" accordionKey="monitor-chart-ops">
+    <p3xr-ng-accordion [title]="strings().page?.monitor?.opsPerSec" accordionKey="monitor-chart-ops">
         <div actions>
             <p3xr-ng-button
                 (click)="exportChart(opsChartRef, 'ops'); $event.stopPropagation()"
-                [label]="strings().intention?.export || 'Export'"
+                [label]="strings().intention?.export"
                 mdIcon="download">
             </p3xr-ng-button>
         </div>
@@ -389,11 +389,11 @@
 
     <br />
 
-    <p3xr-ng-accordion [title]="strings().page?.monitor?.clients || 'Clients'" accordionKey="monitor-chart-clients">
+    <p3xr-ng-accordion [title]="strings().page?.monitor?.clients" accordionKey="monitor-chart-clients">
         <div actions>
             <p3xr-ng-button
                 (click)="exportChart(clientsChartRef, 'clients'); $event.stopPropagation()"
-                [label]="strings().intention?.export || 'Export'"
+                [label]="strings().intention?.export"
                 mdIcon="download">
             </p3xr-ng-button>
         </div>
@@ -404,11 +404,11 @@
 
     <br />
 
-    <p3xr-ng-accordion [title]="(strings().page?.monitor?.networkIo || 'Network I/O') + ' (KB/s)'" accordionKey="monitor-chart-network">
+    <p3xr-ng-accordion [title]="(strings().page?.monitor?.networkIo) + ' (KB/s)'" accordionKey="monitor-chart-network">
         <div actions>
             <p3xr-ng-button
                 (click)="exportChart(networkChartRef, 'network'); $event.stopPropagation()"
-                [label]="strings().intention?.export || 'Export'"
+                [label]="strings().intention?.export"
                 mdIcon="download">
             </p3xr-ng-button>
         </div>
@@ -419,7 +419,7 @@
 
     <!-- Slow Log -->
     <br />
-    <p3xr-ng-accordion [title]="strings().page?.monitor?.slowLog || 'Slow Log'" accordionKey="monitor-slowlog">
+    <p3xr-ng-accordion [title]="strings().page?.monitor?.slowLog" accordionKey="monitor-slowlog">
         <div actions>
             @if (!isReadonly) {
                 <p3xr-ng-button
@@ -430,14 +430,14 @@
             }
             <p3xr-ng-button
                 (click)="exportSlowLog(); $event.stopPropagation()"
-                [label]="strings().intention?.export || 'Export'"
+                [label]="strings().intention?.export"
                 mdIcon="download">
             </p3xr-ng-button>
         </div>
         <div content>
             @if (current.slowlog.length === 0) {
                 <div style="padding: 12px 16px; opacity: 0.6;">
-                    {{ strings().page?.monitor?.noSlowQueries || 'No slow queries recorded' }}
+                    {{ strings().page?.monitor?.noSlowQueries }}
                 </div>
             }
             <mat-list>
@@ -456,32 +456,32 @@
 
     <!-- Client List -->
     <br />
-    <p3xr-ng-accordion [title]="strings().page?.monitor?.clientList || 'Client List'" accordionKey="monitor-clients-list">
+    <p3xr-ng-accordion [title]="strings().page?.monitor?.clientList" accordionKey="monitor-clients-list">
         <div actions>
             <p3xr-ng-button
                 (click)="toggleAutoRefreshClients(); $event.stopPropagation()"
-                [label]="strings().label?.autoRefresh || 'Auto'"
+                [label]="strings().label?.autoRefresh"
                 [mdIcon]="autoRefreshClients ? 'check_box' : 'check_box_outline_blank'">
             </p3xr-ng-button>
             @if (!autoRefreshClients) {
                 <p3xr-ng-button
                     (click)="loadClientList(); $event.stopPropagation()"
-                    [label]="strings().intention?.refresh || 'Refresh'"
+                    [label]="strings().intention?.refresh"
                     mdIcon="refresh">
                 </p3xr-ng-button>
             }
             <p3xr-ng-button
                 (click)="exportClientList(); $event.stopPropagation()"
-                [label]="strings().intention?.export || 'Export'"
+                [label]="strings().intention?.export"
                 mdIcon="download">
             </p3xr-ng-button>
         </div>
         <div content>
             @if (clientList.length === 0 && clientListLoaded) {
-                <div style="padding: 16px; opacity: 0.5;">{{ strings().page?.monitor?.noClients || 'No clients' }}</div>
+                <div style="padding: 16px; opacity: 0.5;">{{ strings().page?.monitor?.noClients }}</div>
             }
             @if (clientList.length === 0 && !clientListLoaded) {
-                <div style="padding: 16px; opacity: 0.5;">{{ strings().label?.loading || 'Loading...' }}</div>
+                <div style="padding: 16px; opacity: 0.5;">{{ strings().label?.loading }}</div>
             }
             @if (clientList.length > 0) {
                 <mat-list>
@@ -497,7 +497,7 @@
                                 </span>
                                 @if (!isReadonly) {
                                     <mat-icon class="p3xr-monitoring-client-kill" (click)="killClient(client.id, $event)"
-                                            [matTooltip]="strings().page?.monitor?.killClient || 'Kill client'">close</mat-icon>
+                                            [matTooltip]="strings().page?.monitor?.killClient">close</mat-icon>
                                 }
                             </div>
                         </mat-list-item>
@@ -510,32 +510,32 @@
 
     <!-- Memory Top Keys -->
     <br />
-    <p3xr-ng-accordion [title]="strings().page?.monitor?.topKeys || 'Top Keys by Memory'" accordionKey="monitor-top-keys">
+    <p3xr-ng-accordion [title]="strings().page?.monitor?.topKeys" accordionKey="monitor-top-keys">
         <div actions>
             <p3xr-ng-button
                 (click)="toggleAutoRefreshTopKeys(); $event.stopPropagation()"
-                [label]="strings().label?.autoRefresh || 'Auto'"
+                [label]="strings().label?.autoRefresh"
                 [mdIcon]="autoRefreshTopKeys ? 'check_box' : 'check_box_outline_blank'">
             </p3xr-ng-button>
             @if (!autoRefreshTopKeys) {
                 <p3xr-ng-button
                     (click)="loadTopKeys(); $event.stopPropagation()"
-                    [label]="strings().intention?.refresh || 'Refresh'"
+                    [label]="strings().intention?.refresh"
                     mdIcon="refresh">
                 </p3xr-ng-button>
             }
             <p3xr-ng-button
                 (click)="exportTopKeys(); $event.stopPropagation()"
-                [label]="strings().intention?.export || 'Export'"
+                [label]="strings().intention?.export"
                 mdIcon="download">
             </p3xr-ng-button>
         </div>
         <div content>
             @if (topKeys.length === 0 && topKeysLoaded) {
-                <div style="padding: 16px; opacity: 0.5;">{{ strings().page?.monitor?.noKeys || 'No keys' }}</div>
+                <div style="padding: 16px; opacity: 0.5;">{{ strings().page?.monitor?.noKeys }}</div>
             }
             @if (topKeys.length === 0 && !topKeysLoaded) {
-                <div style="padding: 16px; opacity: 0.5;">{{ strings().label?.loading || 'Loading...' }}</div>
+                <div style="padding: 16px; opacity: 0.5;">{{ strings().label?.loading }}</div>
             }
             @if (topKeys.length > 0) {
                 <mat-list>
@@ -558,11 +558,11 @@
 
     @if (isCluster && state.redisVersion().isAtLeast(8, 2)) {
         <br />
-        <p3xr-ng-accordion [title]="strings().page?.monitor?.slotStats || 'Cluster Slot Stats'" accordionKey="monitor-slot-stats">
+        <p3xr-ng-accordion [title]="strings().page?.monitor?.slotStats" accordionKey="monitor-slot-stats">
             <div actions>
                 <p3xr-ng-button
                     (click)="loadSlotStats(); $event.stopPropagation()"
-                    [label]="strings().intention?.refresh || 'Refresh'"
+                    [label]="strings().intention?.refresh"
                     mdIcon="refresh">
                 </p3xr-ng-button>
             </div>
@@ -607,30 +607,30 @@
     <!-- Cluster Slot Map -->
     @if (isCluster) {
         <br />
-        <p3xr-ng-accordion [title]="strings().page?.monitor?.clusterSlotMap || 'Cluster Slot Map'" accordionKey="monitor-cluster-slots">
+        <p3xr-ng-accordion [title]="strings().page?.monitor?.clusterSlotMap" accordionKey="monitor-cluster-slots">
             <div actions>
                 <p3xr-ng-button
                     (click)="toggleAutoRefreshShards(); $event.stopPropagation()"
-                    [label]="strings().label?.autoRefresh || 'Auto'"
+                    [label]="strings().label?.autoRefresh"
                     [mdIcon]="autoRefreshShards ? 'check_box' : 'check_box_outline_blank'">
                 </p3xr-ng-button>
                 @if (!autoRefreshShards) {
                     <p3xr-ng-button
                         (click)="loadClusterShards(); $event.stopPropagation()"
-                        [label]="strings().intention?.refresh || 'Refresh'"
+                        [label]="strings().intention?.refresh"
                         mdIcon="refresh">
                     </p3xr-ng-button>
                 }
                 <p3xr-ng-button
                     (click)="exportClusterSlots(); $event.stopPropagation()"
-                    [label]="strings().intention?.export || 'Export'"
+                    [label]="strings().intention?.export"
                     mdIcon="download">
                 </p3xr-ng-button>
             </div>
             <div content>
                 @if (!clusterShards) {
                     <div style="padding: 12px 16px; opacity: 0.6;">
-                        {{ strings().page?.monitor?.noClusterData || 'No cluster data available' }}
+                        {{ strings().page?.monitor?.noClusterData }}
                     </div>
                 } @else {
                     <mat-list>
@@ -644,7 +644,7 @@
                                         </span>
                                     </div>
                                     <div class="p3xr-settings-row-value p3xr-mono">
-                                        {{ getSlotCount(shard) }} {{ strings().page?.monitor?.totalSlots || 'slots' }}
+                                        {{ getSlotCount(shard) }} {{ strings().page?.monitor?.totalSlots }}
                                         @if (shard.replicas.length > 0) {
                                             <span style="opacity: 0.5; margin-left: 8px;">({{ formatReplicas(shard) }})</span>
                                         }

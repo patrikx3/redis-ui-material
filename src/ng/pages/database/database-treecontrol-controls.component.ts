@@ -105,8 +105,8 @@ export class DatabaseTreecontrolControlsComponent implements OnInit, OnDestroy {
     searchPlaceholder(): string {
         const searchStrings = this.strings()?.page?.treeControls?.search;
         return this.searchClientSide
-            ? (searchStrings?.placeholderClient || 'Search keys')
-            : (searchStrings?.placeholderServer || 'Search keys on server');
+            ? (searchStrings?.placeholderClient)
+            : (searchStrings?.placeholderServer);
     }
 
     treeExpandAll(): void {
@@ -230,13 +230,13 @@ export class DatabaseTreecontrolControlsComponent implements OnInit, OnDestroy {
     async exportKeys(): Promise<void> {
         const keys = this.state.keysRaw();
         if (!Array.isArray(keys) || keys.length === 0) {
-            this.common.toast({ message: this.strings().label?.noKeysToExport || 'No keys to export' });
+            this.common.toast({ message: this.strings().label?.noKeysToExport });
             return;
         }
 
         try {
             this.overlay.show({
-                message: this.strings().label?.exportProgress || 'Exporting keys...',
+                message: this.strings().label?.exportProgress,
             });
 
             const response = await this.socket.request({
@@ -255,7 +255,7 @@ export class DatabaseTreecontrolControlsComponent implements OnInit, OnDestroy {
             a.click();
             URL.revokeObjectURL(url);
 
-            this.common.toast({ message: this.strings().status?.exportDone || 'Export complete' });
+            this.common.toast({ message: this.strings().status?.exportDone });
         } catch (e) {
             this.common.generalHandleError(e);
         } finally {
@@ -277,7 +277,7 @@ export class DatabaseTreecontrolControlsComponent implements OnInit, OnDestroy {
                 try {
                     const parsed = JSON.parse(e.target.result);
                     if (!parsed?.keys || !Array.isArray(parsed.keys) || parsed.keys.length === 0) {
-                        this.common.toast({ message: this.strings().label?.importNoKeys || 'No keys found in file' });
+                        this.common.toast({ message: this.strings().label?.importNoKeys });
                         return;
                     }
 
@@ -286,7 +286,7 @@ export class DatabaseTreecontrolControlsComponent implements OnInit, OnDestroy {
                         // Dialog closed, now show overlay and do import
                         try {
                             this.overlay.show({
-                                message: this.strings().label?.importProgress || 'Importing keys...',
+                                message: this.strings().label?.importProgress,
                             });
                             const response = await this.socket.request({
                                 action: 'key/import',
@@ -353,7 +353,7 @@ export class DatabaseTreecontrolControlsComponent implements OnInit, OnDestroy {
             await this.common.confirm({ message: confirmMsg });
 
             this.overlay.show({
-                message: this.strings().label?.deletingSearchKeys || 'Deleting matching keys...',
+                message: this.strings().label?.deletingSearchKeys,
             });
 
             const response = await this.socket.request({

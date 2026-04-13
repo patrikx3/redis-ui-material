@@ -25,7 +25,7 @@ import { CommonService } from '../services/common.service';
     template: `
         <mat-toolbar class="p3xr-dialog-toolbar p3xr-mat-layout-strong">
             <span mat-dialog-title class="p3xr-dialog-title">
-                {{ strings().intention?.importKeys || 'Import Keys' }}
+                {{ strings().intention?.importKeys }}
             </span>
             <button mat-icon-button type="button" (click)="cancel()">
                 <mat-icon>close</mat-icon>
@@ -36,7 +36,7 @@ import { CommonService } from '../services/common.service';
             <div class="p3xr-padding">
 
                 <div style="margin-bottom: 16px;">
-                    <strong>{{ strings().label?.importPreview || 'Preview' }}</strong>
+                    <strong>{{ strings().label?.importPreview }}</strong>
                     <span style="opacity: 0.7; margin-left: 8px;">
                         ({{ data.keys.length }})
                     </span>
@@ -51,14 +51,14 @@ import { CommonService } from '../services/common.service';
 
                 <div style="margin-top: 16px;">
                     <div style="margin-bottom: 8px; font-weight: 500;">
-                        {{ strings().label?.importConflict || 'If key already exists:' }}
+                        {{ strings().label?.importConflict }}
                     </div>
                     <mat-radio-group [(ngModel)]="conflictMode">
                         <mat-radio-button value="overwrite" style="margin-right: 16px;">
-                            {{ strings().label?.importOverwrite || 'Overwrite' }}
+                            {{ strings().label?.importOverwrite }}
                         </mat-radio-button>
                         <mat-radio-button value="skip">
-                            {{ strings().label?.importSkip || 'Skip' }}
+                            {{ strings().label?.importSkip }}
                         </mat-radio-button>
                     </mat-radio-group>
                 </div>
@@ -70,7 +70,7 @@ import { CommonService } from '../services/common.service';
             <p3xr-dialog-cancel (cancel)="cancel()"></p3xr-dialog-cancel>
             <button mat-raised-button class="btn-primary" (click)="doImport()" [disabled]="importing">
                 <mat-icon>file_upload</mat-icon>
-                {{ importing ? (strings().label?.importProgress || 'Importing...') : (strings().intention?.importKeys || 'Import') }}
+                {{ importing ? (strings().label?.importProgress) : (strings().intention?.importKeys) }}
             </button>
         </mat-dialog-actions>
     `,

@@ -158,7 +158,7 @@ export default function KeyTimeseries({ response, value, keyName, onRefresh }: K
 
         const seriesConfig: any[] = [
             {
-                label: strings?.label?.time || 'Time',
+                label: strings?.label?.time,
                 value: (_: any, v: number) => {
                     if (!v) return ''
                     return new Date(v * 1000).toLocaleString(langRef.current || 'en', {
@@ -363,7 +363,7 @@ export default function KeyTimeseries({ response, value, keyName, onRefresh }: K
         if (!addValue) return
         try {
             await request({ action: 'timeseries/add', payload: { key: keyName, timestamp: addTimestamp || '*', value: parseFloat(addValue) } })
-            toast(strings?.status?.added || 'Added')
+            toast(strings?.status?.added)
             setAddValue('')
             onRefresh()
         } catch (e: any) { generalHandleError(e) }
@@ -371,9 +371,9 @@ export default function KeyTimeseries({ response, value, keyName, onRefresh }: K
 
     const deleteDataPoint = useCallback(async (point: DataPoint) => {
         try {
-            await confirm({ message: strings?.confirm?.delete || 'Delete?' })
+            await confirm({ message: strings?.confirm?.delete })
             await request({ action: 'timeseries/del', payload: { key: keyName, from: point.timestamp, to: point.timestamp } })
-            toast(strings?.status?.deleted || 'Deleted')
+            toast(strings?.status?.deleted)
             onRefresh()
         } catch (e: any) { if (e !== undefined && e !== null) generalHandleError(e) }
     }, [keyName, strings, confirm, toast, onRefresh, generalHandleError])
@@ -424,7 +424,7 @@ export default function KeyTimeseries({ response, value, keyName, onRefresh }: K
                 action: 'timeseries/alter',
                 payload: { key: keyName, retention: alterRetention, duplicatePolicy: alterDuplicatePolicy, labels },
             })
-            toast(strings?.status?.saved || 'Updated')
+            toast(strings?.status?.saved)
             setAlterMode(false)
             onRefresh()
         } catch (e: any) { generalHandleError(e) }
@@ -483,22 +483,22 @@ export default function KeyTimeseries({ response, value, keyName, onRefresh }: K
             {/* Chart accordion */}
             <br />
             <P3xrAccordion
-                title={strings?.page?.key?.timeseries?.chart || 'Chart'}
+                title={strings?.page?.key?.timeseries?.chart}
                 accordionKey="ts-chart"
                 actions={<>
                     {!isReadonly && (
-                        <P3xrButton icon={<Edit sx={{ fontSize: 18 }} />} label={strings?.intention?.edit || 'Edit'}
+                        <P3xrButton icon={<Edit sx={{ fontSize: 18 }} />} label={strings?.intention?.edit}
                             breakpoint={1280} color="inherit"
                             onClick={(e) => { e.stopPropagation(); editAllDataPoints() }} />
                     )}
-                    <P3xrButton icon={<Image sx={{ fontSize: 18 }} />} label={strings?.page?.key?.timeseries?.exportChart || 'Export PNG'}
+                    <P3xrButton icon={<Image sx={{ fontSize: 18 }} />} label={strings?.page?.key?.timeseries?.exportChart}
                         breakpoint={1280} color="inherit"
                         onClick={(e) => { e.stopPropagation(); exportChartPng() }} />
                     <P3xrButton icon={autoRefresh ? <CheckBox sx={{ fontSize: 18 }} /> : <CheckBoxOutlineBlank sx={{ fontSize: 18 }} />}
-                        label={strings?.label?.autoRefresh || 'Auto'} breakpoint={1280} color="inherit"
+                        label={strings?.label?.autoRefresh} breakpoint={1280} color="inherit"
                         onClick={(e) => { e.stopPropagation(); setAutoRefresh(v => !v) }} />
                     {!autoRefresh && (
-                        <P3xrButton icon={<Refresh sx={{ fontSize: 18 }} />} label={strings?.intention?.refresh || 'Refresh'}
+                        <P3xrButton icon={<Refresh sx={{ fontSize: 18 }} />} label={strings?.intention?.refresh}
                             breakpoint={1280} color="inherit"
                             onClick={(e) => { e.stopPropagation(); loadRange() }} />
                     )}
@@ -507,37 +507,37 @@ export default function KeyTimeseries({ response, value, keyName, onRefresh }: K
                 <Box sx={{ p: 2 }}>
                     {/* Range controls */}
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', gap: 1, py: 1 }}>
-                        <TextField size="small" sx={fieldSx} label={strings?.page?.key?.timeseries?.from || 'From (ms or -)'} placeholder="-"
+                        <TextField size="small" sx={fieldSx} label={strings?.page?.key?.timeseries?.from} placeholder="-"
                             value={rangeFrom} onChange={e => { setRangeFrom(e.target.value); debouncedLoadRange() }} />
-                        <TextField size="small" sx={fieldSx} label={strings?.page?.key?.timeseries?.to || 'To (ms or +)'} placeholder="+"
+                        <TextField size="small" sx={fieldSx} label={strings?.page?.key?.timeseries?.to} placeholder="+"
                             value={rangeTo} onChange={e => { setRangeTo(e.target.value); debouncedLoadRange() }} />
                         <FormControl size="small" sx={fieldSx}>
-                            <InputLabel sx={{ fontSize: 13 }}>{strings?.page?.key?.timeseries?.aggregation || 'Aggregation'}</InputLabel>
-                            <Select value={aggregationType} label={strings?.page?.key?.timeseries?.aggregation || 'Aggregation'}
+                            <InputLabel sx={{ fontSize: 13 }}>{strings?.page?.key?.timeseries?.aggregation}</InputLabel>
+                            <Select value={aggregationType} label={strings?.page?.key?.timeseries?.aggregation}
                                 onChange={e => { setAggregationType(e.target.value); setTimeout(() => loadRange(), 0) }}
                                 sx={{ fontSize: 13 }}>
-                                <MenuItem value="">{strings?.page?.key?.timeseries?.none || 'None'}</MenuItem>
+                                <MenuItem value="">{strings?.page?.key?.timeseries?.none}</MenuItem>
                                 {aggregationTypes.map(a => <MenuItem key={a} value={a}>{a}</MenuItem>)}
                             </Select>
                         </FormControl>
                         {aggregationType && (
                             <TextField size="small" sx={fieldSx} type="number"
-                                label={strings?.page?.key?.timeseries?.timeBucket || 'Bucket (ms)'} placeholder="5000"
+                                label={strings?.page?.key?.timeseries?.timeBucket} placeholder="5000"
                                 value={aggregationBucket} onChange={e => { setAggregationBucket(e.target.value); debouncedLoadRange() }} />
                         )}
                         <TextField size="small" sx={{ ...fieldSx, minWidth: 200 }}
-                            label={strings?.page?.key?.timeseries?.overlay || 'Overlay keys'}
-                            placeholder={strings?.page?.key?.timeseries?.overlayHint || 'key1, key2'}
+                            label={strings?.page?.key?.timeseries?.overlay}
+                            placeholder={strings?.page?.key?.timeseries?.overlayHint}
                             value={overlayKeysInput} onChange={e => { setOverlayKeysInput(e.target.value); debouncedLoadRange() }} />
                         <TextField size="small" sx={{ ...fieldSx, minWidth: 180 }}
-                            label={strings?.page?.key?.timeseries?.mrangeFilter || 'Label filter'}
-                            placeholder={strings?.page?.key?.timeseries?.mrangeHint || 'sensor=temp'}
+                            label={strings?.page?.key?.timeseries?.mrangeFilter}
+                            placeholder={strings?.page?.key?.timeseries?.mrangeHint}
                             value={mrangeFilter} onChange={e => { setMrangeFilter(e.target.value); debouncedLoadRange() }} />
                     </Box>
 
                     {/* Data points count */}
                     <Box sx={{ py: '4px', opacity: 0.6, fontSize: 13 }}>
-                        {rangeData.length} {strings?.page?.key?.timeseries?.dataPoints || 'data points'}
+                        {rangeData.length} {strings?.page?.key?.timeseries?.dataPoints}
                     </Box>
 
                     {/* Chart container */}
@@ -547,14 +547,14 @@ export default function KeyTimeseries({ response, value, keyName, onRefresh }: K
                     {!isReadonly && (
                         <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', gap: 1, mt: 2 }}>
                             <TextField size="small" sx={fieldSx}
-                                label={strings?.page?.key?.timeseries?.timestamp || 'Timestamp'}
+                                label={strings?.page?.key?.timeseries?.timestamp}
                                 placeholder="* (auto)" value={addTimestamp}
                                 onChange={e => setAddTimestamp(e.target.value)} />
                             <TextField size="small" sx={fieldSx} type="number"
-                                label={strings?.page?.key?.timeseries?.value || 'Value'}
+                                label={strings?.page?.key?.timeseries?.value}
                                 value={addValue} onChange={e => setAddValue(e.target.value)}
                                 onKeyDown={e => { if (e.key === 'Enter') addDataPoint() }} />
-                            <P3xrButton icon={<Add fontSize="small" />} label={strings?.intention?.add || 'Add'}
+                            <P3xrButton icon={<Add fontSize="small" />} label={strings?.intention?.add}
                                 raised color="primary" onClick={() => addDataPoint()} disabled={!addValue} />
                         </Box>
                     )}
@@ -566,7 +566,7 @@ export default function KeyTimeseries({ response, value, keyName, onRefresh }: K
                 <>
                     <br />
                     <P3xrAccordion
-                        title={capitalize(strings?.page?.key?.timeseries?.dataPoints || 'Data') + ` (${rangeData.length})`}
+                        title={capitalize(strings?.page?.key?.timeseries?.dataPoints) + ` (${rangeData.length})`}
                         accordionKey="ts-data"
                     >
                         <Box>
@@ -576,8 +576,8 @@ export default function KeyTimeseries({ response, value, keyName, onRefresh }: K
                                 bgcolor: muiTheme.palette.primary.main, color: muiTheme.palette.primary.contrastText,
                                 borderBottom: `2px solid ${listBorder}`,
                             }}>
-                                <Box component="span" sx={{ flex: 1 }}>{strings?.page?.key?.timeseries?.timestamp || 'Timestamp'}</Box>
-                                <Box component="span">{strings?.page?.key?.timeseries?.value || 'Value'}</Box>
+                                <Box component="span" sx={{ flex: 1 }}>{strings?.page?.key?.timeseries?.timestamp}</Box>
+                                <Box component="span">{strings?.page?.key?.timeseries?.value}</Box>
                                 {!isReadonly && <Box component="span" sx={{ minWidth: 52 }} />}
                             </Box>
 
@@ -621,11 +621,11 @@ export default function KeyTimeseries({ response, value, keyName, onRefresh }: K
             {/* TS.INFO accordion */}
             <br />
             <P3xrAccordion
-                title={strings?.page?.key?.timeseries?.info || 'Info'}
+                title={strings?.page?.key?.timeseries?.info}
                 accordionKey="ts-info"
                 actions={!isReadonly ? (
                     <P3xrButton icon={alterMode ? <CheckBox sx={{ fontSize: 18 }} /> : <Edit sx={{ fontSize: 18 }} />}
-                        label={strings?.intention?.edit || 'Edit'} color="inherit"
+                        label={strings?.intention?.edit} color="inherit"
                         onClick={(e) => { e.stopPropagation(); toggleAlterMode() }} />
                 ) : undefined}
             >
@@ -633,13 +633,13 @@ export default function KeyTimeseries({ response, value, keyName, onRefresh }: K
                     <Box sx={{ p: 2 }}>
                         <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', gap: 1 }}>
                             <TextField size="small" type="number" sx={{ flex: 1, minWidth: 150 }}
-                                label={`${strings?.page?.key?.timeseries?.retention || 'Retention'} (ms)`}
-                                helperText={strings?.page?.key?.timeseries?.retentionHint || '0 = no expiry, or milliseconds'}
+                                label={`${strings?.page?.key?.timeseries?.retention} (ms)`}
+                                helperText={strings?.page?.key?.timeseries?.retentionHint}
                                 value={alterRetention} onChange={e => setAlterRetention(Number(e.target.value))} />
                             <FormControl size="small" sx={{ flex: 1, minWidth: 150 }}>
-                                <InputLabel>{strings?.page?.key?.timeseries?.duplicatePolicy || 'Duplicate policy'}</InputLabel>
+                                <InputLabel>{strings?.page?.key?.timeseries?.duplicatePolicy}</InputLabel>
                                 <Select value={alterDuplicatePolicy}
-                                    label={strings?.page?.key?.timeseries?.duplicatePolicy || 'Duplicate policy'}
+                                    label={strings?.page?.key?.timeseries?.duplicatePolicy}
                                     onChange={e => setAlterDuplicatePolicy(e.target.value)}>
                                     {['LAST', 'FIRST', 'MIN', 'MAX', 'SUM', 'BLOCK'].map(p =>
                                         <MenuItem key={p} value={p}>{p}</MenuItem>
@@ -647,10 +647,10 @@ export default function KeyTimeseries({ response, value, keyName, onRefresh }: K
                                 </Select>
                             </FormControl>
                             <TextField size="small" sx={{ flex: 1, minWidth: 200 }}
-                                label={strings?.page?.key?.timeseries?.labels || 'Labels'}
-                                helperText={strings?.page?.key?.timeseries?.labelsHint || 'key1 value1 key2 value2'}
+                                label={strings?.page?.key?.timeseries?.labels}
+                                helperText={strings?.page?.key?.timeseries?.labelsHint}
                                 value={alterLabels} onChange={e => setAlterLabels(e.target.value)} />
-                            <P3xrButton icon={<Save fontSize="small" />} label={strings?.intention?.save || 'Save'}
+                            <P3xrButton icon={<Save fontSize="small" />} label={strings?.intention?.save}
                                 raised color="primary" onClick={() => saveAlter()} />
                         </Box>
                     </Box>
@@ -671,7 +671,7 @@ export default function KeyTimeseries({ response, value, keyName, onRefresh }: K
 
                     {tsLabels.length > 0 && (
                         <>
-                            <ListItem sx={{ px: 2, py: 1 }}><strong>{strings?.page?.key?.timeseries?.labels || 'Labels'}</strong></ListItem>
+                            <ListItem sx={{ px: 2, py: 1 }}><strong>{strings?.page?.key?.timeseries?.labels}</strong></ListItem>
                             <Divider />
                             {tsLabels.map(label => (
                                 <Box key={label.key}>
@@ -689,7 +689,7 @@ export default function KeyTimeseries({ response, value, keyName, onRefresh }: K
 
                     {tsRules.length > 0 && (
                         <>
-                            <ListItem sx={{ px: 2, py: 1 }}><strong>{strings?.page?.key?.timeseries?.rules || 'Rules'}</strong></ListItem>
+                            <ListItem sx={{ px: 2, py: 1 }}><strong>{strings?.page?.key?.timeseries?.rules}</strong></ListItem>
                             <Divider />
                             {tsRules.map((rule: any) => (
                                 <Box key={rule.destKey}>

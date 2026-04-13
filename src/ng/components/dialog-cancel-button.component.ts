@@ -48,7 +48,7 @@ export class DialogCancelButtonComponent {
 
     ngOnInit(): void {
         if (!this.label) {
-            this.label = this.i18n.strings().intention?.cancel || 'Cancel';
+            this.label = this.i18n.strings().intention?.cancel;
         }
     }
 }

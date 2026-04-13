@@ -83,7 +83,7 @@ export default function KeyVectorset({ response, value, keyName, onRefresh }: Ke
                 payload: { key: keyName, mode: 'element', element: simSearchInput.trim(), count: simCountInput, filter: simFilterInput.trim() || undefined },
             })
             setSimResults(resp.results || [])
-            toast(strings?.page?.key?.vectorset?.searchComplete || 'Search complete')
+            toast(strings?.page?.key?.vectorset?.searchComplete)
         } catch (e: any) {
             toast(e.message || 'Error')
         }
@@ -98,7 +98,7 @@ export default function KeyVectorset({ response, value, keyName, onRefresh }: Ke
                 payload: { key: keyName, mode: 'vector', values, count: simCountInput, filter: simFilterInput.trim() || undefined },
             })
             setSimResults(resp.results || [])
-            toast(strings?.page?.key?.vectorset?.searchComplete || 'Search complete')
+            toast(strings?.page?.key?.vectorset?.searchComplete)
         } catch (e: any) {
             toast(e.message || 'Error')
         }
@@ -114,7 +114,7 @@ export default function KeyVectorset({ response, value, keyName, onRefresh }: Ke
             if (attrs && Object.keys(attrs).length > 0) {
                 toast(`${element}: ${JSON.stringify(attrs)}`)
             } else {
-                toast(`${element}: ${strings?.page?.key?.vectorset?.noAttributes || 'No attributes'}`)
+                toast(`${element}: ${strings?.page?.key?.vectorset?.noAttributes}`)
             }
         } catch (e: any) {
             if (e?.message) toast(e.message)
@@ -128,7 +128,7 @@ export default function KeyVectorset({ response, value, keyName, onRefresh }: Ke
                 action: 'vectorset/add',
                 payload: { key: keyName, element: elementInput.trim(), values: vectorInput.split(',').map(Number) },
             })
-            toast(strings?.page?.key?.vectorset?.addedSuccessfully || 'Element added successfully')
+            toast(strings?.page?.key?.vectorset?.addedSuccessfully)
             setElementInput('')
             setVectorInput('')
             onRefresh()
@@ -140,12 +140,12 @@ export default function KeyVectorset({ response, value, keyName, onRefresh }: Ke
 
     async function removeElement(element: string) {
         try {
-            await confirm({ message: strings?.confirm?.delete || 'Delete?' })
+            await confirm({ message: strings?.confirm?.delete })
             await request({
                 action: 'vectorset/remove',
                 payload: { key: keyName, element },
             })
-            toast(strings?.page?.key?.vectorset?.deletedSuccessfully || 'Element deleted successfully')
+            toast(strings?.page?.key?.vectorset?.deletedSuccessfully)
             onRefresh()
             loadElements()
         } catch (e: any) {
@@ -160,7 +160,7 @@ export default function KeyVectorset({ response, value, keyName, onRefresh }: Ke
                 payload: { key: keyName, mode: 'element', element, count: simCountInput },
             })
             setSimResults(resp.results || [])
-            toast(strings?.page?.key?.vectorset?.searchComplete || 'Search complete')
+            toast(strings?.page?.key?.vectorset?.searchComplete)
         } catch (e: any) {
             toast(e.message || 'Error')
         }
@@ -171,15 +171,15 @@ export default function KeyVectorset({ response, value, keyName, onRefresh }: Ke
             {/* INFO */}
             <br />
             <P3xrAccordion
-                title={strings?.page?.key?.vectorset?.info || 'Info'}
+                title={strings?.page?.key?.vectorset?.info}
                 accordionKey="vs-info"
                 actions={<>
                     <P3xrButton
                         icon={autoRefresh ? <CheckBox sx={{ fontSize: 18 }} /> : <CheckBoxOutlineBlank sx={{ fontSize: 18 }} />}
-                        label={strings?.label?.autoRefresh || 'Auto'} breakpoint={1280}
+                        label={strings?.label?.autoRefresh} breakpoint={1280}
                         onClick={(e) => { e.stopPropagation(); setAutoRefresh(v => !v) }} />
                     {!autoRefresh && (
-                        <P3xrButton icon={<Refresh sx={{ fontSize: 18 }} />} label={strings?.intention?.refresh || 'Refresh'}
+                        <P3xrButton icon={<Refresh sx={{ fontSize: 18 }} />} label={strings?.intention?.refresh}
                             breakpoint={1280}
                             onClick={(e) => { e.stopPropagation(); onRefresh(); loadElements() }} />
                     )}
@@ -203,7 +203,7 @@ export default function KeyVectorset({ response, value, keyName, onRefresh }: Ke
             {/* ELEMENTS */}
             <br />
             <P3xrAccordion
-                title={strings?.page?.key?.vectorset?.elements || 'Elements'}
+                title={strings?.page?.key?.vectorset?.elements}
                 accordionKey="vs-elements"
             >
                 <Box>
@@ -213,11 +213,11 @@ export default function KeyVectorset({ response, value, keyName, onRefresh }: Ke
                         bgcolor: 'primary.main', color: 'primary.contrastText',
                         borderBottom: `2px solid rgba(255,255,255,0.05)`,
                     }}>
-                        <Box component="span" sx={{ flex: '50%' }}>{strings?.page?.key?.vectorset?.element || 'Element'}</Box>
-                        <Box component="span" sx={{ flex: '20%' }}>{strings?.page?.key?.vectorset?.score || 'Score'}</Box>
+                        <Box component="span" sx={{ flex: '50%' }}>{strings?.page?.key?.vectorset?.element}</Box>
+                        <Box component="span" sx={{ flex: '20%' }}>{strings?.page?.key?.vectorset?.score}</Box>
                         <Box component="span" sx={{ flex: '30%', textAlign: 'right', display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
                             {!readonly && (
-                                <Tooltip title={strings?.intention?.add || 'Add'}><Add sx={{ cursor: 'pointer', color: 'inherit' }} onClick={() => setShowAddForm(v => !v)} /></Tooltip>
+                                <Tooltip title={strings?.intention?.add}><Add sx={{ cursor: 'pointer', color: 'inherit' }} onClick={() => setShowAddForm(v => !v)} /></Tooltip>
                             )}
                         </Box>
                     </Box>
@@ -235,9 +235,9 @@ export default function KeyVectorset({ response, value, keyName, onRefresh }: Ke
                                     setSimSearchInput(elem.element)
                                     searchByElementDirect(elem.element)
                                 }} /></Tooltip>
-                                <Tooltip title={strings?.page?.key?.vectorset?.attributes || 'Attributes'}><Info sx={{ fontSize: 18, cursor: 'pointer', mx: '2px', opacity: 0.7, color: 'secondary.main', '&:hover': { opacity: 1 } }} onClick={() => getAttributes(elem.element)} /></Tooltip>
+                                <Tooltip title={strings?.page?.key?.vectorset?.attributes}><Info sx={{ fontSize: 18, cursor: 'pointer', mx: '2px', opacity: 0.7, color: 'secondary.main', '&:hover': { opacity: 1 } }} onClick={() => getAttributes(elem.element)} /></Tooltip>
                                 {!readonly && (
-                                    <Tooltip title={strings?.intention?.delete || 'Delete'}><Delete sx={{ fontSize: 18, cursor: 'pointer', mx: '2px', opacity: 0.7, color: 'error.main', '&:hover': { opacity: 1 } }} onClick={() => removeElement(elem.element)} /></Tooltip>
+                                    <Tooltip title={strings?.intention?.delete}><Delete sx={{ fontSize: 18, cursor: 'pointer', mx: '2px', opacity: 0.7, color: 'error.main', '&:hover': { opacity: 1 } }} onClick={() => removeElement(elem.element)} /></Tooltip>
                                 )}
                             </Box>
                         </Box>
@@ -247,18 +247,18 @@ export default function KeyVectorset({ response, value, keyName, onRefresh }: Ke
                             <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', gap: 1.5, py: 1 }}>
                                 <TextField size="small" margin="none"
                                     sx={{ flex: 1, minWidth: 200 }}
-                                    label={strings?.page?.key?.vectorset?.elementName || 'Element name'}
+                                    label={strings?.page?.key?.vectorset?.elementName}
                                     value={elementInput}
                                     onChange={e => setElementInput(e.target.value)}
                                     onKeyUp={e => e.key === 'Enter' && addElement()} />
                                 <TextField size="small" margin="none"
                                     sx={{ flex: 1, minWidth: 200 }}
-                                    label={strings?.page?.key?.vectorset?.vectorValues || 'Vector values'}
+                                    label={strings?.page?.key?.vectorset?.vectorValues}
                                     placeholder="0.1, 0.2, 0.3"
                                     value={vectorInput}
                                     onChange={e => setVectorInput(e.target.value)}
                                     onKeyUp={e => e.key === 'Enter' && addElement()} />
-                                <P3xrButton icon={<Add fontSize="small" />} label={strings?.intention?.add || 'Add'}
+                                <P3xrButton icon={<Add fontSize="small" />} label={strings?.intention?.add}
                                     raised color="primary" onClick={addElement} />
                             </Box>
                         </Box>
@@ -269,36 +269,36 @@ export default function KeyVectorset({ response, value, keyName, onRefresh }: Ke
             {/* SIMILARITY SEARCH */}
             <br />
             <P3xrAccordion
-                title={strings?.page?.key?.vectorset?.similaritySearch || 'Similarity Search'}
+                title={strings?.page?.key?.vectorset?.similaritySearch}
                 accordionKey="vs-sim"
             >
                 <Box sx={{ p: 2 }}>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', gap: 1.5, py: 1 }}>
                         <TextField size="small" margin="none"
                             sx={{ flex: 1, minWidth: 200 }}
-                            label={strings?.page?.key?.vectorset?.searchTerm || 'Search term'}
+                            label={strings?.page?.key?.vectorset?.searchTerm}
                             value={simSearchInput}
                             onChange={e => setSimSearchInput(e.target.value)}
                             onKeyUp={e => e.key === 'Enter' && searchByElement()} />
                         <TextField size="small" margin="none" type="number"
                             sx={{ width: 80 }}
-                            label={strings?.page?.key?.vectorset?.count || 'Count'}
+                            label={strings?.page?.key?.vectorset?.count}
                             value={simCountInput}
                             onChange={e => setSimCountInput(parseInt(e.target.value) || 10)} />
                         {parseRedisVersion(useRedisStateStore.getState().info?.server?.redis_version).isAtLeast(8, 2) && (
                             <TextField size="small" margin="none"
                                 sx={{ flex: 1, minWidth: 150 }}
-                                label={strings?.page?.key?.vectorset?.filter || 'Filter'}
+                                label={strings?.page?.key?.vectorset?.filter}
                                 placeholder="attr == 'value'"
                                 value={simFilterInput}
                                 onChange={e => setSimFilterInput(e.target.value)}
                                 onKeyUp={e => e.key === 'Enter' && searchByElement()} />
                         )}
                         <P3xrButton icon={<Person fontSize="small" />}
-                            label={strings?.page?.key?.vectorset?.byElement || 'By Element'}
+                            label={strings?.page?.key?.vectorset?.byElement}
                             raised color="primary" onClick={searchByElement} />
                         <P3xrButton icon={<DataArray fontSize="small" />}
-                            label={strings?.page?.key?.vectorset?.byVector || 'By Vector'}
+                            label={strings?.page?.key?.vectorset?.byVector}
                             raised color="primary" onClick={searchByVector} />
                     </Box>
                     {simResults.length > 0 && (

@@ -62,7 +62,7 @@ export default function KeyProbabilistic({ response, value, keyName, onRefresh }
                 action: 'probabilistic/add',
                 payload: { key: keyName, type, item: itemInput.trim(), increment: incrementInput },
             })
-            toast(strings?.page?.key?.probabilistic?.addedSuccessfully || 'Item added successfully')
+            toast(strings?.page?.key?.probabilistic?.addedSuccessfully)
             setItemInput('')
             onRefresh()
             if (type === 'topk') loadTopkList()
@@ -80,8 +80,8 @@ export default function KeyProbabilistic({ response, value, keyName, onRefresh }
             })
             const exists = resp.result === 1
             toast(`"${itemInput}" — ${exists
-                ? (strings?.page?.key?.probabilistic?.exists || 'Exists')
-                : (strings?.page?.key?.probabilistic?.doesNotExist || 'Does not exist')}`)
+                ? (strings?.page?.key?.probabilistic?.exists)
+                : (strings?.page?.key?.probabilistic?.doesNotExist)}`)
         } catch (e: any) {
             toast(e.message || 'Error')
         }
@@ -90,12 +90,12 @@ export default function KeyProbabilistic({ response, value, keyName, onRefresh }
     async function deleteItem() {
         if (!itemInput.trim()) return
         try {
-            await confirm({ message: strings?.confirm?.delete || 'Delete?' })
+            await confirm({ message: strings?.confirm?.delete })
             await request({
                 action: 'probabilistic/delete',
                 payload: { key: keyName, type, item: itemInput.trim() },
             })
-            toast(strings?.page?.key?.probabilistic?.deletedSuccessfully || 'Item deleted successfully')
+            toast(strings?.page?.key?.probabilistic?.deletedSuccessfully)
             setItemInput('')
             onRefresh()
         } catch (e: any) {
@@ -111,7 +111,7 @@ export default function KeyProbabilistic({ response, value, keyName, onRefresh }
                 payload: { key: keyName, type, item: itemInput.trim() },
             })
             const count = Array.isArray(resp.result) ? resp.result[0] : resp.result
-            toast(`"${itemInput}" — ${strings?.page?.key?.probabilistic?.topkCount || 'Count'}: ${count}`)
+            toast(`"${itemInput}" — ${strings?.page?.key?.probabilistic?.topkCount}: ${count}`)
         } catch (e: any) {
             toast(e.message || 'Error')
         }
@@ -124,7 +124,7 @@ export default function KeyProbabilistic({ response, value, keyName, onRefresh }
                 payload: { key: keyName, type, quantile: quantileInput },
             })
             const result = Array.isArray(resp.result) ? resp.result[0] : resp.result
-            toast(`${strings?.page?.key?.probabilistic?.quantile || 'Quantile'} ${quantileInput} = ${result}`)
+            toast(`${strings?.page?.key?.probabilistic?.quantile} ${quantileInput} = ${result}`)
         } catch (e: any) {
             toast(e.message || 'Error')
         }
@@ -132,7 +132,7 @@ export default function KeyProbabilistic({ response, value, keyName, onRefresh }
 
     async function resetTdigest() {
         try {
-            await confirm({ message: strings?.page?.key?.probabilistic?.resetConfirm || 'Reset all data in this T-Digest?' })
+            await confirm({ message: strings?.page?.key?.probabilistic?.resetConfirm })
             await request({
                 action: 'probabilistic/delete',
                 payload: { key: keyName, type: 'tdigest' },
@@ -161,15 +161,15 @@ export default function KeyProbabilistic({ response, value, keyName, onRefresh }
             {/* INFO */}
             <br />
             <P3xrAccordion
-                title={strings?.page?.key?.probabilistic?.info || 'Info'}
+                title={strings?.page?.key?.probabilistic?.info}
                 accordionKey="prob-info"
                 actions={<>
                     <P3xrButton
                         icon={autoRefresh ? <CheckBox sx={{ fontSize: 18 }} /> : <CheckBoxOutlineBlank sx={{ fontSize: 18 }} />}
-                        label={strings?.label?.autoRefresh || 'Auto'} breakpoint={1280}
+                        label={strings?.label?.autoRefresh} breakpoint={1280}
                         onClick={(e) => { e.stopPropagation(); setAutoRefresh(v => !v) }} />
                     {!autoRefresh && (
-                        <P3xrButton icon={<Refresh sx={{ fontSize: 18 }} />} label={strings?.intention?.refresh || 'Refresh'}
+                        <P3xrButton icon={<Refresh sx={{ fontSize: 18 }} />} label={strings?.intention?.refresh}
                             breakpoint={1280}
                             onClick={(e) => { e.stopPropagation(); onRefresh(); if (type === 'topk') loadTopkList() }} />
                     )}
@@ -194,8 +194,8 @@ export default function KeyProbabilistic({ response, value, keyName, onRefresh }
             <br />
             <P3xrAccordion
                 title={type === 'topk'
-                    ? (strings?.page?.key?.probabilistic?.topkList || 'Top Items')
-                    : (strings?.page?.key?.probabilistic?.addItem || 'Actions')}
+                    ? (strings?.page?.key?.probabilistic?.topkList)
+                    : (strings?.page?.key?.probabilistic?.addItem)}
                 accordionKey="prob-actions"
             >
                 <Box>
@@ -204,7 +204,7 @@ export default function KeyProbabilistic({ response, value, keyName, onRefresh }
                         {type === 'tdigest' ? (
                             <TextField size="small" type="number" margin="none"
                                 className="p3xr-timeseries-field"
-                                label={strings?.form?.key?.field?.value || 'Value'}
+                                label={strings?.form?.key?.field?.value}
                                 value={itemInput}
                                 onChange={e => setItemInput(e.target.value)}
                                 onKeyUp={e => e.key === 'Enter' && addItem()} />
@@ -212,7 +212,7 @@ export default function KeyProbabilistic({ response, value, keyName, onRefresh }
                             <TextField size="small" margin="none"
                                 className="p3xr-timeseries-field"
                                 sx={{ flex: 1, minWidth: 200 }}
-                                label={strings?.page?.key?.probabilistic?.item || 'Item'}
+                                label={strings?.page?.key?.probabilistic?.item}
                                 value={itemInput}
                                 onChange={e => setItemInput(e.target.value)}
                                 onKeyUp={e => e.key === 'Enter' && addItem()} />
@@ -222,7 +222,7 @@ export default function KeyProbabilistic({ response, value, keyName, onRefresh }
                             <TextField size="small" type="number" margin="none"
                                 className="p3xr-timeseries-field"
                                 sx={{ maxWidth: 120 }}
-                                label={strings?.form?.key?.field?.increment || 'Increment'}
+                                label={strings?.form?.key?.field?.increment}
                                 value={incrementInput}
                                 onChange={e => setIncrementInput(parseInt(e.target.value) || 1)} />
                         )}
@@ -232,34 +232,34 @@ export default function KeyProbabilistic({ response, value, keyName, onRefresh }
                                 slotProps={{ htmlInput: { step: 0.1 } }}
                                 className="p3xr-timeseries-field"
                                 sx={{ maxWidth: 120 }}
-                                label={strings?.page?.key?.probabilistic?.quantile || 'Quantile'}
+                                label={strings?.page?.key?.probabilistic?.quantile}
                                 value={quantileInput}
                                 onChange={e => setQuantileInput(parseFloat(e.target.value) || 0.5)}
                                 onKeyUp={e => e.key === 'Enter' && queryQuantile()} />
                         )}
 
                         {!readonly && (
-                            <P3xrButton icon={<Add fontSize="small" />} label={strings?.intention?.add || 'Add'}
+                            <P3xrButton icon={<Add fontSize="small" />} label={strings?.intention?.add}
                                 raised color="primary" onClick={addItem} />
                         )}
 
                         {(type === 'bloom' || type === 'cuckoo') && (
-                            <P3xrButton icon={<Search fontSize="small" />} label={strings?.page?.key?.probabilistic?.checkItem || 'Check'}
+                            <P3xrButton icon={<Search fontSize="small" />} label={strings?.page?.key?.probabilistic?.checkItem}
                                 raised color="primary" onClick={checkItem} />
                         )}
 
                         {type === 'cuckoo' && !readonly && (
-                            <P3xrButton icon={<Delete fontSize="small" />} label={strings?.intention?.delete || 'Delete'}
+                            <P3xrButton icon={<Delete fontSize="small" />} label={strings?.intention?.delete}
                                 raised color="primary" onClick={deleteItem} />
                         )}
 
                         {type === 'cms' && (
-                            <P3xrButton icon={<Search fontSize="small" />} label={strings?.page?.key?.probabilistic?.queryCount || 'Query'}
+                            <P3xrButton icon={<Search fontSize="small" />} label={strings?.page?.key?.probabilistic?.queryCount}
                                 raised color="primary" onClick={queryItem} />
                         )}
 
                         {type === 'tdigest' && (
-                            <P3xrButton icon={<BarChart fontSize="small" />} label={strings?.page?.key?.probabilistic?.quantile || 'Quantile'}
+                            <P3xrButton icon={<BarChart fontSize="small" />} label={strings?.page?.key?.probabilistic?.quantile}
                                 raised color="primary" onClick={queryQuantile} />
                         )}
 

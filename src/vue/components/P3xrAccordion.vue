@@ -57,8 +57,8 @@ function toggle() { extended.value = !extended.value }
             class="p3xr-accordion-toolbar"
             :class="{ 'p3xr-collapsed': !extended }"
             :style="{
-                backgroundColor: ACCORDION_BG[themeKey] || '#9e9e9e',
-                color: ACCORDION_COLOR[themeKey] || 'rgba(0,0,0,0.87)',
+                backgroundColor: ACCORDION_BG[themeKey],
+                color: ACCORDION_COLOR[themeKey],
             }"
         >
             <div class="p3xr-accordion-toolbar-inner">
@@ -70,7 +70,7 @@ function toggle() { extended.value = !extended.value }
                 <div class="p3xr-accordion-actions">
                     <slot name="actions" />
                 </div>
-                <v-tooltip v-if="collapsible" :text="extended ? (strings()?.intention?.collapse || 'Collapse') : (strings()?.intention?.extend || 'Extend')" location="top">
+                <v-tooltip v-if="collapsible" :text="extended ? strings()?.intention?.collapse : strings()?.intention?.extend" location="top">
                     <template #activator="{ props: tp }">
                         <v-btn v-bind="tp" icon variant="text" color="inherit"
                             class="p3xr-accordion-toggle" @click="toggle">
@@ -85,7 +85,7 @@ function toggle() { extended.value = !extended.value }
         <div class="p3xr-accordion-content"
             :style="{
                 display: extended ? 'block' : 'none',
-                borderColor: ACCORDION_BG[themeKey] || '#9e9e9e',
+                borderColor: ACCORDION_BG[themeKey],
             }">
             <slot name="content" />
             <!-- Also support default slot for convenience -->

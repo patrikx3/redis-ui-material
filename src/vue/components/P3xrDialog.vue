@@ -37,9 +37,9 @@ const ACCORDION_BG: Record<string, string> = {
     matrix: '#76ff03',
 }
 
-const headerBg = computed(() => STRONG_BG[themeKey.value] || '#212121')
+const headerBg = computed(() => STRONG_BG[themeKey.value])
 // Matrix dialog footer uses dark green, not bright green
-const footerBg = computed(() => themeKey.value === 'matrix' ? '#0a2e0d' : (ACCORDION_BG[themeKey.value] || '#9e9e9e'))
+const footerBg = computed(() => themeKey.value === 'matrix' ? '#0a2e0d' : (ACCORDION_BG[themeKey.value]))
 </script>
 
 <template>

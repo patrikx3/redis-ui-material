@@ -37,7 +37,7 @@ export default function AiSettingsDialog({ open, onClose }: AiSettingsDialogProp
                 } catch (e) { generalHandleError(e); return }
                 finally { overlay.hide() }
                 if (!validation.valid) {
-                    toast(strings?.label?.aiGroqApiKeyInvalid || 'Invalid Groq API key')
+                    toast(strings?.label?.aiGroqApiKeyInvalid)
                     return
                 }
             }

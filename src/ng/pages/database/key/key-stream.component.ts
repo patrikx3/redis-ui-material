@@ -160,8 +160,8 @@ export class KeyStreamComponent extends KeyTypeBase implements OnInit, OnChanges
             return data;
         }
 
-        const fieldLabel = this.strings?.page?.key?.stream?.table?.field || 'Field';
-        const valueLabel = this.strings?.page?.key?.stream?.table?.value || 'Value';
+        const fieldLabel = this.strings?.page?.key?.stream?.table?.field;
+        const valueLabel = this.strings?.page?.key?.stream?.table?.value;
         return data.map((item: { field: string; value: any }) => ({
             [fieldLabel]: item.field,
             [valueLabel]: item.value,
@@ -221,7 +221,7 @@ export class KeyStreamComponent extends KeyTypeBase implements OnInit, OnChanges
         try {
             await this.common.confirm({ message: this.i18n.strings().confirm?.deleteStreamTimestamp });
             await this.socket.request({ action: 'key/stream-delete-timestamp', payload: { key: this.p3xrKey, streamTimestamp: id } });
-            this.common.toast(this.i18n.strings().status?.deletedStreamTimestamp || this.i18n.strings().status?.deletedKey || 'Deleted');
+            this.common.toast(this.i18n.strings().status?.deletedStreamTimestamp || this.i18n.strings().status?.deletedKey);
             this.refreshKey();
         } catch (e) { if (e) this.common.generalHandleError(e); }
     }

@@ -69,10 +69,10 @@ const INPUT_BORDER: Record<string, string> = {
     dark: '#9e9e9e', darkNeu: '#90a4ae', darkoBluo: '#3f51b5',
     matrix: '#76ff03',
 }
-const toolbarBg = computed(() => STRONG_BG[themeKey.value] || '#212121')
-const inputBg = computed(() => INPUT_BG[themeKey.value] || 'rgba(64,64,64,1)')
-const inputColor = computed(() => INPUT_COLOR[themeKey.value] || 'white')
-const inputBorder = computed(() => INPUT_BORDER[themeKey.value] || '#9e9e9e')
+const toolbarBg = computed(() => STRONG_BG[themeKey.value])
+const inputBg = computed(() => INPUT_BG[themeKey.value])
+const inputColor = computed(() => INPUT_COLOR[themeKey.value])
+const inputBorder = computed(() => INPUT_BORDER[themeKey.value])
 
 // --- HTML encoding ---
 function htmlEncode(str: string): string {
@@ -89,8 +89,8 @@ const filteredCommands = computed(() => {
     const groups = new Map<string, { name: string; syntax: string }[]>()
     for (const c of matched) {
         const info = state.commandsMeta?.[c.toUpperCase()]
-        const group = info?.group || 'Other'
-        const syntax = info?.syntax || ''
+        const group = info?.group
+        const syntax = info?.syntax
         if (!groups.has(group)) groups.set(group, [])
         groups.get(group)!.push({ name: c, syntax })
     }
@@ -475,7 +475,7 @@ onMounted(() => {
         <div class="p3xr-console-header" :style="{ backgroundColor: toolbarBg }">
             <div class="p3xr-console-header-inner">
                 <v-icon size="20" style="margin-right: 6px; color: inherit;">mdi-console</v-icon>
-                <span class="p3xr-console-title">{{ strings?.label?.console || 'Console' }}</span>
+                <span class="p3xr-console-title">{{ strings?.label?.console }}</span>
                 <span style="flex: 1 1 auto;" />
                 <div class="p3xr-console-toolbar-actions">
                     <!-- AI auto-detect toggle -->
@@ -486,13 +486,13 @@ onMounted(() => {
                     <!-- Redis Commands -->
                     <P3xrButton
                         @click="openCommands(); $event.stopPropagation()"
-                        :label="strings?.label?.redisCommandsReference || 'Redis Commands'"
+                        :label="strings?.label?.redisCommandsReference"
                         icon="mdi-book-open-page-variant"
                     />
                     <!-- Clear -->
                     <P3xrButton
                         @click="clearConsole(); $event.stopPropagation()"
-                        :label="strings?.intention?.clear || 'Clear'"
+                        :label="strings?.intention?.clear"
                         icon="mdi-backspace"
                     />
                 </div>
@@ -527,7 +527,7 @@ onMounted(() => {
                 ref="inputEl"
                 v-model="searchText"
                 class="p3xr-console-input"
-                :placeholder="aiLoading ? (strings?.label?.aiTranslating || 'Translating...') : ''"
+                :placeholder="aiLoading ? strings?.label?.aiTranslating : ''"
                 rows="1"
                 autocomplete="off"
                 :style="{

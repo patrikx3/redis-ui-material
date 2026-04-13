@@ -92,7 +92,7 @@ function getConnectionClients(conn: any): string {
             results.push(typeof fn === 'function' ? fn({ length: clients }) : '')
         }
     }
-    return results.join(' ') || '\u00A0'
+    return results.join(' ')
 }
 
 // --- Drag & drop handlers ---
@@ -174,10 +174,10 @@ watch(currentConnectionId, (newId, oldId) => {
 
 async function deleteAclUser(username: string) {
     try {
-        const msg = (strings.value?.page?.acl?.confirmDelete || 'Are you sure to delete ACL user') + ` "${username}"?`
+        const msg = strings.value?.page?.acl?.confirmDelete + ` "${username}"?`
         await common.confirm({ message: msg })
         await request({ action: 'acl/del-user', payload: { username } })
-        common.toast({ message: strings.value?.page?.acl?.userDeleted || 'ACL user deleted' })
+        common.toast(strings.value?.page?.acl?.userDeleted)
         loadAclUsers()
     } catch {}
 }
@@ -201,7 +201,7 @@ async function handleAclDialogClose(result?: { username: string; rules: string[]
     if (result) {
         try {
             await request({ action: 'acl/set-user', payload: { username: result.username, rules: result.rules } })
-            common.toast({ message: strings.value?.page?.acl?.userSaved || 'ACL user saved' })
+            common.toast(strings.value?.page?.acl?.userSaved)
             loadAclUsers()
         } catch (e) { common.generalHandleError(e) }
     }
@@ -214,39 +214,7 @@ function handleConnectionForm(formType: 'new' | 'edit', formModel?: any) {
 }
 
 // Connect
-async function handleConnect(conn: any) {
-    const cloned = JSON.parse(JSON.stringify(conn))
-    try {
-        const dbStorageKey = settings.getStorageKeyCurrentDatabase(cloned.id)
-        let db: string | undefined
-        try { db = localStorage.getItem(dbStorageKey) ?? undefined } catch {}
-        overlay.show({ message: strings.value?.title?.connectingRedis })
-        const response = await request({ action: 'connection/connect', payload: { connection: cloned, db } })
-        const databaseIndexes: number[] = []
-        let idx = 0
-        while (idx < response.databases) databaseIndexes.push(idx++)
-        const commands: string[] = []
-        Object.keys(response.commands ?? {}).forEach(k => commands.push(response.commands[k][0]))
-        commands.sort()
-        const modules = Array.isArray(response.modules) ? response.modules : []
-        Object.assign(state, {
-            page: 1, monitor: false, dbsize: response.dbsize,
-            databaseIndexes, connection: cloned, commands,
-            commandsMeta: response.commandsMeta ?? {}, modules,
-            hasReJSON: modules.some((m: any) => m.name === 'ReJSON'),
-            hasRediSearch: modules.some((m: any) => m.name === 'search'),
-            hasTimeSeries: modules.some((m: any) => m.name === 'timeseries' || m.name === 'Timeseries'),
-        })
-        common.loadRedisInfoResponse({ response })
-        try { localStorage.setItem(settings.connectInfoStorageKey, JSON.stringify(cloned)) } catch {}
-    } catch (error: any) {
-        try { localStorage.removeItem(settings.connectInfoStorageKey) } catch {}
-        state.connection = undefined
-        common.generalHandleError(error)
-    } finally {
-        overlay.hide()
-    }
-}
+const handleConnect = (conn: any) => mainCommand.connect(conn)
 
 async function handleDelete(conn: any) {
     try {
@@ -291,16 +259,16 @@ const treeSettingsItems = computed(() => [
     { label: strings.value?.form?.treeSettings?.field?.searchModeStartsWith, value: settings.searchStartsWith ? strings.value?.form?.treeSettings?.label?.searchModeStartsWith : strings.value?.form?.treeSettings?.label?.searchModeIncludes },
     { label: null, value: settings.jsonFormat === 2 ? strings.value?.form?.treeSettings?.label?.jsonFormatTwoSpace : strings.value?.form?.treeSettings?.label?.jsonFormatFourSpace },
     { label: null, value: settings.animation ? strings.value?.form?.treeSettings?.label?.animation : strings.value?.form?.treeSettings?.label?.noAnimation },
-    { label: null, value: settings.undoEnabled ? (strings.value?.form?.treeSettings?.label?.undoEnabled || 'Undo enabled') : (strings.value?.form?.treeSettings?.label?.undoDisabled || 'Undo disabled'), hint: strings.value?.form?.treeSettings?.undoHint || 'Undo is available for string and JSON key types only' },
-    { label: null, value: settings.showDiffBeforeSave ? (strings.value?.form?.treeSettings?.label?.diffEnabled || 'Show diff before saving') : (strings.value?.form?.treeSettings?.label?.diffDisabled || 'Diff before save disabled') },
+    { label: null, value: settings.undoEnabled ? strings.value?.form?.treeSettings?.label?.undoEnabled : strings.value?.form?.treeSettings?.label?.undoDisabled, hint: strings.value?.form?.treeSettings?.undoHint },
+    { label: null, value: settings.showDiffBeforeSave ? strings.value?.form?.treeSettings?.label?.diffEnabled : strings.value?.form?.treeSettings?.label?.diffDisabled },
 ])
 </script>
 
 <template>
     <!-- Donate -->
-    <P3xrAccordion :title="strings?.title?.donateTitle || 'Support P3X Redis UI'" accordion-key="donate" :collapsible="false">
+    <P3xrAccordion :title="strings?.title?.donateTitle" accordion-key="donate" :collapsible="false">
         <template #actions>
-            <P3xrButton :label="`${strings?.title?.donate || 'Donate'} — PayPal`" icon="mdi-heart" @click="openLink('https://www.paypal.me/patrikx3')" />
+            <P3xrButton :label="`${strings?.title?.donate} — PayPal`" icon="mdi-heart" @click="openLink('https://www.paypal.me/patrikx3')" />
         </template>
         <div style="padding: 12px 16px; font-size: 13px; opacity: 0.85; line-height: 1.6;">
             {{ strings?.title?.donateDescription }}
@@ -310,10 +278,10 @@ const treeSettingsItems = computed(() => [
     <br />
 
     <!-- Connections -->
-    <P3xrAccordion :title="strings?.label?.connections || 'Connections'" accordion-key="settings">
+    <P3xrAccordion :title="strings?.label?.connections" accordion-key="settings">
         <template #actions>
-            <P3xrButton :label="strings?.label?.grouped || 'Grouped'" :icon="groupModeEnabled ? 'mdi-checkbox-marked' : 'mdi-checkbox-blank-outline'" @click="toggleGroupMode" />
-            <P3xrButton v-if="!readonlyConnections" :label="strings?.intention?.connectionAdd || 'Add'" icon="mdi-plus-box" @click="handleConnectionForm('new')" />
+            <P3xrButton :label="strings?.label?.grouped" :icon="groupModeEnabled ? 'mdi-checkbox-marked' : 'mdi-checkbox-blank-outline'" @click="toggleGroupMode" />
+            <P3xrButton v-if="!readonlyConnections" :label="strings?.intention?.connectionAdd" icon="mdi-plus-box" @click="handleConnectionForm('new')" />
         </template>
 
         <div v-if="connectionsList.length === 0" style="padding: 16px;">
@@ -421,25 +389,25 @@ const treeSettingsItems = computed(() => [
     <template v-if="currentConnectionId">
         <br />
         <!-- ACL Users -->
-        <P3xrAccordion :title="`${strings?.page?.acl?.title || 'ACL Users'} — ${currentConnectionName}`" accordion-key="acl-users">
+        <P3xrAccordion :title="`${strings?.page?.acl?.title} — ${currentConnectionName}`" accordion-key="acl-users">
             <template #actions>
-                <P3xrButton @click="loadAclUsers(); $event.stopPropagation()" :label="strings?.intention?.refresh || 'Refresh'" icon="mdi-refresh" />
-                <P3xrButton v-if="!readonlyConnections" @click="openAclCreate(); $event.stopPropagation()" :label="strings?.page?.acl?.createUser || 'Create User'" icon="mdi-account-plus" />
+                <P3xrButton @click="loadAclUsers(); $event.stopPropagation()" :label="strings?.intention?.refresh" icon="mdi-refresh" />
+                <P3xrButton v-if="!readonlyConnections" @click="openAclCreate(); $event.stopPropagation()" :label="strings?.page?.acl?.createUser" icon="mdi-account-plus" />
             </template>
             <div v-if="aclLoading" style="padding: 16px; opacity: 0.6;">
-                {{ strings?.page?.acl?.loading || 'Loading...' }}
+                {{ strings?.page?.acl?.loading }}
             </div>
             <div v-else-if="!aclUsers" style="padding: 16px; opacity: 0.6;">
-                {{ strings?.page?.acl?.noUsers || 'ACL requires Redis 6.0+.' }}
+                {{ strings?.page?.acl?.noUsers }}
             </div>
             <div v-else>
                 <template v-for="(user, idx) in aclUsers" :key="user.name">
                     <div :class="{ 'p3xr-settings-list-item': !readonlyConnections }" style="display: flex; align-items: center; gap: 4px; padding: 8px 8px 8px 16px; min-height: 56px;" @click="!readonlyConnections && openAclEdit(user)">
-                        <div style="flex: 1; min-width: 0;">
+                        <div style="flex: 1; min-width: 0; display: flex; align-items: center;">
                             <span style="font-weight: 700;">{{ user.name }}</span>
-                            <span v-if="user.name === aclCurrentUser" style="opacity: 0.5; margin-left: 6px; font-size: 11px;">({{ strings?.page?.acl?.currentUser || 'Current' }})</span>
+                            <span v-if="user.name === aclCurrentUser" style="opacity: 0.5; margin-left: 6px; font-size: 11px; line-height: 1;">({{ strings?.page?.acl?.currentUser }})</span>
                         </div>
-                        <v-tooltip v-if="!user.enabled" :text="strings?.page?.acl?.disabled || 'Disabled'" location="top">
+                        <v-tooltip v-if="!user.enabled" :text="strings?.page?.acl?.disabled" location="top">
                             <template #activator="{ props: tp }">
                                 <v-icon v-bind="tp" color="warning" size="20">mdi-alert</v-icon>
                             </template>
@@ -449,14 +417,14 @@ const treeSettingsItems = computed(() => [
                                 variant="flat" color="error" size="small"
                                 @click.stop="deleteAclUser(user.name)"
                                 :style="isXs ? 'min-width:40px;width:40px;height:40px;padding:0;' : 'min-width:auto;padding:0 8px;'">
-                                <v-icon>mdi-delete</v-icon><span v-if="!isXs" style="margin-left:3px;">{{ strings?.page?.acl?.deleteUser || 'Delete' }}</span>
-                                <v-tooltip v-if="isXs" activator="parent" location="top">{{ strings?.page?.acl?.deleteUser || 'Delete' }}</v-tooltip>
+                                <v-icon>mdi-delete</v-icon><span v-if="!isXs" style="margin-left:3px;">{{ strings?.page?.acl?.deleteUser }}</span>
+                                <v-tooltip v-if="isXs" activator="parent" location="top">{{ strings?.page?.acl?.deleteUser }}</v-tooltip>
                             </v-btn>
                             <v-btn variant="flat" color="primary" size="small"
                                 @click.stop="openAclEdit(user)"
                                 :style="isXs ? 'min-width:40px;width:40px;height:40px;padding:0;' : 'min-width:auto;padding:0 8px;'">
-                                <v-icon>mdi-pencil</v-icon><span v-if="!isXs" style="margin-left:3px;">{{ strings?.page?.acl?.editUser || 'Edit' }}</span>
-                                <v-tooltip v-if="isXs" activator="parent" location="top">{{ strings?.page?.acl?.editUser || 'Edit' }}</v-tooltip>
+                                <v-icon>mdi-pencil</v-icon><span v-if="!isXs" style="margin-left:3px;">{{ strings?.page?.acl?.editUser }}</span>
+                                <v-tooltip v-if="isXs" activator="parent" location="top">{{ strings?.page?.acl?.editUser }}</v-tooltip>
                             </v-btn>
                         </template>
                     </div>
@@ -489,9 +457,9 @@ const treeSettingsItems = computed(() => [
     <br />
 
     <!-- AI Settings -->
-    <P3xrAccordion :title="strings?.label?.aiSettings || 'AI Settings'" accordion-key="ai-settings">
+    <P3xrAccordion :title="strings?.label?.aiSettings" accordion-key="ai-settings">
         <template #actions>
-            <P3xrButton v-if="!readonlyConnections && !state.cfg?.groqApiKeyReadonly" :label="strings?.intention?.edit || 'Edit'" icon="mdi-pencil" @click="aiDialogOpen = true" />
+            <P3xrButton v-if="!readonlyConnections && !state.cfg?.groqApiKeyReadonly" :label="strings?.intention?.edit" icon="mdi-pencil" @click="aiDialogOpen = true" />
         </template>
         <v-list density="compact" class="pa-0">
             <v-list-item>
@@ -528,17 +496,17 @@ const treeSettingsItems = computed(() => [
     <br />
 
     <!-- Desktop Notifications -->
-    <P3xrAccordion :title="strings?.label?.desktopNotifications || 'Desktop Notifications'" accordion-key="desktop-notifications">
+    <P3xrAccordion :title="strings?.label?.desktopNotifications" accordion-key="desktop-notifications">
         <v-list density="compact" class="pa-0">
             <v-list-item>
                 <div style="display: flex; width: 100%; align-items: center;">
-                    <div style="flex: 1; font-weight: 500;">{{ strings?.label?.desktopNotificationsEnabled || 'Enable desktop notifications' }}</div>
+                    <div style="flex: 1; font-weight: 500;">{{ strings?.label?.desktopNotificationsEnabled }}</div>
                     <div style="padding-right: 8px;"><v-switch :model-value="notifToggle" @update:model-value="(v: any) => { setNotificationsEnabled(v); notifToggle = v }" density="comfortable" hide-details /></div>
                 </div>
             </v-list-item>
             <v-divider />
             <v-list-item>
-                <div style="font-size: 12px; opacity: 0.7;">{{ strings?.label?.desktopNotificationsInfo || 'Receive OS notifications for Redis disconnections and reconnections when the app is not focused.' }}</div>
+                <div style="font-size: 12px; opacity: 0.7;">{{ strings?.label?.desktopNotificationsInfo }}</div>
             </v-list-item>
         </v-list>
     </P3xrAccordion>
@@ -546,9 +514,9 @@ const treeSettingsItems = computed(() => [
     <br />
 
     <!-- Tree/Redis Settings -->
-    <P3xrAccordion :title="strings?.form?.treeSettings?.label?.formName || 'Settings'" accordion-key="tree-settings">
+    <P3xrAccordion :title="strings?.form?.treeSettings?.label?.formName" accordion-key="tree-settings">
         <template #actions>
-            <P3xrButton :label="strings?.intention?.edit || 'Edit'" icon="mdi-pencil" @click="treeDialogOpen = true" />
+            <P3xrButton :label="strings?.intention?.edit" icon="mdi-pencil" @click="treeDialogOpen = true" />
         </template>
         <v-list density="compact" class="pa-0">
             <template v-for="(item, i) in treeSettingsItems" :key="i">

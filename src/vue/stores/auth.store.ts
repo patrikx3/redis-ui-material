@@ -55,7 +55,7 @@ export const useAuthStore = defineStore('auth', () => {
                 return true
             }
 
-            loginError.value = data.error || 'login_failed'
+            loginError.value = data.error
             return false
         } catch {
             loginError.value = 'network_error'

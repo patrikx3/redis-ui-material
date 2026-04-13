@@ -55,7 +55,7 @@ export interface KeyNewOrSetDialogData {
 
             <mat-dialog-content class="p3xr-dialog-content">
                 <mat-form-field class="full-width">
-                    <mat-label>{{ strings().form?.key?.field?.key || 'Key' }}</mat-label>
+                    <mat-label>{{ strings().form?.key?.field?.key }}</mat-label>
                     <input matInput required minlength="1" name="key" [(ngModel)]="model.key"
                            [disabled]="options.type !== 'add'" />
                     @if (keyForm.controls['key']?.invalid && keyForm.controls['key']?.touched) {
@@ -64,7 +64,7 @@ export interface KeyNewOrSetDialogData {
                 </mat-form-field>
 
                 <mat-form-field class="full-width">
-                    <mat-label>{{ strings().form?.key?.field?.type || 'Type' }}</mat-label>
+                    <mat-label>{{ strings().form?.key?.field?.type }}</mat-label>
                     <mat-select name="type" [(ngModel)]="model.type" [disabled]="options.type !== 'add'">
                         @for (t of types; track t) {
                             <mat-option [value]="t">{{ strings().redisTypes?.[t] || t }}</mat-option>
@@ -76,14 +76,14 @@ export interface KeyNewOrSetDialogData {
                 @switch (model.type) {
                     @case ('list') {
                         <mat-form-field class="full-width">
-                            <mat-label>{{ strings().form?.key?.field?.index || 'Index' }}</mat-label>
+                            <mat-label>{{ strings().form?.key?.field?.index }}</mat-label>
                             <input matInput type="number" step="1" name="index" [(ngModel)]="model.index" />
                         </mat-form-field>
                         <div class="info-text">{{ strings().label?.redisListIndexInfo }}</div>
                     }
                     @case ('hash') {
                         <mat-form-field class="full-width">
-                            <mat-label>{{ strings().form?.key?.field?.hashKey || 'Hash Key' }}</mat-label>
+                            <mat-label>{{ strings().form?.key?.field?.hashKey }}</mat-label>
                             <input matInput required minlength="1" name="hashKey" [(ngModel)]="model.hashKey" />
                             @if (keyForm.controls['hashKey']?.invalid && keyForm.controls['hashKey']?.touched) {
                                 <mat-error>{{ strings().form?.key?.error?.hashKey }}</mat-error>
@@ -92,7 +92,7 @@ export interface KeyNewOrSetDialogData {
                     }
                     @case ('zset') {
                         <mat-form-field class="full-width">
-                            <mat-label>{{ strings().form?.key?.field?.score || 'Score' }}</mat-label>
+                            <mat-label>{{ strings().form?.key?.field?.score }}</mat-label>
                             <input matInput type="number" required name="score" [(ngModel)]="model.score" />
                             @if (keyForm.controls['score']?.invalid && keyForm.controls['score']?.touched) {
                                 <mat-error>{{ strings().form?.key?.error?.score }}</mat-error>
@@ -101,7 +101,7 @@ export interface KeyNewOrSetDialogData {
                     }
                     @case ('stream') {
                         <mat-form-field class="full-width">
-                            <mat-label>{{ strings().form?.key?.field?.streamTimestamp || 'Timestamp' }}</mat-label>
+                            <mat-label>{{ strings().form?.key?.field?.streamTimestamp }}</mat-label>
                             <input matInput required name="streamTimestamp" [(ngModel)]="model.streamTimestamp" />
                             @if (keyForm.controls['streamTimestamp']?.invalid && keyForm.controls['streamTimestamp']?.touched) {
                                 <mat-error>{{ strings().form?.key?.error?.streamTimestamp }}</mat-error>
@@ -112,12 +112,12 @@ export interface KeyNewOrSetDialogData {
                     @case ('timeseries') {
                         @if (options.type === 'add') {
                             <mat-form-field class="full-width">
-                                <mat-label>{{ strings().page?.key?.timeseries?.retention || 'Retention' }} (ms)</mat-label>
+                                <mat-label>{{ strings().page?.key?.timeseries?.retention }} (ms)</mat-label>
                                 <input matInput type="number" name="tsRetention" [(ngModel)]="model.tsRetention" />
-                                <mat-hint>{{ strings().page?.key?.timeseries?.retentionHint || '0 = no expiry, or milliseconds' }}</mat-hint>
+                                <mat-hint>{{ strings().page?.key?.timeseries?.retentionHint }}</mat-hint>
                             </mat-form-field>
                             <mat-form-field class="full-width">
-                                <mat-label>{{ strings().page?.key?.timeseries?.duplicatePolicy || 'Duplicate policy' }}</mat-label>
+                                <mat-label>{{ strings().page?.key?.timeseries?.duplicatePolicy }}</mat-label>
                                 <mat-select name="tsDuplicatePolicy" [(ngModel)]="model.tsDuplicatePolicy">
                                     <mat-option value="LAST">LAST</mat-option>
                                     <mat-option value="FIRST">FIRST</mat-option>
@@ -129,38 +129,38 @@ export interface KeyNewOrSetDialogData {
                             </mat-form-field>
                         }
                         <mat-form-field class="full-width">
-                            <mat-label>{{ strings().page?.key?.timeseries?.labels || 'Labels' }}</mat-label>
+                            <mat-label>{{ strings().page?.key?.timeseries?.labels }}</mat-label>
                             <input matInput name="tsLabels" [(ngModel)]="model.tsLabels" />
-                            <mat-hint>{{ strings().page?.key?.timeseries?.labelsHint || 'key1 value1 key2 value2' }}</mat-hint>
+                            <mat-hint>{{ strings().page?.key?.timeseries?.labelsHint }}</mat-hint>
                         </mat-form-field>
                         @if (!model.tsBulkMode) {
                             <mat-form-field class="full-width">
-                                <mat-label>{{ strings().page?.key?.timeseries?.timestamp || 'Timestamp' }}</mat-label>
+                                <mat-label>{{ strings().page?.key?.timeseries?.timestamp }}</mat-label>
                                 <input matInput name="tsTimestamp" [(ngModel)]="model.tsTimestamp" [disabled]="model.originalTimestamp !== undefined" />
-                                <mat-hint>{{ strings().page?.key?.timeseries?.timestampHint || "'*' means auto generated, or milliseconds timestamp" }}</mat-hint>
+                                <mat-hint>{{ strings().page?.key?.timeseries?.timestampHint }}</mat-hint>
                             </mat-form-field>
                         }
                         @if (model.originalTimestamp === undefined) {
                             <mat-slide-toggle [(ngModel)]="model.tsBulkMode" name="tsBulkMode" style="display: block; margin: 8px 0;">
-                                {{ strings().page?.key?.timeseries?.bulkMode || 'Bulk generate' }}
+                                {{ strings().page?.key?.timeseries?.bulkMode }}
                             </mat-slide-toggle>
                         }
                     }
                     @case ('bloom') {
                         <div style="display: flex; gap: 16px; flex-wrap: wrap;">
                             <mat-form-field style="flex: 1; min-width: 140px;">
-                                <mat-label>{{ strings().form?.key?.field?.errorRate || 'Error rate' }}</mat-label>
+                                <mat-label>{{ strings().form?.key?.field?.errorRate }}</mat-label>
                                 <input matInput type="number" step="0.001" name="bloomErrorRate" [(ngModel)]="model.bloomErrorRate" placeholder="0.01 = 1%" />
                             </mat-form-field>
                             <mat-form-field style="flex: 1; min-width: 140px;">
-                                <mat-label>{{ strings().form?.key?.field?.capacity || 'Capacity' }}</mat-label>
+                                <mat-label>{{ strings().form?.key?.field?.capacity }}</mat-label>
                                 <input matInput type="number" name="bloomCapacity" [(ngModel)]="model.bloomCapacity" />
                             </mat-form-field>
                         </div>
                     }
                     @case ('cuckoo') {
                         <mat-form-field class="full-width">
-                            <mat-label>{{ strings().form?.key?.field?.capacity || 'Capacity' }}</mat-label>
+                            <mat-label>{{ strings().form?.key?.field?.capacity }}</mat-label>
                             <input matInput type="number" name="cuckooCapacity" [(ngModel)]="model.cuckooCapacity" />
                         </mat-form-field>
                     }
@@ -171,15 +171,15 @@ export interface KeyNewOrSetDialogData {
                                 <input matInput type="number" name="topkK" [(ngModel)]="model.topkK" />
                             </mat-form-field>
                             <mat-form-field style="flex: 1; min-width: 100px;">
-                                <mat-label>{{ strings().form?.key?.field?.width || 'Width' }}</mat-label>
+                                <mat-label>{{ strings().form?.key?.field?.width }}</mat-label>
                                 <input matInput type="number" name="topkWidth" [(ngModel)]="model.topkWidth" />
                             </mat-form-field>
                             <mat-form-field style="flex: 1; min-width: 100px;">
-                                <mat-label>{{ strings().form?.key?.field?.depth || 'Depth' }}</mat-label>
+                                <mat-label>{{ strings().form?.key?.field?.depth }}</mat-label>
                                 <input matInput type="number" name="topkDepth" [(ngModel)]="model.topkDepth" />
                             </mat-form-field>
                             <mat-form-field style="flex: 1; min-width: 100px;">
-                                <mat-label>{{ strings().form?.key?.field?.decay || 'Decay' }}</mat-label>
+                                <mat-label>{{ strings().form?.key?.field?.decay }}</mat-label>
                                 <input matInput type="number" step="0.1" name="topkDecay" [(ngModel)]="model.topkDecay" />
                             </mat-form-field>
                         </div>
@@ -187,28 +187,28 @@ export interface KeyNewOrSetDialogData {
                     @case ('cms') {
                         <div style="display: flex; gap: 16px; flex-wrap: wrap;">
                             <mat-form-field style="flex: 1; min-width: 140px;">
-                                <mat-label>{{ strings().form?.key?.field?.width || 'Width' }}</mat-label>
+                                <mat-label>{{ strings().form?.key?.field?.width }}</mat-label>
                                 <input matInput type="number" name="cmsWidth" [(ngModel)]="model.cmsWidth" />
                             </mat-form-field>
                             <mat-form-field style="flex: 1; min-width: 140px;">
-                                <mat-label>{{ strings().form?.key?.field?.depth || 'Depth' }}</mat-label>
+                                <mat-label>{{ strings().form?.key?.field?.depth }}</mat-label>
                                 <input matInput type="number" name="cmsDepth" [(ngModel)]="model.cmsDepth" />
                             </mat-form-field>
                         </div>
                     }
                     @case ('tdigest') {
                         <mat-form-field class="full-width">
-                            <mat-label>{{ strings().form?.key?.field?.compression || 'Compression' }}</mat-label>
+                            <mat-label>{{ strings().form?.key?.field?.compression }}</mat-label>
                             <input matInput type="number" name="tdigestCompression" [(ngModel)]="model.tdigestCompression" />
                         </mat-form-field>
                     }
                     @case ('vectorset') {
                         <mat-form-field class="full-width">
-                            <mat-label>{{ strings().page?.key?.vectorset?.elementName || 'Element name' }}</mat-label>
+                            <mat-label>{{ strings().page?.key?.vectorset?.elementName }}</mat-label>
                             <input matInput name="vectorElement" [(ngModel)]="model.vectorElement" />
                         </mat-form-field>
                         <mat-form-field class="full-width">
-                            <mat-label>{{ strings().page?.key?.vectorset?.vectorValues || 'Vector values' }}</mat-label>
+                            <mat-label>{{ strings().page?.key?.vectorset?.vectorValues }}</mat-label>
                             <input matInput name="vectorValues" [(ngModel)]="model.vectorValues" placeholder="0.1, 0.2, 0.3" />
                         </mat-form-field>
                     }
@@ -218,43 +218,43 @@ export interface KeyNewOrSetDialogData {
                 <input type="file" #fileInput style="display: none" (change)="onFileSelected($event)" />
                 @if (model.type !== 'stream' && model.type !== 'timeseries' && !isProbabilisticType()) {
                     <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="fileInput.click()"
-                        [matTooltip]="isWide ? '' : (strings().intention?.setBuffer || 'Upload Binary')">
+                        [matTooltip]="isWide ? '' : (strings().intention?.setBuffer)">
                         <mat-icon>upload</mat-icon>
-                        @if (isWide) { <span>{{ strings().intention?.setBuffer || 'Upload Binary' }}</span> }
+                        @if (isWide) { <span>{{ strings().intention?.setBuffer }}</span> }
                     </button>
                 }
 
                 @if (model.type !== 'timeseries' && !isProbabilisticType()) {
                     <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="openJsonEditor()"
-                        [matTooltip]="isWide ? '' : (strings().intention?.jsonViewEditor || 'Edit JSON')">
+                        [matTooltip]="isWide ? '' : (strings().intention?.jsonViewEditor)">
                         <mat-icon>description</mat-icon>
-                        @if (isWide) { <span>{{ strings().intention?.jsonViewEditor || 'Edit JSON' }}</span> }
+                        @if (isWide) { <span>{{ strings().intention?.jsonViewEditor }}</span> }
                     </button>
 
                     <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="formatJson()"
-                        [matTooltip]="isWide ? '' : (strings().intention?.formatJson || 'Format JSON')">
+                        [matTooltip]="isWide ? '' : (strings().intention?.formatJson)">
                         <mat-icon>format_line_spacing</mat-icon>
-                        @if (isWide) { <span>{{ strings().intention?.formatJson || 'Format JSON' }}</span> }
+                        @if (isWide) { <span>{{ strings().intention?.formatJson }}</span> }
                     </button>
 
                     <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="openJsonViewer()"
-                        [matTooltip]="isWide ? '' : (strings().intention?.jsonViewShow || 'Display JSON')">
+                        [matTooltip]="isWide ? '' : (strings().intention?.jsonViewShow)">
                         <mat-icon>account_tree</mat-icon>
-                        @if (isWide) { <span>{{ strings().intention?.jsonViewShow || 'Display JSON' }}</span> }
+                        @if (isWide) { <span>{{ strings().intention?.jsonViewShow }}</span> }
                     </button>
                 }
 
                 <div style="margin: 8px 0;">
                     <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="copy()"
-                        [matTooltip]="isWide ? '' : (strings().intention?.copy || 'Copy')">
+                        [matTooltip]="isWide ? '' : (strings().intention?.copy)">
                         <mat-icon>content_copy</mat-icon>
-                        @if (isWide) { <span>{{ strings().intention?.copy || 'Copy' }}</span> }
+                        @if (isWide) { <span>{{ strings().intention?.copy }}</span> }
                     </button>
                 </div>
 
                 @if (model.type !== 'timeseries' && !isProbabilisticType()) {
                     <mat-slide-toggle [(ngModel)]="validateJson" name="validateJson" style="display: block; margin: 8px 0;">
-                        {{ strings().label?.validateJson || 'Validate JSON' }}
+                        {{ strings().label?.validateJson }}
                     </mat-slide-toggle>
 
                     @if (model.type === 'stream') {
@@ -272,26 +272,26 @@ export interface KeyNewOrSetDialogData {
                 @if (model.type === 'timeseries' && (model.tsEditAll || model.tsBulkMode)) {
                     <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 8px;">
                         <mat-form-field style="min-width: 140px; flex: 1;" subscriptSizing="dynamic">
-                            <mat-label>{{ strings().page?.key?.timeseries?.autoSpread || 'Auto * spread' }}</mat-label>
+                            <mat-label>{{ strings().page?.key?.timeseries?.autoSpread }}</mat-label>
                             <mat-select name="tsSpread" [(ngModel)]="model.tsSpread">
-                                <mat-option [value]="1000">1 {{ strings().time?.second || 'second' }}</mat-option>
-                                <mat-option [value]="30000">30 {{ strings().time?.seconds || 'seconds' }}</mat-option>
-                                <mat-option [value]="60000">1 {{ strings().time?.minute || 'minute' }}</mat-option>
-                                <mat-option [value]="1800000">30 {{ strings().time?.minutes || 'minutes' }}</mat-option>
-                                <mat-option [value]="3600000">1 {{ strings().time?.hour || 'hour' }}</mat-option>
-                                <mat-option [value]="86400000">24 {{ strings().time?.hours || 'hours' }}</mat-option>
+                                <mat-option [value]="1000">1 {{ strings().time?.second }}</mat-option>
+                                <mat-option [value]="30000">30 {{ strings().time?.seconds }}</mat-option>
+                                <mat-option [value]="60000">1 {{ strings().time?.minute }}</mat-option>
+                                <mat-option [value]="1800000">30 {{ strings().time?.minutes }}</mat-option>
+                                <mat-option [value]="3600000">1 {{ strings().time?.hour }}</mat-option>
+                                <mat-option [value]="86400000">24 {{ strings().time?.hours }}</mat-option>
                             </mat-select>
                         </mat-form-field>
 
                         <mat-form-field style="min-width: 120px; flex: 1;" subscriptSizing="dynamic">
-                            <mat-label>{{ strings().page?.key?.timeseries?.formula || 'Formula' }}</mat-label>
+                            <mat-label>{{ strings().page?.key?.timeseries?.formula }}</mat-label>
                             <mat-select name="tsFormula" [(ngModel)]="model.tsFormula">
-                                <mat-option value="">{{ strings().page?.key?.timeseries?.none || 'None' }}</mat-option>
+                                <mat-option value="">{{ strings().page?.key?.timeseries?.none }}</mat-option>
                                 <mat-option value="sin">sin</mat-option>
                                 <mat-option value="cos">cos</mat-option>
-                                <mat-option value="linear">{{ strings().page?.key?.timeseries?.formulaLinear || 'Linear' }}</mat-option>
-                                <mat-option value="random">{{ strings().page?.key?.timeseries?.formulaRandom || 'Random' }}</mat-option>
-                                <mat-option value="sawtooth">{{ strings().page?.key?.timeseries?.formulaSawtooth || 'Sawtooth' }}</mat-option>
+                                <mat-option value="linear">{{ strings().page?.key?.timeseries?.formulaLinear }}</mat-option>
+                                <mat-option value="random">{{ strings().page?.key?.timeseries?.formulaRandom }}</mat-option>
+                                <mat-option value="sawtooth">{{ strings().page?.key?.timeseries?.formulaSawtooth }}</mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
@@ -299,36 +299,36 @@ export interface KeyNewOrSetDialogData {
                     @if (model.tsFormula) {
                         <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 8px;">
                             <mat-form-field style="min-width: 80px; flex: 1;" subscriptSizing="dynamic">
-                                <mat-label>{{ strings().page?.key?.timeseries?.formulaPoints || 'Points' }}</mat-label>
+                                <mat-label>{{ strings().page?.key?.timeseries?.formulaPoints }}</mat-label>
                                 <input matInput type="number" name="tsFormulaPoints" [(ngModel)]="model.tsFormulaPoints" min="1" max="10000" />
                             </mat-form-field>
                             <mat-form-field style="min-width: 80px; flex: 1;" subscriptSizing="dynamic">
-                                <mat-label>{{ strings().page?.key?.timeseries?.formulaAmplitude || 'Amplitude' }}</mat-label>
+                                <mat-label>{{ strings().page?.key?.timeseries?.formulaAmplitude }}</mat-label>
                                 <input matInput type="number" name="tsFormulaAmplitude" [(ngModel)]="model.tsFormulaAmplitude" />
                             </mat-form-field>
                             <mat-form-field style="min-width: 80px; flex: 1;" subscriptSizing="dynamic">
-                                <mat-label>{{ strings().page?.key?.timeseries?.formulaOffset || 'Offset' }}</mat-label>
+                                <mat-label>{{ strings().page?.key?.timeseries?.formulaOffset }}</mat-label>
                                 <input matInput type="number" name="tsFormulaOffset" [(ngModel)]="model.tsFormulaOffset" />
                             </mat-form-field>
                             <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="generateFormula()">
                                 <mat-icon>auto_graph</mat-icon>
-                                @if (isWide) { <span>{{ strings().page?.key?.timeseries?.generate || 'Generate' }}</span> }
+                                @if (isWide) { <span>{{ strings().page?.key?.timeseries?.generate }}</span> }
                             </button>
                         </div>
                     }
 
                     <mat-form-field class="full-width">
-                        <mat-label>{{ strings().page?.key?.timeseries?.dataPoints || 'data points' }}</mat-label>
+                        <mat-label>{{ strings().page?.key?.timeseries?.dataPoints }}</mat-label>
                         <textarea matInput required name="value" [(ngModel)]="model.value" rows="10"
                                   style="font-family: 'Roboto Mono', monospace; font-size: 13px;"></textarea>
-                        <mat-hint>{{ strings().page?.key?.timeseries?.editAllHint || 'One data point per line: timestamp value (timestamp can be * for auto)' }}</mat-hint>
+                        <mat-hint>{{ strings().page?.key?.timeseries?.editAllHint }}</mat-hint>
                         @if (keyForm.controls['value']?.invalid && keyForm.controls['value']?.touched) {
                             <mat-error>{{ strings().form?.key?.error?.value }}</mat-error>
                         }
                     </mat-form-field>
                 } @else if (model.type === 'timeseries' && !model.tsBulkMode) {
                     <mat-form-field class="full-width">
-                        <mat-label>{{ strings().page?.key?.timeseries?.value || 'Value' }}</mat-label>
+                        <mat-label>{{ strings().page?.key?.timeseries?.value }}</mat-label>
                         <input matInput type="number" required name="value" [(ngModel)]="model.value" />
                         @if (keyForm.controls['value']?.invalid && keyForm.controls['value']?.touched) {
                             <mat-error>{{ strings().form?.key?.error?.value }}</mat-error>
@@ -336,7 +336,7 @@ export interface KeyNewOrSetDialogData {
                     </mat-form-field>
                 } @else if (!isProbabilisticType()) {
                     <mat-form-field class="full-width">
-                        <mat-label>{{ strings().form?.key?.field?.value || 'Value' }}</mat-label>
+                        <mat-label>{{ strings().form?.key?.field?.value }}</mat-label>
                         <textarea matInput required name="value" [(ngModel)]="model.value" rows="5"></textarea>
                         @if (keyForm.controls['value']?.invalid && keyForm.controls['value']?.touched) {
                             <mat-error>{{ strings().form?.key?.error?.value }}</mat-error>
@@ -350,7 +350,7 @@ export interface KeyNewOrSetDialogData {
                 @if (!isReadonly) {
                     <button mat-raised-button class="btn-primary" type="submit">
                         <mat-icon>{{ options.type === 'edit' ? 'edit' : 'add' }}</mat-icon>
-                        {{ options.type === 'edit' ? (strings().intention?.save || 'Save') : (strings().intention?.add || 'Add') }}
+                        {{ options.type === 'edit' ? (strings().intention?.save) : (strings().intention?.add) }}
                     </button>
                 }
             </mat-dialog-actions>
@@ -421,8 +421,8 @@ export class KeyNewOrSetDialogComponent implements OnInit {
             key: this.data.node?.key ? this.data.node.key + (this.settings.redisTreeDivider() ?? ':') : '',
             value: undefined,
             score: undefined,
-            streamTimestamp: '*',
-            tsTimestamp: '*',
+            streamTimestamp: undefined,
+            tsTimestamp: undefined,
             tsRetention: 0,
             tsDuplicatePolicy: 'LAST',
             tsLabels: '',
@@ -457,9 +457,9 @@ export class KeyNewOrSetDialogComponent implements OnInit {
 
     getTitle(): string {
         const s = this.strings();
-        if (this.options.type === 'edit') return s.form?.key?.label?.formName?.edit || 'Edit Key';
-        if (this.options.type === 'append') return s.form?.key?.label?.formName?.append || 'Append';
-        return s.form?.key?.label?.formName?.add || 'Add Key';
+        if (this.options.type === 'edit') return s.form?.key?.label?.formName?.edit;
+        if (this.options.type === 'append') return s.form?.key?.label?.formName?.append;
+        return s.form?.key?.label?.formName?.add;
     }
 
     getMaxValueAsBufferText(): string {
@@ -483,7 +483,7 @@ export class KeyNewOrSetDialogComponent implements OnInit {
             value = `TS.ADD ${this.model.key} ${this.model.tsTimestamp || '*'} ${this.model.value}`;
         }
         await this.settings.clipboard(value);
-        this.common.toast(this.strings().status?.dataCopied || 'Copied');
+        this.common.toast(this.strings().status?.dataCopied);
     }
 
     async openJsonViewer(): Promise<void> {
@@ -501,7 +501,7 @@ export class KeyNewOrSetDialogComponent implements OnInit {
         try {
             this.model.value = JSON.stringify(JSON.parse(this.model.value), null, this.settings.jsonFormat() ?? 2);
         } catch (e) {
-            this.common.toast(this.strings().label?.jsonViewNotParsable || 'Not valid JSON');
+            this.common.toast(this.strings().label?.jsonViewNotParsable);
         }
     }
 
@@ -511,11 +511,11 @@ export class KeyNewOrSetDialogComponent implements OnInit {
         if (!file) return;
 
         try {
-            await this.common.confirm({ message: this.strings().confirm?.uploadBuffer || 'Upload buffer?' });
+            await this.common.confirm({ message: this.strings().confirm?.uploadBuffer });
             const arrayBuffer = await file.arrayBuffer();
             this.model.value = arrayBuffer;
             this.isBuffer = true;
-            this.common.toast(this.strings().confirm?.uploadBufferDone || 'Buffer uploaded');
+            this.common.toast(this.strings().confirm?.uploadBufferDone);
         } catch (e) { /* cancelled */ }
 
         input.value = '';
@@ -523,7 +523,7 @@ export class KeyNewOrSetDialogComponent implements OnInit {
 
     async submit(): Promise<void> {
         if (!this.model.key || this.model.key.trim().length === 0) {
-            this.common.toast(this.strings().form?.key?.error?.key || 'Key cannot be empty');
+            this.common.toast(this.strings().form?.key?.error?.key);
             return;
         }
 
@@ -531,7 +531,7 @@ export class KeyNewOrSetDialogComponent implements OnInit {
             try {
                 JSON.parse(this.model.value);
             } catch (e) {
-                this.common.toast(this.strings().label?.jsonViewNotParsable || 'Not valid JSON');
+                this.common.toast(this.strings().label?.jsonViewNotParsable);
                 return;
             }
         }
@@ -563,7 +563,7 @@ export class KeyNewOrSetDialogComponent implements OnInit {
                 window['gtag']('config', this.settings.googleAnalytics, { page_path: '/key-new-or-set' });
             }
 
-            this.common.toast(this.strings().status?.set || 'Saved');
+            this.common.toast(this.strings().status?.set);
             this.dialogRef.close(response);
         } catch (e) {
             this.common.generalHandleError(e);

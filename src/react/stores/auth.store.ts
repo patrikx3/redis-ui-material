@@ -64,7 +64,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
                 return true
             }
 
-            set({ loginError: data.error || 'login_failed' })
+            set({ loginError: data.error })
             return false
         } catch {
             set({ loginError: 'network_error' })

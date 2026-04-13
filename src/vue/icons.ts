@@ -4,6 +4,7 @@ import type { IconSet, IconProps } from 'vuetify'
 import {
     mdiAccount,
     mdiAccountPlus,
+    mdiAlert,
     mdiArchive,
     mdiBackspace,
     mdiBookOpenPageVariant,
@@ -78,6 +79,7 @@ import {
 const iconMap: Record<string, string> = {
     'mdi-account': mdiAccount,
     'mdi-account-plus': mdiAccountPlus,
+    'mdi-alert': mdiAlert,
     'mdi-archive': mdiArchive,
     'mdi-backspace': mdiBackspace,
     'mdi-book-open-page-variant': mdiBookOpenPageVariant,

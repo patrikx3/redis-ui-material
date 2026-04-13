@@ -5,7 +5,7 @@
             @if (isGtSm) {
                 <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="setBufferUpload()">
                     <mat-icon>upload</mat-icon>
-                    <span>{{ strings?.intention?.setBuffer || 'Upload' }}</span>
+                    <span>{{ strings?.intention?.setBuffer }}</span>
                 </button>
             } @else {
                 <button mat-mini-fab class="btn-primary" type="button" (click)="setBufferUpload()"
@@ -17,7 +17,7 @@
         @if (isGtSm) {
             <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="downloadBufferFile()">
                 <mat-icon>download</mat-icon>
-                <span>{{ strings?.intention?.downloadBuffer || 'Download' }}</span>
+                <span>{{ strings?.intention?.downloadBuffer }}</span>
             </button>
         } @else {
             <button mat-mini-fab class="btn-accent" type="button" (click)="downloadBufferFile()"
@@ -28,7 +28,7 @@
         @if (isGtSm) {
             <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="jsonViewer($event)">
                 <mat-icon>account_tree</mat-icon>
-                <span>{{ strings?.intention?.jsonViewShow || 'JSON' }}</span>
+                <span>{{ strings?.intention?.jsonViewShow }}</span>
             </button>
         } @else {
             <button mat-mini-fab class="btn-accent" type="button" (click)="jsonViewer($event)"
@@ -39,7 +39,7 @@
         @if (isGtSm) {
             <button mat-raised-button class="btn-accent p3xr-action-btn" type="button" (click)="copyValue()">
                 <mat-icon>content_copy</mat-icon>
-                <span>{{ strings?.intention?.copy || 'Copy' }}</span>
+                <span>{{ strings?.intention?.copy }}</span>
             </button>
         } @else {
             <button mat-mini-fab class="btn-accent" type="button" (click)="copyValue()"
@@ -51,7 +51,7 @@
             @if (isGtSm) {
                 <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="formatJson()">
                     <mat-icon>format_line_spacing</mat-icon>
-                    <span>{{ strings?.intention?.formatJson || 'Format' }}</span>
+                    <span>{{ strings?.intention?.formatJson }}</span>
                 </button>
             } @else {
                 <button mat-mini-fab class="btn-primary" type="button" (click)="formatJson()"
@@ -63,7 +63,7 @@
         @if (isGtSm) {
             <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="jsonEditor()">
                 <mat-icon>description</mat-icon>
-                <span>{{ strings?.intention?.jsonViewEditor || 'Editor' }}</span>
+                <span>{{ strings?.intention?.jsonViewEditor }}</span>
             </button>
         } @else {
             <button mat-mini-fab class="btn-primary" type="button" (click)="jsonEditor()"
@@ -88,7 +88,7 @@
             @if (isGtSm) {
                 <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="edit()">
                     <mat-icon>edit</mat-icon>
-                    <span>{{ strings?.intention?.edit || 'Edit' }}</span>
+                    <span>{{ strings?.intention?.edit }}</span>
                 </button>
             } @else {
                 <button mat-mini-fab class="btn-primary" type="button" (click)="edit()"
@@ -105,13 +105,13 @@
     <div class="p3xr-key-type-actions">
         @if (!isReadonly) {
             <mat-slide-toggle [(ngModel)]="validateJson" class="btn-accent" style="margin-right: 8px;">
-                {{ strings?.label?.validateJson || 'Validate JSON' }}
+                {{ strings?.label?.validateJson }}
             </mat-slide-toggle>
         }
         @if (isGtSm) {
             <button mat-raised-button class="btn-warn p3xr-action-btn" type="button" (click)="cancelEdit()">
                 <mat-icon>cancel</mat-icon>
-                <span>{{ strings?.intention?.cancel || 'Cancel' }}</span>
+                <span>{{ strings?.intention?.cancel }}</span>
             </button>
         } @else {
             <button mat-mini-fab class="btn-warn" type="button" (click)="cancelEdit()"
@@ -123,7 +123,7 @@
             @if (isGtSm) {
                 <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="setBufferUpload()">
                     <mat-icon>upload</mat-icon>
-                    <span>{{ strings?.intention?.setBuffer || 'Upload' }}</span>
+                    <span>{{ strings?.intention?.setBuffer }}</span>
                 </button>
             } @else {
                 <button mat-mini-fab class="btn-primary" type="button" (click)="setBufferUpload()"
@@ -136,7 +136,7 @@
             @if (isGtSm) {
                 <button mat-raised-button class="btn-primary p3xr-action-btn" type="button" (click)="save()">
                     <mat-icon>save</mat-icon>
-                    <span>{{ strings?.intention?.save || 'Save' }}</span>
+                    <span>{{ strings?.intention?.save }}</span>
                 </button>
             } @else {
                 <button mat-mini-fab class="btn-primary" type="button" (click)="save()"

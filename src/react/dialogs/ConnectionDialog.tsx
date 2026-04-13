@@ -240,10 +240,13 @@ export default function ConnectionDialog({ open, type, model: sourceModel, onClo
                 <legend style={{ fontWeight: 700 }}>Node 1</legend>
                 <TextField fullWidth margin="dense" label={strings?.form?.connection?.label?.host} value={model.host || ''} onChange={e => set('host', e.target.value)} disabled={readonlyConnections} />
                 <TextField fullWidth margin="dense" label={strings?.form?.connection?.label?.port} type="number" value={model.port || ''} onChange={e => set('port', Number(e.target.value))} disabled={readonlyConnections} slotProps={{ htmlInput: { min: 1, max: 65535 } }} />
-                <FormControlLabel control={<Switch checked={!!model.askAuth} onChange={(_, v) => set('askAuth', v)} disabled={readonlyConnections} />} label={strings?.label?.askAuth} />
-                <TextField fullWidth margin="dense" label={strings?.form?.connection?.label?.username} value={model.username || ''} onChange={e => set('username', e.target.value)} disabled={readonlyConnections} autoComplete="off" />
-                <PasswordField label={strings?.form?.connection?.label?.password} value={model.password} onChange={(v: string) => set('password', v)} visible={pwVisible} onToggle={() => setPwVisible(!pwVisible)} disabled={readonlyConnections} />
-                <Box sx={{ fontSize: 12, opacity: 0.7 }}>{strings?.label?.passwordSecure}</Box>
+                <FormControlLabel control={<Switch checked={!!model.askAuth} onChange={(_, v) => { set('askAuth', v); if (v) { set('username', ''); set('password', '') } }} disabled={readonlyConnections} />} label={strings?.label?.askAuth} />
+                <Box sx={{ fontSize: 12, opacity: 0.7, mb: 0.5 }}>{strings?.label?.aclAuthHint}</Box>
+                {!model.askAuth && (<>
+                    <TextField fullWidth margin="dense" label={strings?.form?.connection?.label?.username} value={model.username || ''} onChange={e => set('username', e.target.value)} disabled={readonlyConnections} autoComplete="off" />
+                    <PasswordField label={strings?.form?.connection?.label?.password} value={model.password} onChange={(v: string) => set('password', v)} visible={pwVisible} onToggle={() => setPwVisible(!pwVisible)} disabled={readonlyConnections} />
+                    <Box sx={{ fontSize: 12, opacity: 0.7 }}>{strings?.label?.passwordSecure}</Box>
+                </>)}
             </Box>
 
             {/* Readonly */}

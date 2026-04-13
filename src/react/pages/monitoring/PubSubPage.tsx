@@ -110,9 +110,9 @@ export default function PubSubPage() {
         <Box>
             <P3xrAccordion title="" accordionKey="profiler-pubsub" collapsible={false}
                 actions={<>
-                    <P3xrButton icon={<Backspace sx={{ fontSize: 18 }} />} label={strings?.intention?.clear || 'Clear'}
+                    <P3xrButton icon={<Backspace sx={{ fontSize: 18 }} />} label={strings?.intention?.clear}
                         color="inherit" onClick={(e) => { e.stopPropagation(); handleClear() }} />
-                    <P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export || 'Export'}
+                    <P3xrButton icon={<Download sx={{ fontSize: 18 }} />} label={strings?.intention?.export}
                         color="inherit" onClick={(e) => { e.stopPropagation(); handleExport() }} />
                 </>}
             >

@@ -98,8 +98,8 @@ export default function DatabaseTreeControls() {
     const searchPlaceholder = useMemo(() => {
         const s = strings?.page?.treeControls?.search
         return searchClientSide
-            ? (s?.placeholderClient || 'Search keys')
-            : (s?.placeholderServer || 'Search keys on server')
+            ? s?.placeholderClient
+            : s?.placeholderServer
     }, [strings, searchClientSide])
 
     const onSearchChange = useCallback(async () => {

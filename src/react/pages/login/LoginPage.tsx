@@ -26,7 +26,7 @@ export default function LoginPage() {
     const footerBg = themeKey === 'matrix' ? '#0a2e0d' : muiTheme.p3xr.accordionBg
 
     const currentGui = (() => {
-        try { return localStorage.getItem('p3xr-frontend') || 'ng' } catch { return 'ng' }
+        try { return localStorage.getItem('p3xr-frontend') } catch { return 'ng' }
     })()
 
     const handleLogin = async () => {
@@ -42,7 +42,7 @@ export default function LoginPage() {
     const switchGui = (gui: string) => doSwitchGui(gui)
 
     const getErrorMessage = (error: string) => {
-        return strings?.confirm?.invalidCredentials || 'Invalid username or password.'
+        return strings?.confirm?.invalidCredentials
     }
 
     return (
@@ -95,7 +95,7 @@ export default function LoginPage() {
                 }}>
                     <TextField
                         autoFocus fullWidth margin="dense"
-                        label={strings?.form?.connection?.label?.username || 'Username'}
+                        label={strings?.form?.connection?.label?.username}
                         value={username}
                         onChange={e => setUsername(e.target.value)}
                         autoComplete="username"
@@ -112,7 +112,7 @@ export default function LoginPage() {
                     />
                     <TextField
                         fullWidth margin="dense"
-                        label={strings?.form?.connection?.label?.password || 'Password'}
+                        label={strings?.form?.connection?.label?.password}
                         type={pwVisible ? 'text' : 'password'}
                         value={password}
                         onChange={e => setPassword(e.target.value)}
@@ -152,10 +152,10 @@ export default function LoginPage() {
                         <Button variant="contained" color="primary" onClick={handleLogin}
                                 disabled={loading || !username || !password}>
                             <Login fontSize="small" />
-                            <span style={{ marginLeft: 3 }}>{strings?.intention?.ok || 'Login'}</span>
+                            <span style={{ marginLeft: 3 }}>{strings?.intention?.ok}</span>
                         </Button>
                     ) : (
-                        <Tooltip title={strings?.intention?.ok || 'Login'} placement="top">
+                        <Tooltip title={strings?.intention?.ok} placement="top">
                             <span>
                                 <IconButton color="primary" onClick={handleLogin}
                                             disabled={loading || !username || !password}

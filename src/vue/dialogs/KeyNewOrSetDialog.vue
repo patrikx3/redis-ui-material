@@ -72,7 +72,7 @@ const types = computed(() => {
 
 watch(() => props.open, (v) => {
     if (!v || !props.data) return
-    const divider = settings.redisTreeDivider || ':'
+    const divider = settings.redisTreeDivider
     const m: any = {
         type: 'string',
         key: props.data.node?.key ? props.data.node.key + divider : '',
@@ -126,7 +126,7 @@ function set(field: string, value: any) {
 function copy() {
     let value = model.value.value
     if (model.value.type === 'timeseries') {
-        value = `TS.ADD ${model.value.key} ${model.value.tsTimestamp || '*'} ${model.value.value}`
+        value = `TS.ADD ${model.value.key} ${model.value.tsTimestamp} ${model.value.value}`
     }
     navigator.clipboard.writeText(String(value ?? '')).catch(() => {})
     common.toast(str(strings.value?.status?.dataCopied))

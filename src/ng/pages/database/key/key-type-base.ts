@@ -60,7 +60,7 @@ export abstract class KeyTypeBase {
 
     async copy(value: any): Promise<void> {
         await this.settingsService.clipboard(value);
-        this.common.toast(this.strings?.status?.dataCopied || 'Copied');
+        this.common.toast(this.strings?.status?.dataCopied);
     }
 
     downloadBuffer(buffer: any, filename?: string): void {

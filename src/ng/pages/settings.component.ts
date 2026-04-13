@@ -44,11 +44,11 @@ import { switchGui } from '../../core/gui-switch';
     ],
     template: `
         <!-- Donate -->
-        <p3xr-ng-accordion [title]="strings().title?.donateTitle || 'Support P3X Redis UI'" accordionKey="donate" [collapsible]="false">
+        <p3xr-ng-accordion [title]="strings().title?.donateTitle" accordionKey="donate" [collapsible]="false">
             <div actions>
                 <a href="https://www.paypal.me/patrikx3" target="_blank" rel="noreferrer" style="text-decoration: none;">
                     <p3xr-ng-button
-                        [label]="(strings().title?.donate || 'Donate') + ' — PayPal'"
+                        [label]="(strings().title?.donate) + ' — PayPal'"
                         mdIcon="favorite">
                     </p3xr-ng-button>
                 </a>
@@ -63,17 +63,17 @@ import { switchGui } from '../../core/gui-switch';
         <br/>
 
         <!-- Connections -->
-        <p3xr-ng-accordion [title]="strings().label?.connections || 'Connections'" accordionKey="settings">
+        <p3xr-ng-accordion [title]="strings().label?.connections" accordionKey="settings">
             <div actions>
                 <p3xr-ng-button
                     (click)="toggleGroupMode()"
-                    [label]="strings().label?.grouped || 'Grouped'"
+                    [label]="strings().label?.grouped"
                     [mdIcon]="groupModeEnabled ? 'check_box' : 'check_box_outline_blank'">
                 </p3xr-ng-button>
                 @if (!readonlyConnections) {
                     <p3xr-ng-button
                         (click)="connectionForm('new')"
-                        [label]="strings().intention?.connectionAdd || 'Add'"
+                        [label]="strings().intention?.connectionAdd"
                         mdIcon="add_box">
                     </p3xr-ng-button>
                 }
@@ -81,7 +81,7 @@ import { switchGui } from '../../core/gui-switch';
             <div content>
                 @if (connectionsList.length === 0) {
                     <div style="padding: 16px;">
-                        {{ strings().intention?.noConnectionsInSettings || 'No connections' }}
+                        {{ strings().intention?.noConnectionsInSettings }}
                     </div>
                 }
 
@@ -121,14 +121,14 @@ import { switchGui } from '../../core/gui-switch';
                                     @if (currentConnectionId !== connection.id) {
                                         @if (isXs) {
                                             <button mat-mini-fab class="btn-accent" (click)="connect(connection)"
-                                                [matTooltip]="strings().intention?.connect || 'Connect'"
-                                                [attr.aria-label]="strings().intention?.connect || 'Connect'">
+                                                [matTooltip]="strings().intention?.connect"
+                                                [attr.aria-label]="strings().intention?.connect">
                                                 <mat-icon>power</mat-icon>
                                             </button>
                                         } @else {
                                             <button mat-flat-button class="btn-accent" (click)="connect(connection)">
                                                 <mat-icon>power</mat-icon>
-                                                <span>{{ strings().intention?.connect || 'Connect' }}</span>
+                                                <span>{{ strings().intention?.connect }}</span>
                                             </button>
                                         }
                                     }
@@ -136,15 +136,15 @@ import { switchGui } from '../../core/gui-switch';
                                     @if (currentConnectionId === connection.id) {
                                         @if (isXs) {
                                             <button mat-mini-fab class="btn-accent" (click)="disconnect()"
-                                                [matTooltip]="strings().intention?.disconnect || 'Disconnect'"
+                                                [matTooltip]="strings().intention?.disconnect"
                                                 matTooltipPosition="above"
-                                                [attr.aria-label]="strings().intention?.disconnect || 'Disconnect'">
+                                                [attr.aria-label]="strings().intention?.disconnect">
                                                 <i class="fa fa-power-off"></i>
                                             </button>
                                         } @else {
                                             <button mat-flat-button class="btn-accent" (click)="disconnect()">
                                                 <i class="fa fa-power-off"></i>
-                                                <span>{{ strings().intention?.disconnect || 'Disconnect' }}</span>
+                                                <span>{{ strings().intention?.disconnect }}</span>
                                             </button>
                                         }
                                     }
@@ -152,26 +152,26 @@ import { switchGui } from '../../core/gui-switch';
                                     @if (!readonlyConnections) {
                                         @if (isXs) {
                                             <button mat-mini-fab class="btn-warn" (click)="deleteConnection(connection, $event)"
-                                                [matTooltip]="strings().intention?.delete || 'Delete'"
-                                                [attr.aria-label]="strings().intention?.delete || 'Delete'">
+                                                [matTooltip]="strings().intention?.delete"
+                                                [attr.aria-label]="strings().intention?.delete">
                                                 <mat-icon>delete_forever</mat-icon>
                                             </button>
                                         } @else {
                                             <button mat-flat-button class="btn-warn" (click)="deleteConnection(connection, $event)">
                                                 <mat-icon>delete_forever</mat-icon>
-                                                <span>{{ strings().intention?.delete || 'Delete' }}</span>
+                                                <span>{{ strings().intention?.delete }}</span>
                                             </button>
                                         }
                                         @if (isXs) {
                                             <button mat-mini-fab class="btn-primary" (click)="connectionForm('edit', connection)"
-                                                [matTooltip]="strings().intention?.edit || 'Edit'"
-                                                [attr.aria-label]="strings().intention?.edit || 'Edit'">
+                                                [matTooltip]="strings().intention?.edit"
+                                                [attr.aria-label]="strings().intention?.edit">
                                                 <mat-icon>edit</mat-icon>
                                             </button>
                                         } @else {
                                             <button mat-flat-button class="btn-primary" (click)="connectionForm('edit', connection)">
                                                 <mat-icon>edit</mat-icon>
-                                                <span>{{ strings().intention?.edit || 'Edit' }}</span>
+                                                <span>{{ strings().intention?.edit }}</span>
                                             </button>
                                         }
                                     }
@@ -179,14 +179,14 @@ import { switchGui } from '../../core/gui-switch';
                                     @if (readonlyConnections) {
                                         @if (isXs) {
                                             <button mat-mini-fab class="btn-primary" (click)="connectionForm('edit', connection)"
-                                                [matTooltip]="strings().intention?.view || 'View'"
-                                                [attr.aria-label]="strings().intention?.view || 'View'">
+                                                [matTooltip]="strings().intention?.view"
+                                                [attr.aria-label]="strings().intention?.view">
                                                 <mat-icon>mode_comment</mat-icon>
                                             </button>
                                         } @else {
                                             <button mat-flat-button class="btn-primary" (click)="connectionForm('edit', connection)">
                                                 <mat-icon>mode_comment</mat-icon>
-                                                <span>{{ strings().intention?.view || 'View' }}</span>
+                                                <span>{{ strings().intention?.view }}</span>
                                             </button>
                                         }
                                     }
@@ -219,14 +219,14 @@ import { switchGui } from '../../core/gui-switch';
                                     @if (currentConnectionId !== connection.id) {
                                         @if (isXs) {
                                             <button mat-mini-fab class="btn-accent" (click)="connect(connection)"
-                                                [matTooltip]="strings().intention?.connect || 'Connect'"
-                                                [attr.aria-label]="strings().intention?.connect || 'Connect'">
+                                                [matTooltip]="strings().intention?.connect"
+                                                [attr.aria-label]="strings().intention?.connect">
                                                 <mat-icon>power</mat-icon>
                                             </button>
                                         } @else {
                                             <button mat-flat-button class="btn-accent" (click)="connect(connection)">
                                                 <mat-icon>power</mat-icon>
-                                                <span>{{ strings().intention?.connect || 'Connect' }}</span>
+                                                <span>{{ strings().intention?.connect }}</span>
                                             </button>
                                         }
                                     }
@@ -234,15 +234,15 @@ import { switchGui } from '../../core/gui-switch';
                                     @if (currentConnectionId === connection.id) {
                                         @if (isXs) {
                                             <button mat-mini-fab class="btn-accent" (click)="disconnect()"
-                                                [matTooltip]="strings().intention?.disconnect || 'Disconnect'"
+                                                [matTooltip]="strings().intention?.disconnect"
                                                 matTooltipPosition="above"
-                                                [attr.aria-label]="strings().intention?.disconnect || 'Disconnect'">
+                                                [attr.aria-label]="strings().intention?.disconnect">
                                                 <i class="fa fa-power-off"></i>
                                             </button>
                                         } @else {
                                             <button mat-flat-button class="btn-accent" (click)="disconnect()">
                                                 <i class="fa fa-power-off"></i>
-                                                <span>{{ strings().intention?.disconnect || 'Disconnect' }}</span>
+                                                <span>{{ strings().intention?.disconnect }}</span>
                                             </button>
                                         }
                                     }
@@ -250,26 +250,26 @@ import { switchGui } from '../../core/gui-switch';
                                     @if (!readonlyConnections) {
                                         @if (isXs) {
                                             <button mat-mini-fab class="btn-warn" (click)="deleteConnection(connection, $event)"
-                                                [matTooltip]="strings().intention?.delete || 'Delete'"
-                                                [attr.aria-label]="strings().intention?.delete || 'Delete'">
+                                                [matTooltip]="strings().intention?.delete"
+                                                [attr.aria-label]="strings().intention?.delete">
                                                 <mat-icon>delete_forever</mat-icon>
                                             </button>
                                         } @else {
                                             <button mat-flat-button class="btn-warn" (click)="deleteConnection(connection, $event)">
                                                 <mat-icon>delete_forever</mat-icon>
-                                                <span>{{ strings().intention?.delete || 'Delete' }}</span>
+                                                <span>{{ strings().intention?.delete }}</span>
                                             </button>
                                         }
                                         @if (isXs) {
                                             <button mat-mini-fab class="btn-primary" (click)="connectionForm('edit', connection)"
-                                                [matTooltip]="strings().intention?.edit || 'Edit'"
-                                                [attr.aria-label]="strings().intention?.edit || 'Edit'">
+                                                [matTooltip]="strings().intention?.edit"
+                                                [attr.aria-label]="strings().intention?.edit">
                                                 <mat-icon>edit</mat-icon>
                                             </button>
                                         } @else {
                                             <button mat-flat-button class="btn-primary" (click)="connectionForm('edit', connection)">
                                                 <mat-icon>edit</mat-icon>
-                                                <span>{{ strings().intention?.edit || 'Edit' }}</span>
+                                                <span>{{ strings().intention?.edit }}</span>
                                             </button>
                                         }
                                     }
@@ -277,14 +277,14 @@ import { switchGui } from '../../core/gui-switch';
                                     @if (readonlyConnections) {
                                         @if (isXs) {
                                             <button mat-mini-fab class="btn-primary" (click)="connectionForm('edit', connection)"
-                                                [matTooltip]="strings().intention?.view || 'View'"
-                                                [attr.aria-label]="strings().intention?.view || 'View'">
+                                                [matTooltip]="strings().intention?.view"
+                                                [attr.aria-label]="strings().intention?.view">
                                                 <mat-icon>mode_comment</mat-icon>
                                             </button>
                                         } @else {
                                             <button mat-flat-button class="btn-primary" (click)="connectionForm('edit', connection)">
                                                 <mat-icon>mode_comment</mat-icon>
-                                                <span>{{ strings().intention?.view || 'View' }}</span>
+                                                <span>{{ strings().intention?.view }}</span>
                                             </button>
                                         }
                                     }
@@ -301,39 +301,39 @@ import { switchGui } from '../../core/gui-switch';
         @if (currentConnectionId) {
             <br />
             <!-- ACL Users -->
-            <p3xr-ng-accordion [title]="(strings().page?.acl?.title || 'ACL Users') + ' — ' + currentConnectionName" accordionKey="acl-users">
+            <p3xr-ng-accordion [title]="(strings().page?.acl?.title) + ' — ' + currentConnectionName" accordionKey="acl-users">
                 <div actions>
                     <p3xr-ng-button
                         (click)="loadAclUsers(); $event.stopPropagation()"
-                        [label]="strings().intention?.refresh || 'Refresh'"
+                        [label]="strings().intention?.refresh"
                         mdIcon="refresh">
                     </p3xr-ng-button>
                     @if (!readonlyConnections) {
                         <p3xr-ng-button
                             (click)="openAclCreate(); $event.stopPropagation()"
-                            [label]="strings().page?.acl?.createUser || 'Create User'"
+                            [label]="strings().page?.acl?.createUser"
                             mdIcon="person_add">
                         </p3xr-ng-button>
                     }
                 </div>
                 <div content>
                     @if (aclLoading) {
-                        <div style="padding: 16px; opacity: 0.6;">{{ strings().page?.acl?.loading || 'Loading...' }}</div>
+                        <div style="padding: 16px; opacity: 0.6;">{{ strings().page?.acl?.loading }}</div>
                     } @else if (!aclUsers) {
-                        <div style="padding: 16px; opacity: 0.6;">{{ strings().page?.acl?.noUsers || 'ACL requires Redis 6.0+.' }}</div>
+                        <div style="padding: 16px; opacity: 0.6;">{{ strings().page?.acl?.noUsers }}</div>
                     } @else {
                         <div class="p3xr-acl-users-list">
                             @for (user of aclUsers; track user.name; let last = $last) {
                                 <div class="p3xr-connection-item" [class.p3xr-acl-clickable]="!readonlyConnections" (click)="!readonlyConnections && openAclEdit(user)">
-                                    <div class="p3xr-connection-info">
+                                    <div class="p3xr-connection-info" style="display: flex; align-items: center;">
                                         <span style="font-weight: 700;">{{ user.name }}</span>
                                         @if (user.name === aclCurrentUser) {
-                                            <span style="opacity: 0.5; margin-left: 6px; font-size: 11px;">({{ strings().page?.acl?.currentUser || 'Current' }})</span>
+                                            <span style="opacity: 0.5; margin-left: 6px; font-size: 11px; line-height: 1;">({{ strings().page?.acl?.currentUser }})</span>
                                         }
                                     </div>
                                     @if (!user.enabled) {
                                         <mat-icon style="color: var(--p3xr-btn-warn-bg, #f44336); font-size: 20px; width: 20px; height: 20px;"
-                                            [matTooltip]="strings().page?.acl?.disabled || 'Disabled'">
+                                            [matTooltip]="strings().page?.acl?.disabled">
                                             warning
                                         </mat-icon>
                                     }
@@ -341,27 +341,27 @@ import { switchGui } from '../../core/gui-switch';
                                         @if (user.name !== 'default' && user.name !== aclCurrentUser) {
                                             @if (isXs) {
                                                 <button mat-mini-fab class="btn-warn" (click)="deleteAclUser(user.name); $event.stopPropagation()"
-                                                    [matTooltip]="strings().page?.acl?.deleteUser || 'Delete'"
-                                                    [attr.aria-label]="strings().page?.acl?.deleteUser || 'Delete'">
+                                                    [matTooltip]="strings().page?.acl?.deleteUser"
+                                                    [attr.aria-label]="strings().page?.acl?.deleteUser">
                                                     <mat-icon>delete</mat-icon>
                                                 </button>
                                             } @else {
                                                 <button mat-flat-button class="btn-warn" (click)="deleteAclUser(user.name); $event.stopPropagation()">
                                                     <mat-icon>delete</mat-icon>
-                                                    <span>{{ strings().page?.acl?.deleteUser || 'Delete' }}</span>
+                                                    <span>{{ strings().page?.acl?.deleteUser }}</span>
                                                 </button>
                                             }
                                         }
                                         @if (isXs) {
                                             <button mat-mini-fab class="btn-primary" (click)="openAclEdit(user); $event.stopPropagation()"
-                                                [matTooltip]="strings().page?.acl?.editUser || 'Edit'"
-                                                [attr.aria-label]="strings().page?.acl?.editUser || 'Edit'">
+                                                [matTooltip]="strings().page?.acl?.editUser"
+                                                [attr.aria-label]="strings().page?.acl?.editUser">
                                                 <mat-icon>edit</mat-icon>
                                             </button>
                                         } @else {
                                             <button mat-flat-button class="btn-primary" (click)="openAclEdit(user); $event.stopPropagation()">
                                                 <mat-icon>edit</mat-icon>
-                                                <span>{{ strings().page?.acl?.editUser || 'Edit' }}</span>
+                                                <span>{{ strings().page?.acl?.editUser }}</span>
                                             </button>
                                         }
                                     }
@@ -392,12 +392,12 @@ import { switchGui } from '../../core/gui-switch';
         <br />
 
         <!-- AI Settings -->
-        <p3xr-ng-accordion [title]="strings().label?.aiSettings || 'AI Settings'" accordionKey="ai-settings">
+        <p3xr-ng-accordion [title]="strings().label?.aiSettings" accordionKey="ai-settings">
             <div actions>
                 @if (!readonlyConnections && !isGroqApiKeyReadonly()) {
                     <p3xr-ng-button
                         (click)="openAiSettings($event)"
-                        [label]="strings().intention?.edit || 'Edit'"
+                        [label]="strings().intention?.edit"
                         mdIcon="edit">
                     </p3xr-ng-button>
                 }
@@ -406,7 +406,7 @@ import { switchGui } from '../../core/gui-switch';
                 <mat-list>
                     <mat-list-item (click)="$event.stopPropagation()">
                         <div class="p3xr-settings-pair-row">
-                            <div class="p3xr-settings-row-label">{{ strings().label?.aiEnabled || 'AI Enabled' }}</div>
+                            <div class="p3xr-settings-row-label">{{ strings().label?.aiEnabled }}</div>
                             <div class="p3xr-settings-row-value">
                                 <mat-slide-toggle [checked]="isAiEnabled()" [disabled]="isAiReadonly()" (change)="toggleAiEnabled($event.checked)"></mat-slide-toggle>
                             </div>
@@ -417,13 +417,13 @@ import { switchGui } from '../../core/gui-switch';
                         <mat-list-item (click)="$event.stopPropagation()">
                             <div style="width: 100%;">
                                 <div class="p3xr-settings-pair-row">
-                                    <div class="p3xr-settings-row-label">{{ strings().label?.aiRouteViaNetwork || 'Route via network.corifeus.com' }}</div>
+                                    <div class="p3xr-settings-row-label">{{ strings().label?.aiRouteViaNetwork }}</div>
                                     <div class="p3xr-settings-row-value">
                                         <mat-slide-toggle [checked]="!isUseOwnKey()" [disabled]="isAiReadonly()" (change)="toggleUseOwnKey(!$event.checked)"></mat-slide-toggle>
                                     </div>
                                 </div>
                                 <div class="p3xr-settings-hint">
-                                    {{ isUseOwnKey() ? (strings().label?.aiRoutingDirect || 'Queries go directly to Groq using your own API key, bypassing network.corifeus.com.') : (strings().label?.aiRoutingNetwork || 'AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.') }}
+                                    {{ isUseOwnKey() ? (strings().label?.aiRoutingDirect) : (strings().label?.aiRoutingNetwork) }}
                                     @if (!isUseOwnKey()) {
                                         <a href="https://console.groq.com" target="_blank" style="color: inherit; text-decoration: underline;">console.groq.com</a>
                                     }
@@ -433,7 +433,7 @@ import { switchGui } from '../../core/gui-switch';
                         <mat-divider></mat-divider>
                         <mat-list-item>
                             <div class="p3xr-settings-pair-row">
-                                <div class="p3xr-settings-row-label">{{ strings().label?.aiGroqApiKey || 'Groq API Key' }}</div>
+                                <div class="p3xr-settings-row-label">{{ strings().label?.aiGroqApiKey }}</div>
                                 <div class="p3xr-settings-row-value" style="font-family: monospace;">{{ state.cfg()?.groqApiKeyMasked }}</div>
                             </div>
                         </mat-list-item>
@@ -445,18 +445,18 @@ import { switchGui } from '../../core/gui-switch';
         <br />
 
         <!-- Desktop Notifications -->
-        <p3xr-ng-accordion [title]="strings().label?.desktopNotifications || 'Desktop Notifications'" accordionKey="desktop-notifications">
+        <p3xr-ng-accordion [title]="strings().label?.desktopNotifications" accordionKey="desktop-notifications">
             <div content>
                 <mat-list>
                     <mat-list-item>
                         <div style="display: flex; width: 100%; align-items: center;">
-                            <span class="p3xr-settings-label" style="flex: 1;">{{ strings().label?.desktopNotificationsEnabled || 'Enable desktop notifications' }}</span>
+                            <span class="p3xr-settings-label" style="flex: 1;">{{ strings().label?.desktopNotificationsEnabled }}</span>
                             <mat-slide-toggle [checked]="notificationService.isEnabled()" (change)="notificationService.setEnabled($event.checked)"></mat-slide-toggle>
                         </div>
                     </mat-list-item>
                     <mat-divider></mat-divider>
                     <mat-list-item>
-                        <div style="font-size: 12px; opacity: 0.7;">{{ strings().label?.desktopNotificationsInfo || 'Receive OS notifications for Redis disconnections and reconnections when the app is not focused.' }}</div>
+                        <div style="font-size: 12px; opacity: 0.7;">{{ strings().label?.desktopNotificationsInfo }}</div>
                     </mat-list-item>
                 </mat-list>
             </div>
@@ -465,11 +465,11 @@ import { switchGui } from '../../core/gui-switch';
         <br />
 
         <!-- Tree Settings -->
-        <p3xr-ng-accordion [title]="strings().form?.treeSettings?.label?.formName || 'Redis Settings'" accordionKey="tree-settings">
+        <p3xr-ng-accordion [title]="strings().form?.treeSettings?.label?.formName" accordionKey="tree-settings">
             <div actions>
                 <p3xr-ng-button
                     (click)="openTreeSettings($event)"
-                    [label]="strings().intention?.edit || 'Edit'"
+                    [label]="strings().intention?.edit"
                     mdIcon="edit">
                 </p3xr-ng-button>
             </div>
@@ -534,13 +534,13 @@ import { switchGui } from '../../core/gui-switch';
                     <mat-divider></mat-divider>
 
                     <mat-list-item (click)="openTreeSettings($event)">
-                        <div><div style="display: flex; width: 100%; font-weight: 500;">{{ settings.undoEnabled() ? (strings().form?.treeSettings?.label?.undoEnabled || 'Undo enabled') : (strings().form?.treeSettings?.label?.undoDisabled || 'Undo disabled') }}</div>
-                        <div class="p3xr-settings-hint">{{ strings().form?.treeSettings?.undoHint || 'Undo is available for string and JSON key types only' }}</div></div>
+                        <div><div style="display: flex; width: 100%; font-weight: 500;">{{ settings.undoEnabled() ? (strings().form?.treeSettings?.label?.undoEnabled) : (strings().form?.treeSettings?.label?.undoDisabled) }}</div>
+                        <div class="p3xr-settings-hint">{{ strings().form?.treeSettings?.undoHint }}</div></div>
                     </mat-list-item>
                     <mat-divider></mat-divider>
 
                     <mat-list-item (click)="openTreeSettings($event)">
-                        <div style="display: flex; width: 100%; font-weight: 500;">{{ settings.showDiffBeforeSave() ? (strings().form?.treeSettings?.label?.diffEnabled || 'Show diff before saving') : (strings().form?.treeSettings?.label?.diffDisabled || 'Diff before save disabled') }}</div>
+                        <div style="display: flex; width: 100%; font-weight: 500;">{{ settings.showDiffBeforeSave() ? (strings().form?.treeSettings?.label?.diffEnabled) : (strings().form?.treeSettings?.label?.diffDisabled) }}</div>
                     </mat-list-item>
                 </mat-list>
             </div>
@@ -842,7 +842,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     }
 
     private getUngroupedLabel(): string {
-        return this.strings().label?.ungrouped || 'Ungrouped';
+        return this.strings().label?.ungrouped;
     }
 
     private normalizeCollapsedGroupName(name: unknown): string {
@@ -952,13 +952,13 @@ export class SettingsComponent implements OnInit, OnDestroy {
         try {
             await this.common.confirm({
                 event: $event,
-                message: this.strings().confirm?.deleteConnectionText || 'Delete this connection?',
+                message: this.strings().confirm?.deleteConnectionText,
             });
             await this.socket.request({
                 action: 'connection/delete',
                 payload: { id: connection.id },
             });
-            this.common.toast(this.strings().status?.deleted || 'Deleted');
+            this.common.toast(this.strings().status?.deleted);
         } catch (e) {
             if (e !== undefined) {
                 this.common.generalHandleError(e);
@@ -1064,10 +1064,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
     async deleteAclUser(username: string): Promise<void> {
         try {
-            const msg = (this.strings().page?.acl?.confirmDelete || 'Are you sure to delete ACL user') + ` "${username}"?`;
+            const msg = (this.strings().page?.acl?.confirmDelete) + ` "${username}"?`;
             await this.common.confirm({ message: msg });
             await this.socket.request({ action: 'acl/del-user', payload: { username } });
-            this.common.toast({ message: this.strings().page?.acl?.userDeleted || 'ACL user deleted' });
+            this.common.toast({ message: this.strings().page?.acl?.userDeleted });
             this.loadAclUsers();
         } catch {}
     }
@@ -1081,7 +1081,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
         if (result) {
             try {
                 await this.socket.request({ action: 'acl/set-user', payload: { username: result.username, rules: result.rules } });
-                this.common.toast({ message: this.strings().page?.acl?.userSaved || 'ACL user saved' });
+                this.common.toast({ message: this.strings().page?.acl?.userSaved });
                 this.loadAclUsers();
             } catch (e) {
                 this.common.generalHandleError(e);
@@ -1099,7 +1099,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
         if (result) {
             try {
                 await this.socket.request({ action: 'acl/set-user', payload: { username: result.username, rules: result.rules } });
-                this.common.toast({ message: this.strings().page?.acl?.userSaved || 'ACL user saved' });
+                this.common.toast({ message: this.strings().page?.acl?.userSaved });
                 this.loadAclUsers();
             } catch (e) {
                 this.common.generalHandleError(e);

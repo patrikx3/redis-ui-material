@@ -94,10 +94,10 @@ onUnmounted(() => {
             slider-color="primary"
             @update:model-value="onTabChange"
         >
-            <v-tab :value="0">{{ strings?.intention?.pulse || 'Pulse' }}</v-tab>
-            <v-tab :value="1">{{ strings?.intention?.profiler || 'Profiler' }}</v-tab>
-            <v-tab :value="2">{{ strings?.intention?.pubsubMonitor || 'PubSub' }}</v-tab>
-            <v-tab :value="3">{{ strings?.intention?.memoryAnalysis || 'Analysis' }}</v-tab>
+            <v-tab :value="0">{{ strings?.intention?.pulse }}</v-tab>
+            <v-tab :value="1">{{ strings?.intention?.profiler }}</v-tab>
+            <v-tab :value="2">{{ strings?.intention?.pubsubMonitor }}</v-tab>
+            <v-tab :value="3">{{ strings?.intention?.memoryAnalysis }}</v-tab>
         </v-tabs>
         <div class="p3xr-monitoring-shell-content">
             <router-view />

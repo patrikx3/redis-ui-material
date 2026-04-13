@@ -36,7 +36,7 @@ export class MonitoringDataService {
     pubsubPattern = '*';
 
     private socket: any;
-    private langFn: () => string = () => 'en';
+    private langFn: () => string;
     private profilerSaveTimeout: any = null;
     private pubsubSaveTimeout: any = null;
     private initialized = false;

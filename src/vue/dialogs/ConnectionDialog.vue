@@ -170,11 +170,14 @@ const title = computed(() =>
             <legend style="font-weight: 700;">Node 1</legend>
             <v-text-field v-model="model.host" :label="strings?.form?.connection?.label?.host" variant="outlined" density="comfortable" :disabled="readonlyConnections" hide-details class="mb-3" />
             <v-text-field v-model.number="model.port" :label="strings?.form?.connection?.label?.port" type="number" variant="outlined" density="comfortable" :disabled="readonlyConnections" hide-details class="mb-3" />
-            <v-switch v-model="model.askAuth" :label="strings?.label?.askAuth" :disabled="readonlyConnections" density="comfortable" hide-details class="mb-1" />
-            <v-text-field v-model="model.username" :label="strings?.form?.connection?.label?.username" variant="outlined" density="comfortable" :disabled="readonlyConnections" autocomplete="off" hide-details class="mb-3" />
-            <v-text-field v-model="model.password" :label="strings?.form?.connection?.label?.password" :type="pwVisible ? 'text' : 'password'" variant="outlined" density="comfortable" :disabled="readonlyConnections" autocomplete="off" hide-details class="mb-1"
-                :append-inner-icon="pwVisible ? 'mdi-eye-off' : 'mdi-eye'" @click:append-inner="pwVisible = !pwVisible" />
-            <div style="font-size: 12px; opacity: 0.7;">{{ strings?.label?.passwordSecure }}</div>
+            <v-switch v-model="model.askAuth" :label="strings?.label?.askAuth" :disabled="readonlyConnections" density="comfortable" hide-details class="mb-1" @update:model-value="(v: any) => { if (v) { model.username = ''; model.password = '' } }" />
+            <div style="font-size: 12px; opacity: 0.7; margin-bottom: 4px;">{{ strings?.label?.aclAuthHint }}</div>
+            <template v-if="!model.askAuth">
+                <v-text-field v-model="model.username" :label="strings?.form?.connection?.label?.username" variant="outlined" density="comfortable" :disabled="readonlyConnections" autocomplete="off" hide-details class="mb-3" />
+                <v-text-field v-model="model.password" :label="strings?.form?.connection?.label?.password" :type="pwVisible ? 'text' : 'password'" variant="outlined" density="comfortable" :disabled="readonlyConnections" autocomplete="off" hide-details class="mb-1"
+                    :append-inner-icon="pwVisible ? 'mdi-eye-off' : 'mdi-eye'" @click:append-inner="pwVisible = !pwVisible" />
+                <div style="font-size: 12px; opacity: 0.7;">{{ strings?.label?.passwordSecure }}</div>
+            </template>
         </fieldset>
 
         <!-- Readonly -->

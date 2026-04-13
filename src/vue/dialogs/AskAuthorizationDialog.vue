@@ -36,15 +36,16 @@ function str(val: any, opts?: any): string {
 <template>
     <P3xrDialog
         :open="common.askAuthOpen"
-        :title="str(strings?.label?.askAuth) || 'Authorization'"
+        :title="str(strings?.label?.askAuth)"
         icon="mdi-shield"
         width="400px"
         :full-screen-on-mobile="false"
         @close="handleCancel"
     >
+        <div style="font-size: 12px; opacity: 0.7; margin-bottom: 8px;">{{ strings?.label?.aclAuthHint }}</div>
         <v-text-field
             v-model="username" autofocus
-            :label="str(strings?.form?.connection?.label?.username) || 'Username'"
+            :label="str(strings?.form?.connection?.label?.username)"
             autocomplete="off" density="comfortable" variant="outlined" hide-details class="mb-3"
             @keydown.enter="handleOk"
         >
@@ -54,7 +55,7 @@ function str(val: any, opts?: any): string {
         </v-text-field>
         <v-text-field
             v-model="password"
-            :label="str(strings?.form?.connection?.label?.password) || 'Password'"
+            :label="str(strings?.form?.connection?.label?.password)"
             :type="pwVisible ? 'text' : 'password'"
             autocomplete="off" density="comfortable" variant="outlined" hide-details
             @keydown.enter="handleOk"
@@ -72,11 +73,11 @@ function str(val: any, opts?: any): string {
         <template #actions>
             <v-btn color="error" variant="flat" @click="handleCancel">
                 <v-icon size="20" class="mr-1">mdi-close-circle</v-icon>
-                {{ str(strings?.intention?.cancel) || 'Cancel' }}
+                {{ str(strings?.intention?.cancel) }}
             </v-btn>
             <v-btn color="primary" variant="flat" @click="handleOk">
                 <v-icon size="20" class="mr-1">mdi-check</v-icon>
-                {{ str(strings?.intention?.ok) || 'OK' }}
+                {{ str(strings?.intention?.ok) }}
             </v-btn>
         </template>
     </P3xrDialog>

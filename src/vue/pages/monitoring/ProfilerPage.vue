@@ -75,7 +75,7 @@ function clearProfiler(): void {
 }
 
 function exportProfiler(): void {
-    const connName = state.connection?.name || 'redis'
+    const connName = state.connection?.name
     const lines = monitorData.profilerEntries.map(e => `${e.fullTimestamp} [${e.database} ${e.source}] ${e.command}`)
     const blob = new Blob([lines.join('\n')], { type: 'text/plain' })
     const url = URL.createObjectURL(blob)
@@ -115,12 +115,12 @@ onUnmounted(() => {
         <template #actions>
             <P3xrButton
                 @click="clearProfiler(); $event.stopPropagation()"
-                :label="strings()?.intention?.clear || 'Clear'"
+                :label="strings()?.intention?.clear"
                 icon="mdi-backspace"
             />
             <P3xrButton
                 @click="exportProfiler(); $event.stopPropagation()"
-                :label="strings()?.intention?.export || 'Export'"
+                :label="strings()?.intention?.export"
                 icon="mdi-download"
             />
         </template>

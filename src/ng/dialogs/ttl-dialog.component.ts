@@ -36,7 +36,7 @@ export interface TtlDialogData {
         <form (ngSubmit)="submit()" novalidate>
             <mat-toolbar class="p3xr-dialog-toolbar p3xr-mat-layout-strong">
                 <span mat-dialog-title class="p3xr-dialog-title">
-                    {{ strings().confirm?.ttl?.title || 'TTL' }}
+                    {{ strings().confirm?.ttl?.title }}
                 </span>
                 <button mat-icon-button type="button" (click)="cancel()">
                     <mat-icon>close</mat-icon>
@@ -47,16 +47,16 @@ export interface TtlDialogData {
                 <div>{{ strings().confirm?.ttl?.textContent }}</div>
 
                 <mat-form-field class="full-width">
-                    <mat-label>{{ strings().confirm?.ttl?.placeholder || 'TTL (seconds)' }}</mat-label>
+                    <mat-label>{{ strings().confirm?.ttl?.placeholder }}</mat-label>
                     <input matInput type="number" name="ttl" [(ngModel)]="model.ttl" min="-1"
-                           [placeholder]="strings().confirm?.ttl?.placeholderPlaceholder || '-1'" />
+                           [placeholder]="strings().confirm?.ttl?.placeholderPlaceholder" />
                 </mat-form-field>
 
                 <mat-form-field class="full-width">
-                    <mat-label>{{ strings().confirm?.ttl?.convertTextToTime || 'Duration' }}</mat-label>
+                    <mat-label>{{ strings().confirm?.ttl?.convertTextToTime }}</mat-label>
                     <input matInput name="convertTextToTime" [(ngModel)]="convertTextToTime"
                            (ngModelChange)="onTextTimeChange($event)"
-                           [placeholder]="strings().confirm?.ttl?.convertTextToTimePlaceholder || '1h 30m'" />
+                           [placeholder]="strings().confirm?.ttl?.convertTextToTimePlaceholder" />
                 </mat-form-field>
 
                 <button mat-button class="btn-accent p3xr-timestring-link" type="button" (click)="openTimestringNpm()">
@@ -68,7 +68,7 @@ export interface TtlDialogData {
                 <p3xr-dialog-cancel (cancel)="cancel()"></p3xr-dialog-cancel>
                 <button mat-raised-button class="btn-primary" type="submit">
                     <mat-icon>timer</mat-icon>
-                    {{ strings().intention?.ttl || 'Set TTL' }}
+                    {{ strings().intention?.ttl }}
                 </button>
             </mat-dialog-actions>
         </form>

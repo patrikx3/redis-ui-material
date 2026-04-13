@@ -78,7 +78,7 @@ export default function DiffDialog({ open, keyName, fieldName, oldValue, newValu
 
     const renderInline = () => blocks.map((block, i) => {
         if (block.type === 'collapse' && !expanded.has(i)) {
-            return <Box key={i} sx={collapseSx} onClick={() => toggleExpand(i)}>... {block.collapsedCount} {d.unchangedLines || 'unchanged lines'} ...</Box>
+            return <Box key={i} sx={collapseSx} onClick={() => toggleExpand(i)}>... {block.collapsedCount} {d.unchangedLines} ...</Box>
         }
         return block.lines.map((line, j) => (
             <Box key={`${i}-${j}`} sx={lineSx(block.type)}>
@@ -93,11 +93,11 @@ export default function DiffDialog({ open, keyName, fieldName, oldValue, newValu
         const skipType = side === 'before' ? 'added' : 'removed'
         return (<>
             <Box sx={{ px: 1, py: '4px', fontWeight: 500, borderBottom: 1, borderColor: 'divider', position: 'sticky', top: 0, zIndex: 1, bgcolor: 'background.paper' }}>
-                {side === 'before' ? (d.before || 'Before') : (d.after || 'After')}
+                {side === 'before' ? d.before : d.after}
             </Box>
             {blocks.map((block, i) => {
                 if (block.type === 'collapse' && !expanded.has(i)) {
-                    return <Box key={i} sx={collapseSx} onClick={() => toggleExpand(i)}>... {block.collapsedCount} {d.unchangedLines || 'unchanged lines'} ...</Box>
+                    return <Box key={i} sx={collapseSx} onClick={() => toggleExpand(i)}>... {block.collapsedCount} {d.unchangedLines} ...</Box>
                 }
                 if (block.type === skipType) return null
                 return block.lines.map((line, j) => <Box key={`${i}-${j}`} sx={lineSx(block.type)}>{line}</Box>)
@@ -105,7 +105,7 @@ export default function DiffDialog({ open, keyName, fieldName, oldValue, newValu
         </>)
     }
 
-    const title = `${d.reviewChanges || 'Review changes'} — ${fieldName ? `${fieldName} @ ` : ''}${keyName}`
+    const title = `${d.reviewChanges} — ${fieldName ? `${fieldName} @ ` : ''}${keyName}`
 
     return (
         <P3xrDialog
@@ -117,25 +117,25 @@ export default function DiffDialog({ open, keyName, fieldName, oldValue, newValu
             headerActions={<>
                 <ToggleButtonGroup size="small" exclusive value={mode} onChange={(_, v) => v && setMode(v)}
                     sx={{ mr: 0.5, '& .MuiToggleButton-root': { py: '2px', px: 1.5, fontSize: 12, borderRadius: '4px', textTransform: 'none', color: 'rgba(255,255,255,0.7)', borderColor: 'rgba(255,255,255,0.3)' } }}>
-                    <ToggleButton value="inline">{d.inline || 'Inline'}</ToggleButton>
-                    <ToggleButton value="side-by-side">{d.sideBySide || 'Side by side'}</ToggleButton>
+                    <ToggleButton value="inline">{d.inline}</ToggleButton>
+                    <ToggleButton value="side-by-side">{d.sideBySide}</ToggleButton>
                 </ToggleButtonGroup>
                 <Box sx={{ fontSize: 12, opacity: 0.8, mr: 0.5, whiteSpace: 'nowrap' }}>
-                    <Box component="span" sx={{ color: '#81c784', fontWeight: 700 }}>+{additions}</Box>{' '}{d.additions || 'additions'},{' '}
-                    <Box component="span" sx={{ color: '#ef9a9a', fontWeight: 700 }}>-{deletions}</Box>{' '}{d.deletions || 'deletions'}
+                    <Box component="span" sx={{ color: '#81c784', fontWeight: 700 }}>+{additions}</Box>{' '}{d.additions},{' '}
+                    <Box component="span" sx={{ color: '#ef9a9a', fontWeight: 700 }}>-{deletions}</Box>{' '}{d.deletions}
                 </Box>
             </>}
             actions={<>
-                <Tooltip title={strings?.intention?.cancel || 'Cancel'} disableHoverListener={isWide}>
+                <Tooltip title={strings?.intention?.cancel} disableHoverListener={isWide}>
                     <Button variant="contained" color="warning" onClick={onCancel}>
                         <Cancel sx={{ fontSize: 18, mr: isWide ? 0.5 : 0 }} />
-                        {isWide && <span>{strings?.intention?.cancel || 'Cancel'}</span>}
+                        {isWide && <span>{strings?.intention?.cancel}</span>}
                     </Button>
                 </Tooltip>
-                <Tooltip title={strings?.intention?.save || 'Save'} disableHoverListener={isWide}>
+                <Tooltip title={strings?.intention?.save} disableHoverListener={isWide}>
                     <Button variant="contained" color="primary" onClick={onConfirm}>
                         <Save sx={{ fontSize: 18, mr: isWide ? 0.5 : 0 }} />
-                        {isWide && <span>{strings?.intention?.save || 'Save'}</span>}
+                        {isWide && <span>{strings?.intention?.save}</span>}
                     </Button>
                 </Tooltip>
             </>}

@@ -35,7 +35,7 @@ import { TreeBuilderService } from '../services/tree-builder.service';
         <form (ngSubmit)="submit()" novalidate #settingsForm="ngForm">
             <mat-toolbar class="p3xr-dialog-toolbar p3xr-tree-settings-dialog-toolbar p3xr-mat-layout-strong">
                 <span mat-dialog-title class="p3xr-dialog-title">
-                    {{ strings().form?.treeSettings?.label?.formName || 'Redis Settings' }}
+                    {{ strings().form?.treeSettings?.label?.formName }}
                 </span>
                 <button mat-icon-button type="button" (click)="cancel()">
                     <mat-icon>close</mat-icon>
@@ -55,7 +55,7 @@ import { TreeBuilderService } from '../services/tree-builder.service';
 
                     <div class="p3xr-tree-settings-field-block p3xr-tree-settings-field-block-tree-separator">
                         <mat-form-field class="md-block p3xr-md-input-container-no-bottom" subscriptSizing="dynamic">
-                            <mat-label>{{ strings().form?.treeSettings?.field?.treeSeparator || 'Tree separator' }}</mat-label>
+                            <mat-label>{{ strings().form?.treeSettings?.field?.treeSeparator }}</mat-label>
                             <input matInput name="treeSeparator" [(ngModel)]="model.treeSeparator" />
                         </mat-form-field>
                         <div class="p3xr-md-input-container-bottom-info">
@@ -65,18 +65,18 @@ import { TreeBuilderService } from '../services/tree-builder.service';
 
                     <div class="p3xr-tree-settings-field-block p3xr-tree-settings-field-block-page-count">
                         <mat-form-field class="md-block" [class.p3xr-field-error]="isFieldInvalid('pageCount', 10, 5000)">
-                            <mat-label>{{ strings().form?.treeSettings?.field?.page || 'Page size' }}</mat-label>
+                            <mat-label>{{ strings().form?.treeSettings?.field?.page }}</mat-label>
                             <input matInput type="number" required step="1" name="pageCount"
                                 [(ngModel)]="model.pageCount" />
                         </mat-form-field>
                         @if (isFieldInvalid('pageCount', 10, 5000)) {
-                            <div class="p3xr-field-error-text">{{ strings().form?.treeSettings?.error?.page || 'The page count must be an integer between 10 - 5000' }}</div>
+                            <div class="p3xr-field-error-text">{{ strings().form?.treeSettings?.error?.page }}</div>
                         }
                     </div>
 
                     <div class="p3xr-tree-settings-field-block p3xr-tree-settings-field-block-key-page-count">
                         <mat-form-field class="md-block" [class.p3xr-field-error]="isFieldInvalid('keyPageCount', 5, 100)">
-                            <mat-label>{{ strings().form?.treeSettings?.field?.keyPageCount || 'Key page size' }}</mat-label>
+                            <mat-label>{{ strings().form?.treeSettings?.field?.keyPageCount }}</mat-label>
                             <input matInput type="number" required step="1" name="keyPageCount"
                                 [(ngModel)]="model.keyPageCount" />
                         </mat-form-field>
@@ -87,7 +87,7 @@ import { TreeBuilderService } from '../services/tree-builder.service';
 
                     <div class="p3xr-tree-settings-field-block p3xr-tree-settings-field-block-max-value-display">
                         <mat-form-field class="md-block p3xr-md-input-container-no-bottom" [class.p3xr-field-error]="isFieldInvalid('maxValueDisplay', -1, 32768)" subscriptSizing="dynamic">
-                            <mat-label>{{ strings().form?.treeSettings?.maxValueDisplay || 'Max value display' }}</mat-label>
+                            <mat-label>{{ strings().form?.treeSettings?.maxValueDisplay }}</mat-label>
                             <input matInput type="number" required step="1" name="maxValueDisplay"
                                 [(ngModel)]="model.maxValueDisplay" />
                         </mat-form-field>
@@ -100,7 +100,7 @@ import { TreeBuilderService } from '../services/tree-builder.service';
 
                     <div class="p3xr-tree-settings-field-block p3xr-tree-settings-field-block-max-keys">
                         <mat-form-field class="md-block p3xr-md-input-container-no-bottom" [class.p3xr-field-error]="isFieldInvalid('maxKeys', 5, 100000)" subscriptSizing="dynamic">
-                            <mat-label>{{ strings().form?.treeSettings?.maxKeys || 'Max keys' }}</mat-label>
+                            <mat-label>{{ strings().form?.treeSettings?.maxKeys }}</mat-label>
                             <input matInput type="number" required step="1" name="maxKeys"
                                 [(ngModel)]="model.maxKeys" />
                         </mat-form-field>
@@ -177,19 +177,19 @@ import { TreeBuilderService } from '../services/tree-builder.service';
                         <mat-slide-toggle [(ngModel)]="model.undoEnabled" name="undoEnabled">
                             {{
                                 model.undoEnabled
-                                    ? (strings().form?.treeSettings?.label?.undoEnabled || 'Undo enabled')
-                                    : (strings().form?.treeSettings?.label?.undoDisabled || 'Undo disabled')
+                                    ? (strings().form?.treeSettings?.label?.undoEnabled)
+                                    : (strings().form?.treeSettings?.label?.undoDisabled)
                             }}
                         </mat-slide-toggle>
-                        <div style="font-size: 12px; opacity: 0.7; margin-top: 4px;">{{ strings().form?.treeSettings?.undoHint || 'Undo is available for string and JSON key types only' }}</div>
+                        <div style="font-size: 12px; opacity: 0.7; margin-top: 4px;">{{ strings().form?.treeSettings?.undoHint }}</div>
                     </div>
 
                     <div class="p3xr-tree-settings-toggle-block p3xr-tree-settings-toggle-block-last">
                         <mat-slide-toggle [(ngModel)]="model.showDiffBeforeSave" name="showDiffBeforeSave">
                             {{
                                 model.showDiffBeforeSave
-                                    ? (strings().form?.treeSettings?.label?.diffEnabled || 'Show diff before saving')
-                                    : (strings().form?.treeSettings?.label?.diffDisabled || 'Diff before save disabled')
+                                    ? (strings().form?.treeSettings?.label?.diffEnabled)
+                                    : (strings().form?.treeSettings?.label?.diffDisabled)
                             }}
                         </mat-slide-toggle>
                     </div>
@@ -200,7 +200,7 @@ import { TreeBuilderService } from '../services/tree-builder.service';
                 <p3xr-dialog-cancel (cancel)="cancel()"></p3xr-dialog-cancel>
                 <button mat-raised-button class="btn-primary" type="submit">
                     <mat-icon>save</mat-icon>
-                    {{ strings().intention?.save || 'Save' }}
+                    {{ strings().intention?.save }}
                 </button>
             </mat-dialog-actions>
         </form>
@@ -338,7 +338,7 @@ export class TreecontrolSettingsDialogComponent implements OnInit, AfterViewInit
     private handleInvalidForm(): boolean {
         if (this.formRef?.invalid) {
             this.common.toast({
-                message: this.strings().form?.error?.invalid || 'Invalid form',
+                message: this.strings().form?.error?.invalid,
             });
             return false;
         }
@@ -357,7 +357,7 @@ export class TreecontrolSettingsDialogComponent implements OnInit, AfterViewInit
 
         if (hasRangeError || !this.handleInvalidForm()) {
             this.common.toast({
-                message: this.strings().form?.error?.invalid || 'Please fix the errors before saving',
+                message: this.strings().form?.error?.invalid,
             });
             return;
         }

@@ -86,7 +86,7 @@ function lineClass(type: string) {
 }
 
 const title = computed(() => {
-    const prefix = d.value.reviewChanges || 'Review changes'
+    const prefix = d.value.reviewChanges
     const field = props.fieldName ? `${props.fieldName} @ ` : ''
     return `${prefix} — ${field}${props.keyName}`
 })
@@ -96,12 +96,12 @@ const title = computed(() => {
     <P3xrDialog v-if="open" :open="true" :title="title" width="800px" :content-padding="false" @close="emit('cancel')">
         <template #headerActions>
             <v-btn-toggle v-model="mode" mandatory density="compact" class="p3xr-diff-mode-toggle" style="margin-right: 4px;">
-                <v-btn value="inline" size="x-small">{{ d.inline || 'Inline' }}</v-btn>
-                <v-btn value="side-by-side" size="x-small">{{ d.sideBySide || 'Side by side' }}</v-btn>
+                <v-btn value="inline" size="x-small">{{ d.inline }}</v-btn>
+                <v-btn value="side-by-side" size="x-small">{{ d.sideBySide }}</v-btn>
             </v-btn-toggle>
             <span style="font-size: 12px; opacity: 0.8; margin-right: 4px; white-space: nowrap;">
-                <span style="color: #81c784; font-weight: 700;">+{{ additions }}</span> {{ d.additions || 'additions' }},
-                <span style="color: #ef9a9a; font-weight: 700;">-{{ deletions }}</span> {{ d.deletions || 'deletions' }}
+                <span style="color: #81c784; font-weight: 700;">+{{ additions }}</span> {{ d.additions }},
+                <span style="color: #ef9a9a; font-weight: 700;">-{{ deletions }}</span> {{ d.deletions }}
             </span>
         </template>
 
@@ -111,7 +111,7 @@ const title = computed(() => {
                 <div>
                     <template v-for="(block, i) in blocks" :key="i">
                         <div v-if="block.type === 'collapse' && !expanded.has(i)" class="p3xr-diff-collapse" @click="toggleExpand(i)">
-                            ... {{ block.collapsedCount }} {{ d.unchangedLines || 'unchanged lines' }} ...
+                            ... {{ block.collapsedCount }} {{ d.unchangedLines }} ...
                         </div>
                         <template v-else>
                             <div v-for="(line, j) in block.lines" :key="`${i}-${j}`" :class="lineClass(block.type)" class="p3xr-diff-line">
@@ -126,11 +126,11 @@ const title = computed(() => {
             <template v-else>
                 <div style="border-right: 1px solid rgba(var(--v-theme-on-surface), 0.12); overflow: auto;">
                     <div style="padding: 4px 8px; font-weight: 500; border-bottom: 1px solid rgba(var(--v-theme-on-surface), 0.12); position: sticky; top: 0; z-index: 1; background: rgb(var(--v-theme-surface));">
-                        {{ d.before || 'Before' }}
+                        {{ d.before }}
                     </div>
                     <template v-for="(block, i) in blocks" :key="'l'+i">
                         <div v-if="block.type === 'collapse' && !expanded.has(i)" class="p3xr-diff-collapse" @click="toggleExpand(i)">
-                            ... {{ block.collapsedCount }} {{ d.unchangedLines || 'unchanged lines' }} ...
+                            ... {{ block.collapsedCount }} {{ d.unchangedLines }} ...
                         </div>
                         <template v-else-if="block.type !== 'added'">
                             <div v-for="(line, j) in block.lines" :key="`l${i}-${j}`" :class="lineClass(block.type)" class="p3xr-diff-line">{{ line }}</div>
@@ -139,11 +139,11 @@ const title = computed(() => {
                 </div>
                 <div style="overflow: auto;">
                     <div style="padding: 4px 8px; font-weight: 500; border-bottom: 1px solid rgba(var(--v-theme-on-surface), 0.12); position: sticky; top: 0; z-index: 1; background: rgb(var(--v-theme-surface));">
-                        {{ d.after || 'After' }}
+                        {{ d.after }}
                     </div>
                     <template v-for="(block, i) in blocks" :key="'r'+i">
                         <div v-if="block.type === 'collapse' && !expanded.has(i)" class="p3xr-diff-collapse" @click="toggleExpand(i)">
-                            ... {{ block.collapsedCount }} {{ d.unchangedLines || 'unchanged lines' }} ...
+                            ... {{ block.collapsedCount }} {{ d.unchangedLines }} ...
                         </div>
                         <template v-else-if="block.type !== 'removed'">
                             <div v-for="(line, j) in block.lines" :key="`r${i}-${j}`" :class="lineClass(block.type)" class="p3xr-diff-line">{{ line }}</div>

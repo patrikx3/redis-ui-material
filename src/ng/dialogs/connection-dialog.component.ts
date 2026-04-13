@@ -85,7 +85,7 @@ export interface ConnectionDialogData {
 
                     <!-- Group (optional — blank = ungrouped) -->
                     <mat-form-field class="md-block">
-                        <mat-label>{{ strings().form?.connection?.label?.group || 'Group' }}</mat-label>
+                        <mat-label>{{ strings().form?.connection?.label?.group }}</mat-label>
                         <input matInput name="group" [(ngModel)]="model.group"
                                [matAutocomplete]="groupAuto"
                                [disabled]="readonlyConnections" />
@@ -189,35 +189,48 @@ export interface ConnectionDialogData {
                         </mat-form-field>
 
                         <mat-slide-toggle name="askAuth" [(ngModel)]="model.askAuth"
-                                          [disabled]="readonlyConnections">
+                                          [disabled]="readonlyConnections"
+                                          (change)="onAskAuthChange()">
                             {{ strings().label?.askAuth }}
                         </mat-slide-toggle>
 
-                        <span>
-                            <mat-form-field class="md-block">
-                                <mat-label>{{ strings().form?.connection?.label?.username }}</mat-label>
-                                <input matInput name="username" type="text" [(ngModel)]="model.username"
-                                       [disabled]="readonlyConnections" autocomplete="off" />
-                            </mat-form-field>
-
-                            <mat-form-field class="md-block p3xr-md-input-container-no-bottom">
-                                <mat-label>{{ strings().form?.connection?.label?.password }}</mat-label>
-                                <input matInput name="password"
-                                       [type]="passwordVisible ? 'text' : 'password'"
-                                       [(ngModel)]="model.password"
-                                       [disabled]="readonlyConnections" autocomplete="off" />
-                                @if (!readonlyConnections) {
-                                    <button mat-icon-button matSuffix type="button"
-                                            (click)="passwordVisible = !passwordVisible">
-                                        <mat-icon>{{ passwordVisible ? 'visibility_off' : 'visibility' }}</mat-icon>
-                                    </button>
-                                }
-                            </mat-form-field>
-                            <div class="p3xr-md-input-container-bottom-info">
-                                {{ strings().label?.passwordSecure }}
+                        @if (model.askAuth) {
+                            <div class="p3xr-md-input-container-bottom-info" style="margin-top: 4px;">
+                                {{ strings().label?.aclAuthHint }}
                             </div>
-                            <br/>
-                        </span>
+                        }
+
+                        @if (!model.askAuth) {
+                            <span>
+                                <div class="p3xr-md-input-container-bottom-info" style="margin-bottom: 8px;">
+                                    {{ strings().label?.aclAuthHint }}
+                                </div>
+
+                                <mat-form-field class="md-block">
+                                    <mat-label>{{ strings().form?.connection?.label?.username }}</mat-label>
+                                    <input matInput name="username" type="text" [(ngModel)]="model.username"
+                                           [disabled]="readonlyConnections" autocomplete="off" />
+                                </mat-form-field>
+
+                                <mat-form-field class="md-block p3xr-md-input-container-no-bottom">
+                                    <mat-label>{{ strings().form?.connection?.label?.password }}</mat-label>
+                                    <input matInput name="password"
+                                           [type]="passwordVisible ? 'text' : 'password'"
+                                           [(ngModel)]="model.password"
+                                           [disabled]="readonlyConnections" autocomplete="off" />
+                                    @if (!readonlyConnections) {
+                                        <button mat-icon-button matSuffix type="button"
+                                                (click)="passwordVisible = !passwordVisible">
+                                            <mat-icon>{{ passwordVisible ? 'visibility_off' : 'visibility' }}</mat-icon>
+                                        </button>
+                                    }
+                                </mat-form-field>
+                                <div class="p3xr-md-input-container-bottom-info">
+                                    {{ strings().label?.passwordSecure }}
+                                </div>
+                                <br/>
+                            </span>
+                        }
                     </fieldset>
 
                     <br/>
@@ -465,6 +478,13 @@ export class ConnectionDialogComponent implements AfterViewInit {
     passwordVisible = false;
     sshPasswordVisible = false;
     nodePasswordVisible: Record<number, boolean> = {};
+
+    onAskAuthChange(): void {
+        if (this.model.askAuth) {
+            this.model.username = '';
+            this.model.password = '';
+        }
+    }
 
     // Readonly connections mode from global state
     get readonlyConnections(): boolean {

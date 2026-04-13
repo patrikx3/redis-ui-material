@@ -42,7 +42,7 @@ const rangeFrom = ref('')
 const rangeTo = ref('')
 const aggregationType = ref('')
 const aggregationItems = computed(() => [
-    { title: str(strings.value?.page?.key?.timeseries?.none) || 'None', value: '' },
+    { title: str(strings.value?.page?.key?.timeseries?.none), value: '' },
     ...aggregationTypes.map(a => ({ title: a, value: a })),
 ])
 const aggregationBucket = ref('')
@@ -95,7 +95,7 @@ const tsRules = computed(() => Array.isArray(tsInfo.value?.rules) ? tsInfo.value
 const capitalize = (s: string) => s ? s.charAt(0).toUpperCase() + s.slice(1) : ''
 
 function formatTimestamp(ts: number): string {
-    const lang = i18n.currentLang || 'en'
+    const lang = i18n.currentLang
     return new Date(ts).toLocaleString(lang, {
         year: 'numeric', month: '2-digit', day: '2-digit',
         hour: '2-digit', minute: '2-digit', second: '2-digit',
@@ -146,12 +146,12 @@ function initChart() {
     const el = chartEl.value
     const w = el.clientWidth || 400
     const colors = getChartColors()
-    const lang = i18n.currentLang || 'en'
+    const lang = i18n.currentLang
 
     const seriesConfig: any[] = [
         {
-            label: str(strings.value?.label?.time) || 'Time',
-            value: (_: any, v: number) => v ? new Date(v * 1000).toLocaleString(i18n.currentLang || 'en', {
+            label: str(strings.value?.label?.time),
+            value: (_: any, v: number) => v ? new Date(v * 1000).toLocaleString(i18n.currentLang, {
                 year: 'numeric', month: '2-digit', day: '2-digit',
                 hour: '2-digit', minute: '2-digit', second: '2-digit',
             }) : '',
@@ -169,7 +169,7 @@ function initChart() {
         scales: { x: { time: true } },
         axes: [
             { stroke: colors.text, grid: { stroke: colors.grid, width: 1 }, ticks: { stroke: colors.grid }, font: '11px Roboto',
-                values: (_: any, ticks: number[]) => ticks.map(t => new Date(t * 1000).toLocaleTimeString(i18n.currentLang || 'en', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })) },
+                values: (_: any, ticks: number[]) => ticks.map(t => new Date(t * 1000).toLocaleTimeString(i18n.currentLang, { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })) },
             { stroke: colors.text, grid: { stroke: colors.grid, width: 1 }, ticks: { stroke: colors.grid }, font: '11px Roboto Mono', size: 65 },
         ],
         series: seriesConfig,
@@ -247,8 +247,8 @@ function debouncedLoadRange() {
 async function addDataPoint() {
     if (!addValue.value) return
     try {
-        await request({ action: 'timeseries/add', payload: { key: props.keyName, timestamp: addTimestamp.value || '*', value: parseFloat(addValue.value) } })
-        common.toast(str(strings.value?.status?.added) || 'Added')
+        await request({ action: 'timeseries/add', payload: { key: props.keyName, timestamp: addTimestamp.value, value: parseFloat(addValue.value) } })
+        common.toast(str(strings.value?.status?.added))
         addValue.value = ''
         emit('refresh')
     } catch (e: any) { common.generalHandleError(e) }
@@ -256,9 +256,9 @@ async function addDataPoint() {
 
 async function deleteDataPoint(point: DataPoint) {
     try {
-        await common.confirm({ message: str(strings.value?.confirm?.delete) || 'Delete?' })
+        await common.confirm({ message: str(strings.value?.confirm?.delete) })
         await request({ action: 'timeseries/del', payload: { key: props.keyName, from: point.timestamp, to: point.timestamp } })
-        common.toast(str(strings.value?.status?.deleted) || 'Deleted')
+        common.toast(str(strings.value?.status?.deleted))
         emit('refresh')
     } catch (e: any) { if (e !== undefined && e !== null) common.generalHandleError(e) }
 }
@@ -285,7 +285,7 @@ function toggleAlterMode() {
     alterMode.value = !alterMode.value
     if (alterMode.value) {
         alterRetention.value = tsInfo.value?.retentionTime || 0
-        alterDuplicatePolicy.value = (tsInfo.value?.duplicatePolicy || 'LAST').toUpperCase()
+        alterDuplicatePolicy.value = (tsInfo.value?.duplicatePolicy).toUpperCase()
         const labels = tsLabels.value.map(l => `${l.key} ${l.value}`).join(' ')
         alterLabels.value = labels || `key ${props.keyName}`
     }
@@ -295,7 +295,7 @@ async function saveAlter() {
     try {
         const labels = alterLabels.value.trim().length > 0 ? alterLabels.value : `key ${props.keyName}`
         await request({ action: 'timeseries/alter', payload: { key: props.keyName, retention: alterRetention.value, duplicatePolicy: alterDuplicatePolicy.value, labels } })
-        common.toast(str(strings.value?.status?.saved) || 'Updated')
+        common.toast(str(strings.value?.status?.saved))
         alterMode.value = false
         emit('refresh')
     } catch (e: any) { common.generalHandleError(e) }
@@ -395,42 +395,42 @@ const hoverBg = computed(() => isDark.value ? 'rgba(255,255,255,0.1)' : 'rgba(0,
 
         <!-- Chart accordion -->
         <br />
-        <P3xrAccordion :title="str(strings?.page?.key?.timeseries?.chart) || 'Chart'" accordion-key="ts-chart">
+        <P3xrAccordion :title="str(strings?.page?.key?.timeseries?.chart)" accordion-key="ts-chart">
             <template #actions>
-                <P3xrButton v-if="!isReadonly" icon="mdi-pencil" :label="str(strings?.intention?.edit) || 'Edit'" :breakpoint="1280" color="inherit" @click.stop="editAllDataPoints()" />
-                <P3xrButton icon="mdi-image" :label="str(strings?.page?.key?.timeseries?.exportChart) || 'Export PNG'" :breakpoint="1280" color="inherit" @click.stop="exportChartPng()" />
-                <P3xrButton :icon="autoRefresh ? 'mdi-checkbox-marked' : 'mdi-checkbox-blank-outline'" :label="str(strings?.label?.autoRefresh) || 'Auto'" :breakpoint="1280" color="inherit" @click.stop="autoRefresh = !autoRefresh" />
-                <P3xrButton v-if="!autoRefresh" icon="mdi-refresh" :label="str(strings?.intention?.refresh) || 'Refresh'" :breakpoint="1280" color="inherit" @click.stop="loadRange()" />
+                <P3xrButton v-if="!isReadonly" icon="mdi-pencil" :label="str(strings?.intention?.edit)" :breakpoint="1280" color="inherit" @click.stop="editAllDataPoints()" />
+                <P3xrButton icon="mdi-image" :label="str(strings?.page?.key?.timeseries?.exportChart)" :breakpoint="1280" color="inherit" @click.stop="exportChartPng()" />
+                <P3xrButton :icon="autoRefresh ? 'mdi-checkbox-marked' : 'mdi-checkbox-blank-outline'" :label="str(strings?.label?.autoRefresh)" :breakpoint="1280" color="inherit" @click.stop="autoRefresh = !autoRefresh" />
+                <P3xrButton v-if="!autoRefresh" icon="mdi-refresh" :label="str(strings?.intention?.refresh)" :breakpoint="1280" color="inherit" @click.stop="loadRange()" />
             </template>
 
             <div style="padding: 16px;">
                 <!-- Range controls -->
                 <div class="p3xr-ts-controls">
                     <v-text-field density="compact" variant="outlined" hide-details class="p3xr-ts-field"
-                        :label="str(strings?.page?.key?.timeseries?.from) || 'From (ms or -)'" placeholder="-"
+                        :label="str(strings?.page?.key?.timeseries?.from)" placeholder="-"
                         v-model="rangeFrom" @update:model-value="debouncedLoadRange()" />
                     <v-text-field density="compact" variant="outlined" hide-details class="p3xr-ts-field"
-                        :label="str(strings?.page?.key?.timeseries?.to) || 'To (ms or +)'" placeholder="+"
+                        :label="str(strings?.page?.key?.timeseries?.to)" placeholder="+"
                         v-model="rangeTo" @update:model-value="debouncedLoadRange()" />
                     <v-select density="compact" variant="outlined" hide-details class="p3xr-ts-field"
-                        :label="str(strings?.page?.key?.timeseries?.aggregation) || 'Aggregation'"
+                        :label="str(strings?.page?.key?.timeseries?.aggregation)"
                         v-model="aggregationType" :items="aggregationItems" item-title="title" item-value="value"
                         @update:model-value="loadRange()" />
                     <v-text-field v-if="aggregationType" density="compact" variant="outlined" hide-details class="p3xr-ts-field"
-                        type="number" :label="str(strings?.page?.key?.timeseries?.timeBucket) || 'Bucket (ms)'" placeholder="5000"
+                        type="number" :label="str(strings?.page?.key?.timeseries?.timeBucket)" placeholder="5000"
                         v-model="aggregationBucket" @update:model-value="debouncedLoadRange()" />
                     <v-text-field density="compact" variant="outlined" hide-details class="p3xr-ts-field" style="min-width: 200px;"
-                        :label="str(strings?.page?.key?.timeseries?.overlay) || 'Overlay keys'"
-                        :placeholder="str(strings?.page?.key?.timeseries?.overlayHint) || 'key1, key2'"
+                        :label="str(strings?.page?.key?.timeseries?.overlay)"
+                        :placeholder="str(strings?.page?.key?.timeseries?.overlayHint)"
                         v-model="overlayKeysInput" @update:model-value="debouncedLoadRange()" />
                     <v-text-field density="compact" variant="outlined" hide-details class="p3xr-ts-field" style="min-width: 180px;"
-                        :label="str(strings?.page?.key?.timeseries?.mrangeFilter) || 'Label filter'"
-                        :placeholder="str(strings?.page?.key?.timeseries?.mrangeHint) || 'sensor=temp'"
+                        :label="str(strings?.page?.key?.timeseries?.mrangeFilter)"
+                        :placeholder="str(strings?.page?.key?.timeseries?.mrangeHint)"
                         v-model="mrangeFilter" @update:model-value="debouncedLoadRange()" />
                 </div>
 
                 <div style="padding: 4px 0; opacity: 0.6; font-size: 13px;">
-                    {{ rangeData.length }} {{ str(strings?.page?.key?.timeseries?.dataPoints) || 'data points' }}
+                    {{ rangeData.length }} {{ str(strings?.page?.key?.timeseries?.dataPoints) }}
                 </div>
 
                 <!-- Chart container -->
@@ -439,12 +439,12 @@ const hoverBg = computed(() => isDark.value ? 'rgba(255,255,255,0.1)' : 'rgba(0,
                 <!-- Add data point -->
                 <div v-if="!isReadonly" class="p3xr-ts-controls" style="margin-top: 16px;">
                     <v-text-field density="compact" variant="outlined" hide-details class="p3xr-ts-field"
-                        :label="str(strings?.page?.key?.timeseries?.timestamp) || 'Timestamp'" placeholder="* (auto)"
+                        :label="str(strings?.page?.key?.timeseries?.timestamp)" placeholder="* (auto)"
                         v-model="addTimestamp" />
                     <v-text-field density="compact" variant="outlined" hide-details class="p3xr-ts-field"
-                        type="number" :label="str(strings?.page?.key?.timeseries?.value) || 'Value'"
+                        type="number" :label="str(strings?.page?.key?.timeseries?.value)"
                         v-model="addValue" @keydown.enter="addDataPoint()" />
-                    <P3xrButton icon="mdi-plus" :label="str(strings?.intention?.add) || 'Add'" raised color="primary" :disabled="!addValue" @click="addDataPoint()" />
+                    <P3xrButton icon="mdi-plus" :label="str(strings?.intention?.add)" raised color="primary" :disabled="!addValue" @click="addDataPoint()" />
                 </div>
             </div>
         </P3xrAccordion>
@@ -452,11 +452,11 @@ const hoverBg = computed(() => isDark.value ? 'rgba(255,255,255,0.1)' : 'rgba(0,
         <!-- Data table accordion -->
         <template v-if="rangeData.length > 0">
             <br />
-            <P3xrAccordion :title="capitalize(str(strings?.page?.key?.timeseries?.dataPoints) || 'Data') + ` (${rangeData.length})`" accordion-key="ts-data">
+            <P3xrAccordion :title="capitalize(str(strings?.page?.key?.timeseries?.dataPoints)) + ` (${rangeData.length})`" accordion-key="ts-data">
                 <!-- Header -->
                 <div class="p3xr-key-table-header">
-                    <span style="flex: 1;">{{ str(strings?.page?.key?.timeseries?.timestamp) || 'Timestamp' }}</span>
-                    <span>{{ str(strings?.page?.key?.timeseries?.value) || 'Value' }}</span>
+                    <span style="flex: 1;">{{ str(strings?.page?.key?.timeseries?.timestamp) }}</span>
+                    <span>{{ str(strings?.page?.key?.timeseries?.value) }}</span>
                     <span v-if="!isReadonly" style="min-width: 52px;"></span>
                 </div>
 
@@ -476,10 +476,10 @@ const hoverBg = computed(() => isDark.value ? 'rgba(255,255,255,0.1)' : 'rgba(0,
                             <span style="flex: 1; font-size: 13px;">{{ formatTimestamp(rangeData[vRow.index].timestamp) }}</span>
                             <span style="font-size: 13px; font-family: 'Roboto Mono', monospace;">{{ rangeData[vRow.index].value }}</span>
                             <span v-if="!isReadonly" style="display: flex; align-items: center;">
-                                <v-tooltip :text="str(strings?.intention?.delete) || 'Delete'" location="top">
+                                <v-tooltip :text="str(strings?.intention?.delete)" location="top">
                                     <template #activator="{ props: tp }"><v-icon v-bind="tp" size="24" class="p3xr-key-icon" style="color:rgb(var(--v-theme-error));" @click="deleteDataPoint(rangeData[vRow.index])">mdi-delete</v-icon></template>
                                 </v-tooltip>
-                                <v-tooltip :text="str(strings?.intention?.edit) || 'Edit'" location="top">
+                                <v-tooltip :text="str(strings?.intention?.edit)" location="top">
                                     <template #activator="{ props: tp }"><v-icon v-bind="tp" size="24" class="p3xr-key-icon" style="color:rgb(var(--v-theme-primary));" @click="editDataPoint(rangeData[vRow.index])">mdi-pencil</v-icon></template>
                                 </v-tooltip>
                             </span>
@@ -491,26 +491,26 @@ const hoverBg = computed(() => isDark.value ? 'rgba(255,255,255,0.1)' : 'rgba(0,
 
         <!-- TS.INFO accordion -->
         <br />
-        <P3xrAccordion :title="str(strings?.page?.key?.timeseries?.info) || 'Info'" accordion-key="ts-info">
+        <P3xrAccordion :title="str(strings?.page?.key?.timeseries?.info)" accordion-key="ts-info">
             <template v-if="!isReadonly" #actions>
-                <P3xrButton :icon="alterMode ? 'mdi-checkbox-marked' : 'mdi-pencil'" :label="str(strings?.intention?.edit) || 'Edit'" color="inherit" @click.stop="toggleAlterMode()" />
+                <P3xrButton :icon="alterMode ? 'mdi-checkbox-marked' : 'mdi-pencil'" :label="str(strings?.intention?.edit)" color="inherit" @click.stop="toggleAlterMode()" />
             </template>
 
             <!-- Alter mode -->
             <div v-if="alterMode" style="padding: 16px;">
                 <div class="p3xr-ts-controls">
                     <v-text-field density="compact" variant="outlined" type="number" style="flex: 1; min-width: 150px;"
-                        :label="`${str(strings?.page?.key?.timeseries?.retention) || 'Retention'} (ms)`"
-                        :hint="str(strings?.page?.key?.timeseries?.retentionHint) || '0 = no expiry, or milliseconds'" persistent-hint
+                        :label="`${str(strings?.page?.key?.timeseries?.retention)} (ms)`"
+                        :hint="str(strings?.page?.key?.timeseries?.retentionHint)" persistent-hint
                         v-model.number="alterRetention" />
                     <v-select density="compact" variant="outlined" style="flex: 1; min-width: 150px;"
-                        :label="str(strings?.page?.key?.timeseries?.duplicatePolicy) || 'Duplicate policy'"
+                        :label="str(strings?.page?.key?.timeseries?.duplicatePolicy)"
                         v-model="alterDuplicatePolicy" :items="['LAST', 'FIRST', 'MIN', 'MAX', 'SUM', 'BLOCK']" />
                     <v-text-field density="compact" variant="outlined" style="flex: 1; min-width: 200px;"
-                        :label="str(strings?.page?.key?.timeseries?.labels) || 'Labels'"
-                        :hint="str(strings?.page?.key?.timeseries?.labelsHint) || 'key1 value1 key2 value2'" persistent-hint
+                        :label="str(strings?.page?.key?.timeseries?.labels)"
+                        :hint="str(strings?.page?.key?.timeseries?.labelsHint)" persistent-hint
                         v-model="alterLabels" />
-                    <P3xrButton icon="mdi-content-save" :label="str(strings?.intention?.save) || 'Save'" raised color="primary" @click="saveAlter()" />
+                    <P3xrButton icon="mdi-content-save" :label="str(strings?.intention?.save)" raised color="primary" @click="saveAlter()" />
                 </div>
             </div>
 
@@ -527,7 +527,7 @@ const hoverBg = computed(() => isDark.value ? 'rgba(255,255,255,0.1)' : 'rgba(0,
                 </template>
 
                 <template v-if="tsLabels.length > 0">
-                    <v-list-item><strong>{{ str(strings?.page?.key?.timeseries?.labels) || 'Labels' }}</strong></v-list-item>
+                    <v-list-item><strong>{{ str(strings?.page?.key?.timeseries?.labels) }}</strong></v-list-item>
                     <v-divider />
                     <template v-for="label in tsLabels" :key="label.key">
                         <v-list-item>
@@ -541,7 +541,7 @@ const hoverBg = computed(() => isDark.value ? 'rgba(255,255,255,0.1)' : 'rgba(0,
                 </template>
 
                 <template v-if="tsRules.length > 0">
-                    <v-list-item><strong>{{ str(strings?.page?.key?.timeseries?.rules) || 'Rules' }}</strong></v-list-item>
+                    <v-list-item><strong>{{ str(strings?.page?.key?.timeseries?.rules) }}</strong></v-list-item>
                     <v-divider />
                     <template v-for="rule in tsRules" :key="rule.destKey">
                         <v-list-item>

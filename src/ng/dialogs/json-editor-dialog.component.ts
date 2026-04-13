@@ -30,7 +30,7 @@ export interface JsonEditorDialogData {
         <mat-toolbar class="p3xr-dialog-toolbar p3xr-mat-layout-strong">
             <span mat-dialog-title class="p3xr-dialog-title p3xr-dialog-title-with-icon">
                 <mat-icon>edit</mat-icon>
-                <span>{{ strings().intention?.jsonViewEditor || 'JSON Editor' }}</span>
+                <span>{{ strings().intention?.jsonViewEditor }}</span>
             </span>
             <button mat-icon-button (click)="close()">
                 <mat-icon>close</mat-icon>
@@ -44,30 +44,30 @@ export interface JsonEditorDialogData {
             </mat-dialog-content>
         } @else {
             <mat-dialog-content class="p3xr-dialog-content p3xr-dialog-content-mono p3xr-dialog-content-message">
-                {{ strings().label?.jsonViewNotParsable || 'Not valid JSON' }}
+                {{ strings().label?.jsonViewNotParsable }}
             </mat-dialog-content>
         }
 
         <mat-dialog-actions class="p3xr-dialog-actions">
             <button mat-raised-button class="btn-accent" type="button" (click)="toggleWrap()">
                 <mat-icon>{{ lineWrap ? 'wrap_text' : 'notes' }}</mat-icon>
-                <span class="hide-sm">{{ lineWrap ? (strings().intention?.unwrap || 'Unwrap') : (strings().intention?.wrap || 'Wrap') }}</span>
+                <span class="hide-sm">{{ lineWrap ? (strings().intention?.unwrap) : (strings().intention?.wrap) }}</span>
             </button>
             <span style="flex: 1"></span>
             <p3xr-dialog-cancel (cancel)="close()"></p3xr-dialog-cancel>
 
             @if (isJson && !isReadonly) {
                 <button mat-raised-button class="btn-primary" type="button" (click)="save(false)"
-                    [matTooltip]="strings().intention?.save || 'Save'">
+                    [matTooltip]="strings().intention?.save">
                     <mat-icon>save</mat-icon>
-                    <span class="hide-sm">{{ strings().intention?.save || 'Save' }}</span>
+                    <span class="hide-sm">{{ strings().intention?.save }}</span>
                 </button>
                 @if (!hideFormatSave) {
                     <button mat-raised-button class="btn-primary" type="button" (click)="save(true)"
-                        [matTooltip]="strings().intention?.saveWithFormatJson || 'Save Formatted'">
+                        [matTooltip]="strings().intention?.saveWithFormatJson">
                         <mat-icon>save</mat-icon>
                         <mat-icon>format_line_spacing</mat-icon>
-                        <span class="hide-sm">{{ strings().intention?.saveWithFormatJson || 'Save Formatted' }}</span>
+                        <span class="hide-sm">{{ strings().intention?.saveWithFormatJson }}</span>
                     </button>
                 }
             }
