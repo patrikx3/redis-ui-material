@@ -628,6 +628,7 @@ const strings = {
       noUsers: "Cliquez sur Charger les utilisateurs pour afficher les utilisateurs ACL. Nécessite Redis 6.0+.",
       rules: "Règles",
       rulesHint: "Jetons séparés par des espaces (par exemple on >password +@all ~* &*)",
+      defaultUserWarning: "Attention : La modification de l'utilisateur par défaut peut verrouiller toutes les connexions. Si cela se produit, vous devrez redémarrer Redis ou utiliser redis-cli pour restaurer l'accès.",
     },
     overview: {
       noConnected: "Il n'y a pas de connexion à Redis.",

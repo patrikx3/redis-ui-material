@@ -37,9 +37,15 @@ function readStored(): string {
 function applyBodyClasses(resolved: string): void {
     if (typeof document === 'undefined') return
     const dark = isDarkTheme(resolved)
-    document.documentElement.setAttribute('data-color-scheme', dark ? 'dark' : 'light')
+    const scheme = dark ? 'dark' : 'light'
+    document.documentElement.setAttribute('data-color-scheme', scheme)
+    document.documentElement.style.colorScheme = scheme
+    document.body.style.colorScheme = scheme
     document.body.classList.toggle('p3xr-theme-dark', dark)
     document.body.classList.toggle('p3xr-theme-light', !dark)
+    // Update the <meta name="color-scheme"> tag set in index.html
+    const meta = document.querySelector('meta[name="color-scheme"]') as HTMLMetaElement
+    if (meta) meta.content = scheme
 }
 
 // Same logic as Angular ThemeService

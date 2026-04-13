@@ -626,6 +626,7 @@ const strings = {
       noUsers: "Napsauta Lataa käyttäjiä nähdäksesi ACL-käyttäjät. Vaatii Redis 6.0+.",
       rules: "Säännöt",
       rulesHint: "Välilyönnillä erotetut tunnukset (esimerkiksi on >password +@all ~* &*)",
+      defaultUserWarning: "Varoitus: Oletuskäyttäjän muuttaminen voi lukita kaikki yhteydet. Jos näin tapahtuu, sinun on käynnistettävä Redis uudelleen tai palautettava käyttöoikeus käyttämällä redis-cli.",
     },
     overview: {
       noConnected: "Ei yhteyttä laitteeseen Redis.",

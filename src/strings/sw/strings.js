@@ -628,6 +628,7 @@ const strings = {
       noUsers: "Bofya Pakia watumiaji kutazama watumiaji wa ACL. Inahitaji Redis 6.0+.",
       rules: "Sheria",
       rulesHint: "Tokeni zilizotenganishwa na nafasi (kwa mfano on >password +@all ~* &*)",
+      defaultUserWarning: "Tahadhari: Kurekebisha mtumiaji chaguo-msingi kunaweza kufunga miunganisho yote. Hili likitokea, utahitaji kuwasha upya Redis au utumie redis-cli kurejesha ufikiaji.",
     },
     overview: {
       noConnected: "Hakuna muunganisho na Redis.",

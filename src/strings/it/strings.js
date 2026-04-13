@@ -624,6 +624,7 @@ const strings = {
       noUsers: "Fare clic su Carica utenti per visualizzare gli utenti ACL. Richiede Redis 6.0+.",
       rules: "Regole",
       rulesHint: "Token separati da spazi (ad esempio on >password +@all ~* &*)",
+      defaultUserWarning: "Attenzione: la modifica dell'utente predefinito può bloccare tutte le connessioni. Se ciò accade, dovrai riavviare Redis o utilizzare redis-cli per ripristinare l'accesso.",
     },
     overview: {
       noConnected: "Non c'è nessuna connessione a Redis.",

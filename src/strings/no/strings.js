@@ -626,6 +626,7 @@ const strings = {
       noUsers: "Klikk Last inn brukere for å se ACL-brukere. Krever Redis 6.0+.",
       rules: "Regler",
       rulesHint: "Mellomromseparerte tokens (for eksempel on >password +@all ~* &*)",
+      defaultUserWarning: "Forsiktig: Endring av standardbrukeren kan låse alle tilkoblinger. Hvis dette skjer, må du starte Redis på nytt eller bruke redis-cli for å gjenopprette tilgangen.",
     },
     overview: {
       noConnected: "Det er ingen tilkobling til Redis.",

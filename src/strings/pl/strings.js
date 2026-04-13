@@ -626,6 +626,7 @@ const strings = {
       noUsers: "Kliknij Załaduj użytkowników, aby wyświetlić użytkowników ACL. Wymaga Redis 6.0+.",
       rules: "Reguły",
       rulesHint: "Tokeny oddzielone spacjami (na przykład on >password +@all ~* &*)",
+      defaultUserWarning: "Uwaga: Modyfikacja domyślnego użytkownika może zablokować wszystkie połączenia. Jeśli tak się stanie, będziesz musiał ponownie uruchomić Redis lub użyć redis-cli, aby przywrócić dostęp.",
     },
     overview: {
       noConnected: "Brak połączenia z Redis.",

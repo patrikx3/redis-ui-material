@@ -628,6 +628,7 @@ const strings = {
       noUsers: "Klicken Sie auf Benutzer laden, um ACL-Benutzer anzuzeigen. Erfordert Redis 6.0+.",
       rules: "Regeln",
       rulesHint: "Durch Leerzeichen getrennte Token (zum Beispiel on >password +@all ~* &*)",
+      defaultUserWarning: "Achtung: Durch das Ändern des Standardbenutzers können alle Verbindungen gesperrt werden. In diesem Fall müssen Sie Redis neu starten oder redis-cli verwenden, um den Zugriff wiederherzustellen.",
     },
     overview: {
       noConnected: "Es besteht keine Verbindung zu Redis.",

@@ -626,6 +626,7 @@ const strings = {
       noUsers: "按一下載入使用者以檢視 ACL 使用者。需要 Redis 6.0+。",
       rules: "規則",
       rulesHint: "以空格分隔的權杖（例如 on >password +@all ~* &*）",
+      defaultUserWarning: "注意：修改預設使用者可能會鎖定所有連線。如果發生這種情況，您將需要重新啟動 Redis 或使用 redis-cli 來恢復存取。",
     },
     overview: {
       noConnected: "與 Redis 沒有連接。",

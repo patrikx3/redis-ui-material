@@ -626,6 +626,7 @@ const strings = {
       noUsers: "Clique em Carregar utilizadores para visualizar os utilizadores ACL. Requer Redis 6.0+.",
       rules: "Regras",
       rulesHint: "Tokens separados por espaço (por exemplo on >password +@all ~* &*)",
+      defaultUserWarning: "Atenção: Modificar o utilizador padrão pode bloquear todas as ligações. Se isto acontecer, terá de reiniciar o Redis ou utilizar o redis-cli para restaurar o acesso.",
     },
     overview: {
       noConnected: "Não existe ligação ao Redis.",

@@ -662,6 +662,7 @@ const strings = {
       noUsers: "ACL requires Redis 6.0+.",
       rules: "Rules",
       rulesHint: "Space-separated tokens (e.g. on >password +@all ~* &*)",
+      defaultUserWarning: "Caution: Modifying the default user can lock out all connections. If this happens, you will need to restart Redis or use redis-cli to restore access.",
     },
     overview: {
       noConnected: "There is no connection to Redis.",

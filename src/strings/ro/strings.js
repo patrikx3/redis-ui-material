@@ -626,6 +626,7 @@ const strings = {
       noUsers: "Faceți clic pe Încărcați utilizatori pentru a vedea utilizatorii ACL. Necesită Redis 6.0+.",
       rules: "Reguli",
       rulesHint: "Jetoane separate prin spațiu (de exemplu, on >password +@all ~* &*)",
+      defaultUserWarning: "Atenție: Modificarea utilizatorului implicit poate bloca toate conexiunile. Dacă se întâmplă acest lucru, va trebui să reporniți Redis sau să utilizați redis-cli pentru a restabili accesul.",
     },
     overview: {
       noConnected: "Nu exista conexiune la Redis.",

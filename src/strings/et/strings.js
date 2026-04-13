@@ -626,6 +626,7 @@ const strings = {
       noUsers: "ACL-i kasutajate vaatamiseks klõpsake Laadige kasutajaid. Nõuab Redis 6.0+.",
       rules: "Reeglid",
       rulesHint: "Tühikuga eraldatud märgid (nt on >password +@all ~* &*)",
+      defaultUserWarning: "Ettevaatust. Vaikekasutaja muutmine võib kõik ühendused lukustada. Kui see juhtub, peate juurdepääsu taastamiseks taaskäivitama Redis või kasutama redis-cli.",
     },
     overview: {
       noConnected: "Seadmega Redis pole ühendust.",

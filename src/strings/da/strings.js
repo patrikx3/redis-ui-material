@@ -626,6 +626,7 @@ const strings = {
       noUsers: "Klik på Indlæs brugere for at se ACL-brugere. Kræver Redis 6.0+.",
       rules: "Regler",
       rulesHint: "Mellemrumsadskilte tokens (f.eks. on >password +@all ~* &*)",
+      defaultUserWarning: "Forsigtig: Ændring af standardbrugeren kan spærre alle forbindelser. Hvis dette sker, skal du genstarte Redis eller bruge redis-cli for at gendanne adgangen.",
     },
     overview: {
       noConnected: "Der er ingen forbindelse til Redis.",

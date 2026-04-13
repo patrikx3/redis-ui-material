@@ -626,6 +626,7 @@ const strings = {
       noUsers: "לחץ על טען משתמשים כדי להציג משתמשי ACL. דורש Redis 6.0+.",
       rules: "כללים",
       rulesHint: "אסימונים מופרדים ברווחים (לדוגמה on >password +@all ~* &*)",
+      defaultUserWarning: "זהירות: שינוי משתמש ברירת המחדל יכול לנעול את כל החיבורים. אם זה קורה, יהיה עליך להפעיל מחדש את Redis או להשתמש ב-redis-cli כדי לשחזר את הגישה.",
     },
     overview: {
       noConnected: "אין חיבור ל-Redis.",

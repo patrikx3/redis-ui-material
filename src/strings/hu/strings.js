@@ -624,6 +624,7 @@ const strings = {
       noUsers: "Kattintson a Felhasználók betöltése elemre a ACL felhasználók megtekintéséhez. Redis 6.0+ szükséges.",
       rules: "Szabályok",
       rulesHint: "Szóközökkel elválasztott tokenek (például on >password +@all ~* &*)",
+      defaultUserWarning: "Vigyázat: Az alapértelmezett felhasználó módosítása minden kapcsolatot lezárhat. Ha ez megtörténik, újra kell indítania a Redis-t, vagy a redis-cli segítségével vissza kell állítania a hozzáférést.",
     },
     overview: {
       noConnected: "Nincs Redis kapcsolat.",

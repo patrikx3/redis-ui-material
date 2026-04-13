@@ -628,6 +628,7 @@ const strings = {
       noUsers: "Click Բեռնել օգտվողներին to view ACL users. Պահանջվում է Redis 6.0+:",
       rules: "Կանոններ",
       rulesHint: "Տիեզերքով առանձնացված նշաններ (օրինակ՝ on >password +@all ~* &*)",
+      defaultUserWarning: "Ուշադրություն. լռելյայն օգտագործողի փոփոխումը կարող է արգելափակել բոլոր կապերը: Եթե ​​դա տեղի ունենա, դուք պետք է վերագործարկեք Redis կամ օգտագործեք redis-cli մուտքը վերականգնելու համար:",
     },
     overview: {
       noConnected: "Redis-ի հետ կապ չկա։",

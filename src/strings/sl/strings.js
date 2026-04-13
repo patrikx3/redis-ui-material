@@ -626,6 +626,7 @@ const strings = {
       noUsers: "Kliknite Naloži uporabnike za ogled uporabnikov ACL. Zahteva Redis 6.0+.",
       rules: "Pravila",
       rulesHint: "S presledki ločeni žetoni (na primer on >password +@all ~* &*)",
+      defaultUserWarning: "Pozor: Spreminjanje privzetega uporabnika lahko zaklene vse povezave. Če se to zgodi, boste morali znova zagnati Redis ali uporabiti redis-cli za obnovitev dostopa.",
     },
     overview: {
       noConnected: "Ni povezave z Redis.",

@@ -626,6 +626,7 @@ const strings = {
       noUsers: "Klik Memuat pengguna untuk melihat pengguna ACL. Membutuhkan Redis 6.0+.",
       rules: "Aturan",
       rulesHint: "Token yang dipisahkan spasi (misalnya on >password +@all ~* &*)",
+      defaultUserWarning: "Perhatian: Memodifikasi pengguna default dapat mengunci semua koneksi. Jika ini terjadi, Anda perlu memulai ulang Redis atau menggunakan redis-cli untuk memulihkan akses.",
     },
     overview: {
       noConnected: "Tidak ada koneksi ke Redis.",

@@ -628,6 +628,7 @@ const strings = {
       noUsers: "Klepnutím na Načíst uživatele zobrazíte uživatele ACL. Vyžaduje Redis 6.0+.",
       rules: "Pravidla",
       rulesHint: "Tokeny oddělené mezerou (například on >password +@all ~* &*)",
+      defaultUserWarning: "Upozornění: Úprava výchozího uživatele může zablokovat všechna připojení. Pokud k tomu dojde, budete muset restartovat Redis nebo použít redis-cli k obnovení přístupu.",
     },
     overview: {
       noConnected: "Není připojení k Redis.",

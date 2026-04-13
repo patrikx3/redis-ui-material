@@ -79,10 +79,12 @@ function handleCancel() {
 }
 
 function chipColor(rule: any): string {
-    const val = typeof rule === 'string' ? rule : rule?.value ?? rule?.raw ?? ''
-    if (val.startsWith('-')) return 'error'
-    if (val.startsWith('+')) return 'primary'
-    return 'primary'
+    const val = typeof rule === 'string' ? rule
+        : typeof rule?.raw === 'string' ? rule.raw
+        : typeof rule?.value === 'string' ? rule.value
+        : typeof rule?.title === 'string' ? rule.title
+        : ''
+    return val.startsWith('-') ? 'error' : 'primary'
 }
 </script>
 
@@ -104,21 +106,27 @@ function chipColor(rule: any): string {
             class="mb-3"
         />
 
-        <v-switch
-            v-model="enabled"
-            :label="strings?.page?.acl?.enabled || 'Enabled'"
-            density="comfortable"
-            hide-details
-            class="mb-2"
-        />
+        <v-alert v-if="localUsername === 'default'" type="warning" density="compact" class="mb-3" style="font-size: 13px;">
+            {{ strings?.page?.acl?.defaultUserWarning || 'Caution: Modifying the default user can lock out all connections. If this happens, you will need to restart Redis or use redis-cli to restore access.' }}
+        </v-alert>
 
-        <v-checkbox
-            v-model="nopass"
-            :label="strings?.page?.acl?.noPassword || 'No password (nopass)'"
-            density="comfortable"
-            hide-details
-            class="mb-2"
-        />
+        <div style="margin-bottom: 16px;">
+            <v-switch
+                v-model="enabled"
+                :label="strings?.page?.acl?.enabled || 'Enabled'"
+                density="comfortable"
+                hide-details
+            />
+        </div>
+
+        <div style="margin-bottom: 12px;">
+            <v-checkbox
+                v-model="nopass"
+                :label="strings?.page?.acl?.noPassword || 'No password (nopass)'"
+                density="comfortable"
+                hide-details
+            />
+        </div>
 
         <v-text-field
             v-if="!nopass"
@@ -144,11 +152,11 @@ function chipColor(rule: any): string {
             density="comfortable"
             :hint="strings?.page?.acl?.commandsHint || 'e.g., +@all or +@read -@dangerous'"
             persistent-hint
-            :placeholder="commandsList.length === 0 ? '+@all, -@dangerous ...' : ''"
+            placeholder="+@all, -@dangerous ..."
             class="mb-3"
         >
             <template #chip="{ props: chipProps, item }">
-                <v-chip v-bind="chipProps" :color="chipColor(item)" variant="tonal" size="small" />
+                <v-chip v-bind="chipProps" :color="chipColor(item)" variant="flat" size="small" />
             </template>
         </v-combobox>
 
@@ -162,11 +170,11 @@ function chipColor(rule: any): string {
             density="comfortable"
             :hint="strings?.page?.acl?.keysHint || 'e.g., ~* or ~user:*'"
             persistent-hint
-            :placeholder="keysList.length === 0 ? '~*, ~user:* ...' : ''"
+            placeholder="~*, ~user:* ..."
             class="mb-3"
         >
             <template #chip="{ props: chipProps }">
-                <v-chip v-bind="chipProps" color="primary" variant="tonal" size="small" />
+                <v-chip v-bind="chipProps" color="primary" variant="flat" size="small" />
             </template>
         </v-combobox>
 
@@ -180,10 +188,10 @@ function chipColor(rule: any): string {
             density="comfortable"
             :hint="strings?.page?.acl?.channelsHint || 'e.g., &* or &notifications:*'"
             persistent-hint
-            :placeholder="channelsList.length === 0 ? '&*, &notifications:* ...' : ''"
+            placeholder="&*, &notifications:* ..."
         >
             <template #chip="{ props: chipProps }">
-                <v-chip v-bind="chipProps" color="primary" variant="tonal" size="small" />
+                <v-chip v-bind="chipProps" color="primary" variant="flat" size="small" />
             </template>
         </v-combobox>
 

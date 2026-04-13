@@ -628,6 +628,7 @@ const strings = {
       noUsers: "Kliknite na Učitaj korisnike da vidite ACL korisnike. Zahtijeva Redis 6.0+.",
       rules: "Pravila",
       rulesHint: "Tokeni razdvojeni razmakom (na primjer on >password +@all ~* &*)",
+      defaultUserWarning: "Oprez: Izmjena zadanog korisnika može zaključati sve veze. Ako se to dogodi, morat ćete ponovo pokrenuti Redis ili koristiti redis-cli da vratite pristup.",
     },
     overview: {
       noConnected: "Nema konekcije na Redis.",

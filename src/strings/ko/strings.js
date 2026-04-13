@@ -626,6 +626,7 @@ const strings = {
       noUsers: "ACL 사용자를 보려면 사용자 로드을 클릭합니다. Redis 6.0 이상이 필요합니다.",
       rules: "규칙",
       rulesHint: "공백으로 구분된 토큰(예: on >password +@all ~* &*)",
+      defaultUserWarning: "주의: 기본 사용자를 수정하면 모든 연결이 잠길 수 있습니다. 이런 일이 발생하면 Redis를 다시 시작하거나 redis-cli를 사용하여 액세스를 복원해야 합니다.",
     },
     overview: {
       noConnected: "Redis에 연결되어 있지 않습니다.",

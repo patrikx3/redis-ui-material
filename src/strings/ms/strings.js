@@ -626,6 +626,7 @@ const strings = {
       noUsers: "Klik Muatkan pengguna untuk melihat pengguna ACL. Memerlukan Redis 6.0+.",
       rules: "Peraturan",
       rulesHint: "Token yang diasingkan ruang (contohnya on >password +@all ~* &*)",
+      defaultUserWarning: "Awas: Mengubah suai pengguna lalai boleh mengunci semua sambungan. Jika ini berlaku, anda perlu memulakan semula Redis atau menggunakan redis-cli untuk memulihkan akses.",
     },
     overview: {
       noConnected: "Tiada sambungan ke Redis.",

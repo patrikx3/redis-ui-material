@@ -626,6 +626,7 @@ const strings = {
       noUsers: "I-click ang Mag-load ng mga user upang tingnan ang mga gumagamit ng ACL. Nangangailangan ng Redis 6.0+.",
       rules: "Mga Panuntunan",
       rulesHint: "Mga token na pinaghihiwalay ng espasyo (halimbawa on >password +@all ~* &*)",
+      defaultUserWarning: "Babala: Ang pagbabago sa default na user ay maaaring i-lock out ang lahat ng koneksyon. Kung mangyari ito, kakailanganin mong i-restart ang Redis o gamitin ang redis-cli para ibalik ang access.",
     },
     overview: {
       noConnected: "Walang koneksyon sa Redis.",

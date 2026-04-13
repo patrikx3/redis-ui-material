@@ -626,6 +626,7 @@ const strings = {
       noUsers: "Klik op Gebruikers laden om ACL-gebruikers te bekijken. Vereist Redis 6.0+.",
       rules: "Regels",
       rulesHint: "Door spaties gescheiden tokens (bijvoorbeeld on >password +@all ~* &*)",
+      defaultUserWarning: "Let op: Als u de standaardgebruiker wijzigt, kunnen alle verbindingen worden geblokkeerd. Als dit gebeurt, moet u Redis opnieuw opstarten of redis-cli gebruiken om de toegang te herstellen.",
     },
     overview: {
       noConnected: "Er is geen verbinding met Redis.",

@@ -51,6 +51,13 @@ export interface AclUserDialogResult {
                 <input matInput [(ngModel)]="username" [disabled]="!data.isNew" />
             </mat-form-field>
 
+            @if (username === 'default') {
+                <div class="p3xr-acl-default-warning">
+                    <mat-icon>info</mat-icon>
+                    <span>{{ strings().page?.acl?.defaultUserWarning || 'Caution: Modifying the default user can lock out all connections. If this happens, you will need to restart Redis or use redis-cli to restore access.' }}</span>
+                </div>
+            }
+
             <div style="margin-bottom: 16px;">
                 <mat-slide-toggle [(ngModel)]="enabled">
                     {{ strings().page?.acl?.enabled || 'Enabled' }}
@@ -141,8 +148,36 @@ export interface AclUserDialogResult {
     `,
     styles: [`
         .md-block { width: 100%; }
-        mat-chip-row { font-size: 13px; }
-        .p3xr-chip-deny { --mdc-chip-elevated-container-color: var(--p3xr-btn-warn-bg, #f44336); --mdc-chip-label-text-color: #fff; }
+        .p3xr-acl-default-warning {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 12px;
+            margin-bottom: 16px;
+            border-radius: 4px;
+            background-color: var(--p3xr-btn-warn-bg);
+            color: var(--p3xr-btn-warn-color);
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        .p3xr-acl-default-warning mat-icon {
+            flex-shrink: 0;
+        }
+        mat-chip-row {
+            font-size: 13px;
+            --mdc-chip-elevated-container-color: var(--p3xr-btn-primary-bg) !important;
+            --mdc-chip-label-text-color: var(--p3xr-btn-primary-color) !important;
+            --mat-chip-elevated-selected-container-color: var(--p3xr-btn-primary-bg) !important;
+            --mat-chip-selected-label-text-color: var(--p3xr-btn-primary-color) !important;
+            --mat-chip-selected-trailing-icon-color: var(--p3xr-btn-primary-color) !important;
+        }
+        .p3xr-chip-deny {
+            --mdc-chip-elevated-container-color: var(--p3xr-btn-warn-bg) !important;
+            --mdc-chip-label-text-color: var(--p3xr-btn-warn-color) !important;
+            --mat-chip-elevated-selected-container-color: var(--p3xr-btn-warn-bg) !important;
+            --mat-chip-selected-label-text-color: var(--p3xr-btn-warn-color) !important;
+            --mat-chip-selected-trailing-icon-color: var(--p3xr-btn-warn-color) !important;
+        }
     `],
 })
 export class AclUserDialogComponent {

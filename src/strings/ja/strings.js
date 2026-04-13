@@ -624,6 +624,7 @@ const strings = {
       noUsers: "ユーザーを読み込むをクリックして、ACL ユーザーを表示します。Redis 6.0 以降が必要です。",
       rules: "ルール",
       rulesHint: "スペースで区切られたトークン (例: on >password +@all ~* &*)",
+      defaultUserWarning: "注意: デフォルトのユーザーを変更すると、すべての接続がロックアウトされる可能性があります。この問題が発生した場合は、Redis を再起動するか、redis-cli を使用してアクセスを復元する必要があります。",
     },
     overview: {
       noConnected: "Redisへの接続がありません。",

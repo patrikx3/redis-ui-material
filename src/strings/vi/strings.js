@@ -626,6 +626,7 @@ const strings = {
       noUsers: "Nhấp vào Tải người dùng để xem người dùng ACL. Yêu cầu Redis 6.0+.",
       rules: "Quy tắc",
       rulesHint: "Mã thông báo được phân tách bằng dấu cách (ví dụ on >password +@all ~* &*)",
+      defaultUserWarning: "Thận trọng: Việc sửa đổi người dùng mặc định có thể khóa tất cả các kết nối. Nếu điều này xảy ra, bạn sẽ cần phải khởi động lại Redis hoặc sử dụng redis-cli để khôi phục quyền truy cập.",
     },
     overview: {
       noConnected: "Không có kết nối với Redis.",

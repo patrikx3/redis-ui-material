@@ -39,6 +39,9 @@ watch(themeKey, applyTheme)
 /* ===== GLOBAL STYLES matching React/Angular ===== */
 html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; }
 .v-application { font-family: Roboto, 'Helvetica Neue', sans-serif; }
+/* Override Vuetify's color-scheme so scrollbars follow the actual theme */
+body.p3xr-theme-light .v-application { color-scheme: light !important; }
+body.p3xr-theme-dark .v-application { color-scheme: dark !important; }
 
 /* Match MUI dense Toolbar padding: 0 16px */
 .p3xr-toolbar.v-toolbar {

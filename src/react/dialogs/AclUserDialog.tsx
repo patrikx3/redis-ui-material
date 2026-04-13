@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Button, TextField, Switch, Checkbox, FormControlLabel, useMediaQuery, Tooltip, Box, Chip, Autocomplete } from '@mui/material'
+import { Button, TextField, Switch, Checkbox, FormControlLabel, useMediaQuery, Tooltip, Box, Chip, Autocomplete, useTheme, Alert } from '@mui/material'
 import { Done, Cancel } from '@mui/icons-material'
 import { useI18nStore } from '../stores/i18n.store'
 import P3xrDialog from '../components/P3xrDialog'
@@ -30,15 +30,14 @@ function parseRules(rules: string) {
     return { enabled, nopass, cmds, keys, channels }
 }
 
-function chipColor(rule: string): 'primary' | 'error' | 'default' {
-    if (rule.startsWith('-')) return 'error'
-    if (rule.startsWith('+')) return 'primary'
-    return 'default'
+function chipColor(rule: string): 'primary' | 'error' {
+    return rule.startsWith('-') ? 'error' : 'primary'
 }
 
 export default function AclUserDialog({ open, onClose, username: initUsername = '', rules: initRules = '', isNew }: AclUserDialogProps) {
     const strings = useI18nStore(s => s.strings)
     const isWide = useMediaQuery('(min-width: 600px)')
+    const muiTheme = useTheme()
 
     const [username, setUsername] = useState('')
     const [enabled, setEnabled] = useState(true)
@@ -86,21 +85,30 @@ export default function AclUserDialog({ open, onClose, username: initUsername = 
         ? (strings?.page?.acl?.createUser || 'Create User')
         : (strings?.page?.acl?.editUser || 'Edit User')
 
+    const primaryBg = muiTheme.palette.primary.main
+    const primaryFg = muiTheme.palette.primary.contrastText
+    const warnBg = muiTheme.palette.warning.main
+    const warnFg = muiTheme.palette.warning.contrastText
+
     const chipInput = (label: string, hint: string, placeholder: string, value: string[], onChange: (v: string[]) => void, colored?: boolean) => (
         <Autocomplete
             multiple freeSolo options={[]} value={value}
             onChange={(_, newValue) => onChange(newValue as string[])}
-            renderTags={(value, getTagProps) =>
-                value.map((option, index) => {
-                    const { key, ...rest } = getTagProps({ index })
-                    return <Chip key={key} label={option} {...rest} size="small"
-                        color={colored ? chipColor(option) : 'primary'}
-                        variant="filled" />
+            renderValue={(val, getItemProps) =>
+                (val as string[]).map((option, index) => {
+                    const { key, ...rest } = getItemProps({ index })
+                    const str = String(option)
+                    const isDeny = colored && str.charAt(0) === '-'
+                    return <Chip key={key} label={str} {...rest} size="small"
+                        style={{
+                            backgroundColor: isDeny ? warnBg : primaryBg,
+                            color: isDeny ? warnFg : primaryFg,
+                        }} />
                 })
             }
             renderInput={(params) => (
                 <TextField {...params} label={label} helperText={hint}
-                    placeholder={value.length === 0 ? placeholder : ''} margin="dense" />
+                    placeholder={placeholder} margin="dense" />
             )}
         />
     )
@@ -146,7 +154,13 @@ export default function AclUserDialog({ open, onClose, username: initUsername = 
                 value={username} onChange={e => setUsername(e.target.value)}
                 disabled={!isNew} />
 
-            <Box sx={{ my: 1 }}>
+            {username === 'default' && (
+                <Alert severity="warning" sx={{ my: 1, fontSize: 13 }}>
+                    {strings?.page?.acl?.defaultUserWarning || 'Caution: Modifying the default user can lock out all connections. If this happens, you will need to restart Redis or use redis-cli to restore access.'}
+                </Alert>
+            )}
+
+            <Box sx={{ mb: 1 }}>
                 <FormControlLabel
                     control={<Switch checked={enabled} onChange={(_, v) => setEnabled(v)} />}
                     label={strings?.page?.acl?.enabled || 'Enabled'} />
@@ -165,12 +179,27 @@ export default function AclUserDialog({ open, onClose, username: initUsername = 
                     helperText={!isNew ? (strings?.page?.acl?.passwordHint || 'Leave empty to keep current password') : undefined} />
             )}
 
-            {chipInput(
-                strings?.page?.acl?.commands || 'Commands',
-                strings?.page?.acl?.commandsHint || 'e.g., +@all or +@read -@dangerous',
-                '+@all, -@dangerous ...',
-                commandsList, setCommandsList, true
-            )}
+            <Autocomplete
+                multiple freeSolo options={[]} value={commandsList}
+                onChange={(_, newValue) => setCommandsList(newValue as string[])}
+                renderValue={(val, getItemProps) =>
+                    (val as string[]).map((option, index) => {
+                        const { key, ...rest } = getItemProps({ index })
+                        const s = String(option)
+                        const deny = s.charAt(0) === '-'
+                        return <Chip key={key} label={s} {...rest} size="small"
+                            style={{
+                                backgroundColor: deny ? warnBg : primaryBg,
+                                color: deny ? warnFg : primaryFg,
+                            }} />
+                    })
+                }
+                renderInput={(params) => (
+                    <TextField {...params} label={strings?.page?.acl?.commands || 'Commands'}
+                        helperText={strings?.page?.acl?.commandsHint || 'e.g., +@all or +@read -@dangerous'}
+                        placeholder="+@all, -@dangerous ..." margin="dense" />
+                )}
+            />
 
             {chipInput(
                 strings?.page?.acl?.keys || 'Key Patterns',

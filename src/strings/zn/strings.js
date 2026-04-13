@@ -624,7 +624,9 @@ const strings = {
       noUsers: "点击加载用户以查看 ACL 用户。需要 Redis 6.0+。",
       rules: "规则",
       rulesHint: "以空格分隔的令牌（例如 on >password +@all ~* &*）",
-    },verview: {
+      defaultUserWarning: "注意：修改默认用户可能会锁定所有连接。如果发生这种情况，您将需要重新启动 Redis 或使用 redis-cli 来恢复访问。",
+    },
+    overview: {
       noConnected: "没有任何连接到Redis",
       overviewClients: "按客户端连接计数展示所有连接",
       connectedCount: opt => {

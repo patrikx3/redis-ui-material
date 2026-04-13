@@ -626,6 +626,7 @@ const strings = {
       noUsers: "ACL istifadəçilərinə baxmaq üçün İstifadəçiləri yükləyin klikləyin. Redis 6.0+ tələb edir.",
       rules: "Qaydalar",
       rulesHint: "Boşluqla ayrılmış tokenlər (məsələn, on >password +@all ~* &*)",
+      defaultUserWarning: "Diqqət: Defolt istifadəçinin dəyişdirilməsi bütün əlaqələri bloklaya bilər. Bu baş verərsə, girişi bərpa etmək üçün Redis-ni yenidən başlatmalı və ya redis-cli istifadə etməlisiniz.",
     },
     overview: {
       noConnected: "Redis ilə əlaqə yoxdur.",

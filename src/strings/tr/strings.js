@@ -624,6 +624,7 @@ const strings = {
       noUsers: "ACL kullanıcılarını görüntülemek için Kullanıcıları yükle'ye tıklayın. Redis 6.0+ gerektirir.",
       rules: "Kurallar",
       rulesHint: "Boşlukla ayrılmış belirteçler (örneğin on >password +@all ~* &*)",
+      defaultUserWarning: "Dikkat: Varsayılan kullanıcıyı değiştirmek tüm bağlantıları kilitleyebilir. Böyle bir durumda, erişimi yeniden sağlamak için Redis'yi yeniden başlatmanız veya redis-cli'yi kullanmanız gerekecektir.",
     },
     overview: {
       noConnected: "Redis'e bağlantı yok.",

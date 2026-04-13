@@ -626,6 +626,7 @@ const strings = {
       noUsers: "Spustelėkite Įkelti vartotojus, kad pamatytumėte ACL vartotojus. Reikia Redis 6.0+.",
       rules: "Taisyklės",
       rulesHint: "Tarpu atskirti žetonai (pvz., on >password +@all ~* &*)",
+      defaultUserWarning: "Įspėjimas: pakeisdami numatytąjį vartotoją, galite užblokuoti visus ryšius. Jei taip atsitiks, turėsite iš naujo paleisti Redis arba naudoti redis-cli, kad atkurtumėte prieigą.",
     },
     overview: {
       noConnected: "Nėra ryšio su Redis.",
