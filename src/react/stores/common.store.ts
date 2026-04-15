@@ -41,6 +41,7 @@ interface CommonState {
     // Toast
     toastMessage: string
     toastOpen: boolean
+    toastDuration: number
     toast: (message: string, hideDelay?: number) => void
     closeToast: () => void
     toastUndoAction: string | null
@@ -81,8 +82,9 @@ let lastResponse: any = null
 export const useCommonStore = create<CommonState>((set, get) => ({
     toastMessage: '',
     toastOpen: false,
-    toast: (message: string, _hideDelay?: number) => {
-        set({ toastMessage: message, toastOpen: true })
+    toastDuration: 5000,
+    toast: (message: string, hideDelay?: number) => {
+        set({ toastMessage: message, toastOpen: true, toastDuration: hideDelay || 5000 })
     },
     closeToast: () => {
         const resolve = get().resolveToastUndo

@@ -13,7 +13,7 @@ function onClose(value: boolean) {
 <template>
     <v-snackbar
         v-model="commonStore.toastOpen"
-        :timeout="5000"
+        :timeout="commonStore.toastDuration"
         location="bottom right"
         @update:model-value="onClose"
     >

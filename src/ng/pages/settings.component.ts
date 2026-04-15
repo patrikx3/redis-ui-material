@@ -60,6 +60,30 @@ import { switchGui } from '../../core/gui-switch';
             </div>
         </p3xr-ng-accordion>
 
+        @if (isPromoDomain) {
+            <br/>
+
+            <!-- Promo: AI Network Assistant (demo site only) -->
+            <p3xr-ng-accordion [title]="strings().promo?.title" accordionKey="promo-network" [collapsible]="false">
+                <div actions>
+                    <a href="https://network.corifeus.com" target="_blank" rel="noreferrer" style="text-decoration: none;">
+                        <p3xr-ng-button
+                            [label]="strings().promo?.visit"
+                            mdIcon="travel_explore">
+                        </p3xr-ng-button>
+                    </a>
+                </div>
+                <div content>
+                    <div style="padding: 12px 16px; font-size: 13px; opacity: 0.85; line-height: 1.6;">
+                        {{ strings().promo?.description }}
+                    </div>
+                    <div style="padding: 0 16px 12px; font-size: 11px; opacity: 0.5; line-height: 1.4;">
+                        {{ strings().promo?.disclaimer }}
+                    </div>
+                </div>
+            </p3xr-ng-accordion>
+        }
+
         <br/>
 
         <!-- Connections -->
@@ -673,6 +697,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     private static readonly COLLAPSED_GROUPS_KEY = 'p3xr-collapsed-connection-groups';
     private static readonly GROUP_MODE_KEY = 'p3xr-connection-group-mode';
     isElectron = /electron/i.test(navigator.userAgent);
+    isPromoDomain = window.location.hostname === 'p3x.redis.patrikx3.com';
     readonlyConnections = false;
     currentConnectionId: string | undefined;
     aclUsers: any[] | null = null;

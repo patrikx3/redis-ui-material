@@ -856,6 +856,13 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+  },
+  promo: {
+    title: "AI Network Assistant",
+    description: "Discover our free AI Network Assistant at network.corifeus.com — analyze domains, IPs, DNS records, SSL certificates, email security, and network infrastructure. Powered by AI for instant, comprehensive results.",
+    disclaimer: "This promotion is only shown on the demo site and will not appear in Docker, Electron, or web app deployments.",
+    toastMessage: "Try our free AI Network Assistant at network.corifeus.com — analyze domains, DNS, SSL, and more!",
+    visit: "Visit network.corifeus.com",
   }
 };
 module.exports = strings;

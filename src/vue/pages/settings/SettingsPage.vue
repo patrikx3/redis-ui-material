@@ -27,6 +27,7 @@ import { switchGui } from '../../../core/gui-switch'
 
 const i18n = useI18nStore()
 const strings = computed(() => i18n.strings)
+const isPromoDomain = window.location.hostname === 'p3x.redis.patrikx3.com'
 const state = useRedisStateStore()
 const settings = useSettingsStore()
 const common = useCommonStore()
@@ -274,6 +275,23 @@ const treeSettingsItems = computed(() => [
             {{ strings?.title?.donateDescription }}
         </div>
     </P3xrAccordion>
+
+    <!-- Promo: AI Network Assistant (demo site only) -->
+    <template v-if="isPromoDomain">
+        <br />
+
+        <P3xrAccordion :title="strings?.promo?.title" accordion-key="promo-network" :collapsible="false">
+            <template #actions>
+                <P3xrButton :label="strings?.promo?.visit" icon="mdi-earth-arrow-right" @click="openLink('https://network.corifeus.com')" />
+            </template>
+            <div style="padding: 12px 16px; font-size: 13px; opacity: 0.85; line-height: 1.6;">
+                {{ strings?.promo?.description }}
+            </div>
+            <div style="padding: 0 16px 12px; font-size: 11px; opacity: 0.5; line-height: 1.4;">
+                {{ strings?.promo?.disclaimer }}
+            </div>
+        </P3xrAccordion>
+    </template>
 
     <br />
 

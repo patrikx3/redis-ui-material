@@ -3,12 +3,12 @@ import { Close } from '@mui/icons-material'
 import { useCommonStore } from '../stores/common.store'
 
 export default function Toast() {
-    const { toastOpen, toastMessage, closeToast, toastUndoAction, handleToastUndoClick } = useCommonStore()
+    const { toastOpen, toastMessage, toastDuration, closeToast, toastUndoAction, handleToastUndoClick } = useCommonStore()
 
     return (
         <Snackbar
             open={toastOpen}
-            autoHideDuration={5000}
+            autoHideDuration={toastDuration}
             onClose={closeToast}
             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
             message={toastMessage}

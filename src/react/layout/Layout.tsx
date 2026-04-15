@@ -268,6 +268,21 @@ export default function Layout() {
         return () => clearTimeout(timer)
     }, [])
 
+    // Promo toast — demo site only, once per session
+    useEffect(() => {
+        if (window.location.hostname !== 'p3x.redis.patrikx3.com') return
+        if (sessionStorage.getItem('p3xr-promo-shown')) return
+        const timer = setTimeout(() => {
+            const promo = useI18nStore.getState().strings?.promo
+            if (promo?.toastMessage) {
+                sessionStorage.setItem('p3xr-promo-shown', '1')
+                const msg = promo.toastMessage + (promo.disclaimer ? ' · ' + promo.disclaimer : '')
+                useCommonStore.getState().toast(msg, 30000)
+            }
+        }, 5000)
+        return () => clearTimeout(timer)
+    }, [])
+
     // Track route changes for analytics (matches Angular setupRouteTracking)
     useEffect(() => {
         const path = location.pathname.toLowerCase().startsWith('/database/key/')

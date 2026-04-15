@@ -213,6 +213,20 @@ onMounted(() => {
     }, 3000)
 })
 
+// Promo toast — demo site only, once per session
+onMounted(() => {
+    if (window.location.hostname !== 'p3x.redis.patrikx3.com') return
+    if (sessionStorage.getItem('p3xr-promo-shown')) return
+    setTimeout(() => {
+        const promo = i18n.strings?.promo
+        if (promo?.toastMessage) {
+            sessionStorage.setItem('p3xr-promo-shown', '1')
+            const msg = promo.toastMessage + (promo.disclaimer ? ' · ' + promo.disclaimer : '')
+            common.toast(msg, 30000)
+        }
+    }, 5000)
+})
+
 // Group mode poll
 let groupInterval: any
 onMounted(() => {

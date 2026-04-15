@@ -44,10 +44,12 @@ export const useCommonStore = defineStore('common', () => {
     // Toast
     const toastMessage = ref('')
     const toastOpen = ref(false)
+    const toastDuration = ref(5000)
     const toastUndoAction = ref<string | null>(null)
     const resolveToastUndo = ref<((clicked: boolean) => void) | null>(null)
 
-    function toast(message: string, _hideDelay?: number) {
+    function toast(message: string, hideDelay?: number) {
+        toastDuration.value = hideDelay || 5000
         toastMessage.value = message
         toastOpen.value = true
     }
@@ -211,6 +213,7 @@ export const useCommonStore = defineStore('common', () => {
         // Toast
         toastMessage,
         toastOpen,
+        toastDuration,
         toastUndoAction,
         resolveToastUndo,
         toast,

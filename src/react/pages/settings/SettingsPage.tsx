@@ -7,6 +7,7 @@ import {
     Power, PowerOff, DeleteForever, Edit, ModeComment, AddBox,
     CheckBox, CheckBoxOutlineBlank,
     ChevronRight, ExpandMore, Favorite, People, Delete, PersonAdd, Refresh, Warning,
+    TravelExplore,
 } from '@mui/icons-material'
 import {
     DndContext, closestCenter, PointerSensor, useSensor, useSensors,
@@ -346,6 +347,30 @@ export default function SettingsPage() {
                     {strings?.title?.donateDescription}
                 </Box>
             </P3xrAccordion>
+
+            {window.location.hostname === 'p3x.redis.patrikx3.com' && (
+                <>
+                    <br />
+
+                    {/* === Promo: AI Network Assistant (demo site only) === */}
+                    <P3xrAccordion title={strings?.promo?.title} accordionKey="promo-network" collapsible={false}
+                        actions={
+                            <P3xrButton
+                                label={strings?.promo?.visit}
+                                icon={<TravelExplore fontSize="small" />}
+                                onClick={() => window.open('https://network.corifeus.com', '_blank')}
+                            />
+                        }
+                    >
+                        <Box sx={{ p: '12px 16px', fontSize: 13, opacity: 0.85, lineHeight: 1.6 }}>
+                            {strings?.promo?.description}
+                        </Box>
+                        <Box sx={{ p: '0 16px 12px', fontSize: 11, opacity: 0.5, lineHeight: 1.4 }}>
+                            {strings?.promo?.disclaimer}
+                        </Box>
+                    </P3xrAccordion>
+                </>
+            )}
 
             <br />
 
