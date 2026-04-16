@@ -134,10 +134,8 @@ src/
 │   └── .../strings.js      # 52 more languages
 ├── scss/                   # Shared theme CSS variables (7 themes)
 ├── public/                 # Static assets (images, icons)
-├── builder/                # Webpack config for Angular
-│   └── webpack.config.js
 └── tests/                  # Playwright E2E tests
-    ├── redis-ui.spec.js    # Shared test spec (runs against both GUIs)
+    ├── redis-ui.spec.js    # Shared test spec (runs against all three GUIs)
     └── run-e2e.sh          # Test runner script
 ```
 
