@@ -501,7 +501,7 @@ onMounted(() => {
 
         <!-- Output area -->
         <div v-show="!collapsed" ref="scrollerEl" class="p3xr-console-output-scroller">
-            <div ref="outputEl" class="p3xr-console-output"></div>
+            <div id="p3xr-console-content-output" ref="outputEl" class="p3xr-console-output"></div>
         </div>
 
         <!-- Input area with floating autocomplete above -->
@@ -524,6 +524,7 @@ onMounted(() => {
             </div>
             <div v-if="currentHint && !collapsed" class="p3xr-console-hint">{{ currentHint }}</div>
             <textarea
+                id="p3xr-console-input"
                 ref="inputEl"
                 v-model="searchText"
                 class="p3xr-console-input"

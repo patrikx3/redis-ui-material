@@ -1,10 +1,15 @@
 const { test, expect } = require('@playwright/test');
 
-// Helper: set React frontend preference so React doesn't redirect to Angular
+// Helper: set frontend preference so non-Angular frontends don't redirect to Angular
 test.beforeEach(async ({ page }, testInfo) => {
     if (testInfo.project.name === 'react') {
         await page.addInitScript(() => {
             try { localStorage.setItem('p3xr-frontend', 'react') } catch {}
+        })
+    }
+    if (testInfo.project.name === 'vue') {
+        await page.addInitScript(() => {
+            try { localStorage.setItem('p3xr-frontend', 'vue') } catch {}
         })
     }
 })
@@ -20,15 +25,15 @@ async function waitForReady(page) {
     }, { timeout: 20000 });
 }
 
-// Helper: connect to localhost via footer menu (works for both Angular and React)
+// Helper: connect to localhost via footer menu (works for Angular, React, and Vue)
 async function connectToLocalhost(page) {
     await page.goto('settings');
     await waitForReady(page);
     // Click Connect button in footer (scoped to footer to avoid matching "NEW CONNECTION")
     const connectBtn = page.locator('#p3xr-layout-footer-container button').filter({ hasText: /connect/i }).first();
     await connectBtn.click();
-    // Click localhost menu item
-    const menuItem = page.locator('[role="menuitem"]:has-text("localhost")');
+    // Click localhost menu item (Angular uses role="menuitem", Vuetify uses role="listitem")
+    const menuItem = page.locator('[role="menuitem"]:has-text("localhost"), [role="listitem"]:has-text("localhost")').first();
     await menuItem.click();
     await waitForReady(page);
     // Wait for keys to load
@@ -94,6 +99,7 @@ test.describe('Database', () => {
         const input = page.locator('#p3xr-console-input');
         await expect(input).toBeVisible({ timeout: 5000 });
         await input.fill('PING');
+        await input.press('Escape');
         await input.press('Enter');
         await page.waitForFunction(() => {
             const el = document.getElementById('p3xr-console-content-output');
@@ -108,6 +114,7 @@ test.describe('Database', () => {
         const input = page.locator('#p3xr-console-input');
         await expect(input).toBeVisible({ timeout: 5000 });
         await input.fill('SET test:e2e hello\nGET test:e2e');
+        await input.press('Escape');
         await input.press('Enter');
         await page.waitForFunction(() => {
             const el = document.getElementById('p3xr-console-content-output');
@@ -136,6 +143,7 @@ test.describe('AI', () => {
         }
 
         await input.fill('ai: show all keys');
+        await input.press('Escape');
         await input.press('Enter');
 
         // AI response goes through network.corifeus.com proxy, allow 30s for round-trip
@@ -164,6 +172,7 @@ test.describe('AI', () => {
 
         // Natural language that is NOT a valid Redis command
         await input.fill('list all string keys in this database');
+        await input.press('Escape');
         await input.press('Enter');
 
         // Wait for AI response or error output (proxied via network.corifeus.com)

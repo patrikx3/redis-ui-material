@@ -49,5 +49,12 @@ export default defineConfig({
                 baseURL: process.env.PLAYWRIGHT_BASE_URL_REACT || `${baseHost}/react/`,
             },
         },
+        {
+            name: 'vue',
+            use: {
+                browserName: 'chromium',
+                baseURL: process.env.PLAYWRIGHT_BASE_URL_VUE || `${baseHost}/vue/`,
+            },
+        },
     ],
 });

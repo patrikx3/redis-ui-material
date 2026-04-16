@@ -58,9 +58,9 @@ docker exec $REDIS_CONTAINER redis-cli SADD test:set red green blue
 docker exec $REDIS_CONTAINER redis-cli ZADD test:zset 1 alpha 2 beta 3 gamma
 echo "Test data seeded"
 
-# Build Angular + React if needed
+# Build Angular + React + Vue if needed
 echo ""
-echo "=== Building Angular + React ==="
+echo "=== Building Angular + React + Vue ==="
 cd "$MATERIAL_DIR"
 if [ ! -f dist/index.html ]; then
     echo "Building Angular..."
@@ -73,6 +73,12 @@ if [ ! -f dist-react/index.html ]; then
     yarn build-react
 else
     echo "React build exists, skipping"
+fi
+if [ ! -f dist-vue/index.html ]; then
+    echo "Building Vue..."
+    yarn build-vue
+else
+    echo "Vue build exists, skipping"
 fi
 
 # Create test connections config
@@ -88,7 +94,8 @@ cat > "$TEST_HOME/p3xrs.json" <<EOF
             "home-dir": "$TEST_HOME"
         },
         "static": "$MATERIAL_DIR/dist",
-        "staticReact": "$MATERIAL_DIR/dist-react"
+        "staticReact": "$MATERIAL_DIR/dist-react",
+        "staticVue": "$MATERIAL_DIR/dist-vue"
     }
 }
 EOF

@@ -362,6 +362,7 @@ onUnmounted(() => clearInterval(groupInterval))
     </div>
 
     <!-- ===== FOOTER ===== -->
+    <div id="p3xr-layout-footer-container">
     <v-toolbar
         :style="{ ...toolbarStyle, position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1000 }"
         density="compact"
@@ -518,4 +519,5 @@ onUnmounted(() => clearInterval(groupInterval))
         </v-menu>
 
     </v-toolbar>
+    </div>
 </template>

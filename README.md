@@ -118,6 +118,15 @@ src/
 │   ├── themes/             # MUI theme definitions
 │   ├── vite.config.ts      # Vite configuration
 │   └── index.html          # React entry HTML
+├── vue/                    # Vue frontend
+│   ├── pages/              # Page components
+│   ├── dialogs/            # Modal dialogs
+│   ├── components/         # Reusable UI components
+│   ├── stores/             # Pinia stores (state management)
+│   ├── layout/             # App shell, header, footer
+│   ├── themes/             # Vuetify theme definitions
+│   ├── vite.config.ts      # Vite configuration
+│   └── index.html          # Vue entry HTML
 ├── core/                   # Shared utilities (detect-language, translation-loader)
 ├── strings/                # 54 language translation files
 │   ├── en/strings.js       # English (primary)
@@ -138,10 +147,12 @@ src/
 |--------|-------------|
 | `yarn run dev` | Start Angular dev server (Webpack, port 8080) |
 | `yarn run dev-react` | Start React dev server (Vite, port 8082) |
+| `yarn run dev-vue` | Start Vue dev server (Vite) |
 | `yarn run build` | Production build Angular → `dist/` |
 | `yarn run build-react` | Production build React → `dist-react/` |
+| `yarn run build-vue` | Production build Vue |
 | `yarn run stats` | Angular bundle analysis with `webpack-bundle-analyzer` |
-| `yarn run test:e2e` | Run Playwright E2E tests (both GUIs) |
+| `yarn run test:e2e` | Run Playwright E2E tests (Angular + React + Vue) |
 | `yarn run test:e2e:gui` | Run E2E tests with Playwright UI |
 
 ## Development
@@ -181,7 +192,17 @@ yarn run dev-react
 - Instant HMR via Vite's native ESM
 - CJS translation files auto-transformed to ESM via custom plugin
 
-### Running both simultaneously
+### Vue development
+
+```bash
+yarn install
+yarn run dev-vue
+```
+
+- Vite proxies Socket.IO to backend on port 7843
+- Instant HMR via Vite's native ESM
+
+### Running all three simultaneously
 
 ```bash
 # Terminal 1: Angular
@@ -190,7 +211,10 @@ yarn run dev
 # Terminal 2: React  
 yarn run dev-react
 
-# Terminal 3: Backend
+# Terminal 3: Vue
+yarn run dev-vue
+
+# Terminal 4: Backend
 cd ../redis-ui-server && yarn run dev
 ```
 
@@ -218,6 +242,17 @@ All dependencies track the latest LTS versions and are regularly upgraded.
 | `react-router-dom` | Client-side routing |
 | `vite` | Bundler (devDependency) |
 
+### Vue (dependencies — shipped in npm package)
+| Package | Purpose |
+|---------|---------|
+| `vue` | Framework |
+| `vuetify` | UI component library |
+| `vue-router` | Client-side routing |
+| `pinia` | State management |
+| `@tanstack/vue-virtual` | Virtual scrolling |
+| `vuedraggable` | Drag-and-drop |
+| `vite` | Bundler (devDependency) |
+
 ### Shared
 | Package | Purpose |
 |---------|---------|
@@ -231,7 +266,7 @@ All dependencies track the latest LTS versions and are regularly upgraded.
 
 ## E2E Testing
 
-Playwright tests run against both frontends in parallel using a shared test spec:
+Playwright tests run against all three frontends in parallel using a shared test spec:
 
 ```bash
 # Run all tests (Angular + React + Vue)

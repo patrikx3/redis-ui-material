@@ -364,7 +364,7 @@ watch(
                         <template #activator="{ props: tp }">
                             <label
                                 v-bind="tp"
-                                class="p3xr-tree-node-label"
+                                class="p3xr-tree-node-label p3xr-database-tree-node"
                                 @click="dataSource[virtualRow.index].expandable ? toggleExpand(dataSource[virtualRow.index]) : selectNode(dataSource[virtualRow.index])"
                             >
                                 <!-- Type icon -->
