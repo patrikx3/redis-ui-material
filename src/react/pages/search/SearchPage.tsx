@@ -423,7 +423,6 @@ export default function SearchPage() {
                 </>
             )}
 
-            <Box sx={{ height: 64 }} />
         </Box>
     )
 }

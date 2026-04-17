@@ -369,6 +369,5 @@ const supportsHybrid = computed(() => {
             </P3xrAccordion>
         </template>
 
-        <div style="height: 64px;" />
     </div>
 </template>

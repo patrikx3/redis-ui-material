@@ -1,4 +1,4 @@
-import { Box } from '@mui/material'
+import { Box, useTheme } from '@mui/material'
 import { useRedisStateStore } from '../stores/redis-state.store'
 import ConsoleComponent from '../pages/console/ConsoleComponent'
 
@@ -12,6 +12,7 @@ import ConsoleComponent from '../pages/console/ConsoleComponent'
 export default function ConsoleDrawer() {
     const isOpen = useRedisStateStore(s => s.consoleDrawerOpen)
     const setConsoleDrawerOpen = useRedisStateStore(s => s.setConsoleDrawerOpen)
+    const muiTheme = useTheme()
 
     return (
         <Box
@@ -19,14 +20,16 @@ export default function ConsoleDrawer() {
             className={isOpen ? 'p3xr-drawer-open' : ''}
             sx={{
                 position: 'fixed',
-                left: 0,
-                right: 0,
+                left: '5px',
+                right: 'calc(5px + var(--p3xr-scroll-gutter, 0px))',
                 bottom: '48px',
                 height: isOpen ? 'var(--p3xr-console-drawer-height, 30vh)' : 0,
                 overflow: 'hidden',
                 bgcolor: 'background.paper',
                 color: 'text.primary',
-                borderTop: '1px solid rgba(255,255,255,0.16)',
+                border: isOpen ? '1px solid' : '0 solid',
+                borderColor: (muiTheme as any).p3xr?.accordionBg,
+                borderRadius: '4px 4px 0 0',
                 zIndex: 8,
                 transition: 'height 150ms ease-out',
                 display: 'flex',

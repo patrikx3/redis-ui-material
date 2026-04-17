@@ -314,7 +314,7 @@ export default function ConsoleComponent({ embedded = false, collapsed = false, 
             const command = response.command || ''
             const explanation = response.explanation || ''
             const toolTrail = Array.isArray(response.toolTrail) ? response.toolTrail : []
-            outputAppend(htmlEncode(originalInput))
+            outputAppend(`<strong>${htmlEncode(originalInput)}</strong>`)
             updateHistory(originalInput)
 
             // Print each tool call + outcome to the scrollback (transparency).
@@ -327,7 +327,7 @@ export default function ConsoleComponent({ embedded = false, collapsed = false, 
                     const preview = String(t.result ?? '').split('\n').slice(0, 12).join('\n')
                     outputAppend(`${head}<br/><pre style="opacity: 0.85; margin: 2px 0 6px 0;">${htmlEncode(preview)}</pre>`)
                 } else {
-                    outputAppend(`${head}<br/><span style="color: ${muiTheme.p3xr.matSysError || '#f44336'};">${htmlEncode(t.error || 'tool error')}</span>`)
+                    outputAppend(`${head}<br/><span style="color: ${muiTheme.palette.error.main};">${htmlEncode(t.error || 'tool error')}</span>`)
                 }
             }
 
@@ -336,7 +336,7 @@ export default function ConsoleComponent({ embedded = false, collapsed = false, 
             const usedTools = toolTrail.length > 0
 
             if (command) {
-                let line = `<strong style="color: ${muiTheme.p3xr.matSysPrimary};">AI &rarr;</strong> <code>${htmlEncode(command)}</code>`
+                let line = `<strong style="color: ${muiTheme.palette.primary.main};">AI &rarr;</strong> <code>${htmlEncode(command)}</code>`
                 if (explanation) line += `<pre>${htmlEncode(explanation)}</pre>`
                 outputAppend(line)
                 if (!usedTools) {
@@ -352,6 +352,7 @@ export default function ConsoleComponent({ embedded = false, collapsed = false, 
         } catch (e: any) {
             if (mySeq !== aiRequestSeqRef.current) return false
             const msg = e.message || String(e)
+            outputAppend(`<span style="color: ${muiTheme.palette.error.main};">AI error: ${htmlEncode(msg)}</span>`)
             if (msg.includes('429') || msg.includes('rate_limit')) toast(strings?.page?.key?.label?.aiRateLimited)
             else toast(strings?.page?.key?.label?.aiError + ': ' + msg)
             return false
@@ -387,7 +388,7 @@ export default function ConsoleComponent({ embedded = false, collapsed = false, 
         try {
             const response = await request({ action: 'redis/console', payload: { command: enter } })
             const result = htmlEncode(String(consoleParse(response.result)))
-            outputAppend(`${htmlEncode(enter)}<br/><pre>${result}</pre>`)
+            outputAppend(`<strong>${htmlEncode(enter)}</strong><br/><pre>${result}</pre>`)
             if (response.hasOwnProperty('database')) {
                 useRedisStateStore.setState({ currentDatabase: response.database, redisChanged: true })
             }
@@ -397,7 +398,7 @@ export default function ConsoleComponent({ embedded = false, collapsed = false, 
                 if (await handleAiQuery(enter, enter)) return
             }
             const strs = useI18nStore.getState().strings
-            outputAppend(`${htmlEncode(enter)}<br/><pre>${strs?.code?.[errorMsg] || errorMsg}</pre>`)
+            outputAppend(`<strong>${htmlEncode(enter)}</strong><br/><pre style="color: ${muiTheme.palette.error.main};">${strs?.code?.[errorMsg] || errorMsg}</pre>`)
         }
     }, [aiEnabled, aiAutoDetect, looksLikeNaturalLanguage, handleAiQuery, outputAppend])
 
@@ -515,11 +516,11 @@ export default function ConsoleComponent({ embedded = false, collapsed = false, 
             display: 'flex', flexDirection: 'column',
             width: '100%', height: '100%', overflow: 'hidden',
         }}>
-            {/* Header toolbar — strongBg, 48px */}
+            {/* Header toolbar — unified with DatabaseHeader (accordion bg + color) */}
             <Toolbar id="p3xr-console-header" variant="dense" disableGutters sx={{
-                backgroundColor: `${muiTheme.p3xr.strongBg} !important`,
+                backgroundColor: `${muiTheme.p3xr.accordionBg} !important`,
                 backgroundImage: 'none !important',
-                color: 'rgba(255,255,255,0.87) !important',
+                color: `${muiTheme.p3xr.accordionColor} !important`,
                 minHeight: '48px !important', height: 48, maxHeight: 48,
                 px: 0, flexShrink: 0, zIndex: 2,
                 '& *': { color: 'inherit' },
@@ -528,11 +529,11 @@ export default function ConsoleComponent({ embedded = false, collapsed = false, 
                     height: 36, minHeight: 36, minWidth: 'auto', px: 1, mx: 1,
                     letterSpacing: '0.1px', display: 'inline-flex', alignItems: 'center',
                     gap: '3px',
-                    '&:hover': { bgcolor: 'rgba(255,255,255,0.15) !important' },
+                    '&:hover': { bgcolor: 'rgba(0,0,0,0.08) !important' },
                 },
                 '& .MuiIconButton-root': {
                     color: 'inherit !important', borderRadius: '4px',
-                    '&:hover': { bgcolor: 'rgba(255,255,255,0.15) !important' },
+                    '&:hover': { bgcolor: 'rgba(0,0,0,0.08) !important' },
                 },
             }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', width: '100%', height: '100%', px: '3px' }}>
@@ -585,6 +586,7 @@ export default function ConsoleComponent({ embedded = false, collapsed = false, 
                 display: collapsed ? 'none' : 'block',
                 fontFamily: "'Roboto Mono', monospace",
                 textAlign: 'center',
+                px: '4px',
                 '& pre': {
                     fontFamily: "'Roboto Mono', monospace",
                     whiteSpace: 'pre-wrap', wordBreak: 'break-word', overflowWrap: 'anywhere',
@@ -683,7 +685,7 @@ export default function ConsoleComponent({ embedded = false, collapsed = false, 
                         position: 'relative',
                         backgroundColor: muiTheme.p3xr.inputBg,
                         color: muiTheme.p3xr.inputColor,
-                        borderColor: aiLoading ? muiTheme.p3xr.matSysPrimary : muiTheme.p3xr.inputBorderColor,
+                        borderColor: aiLoading ? muiTheme.palette.primary.main : muiTheme.p3xr.inputBorderColor,
                         opacity: aiLoading ? 0.55 : 1,
                         cursor: aiLoading ? 'not-allowed' : 'text',
                     }}

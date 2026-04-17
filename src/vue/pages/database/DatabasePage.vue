@@ -142,7 +142,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div class="p3xr-database-root">
+    <div class="p3xr-database-root" :style="{ borderColor: resizerBg }">
         <DatabaseHeader />
 
         <div class="p3xr-database-body">
@@ -201,7 +201,8 @@ onUnmounted(() => {
     flex-direction: column;
     flex: 1;
     min-height: 0;
-    border-radius: 4px 4px 0 0;
+    border-radius: 4px;
+    border: 1px solid;
     overflow: hidden;
 }
 

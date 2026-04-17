@@ -78,7 +78,7 @@ export default function MonitoringShell() {
                 <Tab label={strings?.intention?.pubsubMonitor} />
                 <Tab label={strings?.intention?.memoryAnalysis} />
             </Tabs>
-            <Box id="p3xr-monitoring-content" sx={{ flex: 1, minHeight: 0, overflow: 'auto', p: '5px' }}>
+            <Box id="p3xr-monitoring-content" className="p3xr-monitoring-shell-content" sx={{ flex: 1, minHeight: 0, overflow: 'auto', p: '5px' }}>
                 <Outlet />
             </Box>
         </Box>

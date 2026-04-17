@@ -53,11 +53,16 @@ let aiCommandPending = false
 const CONSOLE_OUTPUT_KEY = 'p3xr-console-output-v1'
 const CONSOLE_OUTPUT_MAX = 10 * 1024 * 1024
 
-// Theme colors (exact from Angular _theme-custom.scss + React themes/index.ts)
-const STRONG_BG: Record<string, string> = {
-    enterprise: '#212121', light: '#263238', redis: '#b71c1c',
-    dark: '#212121', darkNeu: '#263238', darkoBluo: '#1a237e',
-    matrix: '#33691e',
+// Unified with DatabaseHeader — same accordion color for toolbar across the app
+const ACCORDION_BG: Record<string, string> = {
+    enterprise: '#9e9e9e', light: '#b0bec5', redis: '#ef9a9a',
+    dark: '#9e9e9e', darkNeu: '#90a4ae', darkoBluo: '#3f51b5',
+    matrix: '#76ff03',
+}
+const ACCORDION_COLOR: Record<string, string> = {
+    enterprise: 'rgba(0,0,0,0.87)', light: 'rgba(0,0,0,0.87)', redis: 'rgba(0,0,0,0.87)',
+    dark: 'rgba(0,0,0,0.87)', darkNeu: 'rgba(0,0,0,0.87)', darkoBluo: '#fff',
+    matrix: 'rgba(0,0,0,0.87)',
 }
 const INPUT_BG: Record<string, string> = {
     enterprise: 'white', light: 'white', redis: 'white',
@@ -74,7 +79,8 @@ const INPUT_BORDER: Record<string, string> = {
     dark: '#9e9e9e', darkNeu: '#90a4ae', darkoBluo: '#3f51b5',
     matrix: '#76ff03',
 }
-const toolbarBg = computed(() => STRONG_BG[themeKey.value])
+const toolbarBg = computed(() => ACCORDION_BG[themeKey.value])
+const toolbarColor = computed(() => ACCORDION_COLOR[themeKey.value])
 const inputBg = computed(() => INPUT_BG[themeKey.value])
 const inputColor = computed(() => INPUT_COLOR[themeKey.value])
 const inputBorder = computed(() => INPUT_BORDER[themeKey.value])
@@ -534,7 +540,7 @@ onMounted(() => {
 <template>
     <div class="p3xr-console-root" :class="{ 'p3xr-console-embedded': embedded }">
         <!-- Header toolbar -->
-        <div class="p3xr-console-header" :style="{ backgroundColor: toolbarBg }">
+        <div class="p3xr-console-header" :style="{ backgroundColor: toolbarBg, color: toolbarColor }">
             <div class="p3xr-console-header-inner">
                 <v-icon size="20" style="margin-right: 6px; color: inherit;">mdi-console</v-icon>
                 <span class="p3xr-console-title">{{ strings?.label?.console }}</span>
@@ -650,7 +656,6 @@ onMounted(() => {
     max-height: 48px;
     flex-shrink: 0;
     z-index: 2;
-    color: rgba(255,255,255,0.87);
 }
 
 .p3xr-console-header-inner {
@@ -695,7 +700,7 @@ onMounted(() => {
     flex-shrink: 0;
 }
 .p3xr-console-ai-toggle:hover {
-    background-color: rgba(255,255,255,0.15);
+    background-color: rgba(0,0,0,0.08);
 }
 
 .p3xr-console-output-scroller {
@@ -705,6 +710,7 @@ onMounted(() => {
     overflow-x: hidden;
     font-family: 'Roboto Mono', monospace;
     text-align: center;
+    padding: 0 4px;
 }
 
 .p3xr-console-output {
@@ -837,7 +843,7 @@ onMounted(() => {
 </style>
 
 <style>
-/* Console toolbar buttons: exact match of Angular/React */
+/* Console toolbar buttons: unified with accordion pattern */
 .p3xr-console-header .v-btn {
     color: inherit !important;
     letter-spacing: 0.1px !important;
@@ -860,10 +866,7 @@ onMounted(() => {
     opacity: 0 !important;
 }
 .p3xr-console-header .v-btn:hover .v-btn__overlay {
-    opacity: 0 !important;
-}
-.p3xr-console-header .v-btn:hover {
-    background-color: rgba(255,255,255,0.15) !important;
+    opacity: 0.08 !important;
 }
 
 /* Output pre elements */

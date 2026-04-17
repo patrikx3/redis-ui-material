@@ -204,10 +204,54 @@ export class LayoutComponent implements OnInit, OnDestroy {
                 }
             }, 5000);
         }
+
+        this.setupScrollGutterTracker();
+    }
+
+    private scrollGutterRO: ResizeObserver | null = null;
+    private scrollGutterMO: MutationObserver | null = null;
+    private scrollGutterResizeHandler = () => this.updateScrollGutter();
+
+    private updateScrollGutter(): void {
+        // On monitoring pages the tab shell owns the scroll; elsewhere use the
+        // main layout-content container.
+        const monitoring = document.querySelector('.p3xr-monitoring-shell-content') as HTMLElement | null;
+        const el = monitoring || document.querySelector('.p3xr-layout-content, .p3xr-layout-content-electron') as HTMLElement | null;
+        const gutter = el ? Math.max(0, el.offsetWidth - el.clientWidth) : 0;
+        document.documentElement.style.setProperty('--p3xr-scroll-gutter', gutter + 'px');
+    }
+
+    private bindScrollGutterObservers(): void {
+        this.scrollGutterRO?.disconnect();
+        if (typeof ResizeObserver === 'undefined') return;
+        this.scrollGutterRO = new ResizeObserver(() => this.updateScrollGutter());
+        const monitoring = document.querySelector('.p3xr-monitoring-shell-content') as HTMLElement | null;
+        const el = monitoring || document.querySelector('.p3xr-layout-content, .p3xr-layout-content-electron') as HTMLElement | null;
+        if (el) {
+            this.scrollGutterRO.observe(el);
+            if (el.firstElementChild) this.scrollGutterRO.observe(el.firstElementChild);
+        }
+    }
+
+    private setupScrollGutterTracker(): void {
+        this.updateScrollGutter();
+        this.bindScrollGutterObservers();
+        const root = document.querySelector('.p3xr-layout-content, .p3xr-layout-content-electron') as HTMLElement | null;
+        if (root && typeof MutationObserver !== 'undefined') {
+            this.scrollGutterMO = new MutationObserver(() => {
+                this.bindScrollGutterObservers();
+                this.updateScrollGutter();
+            });
+            this.scrollGutterMO.observe(root, { childList: true, subtree: true });
+        }
+        window.addEventListener('resize', this.scrollGutterResizeHandler);
     }
 
     ngOnDestroy(): void {
         this.unsubFns.forEach(fn => fn());
+        this.scrollGutterRO?.disconnect();
+        this.scrollGutterMO?.disconnect();
+        window.removeEventListener('resize', this.scrollGutterResizeHandler);
     }
 
     // --- Computed properties (read by template) ---

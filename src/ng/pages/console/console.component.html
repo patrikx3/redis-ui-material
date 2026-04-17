@@ -1,8 +1,7 @@
 <div class="p3xr-console-root" [class.p3xr-console-root-embedded]="embedded" (click)="activate()">
 
     <!-- Console header toolbar -->
-    <mat-toolbar class="p3xr-console-toolbar p3xr-mat-layout-strong" id="p3xr-console-header"
-        [class.p3xr-content-border-toolbar]="type === 'quick'">
+    <mat-toolbar class="p3xr-console-toolbar p3xr-accordion-toolbar" id="p3xr-console-header">
         <div class="p3xr-console-toolbar-tools">
 
             @if (type !== 'quick') {
@@ -58,7 +57,8 @@
     </mat-toolbar>
 
     <!-- Console output area -->
-    <div id="p3xr-console-content" class="p3xr-content-border-fixed"
+    <div id="p3xr-console-content"
+         [class.p3xr-content-border-fixed]="type !== 'quick'"
          [class.layout-padding]="type !== 'quick'"
          (click)="$event.stopPropagation()"
          (mousedown)="onContentMouseDown($event)">

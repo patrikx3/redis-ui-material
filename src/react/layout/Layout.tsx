@@ -289,6 +289,41 @@ export default function Layout() {
         return unsub
     }, [])
 
+    // Scroll-gutter tracker: aligns the console drawer's right edge with the
+    // content's right edge. On monitoring pages the tab shell owns the scroll,
+    // so only observe its inner content; everywhere else use layout-content.
+    useEffect(() => {
+        const updateScrollGutter = () => {
+            const monitoring = document.querySelector('.p3xr-monitoring-shell-content') as HTMLElement | null
+            const el = monitoring || document.getElementById('p3xr-layout-content')
+            const gutter = el ? Math.max(0, el.offsetWidth - el.clientWidth) : 0
+            document.documentElement.style.setProperty('--p3xr-scroll-gutter', gutter + 'px')
+        }
+        let ro: ResizeObserver | null = null
+        let mo: MutationObserver | null = null
+        const bind = () => {
+            ro?.disconnect()
+            if (typeof ResizeObserver === 'undefined') return
+            ro = new ResizeObserver(() => updateScrollGutter())
+            const monitoring = document.querySelector('.p3xr-monitoring-shell-content') as HTMLElement | null
+            const el = monitoring || document.getElementById('p3xr-layout-content')
+            if (el) { ro.observe(el); if (el.firstElementChild) ro.observe(el.firstElementChild) }
+        }
+        updateScrollGutter()
+        bind()
+        const root = document.getElementById('p3xr-layout-content')
+        if (root && typeof MutationObserver !== 'undefined') {
+            mo = new MutationObserver(() => { bind(); updateScrollGutter() })
+            mo.observe(root, { childList: true, subtree: true })
+        }
+        window.addEventListener('resize', updateScrollGutter)
+        return () => {
+            ro?.disconnect()
+            mo?.disconnect()
+            window.removeEventListener('resize', updateScrollGutter)
+        }
+    }, [])
+
     // Prefetch other GUI frameworks — fetch HTML, parse script/style tags, cache all assets
     useEffect(() => {
         const timer = setTimeout(() => {

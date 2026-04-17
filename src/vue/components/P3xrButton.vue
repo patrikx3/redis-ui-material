@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import { useDisplay } from 'vuetify'
 
 const props = withDefaults(defineProps<{
-    label: string
+    label?: string
     icon?: string
     raised?: boolean
     color?: string
@@ -11,6 +11,7 @@ const props = withDefaults(defineProps<{
     tooltipPlacement?: 'top' | 'bottom' | 'left' | 'right'
     breakpoint?: number
 }>(), {
+    label: '',
     raised: false,
     color: 'inherit',
     disabled: false,

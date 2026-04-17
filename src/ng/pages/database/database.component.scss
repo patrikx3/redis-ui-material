@@ -13,6 +13,13 @@ p3xr-database {
         border-top-right-radius: v.$border-radius;
     }
 
+    .p3xr-content-border {
+        border: 1px solid var(--p3xr-accordion-bg);
+        border-bottom-left-radius: v.$border-radius;
+        border-bottom-right-radius: v.$border-radius;
+        overflow: hidden;
+    }
+
     #p3xr-database-treecontrol-container {
         position: fixed;
         overflow: auto;

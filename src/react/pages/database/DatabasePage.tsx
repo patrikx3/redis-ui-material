@@ -96,7 +96,16 @@ export default function DatabasePage() {
             : 'none'
 
     return (
-        <Box sx={{ borderRadius: '4px 4px 0 0', overflow: 'hidden', flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
+        <Box sx={{
+            borderRadius: '4px',
+            border: '1px solid',
+            borderColor: (muiTheme as any).p3xr?.accordionBg,
+            overflow: 'hidden',
+            flex: 1,
+            minHeight: 0,
+            display: 'flex',
+            flexDirection: 'column',
+        }}>
             <DatabaseHeader />
 
             <Box sx={{

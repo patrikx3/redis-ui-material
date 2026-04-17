@@ -288,7 +288,7 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
                     this.persistOutputDebounced?.();
                 }
             } else {
-                this.outputAppend(`${htmlEncode(enter)}<br/><pre>${result}</pre>`);
+                this.outputAppend(`<strong>${htmlEncode(enter)}</strong><br/><pre>${result}</pre>`);
             }
 
             if (response.hasOwnProperty('database')) {
@@ -304,11 +304,11 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
             if (this.state.cfg()?.aiEnabled !== false && this.aiAutoDetect && this.looksLikeNaturalLanguage(enter, errorMsg)) {
                 const aiSuccess = await this.handleAiQuery(enter, enter);
                 if (aiSuccess) return;
-                this.outputAppend(`${htmlEncode(enter)}<br/><pre>${this.i18n.strings().code?.[errorMsg] || errorMsg}</pre>`);
+                this.outputAppend(`<strong>${htmlEncode(enter)}</strong><br/><pre style="color: var(--p3xr-btn-warn-bg);">${this.i18n.strings().code?.[errorMsg] || errorMsg}</pre>`);
                 return;
             }
 
-            this.outputAppend(`${htmlEncode(enter)}<br/><pre>${this.i18n.strings().code?.[errorMsg] || errorMsg}</pre>`);
+            this.outputAppend(`<strong>${htmlEncode(enter)}</strong><br/><pre style="color: var(--p3xr-btn-warn-bg);">${this.i18n.strings().code?.[errorMsg] || errorMsg}</pre>`);
         }
     }
 
@@ -380,7 +380,7 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
             const explanation = response.explanation || '';
             const toolTrail = Array.isArray(response.toolTrail) ? response.toolTrail : [];
 
-            this.outputAppend(htmlEncode(originalInput));
+            this.outputAppend(`<strong>${htmlEncode(originalInput)}</strong>`);
             this.updateCommandHistory(originalInput);
 
             // Print each tool call + outcome to the scrollback (transparency).
@@ -393,7 +393,7 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
                     const preview = String(t.result ?? '').split('\n').slice(0, 12).join('\n');
                     this.outputAppend(`${head}<br/><pre style="opacity: 0.85; margin: 2px 0 6px 0;">${htmlEncode(preview)}</pre>`);
                 } else {
-                    this.outputAppend(`${head}<br/><span style="color: var(--mat-sys-error, #f44336);">${htmlEncode(t.error || 'tool error')}</span>`);
+                    this.outputAppend(`${head}<br/><span style="color: var(--p3xr-btn-warn-bg);">${htmlEncode(t.error || 'tool error')}</span>`);
                 }
             }
 
@@ -401,7 +401,7 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
             const usedTools = toolTrail.length > 0;
 
             if (command) {
-                let aiLine = `<strong style="color: var(--mat-sys-primary);">AI &rarr;</strong> <code>${htmlEncode(command)}</code>`;
+                let aiLine = `<strong style="color: var(--p3xr-btn-primary-bg);">AI &rarr;</strong> <code>${htmlEncode(command)}</code>`;
                 if (explanation) {
                     aiLine += `<pre>${htmlEncode(explanation)}</pre>`;
                 }
@@ -421,6 +421,7 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
             if (mySeq !== this.aiRequestSeq) return false;
             console.error('ai-redis-query failed', e);
             const errMsg = e.message || String(e);
+            this.outputAppend(`<span style="color: var(--p3xr-btn-warn-bg);">AI error: ${htmlEncode(errMsg)}</span>`);
             // Show user-friendly error for rate limits
             if (errMsg.includes('429') || errMsg.includes('rate_limit') || errMsg.includes('Rate limit')) {
                 this.common.toast(this.i18n.strings().page?.key?.label?.aiRateLimited);

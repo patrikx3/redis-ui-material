@@ -165,6 +165,22 @@ body {
     height: 24px !important;
 }
 
+/* Icon buttons: square-rounded (4px) hover + ripple, matching Angular.
+   High specificity so scoped toolbar padding rules don't re-widen them. */
+.v-btn.v-btn--icon.v-btn--icon {
+    border-radius: 4px !important;
+    aspect-ratio: 1 !important;
+    padding: 0 !important;
+    min-width: 0 !important;
+    width: auto !important;
+}
+.v-btn.v-btn--icon.v-btn--icon .v-btn__overlay,
+.v-btn.v-btn--icon.v-btn--icon .v-btn__underlay,
+.v-btn.v-btn--icon.v-btn--icon .v-ripple__container,
+.v-btn.v-btn--icon.v-btn--icon .v-ripple__animation {
+    border-radius: 4px !important;
+}
+
 /* Animation control — disable all transitions/animations including Vuetify overlays */
 body.p3xr-no-animation *,
 body.p3xr-no-animation *::before,
