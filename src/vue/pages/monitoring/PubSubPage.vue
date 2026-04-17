@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, watch } from 'vue'
 import P3xrAccordion from '../../components/P3xrAccordion.vue'
 import P3xrButton from '../../components/P3xrButton.vue'
 import { useI18nStore } from '../../stores/i18n'
@@ -63,9 +63,19 @@ function recalcHeight(): void {
     if (!el) return
     const rect = el.getBoundingClientRect()
     const footerHeight = document.getElementById('p3xr-layout-footer-container')?.offsetHeight || 48
-    const available = window.innerHeight - rect.top - footerHeight - 8
+    const drawerCssValue = getComputedStyle(document.documentElement)
+        .getPropertyValue('--p3xr-console-drawer-height-active').trim()
+    let drawerHeight = 0
+    if (drawerCssValue.endsWith('vh')) drawerHeight = Math.round((parseFloat(drawerCssValue) / 100) * window.innerHeight)
+    else if (drawerCssValue.endsWith('px')) drawerHeight = parseFloat(drawerCssValue)
+    const available = window.innerHeight - rect.top - footerHeight - drawerHeight - 8
     el.style.height = Math.max(available, 100) + 'px'
 }
+
+// Re-run height calculation when the global console drawer opens/closes
+watch(() => state.consoleDrawerOpen, () => {
+    setTimeout(() => recalcHeight(), 160) // after the 150ms drawer transition
+})
 
 function clearPubSub(): void {
     storeClearPubSub()

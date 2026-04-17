@@ -58,6 +58,8 @@ export const useMainCommandStore = create<MainCommandState>(() => ({
             const strings = useI18nStore.getState().strings
             overlay.show({ message: strings?.title?.connectingRedis })
 
+            useRedisStateStore.setState({ connectionState: 'connecting' })
+
             const response = await request({
                 action: 'connection/connect',
                 payload: { connection: cloned, db },
@@ -79,13 +81,14 @@ export const useMainCommandStore = create<MainCommandState>(() => ({
                 hasRediSearch: modules.some((m: any) => m.name === 'search'),
                 hasTimeSeries: modules.some((m: any) => m.name === 'timeseries' || m.name === 'Timeseries'),
                 hasBloom: modules.some((m: any) => m.name === 'bf'),
+                connectionState: 'connected',
             })
 
             useCommonStore.getState().loadRedisInfoResponse({ response })
             try { localStorage.setItem(settings.connectInfoStorageKey, JSON.stringify(cloned)) } catch {}
         } catch (error) {
             try { localStorage.removeItem(settings.connectInfoStorageKey) } catch {}
-            useRedisStateStore.setState({ connection: undefined })
+            useRedisStateStore.setState({ connection: undefined, connectionState: 'none' })
             useCommonStore.getState().generalHandleError(error)
         } finally {
             overlay.hide()
@@ -168,6 +171,7 @@ export const useMainCommandStore = create<MainCommandState>(() => ({
         try { localStorage.removeItem(settings.connectInfoStorageKey) } catch {}
         useRedisStateStore.setState({
             connection: undefined,
+            connectionState: 'none',
             redisConnections: {},
             monitor: false,
         })

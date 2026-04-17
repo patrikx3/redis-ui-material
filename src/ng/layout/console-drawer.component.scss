@@ -1,0 +1,90 @@
+@use "../../scss/vars" as v;
+
+// ---------------------------------------------------------------------------
+// Global bottom console drawer
+//
+// Mounts at app-shell level (LayoutComponent), sibling of <router-outlet>.
+// No wrapper chrome — the ConsoleComponent's own toolbar acts as the header.
+// When closed, height is 0 so the open/close transition animates smoothly.
+// When open, 30vh just above the footer toolbar.
+// ---------------------------------------------------------------------------
+
+:root {
+    --p3xr-console-drawer-height: 30vh;
+}
+
+#p3xr-console-drawer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: var(--p3xr-layout-footer-height, 48px);
+    height: 0;
+    overflow: hidden;
+    background: var(--p3xr-content-bg, var(--mat-app-background-color));
+    color: var(--mat-app-text-color, inherit);
+    border-top: 1px solid var(--p3xr-content-border-color, rgba(255, 255, 255, 0.12));
+    z-index: 8;
+    transition: height 150ms ease-out;
+    display: flex;
+    flex-direction: column;
+
+    &.p3xr-drawer-open {
+        height: var(--p3xr-console-drawer-height);
+    }
+}
+
+#p3xr-console-drawer-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+    position: relative;
+
+    // The embedded console component must fill the body
+    p3xr-console {
+        display: block;
+        height: 100%;
+        width: 100%;
+    }
+}
+
+.p3xr-console-drawer-empty {
+    padding: 16px 20px;
+    font-size: 13px;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    .p3xr-console-drawer-empty-row {
+        white-space: pre-wrap;
+    }
+
+    .p3xr-console-drawer-empty-title {
+        font-size: 15px;
+        font-weight: 500;
+        margin-bottom: 4px;
+    }
+
+    .p3xr-console-drawer-empty-hint {
+        opacity: 0.7;
+        font-size: 12px;
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Footer Console button reuses the header's .p3xr-nav-active style when the
+// drawer is open — no custom styling needed here.
+// ---------------------------------------------------------------------------
+// Page content padding when drawer is open
+//
+// When the drawer is open, page content must not disappear behind it.
+// LayoutComponent toggles a class on the <html> root; pages read the value.
+// ---------------------------------------------------------------------------
+
+html.p3xr-console-drawer-open {
+    --p3xr-console-drawer-height-active: var(--p3xr-console-drawer-height);
+}
+
+html:not(.p3xr-console-drawer-open) {
+    --p3xr-console-drawer-height-active: 0px;
+}

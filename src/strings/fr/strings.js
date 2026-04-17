@@ -238,6 +238,221 @@ const strings = {
     aiRoutingNetwork: "Les requêtes IA sont acheminées via network.corifeus.com. Si vous avez votre propre clé API Groq gratuite, vous pouvez désactiver ce commutateur.",
     aiMaxTokens: "Nombre maximal de jetons IA",
     aiMaxTokensInfo: "Nombre maximal de jetons pour les réponses de l'IA. Des valeurs plus élevées permettent des réponses plus longues mais peuvent consommer plus de crédits API.",
+    consoleDrawer: {
+      toggleTooltip: "Basculer la console",
+      clearTooltip: "Effacer le défilement",
+      closeTooltip: "Fermer la console",
+      aiSettingsTooltip: "Paramètres AI",
+      modeRedis: "REDIS",
+      modeAi: "AI",
+      connectionChipNoDb: opts => `${opts.name}`,
+      connectionChipWithDb: opts => `${opts.name} · db ${opts.db}`,
+      pageChip: opts => `page : ${opts.page}`,
+      connectingTo: opts => `Connexion à ${opts.name}…`,
+      connectedTo: opts => `Connecté à ${opts.name} (Redis ${opts.version} ${opts.mode}, ${opts.modules} modules chargés)`,
+      connectedToNoInfo: opts => `Connecté à ${opts.name}`,
+      disconnectedFrom: opts => `Déconnecté de ${opts.name}`,
+      readyIndicator: "Prêt."
+    },
+    cheatsheet: {
+      title: "AI Aide-mémoire — Que puis-je demander ?",
+      subtitle: "Cliquez sur n’importe quelle invite pour la coller dans la console. Appuyez ensuite sur Entrée.",
+      searchPlaceholder: "Filtrer les invites…",
+      openOfficialDocs: "Redis Commandes ↗",
+      openOfficialDocsTooltip: "Ouvrez la référence officielle des commandes Redis sur redis.io",
+      closeTooltip: "Fermer (Échap)",
+      empty: "Aucune invite ne correspond à votre filtre.",
+      footerHint: "Astuce : tapez « ai: » suivi de n'importe quoi dans n'importe quelle langue — le AI comprend 54 langues et utilise l'état Redis en direct si nécessaire.",
+      groups: {
+        diagnostics: {
+          name: "Diagnostic en direct",
+          description: "Demandez au AI d'enquêter sur l'état du serveur en direct via des outils sécurisés en lecture seule.",
+          prompts: [
+            "pourquoi la mémoire est-elle élevée ?",
+            "montre-moi les 10 requêtes les plus lentes",
+            "quels clients sont connectés ?",
+            "quelle est la politique de mémoire maximale ?",
+            "y a-t-il eu des expulsions récentes ?",
+            "y a-t-il un événement de latence ?",
+            "depuis combien de temps le serveur est-il opérationnel ?",
+            "quel est le taux de réussite ?",
+            "afficher l'utilisation du processeur",
+            "résumer l'espace de clés",
+            "Quelle quantité de mémoire chaque type de données utilise-t-il ?",
+            "est-ce que quelque chose bloque le serveur en ce moment ?"
+          ]
+        },
+        keys: {
+          name: "Clés",
+          description: "Inspectez, trouvez et raisonnez sur les clés sans cliquer dans l'arborescence.",
+          prompts: [
+            "trouver toutes les clés correspondant à user:*",
+            "combien de clés dans chaque base de données ?",
+            "afficher le plus gros hachage dans ce db",
+            "trouver des clés avec un TTL inférieur à 60 secondes",
+            "quelles clés n'ont pas de TTL ?",
+            "de quel type est la clé session:abc ?",
+            "estimer la mémoire utilisée par le préfixe \"session:\"",
+            "afficher l'encodage d'objet de la clé user:42",
+            "Y a-t-il des clés sur le point d'expirer ?",
+            "quel espace de noms utilise le plus de mémoire ?"
+          ]
+        },
+        dataTypes: {
+          name: "Types de données",
+          description: "Phrase en langage naturel pour créer/lire/mettre à jour sur chaque type Redis.",
+          prompts: [
+            "créez un hachage nommé user:1 avec les champs name=Alice age=30",
+            "ajoutez trois éléments à la liste tasks",
+            "ajouter des membres pour définir favourites",
+            "ajouter des membres notés à l'ensemble trié leaderboard",
+            "ajouter un événement pour diffuser events",
+            "obtenir les 10 dernières entrées du flux events",
+            "obtenir tous les champs de l'utilisateur de hachage : 1",
+            "obtenir les membres de l'ensemble favourites",
+            "Obtenez le top 10 par score de leaderboard"
+          ]
+        },
+        modules: {
+          name: "Modules",
+          description: "Requêtes pour les modules Redis chargés (les catégories ci-dessous apparaissent uniquement lorsque le module est présent).",
+          prompts: []
+        },
+        json: {
+          name: "RedisJSON",
+          description: "Disponible lorsque le module ReJSON est chargé.",
+          prompts: [
+            "créez un document JSON à user:42 avec { nom : \"Alice\", âge : 30 }",
+            "lire le champ de nom de user:42",
+            "mettre à jour l'âge de user:42 à 31 ans",
+            "lister toutes les clés JSON",
+            "supprimer un champ d'un document JSON",
+            "obtenir un champ imbriqué en utilisant JSONPath"
+          ]
+        },
+        search: {
+          name: "RediSearch",
+          description: "Disponible lorsque le module de recherche est chargé.",
+          prompts: [
+            "lister tous les index de texte intégral",
+            "lancez une recherche en texte intégral pour \"redis\" sur l'index idx:products",
+            "créer un index basé sur un hachage avec les champs titre (TEXT) et prix (NUMERIC)",
+            "obtenir des informations sur l'index idx:products",
+            "indice de chute idx:products",
+            "trouver des documents dont le prix est compris entre 10 et 50",
+            "rédiger une recherche hybride combinant similarité de texte et de vecteur"
+          ]
+        },
+        timeseries: {
+          name: "RedisTimeSeries",
+          description: "Disponible lorsque le module timeseries est chargé.",
+          prompts: [
+            "lister toutes les clés de séries temporelles",
+            "ajouter un point de données à temp:room1",
+            "obtenez la gamme de temp:room1 d'hier à maintenant",
+            "obtenez plusieurs gammes par étiquette sensor=temp",
+            "générer 100 points de données sinusoïdales pour temp:room1",
+            "afficher la rétention et les étiquettes pour temp:room1"
+          ]
+        },
+        bloom: {
+          name: "RedisBloom (Fleur / Coucou / Top-K / CMS / T-Digest)",
+          description: "Disponible lorsque le module bf est chargé.",
+          prompts: [
+            "vérifier si l'article foo existe dans le filtre bloom spam:ips",
+            "ajouter des éléments au filtre bloom spam:ips",
+            "créer un top-K nommé popular avec K=10",
+            "requête count-min sketch traffic pour la clé /home",
+            "ajoutez des valeurs à t-digest et obtenez le 95e centile",
+            "Afficher les informations sur le filtre Bloom spam:ips"
+          ]
+        },
+        vectorSet: {
+          name: "VectorSet (Redis 8+)",
+          description: "Disponible lorsque Redis 8+ est détecté (type VECTORSET natif).",
+          prompts: [
+            "ajouter un vecteur à embeddings",
+            "trouver les 10 vecteurs les plus similaires à un vecteur de requête",
+            "afficher les dimensions et le nombre de vecteurs embeddings",
+            "supprimer un élément du vectorset embeddings",
+            "recherche par nom d'élément avec VSIM"
+          ]
+        },
+        redis8: {
+          name: "Redis 8+ fonctionnalités",
+          description: "Affiché lorsque Redis 8+ est détecté.",
+          prompts: [
+            "définir le champ de hachage ttl avec HEXPIRE",
+            "obtenir le résumé d'une valeur de chaîne",
+            "exécuter une recherche hybride texte intégral + vecteur (FT.HYBRID)",
+            "définir plusieurs clés avec une expiration partagée en utilisant MSETEX",
+            "supprimer une entrée de flux avec un groupe de consommateurs (XDELEX)",
+            "afficher les statistiques des emplacements du cluster pour les 10 premiers emplacements"
+          ]
+        },
+        scripting: {
+          name: "Script",
+          description: "Générez des scripts Lua / EVAL à partir de descriptions en langage naturel.",
+          prompts: [
+            "écrire un script atomique qui incrémente counter X uniquement si Y > 5",
+            "générer 100 clés aléatoires avec Lua",
+            "convertissez ce pipeline shell en un seul EVAL : clés user:* | OBTENIR | grep inactif | DEL",
+            "porter une opération par lots sur Lua pour la sécurité du cluster",
+            "mise à jour du style de vérification et de définition en un seul appel Lua",
+            "parcourir un hachage et supprimer les champs correspondant à un modèle"
+          ]
+        },
+        cluster: {
+          name: "Grappe",
+          description: "Affiché uniquement en mode cluster.",
+          prompts: [
+            "afficher les informations sur le cluster",
+            "lister les nœuds du cluster",
+            "afficher les 10 meilleurs emplacements par nombre de clés",
+            "afficher les 10 meilleurs emplacements par mémoire",
+            "quel maître possède le slot 5000 ?"
+          ]
+        },
+        acl: {
+          name: "ACL (Redis 6+)",
+          description: "Inspectez les utilisateurs de contrôle d’accès et la connexion actuelle.",
+          prompts: [
+            "en tant que qui suis-je connecté ?",
+            "lister tous les utilisateurs ACL",
+            "de quelles autorisations ai-je ?",
+            "afficher les règles utilisateur par défaut"
+          ]
+        },
+        qna: {
+          name: "Questions et réponses générales",
+          description: "Posez des questions de connaissances Redis – pas d'outils, juste des réponses.",
+          prompts: [
+            "qu'est-ce que ZADD ?",
+            "comment fonctionne le basculement de cluster ?",
+            "expliquer SCAN vs KEYS",
+            "quand dois-je utiliser EVAL plutôt que plusieurs commandes ?",
+            "quelles sont les options de persistance Redis ?",
+            "quelle est la différence entre RDB et AOF ?",
+            "comment Redis Sentinel choisit-il un nouveau maître ?",
+            "expliquer les balises de hachage en mode cluster"
+          ]
+        },
+        translate: {
+          name: "Langage naturel → commande Redis",
+          description: "Décrivez ce que vous voulez dans l'une des 54 langues ; le AI écrit la commande Redis.",
+          prompts: [
+            "supprimer la clé user:42",
+            "renommer la clé foo en barre",
+            "expirer la clé session:abc dans 10 secondes",
+            "copier la source de la clé vers la destination",
+            "augmenter les visites au compteur par 5",
+            "définir le message d'accueil clé sur \"hello\" pendant 1 heure",
+            "supprimer toutes les clés user:*",
+            "montre-moi les 10 clés les plus occupées"
+          ]
+        }
+      }
+    },
     ssh: {
       on: 'SSH activé',
       off: 'SSH désactivé',
@@ -280,7 +495,7 @@ const strings = {
     treeSeparatorEmpty: "Si le séparateur d'arbre est vide, l'arbre n'aura pas de nœuds imbriqués, juste une liste simple",
     treeSeparatorEmptyNote: "Pas de nœuds imbriqués, juste une liste simple",
     welcomeConsole: "Bienvenue dans la console Redis",
-    welcomeConsoleInfo: "L'historique avec les flèches HAUT ou BAS est activé",
+    welcomeConsoleInfo: "SHIFT + L'historique avec les flèches HAUT ou BAS est activé",
     redisListIndexInfo: "Vide pour ajouter à la fin, -1 pour ajouter au début ou enregistrer à la position affichée.",
     console: "Console",
     connectiondAdd: "Ajouter une connexion",
@@ -856,6 +1071,13 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+  },
+  promo: {
+    title: "AI Assistant réseau",
+    description: "Découvrez notre assistant réseau AI gratuit sur network.corifeus.com : analysez les domaines, les IP, les enregistrements DNS, les certificats SSL, la sécurité de la messagerie électronique et l'infrastructure réseau. Alimenté par AI pour des résultats instantanés et complets.",
+    disclaimer: "Cette promotion est uniquement affichée sur le site de démonstration et n'apparaîtra pas dans les déploiements Docker, Electron ou d'applications Web.",
+    toastMessage: "Essayez notre assistant réseau AI gratuit sur network.corifeus.com : analysez les domaines, DNS, SSL et plus encore !",
+    visit: "Visitez network.corifeus.com"
   }
 };
 module.exports = strings;

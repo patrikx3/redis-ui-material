@@ -236,6 +236,232 @@ const strings = {
     aiRoutingNetwork: "AI-spørringer rutes via network.corifeus.com. Hvis du har din egen gratis Groq API-nøkkel, kan du slå av denne bryteren for å rute direkte til Groq uten network.corifeus.com.",
     aiMaxTokens: "AI-maksimalt antall tokens",
     aiMaxTokensInfo: "Maksimalt antall tokens for AI-svar. Høyere verdier gir lengre svar, men kan bruke flere API-kreditter.",
+    consoleDrawer: {
+      toggleTooltip: "Bytt konsoll",
+      clearTooltip: "Tøm konsollhistorikk",
+      closeTooltip: "Lukk konsoll",
+      aiSettingsTooltip: "AI-innstillinger",
+      modeRedis: "REDIS",
+      modeAi: "AI",
+      connectionChipNoDb: opts => `${opts.name}`,
+      connectionChipWithDb: opts => `${opts.name} · db ${opts.db}`,
+      pageChip: opts => `side: ${opts.page}`,
+      connectingTo: opts => `Kobler til ${opts.name}…`,
+      connectedTo: opts => `Tilkoblet ${opts.name} (Redis ${opts.version} ${opts.mode}, ${opts.modules} moduler lastet inn)`,
+      connectedToNoInfo: opts => `Tilkoblet ${opts.name}`,
+      disconnectedFrom: opts => `Koblet fra ${opts.name}`,
+      notConnected: "Ikke tilkoblet.",
+      limitedAiOnly: "Kun begrenset AI — generell Redis-spørsmål og -svar fungerer.",
+      connectHint: "For live-diagnostikk, skriv: connect <name>",
+      cheatsheetHint: "Skriv ai: help for å se hva du kan spørre om.",
+      needsConnection: "Dette krever en aktiv tilkobling. Skriv \"connect <name>\" først.",
+      aiNeedsConnectionReason: "Live-state AI (tool use) er bare tilgjengelig når du er koblet til Redis.",
+      verbNeedsConnection: opts => `"${opts.verb}" krever en aktiv tilkobling — skriv "connect <name>" først.`,
+      aiLimitedMode: "AI er i begrenset modus — bare spørsmål om generell Redis-kunnskap fungerer til du kobler til.",
+      welcomeDisconnected: "Velkommen. Du er ikke koblet til noen Redis-instans ennå.",
+      readyIndicator: "Klar.",
+    },
+    cheatsheet: {
+      title: "AI-juksekort — hva kan jeg spørre om?",
+      subtitle: "Klikk på en melding for å lime den inn i konsollen. Trykk så Enter.",
+      searchPlaceholder: "Filtrer meldinger…",
+      openOfficialDocs: "Redis-kommandoer ↗",
+      openOfficialDocsTooltip: "Åpne den offisielle referansen for Redis-kommandoer på redis.io",
+      closeTooltip: "Lukk (Esc)",
+      empty: "Ingen meldinger samsvarer med filteret.",
+      footerHint: "Tips: skriv \"ai:\" etterfulgt av hva som helst på et hvilket som helst språk — AI-en forstår 54 språk og bruker sanntids Redis-tilstand ved behov.",
+
+      // Each group has: name (category label), match (search-filter alias), prompts (array of example strings)
+      groups: {
+        diagnostics: {
+          name: "Sanntidsdiagnostikk",
+          description: "Be AI-en undersøke tjenerens sanntidstilstand via trygge, skrivebeskyttede verktøy.",
+          prompts: [
+            "hvorfor er minnebruken høy?",
+            "vis meg de 10 tregeste spørringene",
+            "hvilke klienter er tilkoblet?",
+            "hva er maxmemory-policyen?",
+            "har det vært nylige utkastelser?",
+            "finnes det noen latens-hendelse?",
+            "hvor lenge har tjeneren vært oppe?",
+            "hva er treffraten?",
+            "vis CPU-bruk",
+            "oppsummer nøkkelrommet",
+            "hvor mye minne bruker hver datatype?",
+            "er det noe som blokkerer tjeneren akkurat nå?"
+          ]
+        },
+        keys: {
+          name: "Nøkler",
+          description: "Inspiser, finn og resoner om nøkler uten å klikke deg gjennom treet.",
+          prompts: [
+            "finn alle nøkler som matcher user:*",
+            "hvor mange nøkler i hver database?",
+            "vis den største hashen i denne db-en",
+            "finn nøkler med TTL under 60 sekunder",
+            "hvilke nøkler har ikke TTL?",
+            "hvilken type er nøkkelen session:abc?",
+            "estimer minnet brukt av prefikset \"session:\"",
+            "vis objektkodingen til nøkkelen user:42",
+            "er det noen nøkler som snart utløper?",
+            "hvilken navneromsprefiks bruker mest minne?"
+          ]
+        },
+        dataTypes: {
+          name: "Datatyper",
+          description: "Naturlig språk-formuleringer for opprett/les/oppdater på alle Redis-typer.",
+          prompts: [
+            "opprett en hash kalt user:1 med feltene name=Alice age=30",
+            "legg til tre elementer i listen tasks",
+            "legg til medlemmer i settet favourites",
+            "legg til scorede medlemmer i sortert sett leaderboard",
+            "legg til en hendelse i strømmen events",
+            "hent de siste 10 oppføringene fra strømmen events",
+            "hent alle feltene til hashen user:1",
+            "hent medlemmer av settet favourites",
+            "hent topp 10 etter score fra leaderboard"
+          ]
+        },
+        modules: {
+          name: "Moduler",
+          description: "Spørringer for lastede Redis-moduler (kategoriene nedenfor vises bare når modulen er tilgjengelig).",
+          prompts: []
+        },
+        json: {
+          name: "RedisJSON",
+          description: "Tilgjengelig når ReJSON-modulen er lastet.",
+          prompts: [
+            "opprett et JSON-dokument på user:42 med { name: \"Alice\", age: 30 }",
+            "les name-feltet til user:42",
+            "oppdater alderen til user:42 til 31",
+            "list alle JSON-nøkler",
+            "slett et felt fra et JSON-dokument",
+            "hent et nestet felt med JSONPath"
+          ]
+        },
+        search: {
+          name: "RediSearch",
+          description: "Tilgjengelig når search-modulen er lastet.",
+          prompts: [
+            "list alle fulltekstindekser",
+            "kjør et fulltekstsøk etter \"redis\" på indeksen idx:products",
+            "opprett en hash-basert indeks med feltene title (TEXT) og price (NUMERIC)",
+            "hent info om indeksen idx:products",
+            "slipp indeksen idx:products",
+            "finn dokumenter der price er mellom 10 og 50",
+            "skriv et hybridsøk som kombinerer tekst og vektor-likhet"
+          ]
+        },
+        timeseries: {
+          name: "RedisTimeSeries",
+          description: "Tilgjengelig når timeseries-modulen er lastet.",
+          prompts: [
+            "list alle timeseries-nøkler",
+            "legg til et datapunkt i temp:room1",
+            "hent spennet for temp:room1 fra i går til nå",
+            "hent flerspenn etter etiketten sensor=temp",
+            "generer 100 sinusbølge-datapunkter for temp:room1",
+            "vis retensjon og etiketter for temp:room1"
+          ]
+        },
+        bloom: {
+          name: "RedisBloom (Bloom / Cuckoo / Top-K / CMS / T-Digest)",
+          description: "Tilgjengelig når bf-modulen er lastet.",
+          prompts: [
+            "sjekk om elementet foo finnes i bloom-filteret spam:ips",
+            "legg til elementer i bloom-filteret spam:ips",
+            "opprett en top-K kalt popular med K=10",
+            "spør count-min sketch traffic for nøkkelen /home",
+            "legg til verdier i t-digest og hent 95-persentilen",
+            "vis info for bloom-filteret spam:ips"
+          ]
+        },
+        vectorSet: {
+          name: "VectorSet (Redis 8+)",
+          description: "Tilgjengelig når Redis 8+ oppdages (innebygd VECTORSET-type).",
+          prompts: [
+            "legg til en vektor i embeddings",
+            "finn de 10 mest like vektorene til en søkevektor",
+            "vis dimensjoner og antall for vectorset embeddings",
+            "slett et element fra vectorset embeddings",
+            "søk etter elementnavn med VSIM"
+          ]
+        },
+        redis8: {
+          name: "Redis 8+-funksjoner",
+          description: "Vises når Redis 8+ oppdages.",
+          prompts: [
+            "sett TTL på et hash-felt med HEXPIRE",
+            "hent digesten til en strengverdi",
+            "kjør et hybrid fulltekst + vektor-søk (FT.HYBRID)",
+            "sett flere nøkler med felles utløp via MSETEX",
+            "slett en strømoppføring med konsumentgruppe (XDELEX)",
+            "vis cluster slot-stats for topp 10 slots"
+          ]
+        },
+        scripting: {
+          name: "Skripting",
+          description: "Generer Lua- / EVAL-skript fra naturlig språk-beskrivelser.",
+          prompts: [
+            "skriv et atomisk skript som øker telleren X kun hvis Y > 5",
+            "generer 100 tilfeldige nøkler med Lua",
+            "konverter denne shell-pipelinen til én enkelt EVAL: keys user:* | GET | grep inactive | DEL",
+            "port en batch-operasjon til Lua for cluster-sikkerhet",
+            "check-and-set-oppdatering i ett enkelt Lua-kall",
+            "iterer over en hash og slett felter som matcher et mønster"
+          ]
+        },
+        cluster: {
+          name: "Cluster",
+          description: "Vises bare i cluster-modus.",
+          prompts: [
+            "vis cluster-info",
+            "list cluster-noder",
+            "vis topp 10 slots etter antall nøkler",
+            "vis topp 10 slots etter minne",
+            "hvilken master eier slot 5000?"
+          ]
+        },
+        acl: {
+          name: "ACL (Redis 6+)",
+          description: "Inspiser tilgangskontrollbrukere og gjeldende tilkobling.",
+          prompts: [
+            "hvem er jeg tilkoblet som?",
+            "list alle ACL-brukere",
+            "hvilke rettigheter har jeg?",
+            "vis reglene for default-brukeren"
+          ]
+        },
+        qna: {
+          name: "Generell spørsmål og svar",
+          description: "Still Redis-kunnskapsspørsmål — ingen verktøy, bare svar.",
+          prompts: [
+            "hva er ZADD?",
+            "hvordan fungerer cluster-failover?",
+            "forklar SCAN vs KEYS",
+            "når bør jeg bruke EVAL framfor flere kommandoer?",
+            "hva er Redis sine persistensalternativer?",
+            "hva er forskjellen mellom RDB og AOF?",
+            "hvordan bestemmer Redis Sentinel en ny master?",
+            "forklar hash tags i cluster-modus"
+          ]
+        },
+        translate: {
+          name: "Naturlig språk → Redis-kommando",
+          description: "Beskriv det du vil ha på vanlig norsk (eller et av 54 språk); AI-en skriver Redis-kommandoen.",
+          prompts: [
+            "slett nøkkelen user:42",
+            "gi nytt navn til nøkkelen foo til bar",
+            "la nøkkelen session:abc utløpe om 10 sekunder",
+            "kopier nøkkelen source til destination",
+            "øk telleren visits med 5",
+            "sett nøkkelen greeting til \"hello\" i 1 time",
+            "vis meg de 10 mest brukte nøklene",
+            "slett alle nøkler som matcher temp:*"
+          ]
+        }
+      }
+    },
     ssh: {
       on: "SSH på",
       off: "SSH av",
@@ -278,7 +504,7 @@ const strings = {
     treeSeparatorEmpty: "Hvis treskilleren er tom, vil treet ikke ha noen nestede noder, bare en ren liste",
     treeSeparatorEmptyNote: "Ingen nestede noder, bare en ren liste",
     welcomeConsole: "Velkommen til Redis-konsollen",
-    welcomeConsoleInfo: "Markør OPP- eller NED-historikk er aktivert",
+    welcomeConsoleInfo: "SHIFT + Markør OPP- eller NED-historikk er aktivert",
     redisListIndexInfo: "Tom for å legge til, -1 for å legge til eller lagre den til posisjonen som vises.",
     console: "Konsoll",
     connectiondAdd: "Legg til tilkobling",
@@ -854,6 +1080,13 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+  },
+  promo: {
+    title: "AI-nettverksassistent",
+    description: "Oppdag vår gratis AI-nettverksassistent på network.corifeus.com — analyser domener, IP-er, DNS-poster, SSL-sertifikater, e-postsikkerhet og nettverksinfrastruktur. Drevet av AI for umiddelbare og omfattende resultater.",
+    disclaimer: "Denne kampanjen vises bare på demosiden og vil ikke vises i Docker-, Electron- eller webapp-distribusjoner.",
+    toastMessage: "Prøv vår gratis AI-nettverksassistent på network.corifeus.com — analyser domener, DNS, SSL og mer!",
+    visit: "Besøk network.corifeus.com",
   }
 };
 module.exports = strings;

@@ -236,6 +236,221 @@ const strings = {
     aiRoutingNetwork: "AI-kyselyt reititetään network.corifeus.comin kautta. Jos sinulla on oma ilmainen Groq API-avain, voit kytkeä tämän pois päältä ja reitittää suoraan Groqiin ilman network.corifeus.comia.",
     aiMaxTokens: "AI:n enimmäistokenit",
     aiMaxTokensInfo: "AI-vastausten enimmäistokenimäärä. Suuremmat arvot mahdollistavat pidemmät vastaukset, mutta voivat kuluttaa enemmän API-krediittejä.",
+    consoleDrawer: {
+      toggleTooltip: "Vaihda konsoli",
+      clearTooltip: "Tyhjennä selaus taaksepäin",
+      closeTooltip: "Sulje konsoli",
+      aiSettingsTooltip: "AI asetukset",
+      modeRedis: "REDIS",
+      modeAi: "AI",
+      connectionChipNoDb: opts => `${opts.name}`,
+      connectionChipWithDb: opts => `${opts.name} · db ${opts.db}`,
+      pageChip: opts => `sivu: ${opts.page}`,
+      connectingTo: opts => `Yhdistetään kohteeseen ${opts.name}…`,
+      connectedTo: opts => `Yhdistetty laitteeseen ${opts.name} (Redis ${opts.version} ${opts.mode}, ${opts.modules} moduulia ladattu)`,
+      connectedToNoInfo: opts => `Yhdistetty: ${opts.name}`,
+      disconnectedFrom: opts => `Yhteys katkaistu kohteeseen ${opts.name}`,
+      readyIndicator: "Valmis."
+    },
+    cheatsheet: {
+      title: "AI Cheatsheet – Mitä voin kysyä?",
+      subtitle: "Napsauta mitä tahansa kehotetta liittääksesi se konsoliin. Paina sitten Enter.",
+      searchPlaceholder: "Suodata kehotteet…",
+      openOfficialDocs: "Redis Komennot ↗",
+      openOfficialDocsTooltip: "Avaa virallinen Redis-komentoviite osoitteessa redis.io",
+      closeTooltip: "Sulje (Esc)",
+      empty: "Yksikään kehote ei vastaa suodatinta.",
+      footerHint: "Vinkki: kirjoita \"ai:\" ja sen jälkeen mitä tahansa millä tahansa kielellä – AI ymmärtää 54 kieltä ja käyttää tarvittaessa live-tilaa Redis.",
+      groups: {
+        diagnostics: {
+          name: "Live-diagnostiikka",
+          description: "Pyydä AI tutkimaan live-palvelimen tilaa turvallisten vain luku -työkalujen avulla.",
+          prompts: [
+            "miksi muisti on korkea?",
+            "näytä minulle 10 hitainta kyselyä",
+            "mitkä asiakkaat ovat yhteydessä?",
+            "mikä on enimmäismuistikäytäntö?",
+            "onko viimeaikaisia häätöjä?",
+            "onko jotain latenssitapahtumaa?",
+            "kuinka kauan palvelin on ollut pystyssä?",
+            "mikä on osumaprosentti?",
+            "näytä prosessorin käyttö",
+            "tiivistää avainväli",
+            "kuinka paljon muistia kukin tietotyyppi käyttää?",
+            "estääkö mikään palvelinta juuri nyt?"
+          ]
+        },
+        keys: {
+          name: "Avaimet",
+          description: "Tarkista, etsi ja perustele avaimia napsauttamalla puuta.",
+          prompts: [
+            "etsi kaikki avaimet, jotka vastaavat user:*",
+            "kuinka monta avainta kussakin tietokannassa?",
+            "näytä suurin hash tässä db",
+            "Etsi avaimet, joiden TTL on alle 60 sekuntia",
+            "millä avaimilla ei ole TTL:ää?",
+            "minkä tyyppinen avain on session:abc?",
+            "arvioi etuliitteellä \"session:\" käyttämä muisti",
+            "näytä avaimen user:42 objektikoodaus",
+            "onko avaimia umpeutumassa?",
+            "mikä nimiavaruus käyttää eniten muistia?"
+          ]
+        },
+        dataTypes: {
+          name: "Tietotyypit",
+          description: "Luonnonkieliset lausekkeet luomista/lukemista/päivitystä varten kaikissa Redis-tyypeissä.",
+          prompts: [
+            "luo hash nimeltä user:1 kentillä name=Alice age=30",
+            "lisää kolme kohdetta luetteloon tasks",
+            "lisää jäseniä joukkoon favourites",
+            "lisää pisteytetyt jäsenet lajiteltuun joukkoon leaderboard",
+            "liitä tapahtuma streamiin events",
+            "hanki viimeiset 10 merkintää streamista events",
+            "hanki kaikki hash-käyttäjän kentät:1",
+            "hanki joukon favourites jäseniä",
+            "hanki top 10 pisteillä leaderboard"
+          ]
+        },
+        modules: {
+          name: "Moduulit",
+          description: "Ladattujen Redis-moduulien kyselyt (alla olevat luokat näkyvät vain, kun moduuli on läsnä).",
+          prompts: []
+        },
+        json: {
+          name: "RedisJSON",
+          description: "Saatavilla, kun ReJSON-moduuli on ladattu.",
+          prompts: [
+            "luo JSON asiakirja osoitteessa user:42 { nimi: \"Alice\", ikä: 30 }",
+            "lue nimikenttä user:42",
+            "päivitä user:42 ikä 31:ksi",
+            "luettele kaikki JSON avaimet",
+            "poista kenttä asiakirjasta JSON",
+            "hanki sisäkkäinen kenttä käyttämällä JSONPath"
+          ]
+        },
+        search: {
+          name: "RediSearch",
+          description: "Käytettävissä, kun hakumoduuli on ladattu.",
+          prompts: [
+            "luettele kaikki kokotekstihakemistot",
+            "suorita kokotekstihaku \"redis\" indeksissä idx:products",
+            "luo hash-tuettu indeksi kentillä otsikko (TEXT) ja hinta (NUMERIC)",
+            "saada tietoa indeksistä idx:products",
+            "pudotusindeksi idx:products",
+            "Etsi asiakirjoja, joiden hinta on 10–50",
+            "Kirjoita hybridihaku, joka yhdistää tekstin ja vektorin samankaltaisuuden"
+          ]
+        },
+        timeseries: {
+          name: "RedisTimeSeries",
+          description: "Käytettävissä, kun aikasarjamoduuli on ladattu.",
+          prompts: [
+            "luettele kaikki aikasarjan avaimet",
+            "lisää datapiste kohtaan temp:room1",
+            "hanki alue temp:room1 eilisestä tähän päivään",
+            "hanki monialue etiketillä sensor=temp",
+            "luo 100 siniaaltodatapistettä kohteelle temp:room1",
+            "näytä säilytys ja tunnisteet kohteelle temp:room1"
+          ]
+        },
+        bloom: {
+          name: "RedisBloom (Bloom / Käki / Top-K / CMS / T-Digest)",
+          description: "Käytettävissä, kun bf-moduuli on ladattu.",
+          prompts: [
+            "tarkista, onko kohde foo kukintasuodattimessa spam:ips",
+            "lisää kohteita kukintasuodattimeen spam:ips",
+            "luo top-K nimeltä popular, jossa K=10",
+            "kysely count-min luonnos traffic avaimelle /home",
+            "lisää arvoja t-digestiin ja saat 95. prosenttipisteen",
+            "näytä tiedot kukintasuodattimelle spam:ips"
+          ]
+        },
+        vectorSet: {
+          name: "VectorSet (Redis 8+)",
+          description: "Saatavilla, kun Redis 8+ havaitaan (natiivi VECTORSET-tyyppi).",
+          prompts: [
+            "lisää vektori embeddings",
+            "etsi 10 eniten samankaltaista vektoria kyselyvektorin kanssa",
+            "näytä vektorijoukon mitat ja lukumäärä embeddings",
+            "poista elementti vektorijoukosta embeddings",
+            "hae elementin nimellä VSIM"
+          ]
+        },
+        redis8: {
+          name: "Redis 8+ ominaisuuksia",
+          description: "Näytetään, kun Redis 8+ havaitaan.",
+          prompts: [
+            "aseta hash-kenttä ttl komennolla HEXPIRE",
+            "saada tiivistelmä merkkijonoarvosta",
+            "suorita hybridi kokoteksti + vektorihaku (FT.HYBRID)",
+            "aseta useita avaimia, joilla on jaettu voimassaoloaika käyttämällä MSETEX",
+            "poista stream-merkintä kuluttajaryhmän kanssa (XDELEX)",
+            "näytä 10 parhaan paikan klusterin paikkatilastot"
+          ]
+        },
+        scripting: {
+          name: "Käsikirjoitus",
+          description: "Luo Lua / EVAL skriptejä luonnollisen kielen kuvauksista.",
+          prompts: [
+            "kirjoita atomiskripti, joka kasvaa counter X vain jos Y > 5",
+            "luo 100 satunnaista avainta Lua",
+            "muuntaa tämä shell-liukuhihna yhdeksi EVAL: avaimet user:* | HANKI | grep ei-aktiivinen | DEL",
+            "siirrä erätoiminto osoitteeseen Lua klusterin turvallisuuden vuoksi",
+            "tarkista ja aseta tyylipäivitys yhdessä Lua-puhelussa",
+            "iteroi tiivistettä ja poista kuviota vastaavat kentät"
+          ]
+        },
+        cluster: {
+          name: "Klusteri",
+          description: "Näytetään vain klusteritilassa.",
+          prompts: [
+            "näytä klusterin tiedot",
+            "luettelo klusterin solmut",
+            "näytä 10 parasta paikkaa avainten lukumäärän mukaan",
+            "näytä 10 parasta paikkaa muistin mukaan",
+            "mikä mestari omistaa slot 5000?"
+          ]
+        },
+        acl: {
+          name: "ACL (Redis 6+)",
+          description: "Tarkista kulunvalvontakäyttäjät ja nykyinen yhteys.",
+          prompts: [
+            "keneksi olen yhteydessä?",
+            "luettele kaikki ACL käyttäjät",
+            "mitä lupia minulla on?",
+            "näyttää oletuskäyttäjäsäännöt"
+          ]
+        },
+        qna: {
+          name: "Yleiset kysymykset ja vastaukset",
+          description: "Kysy Redis tietokysymyksiä – ei työkaluja, vain vastauksia.",
+          prompts: [
+            "mikä on ZADD?",
+            "miten klusterin vikasieto toimii?",
+            "selitä SCAN vs KEYS",
+            "milloin minun pitäisi käyttää EVAL vs useita komentoja?",
+            "mitkä ovat Redis pysyvyysvaihtoehdot?",
+            "mitä eroa on RDB:lla ja AOF:lla?",
+            "miten Redis Sentinel päättää uuden mestarin?",
+            "selittää hash-tunnisteet klusteritilassa"
+          ]
+        },
+        translate: {
+          name: "Luonnollinen kieli → Redis -komento",
+          description: "Kuvaile mitä haluat millä tahansa 54 kielestä; AI kirjoittaa komennon Redis.",
+          prompts: [
+            "poista avain user:42",
+            "nimeä avain foo uudelleen palkkiin",
+            "vanhene avain session:abc 10 sekunnissa",
+            "kopioi avaimen lähde kohteeseen",
+            "lisää laskurikäyntejä 5:llä",
+            "aseta tervehdys \"hello\" 1 tunniksi",
+            "poista kaikki avaimet user:*",
+            "näytä minulle 10 kiireisintä avainta"
+          ]
+        }
+      }
+    },
     ssh: {
       on: "SSH päällä",
       off: "SSH pois päältä",
@@ -278,7 +493,7 @@ const strings = {
     treeSeparatorEmpty: "Jos puun erotin on tyhjä, puussa ei ole sisäkkäisiä solmuja, vain puhdas luettelo",
     treeSeparatorEmptyNote: "Ei sisäkkäisiä solmuja, vain puhdas luettelo",
     welcomeConsole: "Tervetuloa Redis-konsoliin",
-    welcomeConsoleInfo: "Kohdistimen YLÖS- tai ALAS-historia on käytössä",
+    welcomeConsoleInfo: "SHIFT + Kohdistimen YLÖS- tai ALAS-historia on käytössä",
     redisListIndexInfo: "Tyhjä lisätäksesi, -1 lisätäksesi tai tallentaaksesi sen näkyvään kohtaan.",
     console: "konsoli",
     connectiondAdd: "Lisää yhteys",
@@ -854,6 +1069,13 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+  },
+  promo: {
+    title: "AI Verkkoapuri",
+    description: "Tutustu ilmaiseen AI Network Assistant -verkkoavustajaamme osoitteessa network.corifeus.com — analysoi verkkotunnuksia, IPs-, DNS-tietueita, SSL-varmenteita, sähköpostin suojausta ja verkkoinfrastruktuuria. AI tarjoaa välittömiä ja kattavia tuloksia.",
+    disclaimer: "Tämä tarjous näkyy vain esittelysivustolla, eikä sitä näytetä Docker-, Electron- tai verkkosovellusten käyttöönotoissa.",
+    toastMessage: "Kokeile ilmaista AI Network Assistant -ohjelmaamme osoitteessa network.corifeus.com — analysoi verkkotunnuksia, DNS, SSL ja paljon muuta!",
+    visit: "Käy osoitteessa network.corifeus.com"
   }
 };
 module.exports = strings;

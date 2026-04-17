@@ -236,6 +236,232 @@ const strings = {
     aiRoutingNetwork: "AI сұраулары network.corifeus.com арқылы бағытталады. Егер өзіңіздің тегін Groq API кілтіңіз болса, бұл ауыстырғышты өшіріп, network.corifeus.com қолданбай тікелей Groq-қа бағыттай аласыз.",
     aiMaxTokens: "AI ең көп токендері",
     aiMaxTokensInfo: "AI жауаптары үшін токендердің ең көп саны. Жоғары мәндер ұзағырақ жауаптарға мүмкіндік береді, бірақ API кредиттерін көбірек пайдалануы мүмкін.",
+    consoleDrawer: {
+      toggleTooltip: "Консольді ауыстыру",
+      clearTooltip: "Шығыс тарихын тазалау",
+      closeTooltip: "Консольді жабу",
+      aiSettingsTooltip: "AI баптаулары",
+      modeRedis: "REDIS",
+      modeAi: "AI",
+      connectionChipNoDb: opts => `${opts.name}`,
+      connectionChipWithDb: opts => `${opts.name} · db ${opts.db}`,
+      pageChip: opts => `бет: ${opts.page}`,
+      connectingTo: opts => `${opts.name} жүйесіне қосылуда…`,
+      connectedTo: opts => `${opts.name} жүйесіне қосылды (Redis ${opts.version} ${opts.mode}, ${opts.modules} модуль жүктелді)`,
+      connectedToNoInfo: opts => `${opts.name} жүйесіне қосылды`,
+      disconnectedFrom: opts => `${opts.name} жүйесінен ажыратылды`,
+      notConnected: "Қосылмаған.",
+      limitedAiOnly: "Тек шектеулі AI қолжетімді. Redis бойынша жалпы сұрақ-жауап жұмыс істейді.",
+      connectHint: "Нақты уақыттағы диагностика үшін мынаны теріңіз: connect <name>",
+      cheatsheetHint: "Не сұрауға болатынын көру үшін ai: help деп теріңіз.",
+      needsConnection: "Бұл үшін белсенді қосылым қажет. Алдымен \"connect <name>\" деп теріңіз.",
+      aiNeedsConnectionReason: "Нақты күйдегі AI (tool use) тек Redis-ке қосылғанда қолжетімді.",
+      verbNeedsConnection: opts => `"${opts.verb}" үшін белсенді қосылым қажет. Алдымен "connect <name>" деп теріңіз.`,
+      aiLimitedMode: "AI шектеулі режимде тұр. Қосылғанға дейін Redis туралы жалпы білім сұрақтары ғана жұмыс істейді.",
+      welcomeDisconnected: "Қош келдіңіз. Сіз әлі ешбір Redis данасына қосылған жоқсыз.",
+      readyIndicator: "Дайын.",
+    },
+    cheatsheet: {
+      title: "AI парағы — не сұрауға болады?",
+      subtitle: "Кез келген сұрауды басып, оны консольге қойыңыз. Содан кейін Enter басыңыз.",
+      searchPlaceholder: "Сұрауларды сүзу…",
+      openOfficialDocs: "Redis Commands ↗",
+      openOfficialDocsTooltip: "redis.io сайтындағы ресми Redis командалары анықтамасын ашу",
+      closeTooltip: "Жабу (Esc)",
+      empty: "Сүзгіге сәйкес келетін сұрау жоқ.",
+      footerHint: "Кеңес: \"ai:\" деп теріп, одан кейін кез келген тілде кез келген мәтін жазыңыз — AI 54 тілді түсінеді және қажет болғанда Redis-тің нақты күйін пайдаланады.",
+
+      // Each group has: name (category label), match (search-filter alias), prompts (array of example strings)
+      groups: {
+        diagnostics: {
+          name: "Тікелей диагностика",
+          description: "Қауіпсіз тек оқу құралдары арқылы сервердің нақты күйін зерттеуді AI-дан сұраңыз.",
+          prompts: [
+            "неге жад жоғары?",
+            "ең баяу 10 сұрауды көрсет",
+            "қай клиенттер қосылған?",
+            "maxmemory саясаты қандай?",
+            "соңғы кезде эвикция болды ма?",
+            "латенттік оқиғалары бар ма?",
+            "сервер қанша уақыт жұмыс істеп тұр?",
+            "hit rate қандай?",
+            "cpu пайдалануын көрсет",
+            "keyspace қорытындысын жаса",
+            "әр деректер типі қанша жад пайдаланады?",
+            "қазір серверді бір нәрсе бұғаттап тұр ма?"
+          ]
+        },
+        keys: {
+          name: "Кілттер",
+          description: "Ағаш бойынша шертпестен кілттерді қарау, іздеу және талдау.",
+          prompts: [
+            "user:* шаблонына сай барлық кілттерді тап",
+            "әр деректер қорында неше кілт бар?",
+            "осы деректер қорындағы ең үлкен hash-ты көрсет",
+            "TTL-і 60 секундтан аз кілттерді тап",
+            "қай кілттерде TTL жоқ?",
+            "session:abc кілті қандай типте?",
+            "\"session:\" префиксі қанша жад пайдаланатынын бағала",
+            "user:42 кілтінің object encoding-ін көрсет",
+            "жақын арада мерзімі біткелі тұрған кілттер бар ма?",
+            "қай namespace ең көп жад пайдаланады?"
+          ]
+        },
+        dataTypes: {
+          name: "Деректер типтері",
+          description: "Әр Redis типі үшін құру/оқу/жаңарту табиғи тілде.",
+          prompts: [
+            "name=Alice age=30 өрістерімен user:1 атты hash құр",
+            "tasks тізіміне үш элемент қос",
+            "favourites жиынына мүшелер қос",
+            "leaderboard sorted set-ке балмен мүшелер қос",
+            "events ағынына оқиға қос",
+            "events ағынынан соңғы 10 жазбаны ал",
+            "user:1 hash-ының барлық өрістерін ал",
+            "favourites жиынының мүшелерін ал",
+            "leaderboard бойынша топ-10-ды балмен ал"
+          ]
+        },
+        modules: {
+          name: "Модульдер",
+          description: "Жүктелген Redis модульдеріне сұраулар (төмендегі санаттар модуль болған кезде ғана көрінеді).",
+          prompts: []
+        },
+        json: {
+          name: "RedisJSON",
+          description: "ReJSON модулі жүктелген кезде қолжетімді.",
+          prompts: [
+            "user:42 бойынша { name: \"Alice\", age: 30 } JSON құжатын құр",
+            "user:42-нің name өрісін оқы",
+            "user:42-нің age-ін 31-ге жаңарт",
+            "барлық JSON кілттерін тізімде",
+            "JSON құжатынан бір өрісті жой",
+            "JSONPath арқылы ішкі өрісті ал"
+          ]
+        },
+        search: {
+          name: "RediSearch",
+          description: "search модулі жүктелген кезде қолжетімді.",
+          prompts: [
+            "барлық толық мәтінді индекстерді тізімде",
+            "idx:products индексінде \"redis\" бойынша толық мәтінді іздеу жүргіз",
+            "title (TEXT) және price (NUMERIC) өрістерімен hash негізіндегі индекс құр",
+            "idx:products индексі туралы ақпарат ал",
+            "idx:products индексін жой",
+            "price 10 мен 50 аралығындағы құжаттарды тап",
+            "мәтін мен векторлық ұқсастықты біріктіретін гибрид іздеу жаз"
+          ]
+        },
+        timeseries: {
+          name: "RedisTimeSeries",
+          description: "timeseries модулі жүктелген кезде қолжетімді.",
+          prompts: [
+            "барлық timeseries кілттерін тізімде",
+            "temp:room1-ге деректер нүктесін қос",
+            "temp:room1 диапазонын кешеден бүгінге дейін ал",
+            "sensor=temp белгісі бойынша multi-range ал",
+            "temp:room1 үшін 100 синусоидалық нүкте жасап шығар",
+            "temp:room1 үшін retention мен белгілерді көрсет"
+          ]
+        },
+        bloom: {
+          name: "RedisBloom (Bloom / Cuckoo / Top-K / CMS / T-Digest)",
+          description: "bf модулі жүктелген кезде қолжетімді.",
+          prompts: [
+            "spam:ips bloom filter-інде foo элементі бар ма, тексер",
+            "spam:ips bloom filter-іне элементтер қос",
+            "K=10 мәнімен popular атты top-K құр",
+            "/home кілті бойынша count-min sketch traffic сұра",
+            "t-digest-ке мәндер қосып, 95-пайыздық шекті ал",
+            "spam:ips bloom filter туралы ақпаратты көрсет"
+          ]
+        },
+        vectorSet: {
+          name: "VectorSet (Redis 8+)",
+          description: "Redis 8+ анықталған кезде қолжетімді (нативті VECTORSET типі).",
+          prompts: [
+            "embeddings-ке вектор қос",
+            "сұрау векторына ең ұқсас 10 векторды тап",
+            "vectorset embeddings-тің өлшемдігі мен санын көрсет",
+            "vectorset embeddings-тен элементті жой",
+            "VSIM көмегімен элемент атауы бойынша іздеу"
+          ]
+        },
+        redis8: {
+          name: "Redis 8+ мүмкіндіктері",
+          description: "Redis 8+ анықталған кезде көрсетіледі.",
+          prompts: [
+            "HEXPIRE арқылы hash өрісінің ttl-ін орнат",
+            "жол мәнінің digest-ін ал",
+            "гибрид толық мәтінді + векторлық іздеуді орындат (FT.HYBRID)",
+            "MSETEX арқылы бірнеше кілтті ортақ мерзіммен орнат",
+            "consumer group-пен stream жазбасын жой (XDELEX)",
+            "топ-10 слот үшін cluster slot-stats-ты көрсет"
+          ]
+        },
+        scripting: {
+          name: "Скрипттеу",
+          description: "Табиғи тілдегі сипаттамалардан Lua / EVAL скрипттерін жасап шығар.",
+          prompts: [
+            "Y > 5 болған жағдайда ғана counter X-ті арттыратын атомдық скрипт жаз",
+            "Lua-мен 100 кездейсоқ кілт жасап шығар",
+            "осы shell конвейерін бір EVAL-ге айналдыр: keys user:* | GET | grep inactive | DEL",
+            "кластерге қауіпсіз болу үшін топтық операцияны Lua-ға көшір",
+            "бір Lua шақыруымен check-and-set стильдегі жаңарту",
+            "hash-ты итерациялап, шаблонға сәйкес өрістерді жой"
+          ]
+        },
+        cluster: {
+          name: "Кластер",
+          description: "Тек кластер режимінде көрсетіледі.",
+          prompts: [
+            "кластер туралы ақпаратты көрсет",
+            "кластер түйіндерін тізімде",
+            "кілт санына қарай топ-10 слотты көрсет",
+            "жадқа қарай топ-10 слотты көрсет",
+            "5000-шы слотты қай master иеленеді?"
+          ]
+        },
+        acl: {
+          name: "ACL (Redis 6+)",
+          description: "Кіруді басқару пайдаланушыларын және ағымдағы қосылымды қарау.",
+          prompts: [
+            "мен қай пайдаланушы ретінде қосылғанмын?",
+            "барлық ACL пайдаланушыларын тізімде",
+            "менде қандай рұқсаттар бар?",
+            "default пайдаланушысының ережелерін көрсет"
+          ]
+        },
+        qna: {
+          name: "Жалпы сұрақ-жауап",
+          description: "Redis білімі бойынша сұрақ қойыңыз — құралсыз, тек жауаптар.",
+          prompts: [
+            "ZADD дегеніміз не?",
+            "кластер failover қалай жұмыс істейді?",
+            "SCAN пен KEYS-тің айырмашылығын түсіндір",
+            "EVAL-ді бірнеше команданың орнына қашан қолдану керек?",
+            "Redis persistence нұсқалары қандай?",
+            "RDB мен AOF-тың айырмашылығы не?",
+            "Redis Sentinel жаңа master-ді қалай таңдайды?",
+            "кластер режиміндегі hash tag-терді түсіндір"
+          ]
+        },
+        translate: {
+          name: "Табиғи тіл → Redis командасы",
+          description: "Қалағаныңызды жай қазақ тілінде (немесе 54 тілдің кез келгенінде) сипаттаңыз; AI Redis командасын жазады.",
+          prompts: [
+            "user:42 кілтін жой",
+            "foo кілтінің атын bar-ға өзгерт",
+            "session:abc кілтінің мерзімін 10 секундқа орнат",
+            "source кілтін destination-ге көшір",
+            "visits счетчигін 5-ке арттыр",
+            "greeting кілтін 1 сағатқа \"hello\" мәніне орнат",
+            "ең жиі шақырылған 10 кілтті көрсет",
+            "temp:* шаблонына сай барлық кілттерді жой"
+          ]
+        }
+      }
+    },
     ssh: {
       on: "SSH қосулы",
       off: "SSH өшірулі",
@@ -278,7 +504,7 @@ const strings = {
     treeSeparatorEmpty: "Ағаш бөлгіш бос болса, ағаштың кірістірілген түйіндері болмайды, тек таза тізім болады",
     treeSeparatorEmptyNote: "Кірістірілген түйіндер жоқ, тек таза тізім",
     welcomeConsole: "Redis консоліне қош келдіңіз",
-    welcomeConsoleInfo: "Жүгіргіні ЖОҒАРЫ немесе ТӨМЕН журналы қосулы",
+    welcomeConsoleInfo: "SHIFT + Жүгіргіні ЖОҒАРЫ немесе ТӨМЕН журналы қосулы",
     redisListIndexInfo: "Қосу үшін бос, алдына қосу немесе оны көрсетілген орынға сақтау үшін -1.",
     console: "Консоль",
     connectiondAdd: "Қосылым қосыңыз",
@@ -854,6 +1080,13 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+  },
+  promo: {
+    title: "AI желілік көмекшісі",
+    description: "network.corifeus.com сайтындағы тегін AI желілік көмекшімізді пайдаланып көріңіз. Домендерді, IP мекенжайларды, DNS жазбаларын, SSL сертификаттарын, электрондық пошта қауіпсіздігін және желілік инфрақұрылымды талдаңыз. AI жылдам әрі жан-жақты нәтиже береді.",
+    disclaimer: "Бұл жарнама тек демо сайтта көрсетіледі және Docker, Electron немесе web app орналастыруларында шықпайды.",
+    toastMessage: "network.corifeus.com сайтындағы тегін AI желілік көмекшімізді байқап көріңіз. Домендерді, DNS, SSL және т.б. талдаңыз.",
+    visit: "network.corifeus.com сайтына өту",
   }
 };
 module.exports = strings;

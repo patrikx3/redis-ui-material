@@ -238,6 +238,221 @@ const strings = {
     aiRoutingNetwork: "AI dotazy jsou směrovány přes network.corifeus.com. Pokud máte vlastní bezplatný Groq API klíč, můžete tento přepínač vypnout a směrovat přímo do Groq bez network.corifeus.com.",
     aiMaxTokens: "Max. počet tokenů AI",
     aiMaxTokensInfo: "Maximální počet tokenů pro odpovědi AI. Vyšší hodnoty umožňují delší odpovědi, ale mohou spotřebovat více API kreditů.",
+    consoleDrawer: {
+      toggleTooltip: "Přepínací konzole",
+      clearTooltip: "Vymazat scrollback",
+      closeTooltip: "Zavřete konzolu",
+      aiSettingsTooltip: "AI nastavení",
+      modeRedis: "REDIS",
+      modeAi: "AI",
+      connectionChipNoDb: opts => `${opts.name}`,
+      connectionChipWithDb: opts => `${opts.name} · db ${opts.db}`,
+      pageChip: opts => `stránka: ${opts.page}`,
+      connectingTo: opts => `Připojování k ${opts.name}…`,
+      connectedTo: opts => `Připojeno k ${opts.name} (Redis ${opts.version} ${opts.mode}, načteno ${opts.modules} modulů)`,
+      connectedToNoInfo: opts => `Připojeno k ${opts.name}`,
+      disconnectedFrom: opts => `Odpojeno od ${opts.name}`,
+      readyIndicator: "Připraveno."
+    },
+    cheatsheet: {
+      title: "AI Cheatsheet — Co se mohu zeptat?",
+      subtitle: "Klepnutím na libovolnou výzvu ji vložte do konzoly. Poté stiskněte Enter.",
+      searchPlaceholder: "Filtrovat výzvy…",
+      openOfficialDocs: "Redis Příkazy ↗",
+      openOfficialDocsTooltip: "Otevřete oficiální odkaz na příkazy Redis na adrese redis.io",
+      closeTooltip: "Zavřít (Esc)",
+      empty: "Vašemu filtru neodpovídají žádné výzvy.",
+      footerHint: "Tip: napište „ai:“ a poté cokoli v libovolném jazyce – AI rozumí 54 jazykům a v případě potřeby používá živý stav Redis.",
+      groups: {
+        diagnostics: {
+          name: "Živá diagnostika",
+          description: "Požádejte AI, aby prozkoumal stav živého serveru pomocí bezpečných nástrojů pouze pro čtení.",
+          prompts: [
+            "proč je paměť vysoká?",
+            "ukaž mi 10 nejpomalejších dotazů",
+            "kteří klienti jsou připojeni?",
+            "jaké jsou zásady maxmemory?",
+            "došlo k nějakému nedávnému vystěhování?",
+            "existuje nějaká událost latence?",
+            "jak dlouho je server v provozu?",
+            "jaká je návštěvnost?",
+            "zobrazit využití procesoru",
+            "shrnout klíčový prostor",
+            "kolik paměti používá každý datový typ?",
+            "blokuje teď něco server?"
+          ]
+        },
+        keys: {
+          name: "Klíče",
+          description: "Kontrolujte, najděte a zdůvodněte klíče, aniž byste museli procházet stromem.",
+          prompts: [
+            "najít všechny klíče odpovídající user:*",
+            "kolik klíčů v každé databázi?",
+            "ukázat největší hash v tomto db",
+            "najít klíče s TTL kratším než 60 sekund",
+            "které klíče nemají TTL?",
+            "jaký typ je klíč session:abc?",
+            "odhad paměti používané prefixem \"session:\"",
+            "zobrazit kódování objektu klíče user:42",
+            "jsou nějaké klíče, kterým vyprší platnost?",
+            "který jmenný prostor využívá nejvíce paměti?"
+          ]
+        },
+        dataTypes: {
+          name: "Datové typy",
+          description: "Frázování v přirozeném jazyce pro vytváření/čtení/aktualizaci na každém typu Redis.",
+          prompts: [
+            "vytvořte hash s názvem user:1 s poli name=Alice age=30",
+            "přidat tři položky na seznam tasks",
+            "přidat členy do sady favourites",
+            "přidat bodované členy do seřazené sady leaderboard",
+            "připojit událost ke streamování events",
+            "získat posledních 10 záznamů ze streamu events",
+            "získat všechna pole hash user:1",
+            "získejte členy sady favourites",
+            "získat top 10 podle skóre z leaderboard"
+          ]
+        },
+        modules: {
+          name: "Moduly",
+          description: "Dotazy na načtené moduly Redis (kategorie níže se zobrazí pouze v případě, že je modul přítomen).",
+          prompts: []
+        },
+        json: {
+          name: "RedisJSON",
+          description: "Dostupné, když je načten modul ReJSON.",
+          prompts: [
+            "vytvořte dokument JSON na user:42 s { jméno: \"Alice\", věk: 30 }",
+            "přečtěte si pole názvu user:42",
+            "aktualizujte věk user:42 na 31",
+            "vypište všechny klíče JSON",
+            "odstranit pole z dokumentu JSON",
+            "získat vnořené pole pomocí JSONPath"
+          ]
+        },
+        search: {
+          name: "RediSearch",
+          description: "Dostupné, když je načten vyhledávací modul.",
+          prompts: [
+            "vypsat všechny fulltextové indexy",
+            "spusťte fulltextové vyhledávání \"redis\" na indexu idx:products",
+            "vytvořte index podporovaný hashem s názvem polí (TEXT) a cenou (NUMERIC)",
+            "získat informace o indexu idx:products",
+            "index poklesu idx:products",
+            "najít dokumenty, kde je cena mezi 10 a 50",
+            "napsat hybridní vyhledávání kombinující textovou a vektorovou podobnost"
+          ]
+        },
+        timeseries: {
+          name: "RedisTimeSeries",
+          description: "Dostupné, když je načten modul časových řad.",
+          prompts: [
+            "seznam všech klíčů časových řad",
+            "přidat datový bod do temp:room1",
+            "získejte rozsah temp:room1 od včerejška do současnosti",
+            "získat více rozsahů podle štítku sensor=temp",
+            "vygenerovat 100 sinusových datových bodů pro temp:room1",
+            "zobrazit uchování a štítky pro temp:room1"
+          ]
+        },
+        bloom: {
+          name: "RedisBloom (Bloom / Kukačka / Top-K / CMS / T-Digest)",
+          description: "Dostupné, když je načten modul bf.",
+          prompts: [
+            "zkontrolujte, zda položka foo existuje v Bloomově filtru spam:ips",
+            "přidat položky do filtru květů spam:ips",
+            "vytvořte top-K s názvem popular s K=10",
+            "počet dotazů-min skica traffic pro klíč /home",
+            "přidejte hodnoty do t-digest a získáte 95. percentil",
+            "zobrazit informace o květovém filtru spam:ips"
+          ]
+        },
+        vectorSet: {
+          name: "VectorSet (Redis 8+)",
+          description: "Dostupné, když je detekován Redis 8+ (nativní typ VECTORSET).",
+          prompts: [
+            "přidat vektor k embeddings",
+            "najděte 10 vektorů, které se nejvíce podobají vektoru dotazu",
+            "zobrazit rozměry a počet vektorové sady embeddings",
+            "odstranit prvek z vectorset embeddings",
+            "hledat podle názvu prvku pomocí VSIM"
+          ]
+        },
+        redis8: {
+          name: "Redis 8+ funkcí",
+          description: "Zobrazí se, když je detekován Redis 8+.",
+          prompts: [
+            "nastavit hash pole ttl pomocí HEXPIRE",
+            "získat výtah hodnoty řetězce",
+            "spustit hybridní fulltextové + vektorové vyhledávání (FT.HYBRID)",
+            "nastavit více klíčů se sdíleným vypršením platnosti pomocí MSETEX",
+            "smazat záznam streamu se skupinou spotřebitelů (XDELEX)",
+            "zobrazit statistiky slotů clusteru pro 10 nejlepších slotů"
+          ]
+        },
+        scripting: {
+          name: "Skriptování",
+          description: "Generujte skripty Lua / EVAL z popisů v přirozeném jazyce.",
+          prompts: [
+            "napsat atomický skript, který inkrementuje counter X, pouze pokud Y > 5",
+            "vygenerujte 100 náhodných klíčů pomocí Lua",
+            "převést tento shell potrubí na jeden EVAL: klíče user:* | ZÍSKEJTE | grep neaktivní | DEL",
+            "port dávkové operace na Lua pro bezpečnost clusteru",
+            "zkontrolujte a nastavte aktualizaci stylu v jediném volání Lua",
+            "iterujte přes hash a odstraňte pole odpovídající vzoru"
+          ]
+        },
+        cluster: {
+          name: "Cluster",
+          description: "Zobrazeno pouze v režimu clusteru.",
+          prompts: [
+            "zobrazit informace o clusteru",
+            "vypsat uzly clusteru",
+            "zobrazit 10 nejlepších slotů podle počtu klíčů",
+            "zobrazit 10 nejlepších slotů podle paměti",
+            "který master vlastní slot 5000?"
+          ]
+        },
+        acl: {
+          name: "ACL (Redis 6+)",
+          description: "Zkontrolujte uživatele řízení přístupu a aktuální připojení.",
+          prompts: [
+            "jako kdo jsem připojen?",
+            "vypsat všechny uživatele ACL",
+            "jaká mám oprávnění?",
+            "zobrazit výchozí uživatelská pravidla"
+          ]
+        },
+        qna: {
+          name: "Obecné otázky a odpovědi",
+          description: "Pokládejte Redis znalostní otázky – žádné nástroje, pouze odpovědi.",
+          prompts: [
+            "co je ZADD?",
+            "jak funguje převzetí služeb při selhání clusteru?",
+            "vysvětlit SCAN vs KEYS",
+            "kdy bych měl použít EVAL vs více příkazů?",
+            "jaké jsou možnosti perzistence Redis?",
+            "jaký je rozdíl mezi RDB a AOF?",
+            "jak se Redis Sentinel rozhodne pro nového mastera?",
+            "vysvětlit hash tagy v režimu clusteru"
+          ]
+        },
+        translate: {
+          name: "Přirozený jazyk → příkaz Redis",
+          description: "Popište, co chcete, v kterémkoli z 54 jazyků; AI zapíše příkaz Redis.",
+          prompts: [
+            "odstranit klíč user:42",
+            "přejmenujte klíč foo na bar",
+            "platnost klíče session:abc za 10 sekund",
+            "zkopírujte klíčový zdroj do cíle",
+            "zvýšit počet návštěv počítadla o 5",
+            "nastavte pozdrav klíče na \"hello\" na 1 hodinu",
+            "smažte všechny klíče user:*",
+            "ukaž mi 10 nejvytíženějších klíčů"
+          ]
+        }
+      }
+    },
     ssh: {
       on: 'SSH zapnuto',
       off: 'SSH vypnuto',
@@ -280,7 +495,7 @@ const strings = {
     treeSeparatorEmpty: "Pokud je oddělovač stromě prázdný, strom nebude mít vnořené uzly, pouze prostý seznam",
     treeSeparatorEmptyNote: "Žádné vnořené uzly, pouze prostý seznam",
     welcomeConsole: "Vítejte v Redis Konzoli",
-    welcomeConsoleInfo: "Historie s kurzorem NAHORU nebo DOLŮ je povolena",
+    welcomeConsoleInfo: "SHIFT + Historie s kurzorem NAHORU nebo DOLŮ je povolena",
     redisListIndexInfo: "Prázdné pro připojení na konec, -1 pro vložení na začátek nebo uložte na zobrazenou pozici.",
     console: "Konzole",
     connectiondAdd: "Přidat připojení",
@@ -856,6 +1071,13 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+  },
+  promo: {
+    title: "AI Network Assistant",
+    description: "Objevte našeho bezplatného AI Network Assistant na network.corifeus.com — analyzujte domény, IPs, DNS záznamy, SSL certifikáty, zabezpečení e-mailů a síťovou infrastrukturu. Využívá technologii AI pro okamžité a komplexní výsledky.",
+    disclaimer: "Tato promo akce se zobrazuje pouze na ukázkovém webu a neobjeví se v nasazeních Docker, Electron nebo webových aplikací.",
+    toastMessage: "Vyzkoušejte našeho bezplatného AI Network Assistant na network.corifeus.com — analyzujte domény, DNS, SSL a další!",
+    visit: "Navštivte network.corifeus.com"
   }
 };
 module.exports = strings;

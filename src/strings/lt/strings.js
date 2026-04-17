@@ -236,6 +236,221 @@ const strings = {
     aiRoutingNetwork: "AI užklausos nukreipiamos per network.corifeus.com. Jei turite savo nemokamą Groq API raktą, galite išjungti šį jungiklį ir nukreipti tiesiai į Groq be network.corifeus.com.",
     aiMaxTokens: "Didžiausias AI žetonų skaičius",
     aiMaxTokensInfo: "Didžiausias žetonų skaičius AI atsakymams. Didesnės reikšmės leidžia gauti ilgesnius atsakymus, bet gali sunaudoti daugiau API kreditų.",
+    consoleDrawer: {
+      toggleTooltip: "Perjungti konsolę",
+      clearTooltip: "Išvalyti istoriją",
+      closeTooltip: "Uždaryti konsolę",
+      aiSettingsTooltip: "AI nustatymai",
+      modeRedis: "REDIS",
+      modeAi: "AI",
+      connectionChipNoDb: opts => `${opts.name}`,
+      connectionChipWithDb: opts => `${opts.name} · db ${opts.db}`,
+      pageChip: opts => `puslapis: ${opts.page}`,
+      connectingTo: opts => `Jungiamasi prie ${opts.name}…`,
+      connectedTo: opts => `Prisijungta prie ${opts.name} (Redis ${opts.version} ${opts.mode}, įkelta modulių: ${opts.modules})`,
+      connectedToNoInfo: opts => `Prisijungta prie ${opts.name}`,
+      disconnectedFrom: opts => `Atsijungta nuo ${opts.name}`,
+      readyIndicator: "Paruošta.",
+    },
+    cheatsheet: {
+      title: "AI atmintinė — ko galiu paklausti?",
+      subtitle: "Spustelėkite bet kurį pavyzdį, kad įklijuotumėte jį į konsolę. Tada paspauskite Enter.",
+      searchPlaceholder: "Filtruoti užklausas…",
+      openOfficialDocs: "Redis komandos ↗",
+      openOfficialDocsTooltip: "Atidaryti oficialų Redis komandų žinyną svetainėje redis.io",
+      closeTooltip: "Uždaryti (Esc)",
+      empty: "Jokia užklausa neatitinka filtro.",
+      footerHint: "Patarimas: įrašykite „ai:“ ir po to bet ką bet kuria kalba — AI supranta 54 kalbas ir prireikus naudoja esamą Redis būseną.",
+      groups: {
+        diagnostics: {
+          name: "Tiesioginė diagnostika",
+          description: "Paprašykite AI ištirti esamą serverio būseną naudojant saugius tik skaitymo įrankius.",
+          prompts: [
+            "kodėl atminties naudojimas didelis?",
+            "parodyk 10 lėčiausių užklausų",
+            "kurie klientai yra prisijungę?",
+            "kokia yra maxmemory politika?",
+            "ar buvo nesenų išstūmimų?",
+            "ar yra vėlinimo įvykių?",
+            "kiek laiko veikia serveris?",
+            "koks yra pataikymų rodiklis?",
+            "parodyk CPU naudojimą",
+            "apibendrink keyspace",
+            "kiek atminties naudoja kiekvienas duomenų tipas?",
+            "ar kas nors dabar blokuoja serverį?"
+          ]
+        },
+        keys: {
+          name: "Raktai",
+          description: "Tikrinkite, raskite ir analizuokite raktus neklikčiodami medžio.",
+          prompts: [
+            "rask visus raktus, atitinkančius user:*",
+            "kiek raktų yra kiekvienoje duomenų bazėje?",
+            "parodyk didžiausią hash šiame db",
+            "rask raktus, kurių TTL mažesnis nei 60 sekundžių",
+            "kurie raktai neturi TTL?",
+            "koks yra rakto session:abc tipas?",
+            "įvertink atmintį, kurią naudoja prefiksas \"session:\"",
+            "parodyk rakto user:42 object encoding",
+            "ar yra raktų, kurie netrukus baigs galioti?",
+            "kuris namespace naudoja daugiausia atminties?"
+          ]
+        },
+        dataTypes: {
+          name: "Duomenų tipai",
+          description: "Natūralios kalbos formuluotės kūrimui, skaitymui ir atnaujinimui visiems Redis tipams.",
+          prompts: [
+            "sukurk hash pavadinimu user:1 su laukais name=Alice age=30",
+            "pridėk tris elementus į sąrašą tasks",
+            "pridėk narius į rinkinį favourites",
+            "pridėk narius su balais į rūšiuotą rinkinį leaderboard",
+            "pridėk įvykį į srautą events",
+            "gauk paskutinius 10 įrašų iš srauto events",
+            "gauk visus hash user:1 laukus",
+            "gauk rinkinio favourites narius",
+            "gauk 10 geriausių pagal balą iš leaderboard"
+          ]
+        },
+        modules: {
+          name: "Moduliai",
+          description: "Užklausos įkeltiems Redis moduliams (toliau pateiktos kategorijos rodomos tik kai modulis įkeltas).",
+          prompts: []
+        },
+        json: {
+          name: "RedisJSON",
+          description: "Pasiekiama, kai įkeltas ReJSON modulis.",
+          prompts: [
+            "sukurk JSON dokumentą ties user:42 su { name: \"Alice\", age: 30 }",
+            "nuskaityk user:42 lauko name reikšmę",
+            "atnaujink user:42 amžių į 31",
+            "išvardyk visus JSON raktus",
+            "ištrink lauką iš JSON dokumento",
+            "gauk įdėtą lauką naudodamas JSONPath"
+          ]
+        },
+        search: {
+          name: "RediSearch",
+          description: "Pasiekiama, kai įkeltas paieškos modulis.",
+          prompts: [
+            "išvardyk visus viso teksto indeksus",
+            "vykdyk viso teksto paiešką pagal \"redis\" indekse idx:products",
+            "sukurk hash pagrįstą indeksą su laukais title (TEXT) ir price (NUMERIC)",
+            "gauk informaciją apie indeksą idx:products",
+            "pašalink indeksą idx:products",
+            "rask dokumentus, kurių price yra tarp 10 ir 50",
+            "parašyk hibridinę paiešką, jungiančią tekstą ir vektorių panašumą"
+          ]
+        },
+        timeseries: {
+          name: "RedisTimeSeries",
+          description: "Pasiekiama, kai įkeltas timeseries modulis.",
+          prompts: [
+            "išvardyk visus timeseries raktus",
+            "pridėk duomenų tašką į temp:room1",
+            "gauk temp:room1 intervalą nuo vakar iki dabar",
+            "gauk multi-range pagal žymą sensor=temp",
+            "sugeneruok 100 sinusoidės duomenų taškų temp:room1",
+            "parodyk temp:room1 retention ir labels"
+          ]
+        },
+        bloom: {
+          name: "RedisBloom (Bloom / Cuckoo / Top-K / CMS / T-Digest)",
+          description: "Pasiekiama, kai įkeltas bf modulis.",
+          prompts: [
+            "patikrink, ar elementas foo yra bloom filtre spam:ips",
+            "pridėk elementus į bloom filtrą spam:ips",
+            "sukurk top-K pavadinimu popular su K=10",
+            "užklausk count-min sketch traffic dėl rakto /home",
+            "pridėk reikšmes į t-digest ir gauk 95-ąjį procentilį",
+            "parodyk bloom filtro spam:ips informaciją"
+          ]
+        },
+        vectorSet: {
+          name: "VectorSet (Redis 8+)",
+          description: "Pasiekiama, kai aptinkamas Redis 8+ (vietinis VECTORSET tipas).",
+          prompts: [
+            "pridėk vektorių į embeddings",
+            "rask 10 panašiausių vektorių užklausos vektoriui",
+            "parodyk vectorset embeddings matmenis ir kiekį",
+            "ištrink elementą iš vectorset embeddings",
+            "ieškok pagal elemento pavadinimą naudodamas VSIM"
+          ]
+        },
+        redis8: {
+          name: "Redis 8+ funkcijos",
+          description: "Rodoma, kai aptinkamas Redis 8+.",
+          prompts: [
+            "nustatyk hash lauko TTL su HEXPIRE",
+            "gauk string reikšmės santrauką",
+            "vykdyk hibridinę viso teksto + vektorių paiešką (FT.HYBRID)",
+            "nustatyk kelis raktus su bendru galiojimu naudodamas MSETEX",
+            "ištrink srauto įrašą su consumer group (XDELEX)",
+            "parodyk cluster slot-stats 10 geriausių slotų"
+          ]
+        },
+        scripting: {
+          name: "Skriptai",
+          description: "Generuokite Lua / EVAL skriptus iš natūralios kalbos aprašymų.",
+          prompts: [
+            "parašyk atominį skriptą, kuris padidina counter X tik jei Y > 5",
+            "sugeneruok 100 atsitiktinių raktų su Lua",
+            "paversk šį shell pipeline į vieną EVAL: keys user:* | GET | grep inactive | DEL",
+            "perkelk paketinę operaciją į Lua dėl cluster saugumo",
+            "atlik check-and-set tipo atnaujinimą vienu Lua kvietimu",
+            "pereik per hash ir ištrink laukus, atitinkančius šabloną"
+          ]
+        },
+        cluster: {
+          name: "Klasteris",
+          description: "Rodoma tik klasterio režime.",
+          prompts: [
+            "parodyk cluster informaciją",
+            "išvardyk cluster mazgus",
+            "parodyk 10 slotų su daugiausia raktų",
+            "parodyk 10 slotų su daugiausia atminties",
+            "kuriam master priklauso slot 5000?"
+          ]
+        },
+        acl: {
+          name: "ACL (Redis 6+)",
+          description: "Tirkite prieigos valdymo naudotojus ir dabartinį ryšį.",
+          prompts: [
+            "kokiu naudotoju esu prisijungęs?",
+            "išvardyk visus ACL naudotojus",
+            "kokius leidimus turiu?",
+            "parodyk numatytojo naudotojo taisykles"
+          ]
+        },
+        qna: {
+          name: "Bendri klausimai ir atsakymai",
+          description: "Užduokite klausimus apie Redis žinias — be įrankių, tik atsakymai.",
+          prompts: [
+            "kas yra ZADD?",
+            "kaip veikia cluster failover?",
+            "paaiškink SCAN ir KEYS skirtumą",
+            "kada turėčiau naudoti EVAL vietoj kelių komandų?",
+            "kokios yra Redis patvarumo parinktys?",
+            "koks skirtumas tarp RDB ir AOF?",
+            "kaip Redis Sentinel nusprendžia dėl naujo master?",
+            "paaiškink hash tag naudojimą cluster režime"
+          ]
+        },
+        translate: {
+          name: "Natūrali kalba → Redis komanda",
+          description: "Aprašykite, ko norite, bet kuria iš 54 kalbų; AI parašys Redis komandą.",
+          prompts: [
+            "ištrink raktą user:42",
+            "pervadink raktą foo į bar",
+            "nustatyk rakto session:abc galiojimą po 10 sekundžių",
+            "nukopijuok raktą source į destination",
+            "padidink skaitiklį visits 5",
+            "nustatyk rakto greeting reikšmę į \"hello\" 1 valandai",
+            "ištrink visus raktus user:*",
+            "parodyk 10 labiausiai apkrautų raktų"
+          ]
+        }
+      }
+    },
     ssh: {
       on: "SSH įjungta",
       off: "SSH išjungtas",
@@ -278,7 +493,7 @@ const strings = {
     treeSeparatorEmpty: "Jei medžio separatorius tuščias, medis neturės įdėtų mazgų, tik gryną sąrašą",
     treeSeparatorEmptyNote: "Nėra įdėtų mazgų, tik grynas sąrašas",
     welcomeConsole: "Sveiki atvykę į Redis konsolę",
-    welcomeConsoleInfo: "Žymeklio AUKŠTYN arba ŽEMYN istorija įjungta",
+    welcomeConsoleInfo: "SHIFT + Žymeklio AUKŠTYN arba ŽEMYN istorija įjungta",
     redisListIndexInfo: "Tuščia, kad pridėtumėte, -1, kad pridėtumėte arba išsaugotumėte rodomoje pozicijoje.",
     console: "konsolė",
     connectiondAdd: "Pridėti ryšį",
@@ -854,6 +1069,13 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+  },
+  promo: {
+    title: "AI tinklo asistentas",
+    description: "Atraskite mūsų nemokamą AI tinklo asistentą adresu network.corifeus.com. Analizuokite domenus, IP adresus, DNS įrašus, SSL sertifikatus, el. pašto saugumą ir tinklo infrastruktūrą. AI pateikia greitus ir išsamius rezultatus.",
+    disclaimer: "Ši reklama rodoma tik demonstracinėje svetainėje ir nebus rodoma Docker, Electron ar web app diegimuose.",
+    toastMessage: "Išbandykite mūsų nemokamą AI tinklo asistentą network.corifeus.com. Analizuokite domenus, DNS, SSL ir dar daugiau!",
+    visit: "Aplankyti network.corifeus.com",
   }
 };
 module.exports = strings;

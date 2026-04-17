@@ -16,10 +16,14 @@
 
 
 .p3xr-layout-content, .p3xr-layout-content-electron {
-    position: absolute;
-    left: 0px;
-    right: 0px;
-    margin-bottom: v.$toolbar-height;
+    position: fixed;
+    top: v.$toolbar-height;
+    left: 0;
+    right: 0;
+    bottom: calc(#{v.$toolbar-height} + var(--p3xr-console-drawer-height-active, 0px));
+    overflow-y: auto;
+    overflow-x: hidden;
+    transition: bottom 150ms ease-out;
 }
 
 #p3xr-layout-header-version {
@@ -41,8 +45,16 @@
 
 .p3xr-layout-content {
     padding: v.$layout-padding;
-    padding-bottom: 0px !important;
-    margin-top: v.$toolbar-height;
+    // 4px of breathing room between page content and footer/drawer edge — just
+    // enough to avoid content touching the separator, nothing wasted.
+    padding-bottom: 4px !important;
+
+    // Monitoring page owns its own 100% layout (tab shell + scrollable content
+    // area). The 4px would add unwanted empty space below the tab shell, so
+    // drop it when a monitoring shell is present.
+    &:has(p3xr-monitoring-shell) {
+        padding-bottom: 0 !important;
+    }
 }
 
 // Active navigation button highlight

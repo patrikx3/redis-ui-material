@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
-import { Box, Toolbar, Tooltip, Popper, Paper, ClickAwayListener } from '@mui/material'
-import { CheckBox, CheckBoxOutlineBlank, Terminal, Backspace, MenuBook } from '@mui/icons-material'
+import { Box, Toolbar, Tooltip, Popper, Paper, ClickAwayListener, IconButton } from '@mui/material'
+import { CheckBox, CheckBoxOutlineBlank, Terminal, Backspace, MenuBook, KeyboardArrowDown, StopCircle } from '@mui/icons-material'
+import AiCheatsheetDialog from '../../dialogs/AiCheatsheetDialog'
 import { useTheme } from '@mui/material'
 import P3xrButton from '../../components/P3xrButton'
 import { useI18nStore } from '../../stores/i18n.store'
@@ -26,9 +27,12 @@ let actionHistoryPosition = -1
 interface ConsoleProps {
     embedded?: boolean
     collapsed?: boolean
+    /** When true, show a close button on the toolbar right — wired by the drawer host. */
+    showCloseButton?: boolean
+    onCloseRequest?: () => void
 }
 
-export default function ConsoleComponent({ embedded = false, collapsed = false }: ConsoleProps) {
+export default function ConsoleComponent({ embedded = false, collapsed = false, showCloseButton = false, onCloseRequest }: ConsoleProps) {
     const strings = useI18nStore(s => s.strings)
     const cfg = useRedisStateStore(s => s.cfg)
     const commands = useRedisStateStore(s => s.commands)
@@ -39,6 +43,7 @@ export default function ConsoleComponent({ embedded = false, collapsed = false }
     const [searchText, setSearchText] = useState('')
     const [currentHint, setCurrentHint] = useState('')
     const [aiLoading, setAiLoading] = useState(false)
+    const aiRequestSeqRef = useRef(0)
     const [aiAutoDetect, setAiAutoDetect] = useState(() => {
         try { return localStorage.getItem('p3xr-ai-auto-detect') !== 'false' } catch { return true }
     })
@@ -54,6 +59,7 @@ export default function ConsoleComponent({ embedded = false, collapsed = false }
     const [autocompleteHighlight, setAutocompleteHighlight] = useState(0)
     const [autocompleteDismissed, setAutocompleteDismissed] = useState(false)
     const [autocompleteNavigated, setAutocompleteNavigated] = useState(false)
+    const [cheatsheetOpen, setCheatsheetOpen] = useState(false)
 
     // --- Autocomplete: grouped commands matching Angular mat-autocomplete ---
     const filteredCommands = useMemo(() => {
@@ -132,10 +138,13 @@ export default function ConsoleComponent({ embedded = false, collapsed = false }
     }, [])
 
     const forceScrollToBottom = useCallback(() => {
-        setTimeout(() => {
+        // Double rAF + late setTimeout — survives late <pre> layout / large tool-trail renders.
+        const doScroll = () => {
             const s = scrollerRef.current
             if (s) s.scrollTop = s.scrollHeight
-        }, 0)
+        }
+        requestAnimationFrame(() => requestAnimationFrame(doScroll))
+        setTimeout(doScroll, 120)
     }, [])
 
     const outputAppend = useCallback((message: string) => {
@@ -175,7 +184,8 @@ export default function ConsoleComponent({ embedded = false, collapsed = false }
             el.insertAdjacentHTML('beforeend',
                 `<span data-index="${indexRef.current++}" class="p3xr-console-content-output-item"><strong>${welcome}</strong><br/></span>`)
             el.insertAdjacentHTML('beforeend',
-                `<span data-index="${indexRef.current++}" class="p3xr-console-content-output-item">${info}<br/><br/></span>`)
+                `<span data-index="${indexRef.current++}" class="p3xr-console-content-output-item">${info}<br/></span>`)
+            el.insertAdjacentHTML('beforeend', '<div class="p3xr-console-spacer">&nbsp;</div>')
             persistNow()
         }
     }, [])
@@ -188,7 +198,8 @@ export default function ConsoleComponent({ embedded = false, collapsed = false }
         const welcome = strings?.label?.welcomeConsole ?? 'Welcome to the Redis Console'
         const info = strings?.label?.welcomeConsoleInfo ?? 'Shift + Cursor UP or DOWN for history'
         outputAppend(`<strong>${welcome}</strong>`)
-        outputAppend(`${info}<br/>`)
+        outputAppend(info)
+        el.insertAdjacentHTML('beforeend', '<div class="p3xr-console-spacer">&nbsp;</div>')
         persistNow()
         forceScrollToBottom()
         inputRef.current?.focus()
@@ -270,6 +281,7 @@ export default function ConsoleComponent({ embedded = false, collapsed = false }
             toast(strings?.error?.aiPromptTooLong)
             return false
         }
+        const mySeq = ++aiRequestSeqRef.current
         setAiLoading(true)
         inputRef.current?.focus()
         try {
@@ -291,33 +303,77 @@ export default function ConsoleComponent({ embedded = false, collapsed = false }
             if (dbKeys.length > 0) ctx.databases = dbKeys.map((k: string) => `${k}: ${keyspace[k]}`)
             if (modules.length > 0) ctx.modules = modules
             ctx.uiLanguage = useI18nStore.getState().currentLang
+            const rs = useRedisStateStore.getState()
+            ctx.connectionState = rs.connectionState
+            ctx.currentPage = rs.currentPage
+            if (rs.connection?.name) ctx.connectionName = rs.connection.name
+            if (rs.currentDatabase !== undefined) ctx.currentDatabase = rs.currentDatabase
 
             const response = await request({ action: 'ai/redis-query', payload: { prompt, context: ctx } })
+            if (mySeq !== aiRequestSeqRef.current) return false
             const command = response.command || ''
             const explanation = response.explanation || ''
+            const toolTrail = Array.isArray(response.toolTrail) ? response.toolTrail : []
             outputAppend(htmlEncode(originalInput))
             updateHistory(originalInput)
+
+            // Print each tool call + outcome to the scrollback (transparency).
+            for (const t of toolTrail) {
+                const argsStr = t.args && Object.keys(t.args).length
+                    ? '(' + Object.entries(t.args).map(([k, v]) => `${k}=${JSON.stringify(v)}`).join(', ') + ')'
+                    : '()'
+                const head = `<span style="opacity: 0.85;"><strong>tool:</strong> <code>${htmlEncode(t.name + argsStr)}</code> <span style="opacity: 0.6;">${t.ms ?? 0}ms</span></span>`
+                if (t.ok) {
+                    const preview = String(t.result ?? '').split('\n').slice(0, 12).join('\n')
+                    outputAppend(`${head}<br/><pre style="opacity: 0.85; margin: 2px 0 6px 0;">${htmlEncode(preview)}</pre>`)
+                } else {
+                    outputAppend(`${head}<br/><span style="color: ${muiTheme.p3xr.matSysError || '#f44336'};">${htmlEncode(t.error || 'tool error')}</span>`)
+                }
+            }
+
+            // Tool-use investigations return the command as a suggestion — do NOT
+            // auto-prefill the input. Pure translation path (no tools) prefills.
+            const usedTools = toolTrail.length > 0
+
             if (command) {
                 let line = `<strong style="color: ${muiTheme.p3xr.matSysPrimary};">AI &rarr;</strong> <code>${htmlEncode(command)}</code>`
-                if (explanation) line += `<br/><span style="opacity: 0.7; font-size: 0.9em;">${htmlEncode(explanation)}</span>`
-                outputAppend(line + '<br/>')
-                setSearchText(command)
-                setCurrentHint('')
-                aiCommandPendingRef.current = true
-                setTimeout(() => autoResize(), 0)
+                if (explanation) line += `<pre>${htmlEncode(explanation)}</pre>`
+                outputAppend(line)
+                if (!usedTools) {
+                    setSearchText(command)
+                    setCurrentHint('')
+                    aiCommandPendingRef.current = true
+                    setTimeout(() => autoResize(), 0)
+                }
+            } else if (explanation) {
+                outputAppend(`<pre>${htmlEncode(explanation)}</pre>`)
             }
             return true
         } catch (e: any) {
+            if (mySeq !== aiRequestSeqRef.current) return false
             const msg = e.message || String(e)
             if (msg.includes('429') || msg.includes('rate_limit')) toast(strings?.page?.key?.label?.aiRateLimited)
             else toast(strings?.page?.key?.label?.aiError + ': ' + msg)
             return false
         } finally {
-            setAiLoading(false)
-            forceScrollToBottom()
-            inputRef.current?.focus()
+            if (mySeq === aiRequestSeqRef.current) {
+                setAiLoading(false)
+                forceScrollToBottom()
+                inputRef.current?.focus()
+            }
         }
     }, [muiTheme, strings, outputAppend, forceScrollToBottom, toast, autoResize])
+
+    const stopAi = useCallback(() => {
+        aiRequestSeqRef.current++
+        setAiLoading(false)
+        setSearchText('')
+        setCurrentHint('')
+        setTimeout(() => {
+            autoResize()
+            inputRef.current?.focus()
+        }, 0)
+    }, [autoResize])
 
     // --- Execute ---
     const executeSingleLine = useCallback(async (command: string) => {
@@ -505,10 +561,18 @@ export default function ConsoleComponent({ embedded = false, collapsed = false }
                         )}
                         <P3xrButton label={strings?.label?.redisCommandsReference ?? 'Redis Commands'}
                             icon={<MenuBook fontSize="small" />}
-                            onClick={() => window.open('https://redis.io/docs/latest/commands/', '_blank')} />
+                            onClick={() => setCheatsheetOpen(true)} />
                         <P3xrButton label={strings?.intention?.clear ?? 'Clear'}
                             icon={<Backspace fontSize="small" />}
                             onClick={clearConsole} />
+                        {showCloseButton && (
+                            <Tooltip title={strings?.label?.consoleDrawer?.closeTooltip ?? strings?.intention?.close ?? ''} placement="top">
+                                <IconButton onClick={onCloseRequest}
+                                            aria-label={strings?.label?.consoleDrawer?.closeTooltip ?? strings?.intention?.close ?? ''}>
+                                    <KeyboardArrowDown fontSize="small" />
+                                </IconButton>
+                            </Tooltip>
+                        )}
                     </Box>
                 </Box>
             </Toolbar>
@@ -599,6 +663,7 @@ export default function ConsoleComponent({ embedded = false, collapsed = false }
                     onFocus={() => autoResize()}
                     onBlur={() => setTimeout(() => autoResize(), 0)}
                     autoComplete="off"
+                    readOnly={aiLoading}
                     placeholder={aiLoading ? (strings?.label?.aiTranslating ?? 'Translating...') : ''}
                     style={{
                         display: 'block',
@@ -606,6 +671,7 @@ export default function ConsoleComponent({ embedded = false, collapsed = false }
                         minWidth: collapsed ? 'calc(100% - 1px)' : '100%',
                         boxSizing: 'border-box',
                         padding: 3,
+                        paddingRight: aiLoading ? 40 : 3,
                         borderStyle: 'solid',
                         borderWidth: 3,
                         margin: 0,
@@ -618,9 +684,44 @@ export default function ConsoleComponent({ embedded = false, collapsed = false }
                         backgroundColor: muiTheme.p3xr.inputBg,
                         color: muiTheme.p3xr.inputColor,
                         borderColor: aiLoading ? muiTheme.p3xr.matSysPrimary : muiTheme.p3xr.inputBorderColor,
+                        opacity: aiLoading ? 0.55 : 1,
+                        cursor: aiLoading ? 'not-allowed' : 'text',
                     }}
                 />
+                {aiLoading && (
+                    <Tooltip title={strings?.intention?.cancel ?? 'Cancel'}>
+                        <IconButton
+                            size="small"
+                            onClick={stopAi}
+                            sx={{
+                                position: 'absolute',
+                                top: '50%',
+                                right: 6,
+                                transform: 'translateY(-50%)',
+                                zIndex: 3,
+                                color: muiTheme.palette.primary.main,
+                                padding: '2px',
+                                '&:hover': { backgroundColor: 'transparent', opacity: 0.8 },
+                            }}>
+                            <StopCircle fontSize="medium" />
+                        </IconButton>
+                    </Tooltip>
+                )}
             </Box>
+
+            {/* AI Cheatsheet — opens via the toolbar "Redis Commands" button. */}
+            <AiCheatsheetDialog
+                open={cheatsheetOpen}
+                onClose={() => setCheatsheetOpen(false)}
+                onPick={(prompt) => {
+                    setSearchText(prompt)
+                    setCurrentHint('')
+                    setTimeout(() => {
+                        inputRef.current?.focus()
+                        autoResize()
+                    }, 0)
+                }}
+            />
         </Box>
     )
 }

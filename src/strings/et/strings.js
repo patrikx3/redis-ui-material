@@ -236,6 +236,221 @@ const strings = {
     aiRoutingNetwork: "AI-päringud suunatakse läbi network.corifeus.com-i. Kui teil on oma tasuta Groq API-võti, saate selle lüliti välja lülitada, et minna otse Groq'i ilma network.corifeus.com-ita.",
     aiMaxTokens: "AI maksimaalsed tokenid",
     aiMaxTokensInfo: "Maksimaalne tokenite arv AI vastuste jaoks. Suuremad väärtused võimaldavad pikemaid vastuseid, kuid võivad kasutada rohkem API-krediite.",
+    consoleDrawer: {
+      toggleTooltip: "Lülitage konsooli sisse",
+      clearTooltip: "Kustuta tagasikerimine",
+      closeTooltip: "Sulgege konsool",
+      aiSettingsTooltip: "AI seaded",
+      modeRedis: "REDIS",
+      modeAi: "AI",
+      connectionChipNoDb: opts => `${opts.name}`,
+      connectionChipWithDb: opts => `${opts.name} · db ${opts.db}`,
+      pageChip: opts => `leht: ${opts.page}`,
+      connectingTo: opts => `Ühenduse loomine seadmega ${opts.name}…`,
+      connectedTo: opts => `Ühendatud seadmega ${opts.name} (Redis ${opts.version} ${opts.mode}, ${opts.modules} moodulit on laaditud)`,
+      connectedToNoInfo: opts => `Ühendatud: ${opts.name}`,
+      disconnectedFrom: opts => `Ühendus seadmega ${opts.name} katkestatud`,
+      readyIndicator: "Valmis."
+    },
+    cheatsheet: {
+      title: "AI Cheatsheet – mida ma saan küsida?",
+      subtitle: "Klõpsake mis tahes viipa, et see konsooli kleepida. Seejärel vajutage sisestusklahvi.",
+      searchPlaceholder: "Filtreeri viipasid…",
+      openOfficialDocs: "Redis Käsud ↗",
+      openOfficialDocsTooltip: "Avage ametlik Redis käskude viide aadressil redis.io",
+      closeTooltip: "Sule (Esc)",
+      empty: "Teie filtrile ei vasta ükski viip.",
+      footerHint: "Näpunäide: tippige \"ai:\", millele järgneb mis tahes keeles – AI mõistab 54 keelt ja kasutab vajadusel reaalajas olekut Redis.",
+      groups: {
+        diagnostics: {
+          name: "Live diagnostika",
+          description: "Paluge AI uurida reaalajas serveri olekut ohutute kirjutuskaitstud tööriistade abil.",
+          prompts: [
+            "miks mälu on kõrge?",
+            "näita mulle 10 kõige aeglasemat päringut",
+            "millised kliendid on ühendatud?",
+            "mis on maksimaalse mälu poliitika?",
+            "kas hiljuti on välja tõstetud?",
+            "kas on mingi latentsussündmus?",
+            "kaua server üleval on olnud?",
+            "mis on tabamusprotsent?",
+            "näidata protsessori kasutamist",
+            "võtke klahviruum kokku",
+            "kui palju mälu iga andmetüüp kasutab?",
+            "kas miski blokeerib praegu serverit?"
+          ]
+        },
+        keys: {
+          name: "Võtmed",
+          description: "Kontrollige, leidke ja põhjendage võtmeid ilma puu kaudu klõpsamata.",
+          prompts: [
+            "leia kõik võtmed, mis vastavad user:*",
+            "mitu võtit on igas andmebaasis?",
+            "näita selle db suurimat räsi",
+            "leida võtmeid, mille TTL on vähem kui 60 sekundit",
+            "millistel võtmetel pole TTL-i?",
+            "mis tüüpi on võti session:abc?",
+            "hinnanguline mälu, mida kasutab eesliit \"session:\"",
+            "näita võtme user:42 objekti kodeeringut",
+            "kas võtmed hakkavad aeguma?",
+            "milline nimeruum kasutab kõige rohkem mälu?"
+          ]
+        },
+        dataTypes: {
+          name: "Andmetüübid",
+          description: "Loomulikkeelne sõnastus iga Redis tüübi loomiseks/lugemiseks/värskendamiseks.",
+          prompts: [
+            "looge räsi nimega user:1 väljadega name=Alice age=30",
+            "lisage loendisse kolm üksust tasks",
+            "lisa liikmeid komplekti favourites",
+            "lisa hinnatud liikmed sorteeritud komplekti leaderboard",
+            "lisa voogesituse sündmus events",
+            "hankige voost events viimased 10 kirjet",
+            "hankige kõik räsi kasutaja väljad:1",
+            "hankige komplekti favourites liikmed",
+            "saavuta leaderboard punktide järgi top 10"
+          ]
+        },
+        modules: {
+          name: "Moodulid",
+          description: "Laaditud Redis moodulite päringud (allolevad kategooriad kuvatakse ainult siis, kui moodul on olemas).",
+          prompts: []
+        },
+        json: {
+          name: "RedisJSON",
+          description: "Saadaval, kui moodul ReJSON on laaditud.",
+          prompts: [
+            "looge JSON dokument aadressil user:42 { nimi: \"Alice\", vanus: 30 }",
+            "loe user:42 nimevälja",
+            "värskendage user:42 vanust 31-le",
+            "loetlege kõik JSON võtmed",
+            "kustutage väli dokumendist JSON",
+            "hankige pesastatud väli, kasutades JSONPath"
+          ]
+        },
+        search: {
+          name: "RediSearch",
+          description: "Saadaval, kui otsingumoodul on laaditud.",
+          prompts: [
+            "loetleda kõik täistekstiindeksid",
+            "käivitage \"redis\" täistekstiotsing indeksis idx:products",
+            "looge räsipõhise indeks väljadega pealkiri (TEXT) ja hind (NUMERIC)",
+            "hankige teavet indeksi idx:products kohta",
+            "langusindeks idx:products",
+            "otsige dokumente, mille hind on vahemikus 10 kuni 50",
+            "kirjutage hübriidotsing, mis ühendab teksti ja vektori sarnasuse"
+          ]
+        },
+        timeseries: {
+          name: "RedisTimeSeries",
+          description: "Saadaval ajaridade mooduli laadimisel.",
+          prompts: [
+            "loetlege kõik ajaridade võtmed",
+            "lisage andmepunkt temp:room1",
+            "hankige vahemik temp:room1 eilsest praeguseni",
+            "hankige mitu vahemikku sildi järgi sensor=temp",
+            "genereerida 100 siinuslaine andmepunkti temp:room1 jaoks",
+            "kuva temp:room1 säilitamine ja sildid"
+          ]
+        },
+        bloom: {
+          name: "RedisBloom (Bloom / Kägu / Top-K / CMS / T-Digest)",
+          description: "Saadaval, kui bf-moodul on laaditud.",
+          prompts: [
+            "kontrollige, kas üksus foo on õitsemisfiltris spam:ips",
+            "lisa üksused õitsemisfiltrisse spam:ips",
+            "loo top-K nimega popular, mille K=10",
+            "päringu loendus-min sketš traffic võtme /home jaoks",
+            "lisage t-digestile väärtused ja saate 95. protsentiili",
+            "näita õitsemisfiltri teavet spam:ips"
+          ]
+        },
+        vectorSet: {
+          name: "VectorSet (Redis 8+)",
+          description: "Saadaval, kui tuvastatakse Redis 8+ (omatüüp VECTORSET).",
+          prompts: [
+            "lisage vektorisse embeddings",
+            "otsige päringuvektoriga 10 kõige sarnasemat vektorit",
+            "näita vektorkomplekti mõõtmeid ja arvu embeddings",
+            "elemendi kustutamine vektorkomplektist embeddings",
+            "otsi elemendi nime järgi VSIM"
+          ]
+        },
+        redis8: {
+          name: "Redis 8+ funktsiooni",
+          description: "Kuvatakse, kui tuvastatakse Redis 8+.",
+          prompts: [
+            "määrake räsiväli ttl väärtusega HEXPIRE",
+            "saada stringiväärtuse kokkuvõte",
+            "käivitage hübriidne täistekst + vektorotsing (FT.HYBRID)",
+            "määrake mitu jagatud aegumisega võtit, kasutades MSETEX",
+            "voo kirje kustutamine tarbijarühmaga (XDELEX)",
+            "kuva klastri pesa statistika 10 parima pesa kohta"
+          ]
+        },
+        scripting: {
+          name: "Skriptimine",
+          description: "Looge loomulikest kirjeldustest Lua / EVAL skripte.",
+          prompts: [
+            "kirjutage aatomskript, mis suurendab counter X ainult siis, kui Y > 5",
+            "genereerige 100 juhuslikku võtit Lua abil",
+            "teisenda see shell-konveier üheks EVAL: võtmed user:* | SAADA | grep passiivne | DEL",
+            "porti partii toimingu Lua klastri ohutuse tagamiseks",
+            "kontrollige ja määrake stiilivärskendus ühe Lua kõnega",
+            "korrake räsi ja kustutage mustriga vastavad väljad"
+          ]
+        },
+        cluster: {
+          name: "Klaster",
+          description: "Kuvatakse ainult kobarrežiimis.",
+          prompts: [
+            "näita klastri teavet",
+            "klastri sõlmede loend",
+            "kuva 10 parimat pesa võtmete arvu järgi",
+            "kuva 10 parimat pesa mälu järgi",
+            "millisele meistrile kuulub pesa 5000?"
+          ]
+        },
+        acl: {
+          name: "ACL (Redis 6+)",
+          description: "Kontrollige juurdepääsukontrolli kasutajaid ja praegust ühendust.",
+          prompts: [
+            "kellena ma seotud olen?",
+            "loetlege kõik ACL kasutajad",
+            "mis load mul on?",
+            "kuvada kasutaja vaikereeglid"
+          ]
+        },
+        qna: {
+          name: "Üldised küsimused ja vastused",
+          description: "Esitage Redis teadmisi puudutavaid küsimusi – pole tööriistu, vaid vastused.",
+          prompts: [
+            "mis on ZADD?",
+            "kuidas klastrite tõrkesiirde toimib?",
+            "selgitage SCAN vs KEYS",
+            "millal peaksin kasutama EVAL vs mitut käsku?",
+            "millised on Redis püsivusvalikud?",
+            "mis vahe on RDB ja AOF vahel?",
+            "kuidas Redis Sentinel uue meistri kasuks otsustab?",
+            "selgitage räsimärgendeid klastrirežiimis"
+          ]
+        },
+        translate: {
+          name: "Loomulik keel → Redis käsk",
+          description: "Kirjeldage, mida soovite ühes 54 keelest; AI kirjutab käsu Redis.",
+          prompts: [
+            "kustutamisvõti user:42",
+            "nimeta võti foo ribaks ümber",
+            "aeguvad võti session:abc 10 sekundi pärast",
+            "kopeerige võtmeallikas sihtkohta",
+            "suurendage loenduri külastusi 5 võrra",
+            "määrake klahvitervituseks 1 tunniks \"hello\"",
+            "kustuta kõik user:* võtmed",
+            "näita mulle 10 kõige hõivatumat võtit"
+          ]
+        }
+      }
+    },
     ssh: {
       on: "SSH sisse lülitatud",
       off: "SSH väljas",
@@ -278,7 +493,7 @@ const strings = {
     treeSeparatorEmpty: "Kui puu eraldaja on tühi, pole puul pesastatud sõlme, vaid puhas loend",
     treeSeparatorEmptyNote: "Pole pesastatud sõlme, vaid puhas loend",
     welcomeConsole: "Tere tulemast Redis konsooli",
-    welcomeConsoleInfo: "Kursori UP või DOWN ajalugu on lubatud",
+    welcomeConsoleInfo: "SHIFT + Kursori UP või DOWN ajalugu on lubatud",
     redisListIndexInfo: "Tühjendage lisamiseks, -1 lisamiseks või salvestamiseks näidatud kohta.",
     console: "konsool",
     connectiondAdd: "Lisage ühendus",
@@ -854,6 +1069,13 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+  },
+  promo: {
+    title: "AI Võrguabi",
+    description: "Avastage meie tasuta AI võrguabi aadressil network.corifeus.com — analüüsige domeene, IPs, DNS kirjeid, SSL sertifikaate, meiliturvet ja võrguinfrastruktuuri. Toiteallikaks on AI koheste ja kõikehõlmavate tulemuste saavutamiseks.",
+    disclaimer: "Seda reklaami näidatakse ainult demosaidil ja seda ei kuvata Docker, Electron ega veebirakenduste juurutustes.",
+    toastMessage: "Proovige meie tasuta AI võrguabi aadressil network.corifeus.com — analüüsige domeene, DNS, SSL ja palju muud!",
+    visit: "Külastage network.corifeus.com"
   }
 };
 module.exports = strings;

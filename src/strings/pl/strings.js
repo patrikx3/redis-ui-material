@@ -236,6 +236,232 @@ const strings = {
     aiRoutingNetwork: "Zapytania AI są kierowane przez network.corifeus.com. Jeśli masz własny darmowy klucz API Groq, możesz wyłączyć ten przełącznik, aby kierować je bezpośrednio do Groq bez network.corifeus.com.",
     aiMaxTokens: "Maksymalna liczba tokenów AI",
     aiMaxTokensInfo: "Maksymalna liczba tokenów dla odpowiedzi AI. Wyższe wartości pozwalają na dłuższe odpowiedzi, ale mogą zużywać więcej kredytów API.",
+    consoleDrawer: {
+      toggleTooltip: "Przełącz konsolę",
+      clearTooltip: "Wyczyść historię konsoli",
+      closeTooltip: "Zamknij konsolę",
+      aiSettingsTooltip: "Ustawienia AI",
+      modeRedis: "REDIS",
+      modeAi: "AI",
+      connectionChipNoDb: opts => `${opts.name}`,
+      connectionChipWithDb: opts => `${opts.name} · db ${opts.db}`,
+      pageChip: opts => `strona: ${opts.page}`,
+      connectingTo: opts => `Łączenie z ${opts.name}…`,
+      connectedTo: opts => `Połączono z ${opts.name} (Redis ${opts.version} ${opts.mode}, załadowano ${opts.modules} modułów)`,
+      connectedToNoInfo: opts => `Połączono z ${opts.name}`,
+      disconnectedFrom: opts => `Odłączono od ${opts.name}`,
+      notConnected: "Nie połączono.",
+      limitedAiOnly: "Tylko ograniczony AI — działają ogólne pytania i odpowiedzi o Redis.",
+      connectHint: "Aby uzyskać diagnostykę na żywo, wpisz: connect <name>",
+      cheatsheetHint: "Wpisz ai: help, aby zobaczyć, o co możesz zapytać.",
+      needsConnection: "To wymaga aktywnego połączenia. Najpierw wpisz \"connect <name>\".",
+      aiNeedsConnectionReason: "AI stanu na żywo (tool use) jest dostępne tylko po połączeniu z Redis.",
+      verbNeedsConnection: opts => `"${opts.verb}" wymaga aktywnego połączenia — najpierw wpisz "connect <name>".`,
+      aiLimitedMode: "AI działa w trybie ograniczonym — dopóki się nie połączysz, działają tylko pytania o ogólną wiedzę o Redis.",
+      welcomeDisconnected: "Witaj. Nie jesteś jeszcze połączony z żadną instancją Redis.",
+      readyIndicator: "Gotowe.",
+    },
+    cheatsheet: {
+      title: "Ściągawka AI — O co mogę zapytać?",
+      subtitle: "Kliknij dowolny monit, aby wkleić go do konsoli. Następnie naciśnij Enter.",
+      searchPlaceholder: "Filtruj monity…",
+      openOfficialDocs: "Polecenia Redis ↗",
+      openOfficialDocsTooltip: "Otwórz oficjalną dokumentację poleceń Redis na redis.io",
+      closeTooltip: "Zamknij (Esc)",
+      empty: "Żaden monit nie pasuje do filtru.",
+      footerHint: "Wskazówka: wpisz \"ai:\", a po nim cokolwiek w dowolnym języku — AI rozumie 54 języki i w razie potrzeby korzysta z aktualnego stanu Redis.",
+
+      // Each group has: name (category label), match (search-filter alias), prompts (array of example strings)
+      groups: {
+        diagnostics: {
+          name: "Diagnostyka na żywo",
+          description: "Poproś AI o zbadanie bieżącego stanu serwera za pomocą bezpiecznych narzędzi tylko do odczytu.",
+          prompts: [
+            "dlaczego zużycie pamięci jest wysokie?",
+            "pokaż mi 10 najwolniejszych zapytań",
+            "którzy klienci są połączeni?",
+            "jaka jest polityka maxmemory?",
+            "czy były ostatnio jakieś eksmisje?",
+            "czy wystąpiło zdarzenie opóźnienia?",
+            "jak długo serwer jest uruchomiony?",
+            "jaki jest współczynnik trafień?",
+            "pokaż użycie CPU",
+            "podsumuj przestrzeń kluczy",
+            "ile pamięci używa każdy typ danych?",
+            "czy coś blokuje teraz serwer?"
+          ]
+        },
+        keys: {
+          name: "Klucze",
+          description: "Badaj, znajduj i analizuj klucze bez przeklikiwania drzewa.",
+          prompts: [
+            "znajdź wszystkie klucze pasujące do user:*",
+            "ile kluczy jest w każdej bazie danych?",
+            "pokaż największy hash w tej bazie",
+            "znajdź klucze z TTL mniejszym niż 60 sekund",
+            "które klucze nie mają TTL?",
+            "jakiego typu jest klucz session:abc?",
+            "oszacuj pamięć używaną przez prefiks \"session:\"",
+            "pokaż kodowanie obiektu klucza user:42",
+            "czy są klucze, którym za chwilę wygaśnie ważność?",
+            "która przestrzeń nazw używa najwięcej pamięci?"
+          ]
+        },
+        dataTypes: {
+          name: "Typy danych",
+          description: "Naturalny język dla tworzenia/odczytu/aktualizacji każdego typu Redis.",
+          prompts: [
+            "utwórz hash o nazwie user:1 z polami name=Alice age=30",
+            "dodaj trzy elementy do listy tasks",
+            "dodaj członków do zbioru favourites",
+            "dodaj członków z wynikiem do zbioru posortowanego leaderboard",
+            "dołącz zdarzenie do strumienia events",
+            "pobierz 10 ostatnich wpisów ze strumienia events",
+            "pobierz wszystkie pola hasha user:1",
+            "pobierz członków zbioru favourites",
+            "pobierz top 10 według wyniku z leaderboard"
+          ]
+        },
+        modules: {
+          name: "Moduły",
+          description: "Zapytania dla załadowanych modułów Redis (poniższe kategorie pojawiają się tylko, gdy moduł jest obecny).",
+          prompts: []
+        },
+        json: {
+          name: "RedisJSON",
+          description: "Dostępne, gdy moduł ReJSON jest załadowany.",
+          prompts: [
+            "utwórz dokument JSON na user:42 z { name: \"Alice\", age: 30 }",
+            "odczytaj pole name z user:42",
+            "zaktualizuj age na user:42 do 31",
+            "pokaż wszystkie klucze JSON",
+            "usuń pole z dokumentu JSON",
+            "pobierz zagnieżdżone pole za pomocą JSONPath"
+          ]
+        },
+        search: {
+          name: "RediSearch",
+          description: "Dostępne, gdy moduł search jest załadowany.",
+          prompts: [
+            "pokaż wszystkie indeksy pełnotekstowe",
+            "wykonaj wyszukiwanie pełnotekstowe \"redis\" w indeksie idx:products",
+            "utwórz indeks oparty na hashu z polami title (TEXT) i price (NUMERIC)",
+            "pobierz informacje o indeksie idx:products",
+            "usuń indeks idx:products",
+            "znajdź dokumenty, w których price mieści się między 10 a 50",
+            "napisz wyszukiwanie hybrydowe łączące tekst i podobieństwo wektorowe"
+          ]
+        },
+        timeseries: {
+          name: "RedisTimeSeries",
+          description: "Dostępne, gdy moduł timeseries jest załadowany.",
+          prompts: [
+            "pokaż wszystkie klucze timeseries",
+            "dodaj punkt danych do temp:room1",
+            "pobierz zakres temp:room1 od wczoraj do teraz",
+            "pobierz multi-range według etykiety sensor=temp",
+            "wygeneruj 100 punktów sinusoidy dla temp:room1",
+            "pokaż retencję i etykiety dla temp:room1"
+          ]
+        },
+        bloom: {
+          name: "RedisBloom (Bloom / Cuckoo / Top-K / CMS / T-Digest)",
+          description: "Dostępne, gdy moduł bf jest załadowany.",
+          prompts: [
+            "sprawdź, czy element foo istnieje w filtrze bloom spam:ips",
+            "dodaj elementy do filtra bloom spam:ips",
+            "utwórz top-K o nazwie popular z K=10",
+            "zapytaj count-min sketch traffic dla klucza /home",
+            "dodaj wartości do t-digest i pobierz 95. percentyl",
+            "pokaż informacje o filtrze bloom spam:ips"
+          ]
+        },
+        vectorSet: {
+          name: "VectorSet (Redis 8+)",
+          description: "Dostępne, gdy wykryto Redis 8+ (natywny typ VECTORSET).",
+          prompts: [
+            "dodaj wektor do embeddings",
+            "znajdź 10 najbardziej podobnych wektorów do wektora zapytania",
+            "pokaż wymiary i liczbę elementów vectorset embeddings",
+            "usuń element z vectorset embeddings",
+            "wyszukaj po nazwie elementu za pomocą VSIM"
+          ]
+        },
+        redis8: {
+          name: "Funkcje Redis 8+",
+          description: "Wyświetlane, gdy wykryto Redis 8+.",
+          prompts: [
+            "ustaw TTL pola hasha za pomocą HEXPIRE",
+            "pobierz digest wartości tekstowej",
+            "wykonaj hybrydowe wyszukiwanie pełnotekstowe + wektorowe (FT.HYBRID)",
+            "ustaw wiele kluczy ze wspólnym czasem wygaśnięcia za pomocą MSETEX",
+            "usuń wpis strumienia z grupą konsumentów (XDELEX)",
+            "pokaż cluster slot-stats dla 10 najbardziej obciążonych slotów"
+          ]
+        },
+        scripting: {
+          name: "Skrypty",
+          description: "Generuj skrypty Lua / EVAL z opisów w języku naturalnym.",
+          prompts: [
+            "napisz atomowy skrypt, który zwiększa licznik X tylko jeśli Y > 5",
+            "wygeneruj 100 losowych kluczy za pomocą Lua",
+            "przekonwertuj ten potok powłoki na pojedynczy EVAL: keys user:* | GET | grep inactive | DEL",
+            "przenieś operację wsadową do Lua dla bezpieczeństwa klastra",
+            "aktualizacja w stylu check-and-set w jednym wywołaniu Lua",
+            "iteruj po haszu i usuń pola pasujące do wzorca"
+          ]
+        },
+        cluster: {
+          name: "Klaster",
+          description: "Wyświetlane tylko w trybie klastra.",
+          prompts: [
+            "pokaż informacje o klastrze",
+            "pokaż węzły klastra",
+            "pokaż 10 najbardziej obciążonych slotów według liczby kluczy",
+            "pokaż 10 najbardziej obciążonych slotów według pamięci",
+            "który master jest właścicielem slotu 5000?"
+          ]
+        },
+        acl: {
+          name: "ACL (Redis 6+)",
+          description: "Badaj użytkowników kontroli dostępu i bieżące połączenie.",
+          prompts: [
+            "jako kto jestem połączony?",
+            "pokaż wszystkich użytkowników ACL",
+            "jakie mam uprawnienia?",
+            "pokaż reguły użytkownika default"
+          ]
+        },
+        qna: {
+          name: "Ogólne Q&A",
+          description: "Zadawaj pytania o wiedzę Redis — bez narzędzi, tylko odpowiedzi.",
+          prompts: [
+            "czym jest ZADD?",
+            "jak działa failover klastra?",
+            "wyjaśnij SCAN kontra KEYS",
+            "kiedy używać EVAL zamiast wielu poleceń?",
+            "jakie są opcje trwałości Redis?",
+            "jaka jest różnica między RDB a AOF?",
+            "jak Redis Sentinel decyduje o nowym masterze?",
+            "wyjaśnij hash tags w trybie klastra"
+          ]
+        },
+        translate: {
+          name: "Język naturalny → polecenie Redis",
+          description: "Opisz, czego chcesz, prostym polskim (lub w dowolnym z 54 języków); AI napisze polecenie Redis.",
+          prompts: [
+            "usuń klucz user:42",
+            "zmień nazwę klucza foo na bar",
+            "ustaw wygaśnięcie klucza session:abc za 10 sekund",
+            "skopiuj klucz source do destination",
+            "zwiększ licznik visits o 5",
+            "ustaw klucz greeting na \"hello\" na 1 godzinę",
+            "pokaż mi 10 najczęściej używanych kluczy",
+            "usuń wszystkie klucze pasujące do temp:*"
+          ]
+        }
+      }
+    },
     ssh: {
       on: 'SSH włączony',
       off: 'SSH wyłączony',
@@ -278,7 +504,7 @@ const strings = {
     treeSeparatorEmpty: "Jeśli separator drzewa jest pusty, drzewo nie będzie miało zagnieżdżonych węzłów, tylko prostą listę",
     treeSeparatorEmptyNote: "Brak zagnieżdżonych węzłów, tylko prosta lista",
     welcomeConsole: "Witamy w konsoli Redis",
-    welcomeConsoleInfo: "Historia za pomocą kursora W GÓRĘ lub W DÓŁ jest włączona",
+    welcomeConsoleInfo: "SHIFT + Historia za pomocą kursora W GÓRĘ lub W DÓŁ jest włączona",
     redisListIndexInfo: "Puste, aby dodać na końcu, -1, aby dodać na początku lub zapisać na wyświetlanej pozycji.",
     console: "Konsola",
     connectiondAdd: "Dodaj połączenie",
@@ -854,6 +1080,13 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+  },
+  promo: {
+    title: "Asystent sieci AI",
+    description: "Odkryj naszego bezpłatnego asystenta sieci AI na network.corifeus.com — analizuj domeny, adresy IP, rekordy DNS, certyfikaty SSL, bezpieczeństwo poczty e-mail i infrastrukturę sieciową. Napędzany przez AI, aby zapewniać natychmiastowe, kompleksowe wyniki.",
+    disclaimer: "Ta promocja jest wyświetlana tylko na stronie demo i nie pojawi się we wdrożeniach Docker, Electron ani aplikacji webowej.",
+    toastMessage: "Wypróbuj naszego bezpłatnego asystenta sieci AI na network.corifeus.com — analizuj domeny, DNS, SSL i nie tylko!",
+    visit: "Odwiedź network.corifeus.com",
   }
 };
 module.exports = strings;

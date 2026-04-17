@@ -241,6 +241,223 @@ const strings = {
     aiRoutingNetwork: "AI queries are routed through network.corifeus.com. If you have your own free Groq API key, you can turn off this switch to route directly to Groq without network.corifeus.com.",
     aiMaxTokens: "AI Max Tokens",
     aiMaxTokensInfo: "Maximum number of tokens for AI responses. Higher values allow longer responses but may use more API credits.",
+    consoleDrawer: {
+      toggleTooltip: "Toggle console",
+      clearTooltip: "Clear scrollback",
+      closeTooltip: "Close console",
+      aiSettingsTooltip: "AI settings",
+      modeRedis: "REDIS",
+      modeAi: "AI",
+      connectionChipNoDb: opts => `${opts.name}`,
+      connectionChipWithDb: opts => `${opts.name} · db ${opts.db}`,
+      pageChip: opts => `page: ${opts.page}`,
+      connectingTo: opts => `Connecting to ${opts.name}…`,
+      connectedTo: opts => `Connected to ${opts.name} (Redis ${opts.version} ${opts.mode}, ${opts.modules} modules loaded)`,
+      connectedToNoInfo: opts => `Connected to ${opts.name}`,
+      disconnectedFrom: opts => `Disconnected from ${opts.name}`,
+      readyIndicator: "Ready.",
+    },
+    cheatsheet: {
+      title: "AI Cheatsheet — What can I ask?",
+      subtitle: "Click any prompt to paste it into the console. Then press Enter.",
+      searchPlaceholder: "Filter prompts…",
+      openOfficialDocs: "Redis Commands ↗",
+      openOfficialDocsTooltip: "Open the official Redis commands reference at redis.io",
+      closeTooltip: "Close (Esc)",
+      empty: "No prompts match your filter.",
+      footerHint: "Tip: type \"ai:\" followed by anything in any language — the AI understands 54 languages and uses live Redis state when needed.",
+
+      // Each group has: name (category label), match (search-filter alias), prompts (array of example strings)
+      groups: {
+        diagnostics: {
+          name: "Live diagnostics",
+          description: "Ask the AI to investigate live server state via safe read-only tools.",
+          prompts: [
+            "why is memory high?",
+            "show me the 10 slowest queries",
+            "which clients are connected?",
+            "what's the maxmemory policy?",
+            "are there any recent evictions?",
+            "is there any latency event?",
+            "how long has the server been up?",
+            "what's the hit rate?",
+            "show cpu usage",
+            "summarise the keyspace",
+            "how much memory does each data type use?",
+            "is anything blocking the server right now?"
+          ]
+        },
+        keys: {
+          name: "Keys",
+          description: "Inspect, find, and reason about keys without clicking through the tree.",
+          prompts: [
+            "find all keys matching user:*",
+            "how many keys in each database?",
+            "show the biggest hash in this db",
+            "find keys with TTL less than 60 seconds",
+            "which keys don't have a TTL?",
+            "what type is key session:abc?",
+            "estimate memory used by the \"session:\" prefix",
+            "show the object encoding of key user:42",
+            "are there any keys about to expire?",
+            "which namespace uses the most memory?"
+          ]
+        },
+        dataTypes: {
+          name: "Data types",
+          description: "Natural-language phrasing for create/read/update on every Redis type.",
+          prompts: [
+            "create a hash named user:1 with fields name=Alice age=30",
+            "add three items to list tasks",
+            "add members to set favourites",
+            "add scored members to sorted set leaderboard",
+            "append an event to stream events",
+            "get the last 10 entries from stream events",
+            "get all fields of hash user:1",
+            "get members of set favourites",
+            "get top 10 by score from leaderboard"
+          ]
+        },
+        modules: {
+          name: "Modules",
+          description: "Queries for loaded Redis modules (categories below appear only when the module is present).",
+          prompts: []
+        },
+        json: {
+          name: "RedisJSON",
+          description: "Available when the ReJSON module is loaded.",
+          prompts: [
+            "create a JSON document at user:42 with { name: \"Alice\", age: 30 }",
+            "read the name field of user:42",
+            "update the age of user:42 to 31",
+            "list all JSON keys",
+            "delete a field from a JSON document",
+            "get a nested field using JSONPath"
+          ]
+        },
+        search: {
+          name: "RediSearch",
+          description: "Available when the search module is loaded.",
+          prompts: [
+            "list all full-text indexes",
+            "run a full-text search for \"redis\" on index idx:products",
+            "create a hash-backed index with fields title (TEXT) and price (NUMERIC)",
+            "get info about index idx:products",
+            "drop index idx:products",
+            "find documents where price is between 10 and 50",
+            "write a hybrid search combining text and vector similarity"
+          ]
+        },
+        timeseries: {
+          name: "RedisTimeSeries",
+          description: "Available when the timeseries module is loaded.",
+          prompts: [
+            "list all timeseries keys",
+            "add a data point to temp:room1",
+            "get the range of temp:room1 from yesterday to now",
+            "get multi-range by label sensor=temp",
+            "generate 100 sine-wave data points for temp:room1",
+            "show retention and labels for temp:room1"
+          ]
+        },
+        bloom: {
+          name: "RedisBloom (Bloom / Cuckoo / Top-K / CMS / T-Digest)",
+          description: "Available when the bf module is loaded.",
+          prompts: [
+            "check if item foo exists in bloom filter spam:ips",
+            "add items to bloom filter spam:ips",
+            "create a top-K named popular with K=10",
+            "query count-min sketch traffic for key /home",
+            "add values to t-digest and get the 95th percentile",
+            "show info for bloom filter spam:ips"
+          ]
+        },
+        vectorSet: {
+          name: "VectorSet (Redis 8+)",
+          description: "Available when Redis 8+ is detected (native VECTORSET type).",
+          prompts: [
+            "add a vector to embeddings",
+            "find the 10 most similar vectors to a query vector",
+            "show dimensions and count of vectorset embeddings",
+            "delete an element from vectorset embeddings",
+            "search by element name with VSIM"
+          ]
+        },
+        redis8: {
+          name: "Redis 8+ features",
+          description: "Shown when Redis 8+ is detected.",
+          prompts: [
+            "set hash field ttl with HEXPIRE",
+            "get the digest of a string value",
+            "run a hybrid full-text + vector search (FT.HYBRID)",
+            "set multiple keys with a shared expiry using MSETEX",
+            "delete a stream entry with consumer group (XDELEX)",
+            "show cluster slot-stats for the top 10 slots"
+          ]
+        },
+        scripting: {
+          name: "Scripting",
+          description: "Generate Lua / EVAL scripts from natural-language descriptions.",
+          prompts: [
+            "write an atomic script that increments counter X only if Y > 5",
+            "generate 100 random keys with Lua",
+            "convert this shell pipeline to a single EVAL: keys user:* | GET | grep inactive | DEL",
+            "port a batch operation to Lua for cluster safety",
+            "check-and-set style update in a single Lua call",
+            "iterate over a hash and delete fields matching a pattern"
+          ]
+        },
+        cluster: {
+          name: "Cluster",
+          description: "Shown only in cluster mode.",
+          prompts: [
+            "show cluster info",
+            "list cluster nodes",
+            "show the top 10 slots by key count",
+            "show the top 10 slots by memory",
+            "which master owns slot 5000?"
+          ]
+        },
+        acl: {
+          name: "ACL (Redis 6+)",
+          description: "Inspect access-control users and the current connection.",
+          prompts: [
+            "who am I connected as?",
+            "list all ACL users",
+            "what permissions do I have?",
+            "show the default user rules"
+          ]
+        },
+        qna: {
+          name: "General Q&A",
+          description: "Ask Redis knowledge questions — no tools, just answers.",
+          prompts: [
+            "what is ZADD?",
+            "how does cluster failover work?",
+            "explain SCAN vs KEYS",
+            "when should I use EVAL vs multiple commands?",
+            "what are the Redis persistence options?",
+            "what's the difference between RDB and AOF?",
+            "how does Redis Sentinel decide on a new master?",
+            "explain hash tags in cluster mode"
+          ]
+        },
+        translate: {
+          name: "Natural-language → Redis command",
+          description: "Describe what you want in plain English (or any of 54 languages); the AI writes the Redis command.",
+          prompts: [
+            "delete key user:42",
+            "rename key foo to bar",
+            "expire key session:abc in 10 seconds",
+            "copy key source to destination",
+            "increment counter visits by 5",
+            "set key greeting to \"hello\" for 1 hour",
+            "show me the 10 most frequently accessed keys",
+            "delete all keys matching temp:*"
+          ]
+        }
+      }
+    },
     ssh: {
       on: 'SSH on',
       off: 'SSH off',
@@ -283,7 +500,7 @@ const strings = {
     treeSeparatorEmpty: "If the tree separator is empty, the tree wil have no nested nodes, just a pure list",
     treeSeparatorEmptyNote: "No nested nodes, just a pure list",
     welcomeConsole: "Welcome to the Redis Console",
-    welcomeConsoleInfo: "Cursor UP or DOWN history is enabled",
+    welcomeConsoleInfo: "SHIFT + Cursor UP or DOWN history is enabled",
     redisListIndexInfo: "Empty to append, -1 to prepend or save it to the position shown.",
     console: "Console",
     connectiondAdd: "Add connection",

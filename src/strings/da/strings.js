@@ -236,6 +236,221 @@ const strings = {
     aiRoutingNetwork: "AI-forespørgsler rutes gennem network.corifeus.com. Hvis du har din egen gratis Groq API-nøgle, kan du slå denne kontakt fra for at rute direkte til Groq uden network.corifeus.com.",
     aiMaxTokens: "Maks. AI-tokens",
     aiMaxTokensInfo: "Maksimalt antal tokens til AI-svar. Højere værdier giver længere svar, men kan bruge flere API-kreditter.",
+    consoleDrawer: {
+      toggleTooltip: "Skift konsol",
+      clearTooltip: "Ryd rulle tilbage",
+      closeTooltip: "Luk konsollen",
+      aiSettingsTooltip: "AI indstillinger",
+      modeRedis: "REDIS",
+      modeAi: "AI",
+      connectionChipNoDb: opts => `${opts.name}`,
+      connectionChipWithDb: opts => `${opts.name} · db ${opts.db}`,
+      pageChip: opts => `side: ${opts.page}`,
+      connectingTo: opts => `Opretter forbindelse til ${opts.name}...`,
+      connectedTo: opts => `Forbundet til ${opts.name} (Redis ${opts.version} ${opts.mode}, ${opts.modules} moduler indlæst)`,
+      connectedToNoInfo: opts => `Forbundet til ${opts.name}`,
+      disconnectedFrom: opts => `Afbrudt forbindelsen til ${opts.name}`,
+      readyIndicator: "Klar."
+    },
+    cheatsheet: {
+      title: "AI Snydeark — Hvad kan jeg spørge om?",
+      subtitle: "Klik på en vilkårlig prompt for at indsætte den i konsollen. Tryk derefter på Enter.",
+      searchPlaceholder: "Filtrer prompter...",
+      openOfficialDocs: "Redis Kommandoer ↗",
+      openOfficialDocsTooltip: "Åbn den officielle Redis kommandoreference på redis.io",
+      closeTooltip: "Luk (Esc)",
+      empty: "Ingen meddelelser matcher dit filter.",
+      footerHint: "Tip: skriv \"ai:\" efterfulgt af hvad som helst på et hvilket som helst sprog — AI forstår 54 sprog og bruger live Redis tilstand, når det er nødvendigt.",
+      groups: {
+        diagnostics: {
+          name: "Live diagnostik",
+          description: "Bed AI om at undersøge live serverstatus via sikre skrivebeskyttede værktøjer.",
+          prompts: [
+            "hvorfor er hukommelsen høj?",
+            "vis mig de 10 langsomste forespørgsler",
+            "hvilke klienter er forbundet?",
+            "hvad er maxmemory-politikken?",
+            "er der nogen nylige udsættelser?",
+            "er der nogen latenshændelse?",
+            "hvor længe har serveren været oppe?",
+            "hvad er hitraten?",
+            "vis cpu-brug",
+            "opsummer tasterummet",
+            "hvor meget hukommelse bruger hver datatype?",
+            "er der noget, der blokerer serveren lige nu?"
+          ]
+        },
+        keys: {
+          name: "Nøgler",
+          description: "Undersøg, find og ræson om nøgler uden at klikke gennem træet.",
+          prompts: [
+            "find alle nøgler, der matcher user:*",
+            "hvor mange nøgler i hver database?",
+            "vis den største hash i denne db",
+            "finde nøgler med TTL mindre end 60 sekunder",
+            "hvilke nøgler har ikke en TTL?",
+            "hvilken type er nøglen session:abc?",
+            "estimeret hukommelse brugt af præfikset \"session:\"",
+            "vis objektkodningen af nøglen user:42",
+            "er der nogle nøgler ved at udløbe?",
+            "hvilket navneområde bruger mest hukommelse?"
+          ]
+        },
+        dataTypes: {
+          name: "Datatyper",
+          description: "Frasering på naturligt sprog til oprettelse/læs/opdatering på hver Redis-type.",
+          prompts: [
+            "opret en hash med navnet bruger:1 med felterne navn=Alice alder=30",
+            "føj tre elementer til listen tasks",
+            "tilføje medlemmer til sæt favourites",
+            "tilføj scorede medlemmer til sorteret sæt leaderboard",
+            "tilføj en begivenhed til at streame events",
+            "få de sidste 10 poster fra stream events",
+            "få alle felter af hash-bruger:1",
+            "få medlemmer af sæt favourites",
+            "få top 10 efter score fra leaderboard"
+          ]
+        },
+        modules: {
+          name: "Moduler",
+          description: "Forespørgsler til indlæste Redis moduler (kategorierne nedenfor vises kun, når modulet er til stede).",
+          prompts: []
+        },
+        json: {
+          name: "RedisJSON",
+          description: "Tilgængelig, når ReJSON-modulet er indlæst.",
+          prompts: [
+            "opret et JSON dokument på user:42 med {navn: \"Alice\", alder: 30 }",
+            "læs navnefeltet for user:42",
+            "opdater alderen på user:42 til 31",
+            "liste alle JSON nøgler",
+            "slet et felt fra et JSON dokument",
+            "få et indlejret felt ved hjælp af JSONPath"
+          ]
+        },
+        search: {
+          name: "RediSearch",
+          description: "Tilgængelig, når søgemodulet er indlæst.",
+          prompts: [
+            "liste alle fuldtekstindekser",
+            "kør en fuldtekstsøgning efter \"redis\" på indekset idx:products",
+            "opret et hash-backed indeks med felternes titel (TEXT) og pris (NUMERIC)",
+            "få information om indeks idx:products",
+            "faldindeks idx:products",
+            "find dokumenter, hvor prisen er mellem 10 og 50",
+            "skrive en hybrid søgning, der kombinerer tekst og vektor lighed"
+          ]
+        },
+        timeseries: {
+          name: "RedisTimeSeries",
+          description: "Tilgængelig, når tidsseriemodulet er indlæst.",
+          prompts: [
+            "liste alle tidsserienøgler",
+            "tilføje et datapunkt til temp:room1",
+            "få rækkevidden af temp:room1 fra i går til nu",
+            "få multi-range efter label sensor=temp",
+            "generere 100 sinusbølgedatapunkter for temp:room1",
+            "vis opbevaring og etiketter for temp:room1"
+          ]
+        },
+        bloom: {
+          name: "RedisBloom (Bloom / Gøg / Top-K / CMS / T-Digest)",
+          description: "Tilgængelig, når bf-modulet er indlæst.",
+          prompts: [
+            "tjek om varen foo eksisterer i blomstringsfilter spam:ips",
+            "tilføje varer til blomstringsfilter spam:ips",
+            "opret en top-K ved navn popular med K=10",
+            "forespørgsel count-min skitse traffic for nøgle /home",
+            "tilføje værdier til t-digest og få den 95. percentil",
+            "vis info om blomstringsfilter spam:ips"
+          ]
+        },
+        vectorSet: {
+          name: "VectorSet (Redis 8+)",
+          description: "Tilgængelig, når Redis 8+ er detekteret (native VECTORSET type).",
+          prompts: [
+            "tilføje en vektor til embeddings",
+            "find de 10 mest lignende vektorer til en forespørgselsvektor",
+            "vis dimensioner og antal af vektorsæt embeddings",
+            "slet et element fra vektorsæt embeddings",
+            "søg efter elementnavn med VSIM"
+          ]
+        },
+        redis8: {
+          name: "Redis 8+ funktioner",
+          description: "Vises, når Redis 8+ er detekteret.",
+          prompts: [
+            "sæt hash felt ttl med HEXPIRE",
+            "få sammendraget af en strengværdi",
+            "kør en hybrid fuldtekst + vektorsøgning (FT.HYBRID)",
+            "sæt flere nøgler med et delt udløb ved hjælp af MSETEX",
+            "slet en stream-indgang med forbrugergruppe (XDELEX)",
+            "vis klynge slot-statistik for de 10 bedste slots"
+          ]
+        },
+        scripting: {
+          name: "Scripting",
+          description: "Generer Lua / EVAL scripts fra naturlige sprogbeskrivelser.",
+          prompts: [
+            "skriv et atomskrift, der kun øger counter X, hvis Y > 5",
+            "generer 100 tilfældige nøgler med Lua",
+            "konverter denne shell-pipeline til en enkelt EVAL: nøgler user:* | FÅ | grep inaktiv | DEL",
+            "porter en batchoperation til Lua for klyngesikkerhed",
+            "check-and-set stilopdatering i et enkelt Lua opkald",
+            "gentag over en hash og slet felter, der matcher et mønster"
+          ]
+        },
+        cluster: {
+          name: "Klynge",
+          description: "Vises kun i klyngetilstand.",
+          prompts: [
+            "vis klyngeoplysninger",
+            "liste klynge noder",
+            "vis de 10 bedste slots efter nøgletal",
+            "vis de 10 bedste slots efter hukommelse",
+            "hvilken master ejer slot 5000?"
+          ]
+        },
+        acl: {
+          name: "ACL (Redis 6+)",
+          description: "Undersøg adgangskontrolbrugere og den aktuelle forbindelse.",
+          prompts: [
+            "hvem er jeg forbundet som?",
+            "liste alle ACL brugere",
+            "hvilke tilladelser har jeg?",
+            "vis standardbrugerreglerne"
+          ]
+        },
+        qna: {
+          name: "Generelle spørgsmål og svar",
+          description: "Stil Redis vidensspørgsmål — ingen værktøjer, kun svar.",
+          prompts: [
+            "hvad er ZADD?",
+            "hvordan fungerer cluster failover?",
+            "forklar SCAN vs KEYS",
+            "hvornår skal jeg bruge EVAL vs flere kommandoer?",
+            "hvad er Redis persistensmulighederne?",
+            "hvad er forskellen mellem RDB og AOF?",
+            "hvordan beslutter Redis Sentinel sig for en ny master?",
+            "forklare hash-tags i klyngetilstand"
+          ]
+        },
+        translate: {
+          name: "Naturligt sprog → Redis kommando",
+          description: "Beskriv hvad du ønsker på et af de 54 sprog; AI skriver kommandoen Redis.",
+          prompts: [
+            "slet nøgle user:42",
+            "omdøb nøglen foo til bar",
+            "udløb nøgle session:abc om 10 sekunder",
+            "kopier nøglekilden til destinationen",
+            "øge modbesøg med 5",
+            "indstil nøglehilsen til \"hello\" i 1 time",
+            "slet alle user:* nøgler",
+            "vis mig de 10 travleste nøgler"
+          ]
+        }
+      }
+    },
     ssh: {
       on: "SSH tændt",
       off: "SSH slukket",
@@ -278,7 +493,7 @@ const strings = {
     treeSeparatorEmpty: "Hvis træseparatoren er tom, vil træet ikke have nogen indlejrede noder, kun en ren liste",
     treeSeparatorEmptyNote: "Ingen indlejrede noder, kun en ren liste",
     welcomeConsole: "Velkommen til Redis-konsollen",
-    welcomeConsoleInfo: "Markør OP- eller NED-historik er aktiveret",
+    welcomeConsoleInfo: "SHIFT + Markør OP- eller NED-historik er aktiveret",
     redisListIndexInfo: "Tom for at tilføje, -1 for at lægge foran eller gemme den til den viste position.",
     console: "Konsol",
     connectiondAdd: "Tilføj forbindelse",
@@ -854,6 +1069,13 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+  },
+  promo: {
+    title: "AI Netværksassistent",
+    description: "Oplev vores gratis AI netværksassistent på network.corifeus.com — analyser domæner, IPs, DNS poster, SSL certifikater, e-mailsikkerhed og netværksinfrastruktur. Drevet af AI for øjeblikkelige, omfattende resultater.",
+    disclaimer: "Denne kampagne vises kun på demosiden og vises ikke i Docker, Electron eller webapp-implementeringer.",
+    toastMessage: "Prøv vores gratis AI netværksassistent på network.corifeus.com — analyser domæner, DNS, SSL og mere!",
+    visit: "Besøg network.corifeus.com"
   }
 };
 module.exports = strings;

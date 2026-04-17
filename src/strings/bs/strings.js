@@ -238,6 +238,221 @@ const strings = {
     aiRoutingNetwork: "AI upiti se usmjeravaju preko network.corifeus.com. Ako imate vlastiti besplatni Groq API ključ, možete isključiti ovaj prekidač i usmjeravati direktno na Groq bez network.corifeus.com.",
     aiMaxTokens: "Maksimalni AI tokeni",
     aiMaxTokensInfo: "Maksimalan broj tokena za AI odgovore. Veće vrijednosti omogućavaju duže odgovore, ali mogu koristiti više API kredita.",
+    consoleDrawer: {
+      toggleTooltip: "Prebaci konzolu",
+      clearTooltip: "Obrišite pomicanje unazad",
+      closeTooltip: "Zatvorite konzolu",
+      aiSettingsTooltip: "AI postavke",
+      modeRedis: "REDIS",
+      modeAi: "AI",
+      connectionChipNoDb: opts => `${opts.name}`,
+      connectionChipWithDb: opts => `${opts.name} · db ${opts.db}`,
+      pageChip: opts => `stranica: ${opts.page}`,
+      connectingTo: opts => `Povezivanje na ${opts.name}…`,
+      connectedTo: opts => `Povezano na ${opts.name} (Redis ${opts.version} ${opts.mode}, ${opts.modules} modula učitan)`,
+      connectedToNoInfo: opts => `Povezano na ${opts.name}`,
+      disconnectedFrom: opts => `Prekinuta je veza s ${opts.name}`,
+      readyIndicator: "Spreman."
+    },
+    cheatsheet: {
+      title: "AI Cheatsheet — Šta da pitam?",
+      subtitle: "Kliknite na bilo koji upit da ga zalijepite u konzolu. Zatim pritisnite Enter.",
+      searchPlaceholder: "Filtriraj upite…",
+      openOfficialDocs: "Redis Komande ↗",
+      openOfficialDocsTooltip: "Otvorite zvaničnu referencu Redis komandi na redis.io",
+      closeTooltip: "Zatvori (Esc)",
+      empty: "Nijedan upit ne odgovara vašem filteru.",
+      footerHint: "Savjet: upišite \"ai:\" nakon čega slijedi bilo šta na bilo kojem jeziku — AI razumije 54 jezika i koristi stanje Redis uživo kada je potrebno.",
+      groups: {
+        diagnostics: {
+          name: "Dijagnostika uživo",
+          description: "Zamolite AI da istraži stanje servera uživo putem sigurnih alata samo za čitanje.",
+          prompts: [
+            "zašto je memorija visoka?",
+            "pokaži mi 10 najsporijih upita",
+            "koji su klijenti povezani?",
+            "koja je politika maksimalne memorije?",
+            "ima li nedavnih deložacija?",
+            "postoji li neki događaj kašnjenja?",
+            "koliko dugo server radi?",
+            "koja je stopa pogodaka?",
+            "prikaži upotrebu procesora",
+            "sumirati prostor ključeva",
+            "koliko memorije koristi svaki tip podataka?",
+            "da li išta trenutno blokira server?"
+          ]
+        },
+        keys: {
+          name: "Ključevi",
+          description: "Pregledajte, pronađite i razmislite o ključevima bez klikanja kroz stablo.",
+          prompts: [
+            "pronađi sve ključeve koji odgovaraju user:*",
+            "koliko ključeva u svakoj bazi podataka?",
+            "prikaži najveći hash u ovom db",
+            "pronađite ključeve sa TTL manje od 60 sekundi",
+            "koji ključevi nemaju TTL?",
+            "koji tip je ključ session:abc?",
+            "procjena memorije koju koristi \"session:\" prefiks",
+            "prikaži kodiranje objekta ključa user:42",
+            "ima li ključeva koji će uskoro isteći?",
+            "koji imenski prostor koristi najviše memorije?"
+          ]
+        },
+        dataTypes: {
+          name: "Tipovi podataka",
+          description: "Izraz na prirodnom jeziku za kreiranje/čitanje/ažuriranje za svaki tip Redis.",
+          prompts: [
+            "kreirajte hash pod imenom korisnik:1 sa poljima name=Alice age=30",
+            "dodaj tri stavke na listu tasks",
+            "dodajte članove u set favourites",
+            "dodaj bodovane članove u sortirani skup leaderboard",
+            "dodaj događaj u prijenos events",
+            "preuzmi zadnjih 10 unosa iz prijenosa events",
+            "dobiti sva polja hash user:1",
+            "nabavi članove skupa favourites",
+            "dobiti prvih 10 po rezultatu od leaderboard"
+          ]
+        },
+        modules: {
+          name: "Moduli",
+          description: "Upiti za učitane Redis module (kategorije ispod se pojavljuju samo kada je modul prisutan).",
+          prompts: []
+        },
+        json: {
+          name: "RedisJSON",
+          description: "Dostupno kada je modul ReJSON učitan.",
+          prompts: [
+            "kreirajte JSON dokument na user:42 sa { name: \"Alice\", starost: 30 }",
+            "pročitaj polje imena user:42",
+            "ažuriraj starost user:42 na 31",
+            "navesti sve JSON ključeve",
+            "obrišite polje iz JSON dokumenta",
+            "dobiti ugniježđeno polje koristeći JSONPath"
+          ]
+        },
+        search: {
+          name: "RediSearch",
+          description: "Dostupno kada je modul za pretraživanje učitan.",
+          prompts: [
+            "navesti sve indekse punog teksta",
+            "pokrenite pretraživanje cijelog teksta za \"redis\" na indeksu idx:products",
+            "kreirajte hash-backed indeks sa naslovom polja (TEXT) i cijenom (NUMERIC)",
+            "dobiti informacije o indeksu idx:products",
+            "indeks pada idx:products",
+            "pronađite dokumente čija je cijena između 10 i 50",
+            "napisati hibridnu pretragu koja kombinuje sličnost teksta i vektora"
+          ]
+        },
+        timeseries: {
+          name: "RedisTimeSeries",
+          description: "Dostupno kada je modul vremenske serije učitan.",
+          prompts: [
+            "navesti sve ključeve vremenske serije",
+            "dodajte tačku podataka u temp:room1",
+            "dobiti raspon temp:room1 od jučer do sada",
+            "dobiti više opsega po etiketi sensor=temp",
+            "generirajte 100 sinusnih tačaka podataka za temp:room1",
+            "prikaži zadržavanje i oznake za temp:room1"
+          ]
+        },
+        bloom: {
+          name: "RedisBloom (Bloom / Cuckoo / Top-K / CMS / T-Digest)",
+          description: "Dostupno kada je bf modul učitan.",
+          prompts: [
+            "provjerite da li stavka foo postoji u filteru cvjetanja spam:ips",
+            "dodaj stavke u bloom filter spam:ips",
+            "kreirajte top-K pod nazivom popular sa K=10",
+            "upit count-min skica traffic za ključ /home",
+            "dodajte vrijednosti t-digestu i dobijete 95. percentil",
+            "prikaži informacije za bloom filter spam:ips"
+          ]
+        },
+        vectorSet: {
+          name: "VectorSet (Redis 8+)",
+          description: "Dostupno kada se otkrije Redis 8+ (nativni tip VECTORSET).",
+          prompts: [
+            "dodaj vektor u embeddings",
+            "pronađite 10 najsličnijih vektora vektoru upita",
+            "prikaži dimenzije i broj vektorskog skupa embeddings",
+            "izbriši element iz vektorskog skupa embeddings",
+            "pretraži po imenu elementa sa VSIM"
+          ]
+        },
+        redis8: {
+          name: "Redis 8+ funkcija",
+          description: "Prikazuje se kada se detektuje Redis 8+.",
+          prompts: [
+            "postaviti hash polje ttl sa HEXPIRE",
+            "dobiti sažetak vrijednosti niza",
+            "pokrenite hibridno pretraživanje cijelog teksta + vektora (FT.HYBRID)",
+            "postavite više ključeva sa zajedničkim istekom koristeći MSETEX",
+            "izbrišite unos toka sa grupom potrošača (XDELEX)",
+            "prikaži statistiku klastera za prvih 10 slotova"
+          ]
+        },
+        scripting: {
+          name: "Skriptiranje",
+          description: "Generirajte Lua / EVAL skripte iz opisa na prirodnom jeziku.",
+          prompts: [
+            "napišite atomsku skriptu koja povećava counter X samo ako Y > 5",
+            "generirajte 100 nasumičnih ključeva sa Lua",
+            "pretvoriti ovu shell pipeline u jedan EVAL: ključevi user:* | GET | grep neaktivan | DEL",
+            "porti paketnu operaciju na Lua radi sigurnosti klastera",
+            "provjeri i postavi ažuriranje stila u jednom Lua pozivu",
+            "iterirajte preko hash i izbrišite polja koja odgovaraju uzorku"
+          ]
+        },
+        cluster: {
+          name: "Cluster",
+          description: "Prikazuje se samo u klaster modu.",
+          prompts: [
+            "prikaži informacije o klasteru",
+            "lista čvorova klastera",
+            "prikazati prvih 10 slotova po broju ključeva",
+            "prikazati prvih 10 slotova po memoriji",
+            "koji majstor posjeduje slot 5000?"
+          ]
+        },
+        acl: {
+          name: "ACL (Redis 6+)",
+          description: "Pregledajte korisnike kontrole pristupa i trenutnu vezu.",
+          prompts: [
+            "ko sam ja povezan?",
+            "popis svih ACL korisnika",
+            "koje dozvole imam?",
+            "prikaži zadana korisnička pravila"
+          ]
+        },
+        qna: {
+          name: "Opća pitanja i odgovori",
+          description: "Postavljajte Redis pitanja znanja — bez alata, samo odgovori.",
+          prompts: [
+            "šta je ZADD?",
+            "kako funkcionira klaster failover?",
+            "objasni SCAN vs KEYS",
+            "kada trebam koristiti EVAL u odnosu na više komandi?",
+            "koje su Redis opcije postojanosti?",
+            "koja je razlika između RDB i AOF?",
+            "kako Redis Sentinel odlučuje o novom gospodaru?",
+            "objasniti hash oznake u klaster modu"
+          ]
+        },
+        translate: {
+          name: "Prirodni jezik → Redis komanda",
+          description: "Opišite šta želite na bilo kom od 54 jezika; AI piše naredbu Redis.",
+          prompts: [
+            "ključ za brisanje user:42",
+            "preimenuj ključ foo u traku",
+            "istekne ključ session:abc za 10 sekundi",
+            "kopirajte izvor ključa na odredište",
+            "povećati broj posjeta za 5",
+            "postavite pozdravni ključ na \"hello\" na 1 sat",
+            "obriši sve user:* ključeve",
+            "pokaži mi 10 najzauzetijih ključeva"
+          ]
+        }
+      }
+    },
     ssh: {
       on: 'SSH uključen',
       off: 'SSH isključen',
@@ -280,7 +495,7 @@ const strings = {
     treeSeparatorEmpty: "Ako je separator stabla prazan, stablo neće imati ugniježđene čvorove, samo čistu listu",
     treeSeparatorEmptyNote: "Nema ugniježđenih čvorova, samo čista lista",
     welcomeConsole: "Dobrodošli u Redis konzolu",
-    welcomeConsoleInfo: "Historija kursora GORE ili DOLJE je omogućena",
+    welcomeConsoleInfo: "SHIFT + Historija kursora GORE ili DOLJE je omogućena",
     redisListIndexInfo: "Prazno za dodavanje, -1 za dodavanje na početak ili sačuvaj na prikazanu poziciju.",
     console: "Konzola",
     connectiondAdd: "Dodaj konekciju",
@@ -856,6 +1071,13 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+  },
+  promo: {
+    title: "AI Mrežni asistent",
+    description: "Otkrijte naš besplatni AI mrežni asistent na network.corifeus.com — analizirajte domene, IPs, DNS zapise, SSL certifikate, sigurnost e-pošte i mrežnu infrastrukturu. Pokreće AI za trenutne, sveobuhvatne rezultate.",
+    disclaimer: "Ova promocija je prikazana samo na demo stranici i neće se pojaviti u Docker, Electron ili implementacijama web aplikacija.",
+    toastMessage: "Isprobajte naš besplatni AI Network Assistant na network.corifeus.com — analizirajte domene, DNS, SSL i još mnogo toga!",
+    visit: "Posjetite network.corifeus.com"
   }
 };
 module.exports = strings;

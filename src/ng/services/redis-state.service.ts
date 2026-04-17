@@ -43,6 +43,33 @@ export class RedisStateService {
     readonly reducedFunctions = signal<boolean>(false);
     readonly keysInfoFetchedAt = signal<number>(Date.now());
 
+    // --- Console drawer + connection-state awareness ---
+
+    /** 'none' = no connection, 'connecting' = connect in flight, 'connected' = alive */
+    readonly connectionState = signal<'none' | 'connecting' | 'connected'>('none');
+
+    /** Route-level page identifier, set by each page on mount. Used by AI context + console cheatsheet filtering. */
+    readonly currentPage = signal<
+        'connections' | 'database' | 'pulse' | 'profiler' | 'pubsub' | 'analysis' |
+        'search' | 'timeseries' | 'info' | 'settings' | 'unknown'
+    >('unknown');
+
+    /** Is the global bottom console drawer open? Persisted to localStorage. */
+    readonly consoleDrawerOpen = signal<boolean>(this.getStoredDrawerOpen());
+
+    setConsoleDrawerOpen(open: boolean): void {
+        this.consoleDrawerOpen.set(open);
+        try { localStorage.setItem('p3xr-console-drawer-open', String(open)); } catch {}
+    }
+
+    toggleConsoleDrawer(): void {
+        this.setConsoleDrawerOpen(!this.consoleDrawerOpen());
+    }
+
+    private getStoredDrawerOpen(): boolean {
+        try { return localStorage.getItem('p3xr-console-drawer-open') === 'true'; } catch { return false; }
+    }
+
     // --- Computed values ---
 
     /** Parsed Redis server version for feature gating (e.g. redisVersion().isAtLeast(8, 2)) */

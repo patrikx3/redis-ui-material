@@ -13,10 +13,8 @@ import type { KeyNewOrSetData } from '../../dialogs/KeyNewOrSetDialog.vue'
 import DatabaseHeader from './DatabaseHeader.vue'
 import DatabaseTreeControls from './DatabaseTreeControls.vue'
 import DatabaseTree from './DatabaseTree.vue'
-import ConsoleComponent from '../console/ConsoleComponent.vue'
 
 const RESIZE_MIN_WIDTH = 315
-const CONSOLE_COLLAPSED_HEIGHT = 80
 const PANEL_WIDTH_KEY = 'p3xr-database-panel-width'
 
 const router = useRouter()
@@ -68,10 +66,6 @@ const isDragging = ref(false)
 const isHovering = ref(false)
 const containerEl = ref<HTMLDivElement>()
 
-// Console expand/collapse
-const consoleExpanded = ref(false)
-const consolePanelEl = ref<HTMLDivElement>()
-
 // Accordion colors for header/resizer (same as P3xrAccordion)
 const ACCORDION_BG: Record<string, string> = {
     enterprise: '#9e9e9e', light: '#b0bec5', redis: '#ef9a9a',
@@ -87,11 +81,9 @@ const resizerFilter = computed(() => {
     return 'none'
 })
 
-const consoleHeight = computed(() => consoleExpanded.value ? '33%' : `${CONSOLE_COLLAPSED_HEIGHT}px`)
-const consoleMinHeight = computed(() => consoleExpanded.value ? 220 : CONSOLE_COLLAPSED_HEIGHT)
-
 // Redirect to statistics on bare /database + listen for key-new event
 onMounted(() => {
+    state.currentPage = 'database'
     if (state.connection) {
         const path = route.path
         if (path === '/database' || path === '/database/') {
@@ -146,27 +138,7 @@ onUnmounted(() => {
     keyDialogUnsubs.forEach(fn => fn())
 })
 
-// --- Console click-outside-to-collapse ---
-function onDocumentMouseDown(event: MouseEvent) {
-    if (isXs.value || !hasConnection.value) return
-    const panel = consolePanelEl.value
-    if (!panel) return
-
-    if (panel.contains(event.target as Node)) {
-        const actions = panel.querySelector('.p3xr-console-toolbar-actions')
-        if (actions && actions.contains(event.target as Node)) return
-        if (!consoleExpanded.value) {
-            consoleExpanded.value = true
-        }
-        return
-    }
-    if (consoleExpanded.value) {
-        consoleExpanded.value = false
-    }
-}
-
-onMounted(() => document.addEventListener('mousedown', onDocumentMouseDown))
-onUnmounted(() => document.removeEventListener('mousedown', onDocumentMouseDown))
+// Bottom console is now in the global drawer (ConsoleDrawer.vue at the Layout level)
 </script>
 
 <template>
@@ -185,9 +157,6 @@ onUnmounted(() => document.removeEventListener('mousedown', onDocumentMouseDown)
                     </div>
                     <div class="p3xr-database-mobile-content">
                         <router-view />
-                    </div>
-                    <div class="p3xr-database-mobile-console">
-                        <ConsoleComponent embedded />
                     </div>
                 </div>
 
@@ -216,19 +185,6 @@ onUnmounted(() => document.removeEventListener('mousedown', onDocumentMouseDown)
                         <div class="p3xr-database-right">
                             <router-view />
                         </div>
-                    </div>
-
-                    <!-- Bottom console panel -->
-                    <div
-                        ref="consolePanelEl"
-                        class="p3xr-database-console-panel"
-                        :style="{
-                            height: consoleHeight,
-                            minHeight: consoleMinHeight + 'px',
-                            maxHeight: consoleExpanded ? '50%' : CONSOLE_COLLAPSED_HEIGHT + 'px',
-                        }"
-                    >
-                        <ConsoleComponent embedded :collapsed="!consoleExpanded" />
                     </div>
                 </div>
             </template>

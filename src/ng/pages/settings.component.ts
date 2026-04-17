@@ -569,9 +569,6 @@ import { switchGui } from '../../core/gui-switch';
                 </mat-list>
             </div>
         </p3xr-ng-accordion>
-
-        <!-- Bottom spacing to prevent overlap with fixed footer bar -->
-        <div style="height: 60px;"></div>
     `,
     styles: [`
         :host { display: block; color: var(--mat-app-text-color, inherit); }

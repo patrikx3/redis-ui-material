@@ -236,6 +236,221 @@ const strings = {
     aiRoutingNetwork: "AI sorğuları network.corifeus.com vasitəsilə yönləndirilir. Öz pulsuz Groq API açarınız varsa, bu açarı söndürüb network.corifeus.com olmadan birbaşa Groq-a yönləndirə bilərsiniz.",
     aiMaxTokens: "AI maksimum tokenləri",
     aiMaxTokensInfo: "AI cavabları üçün maksimum token sayı. Daha yüksək dəyərlər daha uzun cavablara imkan verir, lakin daha çox API krediti istifadə edə bilər.",
+    consoleDrawer: {
+      toggleTooltip: "Konsolu dəyişdirin",
+      clearTooltip: "Geriyə sürüşdürməni silin",
+      closeTooltip: "Konsolu bağlayın",
+      aiSettingsTooltip: "AI parametrləri",
+      modeRedis: "REDIS",
+      modeAi: "AI",
+      connectionChipNoDb: opts => `${opts.name}`,
+      connectionChipWithDb: opts => `${opts.name} · db ${opts.db}`,
+      pageChip: opts => `səhifə: ${opts.page}`,
+      connectingTo: opts => `${opts.name} ilə qoşulur…`,
+      connectedTo: opts => `${opts.name}-ə qoşuldu (Redis ${opts.version} ${opts.mode}, ${opts.modules} modulları yükləndi)`,
+      connectedToNoInfo: opts => `${opts.name} ilə qoşulub`,
+      disconnectedFrom: opts => `${opts.name} ilə əlaqə kəsildi`,
+      readyIndicator: "Hazır."
+    },
+    cheatsheet: {
+      title: "AI Cheatsheet — Mən nə soruşa bilərəm?",
+      subtitle: "Konsola yapışdırmaq üçün istənilən sorğuya klikləyin. Sonra Enter düyməsini basın.",
+      searchPlaceholder: "Filtr sorğuları...",
+      openOfficialDocs: "Redis Əmrlər ↗",
+      openOfficialDocsTooltip: "redis.io ünvanında rəsmi Redis əmr arayışını açın",
+      closeTooltip: "Bağlayın (Esc)",
+      empty: "Filtrinizə uyğun bildiriş yoxdur.",
+      footerHint: "İpucu: \"ai:\" yazın, ardınca istənilən dildə hər hansı bir şey yazın — AI 54 dili başa düşür və lazım olduqda canlı Redis vəziyyətindən istifadə edir.",
+      groups: {
+        diagnostics: {
+          name: "Canlı diaqnostika",
+          description: "AI-dan yalnız oxumaq üçün təhlükəsiz alətlər vasitəsilə canlı server vəziyyətini araşdırmasını xahiş edin.",
+          prompts: [
+            "yaddaş niyə yüksəkdir?",
+            "mənə ən yavaş 10 sorğunu göstər",
+            "hansı müştərilər bağlıdır?",
+            "maxmemory siyasəti nədir?",
+            "bu yaxınlarda çıxarılanlar varmı?",
+            "hər hansı gecikmə hadisəsi var?",
+            "server nə vaxtdır işləyir?",
+            "hit dərəcəsi nədir?",
+            "CPU istifadəsini göstərin",
+            "açar boşluğunu ümumiləşdirin",
+            "hər bir məlumat növü nə qədər yaddaş istifadə edir?",
+            "serveri bloklayan bir şey var?"
+          ]
+        },
+        keys: {
+          name: "Açarlar",
+          description: "Ağacdan keçmədən açarları yoxlayın, tapın və əsaslandırın.",
+          prompts: [
+            "user:* uyğun gələn bütün açarları tapın",
+            "hər verilənlər bazasında neçə açar var?",
+            "bu db ən böyük hashı göstərin",
+            "60 saniyədən az TTL ilə açarları tapın",
+            "hansı düymələrdə TTL yoxdur?",
+            "session:abc açarı hansı növdür?",
+            "\"session:\" prefiksi tərəfindən istifadə edilən yaddaşı təxmin edin",
+            "user:42 açarının obyekt kodlamasını göstərin",
+            "vaxtı bitmək üzrə olan açarlar varmı?",
+            "hansı ad sahəsi daha çox yaddaş istifadə edir?"
+          ]
+        },
+        dataTypes: {
+          name: "Məlumat növləri",
+          description: "Hər Redis növündə yaratmaq/oxumaq/güncəlləmək üçün təbii dildə ifadələr.",
+          prompts: [
+            "user adlı hash yaradın: 1 sahələri ilə name=Alice age=30",
+            "siyahıya üç element əlavə edin tasks",
+            "favourites qurmaq üçün üzvlər əlavə edin",
+            "sıralanmış dəstəyə xal toplayan üzvləri əlavə edin leaderboard",
+            "axın etmək üçün hadisə əlavə edin events",
+            "events axınından son 10 girişi əldə edin",
+            "hash istifadəçisinin bütün sahələrini əldə edin: 1",
+            "favourites dəstinin üzvlərini əldə edin",
+            "leaderboard xalına görə ilk 10-u əldə edin"
+          ]
+        },
+        modules: {
+          name: "Modullar",
+          description: "Yüklənmiş Redis modulları üçün sorğular (aşağıdakı kateqoriyalar yalnız modul mövcud olduqda görünür).",
+          prompts: []
+        },
+        json: {
+          name: "RedisJSON",
+          description: "ReJSON modulu yükləndikdə mövcuddur.",
+          prompts: [
+            "user:42 ünvanında { adı: \"Alice\", yaş: 30 } ilə JSON sənəd yaradın",
+            "user:42 ad sahəsini oxuyun",
+            "user:42 yaşını 31-ə yeniləyin",
+            "bütün JSON düymələrini sadalayın",
+            "JSON sənədindən sahəni silin",
+            "JSONPath istifadə edərək daxili sahə əldə edin"
+          ]
+        },
+        search: {
+          name: "RediSearch",
+          description: "Axtarış modulu yükləndikdə mövcuddur.",
+          prompts: [
+            "bütün tam mətn indekslərini sadalayın",
+            "idx:products indeksində \"redis\" üçün tam mətnli axtarış aparın",
+            "sahələrin başlığı (TEXT) və qiyməti (NUMERIC) ilə hash dəstəkli indeks yaradın",
+            "idx:products indeksi haqqında məlumat əldə edin",
+            "düşmə indeksi idx:products",
+            "qiymətin 10 ilə 50 arasında olduğu sənədləri tapın",
+            "mətn və vektor oxşarlığını birləşdirən hibrid axtarış yazın"
+          ]
+        },
+        timeseries: {
+          name: "RedisTimeSeries",
+          description: "Zaman seriyası modulu yükləndikdə mövcuddur.",
+          prompts: [
+            "bütün timeseries düymələrini sadalayın",
+            "temp:room1-a məlumat nöqtəsi əlavə edin",
+            "dünəndən indiyə qədər temp:room1 diapazonunu əldə edin",
+            "sensor=temp etiketi ilə çox diapazon əldə edin",
+            "temp:room1 üçün 100 sinus dalğa məlumat nöqtəsi yaradın",
+            "temp:room1 üçün saxlama və etiketləri göstərin"
+          ]
+        },
+        bloom: {
+          name: "RedisBloom (Çiçəklənmə / Ququ / Top-K / CMS / T-Digest)",
+          description: "Bf modulu yükləndikdə mövcuddur.",
+          prompts: [
+            "foo elementinin çiçəklənmə filtrində olub olmadığını yoxlayın spam:ips",
+            "çiçəklənmə filtrinə elementlər əlavə edin spam:ips",
+            "K=10 olan popular adlı top-K yaradın",
+            "sorğu sayı-dəqiqə eskizi traffic açarı üçün /home",
+            "t-həzminə dəyərlər əlavə edin və 95-ci faizlik əldə edin",
+            "çiçəkləmə filtri üçün məlumatı göstər spam:ips"
+          ]
+        },
+        vectorSet: {
+          name: "VectorSet (Redis 8+)",
+          description: "Redis 8+ aşkar edildikdə əlçatandır (doğma VECTORSET növü).",
+          prompts: [
+            "vektor əlavə edin embeddings",
+            "sorğu vektoruna ən çox oxşar olan 10 vektoru tapın",
+            "vektor dəstinin ölçülərini və sayını göstər embeddings",
+            "vektor dəstindən elementi silin embeddings",
+            "VSIM ilə element adına görə axtarın"
+          ]
+        },
+        redis8: {
+          name: "Redis 8+ funksiyalar",
+          description: "Redis 8+ aşkar edildikdə göstərilir.",
+          prompts: [
+            "HEXPIRE ilə hash sahəsi ttl təyin edin",
+            "sətir dəyərinin həzmini əldə edin",
+            "hibrid tam mətn + vektor axtarışını işlədin (FT.HYBRID)",
+            "MSETEX istifadə edərək ortaq istifadə müddəti olan birdən çox açar təyin edin",
+            "istehlakçı qrupu ilə axın girişini silin (XDELEX)",
+            "ilk 10 slot üçün klaster slot statistikasını göstərin"
+          ]
+        },
+        scripting: {
+          name: "Ssenari yazmaq",
+          description: "Təbii dil təsvirlərindən Lua / EVAL skriptləri yaradın.",
+          prompts: [
+            "yalnız Y > 5 olduqda counter X artıran atom skripti yazın",
+            "Lua ilə 100 təsadüfi açar yaradın",
+            "bu qabıq boru kəmərini tək EVAL çevirmək: düymələr user:* | GET | grep qeyri-aktiv | DEL",
+            "klaster təhlükəsizliyi üçün toplu əməliyyatı Lua portuna köçürün",
+            "bir Lua zəngində yoxlayın və təyin edin stil yeniləməsi",
+            "hash üzərində təkrarlayın və nümunəyə uyğun sahələri silin"
+          ]
+        },
+        cluster: {
+          name: "Klaster",
+          description: "Yalnız klaster rejimində göstərilir.",
+          prompts: [
+            "klaster məlumatını göstərin",
+            "klaster qovşaqlarının siyahısı",
+            "əsas sayına görə ilk 10 yeri göstərin",
+            "yaddaşa görə ilk 10 yeri göstərin",
+            "5000 slotu hansı ustanın sahibidir?"
+          ]
+        },
+        acl: {
+          name: "ACL (Redis 6+)",
+          description: "Giriş nəzarəti istifadəçilərini və cari əlaqəni yoxlayın.",
+          prompts: [
+            "mən kimə bağlıyam?",
+            "bütün ACL istifadəçilərini siyahıya salın",
+            "mənim hansı icazələrim var?",
+            "standart istifadəçi qaydalarını göstərin"
+          ]
+        },
+        qna: {
+          name: "Ümumi sual-cavab",
+          description: "Redis biliyə dair suallar verin — alətlər yoxdur, sadəcə cavablar.",
+          prompts: [
+            "ZADD nədir?",
+            "klaster uğursuzluğu necə işləyir?",
+            "izah edin SCAN vs KEYS",
+            "EVAL və çoxlu əmrləri nə vaxt istifadə etməliyəm?",
+            "Redis davamlılıq seçimləri hansılardır?",
+            "RDB və AOF arasındakı fərq nədir?",
+            "Redis Sentinel yeni ustaya necə qərar verir?",
+            "klaster rejimində hash teqlərini izah edin"
+          ]
+        },
+        translate: {
+          name: "Təbii dil → Redis əmri",
+          description: "İstədiyinizi 54 dildən hər hansı birində təsvir edin; AI Redis əmrini yazır.",
+          prompts: [
+            "açarı silin user:42",
+            "foo düyməsinin adını bara dəyişdirin",
+            "session:abc açarının müddəti 10 saniyəyə başa çatır",
+            "əsas mənbəni təyinat yerinə köçürün",
+            "əks ziyarətləri 5 artırın",
+            "Açar salamlamanı \"hello\" olaraq 1 saata təyin edin",
+            "bütün user:* açarlarını sil",
+            "mənə ən məşğul 10 açarı göstər"
+          ]
+        }
+      }
+    },
     ssh: {
       on: "SSH aktivdir",
       off: "SSH deaktivdir",
@@ -278,7 +493,7 @@ const strings = {
     treeSeparatorEmpty: "Ağac ayırıcı boşdursa, ağacın iç içə qovşaqları olmayacaq, sadəcə təmiz siyahı olacaq",
     treeSeparatorEmptyNote: "İçəri daxil edilmiş qovşaqlar yoxdur, sadəcə təmiz siyahıdır",
     welcomeConsole: "Redis Konsoluna xoş gəlmisiniz",
-    welcomeConsoleInfo: "Kursor YUKARI və ya AŞAĞI tarix aktivləşdirilib",
+    welcomeConsoleInfo: "SHIFT + Kursor YUKARI və ya AŞAĞI tarix aktivləşdirilib",
     redisListIndexInfo: "Əlavə etmək üçün boş, yuxarıya əlavə etmək və ya göstərilən mövqeyə saxlamaq üçün -1.",
     console: "Konsol",
     connectiondAdd: "Bağlantı əlavə edin",
@@ -854,6 +1069,13 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+  },
+  promo: {
+    title: "AI Şəbəkə Köməkçisi",
+    description: "network.corifeus.com ünvanında pulsuz AI Şəbəkə Köməkçisini kəşf edin — domenləri, IPs, DNS qeydləri, SSL sertifikatları, e-poçt təhlükəsizliyini və şəbəkə infrastrukturunu təhlil edin. Ani, hərtərəfli nəticələr üçün AI tərəfindən təchiz edilmişdir.",
+    disclaimer: "Bu tanıtım yalnız demo saytında göstərilir və Docker, Electron və ya veb tətbiq yerləşdirmələrində görünməyəcək.",
+    toastMessage: "Pulsuz AI Şəbəkə Köməkçisini network.corifeus.com ünvanında sınayın — domenləri təhlil edin, DNS, SSL və s.!",
+    visit: "network.corifeus.com ziyarət edin"
   }
 };
 module.exports = strings;

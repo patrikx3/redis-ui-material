@@ -122,7 +122,7 @@ import { RedisStateService } from '../services/redis-state.service';
         </p3xr-ng-accordion>
     `,
     styles: [`
-        :host { display: block; padding-bottom: 64px; }
+        :host { display: block; }
     `],
 })
 export class InfoComponent implements OnInit, OnDestroy {

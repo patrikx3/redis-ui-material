@@ -9,6 +9,10 @@ function computeApiHost(): string {
     return `${apiUrl.protocol}//${apiUrl.host}`
 }
 
+type ConnectionState = 'none' | 'connecting' | 'connected'
+type CurrentPage = 'connections' | 'database' | 'pulse' | 'profiler' | 'pubsub' | 'analysis' |
+    'search' | 'timeseries' | 'info' | 'settings' | 'unknown'
+
 interface RedisState {
     apiHost: string
     connection: any | undefined
@@ -38,10 +42,23 @@ interface RedisState {
     failed: boolean
     reducedFunctions: boolean
 
+    // --- Console drawer + connection-state awareness (Pass 1 of features-smarter) ---
+    connectionState: ConnectionState
+    currentPage: CurrentPage
+    consoleDrawerOpen: boolean
+
     resetConnections: () => void
+    setConnectionState: (s: ConnectionState) => void
+    setCurrentPage: (p: CurrentPage) => void
+    setConsoleDrawerOpen: (open: boolean) => void
+    toggleConsoleDrawer: () => void
 }
 
-export const useRedisStateStore = create<RedisState>((set) => ({
+function getStoredDrawerOpen(): boolean {
+    try { return localStorage.getItem('p3xr-console-drawer-open') === 'true' } catch { return false }
+}
+
+export const useRedisStateStore = create<RedisState>((set, get) => ({
     apiHost: computeApiHost(),
     connection: undefined,
     connections: { list: [] },
@@ -70,7 +87,22 @@ export const useRedisStateStore = create<RedisState>((set) => ({
     failed: false,
     reducedFunctions: false,
 
+    connectionState: 'none',
+    currentPage: 'unknown',
+    consoleDrawerOpen: getStoredDrawerOpen(),
+
     resetConnections: () => set({ connections: { list: [] } }),
+    setConnectionState: (s) => set({ connectionState: s }),
+    setCurrentPage: (p) => set({ currentPage: p }),
+    setConsoleDrawerOpen: (open) => {
+        try { localStorage.setItem('p3xr-console-drawer-open', String(open)) } catch {}
+        set({ consoleDrawerOpen: open })
+    },
+    toggleConsoleDrawer: () => {
+        const next = !get().consoleDrawerOpen
+        try { localStorage.setItem('p3xr-console-drawer-open', String(next)) } catch {}
+        set({ consoleDrawerOpen: next })
+    },
 }))
 
 // --- Computed helpers (matching Angular computed signals) ---

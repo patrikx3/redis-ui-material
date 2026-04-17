@@ -16,6 +16,10 @@ body {
     margin: 0;
     background-color: var(--p3xr-body-bg, #303030);
     color: var(--mat-app-text-color, rgba(255, 255, 255, 0.87));
+    // Main scrollbar is not needed — .p3xr-layout-content scrolls internally as a
+    // fixed-height container (see layout.component.scss). The drawer, header and
+    // footer are all position: fixed and don't participate in body scrolling.
+    overflow: hidden;
 }
 
 body.p3xr-no-main-scroll {

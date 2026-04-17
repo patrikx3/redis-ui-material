@@ -161,6 +161,40 @@ p3xr-console .mat-toolbar .p3xr-console-ai-toggle {
     width: 100%
 }
 
+.p3xr-input-ai-loading {
+    opacity: 0.55;
+    cursor: not-allowed !important;
+}
+
+.p3xr-console-stop {
+    position: absolute;
+    top: 50%;
+    right: 6px;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    padding: 2px;
+    margin: 0;
+    cursor: pointer;
+    color: var(--p3xr-btn-primary-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    line-height: 1;
+}
+.p3xr-console-stop:hover {
+    opacity: 0.8;
+}
+.p3xr-console-stop mat-icon,
+.p3xr-console-stop .mat-icon {
+    color: var(--p3xr-btn-primary-bg) !important;
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+}
+
 #p3xr-console-autocomplete.p3xr-console-autocomplete-embedded {
     position: relative;
     width: 100%;

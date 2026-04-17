@@ -238,6 +238,232 @@ const strings = {
     aiRoutingNetwork: "Maswali ya AI yanapitishwa kupitia network.corifeus.com. Ikiwa una ufunguo wako wa bure wa Groq API, unaweza kuzima swichi hii na kuelekeza moja kwa moja kwa Groq bila network.corifeus.com.",
     aiMaxTokens: "Idadi ya juu ya tokeni za AI",
     aiMaxTokensInfo: "Idadi ya juu ya tokeni kwa majibu ya AI. Thamani kubwa huruhusu majibu marefu zaidi lakini inaweza kutumia mikopo zaidi ya API.",
+    consoleDrawer: {
+      toggleTooltip: "Onyesha/ficha konsoli",
+      clearTooltip: "Futa historia ya konsoli",
+      closeTooltip: "Funga konsoli",
+      aiSettingsTooltip: "Mipangilio ya AI",
+      modeRedis: "REDIS",
+      modeAi: "AI",
+      connectionChipNoDb: opts => `${opts.name}`,
+      connectionChipWithDb: opts => `${opts.name} · db ${opts.db}`,
+      pageChip: opts => `ukurasa: ${opts.page}`,
+      connectingTo: opts => `Inaunganisha na ${opts.name}…`,
+      connectedTo: opts => `Imeunganishwa na ${opts.name} (Redis ${opts.version} ${opts.mode}, moduli ${opts.modules} zimepakiwa)`,
+      connectedToNoInfo: opts => `Imeunganishwa na ${opts.name}`,
+      disconnectedFrom: opts => `Imetenganishwa na ${opts.name}`,
+      notConnected: "Haijaunganishwa.",
+      limitedAiOnly: "AI ya kiwango kidogo pekee — maswali ya jumla kuhusu Redis yanafanya kazi.",
+      connectHint: "Kwa uchunguzi wa moja kwa moja, andika: connect <name>",
+      cheatsheetHint: "Andika ai: help kuona unachoweza kuuliza.",
+      needsConnection: "Hili linahitaji muunganisho unaotumika. Andika \"connect <name>\" kwanza.",
+      aiNeedsConnectionReason: "AI ya hali ya moja kwa moja (matumizi ya zana) inapatikana tu ukiwa umeunganishwa na Redis.",
+      verbNeedsConnection: opts => `"${opts.verb}" inahitaji muunganisho unaotumika — andika "connect <name>" kwanza.`,
+      aiLimitedMode: "AI iko katika hali ya kiwango kidogo — ni maswali ya jumla kuhusu Redis pekee yatafanya kazi hadi uunganishe.",
+      welcomeDisconnected: "Karibu. Bado hujaunganishwa na instansi yoyote ya Redis.",
+      readyIndicator: "Tayari.",
+    },
+    cheatsheet: {
+      title: "Karatasi ya AI — Ninaweza kuuliza nini?",
+      subtitle: "Bonyeza kidokezo chochote ili kukibandika kwenye konsoli. Kisha bonyeza Enter.",
+      searchPlaceholder: "Chuja vidokezo…",
+      openOfficialDocs: "Redis Commands ↗",
+      openOfficialDocsTooltip: "Fungua rejeleo rasmi la amri za Redis kwenye redis.io",
+      closeTooltip: "Funga (Esc)",
+      empty: "Hakuna kidokezo kinachokubaliana na kichujio chako.",
+      footerHint: "Dokezo: andika \"ai:\" kisha chochote kwa lugha yoyote — AI inaelewa lugha 54 na hutumia hali ya moja kwa moja ya Redis inapohitajika.",
+
+      // Each group has: name (category label), match (search-filter alias), prompts (array of example strings)
+      groups: {
+        diagnostics: {
+          name: "Uchunguzi wa moja kwa moja",
+          description: "Omba AI kuchunguza hali ya moja kwa moja ya seva kupitia zana salama za kusoma tu.",
+          prompts: [
+            "kwa nini kumbukumbu iko juu?",
+            "nionyeshe hoja 10 za polepole zaidi",
+            "ni wateja gani wameunganishwa?",
+            "sera ya maxmemory ni ipi?",
+            "kuna uondoaji wowote wa hivi karibuni?",
+            "kuna tukio lolote la ucheleweshaji?",
+            "seva imekuwa ikiendelea kwa muda gani?",
+            "kiwango cha hit ni kipi?",
+            "onyesha matumizi ya cpu",
+            "fanya muhtasari wa keyspace",
+            "kila aina ya data hutumia kumbukumbu kiasi gani?",
+            "kuna kitu chochote kinachozuia seva sasa hivi?"
+          ]
+        },
+        keys: {
+          name: "Funguo",
+          description: "Kagua, tafuta na fikiria kuhusu funguo bila kubonyeza kwenye mti.",
+          prompts: [
+            "pata funguo zote zinazolingana na user:*",
+            "ni funguo ngapi katika kila hifadhidata?",
+            "onyesha hash kubwa zaidi katika db hii",
+            "pata funguo zenye TTL chini ya sekunde 60",
+            "ni funguo gani hazina TTL?",
+            "ufunguo session:abc ni wa aina gani?",
+            "kadiria kumbukumbu iliyotumika na kiambishi \"session:\"",
+            "onyesha usimbaji wa kitu wa ufunguo user:42",
+            "kuna funguo zozote zinakaribia kumalizika muda?",
+            "ni namespace ipi inatumia kumbukumbu nyingi zaidi?"
+          ]
+        },
+        dataTypes: {
+          name: "Aina za data",
+          description: "Maneno ya lugha asilia kwa unda/soma/sasisha kwenye kila aina ya Redis.",
+          prompts: [
+            "unda hash yenye jina user:1 ikiwa na sehemu name=Alice age=30",
+            "ongeza vitu vitatu kwenye list tasks",
+            "ongeza wanachama kwenye set favourites",
+            "ongeza wanachama wenye alama kwenye sorted set leaderboard",
+            "ongeza tukio kwenye stream events",
+            "pata maingizo 10 ya mwisho kutoka stream events",
+            "pata sehemu zote za hash user:1",
+            "pata wanachama wa set favourites",
+            "pata 10 bora kwa alama kutoka leaderboard"
+          ]
+        },
+        modules: {
+          name: "Moduli",
+          description: "Hoja za moduli za Redis zilizopakiwa (kategoria zilizo hapa chini huonekana tu wakati moduli ipo).",
+          prompts: []
+        },
+        json: {
+          name: "RedisJSON",
+          description: "Inapatikana wakati moduli ya ReJSON imepakiwa.",
+          prompts: [
+            "unda hati ya JSON kwa user:42 yenye { name: \"Alice\", age: 30 }",
+            "soma sehemu ya name ya user:42",
+            "sasisha age ya user:42 hadi 31",
+            "orodhesha funguo zote za JSON",
+            "futa sehemu moja kutoka hati ya JSON",
+            "pata sehemu iliyofungwa ndani kwa kutumia JSONPath"
+          ]
+        },
+        search: {
+          name: "RediSearch",
+          description: "Inapatikana wakati moduli ya search imepakiwa.",
+          prompts: [
+            "orodhesha faharasa zote za maandishi kamili",
+            "endesha utaftaji wa maandishi kamili wa \"redis\" kwenye faharasa idx:products",
+            "unda faharasa inayotegemea hash yenye sehemu title (TEXT) na price (NUMERIC)",
+            "pata taarifa kuhusu faharasa idx:products",
+            "ondoa faharasa idx:products",
+            "pata hati ambapo price iko kati ya 10 na 50",
+            "andika utaftaji wa mchanganyiko unaojumuisha maandishi na ufanano wa vector"
+          ]
+        },
+        timeseries: {
+          name: "RedisTimeSeries",
+          description: "Inapatikana wakati moduli ya timeseries imepakiwa.",
+          prompts: [
+            "orodhesha funguo zote za timeseries",
+            "ongeza kituo cha data kwa temp:room1",
+            "pata safu ya temp:room1 kutoka jana hadi sasa",
+            "pata multi-range kwa lebo sensor=temp",
+            "tengeneza vituo 100 vya data vya mawimbi ya sine kwa temp:room1",
+            "onyesha uhifadhi na lebo za temp:room1"
+          ]
+        },
+        bloom: {
+          name: "RedisBloom (Bloom / Cuckoo / Top-K / CMS / T-Digest)",
+          description: "Inapatikana wakati moduli ya bf imepakiwa.",
+          prompts: [
+            "angalia kama kipengee foo kipo kwenye bloom filter spam:ips",
+            "ongeza vipengee kwenye bloom filter spam:ips",
+            "unda top-K yenye jina popular na K=10",
+            "uliza count-min sketch traffic kwa ufunguo /home",
+            "ongeza thamani kwa t-digest na pata asilimia ya 95",
+            "onyesha taarifa za bloom filter spam:ips"
+          ]
+        },
+        vectorSet: {
+          name: "VectorSet (Redis 8+)",
+          description: "Inapatikana wakati Redis 8+ imegunduliwa (aina asili ya VECTORSET).",
+          prompts: [
+            "ongeza vector kwa embeddings",
+            "pata vector 10 zinazofanana zaidi na vector ya hoja",
+            "onyesha vipimo na idadi ya vectorset embeddings",
+            "futa kipengee kutoka vectorset embeddings",
+            "tafuta kwa jina la kipengee ukitumia VSIM"
+          ]
+        },
+        redis8: {
+          name: "Vipengele vya Redis 8+",
+          description: "Huonyeshwa wakati Redis 8+ imegunduliwa.",
+          prompts: [
+            "weka ttl ya sehemu ya hash kwa HEXPIRE",
+            "pata digest ya thamani ya mfuatano",
+            "endesha utaftaji wa mchanganyiko wa maandishi kamili + vector (FT.HYBRID)",
+            "weka funguo nyingi kwa muda wa kumalizika wa pamoja kwa kutumia MSETEX",
+            "futa ingizo la stream lenye consumer group (XDELEX)",
+            "onyesha slot-stats ya cluster kwa slot 10 za juu"
+          ]
+        },
+        scripting: {
+          name: "Kuandika skripti",
+          description: "Tengeneza skripti za Lua / EVAL kutoka kwa maelezo ya lugha asilia.",
+          prompts: [
+            "andika skripti ya atomiki inayoongeza counter X endapo tu Y > 5",
+            "tengeneza funguo 100 nasibu kwa Lua",
+            "badilisha mkondo huu wa shell kuwa EVAL moja: keys user:* | GET | grep inactive | DEL",
+            "hamisha operesheni ya kundi kwa Lua kwa usalama wa cluster",
+            "sasisho la mtindo wa check-and-set katika simu moja ya Lua",
+            "pitia hash na ufute sehemu zinazolingana na muundo"
+          ]
+        },
+        cluster: {
+          name: "Cluster",
+          description: "Huonyeshwa tu katika hali ya cluster.",
+          prompts: [
+            "onyesha taarifa za cluster",
+            "orodhesha nodi za cluster",
+            "onyesha slot 10 za juu kwa idadi ya funguo",
+            "onyesha slot 10 za juu kwa kumbukumbu",
+            "ni master gani anayemiliki slot 5000?"
+          ]
+        },
+        acl: {
+          name: "ACL (Redis 6+)",
+          description: "Kagua watumiaji wa udhibiti wa ufikiaji na muunganisho wa sasa.",
+          prompts: [
+            "nimejiunga kama nani?",
+            "orodhesha watumiaji wote wa ACL",
+            "nina ruhusa zipi?",
+            "onyesha sheria za mtumiaji chaguo-msingi"
+          ]
+        },
+        qna: {
+          name: "Maswali na Majibu ya Jumla",
+          description: "Uliza maswali ya maarifa ya Redis — bila zana, majibu tu.",
+          prompts: [
+            "ZADD ni nini?",
+            "cluster failover hufanyaje kazi?",
+            "eleza SCAN ikilinganishwa na KEYS",
+            "lini ninatakiwa kutumia EVAL badala ya amri nyingi?",
+            "chaguo za uhifadhi wa Redis ni zipi?",
+            "kuna tofauti gani kati ya RDB na AOF?",
+            "Redis Sentinel huamuaje master mpya?",
+            "eleza hash tags katika hali ya cluster"
+          ]
+        },
+        translate: {
+          name: "Lugha asilia → Amri ya Redis",
+          description: "Eleza unachotaka kwa Kiswahili rahisi (au lugha yoyote kati ya 54); AI itaandika amri ya Redis.",
+          prompts: [
+            "futa ufunguo user:42",
+            "badilisha jina la ufunguo foo kuwa bar",
+            "malizisha ufunguo session:abc baada ya sekunde 10",
+            "nakili ufunguo source kwenda destination",
+            "ongeza counter visits kwa 5",
+            "weka ufunguo greeting kuwa \"hello\" kwa saa 1",
+            "nionyeshe funguo 10 zinazofikiwa mara nyingi zaidi",
+            "futa funguo zote zinazolingana na temp:*"
+          ]
+        }
+      }
+    },
     ssh: {
       on: 'SSH imewashwa',
       off: 'SSH imezimwa',
@@ -280,7 +506,7 @@ const strings = {
     treeSeparatorEmpty: "Ikiwa kitenganishi cha mti ni tupu, mti hautakuwa na nodi zilizopachikwa, orodha safi tu",
     treeSeparatorEmptyNote: "Hakuna nodi zilizopachikwa, orodha safi tu",
     welcomeConsole: "Karibu kwenye Konsoli ya Redis",
-    welcomeConsoleInfo: "Historia ya Mshale JUU au CHINI imewezeshwa",
+    welcomeConsoleInfo: "SHIFT + Historia ya Mshale JUU au CHINI imewezeshwa",
     redisListIndexInfo: "Tupu kuongeza, -1 kuongeza mbele au hifadhi kwenye nafasi iliyoonyeshwa.",
     console: "Konsoli",
     connectiondAdd: "Ongeza muunganisho",
@@ -856,6 +1082,13 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+  },
+  promo: {
+    title: "Msaidizi wa Mtandao wa AI",
+    description: "Gundua Msaidizi wetu wa Mtandao wa AI bila malipo kwenye network.corifeus.com — chambua domeni, IP, rekodi za DNS, vyeti vya SSL, usalama wa barua pepe na miundombinu ya mtandao. Inaendeshwa na AI kwa matokeo ya papo hapo na ya kina.",
+    disclaimer: "Tangazo hili linaonyeshwa tu kwenye tovuti ya demo na halitaonekana katika usambazaji wa Docker, Electron au programu ya wavuti.",
+    toastMessage: "Jaribu Msaidizi wetu wa Mtandao wa AI bila malipo kwenye network.corifeus.com — chambua domeni, DNS, SSL na zaidi!",
+    visit: "Tembelea network.corifeus.com",
   }
 };
 module.exports = strings;

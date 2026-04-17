@@ -236,6 +236,232 @@ const strings = {
     aiRoutingNetwork: "AI अनुरोधहरू network.corifeus.com मार्फत पठाइन्छन्। यदि तपाईंसँग आफ्नै निःशुल्क Groq API कुञ्जी छ भने, यो स्विच बन्द गरेर network.corifeus.com बिना सीधै Groq मा पठाउन सक्नुहुन्छ।",
     aiMaxTokens: "AI अधिकतम टोकन",
     aiMaxTokensInfo: "AI प्रतिक्रियाका लागि अधिकतम टोकन संख्या। उच्च मानले लामो उत्तर दिन सक्छ, तर API क्रेडिट बढी प्रयोग हुन सक्छ।",
+    consoleDrawer: {
+      toggleTooltip: "कन्सोल टगल गर्नुहोस्",
+      clearTooltip: "कन्सोल इतिहास खाली गर्नुहोस्",
+      closeTooltip: "कन्सोल बन्द गर्नुहोस्",
+      aiSettingsTooltip: "AI सेटिङ",
+      modeRedis: "REDIS",
+      modeAi: "AI",
+      connectionChipNoDb: opts => `${opts.name}`,
+      connectionChipWithDb: opts => `${opts.name} · db ${opts.db}`,
+      pageChip: opts => `पृष्ठ: ${opts.page}`,
+      connectingTo: opts => `${opts.name} मा जडान गर्दै…`,
+      connectedTo: opts => `${opts.name} सँग जडान भयो (Redis ${opts.version} ${opts.mode}, ${opts.modules} मोड्युल लोड गरिएका छन्)`,
+      connectedToNoInfo: opts => `${opts.name} सँग जडान भयो`,
+      disconnectedFrom: opts => `${opts.name} बाट विच्छेद भयो`,
+      notConnected: "जडान गरिएको छैन।",
+      limitedAiOnly: "सीमित AI मात्र — सामान्य Redis प्रश्नोत्तर काम गर्छ।",
+      connectHint: "लाइभ डायग्नोस्टिक्सका लागि टाइप गर्नुहोस्: connect <name>",
+      cheatsheetHint: "के सोध्न सक्नुहुन्छ हेर्न ai: help टाइप गर्नुहोस्।",
+      needsConnection: "यसका लागि सक्रिय जडान चाहिन्छ। पहिले \"connect <name>\" टाइप गर्नुहोस्।",
+      aiNeedsConnectionReason: "लाइभ-स्टेट AI (tool use) Redis सँग जडान हुँदा मात्र उपलब्ध हुन्छ।",
+      verbNeedsConnection: opts => `"${opts.verb}" का लागि सक्रिय जडान चाहिन्छ — पहिले "connect <name>" टाइप गर्नुहोस्।`,
+      aiLimitedMode: "AI सीमित मोडमा छ — तपाईं जडान नहुञ्जेल सामान्य Redis ज्ञानसम्बन्धी प्रश्नहरू मात्र काम गर्छन्।",
+      welcomeDisconnected: "स्वागत छ। तपाईं अझै कुनै पनि Redis इन्स्ट्यान्समा जडान हुनुभएको छैन।",
+      readyIndicator: "तयार।",
+    },
+    cheatsheet: {
+      title: "AI चिटशीट — म के सोध्न सक्छु?",
+      subtitle: "कुनै पनि प्रम्प्ट क्लिक गरेर कन्सोलमा टाँस्नुहोस्। त्यसपछि Enter थिच्नुहोस्।",
+      searchPlaceholder: "प्रम्प्टहरू फिल्टर गर्नुहोस्…",
+      openOfficialDocs: "Redis कमाण्डहरू ↗",
+      openOfficialDocsTooltip: "redis.io मा आधिकारिक Redis कमाण्ड सन्दर्भ खोल्नुहोस्",
+      closeTooltip: "बन्द गर्नुहोस् (Esc)",
+      empty: "तपाईंको फिल्टरसँग कुनै प्रम्प्ट मेल खाँदैन।",
+      footerHint: "सुझाव: कुनै पनि भाषामा \"ai:\" पछाडि केही पनि टाइप गर्नुहोस् — AI ले 54 भाषा बुझ्छ र आवश्यक परेमा प्रत्यक्ष Redis स्थिति प्रयोग गर्छ।",
+
+      // Each group has: name (category label), match (search-filter alias), prompts (array of example strings)
+      groups: {
+        diagnostics: {
+          name: "प्रत्यक्ष निदान",
+          description: "सुरक्षित पढ्ने-मात्र उपकरणहरू मार्फत प्रत्यक्ष सर्भर स्थिति जाँच्न AI लाई भन्नुहोस्।",
+          prompts: [
+            "मेमोरी किन उच्च छ?",
+            "मलाई १० सबैभन्दा सुस्त क्वेरीहरू देखाउनुहोस्",
+            "कुन क्लाइन्टहरू जडान भएका छन्?",
+            "maxmemory नीति के हो?",
+            "भर्खरै कुनै eviction भएको छ?",
+            "कुनै latency घटना छ?",
+            "सर्भर कहिलेदेखि चलिरहेको छ?",
+            "हिट रेट कति छ?",
+            "CPU प्रयोग देखाउनुहोस्",
+            "keyspace को सारांश दिनुहोस्",
+            "प्रत्येक डाटा प्रकारले कति मेमोरी प्रयोग गर्छ?",
+            "अहिले सर्भरलाई केहीले रोकिरहेको छ?"
+          ]
+        },
+        keys: {
+          name: "कुञ्जीहरू",
+          description: "ट्रीमा क्लिक नगरी कुञ्जीहरूको निरीक्षण, खोज र विश्लेषण गर्नुहोस्।",
+          prompts: [
+            "user:* सँग मेल खाने सबै कुञ्जीहरू फेला पार्नुहोस्",
+            "प्रत्येक डाटाबेसमा कति कुञ्जीहरू छन्?",
+            "यो db मा सबैभन्दा ठूलो hash देखाउनुहोस्",
+            "६० सेकेन्डभन्दा कम TTL भएका कुञ्जीहरू फेला पार्नुहोस्",
+            "कुन कुञ्जीहरूसँग TTL छैन?",
+            "कुञ्जी session:abc को प्रकार के हो?",
+            "\"session:\" उपसर्गले प्रयोग गरेको मेमोरीको अनुमान गर्नुहोस्",
+            "कुञ्जी user:42 को वस्तु एन्कोडिङ देखाउनुहोस्",
+            "म्याद सकिन लागेका कुनै कुञ्जीहरू छन्?",
+            "कुन namespace ले सबैभन्दा धेरै मेमोरी प्रयोग गर्छ?"
+          ]
+        },
+        dataTypes: {
+          name: "डाटा प्रकारहरू",
+          description: "हरेक Redis प्रकारमा निर्माण/पढ्ने/अद्यावधिकका लागि प्राकृतिक-भाषाको वाक्यांश।",
+          prompts: [
+            "name=Alice age=30 फिल्डहरू सहित user:1 नामक hash बनाउनुहोस्",
+            "list tasks मा तीन आइटम थप्नुहोस्",
+            "set favourites मा सदस्यहरू थप्नुहोस्",
+            "sorted set leaderboard मा स्कोर सहित सदस्यहरू थप्नुहोस्",
+            "stream events मा एउटा घटना थप्नुहोस्",
+            "stream events बाट अन्तिम १० प्रविष्टिहरू ल्याउनुहोस्",
+            "hash user:1 का सबै फिल्डहरू ल्याउनुहोस्",
+            "set favourites का सदस्यहरू ल्याउनुहोस्",
+            "leaderboard बाट स्कोरको आधारमा शीर्ष १० ल्याउनुहोस्"
+          ]
+        },
+        modules: {
+          name: "मोड्युलहरू",
+          description: "लोड भएका Redis मोड्युलका लागि क्वेरी (तलका श्रेणीहरू मोड्युल उपस्थित हुँदा मात्र देखिन्छन्)।",
+          prompts: []
+        },
+        json: {
+          name: "RedisJSON",
+          description: "ReJSON मोड्युल लोड हुँदा उपलब्ध।",
+          prompts: [
+            "user:42 मा { name: \"Alice\", age: 30 } सँगको JSON कागजात बनाउनुहोस्",
+            "user:42 को name फिल्ड पढ्नुहोस्",
+            "user:42 को age अद्यावधिक गरेर 31 बनाउनुहोस्",
+            "सबै JSON कुञ्जीहरू सूचीबद्ध गर्नुहोस्",
+            "JSON कागजातबाट एउटा फिल्ड मेटाउनुहोस्",
+            "JSONPath प्रयोग गरेर नेस्टेड फिल्ड ल्याउनुहोस्"
+          ]
+        },
+        search: {
+          name: "RediSearch",
+          description: "search मोड्युल लोड हुँदा उपलब्ध।",
+          prompts: [
+            "सबै पूर्ण-पाठ अनुक्रमणिकाहरू सूचीबद्ध गर्नुहोस्",
+            "idx:products अनुक्रमणिकामा \"redis\" का लागि पूर्ण-पाठ खोज चलाउनुहोस्",
+            "title (TEXT) र price (NUMERIC) फिल्डहरू सहित hash-आधारित अनुक्रमणिका बनाउनुहोस्",
+            "अनुक्रमणिका idx:products बारे जानकारी ल्याउनुहोस्",
+            "अनुक्रमणिका idx:products ड्रप गर्नुहोस्",
+            "मूल्य १० र ५० बीचका कागजातहरू फेला पार्नुहोस्",
+            "पाठ र भेक्टर समानता संयोजन गर्ने हाइब्रिड खोज लेख्नुहोस्"
+          ]
+        },
+        timeseries: {
+          name: "RedisTimeSeries",
+          description: "timeseries मोड्युल लोड हुँदा उपलब्ध।",
+          prompts: [
+            "सबै timeseries कुञ्जीहरू सूचीबद्ध गर्नुहोस्",
+            "temp:room1 मा एउटा डाटा बिन्दु थप्नुहोस्",
+            "temp:room1 को हिजोदेखि अहिलेसम्मको दायरा ल्याउनुहोस्",
+            "लेबल sensor=temp अनुसार बहु-दायरा ल्याउनुहोस्",
+            "temp:room1 का लागि १०० साइन-वेभ डाटा बिन्दुहरू उत्पन्न गर्नुहोस्",
+            "temp:room1 का लागि अवधारण र लेबलहरू देखाउनुहोस्"
+          ]
+        },
+        bloom: {
+          name: "RedisBloom (Bloom / Cuckoo / Top-K / CMS / T-Digest)",
+          description: "bf मोड्युल लोड हुँदा उपलब्ध।",
+          prompts: [
+            "bloom filter spam:ips मा foo आइटम छ कि छैन जाँच्नुहोस्",
+            "bloom filter spam:ips मा आइटमहरू थप्नुहोस्",
+            "K=१० सहित popular नामक top-K बनाउनुहोस्",
+            "कुञ्जी /home का लागि count-min sketch traffic क्वेरी गर्नुहोस्",
+            "t-digest मा मानहरू थपेर ९५औं प्रतिशतक ल्याउनुहोस्",
+            "bloom filter spam:ips को जानकारी देखाउनुहोस्"
+          ]
+        },
+        vectorSet: {
+          name: "VectorSet (Redis 8+)",
+          description: "Redis 8+ पत्ता लाग्दा उपलब्ध (नेटिभ VECTORSET प्रकार)।",
+          prompts: [
+            "embeddings मा एउटा भेक्टर थप्नुहोस्",
+            "क्वेरी भेक्टरसँग सबैभन्दा मिल्ने १० भेक्टरहरू फेला पार्नुहोस्",
+            "vectorset embeddings का आयामहरू र गणना देखाउनुहोस्",
+            "vectorset embeddings बाट एउटा तत्व मेटाउनुहोस्",
+            "VSIM सँग तत्वको नामद्वारा खोज्नुहोस्"
+          ]
+        },
+        redis8: {
+          name: "Redis 8+ सुविधाहरू",
+          description: "Redis 8+ पत्ता लाग्दा देखाइन्छ।",
+          prompts: [
+            "HEXPIRE सँग hash फिल्ड ttl सेट गर्नुहोस्",
+            "स्ट्रिङ मानको digest ल्याउनुहोस्",
+            "हाइब्रिड पूर्ण-पाठ + भेक्टर खोज चलाउनुहोस् (FT.HYBRID)",
+            "MSETEX प्रयोग गरेर साझा म्यादसँग धेरै कुञ्जी सेट गर्नुहोस्",
+            "consumer group सँग stream प्रविष्टि मेटाउनुहोस् (XDELEX)",
+            "शीर्ष १० slots का लागि cluster slot-stats देखाउनुहोस्"
+          ]
+        },
+        scripting: {
+          name: "स्क्रिप्टिङ",
+          description: "प्राकृतिक-भाषाको विवरणबाट Lua / EVAL स्क्रिप्टहरू उत्पन्न गर्नुहोस्।",
+          prompts: [
+            "Y > 5 भएमा मात्र counter X बढाउने परमाणु स्क्रिप्ट लेख्नुहोस्",
+            "Lua सँग १०० अनियमित कुञ्जीहरू उत्पन्न गर्नुहोस्",
+            "यो shell pipeline लाई एउटै EVAL मा बदल्नुहोस्: keys user:* | GET | grep inactive | DEL",
+            "cluster सुरक्षाका लागि batch सञ्चालनलाई Lua मा पोर्ट गर्नुहोस्",
+            "एउटै Lua कलमा check-and-set शैलीको अद्यावधिक",
+            "hash मा iterate गरेर ढाँचासँग मिल्ने फिल्डहरू मेटाउनुहोस्"
+          ]
+        },
+        cluster: {
+          name: "क्लस्टर",
+          description: "क्लस्टर मोडमा मात्र देखाइन्छ।",
+          prompts: [
+            "क्लस्टर जानकारी देखाउनुहोस्",
+            "क्लस्टर नोडहरू सूचीबद्ध गर्नुहोस्",
+            "कुञ्जी गणनाद्वारा शीर्ष १० slots देखाउनुहोस्",
+            "मेमोरीद्वारा शीर्ष १० slots देखाउनुहोस्",
+            "slot 5000 कुन master को हो?"
+          ]
+        },
+        acl: {
+          name: "ACL (Redis 6+)",
+          description: "access-control प्रयोगकर्ताहरू र हालको जडानको निरीक्षण गर्नुहोस्।",
+          prompts: [
+            "म कसको रूपमा जडान भएको छु?",
+            "सबै ACL प्रयोगकर्ताहरू सूचीबद्ध गर्नुहोस्",
+            "मसँग के के अनुमति छन्?",
+            "पूर्वनिर्धारित प्रयोगकर्ताका नियमहरू देखाउनुहोस्"
+          ]
+        },
+        qna: {
+          name: "सामान्य प्रश्न-उत्तर",
+          description: "Redis ज्ञानका प्रश्न सोध्नुहोस् — उपकरण होइन, जवाफ मात्र।",
+          prompts: [
+            "ZADD के हो?",
+            "cluster failover कसरी काम गर्छ?",
+            "SCAN र KEYS को तुलना गर्नुहोस्",
+            "EVAL कहिले र धेरै कमाण्डहरू कहिले प्रयोग गर्ने?",
+            "Redis का persistence विकल्पहरू के के हुन्?",
+            "RDB र AOF बीचको भिन्नता के हो?",
+            "Redis Sentinel ले नयाँ master कसरी निर्णय गर्छ?",
+            "क्लस्टर मोडमा hash tags बुझाउनुहोस्"
+          ]
+        },
+        translate: {
+          name: "प्राकृतिक-भाषा → Redis कमाण्ड",
+          description: "तपाईं के चाहनुहुन्छ साधारण अंग्रेजी (वा ५४ भाषामध्ये कुनैमा) वर्णन गर्नुहोस्; AI ले Redis कमाण्ड लेख्नेछ।",
+          prompts: [
+            "कुञ्जी user:42 मेटाउनुहोस्",
+            "कुञ्जी foo को नाम bar मा बदल्नुहोस्",
+            "कुञ्जी session:abc को म्याद १० सेकेन्डमा सकिने बनाउनुहोस्",
+            "कुञ्जी source लाई destination मा प्रतिलिपि गर्नुहोस्",
+            "counter visits लाई ५ ले बढाउनुहोस्",
+            "कुञ्जी greeting लाई १ घण्टाका लागि \"hello\" मा सेट गर्नुहोस्",
+            "सबैभन्दा बारम्बार पहुँच गरिएका १० कुञ्जीहरू देखाउनुहोस्",
+            "temp:* सँग मेल खाने सबै कुञ्जीहरू मेटाउनुहोस्"
+          ]
+        }
+      }
+    },
     ssh: {
       on: "SSH सक्रिय",
       off: "SSH बन्द",
@@ -278,7 +504,7 @@ const strings = {
     treeSeparatorEmpty: "यदि रूख विभाजक खाली छ भने, रूखमा कुनै नेस्टेड नोडहरू हुनेछैन, केवल एक शुद्ध सूची",
     treeSeparatorEmptyNote: "कुनै नेस्टेड नोडहरू छैनन्, केवल शुद्ध सूची",
     welcomeConsole: "Redis कन्सोलमा स्वागत छ",
-    welcomeConsoleInfo: "कर्सर माथि वा तल इतिहास सक्षम छ",
+    welcomeConsoleInfo: "SHIFT + कर्सर माथि वा तल इतिहास सक्षम छ",
     redisListIndexInfo: "जोड्नको लागि खाली, -1 लाई प्रिपेन्ड गर्न वा देखाइएको स्थितिमा बचत गर्न।",
     console: "कन्सोल",
     connectiondAdd: "जडान थप्नुहोस्",
@@ -854,6 +1080,13 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+  },
+  promo: {
+    title: "AI नेटवर्क सहायक",
+    description: "network.corifeus.com मा हाम्रो निःशुल्क AI नेटवर्क सहायक हेर्नुहोस् — डोमेन, IP, DNS रेकर्ड, SSL प्रमाणपत्र, इमेल सुरक्षा र नेटवर्क पूर्वाधार विश्लेषण गर्नुहोस्। तुरुन्त र विस्तृत नतिजाका लागि AI द्वारा सञ्चालित।",
+    disclaimer: "यो प्रचार सामग्री डेमो साइटमा मात्र देखाइन्छ र Docker, Electron वा web app deployment मा देखिने छैन।",
+    toastMessage: "network.corifeus.com मा हाम्रो निःशुल्क AI नेटवर्क सहायक प्रयोग गर्नुहोस् — डोमेन, DNS, SSL र अझ धेरै विश्लेषण गर्नुहोस्!",
+    visit: "network.corifeus.com भ्रमण गर्नुहोस्",
   }
 };
 module.exports = strings;

@@ -234,6 +234,221 @@ const strings = {
     aiRoutingNetwork: "AIクエリはnetwork.corifeus.comを経由します。無料のGroq APIキーをお持ちの場合、このスイッチをオフにして直接Groqを使用できます。",
     aiMaxTokens: "AI 最大トークン数",
     aiMaxTokensInfo: "AI応答の最大トークン数です。値を大きくすると長い応答が可能になりますが、APIクレジットを多く消費する場合があります。",
+    consoleDrawer: {
+      toggleTooltip: "コンソールの切り替え",
+      clearTooltip: "スクロールバックをクリア",
+      closeTooltip: "コンソールを閉じます",
+      aiSettingsTooltip: "AI 設定",
+      modeRedis: "REDIS",
+      modeAi: "AI",
+      connectionChipNoDb: opts => `${opts.name}`,
+      connectionChipWithDb: opts => `${opts.name} · db ${opts.db}`,
+      pageChip: opts => `ページ: ${opts.page}`,
+      connectingTo: opts => `${opts.name} に接続しています…`,
+      connectedTo: opts => `${opts.name} に接続済み（Redis ${opts.version} ${opts.mode}、${opts.modules} モジュール読み込み済み）`,
+      connectedToNoInfo: opts => `${opts.name} に接続しました`,
+      disconnectedFrom: opts => `${opts.name} から切断されました`,
+      readyIndicator: "いいぜ。"
+    },
+    cheatsheet: {
+      title: "AI チートシート — 何を聞けますか？",
+      subtitle: "任意のプロンプトをクリックするとコンソールに貼り付けられます。その後 Enter を押してください。",
+      searchPlaceholder: "プロンプトを絞り込む…",
+      openOfficialDocs: "Redis コマンド ↗",
+      openOfficialDocsTooltip: "redis.io にある公式の Redis コマンドリファレンスを開きます",
+      closeTooltip: "閉じる (Esc)",
+      empty: "フィルターに一致するプロンプトはありません。",
+      footerHint: "ヒント：\"ai:\" の後に任意の言語で何でも入力してください — AI は 54 言語を理解し、必要に応じてライブの Redis 状態を参照します。",
+      groups: {
+        diagnostics: {
+          name: "ライブ診断",
+          description: "安全な読み取り専用ツールを使って、AI にサーバーの現在の状態を調査させます。",
+          prompts: [
+            "なぜメモリ使用量が高いのですか？",
+            "最も遅いクエリを 10 件見せてください",
+            "どのクライアントが接続していますか？",
+            "maxmemory ポリシーは何ですか？",
+            "最近エビクションは発生していますか？",
+            "レイテンシーイベントはありますか？",
+            "サーバーはどのくらい稼働していますか？",
+            "ヒット率はどのくらいですか？",
+            "CPU 使用率を見せてください",
+            "キースペースを要約してください",
+            "各データ型はどれくらいメモリを使っていますか？",
+            "今、サーバーを止めている要因はありますか？"
+          ]
+        },
+        keys: {
+          name: "キー",
+          description: "ツリーをクリックして辿ることなく、キーを検査・検索・分析します。",
+          prompts: [
+            "user:* にマッチするすべてのキーを見つける",
+            "各データベースにいくつのキーがありますか？",
+            "この db で最大の hash を見せてください",
+            "TTL が 60 秒未満のキーを見つける",
+            "TTL が設定されていないキーはどれですか？",
+            "キー session:abc の型は何ですか？",
+            "\"session:\" プレフィックスが使用しているメモリ量を推定してください",
+            "キー user:42 のオブジェクトエンコーディングを見せてください",
+            "まもなく期限切れになるキーはありますか？",
+            "最もメモリを使用している名前空間はどれですか？"
+          ]
+        },
+        dataTypes: {
+          name: "データ型",
+          description: "すべての Redis 型に対する作成／読み取り／更新の自然言語表現。",
+          prompts: [
+            "user:1 という名前の hash を作成し、フィールド name=Alice age=30 を設定する",
+            "list tasks に 3 つの要素を追加する",
+            "set favourites にメンバーを追加する",
+            "sorted set leaderboard にスコア付きメンバーを追加する",
+            "stream events にイベントを追加する",
+            "stream events から最後の 10 件を取得する",
+            "hash user:1 のすべてのフィールドを取得する",
+            "set favourites のメンバーを取得する",
+            "leaderboard からスコア上位 10 件を取得する"
+          ]
+        },
+        modules: {
+          name: "モジュール",
+          description: "読み込まれている Redis モジュール向けのクエリ（以下のカテゴリは該当モジュールが存在する場合のみ表示されます）。",
+          prompts: []
+        },
+        json: {
+          name: "RedisJSON",
+          description: "ReJSON モジュールが読み込まれている場合に利用できます。",
+          prompts: [
+            "user:42 に { name: \"Alice\", age: 30 } という JSON ドキュメントを作成する",
+            "user:42 の name フィールドを読み取る",
+            "user:42 の age を 31 に更新する",
+            "すべての JSON キーを一覧表示する",
+            "JSON ドキュメントからフィールドを削除する",
+            "JSONPath でネストされたフィールドを取得する"
+          ]
+        },
+        search: {
+          name: "RediSearch",
+          description: "search モジュールが読み込まれている場合に利用できます。",
+          prompts: [
+            "全文検索インデックスを一覧表示する",
+            "インデックス idx:products に対して \"redis\" の全文検索を実行する",
+            "title (TEXT) と price (NUMERIC) のフィールドを持つ hash ベースのインデックスを作成する",
+            "インデックス idx:products の情報を取得する",
+            "インデックス idx:products を削除する",
+            "価格が 10 から 50 の間のドキュメントを見つける",
+            "テキストとベクトル類似度を組み合わせたハイブリッド検索を書く"
+          ]
+        },
+        timeseries: {
+          name: "RedisTimeSeries",
+          description: "timeseries モジュールが読み込まれている場合に利用できます。",
+          prompts: [
+            "すべての timeseries キーを一覧表示する",
+            "temp:room1 にデータポイントを追加する",
+            "temp:room1 の昨日から現在までの範囲を取得する",
+            "ラベル sensor=temp でマルチレンジを取得する",
+            "temp:room1 向けに正弦波のデータポイントを 100 個生成する",
+            "temp:room1 の保持期間とラベルを表示する"
+          ]
+        },
+        bloom: {
+          name: "RedisBloom (Bloom / Cuckoo / Top-K / CMS / T-Digest)",
+          description: "bf モジュールが読み込まれている場合に利用できます。",
+          prompts: [
+            "Bloom フィルター spam:ips にアイテム foo が存在するか確認する",
+            "Bloom フィルター spam:ips にアイテムを追加する",
+            "popular という名前の Top-K を K=10 で作成する",
+            "キー /home に対して count-min sketch traffic を問い合わせる",
+            "t-digest に値を追加し、95 パーセンタイルを取得する",
+            "Bloom フィルター spam:ips の情報を表示する"
+          ]
+        },
+        vectorSet: {
+          name: "VectorSet (Redis 8+)",
+          description: "Redis 8+ が検出されたときに利用できます（ネイティブの VECTORSET 型）。",
+          prompts: [
+            "embeddings にベクトルを追加する",
+            "クエリベクトルに最も類似する 10 件のベクトルを見つける",
+            "vectorset embeddings の次元数と件数を表示する",
+            "vectorset embeddings から要素を削除する",
+            "VSIM で要素名を指定して検索する"
+          ]
+        },
+        redis8: {
+          name: "Redis 8+ 機能",
+          description: "Redis 8+ が検出されたときに表示されます。",
+          prompts: [
+            "HEXPIRE で hash フィールドに TTL を設定する",
+            "文字列値のダイジェストを取得する",
+            "ハイブリッドの全文 + ベクトル検索を実行する (FT.HYBRID)",
+            "MSETEX で複数のキーに共通の有効期限を設定する",
+            "コンシューマーグループ付きで stream エントリを削除する (XDELEX)",
+            "上位 10 スロットの cluster slot-stats を表示する"
+          ]
+        },
+        scripting: {
+          name: "スクリプト",
+          description: "自然言語の説明から Lua / EVAL スクリプトを生成します。",
+          prompts: [
+            "Y > 5 のときのみカウンター X をインクリメントするアトミックなスクリプトを書く",
+            "Lua で 100 個のランダムなキーを生成する",
+            "このシェルパイプラインを単一の EVAL に変換する：keys user:* | GET | grep inactive | DEL",
+            "クラスター安全性のためにバッチ操作を Lua に移植する",
+            "単一の Lua 呼び出しで check-and-set 形式の更新を行う",
+            "hash を走査し、パターンに一致するフィールドを削除する"
+          ]
+        },
+        cluster: {
+          name: "クラスター",
+          description: "クラスターモードのときのみ表示されます。",
+          prompts: [
+            "cluster 情報を表示する",
+            "cluster ノードを一覧表示する",
+            "キー数で上位 10 個のスロットを表示する",
+            "メモリ使用量で上位 10 個のスロットを表示する",
+            "スロット 5000 を所有している master はどれですか？"
+          ]
+        },
+        acl: {
+          name: "ACL (Redis 6+)",
+          description: "アクセス制御ユーザーと現在の接続を確認します。",
+          prompts: [
+            "私はどのユーザーで接続していますか？",
+            "すべての ACL ユーザーを一覧表示する",
+            "私はどのような権限を持っていますか？",
+            "default ユーザーのルールを表示する"
+          ]
+        },
+        qna: {
+          name: "一般 Q&A",
+          description: "Redis に関する知識の質問を行います — ツールは使わず、回答だけ返します。",
+          prompts: [
+            "ZADD とは何ですか？",
+            "cluster failover はどのように動作しますか？",
+            "SCAN と KEYS の違いを説明してください",
+            "EVAL と複数コマンドはどう使い分けるべきですか？",
+            "Redis の永続化オプションには何がありますか？",
+            "RDB と AOF の違いは何ですか？",
+            "Redis Sentinel はどうやって新しい master を決定しますか？",
+            "クラスターモードでの hash tag について説明してください"
+          ]
+        },
+        translate: {
+          name: "自然言語 → Redis コマンド",
+          description: "やりたいことを日本語（または 54 言語のいずれか）で説明してください。AI が対応する Redis コマンドを書きます。",
+          prompts: [
+            "キー user:42 を削除する",
+            "キー foo の名前を bar に変更する",
+            "キー session:abc を 10 秒後に期限切れにする",
+            "キー source を destination にコピーする",
+            "カウンター visits を 5 増やす",
+            "キー greeting を \"hello\" に設定し、1 時間有効にする",
+            "最もよくアクセスされているキーを 10 件表示する",
+            "temp:* にマッチするすべてのキーを削除する"
+          ]
+        }
+      }
+    },
     ssh: {
       on: 'SSH オン',
       off: 'SSH オフ',
@@ -276,7 +491,7 @@ const strings = {
     treeSeparatorEmpty: "ツリー区切りが空の場合、ツリーにはネストされたノードはなく、単純なリストのみになります",
     treeSeparatorEmptyNote: "ネストされたノードはなく、単純なリストのみ",
     welcomeConsole: "Redisコンソールへようこそ",
-    welcomeConsoleInfo: "カーソル上下キーによる履歴機能が有効です",
+    welcomeConsoleInfo: "SHIFT + カーソル上下キーによる履歴機能が有効です",
     redisListIndexInfo: "空で末尾に追加、-1で先頭に追加、または表示されている位置に保存します。",
     console: "コンソール",
     connectiondAdd: "接続を追加",
@@ -852,6 +1067,13 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+  },
+  promo: {
+    title: "AI ネットワークアシスタント",
+    description: "無料の AI ネットワークアシスタントを network.corifeus.com でご覧ください。ドメイン、IP、DNS レコード、SSL 証明書、メールセキュリティ、ネットワークインフラストラクチャを分析します。AI 駆動で即座に包括的な結果を得られます。",
+    disclaimer: "このプロモーションはデモサイトにのみ表示され、Docker、Electron、またはウェブアプリのデプロイメントには表示されません。",
+    toastMessage: "無料の AI ネットワークアシスタントを network.corifeus.com でお試しください。ドメイン、DNS、SSL などを分析してください！",
+    visit: "network.corifeus.com にアクセス"
   }
 };
 module.exports = strings;

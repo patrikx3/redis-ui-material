@@ -1,0 +1,10 @@
+<div id="p3xr-console-drawer" [class.p3xr-drawer-open]="isOpen()">
+    <div id="p3xr-console-drawer-body">
+        <!-- Always the full ConsoleComponent — the welcome banner in the scrollback
+             adapts to connectionState (connected vs limited-AI). This way the
+             toolbar, input, Clear/Commands buttons stay usable at all times. -->
+        <p3xr-console type="quick" [embedded]="true"
+                      [showCloseButton]="true"
+                      (closeRequest)="close()"></p3xr-console>
+    </div>
+</div>

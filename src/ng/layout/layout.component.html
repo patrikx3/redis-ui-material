@@ -180,18 +180,30 @@
 
         <span class="p3xr-layout-spacer"></span>
 
-        <!-- Donate button — text at >720px (AngularJS: p3xr-button 720px threshold) -->
-        @if (isWide) {
-            <button mat-button (click)="openLink('donate')">
-                <i class="fas fa-donate"></i>
-                <span>{{ i18n.strings().title?.donate }}</span>
-            </button>
-        } @else {
-            <button mat-icon-button (click)="openLink('donate')"
-                    [matTooltip]="i18n.strings().title?.donate ?? ''"
-                    matTooltipPosition="above">
-                <i class="fas fa-donate"></i>
-            </button>
+        <!-- Console drawer toggle — only shown when a Redis connection is active.
+             Console without a connection is useless: its value is watching monitoring
+             while typing commands, not an empty chrome with limited-AI chatter. -->
+        @if (state.connectionState() === 'connected') {
+            @if (isWide) {
+                <button mat-button
+                        (click)="toggleConsoleDrawer()"
+                        [class.p3xr-nav-active]="state.consoleDrawerOpen()"
+                        [attr.aria-pressed]="state.consoleDrawerOpen()"
+                        [matTooltip]="i18n.strings().label?.consoleDrawer?.toggleTooltip ?? ''"
+                        matTooltipPosition="above">
+                    <mat-icon>terminal</mat-icon>
+                    <span>{{ i18n.strings().intention?.console }}</span>
+                </button>
+            } @else {
+                <button mat-icon-button
+                        (click)="toggleConsoleDrawer()"
+                        [class.p3xr-nav-active]="state.consoleDrawerOpen()"
+                        [attr.aria-pressed]="state.consoleDrawerOpen()"
+                        [matTooltip]="(i18n.strings().intention?.console ?? '') + '  —  ' + (i18n.strings().label?.consoleDrawer?.toggleTooltip ?? '')"
+                        matTooltipPosition="above">
+                    <mat-icon>terminal</mat-icon>
+                </button>
+            }
         }
 
         <!-- Language menu: text at >960px (AngularJS: hide-xs hide-sm) -->
@@ -294,3 +306,9 @@
         <router-outlet></router-outlet>
     }
 </div>
+
+<!-- Global bottom console drawer — only mounted when a Redis connection is active.
+     No connection = no console (simpler UI; avoids confusion with empty chrome). -->
+@if (!showLogin && state.connectionState() === 'connected') {
+    <p3xr-console-drawer></p3xr-console-drawer>
+}

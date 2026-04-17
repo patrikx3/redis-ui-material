@@ -236,6 +236,232 @@ const strings = {
     aiRoutingNetwork: "Các truy vấn AI được định tuyến qua network.corifeus.com. Nếu bạn có khóa Groq API miễn phí của riêng mình, bạn có thể tắt công tắc này để định tuyến trực tiếp tới Groq mà không cần network.corifeus.com.",
     aiMaxTokens: "Số token AI tối đa",
     aiMaxTokensInfo: "Số lượng token tối đa cho phản hồi AI. Giá trị cao hơn cho phép phản hồi dài hơn nhưng có thể dùng nhiều tín dụng API hơn.",
+    consoleDrawer: {
+      toggleTooltip: "Bật/tắt bảng điều khiển",
+      clearTooltip: "Xóa lịch sử cuộn",
+      closeTooltip: "Đóng bảng điều khiển",
+      aiSettingsTooltip: "Cài đặt AI",
+      modeRedis: "REDIS",
+      modeAi: "AI",
+      connectionChipNoDb: opts => `${opts.name}`,
+      connectionChipWithDb: opts => `${opts.name} · db ${opts.db}`,
+      pageChip: opts => `trang: ${opts.page}`,
+      connectingTo: opts => `Đang kết nối tới ${opts.name}…`,
+      connectedTo: opts => `Đã kết nối tới ${opts.name} (Redis ${opts.version} ${opts.mode}, đã tải ${opts.modules} mô-đun)`,
+      connectedToNoInfo: opts => `Đã kết nối tới ${opts.name}`,
+      disconnectedFrom: opts => `Đã ngắt kết nối khỏi ${opts.name}`,
+      notConnected: "Chưa kết nối.",
+      limitedAiOnly: "Chỉ AI ở chế độ giới hạn — vẫn dùng được hỏi đáp Redis chung.",
+      connectHint: "Để chẩn đoán trực tiếp, hãy gõ: connect <name>",
+      cheatsheetHint: "Gõ ai: help để xem bạn có thể hỏi gì.",
+      needsConnection: "Tính năng này cần một kết nối đang hoạt động. Hãy gõ \"connect <name>\" trước.",
+      aiNeedsConnectionReason: "AI theo trạng thái trực tiếp (tool use) chỉ khả dụng khi đã kết nối với Redis.",
+      verbNeedsConnection: opts => `"${opts.verb}" cần một kết nối đang hoạt động — hãy gõ "connect <name>" trước.`,
+      aiLimitedMode: "AI đang ở chế độ giới hạn — chỉ các câu hỏi kiến thức Redis chung hoạt động cho tới khi bạn kết nối.",
+      welcomeDisconnected: "Chào mừng. Bạn chưa kết nối tới bất kỳ phiên Redis nào.",
+      readyIndicator: "Sẵn sàng.",
+    },
+    cheatsheet: {
+      title: "Cẩm nang AI — Tôi có thể hỏi gì?",
+      subtitle: "Nhấp vào bất kỳ gợi ý nào để dán vào bảng điều khiển. Sau đó nhấn Enter.",
+      searchPlaceholder: "Lọc gợi ý…",
+      openOfficialDocs: "Redis Commands ↗",
+      openOfficialDocsTooltip: "Mở tài liệu lệnh Redis chính thức tại redis.io",
+      closeTooltip: "Đóng (Esc)",
+      empty: "Không có gợi ý nào khớp với bộ lọc.",
+      footerHint: "Mẹo: gõ \"ai:\" rồi viết bất cứ điều gì bằng bất kỳ ngôn ngữ nào — AI hiểu 54 ngôn ngữ và sử dụng trạng thái Redis trực tiếp khi cần.",
+
+      // Each group has: name (category label), match (search-filter alias), prompts (array of example strings)
+      groups: {
+        diagnostics: {
+          name: "Chẩn đoán trực tiếp",
+          description: "Yêu cầu AI kiểm tra trạng thái máy chủ trực tiếp qua các công cụ chỉ đọc an toàn.",
+          prompts: [
+            "tại sao bộ nhớ cao?",
+            "cho tôi xem 10 truy vấn chậm nhất",
+            "những client nào đang kết nối?",
+            "chính sách maxmemory là gì?",
+            "có lần trục xuất nào gần đây không?",
+            "có sự kiện độ trễ nào không?",
+            "máy chủ đã chạy bao lâu rồi?",
+            "tỷ lệ hit là bao nhiêu?",
+            "hiển thị mức sử dụng cpu",
+            "tóm tắt keyspace",
+            "mỗi loại dữ liệu dùng bao nhiêu bộ nhớ?",
+            "có gì đang chặn máy chủ ngay bây giờ không?"
+          ]
+        },
+        keys: {
+          name: "Khóa",
+          description: "Kiểm tra, tìm và phân tích các khóa mà không cần nhấp qua cây.",
+          prompts: [
+            "tìm tất cả các khóa khớp user:*",
+            "mỗi cơ sở dữ liệu có bao nhiêu khóa?",
+            "hiển thị hash lớn nhất trong db này",
+            "tìm các khóa có TTL dưới 60 giây",
+            "khóa nào không có TTL?",
+            "khóa session:abc thuộc kiểu gì?",
+            "ước lượng bộ nhớ dùng bởi tiền tố \"session:\"",
+            "hiển thị mã hóa đối tượng của khóa user:42",
+            "có khóa nào sắp hết hạn không?",
+            "namespace nào dùng nhiều bộ nhớ nhất?"
+          ]
+        },
+        dataTypes: {
+          name: "Kiểu dữ liệu",
+          description: "Diễn đạt bằng ngôn ngữ tự nhiên cho thao tác tạo/đọc/cập nhật trên mọi kiểu Redis.",
+          prompts: [
+            "tạo một hash có tên user:1 với các trường name=Alice age=30",
+            "thêm ba mục vào list tasks",
+            "thêm thành viên vào set favourites",
+            "thêm thành viên có điểm vào sorted set leaderboard",
+            "thêm một sự kiện vào stream events",
+            "lấy 10 bản ghi cuối cùng từ stream events",
+            "lấy tất cả các trường của hash user:1",
+            "lấy các thành viên của set favourites",
+            "lấy top 10 theo điểm từ leaderboard"
+          ]
+        },
+        modules: {
+          name: "Module",
+          description: "Truy vấn cho các module Redis đã tải (các danh mục bên dưới chỉ hiển thị khi module có mặt).",
+          prompts: []
+        },
+        json: {
+          name: "RedisJSON",
+          description: "Có sẵn khi module ReJSON được tải.",
+          prompts: [
+            "tạo một tài liệu JSON tại user:42 với { name: \"Alice\", age: 30 }",
+            "đọc trường name của user:42",
+            "cập nhật age của user:42 thành 31",
+            "liệt kê tất cả các khóa JSON",
+            "xóa một trường khỏi tài liệu JSON",
+            "lấy một trường lồng nhau dùng JSONPath"
+          ]
+        },
+        search: {
+          name: "RediSearch",
+          description: "Có sẵn khi module search được tải.",
+          prompts: [
+            "liệt kê tất cả các chỉ mục toàn văn",
+            "chạy tìm kiếm toàn văn cho \"redis\" trên chỉ mục idx:products",
+            "tạo một chỉ mục dựa trên hash với các trường title (TEXT) và price (NUMERIC)",
+            "lấy thông tin về chỉ mục idx:products",
+            "xóa chỉ mục idx:products",
+            "tìm tài liệu có price nằm giữa 10 và 50",
+            "viết một tìm kiếm lai kết hợp văn bản và độ tương đồng vector"
+          ]
+        },
+        timeseries: {
+          name: "RedisTimeSeries",
+          description: "Có sẵn khi module timeseries được tải.",
+          prompts: [
+            "liệt kê tất cả các khóa timeseries",
+            "thêm một điểm dữ liệu vào temp:room1",
+            "lấy dải temp:room1 từ hôm qua đến bây giờ",
+            "lấy multi-range theo nhãn sensor=temp",
+            "tạo 100 điểm dữ liệu dạng sóng sin cho temp:room1",
+            "hiển thị retention và nhãn cho temp:room1"
+          ]
+        },
+        bloom: {
+          name: "RedisBloom (Bloom / Cuckoo / Top-K / CMS / T-Digest)",
+          description: "Có sẵn khi module bf được tải.",
+          prompts: [
+            "kiểm tra xem mục foo có trong bloom filter spam:ips không",
+            "thêm các mục vào bloom filter spam:ips",
+            "tạo một top-K tên popular với K=10",
+            "truy vấn count-min sketch traffic cho khóa /home",
+            "thêm giá trị vào t-digest và lấy phân vị thứ 95",
+            "hiển thị thông tin cho bloom filter spam:ips"
+          ]
+        },
+        vectorSet: {
+          name: "VectorSet (Redis 8+)",
+          description: "Có sẵn khi phát hiện Redis 8+ (kiểu VECTORSET gốc).",
+          prompts: [
+            "thêm một vector vào embeddings",
+            "tìm 10 vector tương tự nhất với một vector truy vấn",
+            "hiển thị số chiều và số lượng của vectorset embeddings",
+            "xóa một phần tử khỏi vectorset embeddings",
+            "tìm kiếm theo tên phần tử với VSIM"
+          ]
+        },
+        redis8: {
+          name: "Tính năng Redis 8+",
+          description: "Hiển thị khi phát hiện Redis 8+.",
+          prompts: [
+            "đặt TTL cho trường hash với HEXPIRE",
+            "lấy digest của một giá trị chuỗi",
+            "chạy tìm kiếm lai toàn văn + vector (FT.HYBRID)",
+            "đặt nhiều khóa với thời hạn dùng chung bằng MSETEX",
+            "xóa một bản ghi stream với consumer group (XDELEX)",
+            "hiển thị slot-stats cluster cho 10 slot hàng đầu"
+          ]
+        },
+        scripting: {
+          name: "Viết script",
+          description: "Tạo script Lua / EVAL từ mô tả bằng ngôn ngữ tự nhiên.",
+          prompts: [
+            "viết một script nguyên tử tăng counter X chỉ khi Y > 5",
+            "tạo 100 khóa ngẫu nhiên bằng Lua",
+            "chuyển pipeline shell này thành một EVAL duy nhất: keys user:* | GET | grep inactive | DEL",
+            "chuyển một thao tác hàng loạt sang Lua để an toàn cho cluster",
+            "cập nhật kiểu check-and-set trong một lệnh Lua duy nhất",
+            "duyệt qua một hash và xóa các trường khớp mẫu"
+          ]
+        },
+        cluster: {
+          name: "Cluster",
+          description: "Chỉ hiển thị trong chế độ cluster.",
+          prompts: [
+            "hiển thị thông tin cluster",
+            "liệt kê các node của cluster",
+            "hiển thị 10 slot hàng đầu theo số lượng khóa",
+            "hiển thị 10 slot hàng đầu theo bộ nhớ",
+            "master nào sở hữu slot 5000?"
+          ]
+        },
+        acl: {
+          name: "ACL (Redis 6+)",
+          description: "Kiểm tra người dùng kiểm soát truy cập và kết nối hiện tại.",
+          prompts: [
+            "tôi đang kết nối với tư cách ai?",
+            "liệt kê tất cả người dùng ACL",
+            "tôi có những quyền gì?",
+            "hiển thị các quy tắc của người dùng mặc định"
+          ]
+        },
+        qna: {
+          name: "Hỏi & Đáp chung",
+          description: "Đặt câu hỏi về kiến thức Redis — không cần công cụ, chỉ cần trả lời.",
+          prompts: [
+            "ZADD là gì?",
+            "cluster failover hoạt động như thế nào?",
+            "giải thích SCAN so với KEYS",
+            "khi nào nên dùng EVAL thay vì nhiều lệnh?",
+            "các tùy chọn lưu trữ bền vững của Redis là gì?",
+            "sự khác biệt giữa RDB và AOF là gì?",
+            "Redis Sentinel quyết định master mới như thế nào?",
+            "giải thích hash tag trong chế độ cluster"
+          ]
+        },
+        translate: {
+          name: "Ngôn ngữ tự nhiên → Lệnh Redis",
+          description: "Mô tả điều bạn muốn bằng tiếng Việt đơn giản (hoặc bất kỳ ngôn ngữ nào trong 54 ngôn ngữ); AI sẽ viết lệnh Redis.",
+          prompts: [
+            "xóa khóa user:42",
+            "đổi tên khóa foo thành bar",
+            "cho khóa session:abc hết hạn sau 10 giây",
+            "sao chép khóa source sang destination",
+            "tăng counter visits thêm 5",
+            "đặt khóa greeting thành \"hello\" trong 1 giờ",
+            "cho tôi xem 10 khóa được truy cập thường xuyên nhất",
+            "xóa tất cả khóa khớp temp:*"
+          ]
+        }
+      }
+    },
     ssh: {
       on: "SSH đang bật",
       off: "Tắt SSH",
@@ -278,7 +504,7 @@ const strings = {
     treeSeparatorEmpty: "Nếu dấu tách cây trống, cây sẽ không có nút lồng nhau, chỉ có một danh sách thuần túy",
     treeSeparatorEmptyNote: "Không có nút lồng nhau, chỉ có một danh sách thuần túy",
     welcomeConsole: "Chào mừng bạn đến với Bảng điều khiển Redis",
-    welcomeConsoleInfo: "Lịch sử con trỏ LÊN hoặc XUỐNG được bật",
+    welcomeConsoleInfo: "SHIFT + Lịch sử con trỏ LÊN hoặc XUỐNG được bật",
     redisListIndexInfo: "Trống để nối thêm, -1 để thêm vào trước hoặc lưu nó vào vị trí hiển thị.",
     console: "Bảng điều khiển",
     connectiondAdd: "Thêm kết nối",
@@ -854,6 +1080,13 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+  },
+  promo: {
+    title: "Trợ lý Mạng AI",
+    description: "Khám phá Trợ lý Mạng AI miễn phí của chúng tôi tại network.corifeus.com — phân tích tên miền, IP, bản ghi DNS, chứng chỉ SSL, bảo mật email và hạ tầng mạng. Được hỗ trợ bởi AI để cho kết quả tức thì và toàn diện.",
+    disclaimer: "Khuyến nghị này chỉ hiển thị trên trang demo và sẽ không xuất hiện trong các bản triển khai Docker, Electron hoặc ứng dụng web.",
+    toastMessage: "Hãy thử Trợ lý Mạng AI miễn phí của chúng tôi tại network.corifeus.com — phân tích tên miền, DNS, SSL và hơn thế nữa!",
+    visit: "Truy cập network.corifeus.com",
   }
 };
 module.exports = strings;

@@ -236,6 +236,221 @@ const strings = {
     aiRoutingNetwork: "שאילתות AI מנותבות דרך network.corifeus.com. אם יש לך מפתח Groq API חינמי משלך, אפשר לכבות את המתג הזה כדי לנתב ישירות ל-Groq ללא network.corifeus.com.",
     aiMaxTokens: "מספר אסימוני AI מרבי",
     aiMaxTokensInfo: "מספר האסימונים המרבי לתגובות AI. ערכים גבוהים יותר מאפשרים תגובות ארוכות יותר, אך עשויים לצרוך יותר קרדיט API.",
+    consoleDrawer: {
+      toggleTooltip: "החלף את המסוף",
+      clearTooltip: "נקה גלילה לאחור",
+      closeTooltip: "סגור קונסולה",
+      aiSettingsTooltip: "הגדרות AI",
+      modeRedis: "REDIS",
+      modeAi: "AI",
+      connectionChipNoDb: opts => `${opts.name}`,
+      connectionChipWithDb: opts => `${opts.name} · db ${opts.db}`,
+      pageChip: opts => `עמוד: ${opts.page}`,
+      connectingTo: opts => `מתחבר אל ${opts.name}...`,
+      connectedTo: opts => `מחובר ל-${opts.name} (Redis ${opts.version} ${opts.mode}, ${opts.modules} מודולים נטענים)`,
+      connectedToNoInfo: opts => `מחובר ל-${opts.name}`,
+      disconnectedFrom: opts => `מנותק מ-${opts.name}`,
+      readyIndicator: "מוכן."
+    },
+    cheatsheet: {
+      title: "AI Cheatsheet - מה אני יכול לשאול?",
+      subtitle: "לחץ על כל בקשה כדי להדביק אותה בקונסולה. לאחר מכן הקש Enter.",
+      searchPlaceholder: "סינון הנחיות...",
+      openOfficialDocs: "Redis פקודות ↗",
+      openOfficialDocsTooltip: "פתח את ההפניה הרשמית לפקודות Redis ב-redis.io",
+      closeTooltip: "סגור (Esc)",
+      empty: "אין הנחיות שתואמות למסנן שלך.",
+      footerHint: "טיפ: הקלד \"ai:\" ואחריו כל דבר בכל שפה - ה-AI מבין 54 שפות ומשתמש במצב Redis חי בעת הצורך.",
+      groups: {
+        diagnostics: {
+          name: "אבחון חי",
+          description: "בקש מה-AI לחקור את מצב השרת החי באמצעות כלים בטוחים לקריאה בלבד.",
+          prompts: [
+            "למה הזיכרון גבוה?",
+            "הראה לי את 10 השאילתות האיטיות ביותר",
+            "אילו לקוחות מחוברים?",
+            "מה מדיניות ה-maxmemory?",
+            "האם יש פינויים אחרונים?",
+            "האם יש אירוע חביון כלשהו?",
+            "כמה זמן השרת פתוח?",
+            "מה שיעור הפגיעה",
+            "הצג שימוש במעבד",
+            "לסכם את מרחב המקשים",
+            "כמה זיכרון משתמש כל סוג נתונים?",
+            "משהו חוסם את השרת כרגע?"
+          ]
+        },
+        keys: {
+          name: "מפתחות",
+          description: "בדוק, מצא והנמק מפתחות מבלי ללחוץ על העץ.",
+          prompts: [
+            "מצא את כל המפתחות התואמים user:*",
+            "כמה מפתחות בכל מסד נתונים?",
+            "הצג את ה-hash הגדול ביותר ב-db הזה",
+            "למצוא מפתחות עם TTL פחות מ-60 שניות",
+            "לאילו מפתחות אין TTL?",
+            "איזה סוג הוא מפתח session:abc?",
+            "אומדן זיכרון המשמש את הקידומת \"session:\"",
+            "הצג את קידוד האובייקט של מפתח user:42",
+            "האם יש מפתחות שעומדים לפוג?",
+            "איזה מרחב שמות משתמש הכי הרבה זיכרון?"
+          ]
+        },
+        dataTypes: {
+          name: "סוגי נתונים",
+          description: "ניסוח בשפה טבעית ליצירה/קריאה/עדכון בכל סוג Redis.",
+          prompts: [
+            "צור hash בשם user:1 עם שדות name=Alice age=30",
+            "הוסף שלושה פריטים לרשימה tasks",
+            "הוסף חברים לסט favourites",
+            "הוסף חברים עם ניקוד לסט ממוין leaderboard",
+            "הוסף אירוע לזרם events",
+            "קבל את 10 הערכים האחרונים מהזרם events",
+            "קבל את כל השדות של משתמש hash:1",
+            "קבל חברים בסט favourites",
+            "קבל את הטופ 10 לפי ציון מ-leaderboard"
+          ]
+        },
+        modules: {
+          name: "מודולים",
+          description: "שאילתות עבור מודולי Redis טעונים (הקטגוריות למטה מופיעות רק כאשר המודול קיים).",
+          prompts: []
+        },
+        json: {
+          name: "RedisJSON",
+          description: "זמין כאשר מודול ReJSON נטען.",
+          prompts: [
+            "צור מסמך JSON ב-user:42 עם { שם: \"Alice\", גיל: 30 }",
+            "קרא את שדה השם של user:42",
+            "עדכן את הגיל של user:42 ל-31",
+            "רשום את כל המפתחות JSON",
+            "מחק שדה ממסמך JSON",
+            "קבל שדה מקונן באמצעות JSONPath"
+          ]
+        },
+        search: {
+          name: "RediSearch",
+          description: "זמין כאשר מודול החיפוש נטען.",
+          prompts: [
+            "רשום את כל האינדקסים בטקסט מלא",
+            "הפעל חיפוש בטקסט מלא עבור \"redis\" באינדקס idx:products",
+            "צור אינדקס מגובב עם כותרת השדות (TEXT) ומחיר (NUMERIC)",
+            "קבל מידע על אינדקס idx:products",
+            "אינדקס ירידה idx:products",
+            "מצא מסמכים שבהם המחיר הוא בין 10 ל-50",
+            "כתוב חיפוש היברידי המשלב דמיון וקטורי של טקסט"
+          ]
+        },
+        timeseries: {
+          name: "RedisTimeSeries",
+          description: "זמין כאשר מודול סדרת הזמן נטען.",
+          prompts: [
+            "רשום את כל מפתחות סדרת הזמן",
+            "הוסף נקודת נתונים ל-temp:room1",
+            "קבל את הטווח של temp:room1 מאתמול לעכשיו",
+            "קבל ריבוי טווחים לפי תווית sensor=temp",
+            "צור 100 נקודות נתונים בגל סינוס עבור temp:room1",
+            "הצג שמירה ותוויות עבור temp:room1"
+          ]
+        },
+        bloom: {
+          name: "RedisBloom (בלום / קוקיה / Top-K / CMS / T-Digest)",
+          description: "זמין כאשר מודול bf נטען.",
+          prompts: [
+            "בדוק אם פריט foo קיים במסנן פריחה spam:ips",
+            "הוסף פריטים למסנן הפריחה spam:ips",
+            "צור K-top בשם popular עם K=10",
+            "שרטוט ספירת-דקות שאילתה traffic עבור מפתח /home",
+            "להוסיף ערכים ל-t-digest ולקבל את האחוזון ה-95",
+            "הצג מידע עבור מסנן פריחה spam:ips"
+          ]
+        },
+        vectorSet: {
+          name: "VectorSet (Redis 8+)",
+          description: "זמין כאשר מזוהה Redis 8+ (סוג מקורי VECTORSET).",
+          prompts: [
+            "הוסף וקטור לembeddings",
+            "מצא את 10 הוקטורים הדומים ביותר לווקטור שאילתה",
+            "הצג מידות וספירה של ערכת וקטור embeddings",
+            "מחק אלמנט מ-Vectorset embeddings",
+            "חפש לפי שם רכיב עם VSIM"
+          ]
+        },
+        redis8: {
+          name: "Redis 8+ תכונות",
+          description: "מוצג כאשר Redis 8+ מזוהה.",
+          prompts: [
+            "הגדר שדה hash ttl עם HEXPIRE",
+            "קבל את התקציר של ערך מחרוזת",
+            "הפעל חיפוש היברידי של טקסט מלא + וקטור (FT.HYBRID)",
+            "הגדר מספר מפתחות עם תפוגה משותפת באמצעות MSETEX",
+            "מחק ערך זרם עם קבוצת צרכנים (XDELEX)",
+            "הצג סטטיסטיקות של משבצות אשכול עבור 10 המשבצות המובילות"
+          ]
+        },
+        scripting: {
+          name: "סקריפטים",
+          description: "צור סקריפטים Lua / EVAL מתיאורי שפה טבעית.",
+          prompts: [
+            "כתוב סקריפט אטומי שמגדיל את counter X רק אם Y > 5",
+            "צור 100 מפתחות אקראיים עם Lua",
+            "המרת צינור מעטפת זה ל-EVAL יחיד: מפתחות user:* | קבל | grep לא פעיל | DEL",
+            "העבר פעולת אצווה לLua לבטיחות אשכול",
+            "בדוק וקבע עדכון סגנון בקריאה אחת Lua",
+            "לחזור על hash ולמחוק שדות התואמים דפוס"
+          ]
+        },
+        cluster: {
+          name: "אשכול",
+          description: "מוצג רק במצב אשכול.",
+          prompts: [
+            "הצג מידע על אשכול",
+            "רשימת צמתי אשכול",
+            "הצג את 10 המשבצות המובילות לפי ספירת מפתחות",
+            "הצג את 10 החריצים המובילים לפי זיכרון",
+            "לאיזה מאסטר יש חריץ 5000?"
+          ]
+        },
+        acl: {
+          name: "ACL (Redis 6+)",
+          description: "בדוק את משתמשי בקרת הגישה ואת החיבור הנוכחי.",
+          prompts: [
+            "למי אני מחובר",
+            "רשום את כל משתמשי ACL",
+            "איזה הרשאות יש לי",
+            "הצג את כללי המשתמש המוגדרים כברירת מחדל"
+          ]
+        },
+        qna: {
+          name: "שאלות ותשובות כלליות",
+          description: "שאל Redis שאלות ידע - ללא כלים, רק תשובות.",
+          prompts: [
+            "מה זה ZADD?",
+            "איך עובד כשל באשכול?",
+            "הסבר SCAN לעומת KEYS",
+            "מתי עלי להשתמש ב-EVAL לעומת פקודות מרובות?",
+            "מהן אפשרויות ההתמדה Redis?",
+            "מה ההבדל בין RDB ל-AOF?",
+            "איך Redis Sentinel מחליט על מאסטר חדש?",
+            "להסביר תגי hash במצב אשכול"
+          ]
+        },
+        translate: {
+          name: "שפה טבעית → פקודת Redis",
+          description: "תאר מה אתה רוצה בכל אחת מ-54 שפות; ה-AI כותב את הפקודה Redis.",
+          prompts: [
+            "מחק מפתח user:42",
+            "שנה את שם המפתח foo לסרגל",
+            "פג תוקף מפתח session:abc תוך 10 שניות",
+            "העתק מקור מפתח ליעד",
+            "הגדל את ביקורי הנגד ב-5",
+            "הגדר את ברכת המפתח ל-\"hello\" למשך שעה",
+            "מחק את כל המפתחות user:*",
+            "הראה לי את 10 המפתחות העמוסים ביותר"
+          ]
+        }
+      }
+    },
     ssh: {
       on: "SSH פועל",
       off: "SSH כבוי",
@@ -278,7 +493,7 @@ const strings = {
     treeSeparatorEmpty: "אם מפריד העצים ריק, לעץ לא יהיו צמתים מקוננים, רק רשימה טהורה",
     treeSeparatorEmptyNote: "אין צמתים מקוננים, רק רשימה טהורה",
     welcomeConsole: "ברוכים הבאים לקונסולת Redis",
-    welcomeConsoleInfo: "היסטוריית הסמן למעלה או למטה מופעלת",
+    welcomeConsoleInfo: "SHIFT + היסטוריית הסמן למעלה או למטה מופעלת",
     redisListIndexInfo: "ריק כדי להוסיף, -1 כדי להוסיף או לשמור אותו במיקום המוצג.",
     console: "קונסולה",
     connectiondAdd: "הוסף חיבור",
@@ -854,6 +1069,13 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+  },
+  promo: {
+    title: "AI עוזר רשת",
+    description: "גלה את עוזר הרשת AI החינמי שלנו ב-network.corifeus.com - נתח דומיינים, IPs, רשומות DNS, אישורי SSL, אבטחת דוא\"ל ותשתית רשת. מופעל על ידי AI לתוצאות מיידיות ומקיפות.",
+    disclaimer: "קידום זה מוצג רק באתר ההדגמה ולא יופיע בפריסות Docker, Electron או אפליקציות אינטרנט.",
+    toastMessage: "נסה את עוזר הרשת AI החינמי שלנו ב-network.corifeus.com - נתח דומיינים, DNS, SSL ועוד!",
+    visit: "בקר ב-network.corifeus.com"
   }
 };
 module.exports = strings;

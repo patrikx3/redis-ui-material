@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, OnDestroy, AfterViewInit, ElementRef, ViewChild, NgZone, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy, AfterViewInit, ElementRef, ViewChild, NgZone, ViewEncapsulation, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -54,6 +54,12 @@ export class ProfilerComponent implements OnInit, AfterViewInit, OnDestroy {
         @Inject(NgZone) private readonly ngZone: NgZone,
     ) {
         this.strings = this.i18n.strings;
+
+        // Re-run height calculation when the global console drawer opens/closes
+        effect(() => {
+            this.state.consoleDrawerOpen();
+            setTimeout(() => this.recalcHeight(), 160); // after the 150ms drawer animation
+        });
     }
 
     ngOnInit(): void {
@@ -124,8 +130,17 @@ export class ProfilerComponent implements OnInit, AfterViewInit, OnDestroy {
         if (!el) return;
         const rect = el.getBoundingClientRect();
         const footerHeight = document.getElementById('p3xr-layout-footer-container')?.offsetHeight || 48;
-        const available = window.innerHeight - rect.top - footerHeight - 8;
+        const drawerHeight = this.getDrawerHeight();
+        const available = window.innerHeight - rect.top - footerHeight - drawerHeight - 8;
         el.style.height = Math.max(available, 100) + 'px';
+    }
+
+    private getDrawerHeight(): number {
+        const v = getComputedStyle(document.documentElement)
+            .getPropertyValue('--p3xr-console-drawer-height-active').trim();
+        if (v.endsWith('vh')) return Math.round((parseFloat(v) / 100) * window.innerHeight);
+        if (v.endsWith('px')) return parseFloat(v);
+        return 0;
     }
 
     private escapeHtml(str: string): string {

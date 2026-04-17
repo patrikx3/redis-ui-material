@@ -234,6 +234,221 @@ const strings = {
     aiRoutingNetwork: "Az AI lekérdezések a network.corifeus.com-on keresztül kerülnek továbbításra. Ha van saját ingyenes Groq API kulcsod, kikapcsolhatod ezt a kapcsolót, hogy közvetlenül a Groq-ot használd a network.corifeus.com nélkül.",
     aiMaxTokens: "AI maximális tokenek",
     aiMaxTokensInfo: "Az AI válaszokhoz használt tokenek maximális száma. A nagyobb értékek hosszabb válaszokat tesznek lehetővé, de több API-kreditet használhatnak.",
+    consoleDrawer: {
+      toggleTooltip: "Váltó konzol",
+      clearTooltip: "Visszagörgetés törlése",
+      closeTooltip: "Zárja be a konzolt",
+      aiSettingsTooltip: "AI beállítások",
+      modeRedis: "REDIS",
+      modeAi: "AI",
+      connectionChipNoDb: opts => `${opts.name}`,
+      connectionChipWithDb: opts => `${opts.name} · db ${opts.db}`,
+      pageChip: opts => `oldal: ${opts.page}`,
+      connectingTo: opts => `Csatlakozás a következőhöz: ${opts.name}…`,
+      connectedTo: opts => `Csatlakozva a következőhöz: ${opts.name} (Redis ${opts.version} ${opts.mode}, ${opts.modules} modul betöltve)`,
+      connectedToNoInfo: opts => `Csatlakozva a következőhöz: ${opts.name}`,
+      disconnectedFrom: opts => `Nincs kapcsolat a következővel: ${opts.name}`,
+      readyIndicator: "Kész."
+    },
+    cheatsheet: {
+      title: "AI Cheatsheet – Mit kérdezhetek?",
+      subtitle: "Kattintson bármelyik promptra, hogy beillessze azt a konzolba. Ezután nyomja meg az Enter billentyűt.",
+      searchPlaceholder: "Prompts szűrése…",
+      openOfficialDocs: "Redis Parancsok ↗",
+      openOfficialDocsTooltip: "Nyissa meg a hivatalos Redis parancsreferenciát a redis.io címen",
+      closeTooltip: "Bezárás (Esc)",
+      empty: "Egyetlen kérdés sem felel meg a szűrőnek.",
+      footerHint: "Tipp: írja be a „ai:” kifejezést, majd bármit bármilyen nyelven – a AI 54 nyelvet ért, és szükség esetén élő Redis állapotot használ.",
+      groups: {
+        diagnostics: {
+          name: "Élő diagnosztika",
+          description: "Kérje meg a AI, hogy vizsgálja meg az élő szerver állapotát biztonságos, csak olvasható eszközök segítségével.",
+          prompts: [
+            "miért magas a memória?",
+            "mutasd meg a 10 leglassabb lekérdezést",
+            "mely kliensek csatlakoznak?",
+            "mi a maxmemória szabályzat?",
+            "vannak mostanában kilakoltatások?",
+            "van valami késleltetési esemény?",
+            "mióta működik a szerver?",
+            "mi a találati arány?",
+            "CPU használat megjelenítése",
+            "foglalja össze a kulcsteret",
+            "mennyi memóriát használnak az egyes adattípusok?",
+            "most valami blokkolja a szervert?"
+          ]
+        },
+        keys: {
+          name: "Kulcsok",
+          description: "Nézze meg, keresse meg és indokolja meg a kulcsokat anélkül, hogy a fára kattintana.",
+          prompts: [
+            "megtalálja a user:* megfelelő kulcsot",
+            "hány kulcs van az egyes adatbázisokban?",
+            "mutasd a legnagyobb hash-t ebben a db",
+            "60 másodpercnél rövidebb TTL-lel rendelkező kulcsok keresése",
+            "melyik kulcson nincs TTL?",
+            "milyen típusú kulcs a session:abc?",
+            "becsülje meg a \"session:\" előtag által használt memóriát",
+            "mutasd meg a user:42 kulcs objektumkódolását",
+            "vannak olyan kulcsok, amelyek hamarosan lejárnak?",
+            "melyik névtér használja a legtöbb memóriát?"
+          ]
+        },
+        dataTypes: {
+          name: "Adattípusok",
+          description: "Természetes nyelvű megfogalmazás a létrehozáshoz/olvasáshoz/frissítéshez minden Redis típuson.",
+          prompts: [
+            "hozzon létre egy user:1 nevű hash-t name=Alice age=30 mezőkkel",
+            "három elem hozzáadása a listához tasks",
+            "tagok hozzáadása a favourites készlethez",
+            "pontozott tagok hozzáadása a rendezett halmazhoz leaderboard",
+            "esemény csatolása a streamhez events",
+            "az utolsó 10 bejegyzés lekérése a events adatfolyamból",
+            "lekérni a hash user összes mezőjét:1",
+            "a favourites készlet tagjainak lekérése",
+            "kerülj a legjobb 10-be a következő pontszám alapján: leaderboard"
+          ]
+        },
+        modules: {
+          name: "Modulok",
+          description: "Lekérdezések betöltött Redis modulokhoz (az alábbi kategóriák csak akkor jelennek meg, ha a modul jelen van).",
+          prompts: []
+        },
+        json: {
+          name: "RedisJSON",
+          description: "A ReJSON modul betöltésekor elérhető.",
+          prompts: [
+            "JSON dokumentum létrehozása a user:42 címen a következővel: { név: \"Alice\", életkor: 30 }",
+            "olvassa el a user:42 névmezőjét",
+            "frissítse a user:42 korát 31-re",
+            "felsorolja az összes JSON kulcsot",
+            "töröljön egy mezőt egy JSON dokumentumból",
+            "beágyazott mező beszerzése a JSONPath használatával"
+          ]
+        },
+        search: {
+          name: "RediSearch",
+          description: "A keresőmodul betöltésekor elérhető.",
+          prompts: [
+            "felsorolja az összes teljes szövegű indexet",
+            "futtasson teljes szöveges keresést a \"redis\" kifejezésre a idx:products indexen",
+            "hozzon létre egy hash-alapú indexet a cím (TEXT) és az ár (NUMERIC) mezőkkel",
+            "információ a idx:products indexről",
+            "cseppindex idx:products",
+            "keressen olyan dokumentumokat, ahol az ár 10 és 50 között van",
+            "írjon hibrid keresést, amely kombinálja a szöveg és a vektor hasonlóságát"
+          ]
+        },
+        timeseries: {
+          name: "RedisTimeSeries",
+          description: "Az idősor modul betöltésekor elérhető.",
+          prompts: [
+            "listázza az összes idősor kulcsot",
+            "adatpont hozzáadása a következőhöz: temp:room1",
+            "szerezze be a temp:room1 tartományt tegnaptól máig",
+            "több tartomány beszerzése a sensor=temp címkével",
+            "100 szinuszos adatpont generálása a temp:room1 számára",
+            "megőrzés és címkék megjelenítése a következőhöz: temp:room1"
+          ]
+        },
+        bloom: {
+          name: "RedisBloom (Bloom / Cuckoo / Top-K / CMS / T-Digest)",
+          description: "A bf modul betöltésekor elérhető.",
+          prompts: [
+            "ellenőrizze, hogy a foo elem létezik-e a spam:ips virágszűrőben",
+            "elemek hozzáadása a virágzási szűrőhöz spam:ips",
+            "hozzon létre egy popular nevű top-K-t K=10-zel",
+            "lekérdezés count-min vázlat traffic a /home kulcshoz",
+            "adjunk hozzá értékeket a t-emésztéshez, és kapjuk meg a 95. percentilist",
+            "mutasd a virágzásszűrő adatait spam:ips"
+          ]
+        },
+        vectorSet: {
+          name: "VectorSet (Redis 8+)",
+          description: "Redis 8+ észlelésekor érhető el (natív VECTORSET típus).",
+          prompts: [
+            "vektor hozzáadása ehhez: embeddings",
+            "keresse meg a 10 leginkább hasonló vektort egy lekérdezési vektorhoz",
+            "mutasd a vektorkészlet méretét és számát embeddings",
+            "elem törlése a vektorkészletből embeddings",
+            "keresés elemnév alapján a következővel: VSIM"
+          ]
+        },
+        redis8: {
+          name: "Redis 8+ funkciók",
+          description: "Redis 8+ észlelésekor jelenik meg.",
+          prompts: [
+            "állítsa be a ttl hash mezőt a következővel: HEXPIRE",
+            "lekérni egy karakterlánc érték kivonatát",
+            "futtasson hibrid teljes szöveg + vektor keresést (FT.HYBRID)",
+            "állítson be több kulcsot megosztott lejárattal a MSETEX használatával",
+            "streambejegyzés törlése fogyasztói csoporttal (XDELEX)",
+            "mutasd meg a fürthely-statisztikát a legjobb 10 helyhez"
+          ]
+        },
+        scripting: {
+          name: "Szkriptelés",
+          description: "Lua / EVAL szkriptek létrehozása természetes nyelvű leírásokból.",
+          prompts: [
+            "írjon egy atomi szkriptet, amely csak akkor növeli a counter X értéket, ha Y > 5",
+            "generáljon 100 véletlenszerű kulcsot a Lua segítségével",
+            "konvertálja ezt a shell folyamatot egyetlen EVAL: kulcsok user:* | GET | grep inaktív | DEL",
+            "portoljon egy kötegelt műveletet a Lua-ra a fürt biztonsága érdekében",
+            "ellenőrizze és állítsa be a stílusfrissítést egyetlen Lua hívásban",
+            "iteráljon egy hash-en, és törölje a mintának megfelelő mezőket"
+          ]
+        },
+        cluster: {
+          name: "Klaszter",
+          description: "Csak fürt módban látható.",
+          prompts: [
+            "klaszterinformációk megjelenítése",
+            "klaszter csomópontok listája",
+            "mutasd meg a 10 legjobb helyet a kulcsok száma alapján",
+            "a legjobb 10 slot megjelenítése memória szerint",
+            "melyik mesternek van az 5000-es slotja?"
+          ]
+        },
+        acl: {
+          name: "ACL (Redis 6+)",
+          description: "Ellenőrizze a hozzáférés-vezérlő felhasználókat és az aktuális kapcsolatot.",
+          prompts: [
+            "kihez kapcsolódom?",
+            "listázza ki az összes ACL felhasználót",
+            "milyen engedélyeim vannak?",
+            "az alapértelmezett felhasználói szabályok megjelenítése"
+          ]
+        },
+        qna: {
+          name: "Általános kérdések és válaszok",
+          description: "Tegyen fel Redis tudásra vonatkozó kérdéseket – eszközök nélkül, csak válaszok.",
+          prompts: [
+            "mi az a ZADD?",
+            "hogyan működik a fürt feladatátvétel?",
+            "magyarázat SCAN vs KEYS",
+            "mikor használjam a EVAL vs multiple parancsokat?",
+            "melyek a Redis fennmaradási lehetőségek?",
+            "mi a különbség a RDB és a AOF között?",
+            "hogyan dönt a Redis Sentinel az új mester mellett?",
+            "magyarázza el a hash címkéket fürt módban"
+          ]
+        },
+        translate: {
+          name: "Természetes nyelv → Redis parancs",
+          description: "Írja le, hogy mit szeretne az 54 nyelv bármelyikén; a AI írja a Redis parancsot.",
+          prompts: [
+            "törlési kulcs user:42",
+            "nevezze át a foo kulcsot sávra",
+            "lejárati kulcs session:abc 10 másodpercen belül",
+            "kulcsforrás másolása a célállomásra",
+            "növelje a számlálólátogatásokat 5-tel",
+            "állítsa a billentyű üdvözlést \"hello\" értékre 1 órára",
+            "töröld az összes user:* kulcsot",
+            "mutasd meg a 10 legforgalmasabb kulcsot"
+          ]
+        }
+      }
+    },
     ssh: {
       on: 'SSH be',
       off: 'SSH ki',
@@ -276,7 +491,7 @@ const strings = {
     treeSeparatorEmpty: "Ha a fa elválasztó üres, a fa nem tartalmaz beágyazott csomópontokat, csak egy egyszerű listát",
     treeSeparatorEmptyNote: "Nincs beágyazott csomópont, csak egyszerű lista",
     welcomeConsole: "Üdvözöljük a Redis Konzolban",
-    welcomeConsoleInfo: "Kurzor FEL vagy LE előzménynavigáció engedélyezve",
+    welcomeConsoleInfo: "SHIFT + Kurzor FEL vagy LE előzménynavigáció engedélyezve",
     redisListIndexInfo: "Üres a hozzáfűzéshez, -1 az elejére beszúráshoz, vagy mentse a mutatott pozícióba.",
     console: "Konzol",
     connectiondAdd: "Kapcsolat hozzáadása",
@@ -852,6 +1067,13 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+  },
+  promo: {
+    title: "AI Hálózati asszisztens",
+    description: "Fedezze fel ingyenes AI Hálózati asszisztensünket a network.corifeus.com címen – elemezze a domaineket, IPs, DNS rekordokat, SSL tanúsítványokat, e-mail biztonságot és hálózati infrastruktúrát. Powered by AI az azonnali, átfogó eredményekért.",
+    disclaimer: "Ez a promóció csak a bemutató webhelyen jelenik meg, és nem jelenik meg Docker, Electron vagy webalkalmazás-telepítésekben.",
+    toastMessage: "Próbálja ki ingyenes AI Hálózati asszisztensünket a network.corifeus.com címen – elemezzen domaineket, DNS, SSL és még sok mást!",
+    visit: "Látogassa meg a network.corifeus.com"
   }
 };
 module.exports = strings;

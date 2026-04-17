@@ -2,12 +2,13 @@
 
 p3xr-monitoring-shell {
     display: block;
+    height: 100%;
 }
 
 .p3xr-monitoring-shell-container {
     display: flex;
     flex-direction: column;
-    height: calc(100vh - v.$toolbar-height * 2);
+    height: 100%;
     margin: -(v.$layout-padding);
 }
 

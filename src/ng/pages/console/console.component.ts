@@ -1,4 +1,4 @@
-import { Component, Input, Inject, OnInit, OnDestroy, AfterViewInit, NgZone, ElementRef, ViewEncapsulation, ChangeDetectionStrategy, ChangeDetectorRef, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Inject, OnInit, OnDestroy, AfterViewInit, NgZone, ElementRef, ViewEncapsulation, ChangeDetectionStrategy, ChangeDetectorRef, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormControl } from '@angular/forms';
@@ -7,6 +7,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 import { P3xrButtonComponent } from '../../components/p3xr-button.component';
 import { I18nService } from '../../services/i18n.service';
@@ -14,6 +16,7 @@ import { CommonService } from '../../services/common.service';
 import { SocketService } from '../../services/socket.service';
 import { RedisParserService } from '../../services/redis-parser.service';
 import { MainCommandService } from '../../services/main-command.service';
+import { AiCheatsheetDialogService } from '../../dialogs/ai-cheatsheet-dialog.service';
 import { RedisStateService } from '../../services/redis-state.service';
 
 import { htmlEncode } from 'js-htmlencode';
@@ -35,6 +38,8 @@ let actionHistoryPosition = -1;
         MatAutocompleteModule,
         MatInputModule,
         MatFormFieldModule,
+        MatButtonModule,
+        MatIconModule,
         P3xrButtonComponent,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -46,6 +51,13 @@ let actionHistoryPosition = -1;
 export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input() type: string = '';
     @Input() embedded: boolean = false;
+    /** When true, show a close button on the toolbar right — wired by the drawer host. */
+    @Input() showCloseButton: boolean = false;
+    @Output() closeRequest = new EventEmitter<void>();
+
+    requestClose(): void {
+        this.closeRequest.emit();
+    }
 
     searchText = '';
     searchControl = new FormControl('');
@@ -54,6 +66,7 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
     aiLoading = false;
+    private aiRequestSeq = 0;
 
     get aiAutoDetect(): boolean {
         try { return localStorage.getItem('p3xr-ai-auto-detect') !== 'false'; } catch { return true; }
@@ -94,6 +107,8 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
         @Inject(RedisParserService) private readonly redisParser: RedisParserService,
         @Inject(MainCommandService) private readonly cmd: MainCommandService,
         @Inject(RedisStateService) private readonly state: RedisStateService,
+        @Inject(AiCheatsheetDialogService) private readonly cheatsheet: AiCheatsheetDialogService,
+        @Inject(ChangeDetectorRef) private readonly cdr: ChangeDetectorRef,
     ) {
         this.strings = this.i18n.strings;
     }
@@ -298,8 +313,9 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private looksLikeNaturalLanguage(input: string, errorMsg: string): boolean {
-        // Only try AI if Redis returned an unknown/wrong command error
-        const isUnknownCmd = /unknown command|wrong number of arguments|ERR unknown/i.test(errorMsg);
+        // Try AI if Redis returned an unknown/wrong command error OR we aren't
+        // connected (user is typing natural language to navigate / connect).
+        const isUnknownCmd = /unknown command|wrong number of arguments|ERR unknown|not_connected/i.test(errorMsg);
         if (!isUnknownCmd) return false;
 
         // If the first word is a known Redis command, it's probably a syntax error, not natural language
@@ -314,7 +330,9 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
             this.common.toast(this.i18n.strings()?.error?.aiPromptTooLong);
             return false;
         }
+        const mySeq = ++this.aiRequestSeq;
         this.aiLoading = true;
+        this.cdr.markForCheck();
         (this.inputEl as HTMLElement)?.focus();
 
         try {
@@ -341,6 +359,12 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
             if (dbKeys.length > 0) redisContext.databases = dbKeys.map((k: string) => `${k}: ${keyspace[k]}`);
             if (this.state.modules()?.length > 0) redisContext.modules = this.state.modules();
             redisContext.uiLanguage = this.i18n.currentLang();
+            redisContext.connectionState = this.state.connectionState();
+            redisContext.currentPage = this.state.currentPage();
+            const conn = this.state.connection();
+            if (conn?.name) redisContext.connectionName = conn.name;
+            const db = this.state.currentDatabase();
+            if (db !== undefined) redisContext.currentDatabase = db;
 
             const response = await this.socket.request({
                 action: 'ai/redis-query',
@@ -350,26 +374,51 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
                 },
             });
 
+            if (mySeq !== this.aiRequestSeq) return false;
+
             const command = response.command || '';
             const explanation = response.explanation || '';
+            const toolTrail = Array.isArray(response.toolTrail) ? response.toolTrail : [];
 
             this.outputAppend(htmlEncode(originalInput));
             this.updateCommandHistory(originalInput);
 
+            // Print each tool call + outcome to the scrollback (transparency).
+            for (const t of toolTrail) {
+                const argsStr = t.args && Object.keys(t.args).length
+                    ? '(' + Object.entries(t.args).map(([k, v]) => `${k}=${JSON.stringify(v)}`).join(', ') + ')'
+                    : '()';
+                const head = `<span style="opacity: 0.85;"><strong>tool:</strong> <code>${htmlEncode(t.name + argsStr)}</code> <span style="opacity: 0.6;">${t.ms ?? 0}ms</span></span>`;
+                if (t.ok) {
+                    const preview = String(t.result ?? '').split('\n').slice(0, 12).join('\n');
+                    this.outputAppend(`${head}<br/><pre style="opacity: 0.85; margin: 2px 0 6px 0;">${htmlEncode(preview)}</pre>`);
+                } else {
+                    this.outputAppend(`${head}<br/><span style="color: var(--mat-sys-error, #f44336);">${htmlEncode(t.error || 'tool error')}</span>`);
+                }
+            }
+
+            // If the AI used tools, the returned command is a suggestion — don't auto-prefill.
+            const usedTools = toolTrail.length > 0;
+
             if (command) {
                 let aiLine = `<strong style="color: var(--mat-sys-primary);">AI &rarr;</strong> <code>${htmlEncode(command)}</code>`;
                 if (explanation) {
-                    aiLine += `<br/><span style="opacity: 0.7; font-size: 0.9em;">${htmlEncode(explanation)}</span>`;
+                    aiLine += `<pre>${htmlEncode(explanation)}</pre>`;
                 }
-                this.outputAppend(aiLine + '<br/>');
-                this.searchText = command;
-                this.searchControl.setValue(command, { emitEvent: false });
-                this.filteredCommands = [];
-                this.aiCommandPending = true;
-                setTimeout(() => this.autoResizeTextarea(), 0);
+                this.outputAppend(aiLine);
+                if (!usedTools) {
+                    this.searchText = command;
+                    this.searchControl.setValue(command, { emitEvent: false });
+                    this.filteredCommands = [];
+                    this.aiCommandPending = true;
+                    setTimeout(() => this.autoResizeTextarea(), 0);
+                }
+            } else if (explanation) {
+                this.outputAppend(`<pre>${htmlEncode(explanation)}</pre>`);
             }
             return true;
         } catch (e: any) {
+            if (mySeq !== this.aiRequestSeq) return false;
             console.error('ai-redis-query failed', e);
             const errMsg = e.message || String(e);
             // Show user-friendly error for rate limits
@@ -380,10 +429,26 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
             }
             return false;
         } finally {
-            this.aiLoading = false;
-            this.forceScrollToBottom();
-            (this.inputEl as HTMLElement)?.focus();
+            if (mySeq === this.aiRequestSeq) {
+                this.aiLoading = false;
+                this.cdr.markForCheck();
+                this.forceScrollToBottom();
+                (this.inputEl as HTMLElement)?.focus();
+            }
         }
+    }
+
+    stopAi(): void {
+        this.aiRequestSeq++;
+        this.aiLoading = false;
+        this.searchText = '';
+        this.searchControl.setValue('', { emitEvent: false });
+        this.filteredCommands = [];
+        this.cdr.markForCheck();
+        setTimeout(() => {
+            this.autoResizeTextarea();
+            (this.inputEl as HTMLElement)?.focus();
+        }, 0);
     }
 
     onKeyDown(event: KeyboardEvent): void {
@@ -450,16 +515,25 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
     clearConsole(): void {
         if (!this.outputEl) return;
         this.outputEl.innerHTML = '';
-        this.outputAppend('<strong>' + (this.i18n.strings().label?.welcomeConsole ?? 'Welcome to the Redis Console') + '</strong>');
-        this.outputAppend((this.i18n.strings().label?.welcomeConsoleInfo ?? 'Cursor UP or DOWN history is enabled') + '<br/>');
+        const strings = this.i18n.strings();
+        this.outputAppend('<strong>' + (strings?.label?.welcomeConsole ?? 'Welcome to the Redis Console') + '</strong>');
+        this.outputAppend((strings?.label?.welcomeConsoleInfo ?? 'SHIFT + Cursor UP or DOWN history is enabled') + '<br/>');
         this.persistConsoleOutputNow();
         this.forceScrollToBottom();
         (this.inputEl as HTMLElement)?.focus();
     }
 
 
-    openCommands(event: Event): void {
-        window.open('https://redis.io/docs/latest/commands/', '_blank');
+    async openCommands(event: Event): Promise<void> {
+        const picked = await this.cheatsheet.show();
+        if (!picked) return;
+        // Picked prompt is already prefixed with "ai: " by the dialog.
+        this.searchText = picked;
+        this.searchControl.setValue(picked, { emitEvent: false });
+        setTimeout(() => {
+            (this.inputEl as HTMLElement)?.focus();
+            this.autoResizeTextarea();
+        }, 0);
     }
 
     closeConsole(): void {
@@ -648,11 +722,16 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private forceScrollToBottom(): void {
-        setTimeout(() => {
+        // Double rAF + late setTimeout — survives late <pre> layout / large tool-trail renders.
+        const doScroll = () => {
             if (!this.scrollers) return;
             this.scrollers.scrollTop = this.scrollers.scrollHeight;
             if (this.outputEl) this.outputEl.scrollTop = this.outputEl.scrollHeight;
-        }, 0);
+        };
+        requestAnimationFrame(() => {
+            requestAnimationFrame(doScroll);
+        });
+        setTimeout(doScroll, 120);
     }
 
     private trimOutputToLimit(maxBytes: number): void {

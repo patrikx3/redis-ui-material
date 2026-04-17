@@ -1,6 +1,6 @@
 {
     "name": "p3x-redis-ui-material",
-    "version": "2026.4.441",
+    "version": "2026.4.442",
     "description": "💿 P3X Redis UI triple frontend — Angular + React/MUI + Vue/Vuetify with 54 languages, 7 themes, Socket.IO, desktop notifications, and full feature parity",
     "corifeus": {
         "icon": "fas fa-palette",
@@ -82,7 +82,7 @@
         "sass": "^1.99.0",
         "socket.io-client": "^4.8.3",
         "timestring": "^7.0.0",
-        "typescript": "^6.0.2",
+        "typescript": "^6.0.3",
         "vite": "^8.0.8",
         "zone.js": "^0.16.1"
     },
@@ -105,8 +105,8 @@
         "@msgpack/msgpack": "^3.1.3",
         "@mui/icons-material": "^9.0.0",
         "@mui/material": "^9.0.0",
-        "@tanstack/react-virtual": "^3.13.23",
-        "@tanstack/vue-virtual": "^3.13.23",
+        "@tanstack/react-virtual": "^3.13.24",
+        "@tanstack/vue-virtual": "^3.13.24",
         "@uiw/codemirror-theme-github": "^4.25.9",
         "@vitejs/plugin-vue": "^6.0.6",
         "codemirror": "^6.0.2",

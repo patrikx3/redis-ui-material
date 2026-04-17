@@ -234,6 +234,232 @@ const strings = {
     aiRoutingNetwork: "AI-запити маршрутизуються через network.corifeus.com. Якщо у вас є власний безкоштовний ключ API Groq, ви можете вимкнути цей перемикач.",
     aiMaxTokens: "Максимальна кількість токенів AI",
     aiMaxTokensInfo: "Максимальна кількість токенів для відповідей AI. Більші значення дозволяють довші відповіді, але можуть використовувати більше API-кредитів.",
+    consoleDrawer: {
+      toggleTooltip: "Перемкнути консоль",
+      clearTooltip: "Очистити історію консолі",
+      closeTooltip: "Закрити консоль",
+      aiSettingsTooltip: "Налаштування AI",
+      modeRedis: "REDIS",
+      modeAi: "AI",
+      connectionChipNoDb: opts => `${opts.name}`,
+      connectionChipWithDb: opts => `${opts.name} · db ${opts.db}`,
+      pageChip: opts => `сторінка: ${opts.page}`,
+      connectingTo: opts => `Підключення до ${opts.name}…`,
+      connectedTo: opts => `Підключено до ${opts.name} (Redis ${opts.version} ${opts.mode}, ${opts.modules} модулів завантажено)`,
+      connectedToNoInfo: opts => `Підключено до ${opts.name}`,
+      disconnectedFrom: opts => `Відключено від ${opts.name}`,
+      notConnected: "Не підключено.",
+      limitedAiOnly: "Лише обмежений AI — загальні запитання й відповіді про Redis працюють.",
+      connectHint: "Для живої діагностики введіть: connect <name>",
+      cheatsheetHint: "Введіть ai: help, щоб побачити, що можна запитати.",
+      needsConnection: "Для цього потрібне активне підключення. Спочатку введіть \"connect <name>\".",
+      aiNeedsConnectionReason: "AI у режимі живого стану (використання інструментів) доступний лише під час підключення до Redis.",
+      verbNeedsConnection: opts => `"${opts.verb}" потребує активного підключення — спочатку введіть "connect <name>".`,
+      aiLimitedMode: "AI працює в обмеженому режимі — доки ви не підключитесь, доступні лише загальні запитання про Redis.",
+      welcomeDisconnected: "Вітаємо. Ви ще не підключені до жодного екземпляра Redis.",
+      readyIndicator: "Готово.",
+    },
+    cheatsheet: {
+      title: "Шпаргалка AI — що можна запитати?",
+      subtitle: "Клацніть будь-який запит, щоб вставити його в консоль. Потім натисніть Enter.",
+      searchPlaceholder: "Фільтрувати запити…",
+      openOfficialDocs: "Redis Commands ↗",
+      openOfficialDocsTooltip: "Відкрити офіційний довідник команд Redis на redis.io",
+      closeTooltip: "Закрити (Esc)",
+      empty: "Жоден запит не відповідає фільтру.",
+      footerHint: "Підказка: введіть \"ai:\" і будь-який текст будь-якою мовою — AI розуміє 54 мови та за потреби використовує актуальний стан Redis.",
+
+      // Each group has: name (category label), match (search-filter alias), prompts (array of example strings)
+      groups: {
+        diagnostics: {
+          name: "Жива діагностика",
+          description: "Попросіть AI дослідити поточний стан сервера за допомогою безпечних інструментів лише для читання.",
+          prompts: [
+            "чому пам'ять завантажена так сильно?",
+            "покажи 10 найповільніших запитів",
+            "які клієнти підключені?",
+            "яка політика maxmemory?",
+            "чи були нещодавно витіснення ключів?",
+            "чи є події затримки?",
+            "скільки часу працює сервер?",
+            "який коефіцієнт попадань у кеш?",
+            "покажи завантаження CPU",
+            "зроби зведення простору ключів",
+            "скільки пам'яті використовує кожен тип даних?",
+            "чи щось блокує сервер зараз?"
+          ]
+        },
+        keys: {
+          name: "Ключі",
+          description: "Досліджуйте, шукайте та аналізуйте ключі без клацань по дереву.",
+          prompts: [
+            "знайди всі ключі за шаблоном user:*",
+            "скільки ключів у кожній базі даних?",
+            "покажи найбільший hash у цій базі",
+            "знайди ключі з TTL менше 60 секунд",
+            "які ключі не мають TTL?",
+            "якого типу ключ session:abc?",
+            "оціни пам'ять, яку використовує префікс \"session:\"",
+            "покажи object encoding для ключа user:42",
+            "чи є ключі, що скоро закінчать термін дії?",
+            "який простір імен використовує найбільше пам'яті?"
+          ]
+        },
+        dataTypes: {
+          name: "Типи даних",
+          description: "Формулювання природною мовою для створення/читання/оновлення для кожного типу Redis.",
+          prompts: [
+            "створи hash з ім'ям user:1 з полями name=Alice age=30",
+            "додай три елементи до list tasks",
+            "додай членів до set favourites",
+            "додай членів з балами до sorted set leaderboard",
+            "додай подію до stream events",
+            "отримай останні 10 записів зі stream events",
+            "отримай усі поля hash user:1",
+            "отримай членів set favourites",
+            "отримай топ-10 за балами з leaderboard"
+          ]
+        },
+        modules: {
+          name: "Модулі",
+          description: "Запити до завантажених модулів Redis (категорії нижче з'являються, лише коли модуль присутній).",
+          prompts: []
+        },
+        json: {
+          name: "RedisJSON",
+          description: "Доступно, коли завантажений модуль ReJSON.",
+          prompts: [
+            "створи JSON-документ у user:42 з { name: \"Alice\", age: 30 }",
+            "прочитай поле name у user:42",
+            "онови age у user:42 до 31",
+            "перелічи всі ключі JSON",
+            "видали поле з JSON-документа",
+            "отримай вкладене поле за JSONPath"
+          ]
+        },
+        search: {
+          name: "RediSearch",
+          description: "Доступно, коли завантажений модуль search.",
+          prompts: [
+            "перелічи всі повнотекстові індекси",
+            "виконай повнотекстовий пошук \"redis\" в індексі idx:products",
+            "створи індекс на основі hash з полями title (TEXT) і price (NUMERIC)",
+            "отримай інформацію про індекс idx:products",
+            "видали індекс idx:products",
+            "знайди документи, де price від 10 до 50",
+            "напиши гібридний пошук, що поєднує текст і векторну схожість"
+          ]
+        },
+        timeseries: {
+          name: "RedisTimeSeries",
+          description: "Доступно, коли завантажений модуль timeseries.",
+          prompts: [
+            "перелічи всі ключі timeseries",
+            "додай точку даних у temp:room1",
+            "отримай діапазон temp:room1 від вчора до зараз",
+            "отримай multi-range за міткою sensor=temp",
+            "згенеруй 100 точок синусоїди для temp:room1",
+            "покажи retention і мітки для temp:room1"
+          ]
+        },
+        bloom: {
+          name: "RedisBloom (Bloom / Cuckoo / Top-K / CMS / T-Digest)",
+          description: "Доступно, коли завантажений модуль bf.",
+          prompts: [
+            "перевір, чи існує елемент foo у bloom filter spam:ips",
+            "додай елементи до bloom filter spam:ips",
+            "створи top-K з ім'ям popular із K=10",
+            "запитай count-min sketch traffic для ключа /home",
+            "додай значення до t-digest і отримай 95-й процентиль",
+            "покажи інформацію про bloom filter spam:ips"
+          ]
+        },
+        vectorSet: {
+          name: "VectorSet (Redis 8+)",
+          description: "Доступно, коли виявлено Redis 8+ (нативний тип VECTORSET).",
+          prompts: [
+            "додай вектор до embeddings",
+            "знайди 10 найсхожіших векторів до запитового вектора",
+            "покажи розмірність і кількість у vectorset embeddings",
+            "видали елемент з vectorset embeddings",
+            "шукай за ім'ям елемента через VSIM"
+          ]
+        },
+        redis8: {
+          name: "Можливості Redis 8+",
+          description: "Показується, коли виявлено Redis 8+.",
+          prompts: [
+            "встанови TTL для поля hash за допомогою HEXPIRE",
+            "отримай digest значення рядка",
+            "виконай гібридний повнотекстовий + векторний пошук (FT.HYBRID)",
+            "встанови кілька ключів зі спільним терміном дії через MSETEX",
+            "видали запис потоку з consumer group (XDELEX)",
+            "покажи cluster slot-stats для топ-10 слотів"
+          ]
+        },
+        scripting: {
+          name: "Скриптинг",
+          description: "Генеруйте скрипти Lua / EVAL з описів природною мовою.",
+          prompts: [
+            "напиши атомарний скрипт, що збільшує counter X тільки якщо Y > 5",
+            "згенеруй 100 випадкових ключів на Lua",
+            "перетвори цей shell-конвеєр на один EVAL: keys user:* | GET | grep inactive | DEL",
+            "портуй пакетну операцію на Lua для безпечної роботи в кластері",
+            "оновлення в стилі check-and-set одним викликом Lua",
+            "ітеруй hash і видали поля за шаблоном"
+          ]
+        },
+        cluster: {
+          name: "Кластер",
+          description: "Показується лише в режимі кластера.",
+          prompts: [
+            "покажи інформацію про кластер",
+            "перелічи вузли кластера",
+            "покажи топ-10 слотів за кількістю ключів",
+            "покажи топ-10 слотів за пам'яттю",
+            "який master володіє слотом 5000?"
+          ]
+        },
+        acl: {
+          name: "ACL (Redis 6+)",
+          description: "Переглядайте користувачів контролю доступу та поточне підключення.",
+          prompts: [
+            "під яким користувачем я підключений?",
+            "перелічи всіх користувачів ACL",
+            "які в мене дозволи?",
+            "покажи правила користувача default"
+          ]
+        },
+        qna: {
+          name: "Загальні питання",
+          description: "Ставте питання про знання Redis — без інструментів, лише відповіді.",
+          prompts: [
+            "що таке ZADD?",
+            "як працює failover у кластері?",
+            "поясни SCAN і KEYS",
+            "коли використовувати EVAL замість кількох команд?",
+            "які є варіанти персистентності Redis?",
+            "чим відрізняються RDB і AOF?",
+            "як Redis Sentinel обирає новий master?",
+            "поясни hash tags у режимі кластера"
+          ]
+        },
+        translate: {
+          name: "Природна мова → команда Redis",
+          description: "Опишіть, що ви хочете, простою українською (або будь-якою з 54 мов); AI напише команду Redis.",
+          prompts: [
+            "видали ключ user:42",
+            "перейменуй ключ foo на bar",
+            "встанови термін дії ключа session:abc на 10 секунд",
+            "скопіюй ключ source у destination",
+            "збільш counter visits на 5",
+            "встанови ключ greeting у \"hello\" на 1 годину",
+            "покажи 10 найчастіше запитуваних ключів",
+            "видали всі ключі за шаблоном temp:*"
+          ]
+        }
+      }
+    },
     ssh: {
       on: 'SSH увімкнено',
       off: 'SSH вимкнено',
@@ -276,7 +502,7 @@ const strings = {
     treeSeparatorEmpty: "Якщо роздільник дерева порожній, дерево не матиме вкладених вузлів, лише простий список",
     treeSeparatorEmptyNote: "Немає вкладених вузлів, лише простий список",
     welcomeConsole: "Ласкаво просимо до консолі Redis",
-    welcomeConsoleInfo: "Історія курсором ВГОРУ або ВНИЗ увімкнена",
+    welcomeConsoleInfo: "SHIFT + Історія курсором ВГОРУ або ВНИЗ увімкнена",
     redisListIndexInfo: "Порожнє для додавання в кінець, -1 для додавання на початок або збережіть на показану позицію.",
     console: "Консоль",
     connectiondAdd: "Додати з'єднання",
@@ -852,6 +1078,13 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+  },
+  promo: {
+    title: "AI-помічник для мережі",
+    description: "Відкрийте для себе наш безкоштовний AI-помічник для мережі на network.corifeus.com — аналізуйте домени, IP-адреси, DNS-записи, SSL-сертифікати, безпеку електронної пошти та мережеву інфраструктуру. Працює на базі AI для миттєвих і всебічних результатів.",
+    disclaimer: "Це промо показується лише на demo-сайті й не з’являється в розгортаннях Docker, Electron або вебзастосунку.",
+    toastMessage: "Спробуйте наш безкоштовний AI-помічник для мережі на network.corifeus.com — аналізуйте домени, DNS, SSL та багато іншого!",
+    visit: "Відкрити network.corifeus.com",
   }
 };
 module.exports = strings;

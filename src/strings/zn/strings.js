@@ -234,6 +234,232 @@ const strings = {
     aiRoutingNetwork: "AI 查询通过 network.corifeus.com 路由。如果您有自己的免费 Groq API 密钥，可以关闭此开关直接使用 Groq。",
     aiMaxTokens: "AI 最大令牌数",
     aiMaxTokensInfo: "用于 AI 回复的最大令牌数。更高的值可以生成更长的回复，但可能会消耗更多 API 额度。",
+    consoleDrawer: {
+      toggleTooltip: "切换控制台",
+      clearTooltip: "清除回滚记录",
+      closeTooltip: "关闭控制台",
+      aiSettingsTooltip: "AI 设置",
+      modeRedis: "REDIS",
+      modeAi: "AI",
+      connectionChipNoDb: opts => `${opts.name}`,
+      connectionChipWithDb: opts => `${opts.name} · db ${opts.db}`,
+      pageChip: opts => `页: ${opts.page}`,
+      connectingTo: opts => `正在连接到 ${opts.name}…`,
+      connectedTo: opts => `已连接到 ${opts.name}（Redis ${opts.version} ${opts.mode}，已加载 ${opts.modules} 个模块）`,
+      connectedToNoInfo: opts => `已连接到 ${opts.name}`,
+      disconnectedFrom: opts => `已从 ${opts.name} 断开连接`,
+      notConnected: "未连接。",
+      limitedAiOnly: "仅限受限 AI 模式，仍可进行通用 Redis 问答。",
+      connectHint: "如需实时诊断，请输入：connect <name>",
+      cheatsheetHint: "输入 ai: help 查看你可以提问的内容。",
+      needsConnection: "此功能需要有效连接。请先输入 \"connect <name>\"。",
+      aiNeedsConnectionReason: "实时状态 AI（tool use）仅在连接到 Redis 时可用。",
+      verbNeedsConnection: opts => `"${opts.verb}" 需要有效连接，请先输入 "connect <name>"。`,
+      aiLimitedMode: "AI 当前处于受限模式，连接前只能回答通用 Redis 知识问题。",
+      welcomeDisconnected: "欢迎。你目前尚未连接到任何 Redis 实例。",
+      readyIndicator: "就绪。",
+    },
+    cheatsheet: {
+      title: "AI 速查表 — 我可以问什么？",
+      subtitle: "点击任一提示即可粘贴到控制台,然后按回车。",
+      searchPlaceholder: "筛选提示…",
+      openOfficialDocs: "Redis 命令 ↗",
+      openOfficialDocsTooltip: "在 redis.io 打开官方 Redis 命令参考",
+      closeTooltip: "关闭 (Esc)",
+      empty: "没有提示符合你的筛选条件。",
+      footerHint: "提示：输入 \"ai:\" 后面接任何语言的任何内容 — AI 能理解 54 种语言,并在需要时使用实时的 Redis 状态。",
+
+      // Each group has: name (category label), match (search-filter alias), prompts (array of example strings)
+      groups: {
+        diagnostics: {
+          name: "实时诊断",
+          description: "让 AI 通过安全的只读工具调查服务器的实时状态。",
+          prompts: [
+            "为什么内存这么高？",
+            "显示最慢的 10 条查询",
+            "有哪些客户端已连接？",
+            "maxmemory 策略是什么？",
+            "最近有没有键被驱逐？",
+            "有没有延迟事件？",
+            "服务器已运行多久？",
+            "命中率是多少？",
+            "显示 CPU 使用率",
+            "总结键空间",
+            "每种数据类型使用了多少内存？",
+            "目前有什么在阻塞服务器？"
+          ]
+        },
+        keys: {
+          name: "键",
+          description: "无需在树上点击即可查看、查找和分析键。",
+          prompts: [
+            "找出所有匹配 user:* 的键",
+            "每个数据库有多少个键？",
+            "显示这个 db 中最大的 hash",
+            "找出 TTL 小于 60 秒的键",
+            "哪些键没有 TTL？",
+            "键 session:abc 是什么类型？",
+            "估算 \"session:\" 前缀所使用的内存",
+            "显示键 user:42 的对象编码",
+            "有没有键即将过期？",
+            "哪个命名空间使用了最多内存？"
+          ]
+        },
+        dataTypes: {
+          name: "数据类型",
+          description: "用自然语言描述对每种 Redis 类型执行创建／读取／更新。",
+          prompts: [
+            "创建一个名为 user:1 的 hash,字段为 name=Alice age=30",
+            "向 list tasks 添加三个元素",
+            "向 set favourites 添加成员",
+            "向 sorted set leaderboard 添加带分数的成员",
+            "向 stream events 追加一个事件",
+            "获取 stream events 的最后 10 条记录",
+            "获取 hash user:1 的所有字段",
+            "获取 set favourites 的成员",
+            "从 leaderboard 获取分数前 10 名"
+          ]
+        },
+        modules: {
+          name: "模块",
+          description: "针对已加载的 Redis 模块的查询（下方分类仅在对应模块存在时显示）。",
+          prompts: []
+        },
+        json: {
+          name: "RedisJSON",
+          description: "当 ReJSON 模块被加载时可用。",
+          prompts: [
+            "在 user:42 创建一个 JSON 文档,内容为 { name: \"Alice\", age: 30 }",
+            "读取 user:42 的 name 字段",
+            "把 user:42 的 age 更新为 31",
+            "列出所有 JSON 键",
+            "从一个 JSON 文档删除一个字段",
+            "使用 JSONPath 获取嵌套字段"
+          ]
+        },
+        search: {
+          name: "RediSearch",
+          description: "当 search 模块被加载时可用。",
+          prompts: [
+            "列出所有全文索引",
+            "在索引 idx:products 上对 \"redis\" 执行全文搜索",
+            "创建一个基于 hash 的索引,字段 title (TEXT) 和 price (NUMERIC)",
+            "获取索引 idx:products 的信息",
+            "删除索引 idx:products",
+            "找出价格介于 10 到 50 之间的文档",
+            "编写一个结合文本和向量相似度的混合搜索"
+          ]
+        },
+        timeseries: {
+          name: "RedisTimeSeries",
+          description: "当 timeseries 模块被加载时可用。",
+          prompts: [
+            "列出所有 timeseries 键",
+            "向 temp:room1 添加一个数据点",
+            "获取 temp:room1 从昨天到现在的范围",
+            "按标签 sensor=temp 获取多范围",
+            "为 temp:room1 生成 100 个正弦波数据点",
+            "显示 temp:room1 的保留期与标签"
+          ]
+        },
+        bloom: {
+          name: "RedisBloom (Bloom / Cuckoo / Top-K / CMS / T-Digest)",
+          description: "当 bf 模块被加载时可用。",
+          prompts: [
+            "检查条目 foo 是否存在于 bloom filter spam:ips 中",
+            "向 bloom filter spam:ips 添加条目",
+            "创建一个名为 popular 的 top-K,K=10",
+            "对键 /home 查询 count-min sketch traffic",
+            "向 t-digest 添加数值并获取第 95 百分位",
+            "显示 bloom filter spam:ips 的信息"
+          ]
+        },
+        vectorSet: {
+          name: "VectorSet (Redis 8+)",
+          description: "当检测到 Redis 8+ 时可用（原生 VECTORSET 类型）。",
+          prompts: [
+            "向 embeddings 添加一个向量",
+            "找出与查询向量最相似的 10 个向量",
+            "显示 vectorset embeddings 的维度和数量",
+            "从 vectorset embeddings 删除一个元素",
+            "使用 VSIM 按元素名称搜索"
+          ]
+        },
+        redis8: {
+          name: "Redis 8+ 功能",
+          description: "当检测到 Redis 8+ 时显示。",
+          prompts: [
+            "使用 HEXPIRE 设置 hash 字段的 TTL",
+            "获取字符串值的摘要",
+            "执行混合全文 + 向量搜索 (FT.HYBRID)",
+            "使用 MSETEX 为多个键设置共享过期时间",
+            "带消费者组删除 stream 条目 (XDELEX)",
+            "显示前 10 个 slot 的 cluster slot-stats"
+          ]
+        },
+        scripting: {
+          name: "脚本",
+          description: "根据自然语言描述生成 Lua / EVAL 脚本。",
+          prompts: [
+            "编写一个原子脚本,仅在 Y > 5 时递增计数器 X",
+            "使用 Lua 生成 100 个随机键",
+            "将这条 shell 管道转换为单个 EVAL：keys user:* | GET | grep inactive | DEL",
+            "为了 cluster 安全性,将一个批量操作移植到 Lua",
+            "在单个 Lua 调用中完成 check-and-set 风格的更新",
+            "遍历一个 hash,删除符合某种模式的字段"
+          ]
+        },
+        cluster: {
+          name: "集群",
+          description: "仅在 cluster 模式下显示。",
+          prompts: [
+            "显示 cluster 信息",
+            "列出 cluster 节点",
+            "按键数量显示前 10 个 slot",
+            "按内存显示前 10 个 slot",
+            "哪个 master 拥有 slot 5000？"
+          ]
+        },
+        acl: {
+          name: "ACL (Redis 6+)",
+          description: "查看访问控制用户以及当前连接。",
+          prompts: [
+            "我以哪个身份连接？",
+            "列出所有 ACL 用户",
+            "我有哪些权限？",
+            "显示 default 用户的规则"
+          ]
+        },
+        qna: {
+          name: "常规问答",
+          description: "提问 Redis 相关的知识性问题 — 不使用工具,只给答案。",
+          prompts: [
+            "什么是 ZADD？",
+            "cluster failover 是如何工作的？",
+            "解释 SCAN 与 KEYS 的区别",
+            "什么时候该用 EVAL 而不是多条命令？",
+            "Redis 有哪些持久化选项？",
+            "RDB 和 AOF 有什么区别？",
+            "Redis Sentinel 如何决定新的 master？",
+            "解释 cluster 模式下的 hash tag"
+          ]
+        },
+        translate: {
+          name: "自然语言 → Redis 命令",
+          description: "用中文（或 54 种语言中的任何一种）描述你想做什么,AI 会写出对应的 Redis 命令。",
+          prompts: [
+            "删除键 user:42",
+            "把键 foo 重命名为 bar",
+            "让键 session:abc 在 10 秒后过期",
+            "把键 source 复制到 destination",
+            "把计数器 visits 加 5",
+            "把键 greeting 设为 \"hello\",有效 1 小时",
+            "显示最常被访问的 10 个键",
+            "删除所有匹配 temp:* 的键"
+          ]
+        }
+      }
+    },
     ssh: {
       on: 'SSH 开启',
       off: 'SSH 关闭',
@@ -276,7 +502,7 @@ const strings = {
     tlsSecure: "如果您看到以 P3X 开头的 TLS 配置或所有 TLS 设置看起来都相同，则这是一项安全功能。 要更改设置，只需将这些设置替换为空或其他内容即可保存。 如果您不更改 TLS 设置，这些设置将保持在服务器上的原样。",
     treeSeparatorEmptyNote: "没有嵌套节点，只是一个纯列表",
     welcomeConsole: "欢迎来到Redis控制台",
-    welcomeConsoleInfo: "上下方向键选择历史记录功能已启用",
+    welcomeConsoleInfo: "SHIFT + 上下方向键选择历史记录功能已启用",
     redisListIndexInfo: "空值追加, -1 到前置或保存到光标之处",
     console: "控制台",
     connectiondAdd: "添加连接",
@@ -852,6 +1078,13 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+  },
+  promo: {
+    title: "AI 网络助手",
+    description: "欢迎体验我们在 network.corifeus.com 提供的免费 AI 网络助手，可分析域名、IP、DNS 记录、SSL 证书、邮件安全和网络基础设施。由 AI 驱动，即时提供全面结果。",
+    disclaimer: "此推广仅显示在演示站点中，不会出现在 Docker、Electron 或 Web 应用部署中。",
+    toastMessage: "试试我们在 network.corifeus.com 提供的免费 AI 网络助手，分析域名、DNS、SSL 等更多内容！",
+    visit: "访问 network.corifeus.com",
   }
 };
 module.exports = strings;

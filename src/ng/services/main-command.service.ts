@@ -114,6 +114,9 @@ export class MainCommandService {
     private lastRefreshAt = 0;
 
     async refresh(options: { withoutParent?: boolean; force?: boolean } = {}): Promise<void> {
+        // No connection → nothing to refresh. Skip the server round-trip entirely.
+        if (this.state.connectionState() !== 'connected') return;
+
         // Throttle: skip if last refresh was less than 2s ago
         const now = Date.now();
         if (!options.force && now - this.lastRefreshAt < 2000) return;
@@ -142,6 +145,7 @@ export class MainCommandService {
                 payload
             });
 
+            if (!response) return;
             this.state.dbsize.set(response.dbsize);
             this.state.redisChanged.set(true);
 
@@ -176,6 +180,7 @@ export class MainCommandService {
             try { localStorage.removeItem(storageKey); } catch {}
         }
         this.state.connection.set(undefined);
+        this.state.connectionState.set('none');
         this.state.redisConnections.set({});
         this.state.monitor.set(false);
         this.socket.stateChanged$.next();

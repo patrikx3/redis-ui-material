@@ -236,6 +236,221 @@ const strings = {
     aiRoutingNetwork: "Kueri AI dirutekan melalui network.corifeus.com. Jika Anda memiliki kunci API Groq gratis sendiri, Anda dapat mematikan sakelar ini untuk merutekan langsung ke Groq tanpa network.corifeus.com.",
     aiMaxTokens: "Token AI maksimum",
     aiMaxTokensInfo: "Jumlah token maksimum untuk respons AI. Nilai yang lebih tinggi memungkinkan respons yang lebih panjang tetapi dapat menggunakan lebih banyak kredit API.",
+    consoleDrawer: {
+      toggleTooltip: "Alihkan konsol",
+      clearTooltip: "Hapus gulir balik",
+      closeTooltip: "Tutup konsol",
+      aiSettingsTooltip: "pengaturan AI",
+      modeRedis: "REDIS",
+      modeAi: "AI",
+      connectionChipNoDb: opts => `${opts.name}`,
+      connectionChipWithDb: opts => `${opts.name} · db ${opts.db}`,
+      pageChip: opts => `halaman: ${opts.page}`,
+      connectingTo: opts => `Menyambungkan ke ${opts.name}…`,
+      connectedTo: opts => `Terhubung ke ${opts.name} (Redis ${opts.version} ${opts.mode}, modul ${opts.modules} dimuat)`,
+      connectedToNoInfo: opts => `Terhubung ke ${opts.name}`,
+      disconnectedFrom: opts => `Terputus dari ${opts.name}`,
+      readyIndicator: "Siap."
+    },
+    cheatsheet: {
+      title: "AI Lembar Curang — Apa yang bisa saya tanyakan?",
+      subtitle: "Klik perintah apa pun untuk menempelkannya ke konsol. Lalu tekan Enter.",
+      searchPlaceholder: "Filter perintah…",
+      openOfficialDocs: "Redis Perintah ↗",
+      openOfficialDocsTooltip: "Buka referensi perintah resmi Redis di redis.io",
+      closeTooltip: "Tutup (Esc)",
+      empty: "Tidak ada perintah yang cocok dengan filter Anda.",
+      footerHint: "Tip: ketik \"ai:\" diikuti dengan apa pun dalam bahasa apa pun — AI memahami 54 bahasa dan menggunakan status Redis langsung saat diperlukan.",
+      groups: {
+        diagnostics: {
+          name: "Diagnostik langsung",
+          description: "Minta AI untuk menyelidiki status server langsung melalui alat baca-saja yang aman.",
+          prompts: [
+            "kenapa memorinya tinggi?",
+            "tunjukkan 10 pertanyaan paling lambat",
+            "klien mana yang terhubung?",
+            "apa kebijakan maxmemory?",
+            "apakah ada penggusuran baru-baru ini?",
+            "apakah ada kejadian latensi?",
+            "sudah berapa lama servernya aktif?",
+            "berapa tingkat keberhasilannya?",
+            "tampilkan penggunaan CPU",
+            "meringkas ruang kunci",
+            "berapa banyak memori yang digunakan setiap tipe data?",
+            "apakah ada yang memblokir server saat ini?"
+          ]
+        },
+        keys: {
+          name: "Kunci",
+          description: "Periksa, temukan, dan pertimbangkan kunci tanpa mengklik pohonnya.",
+          prompts: [
+            "temukan semua kunci yang cocok dengan user:*",
+            "berapa banyak kunci di setiap database?",
+            "tampilkan hash terbesar di db ini",
+            "temukan kunci dengan TTL kurang dari 60 detik",
+            "kunci mana yang tidak memiliki TTL?",
+            "jenis kunci apa session:abc?",
+            "memperkirakan memori yang digunakan oleh awalan \"session:\"",
+            "tampilkan pengkodean objek kunci user:42",
+            "apakah ada kunci yang akan kedaluwarsa?",
+            "namespace mana yang paling banyak menggunakan memori?"
+          ]
+        },
+        dataTypes: {
+          name: "Tipe data",
+          description: "Ungkapan bahasa alami untuk membuat/membaca/memperbarui pada setiap jenis Redis.",
+          prompts: [
+            "buat hash bernama pengguna:1 dengan bidang nama=Alice age=30",
+            "tambahkan tiga item ke daftar tasks",
+            "tambahkan anggota untuk mengatur favourites",
+            "tambahkan anggota yang diberi skor ke kumpulan yang diurutkan leaderboard",
+            "menambahkan acara ke streaming events",
+            "dapatkan 10 entri terakhir dari aliran events",
+            "dapatkan semua bidang pengguna hash:1",
+            "dapatkan anggota set favourites",
+            "dapatkan 10 besar berdasarkan skor dari leaderboard"
+          ]
+        },
+        modules: {
+          name: "Modul",
+          description: "Kueri untuk modul Redis yang dimuat (kategori di bawah hanya muncul jika modul ada).",
+          prompts: []
+        },
+        json: {
+          name: "RedisJSON",
+          description: "Tersedia saat modul ReJSON dimuat.",
+          prompts: [
+            "buat dokumen JSON di user:42 dengan { nama: \"Alice\", umur: 30 }",
+            "baca kolom nama user:42",
+            "perbarui usia user:42 menjadi 31",
+            "daftar semua kunci JSON",
+            "hapus bidang dari dokumen JSON",
+            "dapatkan bidang bersarang menggunakan JSONPath"
+          ]
+        },
+        search: {
+          name: "RediSearch",
+          description: "Tersedia saat modul pencarian dimuat.",
+          prompts: [
+            "daftar semua indeks teks lengkap",
+            "jalankan pencarian teks lengkap untuk \"redis\" pada indeks idx:products",
+            "buat indeks yang didukung hash dengan judul bidang (TEXT) dan harga (NUMERIC)",
+            "dapatkan info tentang indeks idx:products",
+            "jatuhkan indeks idx:products",
+            "temukan dokumen yang harganya antara 10 dan 50",
+            "tulis pencarian hibrid yang menggabungkan kesamaan teks dan vektor"
+          ]
+        },
+        timeseries: {
+          name: "RedisTimeSeries",
+          description: "Tersedia ketika modul deret waktu dimuat.",
+          prompts: [
+            "daftar semua kunci deret waktu",
+            "tambahkan titik data ke temp:room1",
+            "dapatkan rentang temp:room1 dari kemarin hingga sekarang",
+            "dapatkan multi-rentang dengan label sensor=temp",
+            "menghasilkan 100 titik data gelombang sinus untuk temp:room1",
+            "tampilkan retensi dan label untuk temp:room1"
+          ]
+        },
+        bloom: {
+          name: "RedisBloom (Mekar / Cuckoo / Top-K / CMS / T-Digest)",
+          description: "Tersedia saat modul bf dimuat.",
+          prompts: [
+            "periksa apakah item foo ada di filter mekar spam:ips",
+            "tambahkan item ke filter mekar spam:ips",
+            "buat top-K bernama popular dengan K=10",
+            "sketsa hitungan menit kueri traffic untuk kunci /home",
+            "tambahkan nilai ke t-digest dan dapatkan persentil ke-95",
+            "tampilkan info untuk filter mekar spam:ips"
+          ]
+        },
+        vectorSet: {
+          name: "VectorSet (Redis 8+)",
+          description: "Tersedia ketika Redis 8+ terdeteksi (tipe asli VECTORSET).",
+          prompts: [
+            "tambahkan vektor ke embeddings",
+            "temukan 10 vektor yang paling mirip dengan vektor kueri",
+            "tampilkan dimensi dan jumlah vektorset embeddings",
+            "hapus elemen dari vectorset embeddings",
+            "cari berdasarkan nama elemen dengan VSIM"
+          ]
+        },
+        redis8: {
+          name: "Redis 8+ fitur",
+          description: "Ditampilkan ketika Redis 8+ terdeteksi.",
+          prompts: [
+            "atur bidang hash ttl dengan HEXPIRE",
+            "mendapatkan intisari nilai string",
+            "menjalankan pencarian teks lengkap + vektor hybrid (FT.HYBRID)",
+            "atur beberapa kunci dengan masa berlaku bersama menggunakan MSETEX",
+            "hapus entri aliran dengan grup konsumen (XDELEX)",
+            "tampilkan statistik slot cluster untuk 10 slot teratas"
+          ]
+        },
+        scripting: {
+          name: "skrip",
+          description: "Hasilkan skrip Lua / EVAL dari deskripsi bahasa alami.",
+          prompts: [
+            "tulis skrip atom yang menambah counter X hanya jika Y > 5",
+            "hasilkan 100 kunci acak dengan Lua",
+            "ubah pipa shell ini menjadi satu EVAL: kunci user:* | DAPATKAN | grep tidak aktif | DEL",
+            "porting operasi batch ke Lua untuk keamanan cluster",
+            "pembaruan gaya check-and-set dalam satu panggilan Lua",
+            "ulangi hash dan hapus bidang yang cocok dengan suatu pola"
+          ]
+        },
+        cluster: {
+          name: "Gugus",
+          description: "Hanya ditampilkan dalam mode cluster.",
+          prompts: [
+            "tampilkan info cluster",
+            "daftar node cluster",
+            "tampilkan 10 slot teratas berdasarkan jumlah kunci",
+            "tampilkan 10 slot teratas berdasarkan memori",
+            "master mana yang memiliki slot 5000?"
+          ]
+        },
+        acl: {
+          name: "ACL (Redis 6+)",
+          description: "Periksa pengguna kontrol akses dan koneksi saat ini.",
+          prompts: [
+            "dengan siapa aku terhubung?",
+            "daftar semua pengguna ACL",
+            "izin apa yang saya miliki?",
+            "tampilkan aturan pengguna default"
+          ]
+        },
+        qna: {
+          name: "Tanya Jawab Umum",
+          description: "Ajukan pertanyaan pengetahuan Redis — tanpa alat, hanya jawaban.",
+          prompts: [
+            "apa itu ZADD?",
+            "bagaimana cara kerja failover klaster?",
+            "jelaskan SCAN vs KEYS",
+            "kapan saya harus menggunakan EVAL vs beberapa perintah?",
+            "apa saja opsi persistensi Redis?",
+            "apa perbedaan antara RDB dan AOF?",
+            "bagaimana Redis Sentinel memutuskan master baru?",
+            "jelaskan tag hash dalam mode cluster"
+          ]
+        },
+        translate: {
+          name: "Bahasa alami → perintah Redis",
+          description: "Jelaskan apa yang Anda inginkan dalam salah satu dari 54 bahasa; AI menulis perintah Redis.",
+          prompts: [
+            "hapus kunci user:42",
+            "ganti nama kunci foo menjadi bar",
+            "kunci kedaluwarsa session:abc dalam 10 detik",
+            "salin sumber kunci ke tujuan",
+            "meningkatkan kunjungan balik sebesar 5",
+            "atur salam kunci ke \"hello\" selama 1 jam",
+            "hapus semua kunci user:*",
+            "tunjukkan 10 kunci tersibuk"
+          ]
+        }
+      }
+    },
     ssh: {
       on: "SSH aktif",
       off: "SSH mati",
@@ -278,7 +493,7 @@ const strings = {
     treeSeparatorEmpty: "Jika pemisah pohon kosong, pohon tidak akan memiliki simpul bersarang, hanya daftar murni",
     treeSeparatorEmptyNote: "Tidak ada node bersarang, hanya daftar murni",
     welcomeConsole: "Selamat datang di Konsol Redis",
-    welcomeConsoleInfo: "Riwayat kursor ATAS atau BAWAH diaktifkan",
+    welcomeConsoleInfo: "SHIFT + Riwayat kursor ATAS atau BAWAH diaktifkan",
     redisListIndexInfo: "Kosong untuk menambahkan, -1 untuk menambahkan atau menyimpannya ke posisi yang ditunjukkan.",
     console: "Konsol",
     connectiondAdd: "Tambahkan koneksi",
@@ -854,6 +1069,13 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+  },
+  promo: {
+    title: "AI Asisten Jaringan",
+    description: "Temukan Asisten Jaringan AI gratis kami di network.corifeus.com — menganalisis domain, IPs, data DNS, sertifikat SSL, keamanan email, dan infrastruktur jaringan. Didukung oleh AI untuk hasil yang instan dan komprehensif.",
+    disclaimer: "Promosi ini hanya ditampilkan di situs demo dan tidak akan muncul di Docker, Electron, atau penerapan aplikasi web.",
+    toastMessage: "Coba Asisten Jaringan AI gratis kami di network.corifeus.com — analisis domain, DNS, SSL, dan banyak lagi!",
+    visit: "Kunjungi network.corifeus.com"
   }
 };
 module.exports = strings;

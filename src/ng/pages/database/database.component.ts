@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, OnDestroy, NgZone, ChangeDetectorRef, CUSTOM_ELEMENTS_SCHEMA, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy, NgZone, ChangeDetectorRef, CUSTOM_ELEMENTS_SCHEMA, ViewEncapsulation, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { BreakpointObserver } from '@angular/cdk/layout';
@@ -12,7 +12,6 @@ import { SettingsService } from '../../services/settings.service';
 import { DatabaseHeaderComponent } from './database-header.component';
 import { DatabaseTreecontrolControlsComponent } from './database-treecontrol-controls.component';
 import { DatabaseTreeComponent } from './database-tree.component';
-import { ConsoleComponent } from '../console/console.component';
 
 import { debounce } from 'lodash-es';
 
@@ -25,7 +24,6 @@ import { debounce } from 'lodash-es';
         DatabaseHeaderComponent,
         DatabaseTreecontrolControlsComponent,
         DatabaseTreeComponent,
-        ConsoleComponent,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     templateUrl: './database.component.html',
@@ -48,7 +46,6 @@ export class DatabaseComponent implements OnInit, OnDestroy {
     private resizerMouseoverOn = false;
     private resizeLeft: number | undefined = undefined;
     private static readonly PANEL_WIDTH_KEY = 'p3xr-database-panel-width';
-    private bottomConsoleExpanded = false;
     private screenSizeIsSmall = false;
 
     private containerEl!: HTMLElement;
@@ -63,18 +60,6 @@ export class DatabaseComponent implements OnInit, OnDestroy {
     private readonly unsubs: Array<() => void> = [];
 
     private readonly resizeMinWidth: number;
-    private get bottomConsoleCollapsedHeight(): number {
-        const panel = document.getElementById('p3xr-database-bottom-console-panel');
-        if (panel) {
-            const toolbar = panel.querySelector('#p3xr-console-header') as HTMLElement;
-            const autocomplete = panel.querySelector('#p3xr-console-autocomplete') as HTMLElement;
-            if (toolbar && autocomplete) {
-                // +1 for the panel's border-top
-                return toolbar.offsetHeight + autocomplete.offsetHeight + 1;
-            }
-        }
-        return 88;
-    }
 
     constructor(
         @Inject(NgZone) private readonly ngZone: NgZone,
@@ -89,9 +74,18 @@ export class DatabaseComponent implements OnInit, OnDestroy {
     ) {
         this.strings = this.i18n.strings;
         this.resizeMinWidth = this.settings.resizeMinWidth;
+
+        // React to global console drawer open/close — re-run layout so tree + content
+        // adjust for the newly-reserved vertical space. The drawer height is read as
+        // a CSS custom property in rawResize() so one code path handles both states.
+        effect(() => {
+            this.state.consoleDrawerOpen();
+            setTimeout(() => this.rawResize(), 160); // after drawer transition
+        });
     }
 
     ngOnInit(): void {
+        this.state.currentPage.set('database');
         this.syncFromGlobal();
 
         // Subscribe to socket events for reactive state updates
@@ -196,23 +190,10 @@ export class DatabaseComponent implements OnInit, OnDestroy {
         });
         this.watchResizeObserver();
 
-        // Listen for events via Angular services
-        const consoleSub1 = this.cmd.consoleActivate$.subscribe(() => {
-            if (!this.isXs && !this.bottomConsoleExpanded) {
-                this.bottomConsoleExpanded = true;
-                this.rawResize();
-                this.cmd.consoleEmbeddedResize$.next();
-            }
-        });
-        const consoleSub2 = this.cmd.consoleDeactivate$.subscribe(() => {
-            if (!this.isXs && this.bottomConsoleExpanded) {
-                this.bottomConsoleExpanded = false;
-                this.rawResize();
-                this.cmd.consoleEmbeddedResize$.next();
-            }
-        });
+        // Bottom console is now a global drawer — LayoutComponent owns its state.
+        // We still react to the drawer height changing so tree + content re-layout.
         const stateSub = this.socket.stateChanged$.subscribe(() => this.watchResizeObserver());
-        this.unsubs.push(() => { consoleSub1.unsubscribe(); consoleSub2.unsubscribe(); stateSub.unsubscribe(); });
+        this.unsubs.push(() => { stateSub.unsubscribe(); });
     }
 
     private rawResize(): void {
@@ -225,14 +206,18 @@ export class DatabaseComponent implements OnInit, OnDestroy {
         const windowHeight = window.innerHeight;
         const outputPositionMinus = 11;
 
-        const bottomConsolePanel = document.getElementById('p3xr-database-bottom-console-panel');
-        const isDesktop = !this.isXs;
-        let bottomConsoleHeight = 0;
-        const hasDesktopConsole = isDesktop && this.state.connection() !== undefined;
-        const availableHeight = Math.max(windowHeight - minus - outputPositionMinus, 100);
-        if (hasDesktopConsole) {
-            bottomConsoleHeight = this.getBottomConsoleHeight(availableHeight);
+        // Global console drawer consumes additional height when open — read CSS custom property
+        // set by LayoutComponent (see console-drawer.component.scss).
+        const drawerCssValue = getComputedStyle(document.documentElement)
+            .getPropertyValue('--p3xr-console-drawer-height-active').trim();
+        let drawerHeight = 0;
+        if (drawerCssValue.endsWith('vh')) {
+            drawerHeight = Math.round((parseFloat(drawerCssValue) / 100) * windowHeight);
+        } else if (drawerCssValue.endsWith('px')) {
+            drawerHeight = parseFloat(drawerCssValue);
         }
+
+        const availableHeight = Math.max(windowHeight - minus - outputPositionMinus - drawerHeight, 100);
         const containerHeight = Math.max(availableHeight, 0);
         this.containerEl.style.height = containerHeight + 'px';
         this.containerEl.style.maxHeight = containerHeight + 'px';
@@ -241,24 +226,7 @@ export class DatabaseComponent implements OnInit, OnDestroy {
         if (!containerPosition || !Number.isFinite(containerPosition.height) || !Number.isFinite(containerPosition.width)) {
             return;
         }
-        const contentAreaHeight = Math.max(containerPosition.height - bottomConsoleHeight, 0);
-
-        // Bottom console panel
-        if (bottomConsolePanel) {
-            if (hasDesktopConsole && bottomConsoleHeight > 0) {
-                const s = bottomConsolePanel.style;
-                s.display = 'block';
-                s.position = 'absolute';
-                s.top = 'auto';
-                s.left = '-1px';
-                s.height = bottomConsoleHeight + 'px';
-                s.width = 'auto';
-                s.right = '-1px';
-                s.bottom = '0';
-            } else {
-                bottomConsolePanel.style.display = 'none';
-            }
-        }
+        const contentAreaHeight = Math.max(containerPosition.height, 0);
 
         // Tree control
         const treeControl = document.getElementById('p3xr-database-treecontrol-container');
@@ -294,8 +262,7 @@ export class DatabaseComponent implements OnInit, OnDestroy {
                     this.resizerEl.addEventListener('mouseover', this.boundResizerMouseover);
                     this.resizerEl.addEventListener('mouseout', this.boundResizerMouseout);
                     this.resizerEl.style.top = containerPosition.top + 'px';
-                    const resizerHeight = Math.max(contentAreaHeight - (bottomConsoleHeight > 0 ? 1 : 0), 0);
-                    this.resizerEl.style.height = resizerHeight + 'px';
+                    this.resizerEl.style.height = Math.max(contentAreaHeight, 0) + 'px';
                     this.resizerEl.style.left = (containerPosition.left + treeControlPosition.width) + 'px';
                     this.resizerEl.style.width = resizerWidth + 'px';
 
@@ -315,19 +282,6 @@ export class DatabaseComponent implements OnInit, OnDestroy {
         } else {
             this.destroyResizer();
         }
-
-        if (hasDesktopConsole && bottomConsoleHeight > 0) {
-            this.cmd.consoleEmbeddedResize$.next();
-        }
-    }
-
-    private getBottomConsoleHeight(containerHeight: number): number {
-        if (this.bottomConsoleExpanded) {
-            let expandedHeight = Math.max(Math.floor(containerHeight * 0.33), 220);
-            expandedHeight = Math.min(expandedHeight, Math.max(containerHeight - 120, this.bottomConsoleCollapsedHeight));
-            return expandedHeight;
-        }
-        return this.bottomConsoleCollapsedHeight;
     }
 
     // --- Resizer drag ---
@@ -409,28 +363,10 @@ export class DatabaseComponent implements OnInit, OnDestroy {
         document.removeEventListener('mousemove', this.boundDocumentMousemove);
     }
 
-    // --- Bottom console expand/collapse ---
-
-    private onDocumentMouseDown(event: MouseEvent): void {
-        const bottomConsolePanel = document.getElementById('p3xr-database-bottom-console-panel');
-        if (this.isXs || !bottomConsolePanel) return;
-        if (bottomConsolePanel.contains(event.target as Node)) {
-            // Toolbar action buttons/checkboxes: keep current state
-            const actions = bottomConsolePanel.querySelector('.p3xr-console-toolbar-actions');
-            if (actions && actions.contains(event.target as Node)) return;
-            // Console content, input, toolbar title: expand
-            if (!this.bottomConsoleExpanded) {
-                this.bottomConsoleExpanded = true;
-                this.rawResize();
-                this.cmd.consoleEmbeddedResize$.next();
-            }
-            return;
-        }
-        if (this.bottomConsoleExpanded) {
-            this.bottomConsoleExpanded = false;
-            this.rawResize();
-            this.cmd.consoleEmbeddedResize$.next();
-        }
+    // Bottom console now lives in the global drawer (LayoutComponent). No page-level
+    // mousedown handler is needed — the drawer manages its own open/close state.
+    private onDocumentMouseDown(_event: MouseEvent): void {
+        // kept for back-compat with existing listener registration — no-op
     }
 
     // --- ResizeObserver for tree controls ---

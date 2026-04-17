@@ -236,6 +236,222 @@ const strings = {
     aiRoutingNetwork: "Interogările AI sunt rutate prin network.corifeus.com. Dacă aveți propria cheie API Groq gratuită, puteți dezactiva acest comutator pentru a ruta direct către Groq fără network.corifeus.com.",
     aiMaxTokens: "Număr maxim de tokeni AI",
     aiMaxTokensInfo: "Numărul maxim de tokeni pentru răspunsurile AI. Valorile mai mari permit răspunsuri mai lungi, dar pot consuma mai multe credite API.",
+    consoleDrawer: {
+      toggleTooltip: "Comută consola",
+      clearTooltip: "Șterge istoricul consolei",
+      closeTooltip: "Închide consola",
+      aiSettingsTooltip: "Setări AI",
+      modeRedis: "REDIS",
+      modeAi: "AI",
+      connectionChipNoDb: opts => `${opts.name}`,
+      connectionChipWithDb: opts => `${opts.name} · db ${opts.db}`,
+      pageChip: opts => `pagina: ${opts.page}`,
+      connectingTo: opts => `Se conectează la ${opts.name}…`,
+      connectedTo: opts => `Conectat la ${opts.name} (Redis ${opts.version} ${opts.mode}, ${opts.modules} module încărcate)`,
+      connectedToNoInfo: opts => `Conectat la ${opts.name}`,
+      disconnectedFrom: opts => `Deconectat de la ${opts.name}`,
+      readyIndicator: "Gata.",
+    },
+    cheatsheet: {
+      title: "Fișă AI — Ce pot întreba?",
+      subtitle: "Faceți clic pe orice prompt pentru a-l insera în consolă. Apoi apăsați Enter.",
+      searchPlaceholder: "Filtrați prompturile…",
+      openOfficialDocs: "Comenzi Redis ↗",
+      openOfficialDocsTooltip: "Deschideți referința oficială a comenzilor Redis la redis.io",
+      closeTooltip: "Închide (Esc)",
+      empty: "Niciun prompt nu se potrivește filtrului.",
+      footerHint: "Sfat: tastați \"ai:\" urmat de orice, în orice limbă — AI-ul înțelege 54 de limbi și folosește starea live a Redis atunci când este necesar.",
+
+      groups: {
+        diagnostics: {
+          name: "Diagnosticare live",
+          description: "Cereți AI-ului să investigheze starea live a serverului prin instrumente sigure, doar pentru citire.",
+          prompts: [
+            "de ce este memoria mare?",
+            "arată-mi cele mai lente 10 interogări",
+            "ce clienți sunt conectați?",
+            "care este politica maxmemory?",
+            "există evacuări recente?",
+            "există vreun eveniment de latență?",
+            "de cât timp rulează serverul?",
+            "care este rata de hit?",
+            "arată utilizarea CPU",
+            "rezumă keyspace-ul",
+            "câtă memorie folosește fiecare tip de date?",
+            "blochează ceva serverul chiar acum?"
+          ]
+        },
+        keys: {
+          name: "Chei",
+          description: "Inspectați, găsiți și analizați chei fără să navigați prin arbore.",
+          prompts: [
+            "găsește toate cheile care se potrivesc cu user:*",
+            "câte chei sunt în fiecare bază de date?",
+            "arată cel mai mare hash din această bază de date",
+            "găsește chei cu TTL mai mic de 60 de secunde",
+            "ce chei nu au TTL?",
+            "ce tip are cheia session:abc?",
+            "estimează memoria folosită de prefixul \"session:\"",
+            "arată codificarea obiectului pentru cheia user:42",
+            "există chei pe cale să expire?",
+            "care spațiu de nume folosește cea mai multă memorie?"
+          ]
+        },
+        dataTypes: {
+          name: "Tipuri de date",
+          description: "Formulări în limbaj natural pentru creare/citire/actualizare pentru fiecare tip Redis.",
+          prompts: [
+            "creează un hash numit user:1 cu câmpurile name=Alice age=30",
+            "adaugă trei elemente în lista tasks",
+            "adaugă membri în setul favourites",
+            "adaugă membri cu scor în setul ordonat leaderboard",
+            "adaugă un eveniment în stream-ul events",
+            "ia ultimele 10 intrări din stream-ul events",
+            "ia toate câmpurile hash-ului user:1",
+            "ia membrii setului favourites",
+            "ia primele 10 după scor din leaderboard"
+          ]
+        },
+        modules: {
+          name: "Module",
+          description: "Interogări pentru modulele Redis încărcate (categoriile de mai jos apar doar când modulul este prezent).",
+          prompts: []
+        },
+        json: {
+          name: "RedisJSON",
+          description: "Disponibil când modulul ReJSON este încărcat.",
+          prompts: [
+            "creează un document JSON la user:42 cu { name: \"Alice\", age: 30 }",
+            "citește câmpul name din user:42",
+            "actualizează age din user:42 la 31",
+            "listează toate cheile JSON",
+            "șterge un câmp dintr-un document JSON",
+            "ia un câmp imbricat folosind JSONPath"
+          ]
+        },
+        search: {
+          name: "RediSearch",
+          description: "Disponibil când modulul de căutare este încărcat.",
+          prompts: [
+            "listează toate indexurile full-text",
+            "rulează o căutare full-text pentru \"redis\" pe indexul idx:products",
+            "creează un index bazat pe hash cu câmpurile title (TEXT) și price (NUMERIC)",
+            "obține informații despre indexul idx:products",
+            "șterge indexul idx:products",
+            "găsește documente unde price este între 10 și 50",
+            "scrie o căutare hibridă care combină text și similaritate vectorială"
+          ]
+        },
+        timeseries: {
+          name: "RedisTimeSeries",
+          description: "Disponibil când modulul timeseries este încărcat.",
+          prompts: [
+            "listează toate cheile timeseries",
+            "adaugă un punct de date în temp:room1",
+            "ia intervalul pentru temp:room1 de ieri până acum",
+            "ia multi-range după eticheta sensor=temp",
+            "generează 100 de puncte de tip undă sinusoidală pentru temp:room1",
+            "arată retenția și etichetele pentru temp:room1"
+          ]
+        },
+        bloom: {
+          name: "RedisBloom (Bloom / Cuckoo / Top-K / CMS / T-Digest)",
+          description: "Disponibil când modulul bf este încărcat.",
+          prompts: [
+            "verifică dacă elementul foo există în filtrul Bloom spam:ips",
+            "adaugă elemente în filtrul Bloom spam:ips",
+            "creează un Top-K numit popular cu K=10",
+            "interoghează count-min sketch traffic pentru cheia /home",
+            "adaugă valori în t-digest și obține percentila 95",
+            "arată informații despre filtrul Bloom spam:ips"
+          ]
+        },
+        vectorSet: {
+          name: "VectorSet (Redis 8+)",
+          description: "Disponibil când este detectat Redis 8+ (tipul nativ VECTORSET).",
+          prompts: [
+            "adaugă un vector în embeddings",
+            "găsește cei mai similari 10 vectori pentru un vector de interogare",
+            "arată dimensiunile și numărul de elemente din vectorset-ul embeddings",
+            "șterge un element din vectorset-ul embeddings",
+            "caută după numele elementului cu VSIM"
+          ]
+        },
+        redis8: {
+          name: "Funcții Redis 8+",
+          description: "Afișat când este detectat Redis 8+.",
+          prompts: [
+            "setează TTL pentru un câmp hash cu HEXPIRE",
+            "obține digestul unei valori string",
+            "rulează o căutare hibridă full-text + vector (FT.HYBRID)",
+            "setează mai multe chei cu aceeași expirare folosind MSETEX",
+            "șterge o intrare de stream cu grup de consumatori (XDELEX)",
+            "arată cluster slot-stats pentru primele 10 sloturi"
+          ]
+        },
+        scripting: {
+          name: "Scriptare",
+          description: "Generează scripturi Lua / EVAL din descrieri în limbaj natural.",
+          prompts: [
+            "scrie un script atomic care incrementează contorul X doar dacă Y > 5",
+            "generează 100 de chei aleatoare cu Lua",
+            "convertește acest pipeline shell într-un singur EVAL: keys user:* | GET | grep inactive | DEL",
+            "portează o operație batch în Lua pentru siguranță în cluster",
+            "fă o actualizare în stil check-and-set într-un singur apel Lua",
+            "iterează printr-un hash și șterge câmpurile care se potrivesc unui model"
+          ]
+        },
+        cluster: {
+          name: "Cluster",
+          description: "Afișat doar în modul cluster.",
+          prompts: [
+            "arată informațiile clusterului",
+            "listează nodurile clusterului",
+            "arată primele 10 sloturi după numărul de chei",
+            "arată primele 10 sloturi după memorie",
+            "ce master deține slotul 5000?"
+          ]
+        },
+        acl: {
+          name: "ACL (Redis 6+)",
+          description: "Inspectați utilizatorii de control al accesului și conexiunea curentă.",
+          prompts: [
+            "cu ce utilizator sunt conectat?",
+            "listează toți utilizatorii ACL",
+            "ce permisiuni am?",
+            "arată regulile utilizatorului implicit"
+          ]
+        },
+        qna: {
+          name: "Întrebări și răspunsuri generale",
+          description: "Puneți întrebări despre Redis — fără unelte, doar răspunsuri.",
+          prompts: [
+            "ce este ZADD?",
+            "cum funcționează failover-ul în cluster?",
+            "explică SCAN vs KEYS",
+            "când ar trebui să folosesc EVAL în loc de mai multe comenzi?",
+            "care sunt opțiunile de persistență Redis?",
+            "care este diferența dintre RDB și AOF?",
+            "cum decide Redis Sentinel asupra unui nou master?",
+            "explică hash tag-urile în modul cluster"
+          ]
+        },
+        translate: {
+          name: "Limbaj natural → comandă Redis",
+          description: "Descrie ce vrei în oricare dintre cele 54 de limbi; AI-ul scrie comanda Redis.",
+          prompts: [
+            "șterge cheia user:42",
+            "redenumește cheia foo în bar",
+            "setează expirarea cheii session:abc la 10 secunde",
+            "copiază cheia source în destination",
+            "incrementează contorul visits cu 5",
+            "setează cheia greeting la \"hello\" pentru 1 oră",
+            "șterge toate cheile user:*",
+            "arată-mi cele mai solicitate 10 chei"
+          ]
+        }
+      }
+    },
     ssh: {
       on: 'SSH activat',
       off: 'SSH dezactivat',
@@ -278,7 +494,7 @@ const strings = {
     treeSeparatorEmpty: "Daca separatorul de arbore este gol, arborele nu va avea noduri imbricate, ci doar o lista simpla",
     treeSeparatorEmptyNote: "Fara noduri imbricate, doar o lista simpla",
     welcomeConsole: "Bine ati venit in consola Redis",
-    welcomeConsoleInfo: "Istoricul cu tastele SUS sau JOS este activat",
+    welcomeConsoleInfo: "SHIFT + Istoricul cu tastele SUS sau JOS este activat",
     redisListIndexInfo: "Gol pentru a adauga la sfarsit, -1 pentru a adauga la inceput sau salvati la pozitia afisata.",
     console: "Consola",
     connectiondAdd: "Adaugare conexiune",
@@ -854,6 +1070,13 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+  },
+  promo: {
+    title: "Asistent de rețea AI",
+    description: "Descoperiți asistentul nostru gratuit de rețea AI la network.corifeus.com — analizați domenii, IP-uri, înregistrări DNS, certificate SSL, securitatea emailului și infrastructura de rețea. Alimentat de AI pentru rezultate instantanee și complete.",
+    disclaimer: "Această promovare este afișată doar pe site-ul demo și nu va apărea în implementările Docker, Electron sau ale aplicației web.",
+    toastMessage: "Încercați asistentul nostru gratuit de rețea AI la network.corifeus.com — analizați domenii, DNS, SSL și multe altele!",
+    visit: "Vizitați network.corifeus.com",
   }
 };
 module.exports = strings;

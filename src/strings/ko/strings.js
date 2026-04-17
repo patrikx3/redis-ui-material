@@ -236,6 +236,232 @@ const strings = {
     aiRoutingNetwork: "AI 쿼리는 network.corifeus.com을 통해 라우팅됩니다. 무료 Groq API 키가 있으면 이 스위치를 끄고 직접 사용할 수 있습니다.",
     aiMaxTokens: "AI 최대 토큰",
     aiMaxTokensInfo: "AI 응답에 사용할 최대 토큰 수입니다. 값을 높이면 더 긴 응답을 받을 수 있지만 API 크레딧을 더 사용할 수 있습니다.",
+    consoleDrawer: {
+      toggleTooltip: "콘솔 전환",
+      clearTooltip: "스크롤백 지우기",
+      closeTooltip: "콘솔 닫기",
+      aiSettingsTooltip: "AI 설정",
+      modeRedis: "REDIS",
+      modeAi: "AI",
+      connectionChipNoDb: opts => `${opts.name}`,
+      connectionChipWithDb: opts => `${opts.name} · db ${opts.db}`,
+      pageChip: opts => `페이지: ${opts.page}`,
+      connectingTo: opts => `${opts.name}에 연결 중…`,
+      connectedTo: opts => `${opts.name}에 연결됨 (Redis ${opts.version} ${opts.mode}, 모듈 ${opts.modules}개 로드됨)`,
+      connectedToNoInfo: opts => `${opts.name}에 연결됨`,
+      disconnectedFrom: opts => `${opts.name}에서 연결 끊김`,
+      notConnected: "연결되지 않았습니다.",
+      limitedAiOnly: "제한된 AI만 사용할 수 있습니다. 일반적인 Redis 질의응답은 가능합니다.",
+      connectHint: "실시간 진단을 하려면 다음을 입력하세요: connect <name>",
+      cheatsheetHint: "무엇을 물어볼 수 있는지 보려면 ai: help 를 입력하세요.",
+      needsConnection: "이 기능에는 활성 연결이 필요합니다. 먼저 \"connect <name>\"를 입력하세요.",
+      aiNeedsConnectionReason: "실시간 상태 AI(tool use)는 Redis에 연결되어 있을 때만 사용할 수 있습니다.",
+      verbNeedsConnection: opts => `"${opts.verb}" 명령에는 활성 연결이 필요합니다. 먼저 "connect <name>"를 입력하세요.`,
+      aiLimitedMode: "AI가 제한 모드입니다. 연결하기 전까지는 Redis 일반 지식 질문만 동작합니다.",
+      welcomeDisconnected: "환영합니다. 아직 어떤 Redis 인스턴스에도 연결되지 않았습니다.",
+      readyIndicator: "준비됨.",
+    },
+    cheatsheet: {
+      title: "AI 치트시트 — 무엇을 물어볼 수 있나요?",
+      subtitle: "원하는 프롬프트를 클릭하면 콘솔에 붙여넣어집니다. 그런 다음 Enter를 누르세요.",
+      searchPlaceholder: "프롬프트 필터…",
+      openOfficialDocs: "Redis Commands ↗",
+      openOfficialDocsTooltip: "redis.io에서 공식 Redis 명령어 레퍼런스 열기",
+      closeTooltip: "닫기 (Esc)",
+      empty: "필터와 일치하는 프롬프트가 없습니다.",
+      footerHint: "팁: \"ai:\" 뒤에 아무 언어로나 원하는 내용을 입력하세요 — AI는 54개 언어를 이해하고 필요할 때 실시간 Redis 상태를 활용합니다.",
+
+      // Each group has: name (category label), match (search-filter alias), prompts (array of example strings)
+      groups: {
+        diagnostics: {
+          name: "실시간 진단",
+          description: "안전한 읽기 전용 도구를 통해 서버의 실시간 상태를 조사하도록 AI에게 요청하세요.",
+          prompts: [
+            "메모리가 왜 이렇게 높아?",
+            "가장 느린 쿼리 10개 보여줘",
+            "연결된 클라이언트는 누구야?",
+            "maxmemory 정책이 뭐야?",
+            "최근에 evictions이 있었어?",
+            "latency 이벤트가 있어?",
+            "서버가 얼마나 오래 가동됐어?",
+            "hit rate가 얼마야?",
+            "cpu 사용량 보여줘",
+            "키스페이스를 요약해줘",
+            "각 데이터 타입은 메모리를 얼마나 써?",
+            "지금 서버를 막고 있는 게 있어?"
+          ]
+        },
+        keys: {
+          name: "키",
+          description: "트리를 클릭하지 않고 키를 검사, 검색, 분석합니다.",
+          prompts: [
+            "user:* 패턴에 맞는 모든 키 찾아줘",
+            "각 데이터베이스에 키가 몇 개 있어?",
+            "이 db에서 가장 큰 hash 보여줘",
+            "TTL이 60초 미만인 키 찾아줘",
+            "TTL이 없는 키는 어떤 거야?",
+            "session:abc 키의 타입이 뭐야?",
+            "\"session:\" 접두사가 쓰는 메모리 양을 추정해줘",
+            "user:42 키의 object encoding 보여줘",
+            "곧 만료되는 키가 있어?",
+            "어떤 namespace가 메모리를 가장 많이 써?"
+          ]
+        },
+        dataTypes: {
+          name: "데이터 타입",
+          description: "모든 Redis 타입의 생성/읽기/수정을 자연어로 표현합니다.",
+          prompts: [
+            "name=Alice age=30 필드로 user:1 이라는 hash 만들어줘",
+            "list tasks에 항목 세 개 추가해줘",
+            "set favourites에 멤버를 추가해줘",
+            "sorted set leaderboard에 점수와 함께 멤버를 추가해줘",
+            "stream events에 이벤트를 추가해줘",
+            "stream events에서 마지막 10개 항목을 가져와줘",
+            "hash user:1의 모든 필드를 가져와줘",
+            "set favourites의 멤버를 가져와줘",
+            "leaderboard에서 점수 상위 10개를 가져와줘"
+          ]
+        },
+        modules: {
+          name: "모듈",
+          description: "로드된 Redis 모듈에 대한 쿼리 (아래 카테고리는 모듈이 있을 때만 표시됩니다).",
+          prompts: []
+        },
+        json: {
+          name: "RedisJSON",
+          description: "ReJSON 모듈이 로드된 경우 사용할 수 있습니다.",
+          prompts: [
+            "user:42에 { name: \"Alice\", age: 30 } JSON 문서를 만들어줘",
+            "user:42의 name 필드를 읽어줘",
+            "user:42의 age를 31로 업데이트해줘",
+            "모든 JSON 키를 나열해줘",
+            "JSON 문서에서 필드 하나를 삭제해줘",
+            "JSONPath를 사용해 중첩 필드를 가져와줘"
+          ]
+        },
+        search: {
+          name: "RediSearch",
+          description: "search 모듈이 로드된 경우 사용할 수 있습니다.",
+          prompts: [
+            "모든 전문 인덱스를 나열해줘",
+            "idx:products 인덱스에서 \"redis\"로 전문 검색을 실행해줘",
+            "title (TEXT)와 price (NUMERIC) 필드를 가진 hash 기반 인덱스를 만들어줘",
+            "idx:products 인덱스 정보를 가져와줘",
+            "idx:products 인덱스를 삭제해줘",
+            "price가 10과 50 사이인 문서를 찾아줘",
+            "텍스트와 벡터 유사도를 결합한 하이브리드 검색을 작성해줘"
+          ]
+        },
+        timeseries: {
+          name: "RedisTimeSeries",
+          description: "timeseries 모듈이 로드된 경우 사용할 수 있습니다.",
+          prompts: [
+            "모든 timeseries 키를 나열해줘",
+            "temp:room1에 데이터 포인트를 추가해줘",
+            "temp:room1의 어제부터 지금까지 범위를 가져와줘",
+            "sensor=temp 라벨로 multi-range를 가져와줘",
+            "temp:room1에 사인파 데이터 포인트 100개를 생성해줘",
+            "temp:room1의 retention과 라벨을 보여줘"
+          ]
+        },
+        bloom: {
+          name: "RedisBloom (Bloom / Cuckoo / Top-K / CMS / T-Digest)",
+          description: "bf 모듈이 로드된 경우 사용할 수 있습니다.",
+          prompts: [
+            "bloom filter spam:ips에 foo 항목이 있는지 확인해줘",
+            "bloom filter spam:ips에 항목을 추가해줘",
+            "K=10인 popular라는 top-K를 만들어줘",
+            "/home 키에 대한 count-min sketch traffic을 조회해줘",
+            "t-digest에 값을 추가하고 95번째 백분위수를 가져와줘",
+            "bloom filter spam:ips의 정보를 보여줘"
+          ]
+        },
+        vectorSet: {
+          name: "VectorSet (Redis 8+)",
+          description: "Redis 8+가 감지된 경우 사용할 수 있습니다 (네이티브 VECTORSET 타입).",
+          prompts: [
+            "embeddings에 벡터를 추가해줘",
+            "쿼리 벡터와 가장 유사한 벡터 10개를 찾아줘",
+            "vectorset embeddings의 차원과 개수를 보여줘",
+            "vectorset embeddings에서 요소를 삭제해줘",
+            "VSIM으로 요소 이름으로 검색해줘"
+          ]
+        },
+        redis8: {
+          name: "Redis 8+ 기능",
+          description: "Redis 8+가 감지되면 표시됩니다.",
+          prompts: [
+            "HEXPIRE로 hash 필드의 ttl을 설정해줘",
+            "문자열 값의 digest를 가져와줘",
+            "하이브리드 전문 + 벡터 검색을 실행해줘 (FT.HYBRID)",
+            "MSETEX로 여러 키를 공통 만료 시간으로 설정해줘",
+            "consumer group으로 stream 항목을 삭제해줘 (XDELEX)",
+            "상위 10개 슬롯에 대한 cluster slot-stats를 보여줘"
+          ]
+        },
+        scripting: {
+          name: "스크립팅",
+          description: "자연어 설명으로부터 Lua / EVAL 스크립트를 생성합니다.",
+          prompts: [
+            "Y > 5일 때만 counter X를 증가시키는 원자적 스크립트를 작성해줘",
+            "Lua로 랜덤 키 100개를 생성해줘",
+            "이 shell 파이프라인을 하나의 EVAL로 변환해줘: keys user:* | GET | grep inactive | DEL",
+            "클러스터 안전성을 위해 배치 작업을 Lua로 포팅해줘",
+            "하나의 Lua 호출로 check-and-set 스타일 업데이트를 해줘",
+            "hash를 순회하며 패턴에 맞는 필드를 삭제해줘"
+          ]
+        },
+        cluster: {
+          name: "클러스터",
+          description: "클러스터 모드에서만 표시됩니다.",
+          prompts: [
+            "클러스터 정보를 보여줘",
+            "클러스터 노드를 나열해줘",
+            "키 개수 기준 상위 10개 슬롯을 보여줘",
+            "메모리 기준 상위 10개 슬롯을 보여줘",
+            "slot 5000은 어느 master가 소유하고 있어?"
+          ]
+        },
+        acl: {
+          name: "ACL (Redis 6+)",
+          description: "액세스 제어 사용자 및 현재 연결을 검사합니다.",
+          prompts: [
+            "나는 어떤 사용자로 연결되어 있어?",
+            "모든 ACL 사용자를 나열해줘",
+            "내가 가진 권한은 뭐야?",
+            "default 사용자의 규칙을 보여줘"
+          ]
+        },
+        qna: {
+          name: "일반 Q&A",
+          description: "Redis 지식 관련 질문에 답합니다 — 도구 없이 답변만 제공합니다.",
+          prompts: [
+            "ZADD가 뭐야?",
+            "클러스터 failover는 어떻게 동작해?",
+            "SCAN과 KEYS의 차이를 설명해줘",
+            "EVAL과 여러 명령어 중 언제 EVAL을 써야 해?",
+            "Redis의 persistence 옵션에는 뭐가 있어?",
+            "RDB와 AOF의 차이는 뭐야?",
+            "Redis Sentinel은 새 master를 어떻게 결정해?",
+            "클러스터 모드의 hash tags를 설명해줘"
+          ]
+        },
+        translate: {
+          name: "자연어 → Redis 명령어",
+          description: "원하는 것을 평이한 한국어(또는 54개 언어 중 어느 것이든)로 설명하세요; AI가 Redis 명령어를 작성해 줍니다.",
+          prompts: [
+            "user:42 키를 삭제해줘",
+            "foo 키 이름을 bar로 바꿔줘",
+            "session:abc 키를 10초 뒤에 만료되게 해줘",
+            "source 키를 destination으로 복사해줘",
+            "visits 카운터를 5 증가시켜줘",
+            "greeting 키를 1시간 동안 \"hello\"로 설정해줘",
+            "가장 자주 접근되는 키 10개를 보여줘",
+            "temp:* 패턴에 맞는 모든 키를 삭제해줘"
+          ]
+        }
+      }
+    },
     ssh: {
       on: "SSH 켜짐",
       off: "SSH 꺼짐",
@@ -278,7 +504,7 @@ const strings = {
     treeSeparatorEmpty: "트리 구분 기호가 비어 있으면 트리에는 중첩 노드가 없고 순수 목록만 있습니다.",
     treeSeparatorEmptyNote: "중첩된 노드가 없고 순수한 목록만 있음",
     welcomeConsole: "Redis 콘솔에 오신 것을 환영합니다.",
-    welcomeConsoleInfo: "커서 UP 또는 DOWN 기록이 활성화되었습니다.",
+    welcomeConsoleInfo: "SHIFT + 커서 UP 또는 DOWN 기록이 활성화되었습니다.",
     redisListIndexInfo: "추가하려면 비우고, 표시된 위치에 앞에 추가하거나 저장하려면 -1입니다.",
     console: "콘솔",
     connectiondAdd: "연결 추가",
@@ -854,6 +1080,13 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+  },
+  promo: {
+    title: "AI 네트워크 어시스턴트",
+    description: "network.corifeus.com에서 무료 AI 네트워크 어시스턴트를 만나보세요. 도메인, IP, DNS 레코드, SSL 인증서, 이메일 보안, 네트워크 인프라를 분석할 수 있습니다. AI 기반으로 즉시 포괄적인 결과를 제공합니다.",
+    disclaimer: "이 프로모션은 데모 사이트에서만 표시되며 Docker, Electron 또는 web app 배포에는 나타나지 않습니다.",
+    toastMessage: "network.corifeus.com의 무료 AI 네트워크 어시스턴트를 사용해 보세요. 도메인, DNS, SSL 등을 분석할 수 있습니다!",
+    visit: "network.corifeus.com 방문",
   }
 };
 module.exports = strings;

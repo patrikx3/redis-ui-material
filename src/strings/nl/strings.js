@@ -236,6 +236,232 @@ const strings = {
     aiRoutingNetwork: "AI-query's worden via network.corifeus.com gerouteerd. Als u uw eigen gratis Groq API-sleutel hebt, kunt u deze schakelaar uitschakelen om rechtstreeks naar Groq te routeren zonder network.corifeus.com.",
     aiMaxTokens: "AI-maximale tokens",
     aiMaxTokensInfo: "Maximaal aantal tokens voor AI-antwoorden. Hogere waarden maken langere antwoorden mogelijk, maar kunnen meer API-credits gebruiken.",
+    consoleDrawer: {
+      toggleTooltip: "Console wisselen",
+      clearTooltip: "Consolegeschiedenis wissen",
+      closeTooltip: "Console sluiten",
+      aiSettingsTooltip: "AI-instellingen",
+      modeRedis: "REDIS",
+      modeAi: "AI",
+      connectionChipNoDb: opts => `${opts.name}`,
+      connectionChipWithDb: opts => `${opts.name} · db ${opts.db}`,
+      pageChip: opts => `pagina: ${opts.page}`,
+      connectingTo: opts => `Verbinden met ${opts.name}…`,
+      connectedTo: opts => `Verbonden met ${opts.name} (Redis ${opts.version} ${opts.mode}, ${opts.modules} modules geladen)`,
+      connectedToNoInfo: opts => `Verbonden met ${opts.name}`,
+      disconnectedFrom: opts => `Verbinding met ${opts.name} verbroken`,
+      notConnected: "Niet verbonden.",
+      limitedAiOnly: "Alleen beperkte AI — algemene Redis-vragen werken.",
+      connectHint: "Typ voor live diagnostiek: connect <name>",
+      cheatsheetHint: "Typ ai: help om te zien wat u kunt vragen.",
+      needsConnection: "Hiervoor is een actieve verbinding nodig. Typ eerst \"connect <name>\".",
+      aiNeedsConnectionReason: "Live-state AI (tool use) is alleen beschikbaar wanneer u met Redis bent verbonden.",
+      verbNeedsConnection: opts => `"${opts.verb}" vereist een actieve verbinding — typ eerst "connect <name>".`,
+      aiLimitedMode: "AI staat in beperkte modus — alleen algemene vragen over Redis-kennis werken totdat u verbinding maakt.",
+      welcomeDisconnected: "Welkom. U bent nog niet verbonden met een Redis-instantie.",
+      readyIndicator: "Gereed.",
+    },
+    cheatsheet: {
+      title: "AI-spiekbriefje — Wat kan ik vragen?",
+      subtitle: "Klik op een prompt om deze in de console te plakken. Druk daarna op Enter.",
+      searchPlaceholder: "Prompts filteren…",
+      openOfficialDocs: "Redis-commando's ↗",
+      openOfficialDocsTooltip: "Open de officiële Redis-commandoreferentie op redis.io",
+      closeTooltip: "Sluiten (Esc)",
+      empty: "Geen prompts komen overeen met je filter.",
+      footerHint: "Tip: typ \"ai:\" gevolgd door wat dan ook in een willekeurige taal — de AI begrijpt 54 talen en gebruikt indien nodig live Redis-status.",
+
+      // Each group has: name (category label), match (search-filter alias), prompts (array of example strings)
+      groups: {
+        diagnostics: {
+          name: "Live diagnostiek",
+          description: "Vraag de AI om de live serverstatus te onderzoeken via veilige alleen-lezen tools.",
+          prompts: [
+            "waarom is het geheugen hoog?",
+            "toon me de 10 traagste queries",
+            "welke clients zijn verbonden?",
+            "wat is het maxmemory-beleid?",
+            "zijn er recente evictions?",
+            "is er een latency-event?",
+            "hoelang draait de server al?",
+            "wat is de hit rate?",
+            "toon cpu-gebruik",
+            "vat de keyspace samen",
+            "hoeveel geheugen gebruikt elk datatype?",
+            "blokkeert er iets de server op dit moment?"
+          ]
+        },
+        keys: {
+          name: "Sleutels",
+          description: "Inspecteer, zoek en redeneer over sleutels zonder door de boom te klikken.",
+          prompts: [
+            "vind alle sleutels die overeenkomen met user:*",
+            "hoeveel sleutels zitten er in elke database?",
+            "toon de grootste hash in deze db",
+            "vind sleutels met een TTL van minder dan 60 seconden",
+            "welke sleutels hebben geen TTL?",
+            "welk type heeft de sleutel session:abc?",
+            "schat het geheugen dat wordt gebruikt door het voorvoegsel \"session:\"",
+            "toon de objectcodering van de sleutel user:42",
+            "zijn er sleutels die bijna verlopen?",
+            "welke namespace gebruikt het meeste geheugen?"
+          ]
+        },
+        dataTypes: {
+          name: "Datatypes",
+          description: "Natuurlijke taal voor aanmaken/lezen/bijwerken van elk Redis-type.",
+          prompts: [
+            "maak een hash met de naam user:1 met velden name=Alice age=30",
+            "voeg drie items toe aan lijst tasks",
+            "voeg leden toe aan set favourites",
+            "voeg leden met score toe aan sorted set leaderboard",
+            "voeg een event toe aan stream events",
+            "haal de laatste 10 items op uit stream events",
+            "haal alle velden op van hash user:1",
+            "haal leden op van set favourites",
+            "haal de top 10 op score op uit leaderboard"
+          ]
+        },
+        modules: {
+          name: "Modules",
+          description: "Zoekopdrachten voor geladen Redis-modules (onderstaande categorieën verschijnen alleen wanneer de module aanwezig is).",
+          prompts: []
+        },
+        json: {
+          name: "RedisJSON",
+          description: "Beschikbaar wanneer de ReJSON-module geladen is.",
+          prompts: [
+            "maak een JSON-document op user:42 met { name: \"Alice\", age: 30 }",
+            "lees het veld name van user:42",
+            "werk age van user:42 bij naar 31",
+            "toon alle JSON-sleutels",
+            "verwijder een veld uit een JSON-document",
+            "haal een genest veld op met JSONPath"
+          ]
+        },
+        search: {
+          name: "RediSearch",
+          description: "Beschikbaar wanneer de search-module geladen is.",
+          prompts: [
+            "toon alle full-text indexen",
+            "voer een full-text zoekopdracht uit op \"redis\" in index idx:products",
+            "maak een op hash gebaseerde index met velden title (TEXT) en price (NUMERIC)",
+            "haal info op over index idx:products",
+            "verwijder index idx:products",
+            "zoek documenten waarvan price tussen 10 en 50 ligt",
+            "schrijf een hybride zoekopdracht die tekst en vector-similariteit combineert"
+          ]
+        },
+        timeseries: {
+          name: "RedisTimeSeries",
+          description: "Beschikbaar wanneer de timeseries-module geladen is.",
+          prompts: [
+            "toon alle timeseries-sleutels",
+            "voeg een datapunt toe aan temp:room1",
+            "haal het bereik van temp:room1 op van gisteren tot nu",
+            "haal multi-range op per label sensor=temp",
+            "genereer 100 sinusgolf-datapunten voor temp:room1",
+            "toon retentie en labels voor temp:room1"
+          ]
+        },
+        bloom: {
+          name: "RedisBloom (Bloom / Cuckoo / Top-K / CMS / T-Digest)",
+          description: "Beschikbaar wanneer de bf-module geladen is.",
+          prompts: [
+            "controleer of item foo bestaat in bloom filter spam:ips",
+            "voeg items toe aan bloom filter spam:ips",
+            "maak een top-K met de naam popular en K=10",
+            "bevraag count-min sketch traffic voor sleutel /home",
+            "voeg waarden toe aan t-digest en haal het 95e percentiel op",
+            "toon info voor bloom filter spam:ips"
+          ]
+        },
+        vectorSet: {
+          name: "VectorSet (Redis 8+)",
+          description: "Beschikbaar wanneer Redis 8+ wordt gedetecteerd (native VECTORSET-type).",
+          prompts: [
+            "voeg een vector toe aan embeddings",
+            "vind de 10 meest vergelijkbare vectoren met een query-vector",
+            "toon dimensies en telling van vectorset embeddings",
+            "verwijder een element uit vectorset embeddings",
+            "zoek op elementnaam met VSIM"
+          ]
+        },
+        redis8: {
+          name: "Redis 8+ functies",
+          description: "Weergegeven wanneer Redis 8+ wordt gedetecteerd.",
+          prompts: [
+            "stel ttl in op hash-veld met HEXPIRE",
+            "haal de digest op van een stringwaarde",
+            "voer een hybride full-text + vector zoekopdracht uit (FT.HYBRID)",
+            "stel meerdere sleutels in met een gedeelde verlooptijd via MSETEX",
+            "verwijder een stream-item met consumergroep (XDELEX)",
+            "toon cluster slot-stats voor de top 10 slots"
+          ]
+        },
+        scripting: {
+          name: "Scripting",
+          description: "Genereer Lua / EVAL scripts uit natuurlijke taal.",
+          prompts: [
+            "schrijf een atomisch script dat teller X alleen verhoogt als Y > 5",
+            "genereer 100 willekeurige sleutels met Lua",
+            "zet deze shell-pipeline om naar één EVAL: keys user:* | GET | grep inactive | DEL",
+            "port een batchbewerking naar Lua voor clusterveiligheid",
+            "check-and-set-update in één Lua-aanroep",
+            "itereer over een hash en verwijder velden die overeenkomen met een patroon"
+          ]
+        },
+        cluster: {
+          name: "Cluster",
+          description: "Alleen weergegeven in clustermodus.",
+          prompts: [
+            "toon clusterinfo",
+            "toon clusterknooppunten",
+            "toon de top 10 slots op aantal sleutels",
+            "toon de top 10 slots op geheugen",
+            "welke master bezit slot 5000?"
+          ]
+        },
+        acl: {
+          name: "ACL (Redis 6+)",
+          description: "Inspecteer toegangscontrolegebruikers en de huidige verbinding.",
+          prompts: [
+            "als wie ben ik verbonden?",
+            "toon alle ACL-gebruikers",
+            "welke rechten heb ik?",
+            "toon de standaardgebruikersregels"
+          ]
+        },
+        qna: {
+          name: "Algemene Q&A",
+          description: "Stel Redis-kennisvragen — geen tools, alleen antwoorden.",
+          prompts: [
+            "wat is ZADD?",
+            "hoe werkt cluster failover?",
+            "leg SCAN versus KEYS uit",
+            "wanneer moet ik EVAL gebruiken in plaats van meerdere commando's?",
+            "wat zijn de Redis-persistentie-opties?",
+            "wat is het verschil tussen RDB en AOF?",
+            "hoe beslist Redis Sentinel over een nieuwe master?",
+            "leg hash tags in clustermodus uit"
+          ]
+        },
+        translate: {
+          name: "Natuurlijke taal → Redis-commando",
+          description: "Beschrijf wat je wilt in gewoon Nederlands (of een van de 54 talen); de AI schrijft het Redis-commando.",
+          prompts: [
+            "verwijder sleutel user:42",
+            "hernoem sleutel foo naar bar",
+            "laat sleutel session:abc verlopen over 10 seconden",
+            "kopieer sleutel source naar destination",
+            "verhoog teller visits met 5",
+            "stel sleutel greeting in op \"hello\" voor 1 uur",
+            "toon me de 10 meest benaderde sleutels",
+            "verwijder alle sleutels die overeenkomen met temp:*"
+          ]
+        }
+      }
+    },
     ssh: {
       on: 'SSH aan',
       off: 'SSH uit',
@@ -278,7 +504,7 @@ const strings = {
     treeSeparatorEmpty: "Als het boomscheidingsteken leeg is, heeft de boom geen geneste knooppunten, maar slechts een platte lijst",
     treeSeparatorEmptyNote: "Geen geneste knooppunten, slechts een platte lijst",
     welcomeConsole: "Welkom bij de Redis Console",
-    welcomeConsoleInfo: "Cursor OMHOOG of OMLAAG voor geschiedenis is ingeschakeld",
+    welcomeConsoleInfo: "SHIFT + Cursor OMHOOG of OMLAAG voor geschiedenis is ingeschakeld",
     redisListIndexInfo: "Leeg om toe te voegen, -1 om vooraan te plaatsen of sla het op op de getoonde positie.",
     console: "Console",
     connectiondAdd: "Verbinding toevoegen",
@@ -854,6 +1080,13 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+  },
+  promo: {
+    title: "AI-netwerkassistent",
+    description: "Ontdek onze gratis AI-netwerkassistent op network.corifeus.com — analyseer domeinen, IP's, DNS-records, SSL-certificaten, e-mailbeveiliging en netwerkinfrastructuur. Aangedreven door AI voor directe, uitgebreide resultaten.",
+    disclaimer: "Deze promotie wordt alleen op de demosite getoond en verschijnt niet in Docker-, Electron- of webapp-implementaties.",
+    toastMessage: "Probeer onze gratis AI-netwerkassistent op network.corifeus.com — analyseer domeinen, DNS, SSL en meer!",
+    visit: "Bezoek network.corifeus.com",
   }
 };
 module.exports = strings;

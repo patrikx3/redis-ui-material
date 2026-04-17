@@ -234,6 +234,232 @@ const strings = {
     aiRoutingNetwork: "AI sorguları network.corifeus.com üzerinden yönlendirilir. Kendi ücretsiz Groq API anahtarınız varsa bu anahtarı kapatabilirsiniz.",
     aiMaxTokens: "AI maksimum jeton sayısı",
     aiMaxTokensInfo: "AI yanıtları için maksimum jeton sayısı. Daha yüksek değerler daha uzun yanıtlar sağlar ancak daha fazla API kredisi kullanabilir.",
+    consoleDrawer: {
+      toggleTooltip: "Konsolu aç/kapat",
+      clearTooltip: "Konsol geçmişini temizle",
+      closeTooltip: "Konsolu kapat",
+      aiSettingsTooltip: "AI ayarları",
+      modeRedis: "REDIS",
+      modeAi: "AI",
+      connectionChipNoDb: opts => `${opts.name}`,
+      connectionChipWithDb: opts => `${opts.name} · db ${opts.db}`,
+      pageChip: opts => `sayfa: ${opts.page}`,
+      connectingTo: opts => `${opts.name} bağlantısı kuruluyor…`,
+      connectedTo: opts => `${opts.name} bağlantısı kuruldu (Redis ${opts.version} ${opts.mode}, ${opts.modules} modül yüklü)`,
+      connectedToNoInfo: opts => `${opts.name} bağlantısı kuruldu`,
+      disconnectedFrom: opts => `${opts.name} bağlantısı kesildi`,
+      notConnected: "Bağlı değil.",
+      limitedAiOnly: "Yalnızca sınırlı AI — genel Redis soru-cevapları çalışır.",
+      connectHint: "Canlı tanılama için şunu yazın: connect <name>",
+      cheatsheetHint: "Neler sorabileceğinizi görmek için ai: help yazın.",
+      needsConnection: "Bu işlem etkin bir bağlantı gerektirir. Önce \"connect <name>\" yazın.",
+      aiNeedsConnectionReason: "Canlı durum AI'ı (araç kullanımı) yalnızca Redis'e bağlıyken kullanılabilir.",
+      verbNeedsConnection: opts => `"${opts.verb}" etkin bir bağlantı gerektirir — önce "connect <name>" yazın.`,
+      aiLimitedMode: "AI sınırlı modda — bağlanana kadar yalnızca Redis hakkında genel bilgi soruları çalışır.",
+      welcomeDisconnected: "Hoş geldiniz. Henüz herhangi bir Redis örneğine bağlı değilsiniz.",
+      readyIndicator: "Hazır.",
+    },
+    cheatsheet: {
+      title: "AI Kopya Kâğıdı — Ne sorabilirim?",
+      subtitle: "Konsola yapıştırmak için herhangi bir isteme tıklayın. Ardından Enter'a basın.",
+      searchPlaceholder: "İstemleri filtrele…",
+      openOfficialDocs: "Redis Komutları ↗",
+      openOfficialDocsTooltip: "redis.io'daki resmi Redis komutları referansını aç",
+      closeTooltip: "Kapat (Esc)",
+      empty: "Filtrenize uyan istem yok.",
+      footerHint: "İpucu: \"ai:\" yazıp ardından herhangi bir dilde herhangi bir şey yazın — yapay zeka 54 dili anlar ve gerektiğinde canlı Redis durumunu kullanır.",
+
+      // Each group has: name (category label), match (search-filter alias), prompts (array of example strings)
+      groups: {
+        diagnostics: {
+          name: "Canlı tanılama",
+          description: "Yapay zekadan güvenli salt okunur araçlar aracılığıyla canlı sunucu durumunu incelemesini isteyin.",
+          prompts: [
+            "bellek kullanımı neden yüksek?",
+            "bana en yavaş 10 sorguyu göster",
+            "hangi istemciler bağlı?",
+            "maxmemory politikası nedir?",
+            "son zamanlarda herhangi bir çıkarma oldu mu?",
+            "herhangi bir gecikme olayı var mı?",
+            "sunucu ne kadar süredir çalışıyor?",
+            "hit oranı nedir?",
+            "cpu kullanımını göster",
+            "anahtar alanını özetle",
+            "her veri türü ne kadar bellek kullanıyor?",
+            "şu anda sunucuyu engelleyen bir şey var mı?"
+          ]
+        },
+        keys: {
+          name: "Anahtarlar",
+          description: "Ağaçta tıklamadan anahtarları inceleyin, bulun ve üzerlerinde akıl yürütün.",
+          prompts: [
+            "user:* ile eşleşen tüm anahtarları bul",
+            "her veritabanında kaç anahtar var?",
+            "bu db'deki en büyük hash'i göster",
+            "TTL'si 60 saniyeden az olan anahtarları bul",
+            "hangi anahtarların TTL'si yok?",
+            "session:abc anahtarının türü nedir?",
+            "\"session:\" önekinin kullandığı belleği tahmin et",
+            "user:42 anahtarının nesne kodlamasını göster",
+            "süresi dolmak üzere olan anahtarlar var mı?",
+            "hangi ad alanı en çok belleği kullanıyor?"
+          ]
+        },
+        dataTypes: {
+          name: "Veri türleri",
+          description: "Her Redis türü için oluşturma/okuma/güncelleme işlemlerinin doğal dil ifadeleri.",
+          prompts: [
+            "name=Alice age=30 alanlarıyla user:1 adlı bir hash oluştur",
+            "tasks listesine üç öğe ekle",
+            "favourites kümesine üye ekle",
+            "leaderboard sıralı kümesine puanlı üyeler ekle",
+            "events akışına bir olay ekle",
+            "events akışından son 10 girişi al",
+            "user:1 hash'inin tüm alanlarını al",
+            "favourites kümesinin üyelerini al",
+            "leaderboard'dan puana göre ilk 10'u al"
+          ]
+        },
+        modules: {
+          name: "Modüller",
+          description: "Yüklenen Redis modülleri için sorgular (aşağıdaki kategoriler yalnızca modül mevcut olduğunda görünür).",
+          prompts: []
+        },
+        json: {
+          name: "RedisJSON",
+          description: "ReJSON modülü yüklendiğinde kullanılabilir.",
+          prompts: [
+            "user:42'de { name: \"Alice\", age: 30 } ile bir JSON belgesi oluştur",
+            "user:42'nin name alanını oku",
+            "user:42'nin age değerini 31 olarak güncelle",
+            "tüm JSON anahtarlarını listele",
+            "bir JSON belgesinden bir alan sil",
+            "JSONPath kullanarak iç içe bir alanı al"
+          ]
+        },
+        search: {
+          name: "RediSearch",
+          description: "search modülü yüklendiğinde kullanılabilir.",
+          prompts: [
+            "tüm tam metin indekslerini listele",
+            "idx:products indeksinde \"redis\" için tam metin araması çalıştır",
+            "title (TEXT) ve price (NUMERIC) alanlarıyla hash destekli bir indeks oluştur",
+            "idx:products indeksi hakkında bilgi al",
+            "idx:products indeksini bırak",
+            "price değeri 10 ile 50 arasında olan belgeleri bul",
+            "metin ve vektör benzerliğini birleştiren hibrit bir arama yaz"
+          ]
+        },
+        timeseries: {
+          name: "RedisTimeSeries",
+          description: "timeseries modülü yüklendiğinde kullanılabilir.",
+          prompts: [
+            "tüm timeseries anahtarlarını listele",
+            "temp:room1'e bir veri noktası ekle",
+            "temp:room1'in dünden şimdiye kadar olan aralığını al",
+            "sensor=temp etiketine göre multi-range al",
+            "temp:room1 için 100 sinüs dalgası veri noktası oluştur",
+            "temp:room1 için retention ve etiketleri göster"
+          ]
+        },
+        bloom: {
+          name: "RedisBloom (Bloom / Cuckoo / Top-K / CMS / T-Digest)",
+          description: "bf modülü yüklendiğinde kullanılabilir.",
+          prompts: [
+            "foo öğesinin spam:ips bloom filtresinde olup olmadığını kontrol et",
+            "spam:ips bloom filtresine öğeler ekle",
+            "K=10 ile popular adlı bir top-K oluştur",
+            "/home anahtarı için count-min sketch traffic'i sorgula",
+            "t-digest'e değerler ekle ve 95. yüzdeliği al",
+            "spam:ips bloom filtresi için bilgi göster"
+          ]
+        },
+        vectorSet: {
+          name: "VectorSet (Redis 8+)",
+          description: "Redis 8+ algılandığında kullanılabilir (yerel VECTORSET türü).",
+          prompts: [
+            "embeddings'e bir vektör ekle",
+            "bir sorgu vektörüne en benzer 10 vektörü bul",
+            "vectorset embeddings'in boyutlarını ve sayısını göster",
+            "vectorset embeddings'ten bir öğe sil",
+            "VSIM ile öğe adına göre ara"
+          ]
+        },
+        redis8: {
+          name: "Redis 8+ özellikleri",
+          description: "Redis 8+ algılandığında gösterilir.",
+          prompts: [
+            "HEXPIRE ile hash alanı ttl'sini ayarla",
+            "bir dize değerinin digest'ini al",
+            "hibrit tam metin + vektör araması çalıştır (FT.HYBRID)",
+            "MSETEX kullanarak paylaşılan bir süre sonu ile birden çok anahtar ayarla",
+            "tüketici grubu ile bir akış girişini sil (XDELEX)",
+            "en iyi 10 slot için cluster slot-stats göster"
+          ]
+        },
+        scripting: {
+          name: "Betik",
+          description: "Doğal dil açıklamalarından Lua / EVAL betikleri oluşturun.",
+          prompts: [
+            "yalnızca Y > 5 ise X sayacını artıran atomik bir betik yaz",
+            "Lua ile 100 rastgele anahtar oluştur",
+            "bu shell işlem hattını tek bir EVAL'a dönüştür: keys user:* | GET | grep inactive | DEL",
+            "küme güvenliği için bir toplu işlemi Lua'ya taşı",
+            "tek bir Lua çağrısında check-and-set tarzı güncelleme",
+            "bir hash üzerinde yineleme yap ve bir kalıba uyan alanları sil"
+          ]
+        },
+        cluster: {
+          name: "Küme",
+          description: "Yalnızca küme modunda gösterilir.",
+          prompts: [
+            "küme bilgilerini göster",
+            "küme düğümlerini listele",
+            "anahtar sayısına göre en iyi 10 slotu göster",
+            "belleğe göre en iyi 10 slotu göster",
+            "slot 5000'e hangi master sahip?"
+          ]
+        },
+        acl: {
+          name: "ACL (Redis 6+)",
+          description: "Erişim kontrolü kullanıcılarını ve mevcut bağlantıyı inceleyin.",
+          prompts: [
+            "kim olarak bağlandım?",
+            "tüm ACL kullanıcılarını listele",
+            "hangi izinlere sahibim?",
+            "varsayılan kullanıcı kurallarını göster"
+          ]
+        },
+        qna: {
+          name: "Genel S&C",
+          description: "Redis bilgi sorularını sorun — araç yok, sadece yanıtlar.",
+          prompts: [
+            "ZADD nedir?",
+            "cluster failover nasıl çalışır?",
+            "SCAN ile KEYS'i karşılaştır",
+            "birden çok komut yerine EVAL'ı ne zaman kullanmalıyım?",
+            "Redis kalıcılık seçenekleri nelerdir?",
+            "RDB ile AOF arasındaki fark nedir?",
+            "Redis Sentinel yeni bir master'a nasıl karar verir?",
+            "küme modunda hash tags'i açıkla"
+          ]
+        },
+        translate: {
+          name: "Doğal dil → Redis komutu",
+          description: "İstediğinizi düz Türkçe (veya 54 dilden herhangi biri) ile tanımlayın; yapay zeka Redis komutunu yazar.",
+          prompts: [
+            "user:42 anahtarını sil",
+            "foo anahtarını bar olarak yeniden adlandır",
+            "session:abc anahtarının süresini 10 saniyede doldur",
+            "source anahtarını destination'a kopyala",
+            "visits sayacını 5 artır",
+            "greeting anahtarını 1 saatliğine \"hello\" olarak ayarla",
+            "bana en sık erişilen 10 anahtarı göster",
+            "temp:* ile eşleşen tüm anahtarları sil"
+          ]
+        }
+      }
+    },
     ssh: {
       on: 'SSH açık',
       off: 'SSH kapalı',
@@ -276,7 +502,7 @@ const strings = {
     treeSeparatorEmpty: "Ağaç ayırıcısı boşsa, ağaçta iç içe düğümler olmaz, sadece düz bir liste olur",
     treeSeparatorEmptyNote: "İç içe düğüm yok, sadece düz bir liste",
     welcomeConsole: "Redis Konsoluna Hoş Geldiniz",
-    welcomeConsoleInfo: "İmleç YUKARI veya AŞAĞI geçmişi etkindir",
+    welcomeConsoleInfo: "SHIFT + İmleç YUKARI veya AŞAĞI geçmişi etkindir",
     redisListIndexInfo: "Sona eklemek için boş bırakın, başa eklemek için -1 veya gösterilen konuma kaydedin.",
     console: "Konsol",
     connectiondAdd: "Bağlantı ekle",
@@ -852,6 +1078,13 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+  },
+  promo: {
+    title: "AI Ağ Asistanı",
+    description: "network.corifeus.com üzerindeki ücretsiz AI Ağ Asistanımızı keşfedin — alan adlarını, IP'leri, DNS kayıtlarını, SSL sertifikalarını, e-posta güvenliğini ve ağ altyapısını analiz edin. Anında ve kapsamlı sonuçlar için AI ile desteklenir.",
+    disclaimer: "Bu tanıtım yalnızca demo sitesinde gösterilir ve Docker, Electron veya web uygulaması dağıtımlarında görünmez.",
+    toastMessage: "network.corifeus.com üzerindeki ücretsiz AI Ağ Asistanımızı deneyin — alan adlarını, DNS'i, SSL'i ve daha fazlasını analiz edin!",
+    visit: "network.corifeus.com'u ziyaret edin",
   }
 };
 module.exports = strings;

@@ -43,6 +43,15 @@
                         <p3xr-ng-button [label]="strings().intention?.close" mdIcon="close"
                             (click)="closeConsole()"></p3xr-ng-button>
                     }
+                    @if (showCloseButton) {
+                        <button mat-icon-button class="p3xr-console-drawer-close"
+                                (click)="requestClose()"
+                                [matTooltip]="strings().label?.consoleDrawer?.closeTooltip ?? strings().intention?.close ?? ''"
+                                matTooltipPosition="above"
+                                [attr.aria-label]="strings().label?.consoleDrawer?.closeTooltip ?? strings().intention?.close ?? ''">
+                            <mat-icon>keyboard_arrow_down</mat-icon>
+                        </button>
+                    }
                 </span>
             }
         </div>
@@ -77,10 +86,20 @@
                (keydown)="onKeyDown($event)"
                [matAutocomplete]="auto"
                autocomplete="off"
+               [readonly]="aiLoading"
+               [class.p3xr-input-ai-loading]="aiLoading"
                [placeholder]="aiLoading ? (strings().label?.aiTranslating) : ''"
                [style.background]="'var(--p3xr-input-bg)'"
                [style.color]="'var(--p3xr-input-color)'"
-               [style.border-color]="aiLoading ? 'var(--mat-sys-primary, var(--p3xr-input-border-color))' : 'var(--p3xr-input-border-color, var(--p3xr-border-color))'"></textarea>
+               [style.border-color]="aiLoading ? 'var(--mat-sys-primary, var(--p3xr-input-border-color))' : 'var(--p3xr-input-border-color, var(--p3xr-border-color))'"
+               [style.padding-right]="aiLoading ? '40px' : null"></textarea>
+        @if (aiLoading) {
+            <button type="button" class="p3xr-console-stop"
+                    [matTooltip]="strings().intention?.cancel"
+                    (click)="stopAi()">
+                <mat-icon>stop_circle</mat-icon>
+            </button>
+        }
         <mat-autocomplete #auto="matAutocomplete"
                           (optionSelected)="onAutocompleteSelected($event)"
                           class="p3xr-console-autocomplete-panel"

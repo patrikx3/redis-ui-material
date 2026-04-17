@@ -14,6 +14,7 @@ import { useAuthStore } from '../stores/auth'
 import { request, onSocketEvent } from '../stores/socket.service'
 import { setNavigate } from '../stores/navigation.store'
 import { trackPage } from '../stores/analytics'
+import ConsoleDrawer from './ConsoleDrawer.vue'
 
 const TOOLBAR_HEIGHT = 48
 
@@ -189,14 +190,54 @@ watch(() => auth.isAuthenticated, (v) => {
 }, { immediate: true })
 
 const unsubs: (() => void)[] = []
-unsubs.push(onSocketEvent('redis-disconnected', () => navigateTo('settings')))
+unsubs.push(onSocketEvent('redis-disconnected', () => {
+    state.connection = undefined
+    state.connectionState = 'none'
+    navigateTo('settings')
+}))
 unsubs.push(onSocketEvent('disconnect', () => { if (!showLogin.value) overlay.show({ message: strings.value?.status?.socketDisconnected }) }))
 unsubs.push(onSocketEvent('socket-error', () => { if (!showLogin.value) overlay.show({ message: strings.value?.status?.socketError }) }))
 onUnmounted(() => unsubs.forEach(u => u()))
 
 watch(() => route.path, (p) => {
     trackPage(p.toLowerCase().startsWith('/database/key/') ? '/database/key' : p)
+    const u = p.toLowerCase()
+    state.currentPage =
+        u.startsWith('/database') ? 'database' :
+        u.startsWith('/monitoring/profiler') ? 'profiler' :
+        u.startsWith('/monitoring/pubsub') ? 'pubsub' :
+        u.startsWith('/monitoring/memory-analysis') || u.startsWith('/monitoring/analysis') ? 'analysis' :
+        u.startsWith('/monitoring') ? 'pulse' :
+        u.startsWith('/search') ? 'search' :
+        u.startsWith('/timeseries') ? 'timeseries' :
+        u.startsWith('/info') ? 'info' :
+        u.startsWith('/settings') ? 'settings' :
+        'unknown'
 }, { immediate: true })
+
+// Console drawer: html class + CSS var sync. Only active when drawer is open AND
+// a connection is active — no connection = no drawer = no space reserved.
+watch(() => [state.consoleDrawerOpen, !!state.connection] as const, ([open, hasConn]) => {
+    const active = open && hasConn
+    if (active) {
+        document.documentElement.classList.add('p3xr-console-drawer-open')
+        document.documentElement.style.setProperty('--p3xr-console-drawer-height-active', '30vh')
+    } else {
+        document.documentElement.classList.remove('p3xr-console-drawer-open')
+        document.documentElement.style.setProperty('--p3xr-console-drawer-height-active', '0px')
+    }
+}, { immediate: true })
+
+onMounted(() => {
+    const handler = (e: KeyboardEvent) => {
+        if (e.key === '`' && (e.ctrlKey || e.metaKey) && !e.altKey && !e.shiftKey) {
+            e.preventDefault()
+            state.toggleConsoleDrawer()
+        }
+    }
+    window.addEventListener('keydown', handler)
+    unsubs.push(() => window.removeEventListener('keydown', handler))
+})
 
 // Prefetch other GUI frameworks — fetch HTML, parse script/style tags, cache all assets
 onMounted(() => {
@@ -418,14 +459,20 @@ onUnmounted(() => clearInterval(groupInterval))
 
         <v-spacer />
 
-        <!-- Donate -->
-        <v-btn v-if="isWide" variant="text" @click="openLink('donate')">
-            <i class="fas fa-donate" /><span>{{ strings?.title?.donate }}</span>
+        <!-- Console drawer toggle — only when connected (no console without connection). -->
+        <v-btn v-if="state.connection && isWide" variant="text"
+               :class="{ 'p3xr-active': state.consoleDrawerOpen }"
+               :aria-pressed="state.consoleDrawerOpen"
+               @click="state.toggleConsoleDrawer()">
+            <v-icon>mdi-console</v-icon><span>{{ strings?.intention?.console }}</span>
         </v-btn>
-        <v-tooltip v-else :text="strings?.title?.donate" location="top">
+        <v-tooltip v-else-if="state.connection" :text="strings?.intention?.console" location="top">
             <template #activator="{ props: tp }">
-                <v-btn v-bind="tp" variant="text" icon @click="openLink('donate')">
-                    <i class="fas fa-donate" />
+                <v-btn v-bind="tp" variant="text" icon
+                       :class="{ 'p3xr-active': state.consoleDrawerOpen }"
+                       :aria-pressed="state.consoleDrawerOpen"
+                       @click="state.toggleConsoleDrawer()">
+                    <v-icon>mdi-console</v-icon>
                 </v-btn>
             </template>
         </v-tooltip>
@@ -520,4 +567,7 @@ onUnmounted(() => clearInterval(groupInterval))
 
     </v-toolbar>
     </div>
+
+    <!-- Global bottom console drawer — only when connected. -->
+    <ConsoleDrawer v-if="!showLogin && state.connection" />
 </template>

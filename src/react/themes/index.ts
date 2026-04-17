@@ -94,6 +94,16 @@ function makeShared(toolbarBg: string, toolbarColor: string): ThemeOptions['comp
                 content: "> ";
                 opacity: 0.5;
             }
+            .p3xr-console-content-output-item pre {
+                font-family: 'Roboto Mono', monospace;
+                white-space: pre-wrap;
+                word-break: break-word;
+                overflow-wrap: anywhere;
+                /* Top margin creates the blank line between "> keys *" and the
+                   first result line; bottom margin is the gap before the next
+                   prompt. Matches Angular's browser default pre margin. */
+                margin: 1em 0;
+            }
             .p3xr-console-ai-result {
                 display: block;
             }
@@ -112,7 +122,9 @@ function makeShared(toolbarBg: string, toolbarColor: string): ThemeOptions['comp
                 white-space: pre-wrap;
                 word-break: break-word;
                 overflow-wrap: anywhere;
-                margin: 0;
+                /* Blank line between "> keys *" and the result (top margin) and
+                   before the next prompt (bottom). Same as Angular's browser default. */
+                margin: 1em 0;
             }
             #p3xr-console-input {
                 display: block;

@@ -5,7 +5,7 @@ import {
 } from '@mui/material'
 import {
     Storage, MonitorHeart, Search, Info, Settings,
-    Power, PowerOff, Language, Logout,
+    Power, PowerOff, Language, Logout, Terminal,
 } from '@mui/icons-material'
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 import { ColorLens } from '@mui/icons-material'
@@ -21,6 +21,7 @@ import { useAuthStore } from '../stores/auth.store'
 import LoginPage from '../pages/login/LoginPage'
 import { trackPage } from '../stores/analytics'
 import { ALL_THEME_KEYS } from '../themes'
+import ConsoleDrawer from './ConsoleDrawer'
 
 const TOOLBAR_HEIGHT = 48
 const LAYOUT_PADDING = 5
@@ -39,6 +40,8 @@ export default function Layout() {
     const connections = useRedisStateStore(s => s.connections)
     const version = useRedisStateStore(s => s.version)
     const hasRediSearch = useRedisStateStore(s => s.hasRediSearch)
+    const consoleDrawerOpen = useRedisStateStore(s => s.consoleDrawerOpen)
+    const toggleConsoleDrawer = useRedisStateStore(s => s.toggleConsoleDrawer)
     const settings = useSettingsStore()
     const { generalHandleError } = useCommonStore()
     const overlay = useOverlayStore()
@@ -215,6 +218,39 @@ export default function Layout() {
         })
     }, [highlightedLangIdx, languageAnchor])
 
+    // Reflect drawer-open state on <html> so CSS + JS recalc can size page content.
+    // Only active when we're connected (no connection = no drawer = no space reserved).
+    useEffect(() => {
+        const active = consoleDrawerOpen && Boolean(connection)
+        if (active) {
+            document.documentElement.classList.add('p3xr-console-drawer-open')
+            document.documentElement.style.setProperty('--p3xr-console-drawer-height-active', '30vh')
+        } else {
+            document.documentElement.classList.remove('p3xr-console-drawer-open')
+            document.documentElement.style.setProperty('--p3xr-console-drawer-height-active', '0px')
+        }
+    }, [consoleDrawerOpen, connection])
+
+    // Body never scrolls — the fixed-height #p3xr-layout-content container
+    // handles all page scrolling. Drawer and footer/header are position: fixed.
+    useEffect(() => {
+        const prev = document.body.style.overflow
+        document.body.style.overflow = 'hidden'
+        return () => { document.body.style.overflow = prev }
+    }, [])
+
+    // Ctrl+` (or Cmd+`) toggles the drawer globally
+    useEffect(() => {
+        const handler = (e: KeyboardEvent) => {
+            if (e.key === '`' && (e.ctrlKey || e.metaKey) && !e.altKey && !e.shiftKey) {
+                e.preventDefault()
+                toggleConsoleDrawer()
+            }
+        }
+        window.addEventListener('keydown', handler)
+        return () => window.removeEventListener('keydown', handler)
+    }, [toggleConsoleDrawer])
+
     // --- Electron bridge ---
     useEffect(() => {
         if (!isElectron) return
@@ -244,9 +280,10 @@ export default function Layout() {
         } catch {}
     }, [isAuthenticated])
 
-    // Subscribe to redis disconnect → navigate to settings
+    // Subscribe to redis disconnect → navigate to settings + reset connection state
     useEffect(() => {
         const unsub = onSocketEvent('redis-disconnected', () => {
+            useRedisStateStore.setState({ connection: undefined, connectionState: 'none' })
             navigateTo('settings')
         })
         return unsub
@@ -284,11 +321,26 @@ export default function Layout() {
     }, [])
 
     // Track route changes for analytics (matches Angular setupRouteTracking)
+    // Also updates the global currentPage signal — used by console drawer + AI context.
     useEffect(() => {
         const path = location.pathname.toLowerCase().startsWith('/database/key/')
             ? '/database/key'
             : location.pathname
         trackPage(path)
+
+        const u = location.pathname.toLowerCase()
+        const page =
+            u.startsWith('/database') ? 'database' :
+            u.startsWith('/monitoring/profiler') ? 'profiler' :
+            u.startsWith('/monitoring/pubsub') ? 'pubsub' :
+            u.startsWith('/monitoring/memory-analysis') || u.startsWith('/monitoring/analysis') ? 'analysis' :
+            u.startsWith('/monitoring') ? 'pulse' :
+            u.startsWith('/search') ? 'search' :
+            u.startsWith('/timeseries') ? 'timeseries' :
+            u.startsWith('/info') ? 'info' :
+            u.startsWith('/settings') ? 'settings' :
+            'unknown'
+        useRedisStateStore.setState({ currentPage: page as any })
     }, [location.pathname])
 
     // Show overlay on raw socket disconnect/error (matches Angular behavior, skip during login)
@@ -417,16 +469,22 @@ export default function Layout() {
 
             {/* ===== CONTENT ===== */}
             <Box id="p3xr-layout-content" sx={{
-                position: 'absolute', left: 0, right: 0,
-                top: TOOLBAR_HEIGHT,
-                bottom: TOOLBAR_HEIGHT,
+                position: 'fixed', left: 0, right: 0,
+                top: `${TOOLBAR_HEIGHT}px`,
+                bottom: `calc(${TOOLBAR_HEIGHT}px + ${consoleDrawerOpen ? '30vh' : '0px'})`,
                 padding: `${LAYOUT_PADDING}px`,
-                overflow: 'auto',
+                paddingBottom: '4px',
+                overflowY: 'auto',
+                overflowX: 'hidden',
                 display: 'flex',
                 flexDirection: 'column',
+                transition: 'bottom 150ms ease-out',
             }}>
                 {showLogin ? <LoginPage /> : <Outlet />}
             </Box>
+
+            {/* ===== GLOBAL CONSOLE DRAWER (only when connected) ===== */}
+            {!showLogin && connection && <ConsoleDrawer />}
 
             {/* ===== FOOTER ===== */}
             <AppBar id="p3xr-layout-footer-container" position="fixed" sx={{ top: 'auto', bottom: 0, height: TOOLBAR_HEIGHT, zIndex: 2 }}>
@@ -484,10 +542,23 @@ export default function Layout() {
 
                     <Box sx={{ flex: 1 }} />
 
-                    {/* Donate */}
-                    <FooterBtn icon={<i className="fas fa-donate" />}
-                        label={strings?.title?.donate}
-                        onClick={() => openLink('donate')} />
+                    {/* Console drawer toggle — only when connected (no console without connection). */}
+                    {connection && (isWide ? (
+                        <Button color="inherit" onClick={() => toggleConsoleDrawer()}
+                                aria-pressed={consoleDrawerOpen}
+                                sx={consoleDrawerOpen ? activeSx : undefined}>
+                            <Terminal fontSize="small" />
+                            <span>{strings?.intention?.console}</span>
+                        </Button>
+                    ) : (
+                        <Tooltip title={strings?.intention?.console || ''} placement="top">
+                            <IconButton color="inherit" onClick={() => toggleConsoleDrawer()}
+                                        aria-pressed={consoleDrawerOpen}
+                                        sx={consoleDrawerOpen ? activeSx : undefined}>
+                                <Terminal fontSize="small" />
+                            </IconButton>
+                        </Tooltip>
+                    ))}
 
                     {/* Language menu with search */}
                     {isGtSm ? (

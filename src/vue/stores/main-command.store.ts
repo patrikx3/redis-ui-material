@@ -47,6 +47,8 @@ export const useMainCommandStore = defineStore('mainCommand', () => {
             const i18n = useI18nStore()
             overlay.show({ message: i18n.strings?.title?.connectingRedis })
 
+            useRedisStateStore().connectionState = 'connecting'
+
             const response = await request({
                 action: 'connection/connect',
                 payload: { connection: cloned, db },
@@ -76,10 +78,14 @@ export const useMainCommandStore = defineStore('mainCommand', () => {
 
             common.loadRedisInfoResponse({ response })
             try { localStorage.setItem(settings.connectInfoStorageKey, JSON.stringify(cloned)) } catch {}
+
+            useRedisStateStore().connectionState = 'connected'
         } catch (error) {
             const settings = useSettingsStore()
             try { localStorage.removeItem(settings.connectInfoStorageKey) } catch {}
-            useRedisStateStore().connection = undefined
+            const rs = useRedisStateStore()
+            rs.connection = undefined
+            rs.connectionState = 'none'
             common.generalHandleError(error)
         } finally {
             overlay.hide()
@@ -169,6 +175,7 @@ export const useMainCommandStore = defineStore('mainCommand', () => {
 
         try { localStorage.removeItem(settings.connectInfoStorageKey) } catch {}
         redisState.connection = undefined
+        redisState.connectionState = 'none'
         redisState.redisConnections = {}
         redisState.monitor = false
 

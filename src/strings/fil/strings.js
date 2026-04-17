@@ -236,6 +236,221 @@ const strings = {
     aiRoutingNetwork: "Ang mga AI query ay niruruta sa pamamagitan ng network.corifeus.com. Kung mayroon kang sarili mong libreng Groq API key, maaari mong i-off ang switch na ito para dumiretso sa Groq nang walang network.corifeus.com.",
     aiMaxTokens: "Pinakamataas na token ng AI",
     aiMaxTokensInfo: "Pinakamataas na bilang ng token para sa mga sagot ng AI. Ang mas mataas na halaga ay nagbibigay ng mas mahahabang sagot ngunit maaaring gumamit ng mas maraming API credit.",
+    consoleDrawer: {
+      toggleTooltip: "I-toggle ang console",
+      clearTooltip: "I-clear ang scrollback",
+      closeTooltip: "Isara ang console",
+      aiSettingsTooltip: "AI mga setting",
+      modeRedis: "REDIS",
+      modeAi: "AI",
+      connectionChipNoDb: opts => `${opts.name}`,
+      connectionChipWithDb: opts => `${opts.name} · db ${opts.db}`,
+      pageChip: opts => `pahina: ${opts.page}`,
+      connectingTo: opts => `Kumokonekta sa ${opts.name}…`,
+      connectedTo: opts => `Nakakonekta sa ${opts.name} (Redis ${opts.version} ${opts.mode}, ${opts.modules} module na na-load)`,
+      connectedToNoInfo: opts => `Nakakonekta sa ${opts.name}`,
+      disconnectedFrom: opts => `Nadiskonekta mula sa ${opts.name}`,
+      readyIndicator: "handa na."
+    },
+    cheatsheet: {
+      title: "AI Cheatsheet — Ano ang maitatanong ko?",
+      subtitle: "I-click ang anumang prompt para i-paste ito sa console. Pagkatapos ay pindutin ang Enter.",
+      searchPlaceholder: "I-filter ang mga prompt...",
+      openOfficialDocs: "Redis Mga Utos ↗",
+      openOfficialDocsTooltip: "Buksan ang opisyal na Redis command reference sa redis.io",
+      closeTooltip: "Isara (Esc)",
+      empty: "Walang mga prompt na tumutugma sa iyong filter.",
+      footerHint: "Tip: i-type ang \"ai:\" na sinusundan ng kahit ano sa anumang wika — ang AI ay nakakaunawa ng 54 na wika at gumagamit ng live na Redis na estado kung kinakailangan.",
+      groups: {
+        diagnostics: {
+          name: "Mga live na diagnostic",
+          description: "Hilingin sa AI na siyasatin ang estado ng live na server sa pamamagitan ng mga ligtas na read-only na tool.",
+          prompts: [
+            "bakit mataas ang memory?",
+            "ipakita sa akin ang 10 pinakamabagal na query",
+            "aling mga kliyente ang konektado?",
+            "ano ang maxmemory policy?",
+            "mayroon bang mga kamakailang pagpapaalis?",
+            "mayroon bang latency na kaganapan?",
+            "gaano katagal ang server?",
+            "ano ang hit rate?",
+            "ipakita ang paggamit ng cpu",
+            "ibuod ang keyspace",
+            "gaano karaming memory ang ginagamit ng bawat uri ng data?",
+            "may humaharang ba sa server ngayon?"
+          ]
+        },
+        keys: {
+          name: "Mga susi",
+          description: "Siyasatin, hanapin, at mangatuwiran tungkol sa mga susi nang hindi nagki-click sa puno.",
+          prompts: [
+            "hanapin ang lahat ng key na tumutugma sa user:*",
+            "ilang susi sa bawat database?",
+            "ipakita ang pinakamalaking hash dito db",
+            "maghanap ng mga key na may TTL na wala pang 60 segundo",
+            "aling mga susi ang walang TTL?",
+            "anong uri ang susi session:abc?",
+            "tantyahin ang memorya na ginamit ng \"session:\" prefix",
+            "ipakita ang object encoding ng key user:42",
+            "mayroon bang anumang mga susi na malapit nang mag-expire?",
+            "aling namespace ang gumagamit ng pinakamaraming memorya?"
+          ]
+        },
+        dataTypes: {
+          name: "Mga uri ng data",
+          description: "Natural-language na parirala para sa paggawa/pagbasa/pag-update sa bawat uri ng Redis.",
+          prompts: [
+            "lumikha ng hash na pinangalanang user:1 na may mga field name=Alice age=30",
+            "magdagdag ng tatlong item sa listahan tasks",
+            "magdagdag ng mga miyembro sa set favourites",
+            "magdagdag ng mga nakapuntos na miyembro sa pinagsunod-sunod na hanay leaderboard",
+            "magdagdag ng kaganapan upang mag-stream events",
+            "makuha ang huling 10 entry mula sa stream events",
+            "makuha ang lahat ng field ng hash user:1",
+            "kumuha ng mga miyembro ng set favourites",
+            "makuha ang nangungunang 10 sa pamamagitan ng iskor mula sa leaderboard"
+          ]
+        },
+        modules: {
+          name: "Mga module",
+          description: "Mga query para sa na-load na Redis na mga module (lalabas lang ang mga kategorya sa ibaba kapag naroroon ang module).",
+          prompts: []
+        },
+        json: {
+          name: "RedisJSON",
+          description: "Available kapag na-load ang ReJSON module.",
+          prompts: [
+            "gumawa ng JSON na dokumento sa user:42 na may { name: \"Alice\", edad: 30 }",
+            "basahin ang field ng pangalan ng user:42",
+            "i-update ang edad na user:42 hanggang 31",
+            "ilista ang lahat ng JSON key",
+            "magtanggal ng field mula sa isang JSON na dokumento",
+            "kumuha ng nested field gamit ang JSONPath"
+          ]
+        },
+        search: {
+          name: "RediSearch",
+          description: "Available kapag na-load ang module ng paghahanap.",
+          prompts: [
+            "ilista ang lahat ng full-text index",
+            "magpatakbo ng full-text na paghahanap para sa \"redis\" sa index idx:products",
+            "lumikha ng hash-backed index na may pamagat ng mga field (TEXT) at presyo (NUMERIC)",
+            "kumuha ng impormasyon tungkol sa index idx:products",
+            "drop index idx:products",
+            "maghanap ng mga dokumento kung saan ang presyo ay nasa pagitan ng 10 at 50",
+            "sumulat ng hybrid na paghahanap na pinagsasama ang pagkakatulad ng text at vector"
+          ]
+        },
+        timeseries: {
+          name: "RedisTimeSeries",
+          description: "Available kapag na-load ang timeseries module.",
+          prompts: [
+            "ilista ang lahat ng timeseries key",
+            "magdagdag ng data point sa temp:room1",
+            "makuha ang saklaw ng temp:room1 mula kahapon hanggang ngayon",
+            "kumuha ng multi-range ayon sa label sensor=temp",
+            "bumuo ng 100 sine-wave data point para sa temp:room1",
+            "ipakita ang pagpapanatili at mga label para sa temp:room1"
+          ]
+        },
+        bloom: {
+          name: "RedisBloom (Bloom / Cuckoo / Top-K / CMS / T-Digest)",
+          description: "Available kapag na-load ang bf module.",
+          prompts: [
+            "suriin kung ang item na foo ay umiiral sa bloom filter spam:ips",
+            "magdagdag ng mga item sa bloom filter spam:ips",
+            "lumikha ng top-K na may pangalang popular na may K=10",
+            "query count-min sketch traffic para sa key /home",
+            "magdagdag ng mga halaga sa t-digest at makuha ang 95th percentile",
+            "ipakita ang impormasyon para sa bloom filter spam:ips"
+          ]
+        },
+        vectorSet: {
+          name: "VectorSet (Redis 8+)",
+          description: "Available kapag natukoy ang Redis 8+ (native VECTORSET type).",
+          prompts: [
+            "magdagdag ng vector sa embeddings",
+            "hanapin ang 10 pinakakatulad na vector sa isang query vector",
+            "ipakita ang mga sukat at bilang ng vectorset embeddings",
+            "tanggalin ang isang elemento mula sa vectorset embeddings",
+            "maghanap ayon sa pangalan ng elemento gamit ang VSIM"
+          ]
+        },
+        redis8: {
+          name: "Redis 8+ na feature",
+          description: "Ipinapakita kapag natukoy ang Redis 8+.",
+          prompts: [
+            "itakda ang hash field ttl na may HEXPIRE",
+            "makuha ang digest ng isang string value",
+            "magpatakbo ng hybrid full-text + vector search (FT.HYBRID)",
+            "magtakda ng maraming key na may nakabahaging pag-expire gamit ang MSETEX",
+            "tanggalin ang isang stream entry sa pangkat ng consumer (XDELEX)",
+            "ipakita ang cluster slot-stats para sa nangungunang 10 slot"
+          ]
+        },
+        scripting: {
+          name: "Pag-iskrip",
+          description: "Bumuo ng Lua / EVAL na mga script mula sa mga paglalarawan sa natural na wika.",
+          prompts: [
+            "sumulat ng atomic script na tumataas counter X lamang kung Y > 5",
+            "bumuo ng 100 random na key gamit ang Lua",
+            "i-convert ang shell pipeline na ito sa isang solong EVAL: mga key user:* | KUMUHA | hindi aktibo ang grep | DEL",
+            "i-port ang isang batch operation sa Lua para sa kaligtasan ng cluster",
+            "check-and-set style update sa isang Lua na tawag",
+            "umulit sa isang hash at magtanggal ng mga field na tumutugma sa isang pattern"
+          ]
+        },
+        cluster: {
+          name: "Cluster",
+          description: "Ipinapakita lang sa cluster mode.",
+          prompts: [
+            "ipakita ang impormasyon ng cluster",
+            "ilista ang mga cluster node",
+            "ipakita ang nangungunang 10 puwang ayon sa bilang ng susi",
+            "ipakita ang nangungunang 10 puwang ayon sa memorya",
+            "sinong master ang nagmamay-ari ng slot 5000?"
+          ]
+        },
+        acl: {
+          name: "ACL (Redis 6+)",
+          description: "Siyasatin ang mga user ng access-control at ang kasalukuyang koneksyon.",
+          prompts: [
+            "kanino ako konektado?",
+            "ilista ang lahat ng ACL user",
+            "anong mga pahintulot ang mayroon ako?",
+            "ipakita ang mga default na panuntunan ng user"
+          ]
+        },
+        qna: {
+          name: "Pangkalahatang Q&A",
+          description: "Magtanong ng Redis mga tanong sa kaalaman — walang mga tool, mga sagot lang.",
+          prompts: [
+            "ano ang ZADD?",
+            "paano gumagana ang cluster failover?",
+            "ipaliwanag SCAN vs KEYS",
+            "kailan ko dapat gamitin ang EVAL vs maramihang mga utos?",
+            "ano ang Redis na mga pagpipilian sa pagtitiyaga?",
+            "ano ang pagkakaiba ng RDB at AOF?",
+            "paano nagpapasya si Redis Sentinel sa isang bagong master?",
+            "ipaliwanag ang mga hash tag sa cluster mode"
+          ]
+        },
+        translate: {
+          name: "Natural-wika → Redis utos",
+          description: "Ilarawan kung ano ang gusto mo sa alinman sa 54 na wika; ang AI ay nagsusulat ng Redis na utos.",
+          prompts: [
+            "delete key user:42",
+            "palitan ang pangalan ng key foo sa bar",
+            "expire key session:abc sa loob ng 10 segundo",
+            "kopyahin ang key source sa destinasyon",
+            "dagdagan ang mga counter visit ng 5",
+            "itakda ang susing pagbati sa \"hello\" sa loob ng 1 oras",
+            "burahin lahat ng mga key user:*",
+            "ipakita sa akin ang 10 pinakaabalang mga key"
+          ]
+        }
+      }
+    },
     ssh: {
       on: "Naka-on ang SSH",
       off: "Naka-off ang SSH",
@@ -278,7 +493,7 @@ const strings = {
     treeSeparatorEmpty: "Kung ang tree separator ay walang laman, ang puno ay walang nested node, isang purong listahan lamang",
     treeSeparatorEmptyNote: "Walang nested node, puro listahan lang",
     welcomeConsole: "Maligayang pagdating sa Redis Console",
-    welcomeConsoleInfo: "Cursor UP o DOWN history ay pinagana",
+    welcomeConsoleInfo: "SHIFT + Cursor UP o DOWN history ay pinagana",
     redisListIndexInfo: "Walang laman para idagdag, -1 para i-prepend o i-save ito sa ipinapakitang posisyon.",
     console: "Console",
     connectiondAdd: "Magdagdag ng koneksyon",
@@ -854,6 +1069,13 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+  },
+  promo: {
+    title: "AI Network Assistant",
+    description: "Tuklasin ang aming libreng AI Network Assistant sa network.corifeus.com — suriin ang mga domain, IPs, DNS record, SSL certificate, email security, at network infrastructure. Pinapatakbo ng AI para sa instant, komprehensibong resulta.",
+    disclaimer: "Ang promosyon na ito ay ipinapakita lamang sa demo site at hindi lilitaw sa Docker, Electron, o mga web app deployment.",
+    toastMessage: "Subukan ang aming libreng AI Network Assistant sa network.corifeus.com — suriin ang mga domain, DNS, SSL, at higit pa!",
+    visit: "Bisitahin ang network.corifeus.com"
   }
 };
 module.exports = strings;

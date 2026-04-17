@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, OnDestroy, HostListener, NgZone, ChangeDetectorRef, ChangeDetectionStrategy, CUSTOM_ELEMENTS_SCHEMA, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy, HostListener, NgZone, ChangeDetectorRef, ChangeDetectionStrategy, CUSTOM_ELEMENTS_SCHEMA, ViewEncapsulation, ViewChild, ElementRef, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router, NavigationEnd } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -24,6 +24,7 @@ import { SettingsService } from '../services/settings.service';
 import { AuthService } from '../services/auth.service';
 import { IconRegistryService } from '../services/icon-registry.service';
 import { LoginComponent } from '../components/login.component';
+import { ConsoleDrawerComponent } from './console-drawer.component';
 
 /**
  * Angular layout component — replaces the AngularJS p3xrLayout component.
@@ -51,6 +52,7 @@ import { LoginComponent } from '../components/login.component';
         MatDividerModule,
         MatTooltipModule,
         LoginComponent,
+        ConsoleDrawerComponent,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     templateUrl: './layout.component.html',
@@ -90,11 +92,36 @@ export class LayoutComponent implements OnInit, OnDestroy {
         @Inject(IconRegistryService) iconRegistry: IconRegistryService,
     ) {
         iconRegistry.registerAll();
+
+        // Reflect the console-drawer open state on <html> so any page can layout
+        // around it via CSS custom properties (see console-drawer.component.scss).
+        // Only active when a connection is alive — no console without a connection,
+        // so the page must not reserve space for a phantom drawer.
+        effect(() => {
+            const open = this.state.consoleDrawerOpen();
+            const connected = this.state.connectionState() === 'connected';
+            if (open && connected) {
+                document.documentElement.classList.add('p3xr-console-drawer-open');
+            } else {
+                document.documentElement.classList.remove('p3xr-console-drawer-open');
+            }
+        });
     }
 
     @HostListener('document:keydown', ['$event'])
     onKeydown(event: KeyboardEvent): void {
+        // Ctrl+` (or Cmd+` on Mac) toggles the bottom console drawer globally.
+        if (event.key === '`' && (event.ctrlKey || event.metaKey) && !event.altKey && !event.shiftKey) {
+            event.preventDefault();
+            this.toggleConsoleDrawer();
+            return;
+        }
         this.shortcuts.handleKeydown(event);
+    }
+
+    toggleConsoleDrawer(): void {
+        this.state.toggleConsoleDrawer();
+        this.cdr.markForCheck();
     }
 
     ngOnInit(): void {
@@ -434,6 +461,8 @@ export class LayoutComponent implements OnInit, OnDestroy {
                 message: strings?.title?.connectingRedis ?? 'Connecting...',
             });
 
+            this.state.connectionState.set('connecting');
+
             const response = await this.socket.request({
                 action: 'connection/connect',
                 payload: { connection, db },
@@ -473,10 +502,13 @@ export class LayoutComponent implements OnInit, OnDestroy {
                 connection,
             );
 
+            this.state.connectionState.set('connected');
+
             // No navigation — just refresh the current view in place
         } catch (error) {
             this.removeStorageItem(this.settings.connectInfoStorageKey);
             this.state.connection.set(undefined);
+            this.state.connectionState.set('none');
             this.common.generalHandleError(error);
         } finally {
             this.overlay.hide();
@@ -548,6 +580,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
     private subscribeSocketEvents(): void {
         const sub1 = this.socket.redisDisconnected$.subscribe(() => {
             this.state.connection.set(undefined);
+            this.state.connectionState.set('none');
             this.nav.navigateTo('settings');
             this.cdr.markForCheck();
         });
@@ -566,11 +599,14 @@ export class LayoutComponent implements OnInit, OnDestroy {
     }
 
     private setupRouteTracking(): void {
-        if (/spider|bot|yahoo|bing|google|yandex|crawl|slurp|curl/i.test(navigator.userAgent)) return;
-
         const sub = this.router.events.pipe(
             filter((event): event is NavigationEnd => event instanceof NavigationEnd)
         ).subscribe((event) => {
+            // Update currentPage signal — used by the console drawer + AI context
+            this.state.currentPage.set(this.urlToPage(event.urlAfterRedirects));
+
+            // Google Analytics page tracking
+            if (/spider|bot|yahoo|bing|google|yandex|crawl|slurp|curl/i.test(navigator.userAgent)) return;
             try {
                 const path = event.urlAfterRedirects.toLowerCase().startsWith('/database/key/')
                     ? '/database/key'
@@ -582,6 +618,21 @@ export class LayoutComponent implements OnInit, OnDestroy {
             } catch { /* noop */ }
         });
         this.unsubFns.push(() => sub.unsubscribe());
+    }
+
+    private urlToPage(url: string): 'connections' | 'database' | 'pulse' | 'profiler' | 'pubsub' | 'analysis' |
+        'search' | 'timeseries' | 'info' | 'settings' | 'unknown' {
+        const u = url.toLowerCase();
+        if (u.startsWith('/database')) return 'database';
+        if (u.startsWith('/monitoring/profiler')) return 'profiler';
+        if (u.startsWith('/monitoring/pubsub')) return 'pubsub';
+        if (u.startsWith('/monitoring/memory-analysis') || u.startsWith('/monitoring/analysis')) return 'analysis';
+        if (u.startsWith('/monitoring')) return 'pulse';
+        if (u.startsWith('/search')) return 'search';
+        if (u.startsWith('/timeseries')) return 'timeseries';
+        if (u.startsWith('/info')) return 'info';
+        if (u.startsWith('/settings')) return 'settings';
+        return 'unknown';
     }
 
     /**

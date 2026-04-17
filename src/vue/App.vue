@@ -110,12 +110,33 @@ body.p3xr-theme-dark .v-application { color-scheme: dark !important; }
     background-color: rgba(0, 0, 0, 0.2) !important;
 }
 
-/* Content area */
+/* Content area — fixed-height scrollable container; shrinks when console drawer opens */
 #p3xr-layout-content {
-    position: absolute; left: 0; right: 0;
-    top: 48px; bottom: 48px;
-    padding: 5px; overflow: auto;
+    position: fixed; left: 0; right: 0;
+    top: 48px;
+    bottom: calc(48px + var(--p3xr-console-drawer-height-active, 0px));
+    padding: 5px;
+    padding-bottom: 4px !important;
+    overflow-y: auto;
+    overflow-x: hidden;
     display: flex; flex-direction: column;
+    transition: bottom 150ms ease-out;
+}
+
+/* Monitoring page owns its own tab-shell layout — drop the 4px so tab shell flush to bottom */
+#p3xr-layout-content:has(.p3xr-monitoring-shell-container) {
+    padding-bottom: 0 !important;
+}
+
+html.p3xr-console-drawer-open {
+    --p3xr-console-drawer-height-active: 30vh;
+}
+html:not(.p3xr-console-drawer-open) {
+    --p3xr-console-drawer-height-active: 0px;
+}
+
+body {
+    overflow: hidden;
 }
 
 /* Global button sizing — match Angular mat-raised-button (36px height, 14px font, uppercase) */

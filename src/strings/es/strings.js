@@ -238,6 +238,221 @@ const strings = {
     aiRoutingNetwork: "Las consultas de IA se enrutan a través de network.corifeus.com. Si tiene su propia clave API Groq gratuita, puede desactivar este interruptor.",
     aiMaxTokens: "Máximo de tokens de AI",
     aiMaxTokensInfo: "Número máximo de tokens para las respuestas de AI. Los valores más altos permiten respuestas más largas, pero pueden consumir más créditos de API.",
+    consoleDrawer: {
+      toggleTooltip: "Alternar consola",
+      clearTooltip: "Borrar desplazamiento hacia atrás",
+      closeTooltip: "Cerrar consola",
+      aiSettingsTooltip: "AI configuración",
+      modeRedis: "REDIS",
+      modeAi: "AI",
+      connectionChipNoDb: opts => `${opts.name}`,
+      connectionChipWithDb: opts => `${opts.name} · db ${opts.db}`,
+      pageChip: opts => `página: ${opts.page}`,
+      connectingTo: opts => `Conectándose a ${opts.name}…`,
+      connectedTo: opts => `Conectado a ${opts.name} (Redis ${opts.version} ${opts.mode}, ${opts.modules} módulos cargados)`,
+      connectedToNoInfo: opts => `Conectado a ${opts.name}`,
+      disconnectedFrom: opts => `Desconectado de ${opts.name}`,
+      readyIndicator: "Listo."
+    },
+    cheatsheet: {
+      title: "AI Hoja de referencia: ¿Qué puedo preguntar?",
+      subtitle: "Haga clic en cualquier mensaje para pegarlo en la consola. Luego presione Entrar.",
+      searchPlaceholder: "Filtrar mensajes...",
+      openOfficialDocs: "Redis Comandos ↗",
+      openOfficialDocsTooltip: "Abra la referencia oficial de comandos Redis en redis.io",
+      closeTooltip: "Cerrar (Esc)",
+      empty: "Ningún mensaje coincide con su filtro.",
+      footerHint: "Consejo: escriba \"ai:\" seguido de cualquier cosa en cualquier idioma: el AI comprende 54 idiomas y utiliza el estado Redis en vivo cuando es necesario.",
+      groups: {
+        diagnostics: {
+          name: "Diagnóstico en vivo",
+          description: "Solicite al AI que investigue el estado del servidor en vivo mediante herramientas seguras de solo lectura.",
+          prompts: [
+            "¿Por qué la memoria es alta?",
+            "muéstrame las 10 consultas más lentas",
+            "¿Qué clientes están conectados?",
+            "¿Cuál es la política de maxmemory?",
+            "¿Hay algún desalojo reciente?",
+            "¿Hay algún evento de latencia?",
+            "¿Cuánto tiempo lleva activo el servidor?",
+            "¿Cuál es la tasa de aciertos?",
+            "mostrar el uso de la CPU",
+            "resumir el espacio de claves",
+            "¿Cuánta memoria utiliza cada tipo de datos?",
+            "¿Hay algo bloqueando el servidor en este momento?"
+          ]
+        },
+        keys: {
+          name: "llaves",
+          description: "Inspeccione, encuentre y razone claves sin hacer clic en el árbol.",
+          prompts: [
+            "encuentre todas las claves que coincidan con user:*",
+            "¿Cuántas claves hay en cada base de datos?",
+            "muestra el hash más grande en este db",
+            "encontrar claves con TTL de menos de 60 segundos",
+            "¿Qué teclas no tienen TTL?",
+            "¿Qué tipo es la clave session:abc?",
+            "memoria estimada utilizada por el prefijo \"session:\"",
+            "muestra la codificación de objeto de la clave user:42",
+            "¿Hay alguna clave a punto de caducar?",
+            "¿Qué espacio de nombres utiliza más memoria?"
+          ]
+        },
+        dataTypes: {
+          name: "tipos de datos",
+          description: "Frases en lenguaje natural para crear/leer/actualizar en cada tipo Redis.",
+          prompts: [
+            "cree un hash llamado usuario:1 con campos nombre=Alice edad=30",
+            "agregue tres elementos a la lista tasks",
+            "agregar miembros para configurar favourites",
+            "agregar miembros puntuados al conjunto ordenado leaderboard",
+            "agregar un evento para transmitir events",
+            "obtener las últimas 10 entradas de la transmisión events",
+            "obtener todos los campos del usuario hash: 1",
+            "obtener miembros del conjunto favourites",
+            "consigue el top 10 por puntuación de leaderboard"
+          ]
+        },
+        modules: {
+          name: "Módulos",
+          description: "Consultas para módulos Redis cargados (las categorías siguientes aparecen solo cuando el módulo está presente).",
+          prompts: []
+        },
+        json: {
+          name: "RedisJSON",
+          description: "Disponible cuando el módulo ReJSON está cargado.",
+          prompts: [
+            "cree un documento JSON en user:42 con {nombre: \"Alice\", edad: 30}",
+            "lea el campo de nombre de user:42",
+            "actualizar la edad de user:42 a 31",
+            "enumerar todas las claves JSON",
+            "eliminar un campo de un documento JSON",
+            "obtener un campo anidado usando JSONPath"
+          ]
+        },
+        search: {
+          name: "RediSearch",
+          description: "Disponible cuando se carga el módulo de búsqueda.",
+          prompts: [
+            "enumerar todos los índices de texto completo",
+            "ejecute una búsqueda de texto completo para \"redis\" en el índice idx:products",
+            "cree un índice respaldado por hash con los campos título (TEXT) y precio (NUMERIC)",
+            "obtener información sobre el índice idx:products",
+            "índice de caída idx:products",
+            "encontrar documentos cuyo precio esté entre 10 y 50",
+            "escribir una búsqueda híbrida que combine texto y similitud de vectores"
+          ]
+        },
+        timeseries: {
+          name: "RedisTimeSeries",
+          description: "Disponible cuando se carga el módulo de serie temporal.",
+          prompts: [
+            "enumerar todas las claves de la serie temporal",
+            "agregar un punto de datos a temp:room1",
+            "obtener el rango de temp:room1 desde ayer hasta ahora",
+            "obtener rango múltiple por etiqueta sensor=temp",
+            "generar 100 puntos de datos de onda sinusoidal para temp:room1",
+            "mostrar retención y etiquetas para temp:room1"
+          ]
+        },
+        bloom: {
+          name: "RedisBloom (Floración / Cuco / Top-K / CMS / T-Digest)",
+          description: "Disponible cuando el módulo bf está cargado.",
+          prompts: [
+            "compruebe si el elemento foo existe en el filtro de floración spam:ips",
+            "agregar elementos al filtro de floración spam:ips",
+            "cree un top-K llamado popular con K=10",
+            "consultar el boceto de recuento mínimo traffic para la clave /home",
+            "sume valores al resumen t y obtenga el percentil 95",
+            "mostrar información para el filtro de floración spam:ips"
+          ]
+        },
+        vectorSet: {
+          name: "VectorSet (Redis 8+)",
+          description: "Disponible cuando se detecta Redis 8+ (tipo VECTORSET nativo).",
+          prompts: [
+            "agregar un vector a embeddings",
+            "encuentre los 10 vectores más similares a un vector de consulta",
+            "mostrar dimensiones y recuento del conjunto de vectores embeddings",
+            "eliminar un elemento del conjunto de vectores embeddings",
+            "buscar por nombre de elemento con VSIM"
+          ]
+        },
+        redis8: {
+          name: "Redis 8+ funciones",
+          description: "Se muestra cuando se detecta Redis 8+.",
+          prompts: [
+            "establecer ttl del campo hash con HEXPIRE",
+            "obtener el resumen de un valor de cadena",
+            "ejecutar una búsqueda híbrida de texto completo + vector (FT.HYBRID)",
+            "establezca varias claves con una caducidad compartida usando MSETEX",
+            "eliminar una entrada de secuencia con grupo de consumidores (XDELEX)",
+            "mostrar estadísticas de espacios del grupo para los 10 primeros espacios"
+          ]
+        },
+        scripting: {
+          name: "secuencias de comandos",
+          description: "Genere scripts Lua / EVAL a partir de descripciones en lenguaje natural.",
+          prompts: [
+            "escriba un script atómico que incremente counter X solo si Y > 5",
+            "generar 100 claves aleatorias con Lua",
+            "convierta esta canalización de shell en un único EVAL: claves user:* | OBTENER | grep inactivo | DEL",
+            "transferir una operación por lotes a Lua para la seguridad del clúster",
+            "comprobar y configurar la actualización del estilo en una sola llamada Lua",
+            "iterar sobre un hash y eliminar campos que coincidan con un patrón"
+          ]
+        },
+        cluster: {
+          name: "Clúster",
+          description: "Se muestra solo en modo clúster.",
+          prompts: [
+            "mostrar información del clúster",
+            "enumerar los nodos del clúster",
+            "mostrar los 10 primeros puestos por número de claves",
+            "mostrar los 10 primeros puestos por memoria",
+            "¿Qué maestro posee la ranura 5000?"
+          ]
+        },
+        acl: {
+          name: "ACL (Redis 6+)",
+          description: "Inspeccionar los usuarios de control de acceso y la conexión actual.",
+          prompts: [
+            "¿Con quién estoy conectado?",
+            "enumerar todos los usuarios ACL",
+            "¿Qué permisos tengo?",
+            "mostrar las reglas de usuario predeterminadas"
+          ]
+        },
+        qna: {
+          name: "Preguntas y respuestas generales",
+          description: "Haga Redis preguntas de conocimiento: sin herramientas, solo respuestas.",
+          prompts: [
+            "¿Qué es ZADD?",
+            "¿Cómo funciona la conmutación por error del clúster?",
+            "explique SCAN frente a KEYS",
+            "¿Cuándo debo usar EVAL frente a múltiples comandos?",
+            "¿Cuáles son las opciones de persistencia de Redis?",
+            "¿Cuál es la diferencia entre RDB y AOF?",
+            "¿Cómo decide Redis Sentinel sobre un nuevo maestro?",
+            "explicar las etiquetas hash en modo clúster"
+          ]
+        },
+        translate: {
+          name: "Lenguaje natural → comando Redis",
+          description: "Describe lo que quieres en cualquiera de los 54 idiomas; el AI escribe el comando Redis.",
+          prompts: [
+            "eliminar clave user:42",
+            "cambiar el nombre de la clave foo a barra",
+            "caducar la clave session:abc en 10 segundos",
+            "copiar el origen de la clave al destino",
+            "incrementar el contador de visitas en 5",
+            "establezca el saludo clave en \"hello\" durante 1 hora",
+            "eliminar todas las claves user:*",
+            "muéstrame las 10 claves más ocupadas"
+          ]
+        }
+      }
+    },
     ssh: {
       on: 'SSH activado',
       off: 'SSH desactivado',
@@ -280,7 +495,7 @@ const strings = {
     treeSeparatorEmpty: "Si el separador del árbol está vacío, el árbol no tendrá nodos anidados, solo una lista simple",
     treeSeparatorEmptyNote: "Sin nodos anidados, solo una lista simple",
     welcomeConsole: "Bienvenido a la consola Redis",
-    welcomeConsoleInfo: "El historial con cursor ARRIBA o ABAJO está habilitado",
+    welcomeConsoleInfo: "SHIFT + El historial con cursor ARRIBA o ABAJO está habilitado",
     redisListIndexInfo: "Vacío para agregar al final, -1 para agregar al inicio o guardar en la posición mostrada.",
     console: "Consola",
     connectiondAdd: "Agregar conexión",
@@ -856,6 +1071,13 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+  },
+  promo: {
+    title: "AI Asistente de red",
+    description: "Descubra nuestro asistente de red AI gratuito en network.corifeus.com: analice dominios, IP, registros DNS, certificados SSL, seguridad del correo electrónico e infraestructura de red. Desarrollado por AI para obtener resultados instantáneos y completos.",
+    disclaimer: "Esta promoción solo se muestra en el sitio de demostración y no aparecerá en Docker, Electron ni en implementaciones de aplicaciones web.",
+    toastMessage: "Pruebe nuestro asistente de red AI gratuito en network.corifeus.com: analice dominios, DNS, SSL y más.",
+    visit: "Visita network.corifeus.com"
   }
 };
 module.exports = strings;

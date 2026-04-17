@@ -2,6 +2,7 @@
 import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import { storeToRefs } from 'pinia'
 import P3xrButton from '../../components/P3xrButton.vue'
+import AiCheatsheetDialog from '../../dialogs/AiCheatsheetDialog.vue'
 import { useI18nStore } from '../../stores/i18n'
 import { useRedisStateStore } from '../../stores/redis-state'
 import { useCommonStore } from '../../stores/common'
@@ -13,10 +14,13 @@ import { consoleParse } from '../../stores/redis-parser'
 const props = withDefaults(defineProps<{
     embedded?: boolean
     collapsed?: boolean
+    showCloseButton?: boolean
 }>(), {
     embedded: false,
     collapsed: false,
+    showCloseButton: false,
 })
+const emit = defineEmits<{ (e: 'closeRequest'): void }>()
 
 const i18n = useI18nStore()
 const state = useRedisStateStore()
@@ -31,6 +35,7 @@ const aiEnabled = computed(() => state.cfg?.aiEnabled !== false)
 const searchText = ref('')
 const currentHint = ref('')
 const aiLoading = ref(false)
+let aiRequestSeq = 0
 const aiAutoDetect = ref((() => {
     try { return localStorage.getItem('p3xr-ai-auto-detect') !== 'false' } catch { return true }
 })())
@@ -166,10 +171,13 @@ function scrollToBottom() {
 }
 
 function forceScrollToBottom() {
-    setTimeout(() => {
+    // Double rAF + late setTimeout — survives late <pre> layout / large tool-trail renders.
+    const doScroll = () => {
         const s = scrollerEl.value
         if (s) s.scrollTop = s.scrollHeight
-    }, 0)
+    }
+    requestAnimationFrame(() => requestAnimationFrame(doScroll))
+    setTimeout(doScroll, 120)
 }
 
 function outputAppend(message: string) {
@@ -238,6 +246,7 @@ function looksLikeNaturalLanguage(input: string, errorMsg: string): boolean {
 // --- AI query ---
 async function executeAiQuery(prompt: string, originalInput: string): Promise<boolean> {
     if (!prompt) return false
+    const mySeq = ++aiRequestSeq
     aiLoading.value = true
     try {
         const info = state.info || {}
@@ -257,27 +266,69 @@ async function executeAiQuery(prompt: string, originalInput: string): Promise<bo
         if (dbKeys.length > 0) ctx.databases = dbKeys.map((k: string) => `${k}: ${keyspace[k]}`)
         if (modules.length > 0) ctx.modules = modules
         ctx.uiLanguage = i18n.currentLang
+        ctx.connectionState = state.connectionState
+        ctx.currentPage = state.currentPage
+        if (state.connection?.name) ctx.connectionName = state.connection.name
+        if (state.currentDatabase !== undefined) ctx.currentDatabase = state.currentDatabase
 
         const response = await request({ action: 'ai/redis-query', payload: { prompt, context: ctx } })
+        if (mySeq !== aiRequestSeq) return false
         const command = response.command || ''
         const explanation = response.explanation || ''
+        const toolTrail = Array.isArray(response.toolTrail) ? response.toolTrail : []
+
+        // Print each tool call + outcome to the scrollback (transparency).
+        for (const t of toolTrail) {
+            const argsStr = t.args && Object.keys(t.args).length
+                ? '(' + Object.entries(t.args).map(([k, v]) => `${k}=${JSON.stringify(v)}`).join(', ') + ')'
+                : '()'
+            const head = `<span style="opacity: 0.85;"><strong>tool:</strong> <code>${htmlEncode(t.name + argsStr)}</code> <span style="opacity: 0.6;">${t.ms ?? 0}ms</span></span>`
+            if (t.ok) {
+                const preview = String(t.result ?? '').split('\n').slice(0, 12).join('\n')
+                outputAppend(`${head}<br/><pre style="opacity: 0.85; margin: 2px 0 6px 0;">${htmlEncode(preview)}</pre>`)
+            } else {
+                outputAppend(`${head}<br/><span style="color: rgb(var(--v-theme-error));">${htmlEncode(t.error || 'tool error')}</span>`)
+            }
+        }
+
+        // Tool-use investigations return the command as a suggestion — do NOT
+        // auto-prefill the input. Pure translation path (no tools) prefills.
+        const usedTools = toolTrail.length > 0
 
         if (command) {
-            let line = `<strong>&gt; <span style="color: rgb(var(--v-theme-primary));">AI &rarr;</span></strong> <code>${htmlEncode(command)}</code>`
-            if (explanation) line += `<br/><span style="opacity: 0.7; font-size: 0.9em;">${htmlEncode(explanation)}</span>`
-            outputAppend(line + '<br/>')
-            searchText.value = command
-            currentHint.value = ''
-            aiCommandPending = true
-            nextTick(() => autoResize())
+            let line = `<strong><span style="color: rgb(var(--v-theme-primary));">AI &rarr;</span></strong> <code>${htmlEncode(command)}</code>`
+            if (explanation) line += `<pre>${htmlEncode(explanation)}</pre>`
+            outputAppend(line)
+            if (!usedTools) {
+                searchText.value = command
+                currentHint.value = ''
+                aiCommandPending = true
+                nextTick(() => autoResize())
+            }
+        } else if (explanation) {
+            outputAppend(`<pre>${htmlEncode(explanation)}</pre>`)
         }
         return true
     } catch (e: any) {
+        if (mySeq !== aiRequestSeq) return false
         outputAppend(`<span style="color: rgb(var(--v-theme-error));">AI error: ${htmlEncode(e?.message || String(e))}</span>`)
         return false
     } finally {
-        aiLoading.value = false
+        if (mySeq === aiRequestSeq) {
+            aiLoading.value = false
+        }
     }
+}
+
+function stopAi() {
+    aiRequestSeq++
+    aiLoading.value = false
+    searchText.value = ''
+    currentHint.value = ''
+    nextTick(() => {
+        autoResize()
+        ;(inputEl.value as any)?.focus?.()
+    })
 }
 
 // --- Command execution ---
@@ -293,7 +344,7 @@ async function executeCommand() {
     // AI prefix
     if (/^ai:\s*/i.test(enter)) {
         const prompt = enter.replace(/^ai:\s*/i, '').trim()
-        outputAppend(`<strong>&gt; ${htmlEncode(enter)}</strong>`)
+        outputAppend(`<strong>${htmlEncode(enter)}</strong>`)
         updateHistory(enter)
         await executeAiQuery(prompt, enter)
         forceScrollToBottom()
@@ -305,7 +356,6 @@ async function executeCommand() {
         aiCommandPending = false
     }
 
-    outputAppend(`<strong>&gt; ${htmlEncode(enter)}</strong>`)
     updateHistory(enter)
 
     try {
@@ -314,7 +364,9 @@ async function executeCommand() {
             payload: { command: enter },
         })
         const result = htmlEncode(String(consoleParse(response.result)))
-        outputAppend(`<pre>${result}</pre>`)
+        // Combine command + result in a single span so the "> " ::before prefix
+        // only renders once (same pattern as Angular and React).
+        outputAppend(`<strong>${htmlEncode(enter)}</strong><br/><pre>${result}</pre>`)
 
         // Refresh after write commands
         if (props.embedded) {
@@ -325,11 +377,12 @@ async function executeCommand() {
 
         // AI auto-detect: try AI first, suppress error if AI succeeds
         if (aiEnabled.value && aiAutoDetect.value && looksLikeNaturalLanguage(enter, errorMsg)) {
+            outputAppend(`<strong>${htmlEncode(enter)}</strong>`)
             const aiSuccess = await executeAiQuery(enter, enter)
             if (aiSuccess) return
         }
 
-        outputAppend(`<span style="color: rgb(var(--v-theme-error));">${htmlEncode(errorMsg)}</span>`)
+        outputAppend(`<strong>${htmlEncode(enter)}</strong><br/><pre style="color: rgb(var(--v-theme-error));">${htmlEncode(errorMsg)}</pre>`)
     }
 
     forceScrollToBottom()
@@ -421,7 +474,8 @@ function clearConsole() {
     const welcome = strings.value?.label?.welcomeConsole ?? 'Welcome to the Redis Console'
     const info = strings.value?.label?.welcomeConsoleInfo ?? 'Shift + Cursor UP or DOWN for history'
     outputAppend(`<strong>${welcome}</strong>`)
-    outputAppend(`${info}<br/>`)
+    outputAppend(`${info}`)
+    el.insertAdjacentHTML('beforeend', '<div class="p3xr-console-spacer">&nbsp;</div>')
     persistNow()
     forceScrollToBottom()
     inputEl.value?.focus()
@@ -432,8 +486,15 @@ function toggleAiAutoDetect() {
     try { localStorage.setItem('p3xr-ai-auto-detect', String(aiAutoDetect.value)) } catch {}
 }
 
+const cheatsheetOpen = ref(false)
 function openCommands() {
-    window.open('https://redis.io/commands', '_blank')
+    cheatsheetOpen.value = true
+}
+function onCheatsheetPick(prompt: string) {
+    searchText.value = prompt
+    currentHint.value = ''
+    nextTick(() => autoResize())
+    inputEl.value?.focus()
 }
 
 // --- Focus/blur for auto-resize ---
@@ -463,7 +524,8 @@ onMounted(() => {
         const welcome = strings.value?.label?.welcomeConsole ?? 'Welcome to the Redis Console'
         const info = strings.value?.label?.welcomeConsoleInfo ?? 'Shift + Cursor UP or DOWN for history'
         outputAppend(`<strong>${welcome}</strong>`)
-        outputAppend(`${info}<br/>`)
+        outputAppend(`${info}`)
+        el.insertAdjacentHTML('beforeend', '<div class="p3xr-console-spacer">&nbsp;</div>')
         persistNow()
     }
 })
@@ -495,6 +557,18 @@ onMounted(() => {
                         :label="strings?.intention?.clear"
                         icon="mdi-backspace"
                     />
+                    <!-- Close (drawer host only) -->
+                    <v-tooltip v-if="showCloseButton"
+                               :text="strings?.label?.consoleDrawer?.closeTooltip ?? strings?.intention?.close ?? ''"
+                               location="top">
+                        <template #activator="{ props: tp }">
+                            <v-btn v-bind="tp" variant="text" icon
+                                   :aria-label="strings?.label?.consoleDrawer?.closeTooltip ?? strings?.intention?.close ?? ''"
+                                   @click.stop="emit('closeRequest')">
+                                <v-icon>mdi-chevron-down</v-icon>
+                            </v-btn>
+                        </template>
+                    </v-tooltip>
                 </div>
             </div>
         </div>
@@ -528,20 +602,36 @@ onMounted(() => {
                 ref="inputEl"
                 v-model="searchText"
                 class="p3xr-console-input"
+                :class="{ 'p3xr-console-input-ai-loading': aiLoading }"
                 :placeholder="aiLoading ? strings?.label?.aiTranslating : ''"
+                :readonly="aiLoading"
                 rows="1"
                 autocomplete="off"
                 :style="{
                     backgroundColor: inputBg,
                     color: inputColor,
                     borderColor: aiLoading ? 'rgb(var(--v-theme-primary))' : inputBorder,
+                    paddingRight: aiLoading ? '40px' : undefined,
                 }"
                 @keydown="onKeyDown"
                 @focus="onInputFocus"
                 @blur="onInputBlur"
                 @paste="onInputPaste"
             />
+            <button v-if="aiLoading" type="button" class="p3xr-console-stop" @click="stopAi">
+                <v-tooltip activator="parent" location="top">
+                    {{ strings?.intention?.cancel }}
+                </v-tooltip>
+                <v-icon>mdi-stop-circle</v-icon>
+            </button>
         </div>
+
+        <!-- AI Cheatsheet — opens via the toolbar "Redis Commands" button. -->
+        <AiCheatsheetDialog
+            :open="cheatsheetOpen"
+            @close="cheatsheetOpen = false"
+            @pick="onCheatsheetPick"
+        />
     </div>
 </template>
 
@@ -687,6 +777,38 @@ onMounted(() => {
     min-width: 0;
 }
 
+.p3xr-console-input-ai-loading {
+    opacity: 0.55;
+    cursor: not-allowed !important;
+}
+
+.p3xr-console-stop {
+    position: absolute;
+    top: 50%;
+    right: 6px;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    padding: 2px;
+    margin: 0;
+    cursor: pointer;
+    color: rgb(var(--v-theme-primary));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    line-height: 1;
+}
+.p3xr-console-stop:hover {
+    opacity: 0.8;
+}
+.p3xr-console-stop :deep(.v-icon) {
+    color: rgb(var(--v-theme-primary)) !important;
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+}
+
 .p3xr-console-hint {
     font-family: 'Roboto Mono', monospace;
     font-size: 12px;
@@ -750,6 +872,13 @@ onMounted(() => {
     white-space: pre-wrap;
     word-break: break-word;
     overflow-wrap: anywhere;
-    margin: 0;
+    /* Top margin creates a blank line between "> keys *" and the result;
+       bottom margin creates the gap before the next prompt. Matches Angular's
+       default browser pre margin. */
+    margin: 1em 0;
+}
+.p3xr-console-content-output-item:before {
+    content: "> ";
+    opacity: 0.5;
 }
 </style>

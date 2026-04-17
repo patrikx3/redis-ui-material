@@ -59,9 +59,21 @@ export default function PubSubPage() {
         const el = outputRef.current
         if (!el) return
         const rect = el.getBoundingClientRect()
-        const available = window.innerHeight - rect.top - TOOLBAR_HEIGHT - 8
+        const drawerCssValue = getComputedStyle(document.documentElement)
+            .getPropertyValue('--p3xr-console-drawer-height-active').trim()
+        let drawerHeight = 0
+        if (drawerCssValue.endsWith('vh')) drawerHeight = Math.round((parseFloat(drawerCssValue) / 100) * window.innerHeight)
+        else if (drawerCssValue.endsWith('px')) drawerHeight = parseFloat(drawerCssValue)
+        const available = window.innerHeight - rect.top - TOOLBAR_HEIGHT - drawerHeight - 8
         el.style.height = Math.max(available, 100) + 'px'
     }, [])
+
+    // Re-run height calculation when the global console drawer opens/closes
+    const drawerOpen = useRedisStateStore(s => s.consoleDrawerOpen)
+    useEffect(() => {
+        const t = setTimeout(() => recalcHeight(), 160) // after the 150ms drawer transition
+        return () => clearTimeout(t)
+    }, [drawerOpen, recalcHeight])
 
     useEffect(() => {
         document.body.classList.add('p3xr-no-main-scroll')

@@ -238,6 +238,232 @@ const strings = {
     aiRoutingNetwork: "AI විමසුම් network.corifeus.com හරහා මාර්ගගත කෙරේ. ඔබට ඔබේම නොමිලේ Groq API යතුරක් තිබේ නම්, මෙම ස්විචය අක්‍රිය කර network.corifeus.com නොමැතිව සෘජුවම Groq වෙත මාර්ගගත කළ හැක.",
     aiMaxTokens: "AI උපරිම ටෝකන",
     aiMaxTokensInfo: "AI ප්‍රතිචාර සඳහා උපරිම ටෝකන ගණන. වැඩි අගයන් දිගු ප්‍රතිචාර ලබා දෙයි, නමුත් වැඩි API ක්‍රෙඩිට් භාවිත කළ හැක.",
+    consoleDrawer: {
+      toggleTooltip: "කොන්සෝලය පෙන්වන්න/සඟවන්න",
+      clearTooltip: "කොන්සෝල ඉතිහාසය හිස් කරන්න",
+      closeTooltip: "කොන්සෝලය වසන්න",
+      aiSettingsTooltip: "AI සැකසුම්",
+      modeRedis: "REDIS",
+      modeAi: "AI",
+      connectionChipNoDb: opts => `${opts.name}`,
+      connectionChipWithDb: opts => `${opts.name} · db ${opts.db}`,
+      pageChip: opts => `පිටුව: ${opts.page}`,
+      connectingTo: opts => `${opts.name} වෙත සම්බන්ධ වෙමින්…`,
+      connectedTo: opts => `${opts.name} වෙත සම්බන්ධයි (Redis ${opts.version} ${opts.mode}, මොඩියුල ${opts.modules} පූරණය කර ඇත)`,
+      connectedToNoInfo: opts => `${opts.name} වෙත සම්බන්ධයි`,
+      disconnectedFrom: opts => `${opts.name} සමඟ සම්බන්ධතාවය කඩවිය`,
+      notConnected: "සම්බන්ධ වී නැත.",
+      limitedAiOnly: "සීමිත AI පමණි — සාමාන්‍ය Redis ප්‍රශ්න සහ පිළිතුරු ක්‍රියා කරයි.",
+      connectHint: "සජීවී රෝගනිර්ණය සඳහා මෙය ටයිප් කරන්න: connect <name>",
+      cheatsheetHint: "ඔබට කුමක් අසන්න පුළුවන්ද බලන්න ai: help ටයිප් කරන්න.",
+      needsConnection: "මෙයට සක්‍රීය සම්බන්ධතාවයක් අවශ්‍යයි. මුලින් \"connect <name>\" ටයිප් කරන්න.",
+      aiNeedsConnectionReason: "සජීවී තත්ත්ව AI (tool use) Redis වෙත සම්බන්ධ වූ විට පමණක් ලබාගත හැක.",
+      verbNeedsConnection: opts => `"${opts.verb}" සඳහා සක්‍රීය සම්බන්ධතාවයක් අවශ්‍යයි — මුලින් "connect <name>" ටයිප් කරන්න.`,
+      aiLimitedMode: "AI සීමිත මාදිලියේ ඇත — ඔබ සම්බන්ධ වන තෙක් සාමාන්‍ය Redis දැනුම පිළිබඳ ප්‍රශ්න පමණක් ක්‍රියා කරයි.",
+      welcomeDisconnected: "සාදරයෙන් පිළිගනිමු. ඔබ තවමත් කිසිදු Redis instance එකකට සම්බන්ධ වී නොමැත.",
+      readyIndicator: "සූදානම්.",
+    },
+    cheatsheet: {
+      title: "AI චීට්ෂීට් — මට අසන්න පුළුවන් මොනවාද?",
+      subtitle: "කොන්සෝලයට අලවන්න ඕනෑම ප්‍රොම්ප්ට් එකක් ක්ලික් කරන්න. ඉන්පසු Enter ඔබන්න.",
+      searchPlaceholder: "ප්‍රොම්ප්ට් පෙරහන් කරන්න…",
+      openOfficialDocs: "Redis විධාන ↗",
+      openOfficialDocsTooltip: "redis.io හි නිල Redis විධාන යොමුව විවෘත කරන්න",
+      closeTooltip: "වසන්න (Esc)",
+      empty: "ඔබේ පෙරනයට ගැළපෙන ප්‍රොම්ප්ට් නොමැත.",
+      footerHint: "ඉඟිය: ඕනෑම භාෂාවකින් \"ai:\" පසුව ඕනෑම දෙයක් ටයිප් කරන්න — AI භාෂා 54ක් තේරුම් ගෙන අවශ්‍ය විට සජීවී Redis තත්ත්වය භාවිත කරයි.",
+
+      // Each group has: name (category label), match (search-filter alias), prompts (array of example strings)
+      groups: {
+        diagnostics: {
+          name: "සජීවී විනිශ්චය",
+          description: "ආරක්ෂිත කියවීම-පමණක් මෙවලම් හරහා සජීවී සේවාදායක තත්ත්වය පරීක්ෂා කිරීමට AI ට කියන්න.",
+          prompts: [
+            "මතකය ඉහළ ඇයි?",
+            "මන්දගාමීම විමසුම් 10 පෙන්වන්න",
+            "කුමන සේවාදායකයන් සම්බන්ධ වී ඇත්ද?",
+            "maxmemory ප්‍රතිපත්තිය කුමක්ද?",
+            "මෑතකාලීන eviction කිසිවක් තිබේද?",
+            "latency සිදුවීමක් තිබේද?",
+            "සේවාදායකය කොපමණ කාලයක් ක්‍රියාත්මකව තිබේද?",
+            "hit rate කුමක්ද?",
+            "CPU භාවිතය පෙන්වන්න",
+            "keyspace සාරාංශ කරන්න",
+            "එක් එක් දත්ත වර්ගය කොපමණ මතකයක් භාවිත කරයිද?",
+            "දැන් සේවාදායකය අවහිර කරන දෙයක් තිබේද?"
+          ]
+        },
+        keys: {
+          name: "යතුරු",
+          description: "ගසෙහි ක්ලික් නොකර යතුරු පරීක්ෂා කිරීම, සොයා ගැනීම සහ විනිශ්චය කිරීම.",
+          prompts: [
+            "user:* හා ගැළපෙන සියලු යතුරු සොයන්න",
+            "එක් එක් දත්ත සමුදායේ යතුරු කීයක් තිබේද?",
+            "මෙම db හි විශාලතම hash පෙන්වන්න",
+            "තත්පර 60ට වඩා අඩු TTL ඇති යතුරු සොයන්න",
+            "කුමන යතුරුවලට TTL නැතිද?",
+            "session:abc යතුර කුමන වර්ගයද?",
+            "\"session:\" උපසර්ගයෙන් භාවිත වන මතකය ඇස්තමේන්තු කරන්න",
+            "user:42 යතුරේ වස්තු කේතනය පෙන්වන්න",
+            "අවසන් වීමට ආසන්න යතුරු තිබේද?",
+            "කුමන namespace වැඩිම මතකය භාවිත කරයිද?"
+          ]
+        },
+        dataTypes: {
+          name: "දත්ත වර්ග",
+          description: "සෑම Redis වර්ගයක්ම සඳහා නිර්මාණය/කියවීම/යාවත්කාලීනය සඳහා ස්වභාවික භාෂා වදන්.",
+          prompts: [
+            "name=Alice age=30 ක්ෂේත්‍ර සහිත user:1 නමින් hash එකක් සාදන්න",
+            "list tasks වෙත අයිතම තුනක් එකතු කරන්න",
+            "set favourites වෙත සාමාජිකයන් එකතු කරන්න",
+            "sorted set leaderboard වෙත ලකුණු සහිත සාමාජිකයන් එකතු කරන්න",
+            "stream events වෙත සිදුවීමක් එකතු කරන්න",
+            "stream events වෙතින් අවසන් ඇතුළත් කිරීම් 10 ලබා ගන්න",
+            "hash user:1 හි සියලු ක්ෂේත්‍ර ලබා ගන්න",
+            "set favourites හි සාමාජිකයන් ලබා ගන්න",
+            "leaderboard වෙතින් ලකුණු අනුව ඉහළ 10 ලබා ගන්න"
+          ]
+        },
+        modules: {
+          name: "මොඩියුල",
+          description: "පූරණය කළ Redis මොඩියුල සඳහා විමසුම් (මොඩියුලය පවතින විට පමණක් පහත කාණ්ඩ දිස්වේ).",
+          prompts: []
+        },
+        json: {
+          name: "RedisJSON",
+          description: "ReJSON මොඩියුලය පූරණය කළ විට ලබා ගත හැක.",
+          prompts: [
+            "user:42 හි { name: \"Alice\", age: 30 } සමඟ JSON ලේඛනයක් සාදන්න",
+            "user:42 හි name ක්ෂේත්‍රය කියවන්න",
+            "user:42 හි age 31 වෙත යාවත්කාලීන කරන්න",
+            "සියලු JSON යතුරු ලැයිස්තුගත කරන්න",
+            "JSON ලේඛනයකින් ක්ෂේත්‍රයක් මකන්න",
+            "JSONPath භාවිතයෙන් කූඩු කළ ක්ෂේත්‍රයක් ලබා ගන්න"
+          ]
+        },
+        search: {
+          name: "RediSearch",
+          description: "search මොඩියුලය පූරණය කළ විට ලබා ගත හැක.",
+          prompts: [
+            "සියලු සම්පූර්ණ-පාඨ දර්ශක ලැයිස්තුගත කරන්න",
+            "idx:products දර්ශකය මත \"redis\" සඳහා සම්පූර්ණ-පාඨ සෙවුමක් ධාවනය කරන්න",
+            "title (TEXT) සහ price (NUMERIC) ක්ෂේත්‍ර සහිත hash-පාදක දර්ශකයක් සාදන්න",
+            "idx:products දර්ශකය පිළිබඳ තොරතුරු ලබා ගන්න",
+            "idx:products දර්ශකය ඉවත් කරන්න",
+            "මිල 10 සහ 50 අතර ලේඛන සොයන්න",
+            "පාඨ සහ වෙක්ටර් සමානතාව ඒකාබද්ධ කරන දෙමුහුන් සෙවුමක් ලියන්න"
+          ]
+        },
+        timeseries: {
+          name: "RedisTimeSeries",
+          description: "timeseries මොඩියුලය පූරණය කළ විට ලබා ගත හැක.",
+          prompts: [
+            "සියලු timeseries යතුරු ලැයිස්තුගත කරන්න",
+            "temp:room1 වෙත දත්ත ලක්ෂ්‍යයක් එකතු කරන්න",
+            "ඊයේ සිට දැන් දක්වා temp:room1 පරාසය ලබා ගන්න",
+            "sensor=temp ලේබලය අනුව බහු-පරාසය ලබා ගන්න",
+            "temp:room1 සඳහා sine-wave දත්ත ලක්ෂ්‍ය 100ක් ජනනය කරන්න",
+            "temp:room1 සඳහා රඳවා තබා ගැනීම සහ ලේබල පෙන්වන්න"
+          ]
+        },
+        bloom: {
+          name: "RedisBloom (Bloom / Cuckoo / Top-K / CMS / T-Digest)",
+          description: "bf මොඩියුලය පූරණය කළ විට ලබා ගත හැක.",
+          prompts: [
+            "bloom filter spam:ips හි foo අයිතමය තිබේදැයි පරීක්ෂා කරන්න",
+            "bloom filter spam:ips වෙත අයිතම එකතු කරන්න",
+            "K=10 සහිත popular නමින් top-K එකක් සාදන්න",
+            "/home යතුර සඳහා count-min sketch traffic විමසන්න",
+            "t-digest වෙත අගයන් එකතු කර 95 වන පර්සන්ටයිලය ලබා ගන්න",
+            "bloom filter spam:ips සඳහා තොරතුරු පෙන්වන්න"
+          ]
+        },
+        vectorSet: {
+          name: "VectorSet (Redis 8+)",
+          description: "Redis 8+ හඳුනාගත් විට ලබා ගත හැක (දේශීය VECTORSET වර්ගය).",
+          prompts: [
+            "embeddings වෙත වෙක්ටරයක් එකතු කරන්න",
+            "විමසුම් වෙක්ටරයට වඩාත්ම සමාන වෙක්ටර 10 සොයන්න",
+            "vectorset embeddings හි මාන සහ ගණන පෙන්වන්න",
+            "vectorset embeddings වෙතින් මූලද්‍රව්‍යයක් මකන්න",
+            "VSIM සමඟ මූලද්‍රව්‍ය නාමයෙන් සොයන්න"
+          ]
+        },
+        redis8: {
+          name: "Redis 8+ විශේෂාංග",
+          description: "Redis 8+ හඳුනාගත් විට පෙන්වයි.",
+          prompts: [
+            "HEXPIRE සමඟ hash ක්ෂේත්‍ර ttl සකසන්න",
+            "string අගයක digest එක ලබා ගන්න",
+            "දෙමුහුන් සම්පූර්ණ-පාඨ + වෙක්ටර් සෙවුමක් ධාවනය කරන්න (FT.HYBRID)",
+            "MSETEX භාවිතා කර බෙදාගත් කල් ඉකුත්වීමක් සමඟ බහු යතුරු සකසන්න",
+            "consumer group සමඟ stream ඇතුළත් කිරීමක් මකන්න (XDELEX)",
+            "ඉහළ slot 10 සඳහා cluster slot-stats පෙන්වන්න"
+          ]
+        },
+        scripting: {
+          name: "ස්ක්‍රිප්ටින්",
+          description: "ස්වභාවික භාෂා විස්තරවලින් Lua / EVAL ස්ක්‍රිප්ට් ජනනය කරන්න.",
+          prompts: [
+            "Y > 5 නම් පමණක් counter X වැඩි කරන පරමාණුක ස්ක්‍රිප්ට් එකක් ලියන්න",
+            "Lua සමඟ අහඹු යතුරු 100ක් ජනනය කරන්න",
+            "මෙම shell pipeline එක තනි EVAL එකකට පරිවර්තනය කරන්න: keys user:* | GET | grep inactive | DEL",
+            "cluster ආරක්ෂාව සඳහා batch මෙහෙයුමක් Lua වෙත පෝට් කරන්න",
+            "තනි Lua ඇමතුමක් තුළ check-and-set ආකාරයේ යාවත්කාලීනයක්",
+            "hash එකක් හරහා iterate කර රටාවට ගැළපෙන ක්ෂේත්‍ර මකන්න"
+          ]
+        },
+        cluster: {
+          name: "පොකුර",
+          description: "පොකුර මාදිලියේදී පමණක් පෙන්වයි.",
+          prompts: [
+            "cluster තොරතුරු පෙන්වන්න",
+            "cluster node ලැයිස්තුගත කරන්න",
+            "යතුරු ගණන අනුව ඉහළ slot 10 පෙන්වන්න",
+            "මතකය අනුව ඉහළ slot 10 පෙන්වන්න",
+            "slot 5000 හිමි master කවුද?"
+          ]
+        },
+        acl: {
+          name: "ACL (Redis 6+)",
+          description: "access-control පරිශීලකයන් සහ වත්මන් සම්බන්ධතාව පරීක්ෂා කරන්න.",
+          prompts: [
+            "මම කවුරුන් ලෙස සම්බන්ධ වී සිටිමිද?",
+            "සියලු ACL පරිශීලකයන් ලැයිස්තුගත කරන්න",
+            "මට ඇති අවසර මොනවාද?",
+            "පෙරනිමි පරිශීලකයාගේ නීති පෙන්වන්න"
+          ]
+        },
+        qna: {
+          name: "සාමාන්‍ය ප්‍රශ්න හා පිළිතුරු",
+          description: "Redis දැනුම පිළිබඳ ප්‍රශ්න අසන්න — මෙවලම් නැත, පිළිතුරු පමණි.",
+          prompts: [
+            "ZADD යනු කුමක්ද?",
+            "cluster failover ක්‍රියා කරන්නේ කෙසේද?",
+            "SCAN සහ KEYS අතර වෙනස පැහැදිලි කරන්න",
+            "EVAL කවදා භාවිත කළ යුතුද බහු විධාන කවදාද?",
+            "Redis persistence විකල්ප මොනවාද?",
+            "RDB සහ AOF අතර වෙනස කුමක්ද?",
+            "Redis Sentinel නව master එකක් තීරණය කරන්නේ කෙසේද?",
+            "cluster මාදිලියේ hash tags පැහැදිලි කරන්න"
+          ]
+        },
+        translate: {
+          name: "ස්වභාවික භාෂාව → Redis විධානය",
+          description: "ඔබට අවශ්‍ය දේ සරල ඉංග්‍රීසියෙන් (හෝ භාෂා 54න් එකකින්) විස්තර කරන්න; AI Redis විධානය ලියයි.",
+          prompts: [
+            "user:42 යතුර මකන්න",
+            "foo යතුර bar ලෙස නැවත නම් කරන්න",
+            "session:abc යතුර තත්පර 10කින් කල් ඉකුත්වන්න",
+            "source යතුර destination වෙත පිටපත් කරන්න",
+            "counter visits 5කින් වැඩි කරන්න",
+            "greeting යතුර පැය 1ක් සඳහා \"hello\" ලෙස සකසන්න",
+            "වැඩිම වාර ගණනක් ප්‍රවේශ වූ යතුරු 10 පෙන්වන්න",
+            "temp:* හා ගැළපෙන සියලු යතුරු මකන්න"
+          ]
+        }
+      }
+    },
     ssh: {
       on: 'SSH සක්\u200dරීයයි',
       off: 'SSH අක්\u200dරීයයි',
@@ -280,7 +506,7 @@ const strings = {
     treeSeparatorEmpty: "ගස් වෙන්කරන්නා හිස් නම්, ගසට කැදැලි නෝඩ නොමැත, සරල ලැයිස්තුවක් පමණි",
     treeSeparatorEmptyNote: "කැදැලි නෝඩ නැත, සරල ලැයිස්තුවක් පමණි",
     welcomeConsole: "Redis කොන්සෝලයට සාදරයෙන් පිළිගනිමු",
-    welcomeConsoleInfo: "කර්සරය ඉහළ හෝ පහළ ඉතිහාසය සක්\u200dරීය කර ඇත",
+    welcomeConsoleInfo: "SHIFT + කර්සරය ඉහළ හෝ පහළ ඉතිහාසය සක්\u200dරීය කර ඇත",
     redisListIndexInfo: "එකතු කිරීමට හිස්, -1 ආරම්භයට එක් කිරීමට හෝ පෙන්වා ඇති ස්ථානයට සුරකින්න.",
     console: "කොන්සෝලය",
     connectiondAdd: "සම්බන්ධතාවය එක් කරන්න",
@@ -856,6 +1082,13 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+  },
+  promo: {
+    title: "AI ජාල සහායකයා",
+    description: "network.corifeus.com හි ඇති අපගේ නොමිලේ AI ජාල සහායකයා සොයා බලන්න — domains, IPs, DNS records, SSL certificates, email security සහ network infrastructure විශ්ලේෂණය කරන්න. ක්ෂණික සහ සම්පූර්ණ ප්‍රතිඵල සඳහා AI බලගන්වයි.",
+    disclaimer: "මෙම ප්‍රවර්ධනය පෙන්වන්නේ demo site එකේ පමණක් වන අතර Docker, Electron හෝ web app deployments වල නොපෙන්වයි.",
+    toastMessage: "network.corifeus.com හි ඇති අපගේ නොමිලේ AI ජාල සහායකයා උත්සාහ කරන්න — domains, DNS, SSL සහ තවත් බොහෝ දේ විශ්ලේෂණය කරන්න!",
+    visit: "network.corifeus.com වෙත යන්න",
   }
 };
 module.exports = strings;

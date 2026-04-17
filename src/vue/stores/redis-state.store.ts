@@ -40,6 +40,27 @@ export const useRedisStateStore = defineStore('redisState', () => {
     const failed = ref(false)
     const reducedFunctions = ref(false)
 
+    // --- Console drawer + connection-state awareness (Pass 1) ---
+    const connectionState = ref<'none' | 'connecting' | 'connected'>('none')
+    const currentPage = ref<
+        'connections' | 'database' | 'pulse' | 'profiler' | 'pubsub' | 'analysis' |
+        'search' | 'timeseries' | 'info' | 'settings' | 'unknown'
+    >('unknown')
+    const consoleDrawerOpen = ref<boolean>(getStoredDrawerOpen())
+
+    function setConsoleDrawerOpen(open: boolean) {
+        try { localStorage.setItem('p3xr-console-drawer-open', String(open)) } catch {}
+        consoleDrawerOpen.value = open
+    }
+
+    function toggleConsoleDrawer() {
+        setConsoleDrawerOpen(!consoleDrawerOpen.value)
+    }
+
+    function getStoredDrawerOpen(): boolean {
+        try { return localStorage.getItem('p3xr-console-drawer-open') === 'true' } catch { return false }
+    }
+
     function resetConnections() {
         connections.value = { list: [] }
     }
@@ -101,5 +122,10 @@ export const useRedisStateStore = defineStore('redisState', () => {
         filteredKeys,
         paginatedKeys,
         pages,
+        connectionState,
+        currentPage,
+        consoleDrawerOpen,
+        setConsoleDrawerOpen,
+        toggleConsoleDrawer,
     }
 })

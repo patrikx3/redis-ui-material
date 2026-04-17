@@ -3,7 +3,6 @@
 <p3xr-database-header></p3xr-database-header>
 
 <div id="p3xr-database-content" class="p3xr-database-content-area"
-     [class.p3xr-database-content-with-bottom-console]="hasConnection && !isXs"
      style="background-color: var(--p3xr-content-bg); color: var(--mat-app-text-color, inherit);">
 
     <div *ngIf="hasConnection" class="p3xr-database-has-connection">
@@ -28,13 +27,6 @@
             </div>
         </div>
 
-        <div id="p3xr-database-bottom-console-panel" *ngIf="!isXs">
-            <p3xr-console type="quick" [embedded]="true"></p3xr-console>
-        </div>
-
-        <div class="p3xr-database-bottom-console-mobile" *ngIf="isXs">
-            <p3xr-console type="quick" [embedded]="true"></p3xr-console>
-        </div>
     </div>
 
 </div>
