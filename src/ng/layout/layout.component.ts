@@ -25,6 +25,7 @@ import { AuthService } from '../services/auth.service';
 import { IconRegistryService } from '../services/icon-registry.service';
 import { LoginComponent } from '../components/login.component';
 import { ConsoleDrawerComponent } from './console-drawer.component';
+import { installOverlayScrolls } from '../../core/overlay-scroll';
 
 /**
  * Angular layout component — replaces the AngularJS p3xrLayout component.
@@ -205,53 +206,17 @@ export class LayoutComponent implements OnInit, OnDestroy {
             }, 5000);
         }
 
-        this.setupScrollGutterTracker();
+        // Custom overlay scrollbar — macOS-style thin thumb, applied app-wide to
+        // every scrollable element. CodeMirror / xterm / Monaco are excluded
+        // inside the helper so they keep their own native scrollbars.
+        this.uninstallOverlayScrolls = installOverlayScrolls();
     }
 
-    private scrollGutterRO: ResizeObserver | null = null;
-    private scrollGutterMO: MutationObserver | null = null;
-    private scrollGutterResizeHandler = () => this.updateScrollGutter();
-
-    private updateScrollGutter(): void {
-        // On monitoring pages the tab shell owns the scroll; elsewhere use the
-        // main layout-content container.
-        const monitoring = document.querySelector('.p3xr-monitoring-shell-content') as HTMLElement | null;
-        const el = monitoring || document.querySelector('.p3xr-layout-content, .p3xr-layout-content-electron') as HTMLElement | null;
-        const gutter = el ? Math.max(0, el.offsetWidth - el.clientWidth) : 0;
-        document.documentElement.style.setProperty('--p3xr-scroll-gutter', gutter + 'px');
-    }
-
-    private bindScrollGutterObservers(): void {
-        this.scrollGutterRO?.disconnect();
-        if (typeof ResizeObserver === 'undefined') return;
-        this.scrollGutterRO = new ResizeObserver(() => this.updateScrollGutter());
-        const monitoring = document.querySelector('.p3xr-monitoring-shell-content') as HTMLElement | null;
-        const el = monitoring || document.querySelector('.p3xr-layout-content, .p3xr-layout-content-electron') as HTMLElement | null;
-        if (el) {
-            this.scrollGutterRO.observe(el);
-            if (el.firstElementChild) this.scrollGutterRO.observe(el.firstElementChild);
-        }
-    }
-
-    private setupScrollGutterTracker(): void {
-        this.updateScrollGutter();
-        this.bindScrollGutterObservers();
-        const root = document.querySelector('.p3xr-layout-content, .p3xr-layout-content-electron') as HTMLElement | null;
-        if (root && typeof MutationObserver !== 'undefined') {
-            this.scrollGutterMO = new MutationObserver(() => {
-                this.bindScrollGutterObservers();
-                this.updateScrollGutter();
-            });
-            this.scrollGutterMO.observe(root, { childList: true, subtree: true });
-        }
-        window.addEventListener('resize', this.scrollGutterResizeHandler);
-    }
+    private uninstallOverlayScrolls: (() => void) | null = null;
 
     ngOnDestroy(): void {
         this.unsubFns.forEach(fn => fn());
-        this.scrollGutterRO?.disconnect();
-        this.scrollGutterMO?.disconnect();
-        window.removeEventListener('resize', this.scrollGutterResizeHandler);
+        this.uninstallOverlayScrolls?.();
     }
 
     // --- Computed properties (read by template) ---

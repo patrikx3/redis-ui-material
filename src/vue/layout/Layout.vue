@@ -15,6 +15,7 @@ import { request, onSocketEvent } from '../stores/socket.service'
 import { setNavigate } from '../stores/navigation.store'
 import { trackPage } from '../stores/analytics'
 import ConsoleDrawer from './ConsoleDrawer.vue'
+import { installOverlayScrolls } from '../../core/overlay-scroll'
 
 const TOOLBAR_HEIGHT = 48
 
@@ -277,59 +278,12 @@ onMounted(() => {
 })
 onUnmounted(() => clearInterval(groupInterval))
 
-// Scrollbar-gutter tracker: updates --p3xr-scroll-gutter so the console drawer's
-// right edge stays aligned with the content's right edge whether or not the page
-// scrollbar is present. The scrolling element differs per page — the main layout
-// for most pages, but the monitoring shell's inner content on pulse/profiler/
-// pubsub/analysis — so we take the max gutter across all candidate containers.
-let scrollGutterRO: ResizeObserver | null = null
-let scrollGutterMO: MutationObserver | null = null
-function updateScrollGutter() {
-    // On monitoring pages the tab shell owns the scroll, so observe its inner
-    // content only. Everywhere else the main layout-content is the scroller.
-    const monitoring = document.querySelector('.p3xr-monitoring-shell-content') as HTMLElement | null
-    const el = monitoring || document.getElementById('p3xr-layout-content')
-    if (!el) {
-        document.documentElement.style.setProperty('--p3xr-scroll-gutter', '0px')
-        return
-    }
-    const gutter = Math.max(0, el.offsetWidth - el.clientWidth)
-    document.documentElement.style.setProperty('--p3xr-scroll-gutter', gutter + 'px')
-}
-function rebindScrollGutterObservers() {
-    scrollGutterRO?.disconnect()
-    if (typeof ResizeObserver === 'undefined') return
-    scrollGutterRO = new ResizeObserver(() => updateScrollGutter())
-    const layout = document.getElementById('p3xr-layout-content')
-    if (layout) {
-        scrollGutterRO.observe(layout)
-        if (layout.firstElementChild) scrollGutterRO.observe(layout.firstElementChild)
-    }
-    document.querySelectorAll('.p3xr-monitoring-shell-content').forEach(el => {
-        scrollGutterRO!.observe(el)
-        if (el.firstElementChild) scrollGutterRO!.observe(el.firstElementChild)
-    })
-}
-onMounted(() => {
-    updateScrollGutter()
-    rebindScrollGutterObservers()
-    // Route changes swap the monitoring shell in/out — rebind observers whenever
-    // the layout-content subtree structure changes.
-    const layout = document.getElementById('p3xr-layout-content')
-    if (layout && typeof MutationObserver !== 'undefined') {
-        scrollGutterMO = new MutationObserver(() => {
-            rebindScrollGutterObservers()
-            updateScrollGutter()
-        })
-        scrollGutterMO.observe(layout, { childList: true, subtree: true })
-    }
-    window.addEventListener('resize', updateScrollGutter)
-})
-onUnmounted(() => {
-    scrollGutterRO?.disconnect()
-    scrollGutterMO?.disconnect()
-    window.removeEventListener('resize', updateScrollGutter)
-})
+// Custom overlay scrollbar — macOS-style thin thumb, applied app-wide to every
+// scrollable element. CodeMirror / xterm / Monaco are excluded inside the helper
+// so they keep their own native scrollbars.
+let uninstallOverlayScrolls: (() => void) | null = null
+onMounted(() => { uninstallOverlayScrolls = installOverlayScrolls() })
+onUnmounted(() => { uninstallOverlayScrolls?.() })
 </script>
 
 <template>
