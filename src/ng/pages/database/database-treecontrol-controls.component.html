@@ -139,7 +139,7 @@
         @if (!isReadonly) {
             <mat-divider></mat-divider>
             <button mat-menu-item (click)="deleteSearchKeys()">
-                <mat-icon>delete_sweep</mat-icon>
+                <mat-icon [style.color]="'var(--p3xr-btn-warn-bg)'">delete_sweep</mat-icon>
                 <span>{{ deleteSearchLabel() }}</span>
             </button>
             @if (search.length > 0) {

@@ -492,7 +492,7 @@ export default function DatabaseTreeControls() {
                     {!isReadonly && <Divider />}
                     {!isReadonly && (
                         <MenuItem onClick={deleteSearchKeys}>
-                            <DeleteSweep sx={{ mr: 1 }} fontSize="small" />
+                            <DeleteSweep sx={{ mr: 1, color: 'warning.main' }} fontSize="small" />
                             {deleteSearchLabel}
                         </MenuItem>
                     )}

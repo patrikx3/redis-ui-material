@@ -117,7 +117,7 @@ interface FlatJsonNode {
         .p3xr-json-tree-bracket { opacity: 0.5; }
         .p3xr-json-tree-ellipsis { opacity: 0.4; margin: 0 2px; }
         .p3xr-json-tree-count { opacity: 0.4; font-size: 11px; margin-left: 4px; align-self: center; }
-        :host { display: block; overflow: auto; }
+        :host { display: block; }
         .p3xr-json-tree-value-string { color: var(--p3xr-json-value-string, #0b7500); }
         .p3xr-json-tree-value-number { color: var(--p3xr-json-value-number, #1a01cc); }
         .p3xr-json-tree-value-boolean { color: var(--p3xr-json-value-boolean, #c41a16); }

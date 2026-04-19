@@ -24,15 +24,8 @@ function ensureGlobalStyles(): void {
     const s = document.createElement('style');
     s.setAttribute('data-p3xr-overlay-scroll', '');
     s.textContent = `
-        /* Hide native scrollbars globally — overlay scroll is the only visible
-           scrollbar. Third-party widgets (CodeMirror / Monaco / xterm) ship
-           their own scrollbar UIs that are excluded from overlay attach, but
-           we still want their native scrollbars hidden (they scroll internally
-           via wheel/keyboard). */
-        html, body, * { scrollbar-width: none; -ms-overflow-style: none; }
-        *::-webkit-scrollbar { width: 0; height: 0; display: none; }
-        .p3xr-os-viewport { scrollbar-width: none; -ms-overflow-style: none; }
-        .p3xr-os-viewport::-webkit-scrollbar { width: 0; height: 0; display: none; }
+        .p3xr-os-viewport { scrollbar-width: none !important; -ms-overflow-style: none !important; }
+        .p3xr-os-viewport::-webkit-scrollbar { width: 0 !important; height: 0 !important; display: none !important; }
         .p3xr-os-thumb {
             position: fixed;
             width: 8px;
@@ -41,8 +34,13 @@ function ensureGlobalStyles(): void {
             opacity: 0;
             transition: opacity 0.25s ease, background-color 0.15s ease;
             pointer-events: auto;
-            z-index: 9999;
-            will-change: transform, opacity, height;
+            z-index: 2147483647;
+            /* will-change was creating a GPU layer that composited BEHIND
+               Angular Material cdk-overlay-container subtree on some themes,
+               even though the thumb z-index is higher than the container.
+               Without it, the thumb paints in normal document order and
+               respects z-index. Removed. */
+            isolation: isolate;
         }
         .p3xr-os-thumb:hover { background-color: rgba(128, 128, 128, 0.75); }
         body.p3xr-theme-dark .p3xr-os-thumb { background-color: rgba(255, 255, 255, 0.35); }
@@ -59,7 +57,14 @@ export function attachOverlayScroll(viewport: HTMLElement): OverlayScrollInstanc
 
     const thumb = document.createElement('div');
     thumb.className = 'p3xr-os-thumb';
-    document.body.appendChild(thumb);
+    // If the viewport is inside Angular Material's dialog / menu / popup, the
+    // MDC surface creates nested stacking contexts (popover, pane, surface)
+    // that our thumb — even at z-index max — can't paint over from outside.
+    // Append to the closest MDC panel element so we're INSIDE that stacking
+    // context and z-index competes directly.
+    const mdcHost = viewport.closest('.mat-mdc-dialog-surface, .mat-mdc-menu-panel, .mat-mdc-autocomplete-panel, .mat-mdc-select-panel') as HTMLElement | null;
+    const cdkHost = viewport.closest('.cdk-overlay-container') as HTMLElement | null;
+    (mdcHost || cdkHost || document.body).appendChild(thumb);
 
     let hideTimer: ReturnType<typeof setTimeout> | null = null;
     let isDragging = false;
@@ -89,7 +94,13 @@ export function attachOverlayScroll(viewport: HTMLElement): OverlayScrollInstanc
         const maxScroll = scrollHeight - clientHeight;
         const trackTravel = clientHeight - thumbHeight - EDGE_PAD * 2;
         const thumbY = maxScroll > 0 ? (scrollTop / maxScroll) * trackTravel : 0;
-        thumb.style.left = `${rect.right - 10}px`;
+        // Inside Angular Material's mat-mdc-dialog-content the element's
+        // getBoundingClientRect().right can extend ~8–10px BEYOND the visually
+        // rendered surface (padding / border-radius / inner shadow quirks in
+        // MDC). A 10px inset is too tight — the 8px-wide thumb ends up clipped
+        // or rendered outside the visible dialog. 16px gives us enough breathing
+        // room without visibly shifting the thumb on plain divs (React/Vue).
+        thumb.style.left = `${rect.right - 16}px`;
         thumb.style.top = `${rect.top + EDGE_PAD + thumbY}px`;
         thumb.style.height = `${thumbHeight}px`;
     };
@@ -126,8 +137,23 @@ export function attachOverlayScroll(viewport: HTMLElement): OverlayScrollInstanc
 
     const ro = new ResizeObserver(update);
     ro.observe(viewport);
-    const mo = new MutationObserver(update);
-    mo.observe(viewport, { childList: true, subtree: true, characterData: true });
+    // Also observe every direct child — when their size changes (e.g. a tree
+    // node expands and grows taller), the viewport's scrollHeight changes
+    // without the viewport's own size changing, so plain viewport ResizeObserver
+    // doesn't fire.
+    for (const child of Array.from(viewport.children) as HTMLElement[]) {
+        ro.observe(child);
+    }
+    const mo = new MutationObserver((mutations) => {
+        // New child added → observe it for size changes too
+        for (const m of mutations) {
+            m.addedNodes.forEach((n) => {
+                if (n.nodeType === 1) ro.observe(n as HTMLElement);
+            });
+        }
+        update();
+    });
+    mo.observe(viewport, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ['style', 'class', 'hidden'] });
     window.addEventListener('resize', update);
 
     // Keep the thumb aligned during CSS transitions (e.g. console drawer open/close
@@ -179,9 +205,9 @@ export function attachOverlayScroll(viewport: HTMLElement): OverlayScrollInstanc
 // their native scrollbar with ours tends to fight with their internal viewport
 // sizing and focus management.
 const EXCLUDE_SELECTORS = [
-    '.cm-scroller',             // CodeMirror
-    '.xterm-viewport',          // xterm.js (in case added later)
-    '.monaco-scrollable-element', // Monaco
+    '.cm-scroller',                 // CodeMirror
+    '.xterm-viewport',              // xterm.js
+    '.monaco-scrollable-element',   // Monaco
 ];
 
 function isScrollableEl(el: HTMLElement): boolean {
@@ -236,9 +262,14 @@ export function installOverlayScrolls(): () => void {
 
     const mo = new MutationObserver((mutations) => {
         let hadRemovals = false;
+        const deferred: HTMLElement[] = [];
         for (const m of mutations) {
             m.addedNodes.forEach((n) => {
-                if (n.nodeType === 1) scanSubtree(n as HTMLElement);
+                if (n.nodeType === 1) {
+                    const el = n as HTMLElement;
+                    scanSubtree(el);
+                    deferred.push(el);
+                }
             });
             if (m.removedNodes.length > 0) hadRemovals = true;
             // Re-check the target too — overflow style may have changed.
@@ -247,12 +278,33 @@ export function installOverlayScrolls(): () => void {
             }
         }
         if (hadRemovals) prune();
+        // Re-scan freshly-added subtrees after the element's mount animation
+        // completes (Material dialog ~250ms, MUI Popper render-then-measure,
+        // Vuetify overlay transitions). At mutation time the scrollable is
+        // usually zero-sized and isScrollableEl() rejects it; on layout there
+        // is no new mutation, so we retry on timers that cover the animation
+        // window.
+        if (deferred.length > 0) {
+            const rescan = () => {
+                for (const el of deferred) {
+                    if (el.isConnected) scanSubtree(el);
+                }
+            };
+            requestAnimationFrame(rescan);
+            setTimeout(rescan, 150);
+            setTimeout(rescan, 350);
+        }
     });
     mo.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['style', 'class'] });
 
-    // Periodic safety net in case a node is detached without firing a mutation
-    // record we saw (some legacy libs manipulate documentFragment).
-    const pruneInterval = setInterval(prune, 5000);
+    // Periodic safety net: re-scan document.body for any scrollable element
+    // we missed (Angular Material dialog surfaces sometimes mount inside CDK
+    // overlay without triggering a mutation we catch, and multi-frame animations
+    // can resize elements past our 350ms retry). Also prunes orphaned instances.
+    const pruneInterval = setInterval(() => {
+        prune();
+        scanSubtree(document.body);
+    }, 1000);
 
     return () => {
         mo.disconnect();

@@ -93,7 +93,10 @@ const exportLabel = computed(() => {
 })
 
 const deleteSearchLabel = computed(() => {
-    return str(strings.value?.intention?.deleteMatchingKeys, { count: keyCount.value })
+    if (hasSearch.value) {
+        return str(strings.value?.intention?.deleteSearchKeys, { count: keyCount.value })
+    }
+    return str(strings.value?.intention?.deleteAllKeysMenu, { count: keyCount.value })
 })
 
 const keyCountLabel = computed(() => {
@@ -279,10 +282,10 @@ async function deleteSearchKeys() {
                 </template>
                 <v-list density="compact">
                     <v-list-item v-for="lvl in 5" :key="lvl" @click="expandToLevel(lvl)">
-                        {{ strings?.intention?.expandLevel }} {{ lvl }}
+                        {{ strings?.page?.treeControls?.level }} {{ lvl }}
                     </v-list-item>
                     <v-divider />
-                    <v-list-item @click="expandAll()">{{ strings?.intention?.expandAll }}</v-list-item>
+                    <v-list-item @click="expandAll()">{{ strings?.page?.treeControls?.expandAll }}</v-list-item>
                 </v-list>
             </v-menu>
 
