@@ -308,7 +308,9 @@
 </div>
 
 <!-- Global bottom console drawer — only mounted when a Redis connection is active.
-     No connection = no console (simpler UI; avoids confusion with empty chrome). -->
+     No connection = no console (simpler UI; avoids confusion with empty chrome).
+     Saved height is applied at module-bootstrap time (see main.ts) so it's in place
+     before the drawer first mounts. -->
 @if (!showLogin && state.connectionState() === 'connected') {
     <p3xr-console-drawer></p3xr-console-drawer>
 }

@@ -129,7 +129,7 @@ body.p3xr-theme-dark .v-application { color-scheme: dark !important; }
 }
 
 html.p3xr-console-drawer-open {
-    --p3xr-console-drawer-height-active: 30vh;
+    --p3xr-console-drawer-height-active: var(--p3xr-console-drawer-height, 30vh);
 }
 html:not(.p3xr-console-drawer-open) {
     --p3xr-console-drawer-height-active: 0px;

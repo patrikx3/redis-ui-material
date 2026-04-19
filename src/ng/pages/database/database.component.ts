@@ -305,10 +305,10 @@ export class DatabaseComponent implements OnInit, OnDestroy {
         if (event.type === 'mousedown' && (event.target as HTMLElement).id !== 'p3xr-database-content-sizer') return;
         if (event.type === 'mousedown') {
             this.resizeClicked = true;
-            document.documentElement.style.cursor = 'ew-resize';
+            this.applyDragCursor('ew-resize');
             document.body.classList.add('p3xr-not-selectable');
         } else if (event.type === 'mouseup') {
-            document.documentElement.style.cursor = 'auto';
+            this.clearDragCursor();
             this.resizeClicked = false;
             document.body.classList.remove('p3xr-not-selectable');
             // Persist panel width
@@ -331,15 +331,36 @@ export class DatabaseComponent implements OnInit, OnDestroy {
         if (!this.resizeClicked || !this.containerEl) return;
         const containerPosition = this.containerEl.getBoundingClientRect();
         if (event.clientX < containerPosition.left + this.resizeMinWidth || event.clientX > window.innerWidth - this.resizeMinWidth) {
-            document.documentElement.style.cursor = 'not-allowed';
+            this.applyDragCursor('not-allowed');
         } else {
-            document.documentElement.style.cursor = 'ew-resize';
+            this.applyDragCursor('ew-resize');
             if (this.resizerEl) {
                 this.resizerEl.style.left = event.clientX + 'px';
             }
             this.resizeLeft = event.clientX;
             this.rawResize();
         }
+    }
+
+    /** Force cursor during drag. Static CSS class rules (`body.class *`) can be out-specificity'd
+     *  by inline `style="cursor:pointer"` on tree nodes. Injecting a `<style>` with
+     *  `*, *::before, *::after { cursor !important }` beats inline styles because `!important`
+     *  always wins over non-`!important` inline styles. The element is appended last to `<head>`
+     *  so it's at the end of the cascade. */
+    private dragStyleEl: HTMLStyleElement | null = null;
+
+    private applyDragCursor(cursor: 'ew-resize' | 'not-allowed'): void {
+        if (!this.dragStyleEl) {
+            this.dragStyleEl = document.createElement('style');
+            this.dragStyleEl.setAttribute('data-p3xr-database-drag', '');
+            document.head.appendChild(this.dragStyleEl);
+        }
+        this.dragStyleEl.textContent = `*, *::before, *::after { cursor: ${cursor} !important; }`;
+    }
+
+    private clearDragCursor(): void {
+        this.dragStyleEl?.remove();
+        this.dragStyleEl = null;
     }
 
     private decorateResizer(): void {

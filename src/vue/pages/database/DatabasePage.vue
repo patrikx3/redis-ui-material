@@ -94,10 +94,30 @@ onMounted(() => {
 })
 
 // --- Drag resize ---
+// Cursor is forced via a dynamically-injected <style> element. Static CSS
+// rules can't reliably beat inline `style="cursor:pointer"` on tree list
+// items once Vuetify/CSS layers are in play, but a late-appended <style>
+// with `*, *::before, *::after { cursor: X !important }` always wins.
+let dragStyleEl: HTMLStyleElement | null = null
+
+function applyDragCursor(cursor: 'ew-resize' | 'not-allowed') {
+    if (!dragStyleEl) {
+        dragStyleEl = document.createElement('style')
+        dragStyleEl.setAttribute('data-p3xr-database-drag', '')
+        document.head.appendChild(dragStyleEl)
+    }
+    dragStyleEl.textContent = `*, *::before, *::after { cursor: ${cursor} !important; }`
+}
+
+function clearDragCursor() {
+    dragStyleEl?.remove()
+    dragStyleEl = null
+}
+
 function handleMouseDown(e: MouseEvent) {
     e.preventDefault()
     isDragging.value = true
-    document.documentElement.style.cursor = 'ew-resize'
+    applyDragCursor('ew-resize')
     document.body.classList.add('p3xr-not-selectable')
 }
 
@@ -110,10 +130,10 @@ function onMouseMove(e: MouseEvent) {
     const rect = container.getBoundingClientRect()
     const newWidth = e.clientX - rect.left
     if (newWidth < RESIZE_MIN_WIDTH || newWidth > rect.width - RESIZE_MIN_WIDTH) {
-        document.documentElement.style.cursor = 'not-allowed'
+        applyDragCursor('not-allowed')
         return
     }
-    document.documentElement.style.cursor = 'ew-resize'
+    applyDragCursor('ew-resize')
     lastDragWidth = newWidth
     leftWidth.value = newWidth
 }
@@ -121,7 +141,7 @@ function onMouseMove(e: MouseEvent) {
 function onMouseUp() {
     if (!isDragging.value) return
     isDragging.value = false
-    document.documentElement.style.cursor = 'auto'
+    clearDragCursor()
     document.body.classList.remove('p3xr-not-selectable')
     if (lastDragWidth >= RESIZE_MIN_WIDTH) {
         localStorage.setItem(PANEL_WIDTH_KEY, String(lastDragWidth))
@@ -135,6 +155,7 @@ onMounted(() => {
 onUnmounted(() => {
     document.removeEventListener('mousemove', onMouseMove)
     document.removeEventListener('mouseup', onMouseUp)
+    clearDragCursor()
     keyDialogUnsubs.forEach(fn => fn())
 })
 

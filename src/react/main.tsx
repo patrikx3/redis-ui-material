@@ -44,6 +44,12 @@ import { createRoot } from 'react-dom/client'
 import App from './App'
 import { useRedisStateStore } from './stores/redis-state.store'
 import { useSettingsStore } from './stores/settings.store'
+import { loadSavedConsoleDrawerHeight } from '../core/console-drawer-height'
+
+// Apply the saved console drawer height BEFORE React renders so the CSS var
+// is in place when components read it. Otherwise the drawer flashes at 30vh
+// default before the component's own useEffect sets it.
+loadSavedConsoleDrawerHeight()
 // Initialize Socket.IO connection on app load
 import './stores/socket.service'
 // Initialize keyboard shortcuts (Electron only)

@@ -35,6 +35,42 @@
     }
 }
 
+#p3xr-console-drawer-sizer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    cursor: ns-resize;
+    z-index: 3;
+    background-color: transparent;
+    transition: background-color 0.15s ease, filter 0.15s ease;
+
+    &:hover,
+    &.p3xr-resizer-active {
+        background-color: var(--p3xr-accordion-bg);
+    }
+
+    body.p3xr-theme-dark &:hover {
+        filter: brightness(1.5);
+    }
+    body.p3xr-theme-dark &.p3xr-resizer-active {
+        filter: brightness(2);
+    }
+    body.p3xr-theme-light &:hover {
+        filter: brightness(0.75);
+    }
+    body.p3xr-theme-light &.p3xr-resizer-active {
+        filter: brightness(0.5);
+    }
+}
+
+// Suppress the height transition while the user is actively dragging so the
+// drawer follows the cursor 1:1 instead of easing toward each intermediate value.
+html.p3xr-console-drawer-resizing #p3xr-console-drawer.p3xr-drawer-open {
+    transition: none;
+}
+
 #p3xr-console-drawer-body {
     flex: 1 1 auto;
     min-height: 0;

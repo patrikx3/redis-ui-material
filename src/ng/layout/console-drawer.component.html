@@ -1,4 +1,9 @@
 <div id="p3xr-console-drawer" [class.p3xr-drawer-open]="isOpen()">
+    <div id="p3xr-console-drawer-sizer"
+         role="separator"
+         aria-orientation="horizontal"
+         aria-label="Resize console drawer"
+         [class.p3xr-resizer-active]="resizeClicked()"></div>
     <div id="p3xr-console-drawer-body">
         <!-- Always the full ConsoleComponent — the welcome banner in the scrollback
              adapts to connectionState (connected vs limited-AI). This way the

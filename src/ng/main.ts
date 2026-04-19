@@ -10,6 +10,13 @@ import { appRoutes } from './app.routes';
 import { LayoutComponent } from './layout/layout.component';
 import { RedisStateService } from './services/redis-state.service';
 import { SettingsService } from './services/settings.service';
+import { loadSavedConsoleDrawerHeight } from '../core/console-drawer-height';
+
+// Apply the saved console drawer height BEFORE Angular bootstraps so the CSS
+// var is in place when the layout + drawer first render. Otherwise the drawer
+// briefly flashes at the 30vh default before ConsoleDrawerComponent's
+// ngAfterViewInit runs.
+loadSavedConsoleDrawerHeight();
 
 bootstrapApplication(LayoutComponent, {
     providers: [

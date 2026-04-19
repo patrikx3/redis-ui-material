@@ -24,6 +24,13 @@ function ensureGlobalStyles(): void {
     const s = document.createElement('style');
     s.setAttribute('data-p3xr-overlay-scroll', '');
     s.textContent = `
+        /* Hide native scrollbars globally — overlay scroll is the only visible
+           scrollbar. Third-party widgets (CodeMirror / Monaco / xterm) ship
+           their own scrollbar UIs that are excluded from overlay attach, but
+           we still want their native scrollbars hidden (they scroll internally
+           via wheel/keyboard). */
+        html, body, * { scrollbar-width: none; -ms-overflow-style: none; }
+        *::-webkit-scrollbar { width: 0; height: 0; display: none; }
         .p3xr-os-viewport { scrollbar-width: none; -ms-overflow-style: none; }
         .p3xr-os-viewport::-webkit-scrollbar { width: 0; height: 0; display: none; }
         .p3xr-os-thumb {

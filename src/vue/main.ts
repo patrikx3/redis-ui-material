@@ -41,6 +41,12 @@ import { aliases } from 'vuetify/iconsets/mdi-svg'
 import { mdiSvgIconSet } from './icons'
 
 import App from './App.vue'
+import { loadSavedConsoleDrawerHeight } from '../core/console-drawer-height'
+
+// Apply the saved console drawer height BEFORE Vue renders so the CSS var
+// is in place when components read it. Otherwise the drawer flashes at 30vh
+// default before the component's own onMounted hook sets it.
+loadSavedConsoleDrawerHeight()
 
 const pinia = createPinia()
 

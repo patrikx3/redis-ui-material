@@ -33,6 +33,27 @@ export default function DatabasePage() {
     const [isDragging, setIsDragging] = useState(false)
     const [isHovering, setIsHovering] = useState(false)
     const containerRef = useRef<HTMLDivElement>(null)
+    const dragStyleElRef = useRef<HTMLStyleElement | null>(null)
+
+    // Force cursor during drag via a dynamically-injected <style>. Static
+    // CSS rules can't reliably beat inline `style="cursor:pointer"` on tree
+    // list items once Material's CSS layers are in play, but a late-appended
+    // <style> with `*, *::before, *::after { cursor: X !important }` always wins.
+    const applyDragCursor = useCallback((cursor: 'ew-resize' | 'not-allowed') => {
+        let el = dragStyleElRef.current
+        if (!el) {
+            el = document.createElement('style')
+            el.setAttribute('data-p3xr-database-drag', '')
+            document.head.appendChild(el)
+            dragStyleElRef.current = el
+        }
+        el.textContent = `*, *::before, *::after { cursor: ${cursor} !important; }`
+    }, [])
+
+    const clearDragCursor = useCallback(() => {
+        dragStyleElRef.current?.remove()
+        dragStyleElRef.current = null
+    }, [])
 
     // Set page context — used by the global console drawer + AI prompt payload
     useEffect(() => {
@@ -52,9 +73,9 @@ export default function DatabasePage() {
     const handleMouseDown = useCallback((e: React.MouseEvent) => {
         e.preventDefault()
         setIsDragging(true)
-        document.documentElement.style.cursor = 'ew-resize'
+        applyDragCursor('ew-resize')
         document.body.classList.add('p3xr-not-selectable')
-    }, [])
+    }, [applyDragCursor])
 
     useEffect(() => {
         if (!isDragging) return
@@ -65,16 +86,16 @@ export default function DatabasePage() {
             const rect = container.getBoundingClientRect()
             const newWidth = e.clientX - rect.left
             if (newWidth < RESIZE_MIN_WIDTH || newWidth > rect.width - RESIZE_MIN_WIDTH) {
-                document.documentElement.style.cursor = 'not-allowed'
+                applyDragCursor('not-allowed')
                 return
             }
-            document.documentElement.style.cursor = 'ew-resize'
+            applyDragCursor('ew-resize')
             lastWidth = newWidth
             setLeftWidth(newWidth)
         }
         const handleMouseUp = () => {
             setIsDragging(false)
-            document.documentElement.style.cursor = 'auto'
+            clearDragCursor()
             document.body.classList.remove('p3xr-not-selectable')
             if (lastWidth >= RESIZE_MIN_WIDTH) {
                 localStorage.setItem(PANEL_WIDTH_KEY, String(lastWidth))
@@ -86,7 +107,7 @@ export default function DatabasePage() {
             document.removeEventListener('mousemove', handleMouseMove)
             document.removeEventListener('mouseup', handleMouseUp)
         }
-    }, [isDragging])
+    }, [isDragging, applyDragCursor, clearDragCursor])
 
     const isDark = muiTheme.palette.mode === 'dark'
     const resizerFilter = isDragging

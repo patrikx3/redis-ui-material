@@ -96,8 +96,8 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
         // Reflect the console-drawer open state on <html> so any page can layout
         // around it via CSS custom properties (see console-drawer.component.scss).
-        // Only active when a connection is alive — no console without a connection,
-        // so the page must not reserve space for a phantom drawer.
+        // The drawer is always mounted (so loadSavedHeight runs at app start),
+        // but it only opens visually when a connection is live.
         effect(() => {
             const open = this.state.consoleDrawerOpen();
             const connected = this.state.connectionState() === 'connected';
@@ -106,6 +106,8 @@ export class LayoutComponent implements OnInit, OnDestroy {
             } else {
                 document.documentElement.classList.remove('p3xr-console-drawer-open');
             }
+            // Note: a ResizeObserver inside ConsoleDrawerComponent fires window.resize
+            // on every frame of the height transition, so pages re-layout live.
         });
     }
 

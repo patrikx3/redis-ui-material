@@ -219,13 +219,15 @@ watch(() => route.path, (p) => {
 // Console drawer: html class + CSS var sync. Only active when drawer is open AND
 // a connection is active — no connection = no drawer = no space reserved.
 watch(() => [state.consoleDrawerOpen, !!state.connection] as const, ([open, hasConn]) => {
+    // Drawer is always mounted (so loadSavedHeight runs at app start), but
+    // only opens visually when a connection is live. --p3xr-console-drawer-height-active
+    // is derived from --p3xr-console-drawer-height via CSS rules in App.vue,
+    // so resizing cascades live to #p3xr-layout-content.bottom.
     const active = open && hasConn
     if (active) {
         document.documentElement.classList.add('p3xr-console-drawer-open')
-        document.documentElement.style.setProperty('--p3xr-console-drawer-height-active', '30vh')
     } else {
         document.documentElement.classList.remove('p3xr-console-drawer-open')
-        document.documentElement.style.setProperty('--p3xr-console-drawer-height-active', '0px')
     }
 }, { immediate: true })
 
@@ -577,5 +579,6 @@ onUnmounted(() => { uninstallOverlayScrolls?.() })
     </div>
 
     <!-- Global bottom console drawer — only when connected. -->
+    <!-- Only mounted when connected. Saved height is applied at module bootstrap (see main.ts). -->
     <ConsoleDrawer v-if="!showLogin && state.connection" />
 </template>

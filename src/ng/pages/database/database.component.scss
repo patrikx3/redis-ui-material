@@ -79,3 +79,8 @@ p3xr-database {
     }
 }
 
+// During a drag, cursor is forced via a dynamically-injected <style> element
+// (see database.component.ts — applyDragCursor). That approach beats inline
+// `style="cursor:pointer"` on tree list items, which static CSS rules here
+// couldn't out-prioritise.
+

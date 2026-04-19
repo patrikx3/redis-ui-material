@@ -221,11 +221,13 @@ export default function Layout() {
 
     // Reflect drawer-open state on <html> so CSS + JS recalc can size page content.
     // Only active when we're connected (no connection = no drawer = no space reserved).
+    // The active var references --p3xr-console-drawer-height (set by ConsoleDrawer and
+    // by loadSavedHeight at bootstrap) so resizing cascades down to page layouts live.
     useEffect(() => {
         const active = consoleDrawerOpen && Boolean(connection)
         if (active) {
             document.documentElement.classList.add('p3xr-console-drawer-open')
-            document.documentElement.style.setProperty('--p3xr-console-drawer-height-active', '30vh')
+            document.documentElement.style.setProperty('--p3xr-console-drawer-height-active', 'var(--p3xr-console-drawer-height, 30vh)')
         } else {
             document.documentElement.classList.remove('p3xr-console-drawer-open')
             document.documentElement.style.setProperty('--p3xr-console-drawer-height-active', '0px')
@@ -477,7 +479,9 @@ export default function Layout() {
             <Box id="p3xr-layout-content" sx={{
                 position: 'fixed', left: 0, right: 0,
                 top: `${TOOLBAR_HEIGHT}px`,
-                bottom: `calc(${TOOLBAR_HEIGHT}px + ${consoleDrawerOpen ? '30vh' : '0px'})`,
+                // Reserve space for drawer when open AND connected — reads the live
+                // CSS var so resizing the drawer shrinks/grows the content area 1:1.
+                bottom: `calc(${TOOLBAR_HEIGHT}px + ${consoleDrawerOpen && connection ? 'var(--p3xr-console-drawer-height, 30vh)' : '0px'})`,
                 padding: `${LAYOUT_PADDING}px`,
                 paddingBottom: '4px',
                 overflowY: 'auto',

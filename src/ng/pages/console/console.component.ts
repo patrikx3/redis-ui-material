@@ -564,7 +564,7 @@ export class ConsoleComponent implements OnInit, AfterViewInit, OnDestroy {
         this.autocompleteEl = rootEl.querySelector('#p3xr-console-autocomplete');
         this.scrollers = this.containerEl;
 
-        this.resizeFn = debounce(() => this.rawResize(), 100);
+        this.resizeFn = () => this.rawResize();
         window.addEventListener('resize', this.resizeFn);
         this.rawResize();
 
