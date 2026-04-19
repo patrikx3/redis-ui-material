@@ -35,3 +35,6 @@ agents/
 .claude/
 /.angular/**/*.*
 /src/**/*.*
+.codex/
+CLAUDE.md
+AGENTS.md
