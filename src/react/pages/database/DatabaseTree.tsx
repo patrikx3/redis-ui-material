@@ -256,8 +256,7 @@ export default function DatabaseTree({ resizeSignal }: { resizeSignal?: any }) {
         return remaining > 0 ? remaining : -1
     }, [])
 
-    const formatTtl = useCallback((node: FlatTreeNode): string => {
-        const remaining = getRemainingTtl(node)
+    const formatTtl = useCallback((remaining: number): string => {
         if (remaining <= 0) return ''
         const hdOpts = useSettingsStore.getState().getHumanizeDurationOptions()
         return humanizeDuration(remaining * 1000, {
@@ -266,19 +265,18 @@ export default function DatabaseTree({ resizeSignal }: { resizeSignal?: any }) {
             round: true,
             delimiter: ' ',
         })
-    }, [getRemainingTtl])
+    }, [])
 
-    const getTtlColor = useCallback((node: FlatTreeNode): string => {
-        const remaining = getRemainingTtl(node)
+    const getTtlColor = useCallback((remaining: number): string => {
         if (remaining <= 0) return ''
-        if (remaining < 300) return '#f44336' // red
-        if (remaining < 3600) return '#ff9800' // yellow/orange
-        return '#4caf50' // green
-    }, [getRemainingTtl])
+        if (remaining < 300) return '#f44336'
+        if (remaining < 3600) return '#ff9800'
+        return '#4caf50'
+    }, [])
 
-    const isTtlPulsing = useCallback((node: FlatTreeNode): boolean => {
-        return getRemainingTtl(node) > 0 && getRemainingTtl(node) < 30
-    }, [getRemainingTtl])
+    const isTtlPulsing = useCallback((remaining: number): boolean => {
+        return remaining > 0 && remaining < 30
+    }, [])
 
     // --- Node actions ---
     const deleteKey = useCallback(async (e: React.MouseEvent, key: string) => {
@@ -345,8 +343,8 @@ export default function DatabaseTree({ resizeSignal }: { resizeSignal?: any }) {
                 {virtualizer.getVirtualItems().map(virtualRow => {
                     const node = dataSource[virtualRow.index]
                     const remaining = getRemainingTtl(node)
-                    const ttlColor = getTtlColor(node)
-                    const pulsing = isTtlPulsing(node)
+                    const ttlColor = getTtlColor(remaining)
+                    const pulsing = isTtlPulsing(remaining)
 
                     return (
                         <Box
@@ -433,7 +431,7 @@ export default function DatabaseTree({ resizeSignal }: { resizeSignal?: any }) {
 
                             {/* TTL badge */}
                             {node.type !== 'folder' && remaining > 0 && (
-                                <Tooltip title={`TTL: ${formatTtl(node)}`} placement="right" enterDelay={300}
+                                <Tooltip title={`TTL: ${formatTtl(remaining)}`} placement="right" enterDelay={300}
                                     slotProps={{ popper: { sx: { ml: '36px !important' } } }}>
                                     <Box component="span" sx={{
                                         display: 'inline-flex',

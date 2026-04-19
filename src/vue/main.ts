@@ -64,7 +64,6 @@ const router = createRouter({
                 { path: 'key/:key', component: () => import('./pages/database/DatabaseKeyPage.vue') },
             ],
         },
-        { path: '/console', component: () => import('./pages/console/ConsoleComponent.vue') },
         { path: '/search', component: () => import('./pages/search/SearchPage.vue') },
         { path: '/login', component: () => import('./pages/login/LoginPage.vue') },
         {

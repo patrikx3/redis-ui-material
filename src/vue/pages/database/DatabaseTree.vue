@@ -25,6 +25,14 @@ interface FlatTreeNode {
     childCount: number
     keysInfo?: { type: string; length: number; ttl?: number }
     _sourceNode?: any
+    // Pre-computed once per row per TTL tick so the template can read these
+    // O(1) instead of re-running getRemainingTtl/color/pulse/format on every
+    // scroll frame for every visible row.
+    _remaining?: number
+    _ttlColor?: string
+    _pulsing?: boolean
+    _formattedTtl?: string
+    _tooltip?: string
 }
 
 const typeIcons: Record<string, string> = {
@@ -112,7 +120,7 @@ const dataSource = computed(() => {
     const result: FlatTreeNode[] = []
     const flatten = (nodes: any[], level: number) => {
         for (const node of nodes) {
-            result.push({
+            const flat: FlatTreeNode = {
                 label: node.label,
                 key: node.key,
                 level,
@@ -121,7 +129,17 @@ const dataSource = computed(() => {
                 childCount: node.childCount ?? 0,
                 keysInfo: node.keysInfo,
                 _sourceNode: node,
-            })
+            }
+            // Pre-compute TTL-derived values once per row per tick so the template
+            // doesn't call getRemainingTtl() / getTtlColor() / isTtlPulsing() /
+            // formatTtl() separately on every scroll frame.
+            const remaining = getRemainingTtl(flat)
+            flat._remaining = remaining
+            flat._ttlColor = getTtlColor(remaining)
+            flat._pulsing = isTtlPulsing(remaining)
+            flat._formattedTtl = formatTtl(remaining)
+            flat._tooltip = nodeTooltip(flat)
+            result.push(flat)
             if (node.type === 'folder' && expandedKeys.value.has(node.key) && node.children?.length > 0) {
                 flatten(node.children, level + 1)
             }
@@ -208,8 +226,7 @@ function getRemainingTtl(node: FlatTreeNode): number {
     return remaining > 0 ? remaining : -1
 }
 
-function formatTtl(node: FlatTreeNode): string {
-    const remaining = getRemainingTtl(node)
+function formatTtl(remaining: number): string {
     if (remaining <= 0) return ''
     try {
         const hdOpts = settings.getHumanizeDurationOptions()
@@ -221,16 +238,14 @@ function formatTtl(node: FlatTreeNode): string {
     }
 }
 
-function getTtlColor(node: FlatTreeNode): string {
-    const remaining = getRemainingTtl(node)
+function getTtlColor(remaining: number): string {
     if (remaining <= 0) return ''
-    if (remaining < 300) return '#f44336'   // red (critical)
-    if (remaining < 3600) return '#ff9800'  // orange (medium)
-    return '#4caf50'                         // green (safe)
+    if (remaining < 300) return '#f44336'
+    if (remaining < 3600) return '#ff9800'
+    return '#4caf50'
 }
 
-function isTtlPulsing(node: FlatTreeNode): boolean {
-    const remaining = getRemainingTtl(node)
+function isTtlPulsing(remaining: number): boolean {
     return remaining > 0 && remaining < 30
 }
 
@@ -360,7 +375,7 @@ watch(
                 <!-- Node content wrapper -->
                 <span :data-p3xr-tree-key="dataSource[virtualRow.index].type === 'folder' ? '' : dataSource[virtualRow.index].key" style="display: inline-flex; align-items: center; height: 28px;">
                     <!-- Label with tooltip -->
-                    <v-tooltip :text="nodeTooltip(dataSource[virtualRow.index])" location="right" :open-delay="500" :offset="36">
+                    <v-tooltip :text="dataSource[virtualRow.index]._tooltip" location="right" :open-delay="500" :offset="36">
                         <template #activator="{ props: tp }">
                             <label
                                 v-bind="tp"
@@ -393,16 +408,16 @@ watch(
 
                     <!-- TTL badge (outside label to avoid tooltip conflict) -->
                     <v-tooltip
-                        v-if="dataSource[virtualRow.index].type !== 'folder' && getRemainingTtl(dataSource[virtualRow.index]) > 0"
-                        :text="'TTL: ' + formatTtl(dataSource[virtualRow.index])"
+                        v-if="dataSource[virtualRow.index].type !== 'folder' && (dataSource[virtualRow.index]._remaining ?? 0) > 0"
+                        :text="'TTL: ' + dataSource[virtualRow.index]._formattedTtl"
                         location="right" :open-delay="300" :offset="36"
                     >
                         <template #activator="{ props: tp }">
                             <span
                                 v-bind="tp"
                                 class="p3xr-tree-ttl"
-                                :class="{ 'p3xr-tree-ttl-pulse': isTtlPulsing(dataSource[virtualRow.index]) }"
-                                :style="{ color: getTtlColor(dataSource[virtualRow.index]) }"
+                                :class="{ 'p3xr-tree-ttl-pulse': dataSource[virtualRow.index]._pulsing }"
+                                :style="{ color: dataSource[virtualRow.index]._ttlColor }"
                             >
                                 <v-icon size="16">mdi-clock-outline</v-icon>
                             </span>
@@ -450,6 +465,13 @@ watch(
     height: 100%;
     width: 100%;
     overflow: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.p3xr-tree-viewport::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
 }
 
 .p3xr-tree-row {

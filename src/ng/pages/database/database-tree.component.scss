@@ -10,6 +10,14 @@ p3xr-database-tree {
 .p3xr-database-tree-viewport {
     height: 100%;
     width: 100%;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+        display: none;
+    }
 }
 
 // Each flat node row

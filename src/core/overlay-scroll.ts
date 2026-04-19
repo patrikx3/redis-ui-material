@@ -72,6 +72,13 @@ export function attachOverlayScroll(viewport: HTMLElement): OverlayScrollInstanc
     let dragStartScrollTop = 0;
     let thumbHeight = 30;
 
+    // Inset from the right edge where the thumb is drawn. MDC dialogs need 16px
+    // because their getBoundingClientRect().right extends beyond the visually
+    // rendered surface. Plain elements would show an 8px visible gap (thumb is
+    // 8px wide) at that inset, so we tighten to 10px — a 2px gap sits flush
+    // against the edge without clipping at DPI-fractional layouts.
+    const RIGHT_INSET = mdcHost ? 16 : 10;
+
     const show = (): void => {
         thumb.style.opacity = '1';
         if (hideTimer) clearTimeout(hideTimer);
@@ -94,13 +101,7 @@ export function attachOverlayScroll(viewport: HTMLElement): OverlayScrollInstanc
         const maxScroll = scrollHeight - clientHeight;
         const trackTravel = clientHeight - thumbHeight - EDGE_PAD * 2;
         const thumbY = maxScroll > 0 ? (scrollTop / maxScroll) * trackTravel : 0;
-        // Inside Angular Material's mat-mdc-dialog-content the element's
-        // getBoundingClientRect().right can extend ~8–10px BEYOND the visually
-        // rendered surface (padding / border-radius / inner shadow quirks in
-        // MDC). A 10px inset is too tight — the 8px-wide thumb ends up clipped
-        // or rendered outside the visible dialog. 16px gives us enough breathing
-        // room without visibly shifting the thumb on plain divs (React/Vue).
-        thumb.style.left = `${rect.right - 16}px`;
+        thumb.style.left = `${rect.right - RIGHT_INSET}px`;
         thumb.style.top = `${rect.top + EDGE_PAD + thumbY}px`;
         thumb.style.height = `${thumbHeight}px`;
     };
