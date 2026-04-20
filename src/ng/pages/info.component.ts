@@ -103,7 +103,7 @@ import { RedisStateService } from '../services/redis-state.service';
         <br />
 
         <!-- Supported Languages -->
-        <p3xr-ng-accordion [title]="strings().label?.supportedLanguages + languageList.length + ')'" accordionKey="info-languages">
+        <p3xr-ng-accordion [title]="strings().label?.supportedLanguages + ' (' + languageList.length + ')'" accordionKey="info-languages">
             <div content>
                 <mat-list>
                     @for (lang of languageList; track lang.code) {
