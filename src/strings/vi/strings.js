@@ -1087,6 +1087,13 @@ const strings = {
     disclaimer: "Khuyến nghị này chỉ hiển thị trên trang demo và sẽ không xuất hiện trong các bản triển khai Docker, Electron hoặc ứng dụng web.",
     toastMessage: "Hãy thử Trợ lý Mạng AI miễn phí của chúng tôi tại network.corifeus.com — phân tích tên miền, DNS, SSL và hơn thế nữa!",
     visit: "Truy cập network.corifeus.com",
+  },
+  promoMeeting: {
+    title: "Meet Assistant SaaS",
+    description: "Quy trình họp đầy đủ dành cho doanh nghiệp châu Âu tại meeting.corifeus.com — dịch trực tiếp 21 ngôn ngữ, tóm tắt AI, việc cần làm, quyết định, người tham dự và trích dẫn chính được tạo tự động. Từ vựng tùy chỉnh, thư viện cuộc họp có thể tìm kiếm, liên kết chỉ đọc có thể chia sẻ, tóm tắt email một cú nhấp. Thanh toán EU — Stripe Tax, tuân thủ VAT, giá EUR (Solo €19.99 / Pro €39.99 / Business €99.99 mỗi tháng, không ràng buộc). Mặc định tuân thủ GDPR — không có cookie theo dõi, lưu trữ mã hóa.",
+    disclaimer: "Khuyến nghị này chỉ hiển thị trên trang demo và sẽ không xuất hiện trong các bản triển khai Docker, Electron hoặc ứng dụng web.",
+    toastMessage: "Dùng thử Meet Assistant SaaS tại meeting.corifeus.com — dịch trực tiếp 21 ngôn ngữ, tóm tắt AI, việc cần làm. Miễn phí 1 phút, không cần đăng ký, tuân thủ GDPR.",
+    visit: "Truy cập meeting.corifeus.com",
   }
 };
 module.exports = strings;

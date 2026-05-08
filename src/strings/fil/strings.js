@@ -1076,6 +1076,13 @@ const strings = {
     disclaimer: "Ang promosyon na ito ay ipinapakita lamang sa demo site at hindi lilitaw sa Docker, Electron, o mga web app deployment.",
     toastMessage: "Subukan ang aming libreng AI Network Assistant sa network.corifeus.com — suriin ang mga domain, DNS, SSL, at higit pa!",
     visit: "Bisitahin ang network.corifeus.com"
+  },
+  promoMeeting: {
+    title: "Meet Assistant SaaS",
+    description: "Buong daloy ng meeting para sa mga negosyong Europeo sa meeting.corifeus.com — live na pagsasalin sa 21 wika, mga buod ng AI, mga gawain, desisyon, dumalo at mahahalagang quote na awtomatikong ginagawa. Pasadyang bokabularyo, searchable na library ng mga meeting, naibabahaging read-only na link, email summary sa isang click. EU billing — Stripe Tax, VAT-compliant, EUR pricing (Solo €19.99 / Pro €39.99 / Business €99.99 bawat buwan, walang lock-in). GDPR-compliant bilang default — walang tracking cookies, encrypted storage.",
+    disclaimer: "Ang promosyon na ito ay ipinapakita lamang sa demo site at hindi lilitaw sa Docker, Electron, o mga web app deployment.",
+    toastMessage: "Subukan ang Meet Assistant SaaS sa meeting.corifeus.com — live na pagsasalin sa 21 wika, AI summaries, mga gawain. 1 minuto libre, walang signup, GDPR-compliant.",
+    visit: "Bisitahin ang meeting.corifeus.com",
   }
 };
 module.exports = strings;

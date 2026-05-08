@@ -1089,6 +1089,13 @@ const strings = {
     disclaimer: "Tangazo hili linaonyeshwa tu kwenye tovuti ya demo na halitaonekana katika usambazaji wa Docker, Electron au programu ya wavuti.",
     toastMessage: "Jaribu Msaidizi wetu wa Mtandao wa AI bila malipo kwenye network.corifeus.com — chambua domeni, DNS, SSL na zaidi!",
     visit: "Tembelea network.corifeus.com",
+  },
+  promoMeeting: {
+    title: "Meet Assistant SaaS",
+    description: "Mtiririko kamili wa mikutano kwa biashara za Ulaya kwenye meeting.corifeus.com — tafsiri ya moja kwa moja katika lugha 21, muhtasari wa AI, vipengee vya utekelezaji, maamuzi, waliohudhuria na nukuu muhimu huundwa kiotomatiki. Msamiati maalum, maktaba ya mikutano inayotafutika, viungo vya kusoma tu vinavyoweza kushirikiwa, muhtasari wa barua pepe kwa mbofyo mmoja. Malipo ya EU — Stripe Tax, inatii VAT, bei za EUR (Solo €19.99 / Pro €39.99 / Business €99.99 kwa mwezi, hakuna lock-in). Inatii GDPR kwa chaguo-msingi — hakuna vidakuzi vya ufuatiliaji, hifadhi iliyosimbwa.",
+    disclaimer: "Tangazo hili linaonyeshwa tu kwenye tovuti ya demo na halitaonekana katika usambazaji wa Docker, Electron au programu ya wavuti.",
+    toastMessage: "Jaribu Meet Assistant SaaS kwenye meeting.corifeus.com — tafsiri ya moja kwa moja katika lugha 21, muhtasari wa AI, vipengee vya utekelezaji. Dakika 1 bila malipo, hakuna kujisajili, inatii GDPR.",
+    visit: "Tembelea meeting.corifeus.com",
   }
 };
 module.exports = strings;

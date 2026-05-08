@@ -1074,6 +1074,13 @@ const strings = {
     disclaimer: "このプロモーションはデモサイトにのみ表示され、Docker、Electron、またはウェブアプリのデプロイメントには表示されません。",
     toastMessage: "無料の AI ネットワークアシスタントを network.corifeus.com でお試しください。ドメイン、DNS、SSL などを分析してください！",
     visit: "network.corifeus.com にアクセス"
+  },
+  promoMeeting: {
+    title: "Meet Assistant SaaS",
+    description: "meeting.corifeus.com で提供する、欧州企業向けの完全な会議ワークフロー。21言語のライブ翻訳、AI 要約、アクションアイテム、決定事項、参加者、重要な引用を自動生成します。カスタム語彙、検索可能な会議ライブラリ、共有できる読み取り専用リンク、ワンクリックのメール要約。EU 請求 — Stripe Tax、VAT 準拠、EUR 価格（Solo €19.99 / Pro €39.99 / Business €99.99/月、ロックインなし）。標準で GDPR 準拠 — トラッキング Cookie なし、暗号化ストレージ。",
+    disclaimer: "このプロモーションはデモサイトにのみ表示され、Docker、Electron、またはウェブアプリのデプロイメントには表示されません。",
+    toastMessage: "meeting.corifeus.com で Meet Assistant SaaS をお試しください — 21言語ライブ翻訳、AI 要約、アクションアイテム。1分無料、登録不要、GDPR 準拠。",
+    visit: "meeting.corifeus.com にアクセス",
   }
 };
 module.exports = strings;

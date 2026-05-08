@@ -196,16 +196,22 @@ export class LayoutComponent implements OnInit, OnDestroy {
         // Expose Electron bridge globals with a delay so the app is fully ready.
         setTimeout(() => this.setupElectronBridge(), 3000);
 
-        // Promo toast — demo site only, once per session
-        if (window.location.hostname === 'p3x.redis.patrikx3.com' && !sessionStorage.getItem('p3xr-promo-shown')) {
-            setTimeout(() => {
-                const promo = this.i18n.strings()?.promo;
-                if (promo?.toastMessage) {
-                    sessionStorage.setItem('p3xr-promo-shown', '1');
-                    const msg = promo.toastMessage + (promo.disclaimer ? ' · ' + promo.disclaimer : '');
+        // Promo toast — demo site only. Initial Meeting toast at 5s, then rotates
+        // every 7 minutes weighted 2:1 (Meeting:Network). Pattern: M, N, M, M, N, M, M, N…
+        if (window.location.hostname === 'p3x.redis.patrikx3.com') {
+            let promoCounter = 0;
+            const showPromoToast = () => {
+                const isMeeting = promoCounter % 3 !== 1;
+                const block = isMeeting ? this.i18n.strings()?.promoMeeting : this.i18n.strings()?.promo;
+                if (block?.toastMessage) {
+                    const msg = block.toastMessage + (block.disclaimer ? ' · ' + block.disclaimer : '');
                     this.common.toast({ message: msg, hideDelay: 30000 });
                 }
-            }, 5000);
+                promoCounter++;
+            };
+            const initialTimer = setTimeout(showPromoToast, 5000);
+            const rotateTimer = setInterval(showPromoToast, 7 * 60 * 1000);
+            this.unsubFns.push(() => { clearTimeout(initialTimer); clearInterval(rotateTimer); });
         }
 
         // Custom overlay scrollbar — macOS-style thin thumb, applied app-wide to

@@ -1074,6 +1074,13 @@ const strings = {
     disclaimer: "Ez a promóció csak a bemutató webhelyen jelenik meg, és nem jelenik meg Docker, Electron vagy webalkalmazás-telepítésekben.",
     toastMessage: "Próbálja ki ingyenes AI Hálózati asszisztensünket a network.corifeus.com címen – elemezzen domaineket, DNS, SSL és még sok mást!",
     visit: "Látogassa meg a network.corifeus.com"
+  },
+  promoMeeting: {
+    title: "Meet Assistant SaaS",
+    description: "Teljes megbeszélés-munkafolyamat európai vállalkozásoknak a meeting.corifeus.com oldalon — élő fordítás 21 nyelven, AI összefoglalók, teendők, döntések, résztvevők és kulcsidézetek automatikusan. Egyedi szókincs, kereshető megbeszéléskönyvtár, megosztható csak olvasható linkek, egykattintásos e-mail összefoglaló. EU számlázás — Stripe Tax, VAT-kompatibilis, EUR árak (Solo €19.99 / Pro €39.99 / Business €99.99 havonta, hűség nélkül). Alapértelmezés szerint GDPR-kompatibilis — nincs követőkuki, titkosított tárolás.",
+    disclaimer: "Ez a promóció csak a bemutató webhelyen jelenik meg, és nem jelenik meg Docker, Electron vagy webalkalmazás-telepítésekben.",
+    toastMessage: "Próbáld ki a Meet Assistant SaaS-t a meeting.corifeus.com oldalon — élő fordítás 21 nyelven, AI összefoglalók, teendők. 1 perc ingyen, regisztráció nélkül, GDPR-kompatibilis.",
+    visit: "Látogasd meg: meeting.corifeus.com",
   }
 };
 module.exports = strings;

@@ -1076,6 +1076,13 @@ const strings = {
     disclaimer: "Promosi ini hanya dipaparkan di laman demo dan tidak akan muncul dalam penggunaan Docker, Electron atau aplikasi web.",
     toastMessage: "Cuba Pembantu Rangkaian AI percuma kami di network.corifeus.com — analisis domain, DNS, SSL dan banyak lagi!",
     visit: "Lawati network.corifeus.com",
+  },
+  promoMeeting: {
+    title: "Meet Assistant SaaS",
+    description: "Aliran kerja mesyuarat lengkap untuk perniagaan Eropah di meeting.corifeus.com — terjemahan langsung 21 bahasa, ringkasan AI, item tindakan, keputusan, peserta dan petikan utama dijana secara automatik. Perbendaharaan kata tersuai, pustaka mesyuarat boleh dicari, pautan baca sahaja yang boleh dikongsi, ringkasan e-mel satu klik. Pengebilan EU — Stripe Tax, patuh VAT, harga EUR (Solo €19.99 / Pro €39.99 / Business €99.99 sebulan, tiada ikatan). Patuh GDPR secara lalai — tiada kuki penjejakan, storan disulitkan.",
+    disclaimer: "Promosi ini hanya dipaparkan di laman demo dan tidak akan muncul dalam penggunaan Docker, Electron atau aplikasi web.",
+    toastMessage: "Cuba Meet Assistant SaaS di meeting.corifeus.com — terjemahan langsung 21 bahasa, ringkasan AI, item tindakan. 1 minit percuma, tanpa pendaftaran, patuh GDPR.",
+    visit: "Lawati meeting.corifeus.com",
   }
 };
 module.exports = strings;

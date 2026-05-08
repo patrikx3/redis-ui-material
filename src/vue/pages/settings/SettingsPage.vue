@@ -276,8 +276,22 @@ const treeSettingsItems = computed(() => [
         </div>
     </P3xrAccordion>
 
-    <!-- Promo: AI Network Assistant (demo site only) -->
+    <!-- Promo: Meet Assistant SaaS + AI Network Assistant (demo site only) -->
     <template v-if="isPromoDomain">
+        <br />
+
+        <P3xrAccordion :title="strings?.promoMeeting?.title" accordion-key="promo-meeting" :collapsible="false">
+            <template #actions>
+                <P3xrButton :label="strings?.promoMeeting?.visit" icon="mdi-forum" @click="openLink('https://meeting.corifeus.com')" />
+            </template>
+            <div style="padding: 12px 16px; font-size: 13px; opacity: 0.85; line-height: 1.6;">
+                {{ strings?.promoMeeting?.description }}
+            </div>
+            <div style="padding: 0 16px 12px; font-size: 11px; opacity: 0.5; line-height: 1.4;">
+                {{ strings?.promoMeeting?.disclaimer }}
+            </div>
+        </P3xrAccordion>
+
         <br />
 
         <P3xrAccordion :title="strings?.promo?.title" accordion-key="promo-network" :collapsible="false">

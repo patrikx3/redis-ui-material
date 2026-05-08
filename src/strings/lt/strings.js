@@ -1076,6 +1076,13 @@ const strings = {
     disclaimer: "Ši reklama rodoma tik demonstracinėje svetainėje ir nebus rodoma Docker, Electron ar web app diegimuose.",
     toastMessage: "Išbandykite mūsų nemokamą AI tinklo asistentą network.corifeus.com. Analizuokite domenus, DNS, SSL ir dar daugiau!",
     visit: "Aplankyti network.corifeus.com",
+  },
+  promoMeeting: {
+    title: "Meet Assistant SaaS",
+    description: "Pilna susitikimų darbo eiga Europos verslui svetainėje meeting.corifeus.com — tiesioginis vertimas į 21 kalbą, AI santraukos, užduotys, sprendimai, dalyviai ir svarbiausios citatos generuojami automatiškai. Pritaikytas žodynas, ieškoma susitikimų biblioteka, bendrinamos tik skaitymo nuorodos, el. pašto santrauka vienu spustelėjimu. EU atsiskaitymas — Stripe Tax, suderinama su VAT, EUR kainos (Solo €19.99 / Pro €39.99 / Business €99.99 per mėnesį, be įsipareigojimų). Pagal numatymą suderinama su GDPR — be sekimo slapukų, šifruota saugykla.",
+    disclaimer: "Ši reklama rodoma tik demonstracinėje svetainėje ir nebus rodoma Docker, Electron ar web app diegimuose.",
+    toastMessage: "Išbandykite Meet Assistant SaaS svetainėje meeting.corifeus.com — tiesioginis vertimas į 21 kalbą, AI santraukos, užduotys. 1 minutė nemokamai, be registracijos, suderinama su GDPR.",
+    visit: "Apsilankyti meeting.corifeus.com",
   }
 };
 module.exports = strings;

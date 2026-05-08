@@ -313,19 +313,25 @@ export default function Layout() {
         return () => clearTimeout(timer)
     }, [])
 
-    // Promo toast — demo site only, once per session
+    // Promo toast — demo site only. Initial Meeting toast at 5s, then rotates
+    // every 7 minutes weighted 2:1 (Meeting:Network). Pattern: M, N, M, M, N, M, M, N…
     useEffect(() => {
         if (window.location.hostname !== 'p3x.redis.patrikx3.com') return
-        if (sessionStorage.getItem('p3xr-promo-shown')) return
-        const timer = setTimeout(() => {
-            const promo = useI18nStore.getState().strings?.promo
-            if (promo?.toastMessage) {
-                sessionStorage.setItem('p3xr-promo-shown', '1')
-                const msg = promo.toastMessage + (promo.disclaimer ? ' · ' + promo.disclaimer : '')
+        let promoCounter = 0
+        const showPromoToast = () => {
+            const isMeeting = promoCounter % 3 !== 1
+            const block = isMeeting
+                ? useI18nStore.getState().strings?.promoMeeting
+                : useI18nStore.getState().strings?.promo
+            if (block?.toastMessage) {
+                const msg = block.toastMessage + (block.disclaimer ? ' · ' + block.disclaimer : '')
                 useCommonStore.getState().toast(msg, 30000)
             }
-        }, 5000)
-        return () => clearTimeout(timer)
+            promoCounter++
+        }
+        const initialTimer = setTimeout(showPromoToast, 5000)
+        const rotateTimer = setInterval(showPromoToast, 7 * 60 * 1000)
+        return () => { clearTimeout(initialTimer); clearInterval(rotateTimer) }
     }, [])
 
     // Track route changes for analytics (matches Angular setupRouteTracking)

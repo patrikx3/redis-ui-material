@@ -1077,6 +1077,13 @@ const strings = {
     disclaimer: "Această promovare este afișată doar pe site-ul demo și nu va apărea în implementările Docker, Electron sau ale aplicației web.",
     toastMessage: "Încercați asistentul nostru gratuit de rețea AI la network.corifeus.com — analizați domenii, DNS, SSL și multe altele!",
     visit: "Vizitați network.corifeus.com",
+  },
+  promoMeeting: {
+    title: "Meet Assistant SaaS",
+    description: "Flux complet pentru întâlniri, creat pentru afacerile europene la meeting.corifeus.com — traducere live în 21 de limbi, rezumate AI, acțiuni, decizii, participanți și citate-cheie generate automat. Vocabular personalizat, bibliotecă de întâlniri căutabilă, linkuri partajabile doar pentru citire, rezumat prin e-mail cu un clic. Facturare EU — Stripe Tax, conform VAT, prețuri EUR (Solo €19.99 / Pro €39.99 / Business €99.99 pe lună, fără blocare). Conform GDPR implicit — fără cookie-uri de urmărire, stocare criptată.",
+    disclaimer: "Această promovare este afișată doar pe site-ul demo și nu va apărea în implementările Docker, Electron sau ale aplicației web.",
+    toastMessage: "Încercați Meet Assistant SaaS la meeting.corifeus.com — traducere live în 21 de limbi, rezumate AI, acțiuni. 1 minut gratuit, fără înscriere, conform GDPR.",
+    visit: "Vizitați meeting.corifeus.com",
   }
 };
 module.exports = strings;

@@ -63,6 +63,28 @@ import { switchGui } from '../../core/gui-switch';
         @if (isPromoDomain) {
             <br/>
 
+            <!-- Promo: Meet Assistant SaaS (demo site only) -->
+            <p3xr-ng-accordion [title]="strings().promoMeeting?.title" accordionKey="promo-meeting" [collapsible]="false">
+                <div actions>
+                    <a href="https://meeting.corifeus.com" target="_blank" rel="noreferrer" style="text-decoration: none;">
+                        <p3xr-ng-button
+                            [label]="strings().promoMeeting?.visit"
+                            mdIcon="forum">
+                        </p3xr-ng-button>
+                    </a>
+                </div>
+                <div content>
+                    <div style="padding: 12px 16px; font-size: 13px; opacity: 0.85; line-height: 1.6;">
+                        {{ strings().promoMeeting?.description }}
+                    </div>
+                    <div style="padding: 0 16px 12px; font-size: 11px; opacity: 0.5; line-height: 1.4;">
+                        {{ strings().promoMeeting?.disclaimer }}
+                    </div>
+                </div>
+            </p3xr-ng-accordion>
+
+            <br/>
+
             <!-- Promo: AI Network Assistant (demo site only) -->
             <p3xr-ng-accordion [title]="strings().promo?.title" accordionKey="promo-network" [collapsible]="false">
                 <div actions>

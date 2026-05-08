@@ -1076,6 +1076,13 @@ const strings = {
     disclaimer: "Promosi ini hanya ditampilkan di situs demo dan tidak akan muncul di Docker, Electron, atau penerapan aplikasi web.",
     toastMessage: "Coba Asisten Jaringan AI gratis kami di network.corifeus.com — analisis domain, DNS, SSL, dan banyak lagi!",
     visit: "Kunjungi network.corifeus.com"
+  },
+  promoMeeting: {
+    title: "Meet Assistant SaaS",
+    description: "Alur kerja rapat lengkap untuk bisnis Eropa di meeting.corifeus.com — terjemahan langsung 21 bahasa, ringkasan AI, item tindakan, keputusan, peserta, dan kutipan penting dibuat otomatis. Kosakata khusus, pustaka rapat yang bisa dicari, tautan hanya-baca yang bisa dibagikan, ringkasan email sekali klik. Penagihan EU — Stripe Tax, patuh VAT, harga EUR (Solo €19.99 / Pro €39.99 / Business €99.99 per bulan, tanpa ikatan). Patuh GDPR secara default — tanpa cookie pelacakan, penyimpanan terenkripsi.",
+    disclaimer: "Promosi ini hanya ditampilkan di situs demo dan tidak akan muncul di Docker, Electron, atau penerapan aplikasi web.",
+    toastMessage: "Coba Meet Assistant SaaS di meeting.corifeus.com — terjemahan langsung 21 bahasa, ringkasan AI, item tindakan. 1 menit gratis, tanpa daftar, patuh GDPR.",
+    visit: "Kunjungi meeting.corifeus.com",
   }
 };
 module.exports = strings;

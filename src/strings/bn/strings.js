@@ -1076,6 +1076,13 @@ const strings = {
     disclaimer: "এই প্রচারটি শুধুমাত্র ডেমো সাইটে দেখানো হয় এবং Docker, Electron, বা ওয়েব অ্যাপ স্থাপনায় প্রদর্শিত হবে না।",
     toastMessage: "network.corifeus.com-এ আমাদের বিনামূল্যের AI নেটওয়ার্ক সহকারী ব্যবহার করে দেখুন — ডোমেইন, DNS, SSL এবং আরও অনেক কিছু বিশ্লেষণ করুন!",
     visit: "ভিজিট করুন network.corifeus.com"
+  },
+  promoMeeting: {
+    title: "Meet Assistant SaaS",
+    description: "meeting.corifeus.com-এ ইউরোপীয় ব্যবসার জন্য তৈরি সম্পূর্ণ মিটিং ওয়ার্কফ্লো — 21 ভাষায় লাইভ অনুবাদ, AI সারাংশ, করণীয়, সিদ্ধান্ত, অংশগ্রহণকারী এবং গুরুত্বপূর্ণ উদ্ধৃতি স্বয়ংক্রিয়ভাবে তৈরি। কাস্টম শব্দভাণ্ডার, অনুসন্ধানযোগ্য মিটিং লাইব্রেরি, শেয়ারযোগ্য শুধু-পঠনযোগ্য লিংক, এক-ক্লিক ইমেল সারাংশ। EU বিলিং — Stripe Tax, VAT-সম্মত, EUR মূল্য (Solo €19.99 / Pro €39.99 / Business €99.99 প্রতি মাসে, কোনো lock-in নেই)। ডিফল্টভাবে GDPR-সম্মত — কোনো tracking cookie নয়, এনক্রিপ্টেড স্টোরেজ।",
+    disclaimer: "এই প্রচারটি শুধুমাত্র ডেমো সাইটে দেখানো হয় এবং Docker, Electron, বা ওয়েব অ্যাপ স্থাপনায় প্রদর্শিত হবে না।",
+    toastMessage: "meeting.corifeus.com-এ Meet Assistant SaaS চেষ্টা করুন — 21 ভাষায় লাইভ অনুবাদ, AI সারাংশ, করণীয়। 1 মিনিট বিনামূল্যে, সাইনআপ নেই, GDPR-সম্মত।",
+    visit: "meeting.corifeus.com দেখুন",
   }
 };
 module.exports = strings;

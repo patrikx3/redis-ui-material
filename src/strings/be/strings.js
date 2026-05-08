@@ -1076,6 +1076,13 @@ const strings = {
     disclaimer: "Гэтая акцыя паказваецца толькі на дэма-сайце і не будзе з'яўляцца ў Docker, Electron або разгортванні вэб-праграм.",
     toastMessage: "Паспрабуйце наш бясплатны AI Network Assistant на network.corifeus.com — аналізуйце дамены, DNS, SSL і многае іншае!",
     visit: "Наведайце network.corifeus.com"
+  },
+  promoMeeting: {
+    title: "Meet Assistant SaaS",
+    description: "Поўны працоўны працэс для сустрэч, створаны для еўрапейскага бізнесу на meeting.corifeus.com — жывы пераклад на 21 мову, AI-зводкі, задачы, рашэнні, удзельнікі і ключавыя цытаты ствараюцца аўтаматычна. Уласны слоўнік, пошукавая бібліятэка сустрэч, спасылкі толькі для чытання, якімі можна дзяліцца, зводка па email у адзін клік. Білінг EU — Stripe Tax, адпаведнасць VAT, цэны ў EUR (Solo €19.99 / Pro €39.99 / Business €99.99 у месяц, без прывязкі). Па змаўчанні адпавядае GDPR — без cookie для адсочвання, шыфраванае захоўванне.",
+    disclaimer: "Гэтая акцыя паказваецца толькі на дэма-сайце і не будзе з'яўляцца ў Docker, Electron або разгортванні вэб-праграм.",
+    toastMessage: "Паспрабуйце Meet Assistant SaaS на meeting.corifeus.com — жывы пераклад на 21 мову, AI-зводкі, задачы. 1 хвіліна бясплатна, без рэгістрацыі, адпавядае GDPR.",
+    visit: "Наведаць meeting.corifeus.com",
   }
 };
 module.exports = strings;

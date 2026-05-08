@@ -1076,6 +1076,13 @@ const strings = {
     disclaimer: "Tämä tarjous näkyy vain esittelysivustolla, eikä sitä näytetä Docker-, Electron- tai verkkosovellusten käyttöönotoissa.",
     toastMessage: "Kokeile ilmaista AI Network Assistant -ohjelmaamme osoitteessa network.corifeus.com — analysoi verkkotunnuksia, DNS, SSL ja paljon muuta!",
     visit: "Käy osoitteessa network.corifeus.com"
+  },
+  promoMeeting: {
+    title: "Meet Assistant SaaS",
+    description: "Eurooppalaisille yrityksille rakennettu täydellinen kokoustyönkulku osoitteessa meeting.corifeus.com — reaaliaikainen käännös 21 kielellä, AI-yhteenvedot, tehtävät, päätökset, osallistujat ja tärkeimmät lainaukset luodaan automaattisesti. Mukautettu sanasto, haettava kokouskirjasto, jaettavat vain luku -linkit, yhden klikkauksen sähköpostiyhteenveto. EU-laskutus — Stripe Tax, VAT-yhteensopiva, EUR-hinnoittelu (Solo €19.99 / Pro €39.99 / Business €99.99 kuukaudessa, ei sitoutumista). Oletuksena GDPR-yhteensopiva — ei seurantakeksejä, salattu tallennus.",
+    disclaimer: "Tämä tarjous näkyy vain esittelysivustolla, eikä sitä näytetä Docker-, Electron- tai verkkosovellusten käyttöönotoissa.",
+    toastMessage: "Kokeile Meet Assistant SaaSia osoitteessa meeting.corifeus.com — reaaliaikainen käännös 21 kielellä, AI-yhteenvedot, tehtävät. 1 minuutti ilmaiseksi, ei rekisteröitymistä, GDPR-yhteensopiva.",
+    visit: "Käy osoitteessa meeting.corifeus.com",
   }
 };
 module.exports = strings;

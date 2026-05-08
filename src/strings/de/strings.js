@@ -1078,6 +1078,13 @@ const strings = {
     disclaimer: "Diese Aktion wird nur auf der Demo-Site angezeigt und erscheint nicht in Docker, Electron oder Web-App-Bereitstellungen.",
     toastMessage: "Testen Sie unseren kostenlosen Netzwerkassistenten AI unter network.corifeus.com – analysieren Sie Domänen, DNS, SSL und mehr!",
     visit: "Besuchen Sie network.corifeus.com"
+  },
+  promoMeeting: {
+    title: "Meet Assistant SaaS",
+    description: "Vollständiger Meeting-Workflow für europäische Unternehmen auf meeting.corifeus.com — 21-sprachige Live-Übersetzung, AI-Zusammenfassungen, Aufgaben, Entscheidungen, Teilnehmende und zentrale Zitate werden automatisch erstellt. Eigenes Vokabular, durchsuchbare Meeting-Bibliothek, teilbare Nur-Lese-Links, E-Mail-Zusammenfassung mit einem Klick. EU-Abrechnung — Stripe Tax, VAT-konform, EUR-Preise (Solo €19.99 / Pro €39.99 / Business €99.99 pro Monat, keine Bindung). Standardmäßig GDPR-konform — keine Tracking-Cookies, verschlüsselte Speicherung.",
+    disclaimer: "Diese Aktion wird nur auf der Demo-Site angezeigt und erscheint nicht in Docker, Electron oder Web-App-Bereitstellungen.",
+    toastMessage: "Testen Sie Meet Assistant SaaS auf meeting.corifeus.com — 21-sprachige Live-Übersetzung, AI-Zusammenfassungen, Aufgaben. 1 Minute kostenlos, keine Registrierung, GDPR-konform.",
+    visit: "Besuchen Sie meeting.corifeus.com",
   }
 };
 module.exports = strings;

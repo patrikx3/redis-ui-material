@@ -1087,6 +1087,13 @@ const strings = {
     disclaimer: "Ин таблиғ танҳо дар сайти demo нишон дода мешавад ва дар Docker, Electron ё нашрҳои web app пайдо намешавад.",
     toastMessage: "Ёвари ройгони шабакаи AI-и моро дар network.corifeus.com санҷед — доменҳо, DNS, SSL ва бештарро таҳлил кунед!",
     visit: "Ба network.corifeus.com равед",
+  },
+  promoMeeting: {
+    title: "Meet Assistant SaaS",
+    description: "Ҷараёни пурраи кори вохӯриҳо барои тиҷоратҳои аврупоӣ дар meeting.corifeus.com — тарҷумаи зинда ба 21 забон, хулосаҳои AI, вазифаҳо, қарорҳо, иштирокчиён ва иқтибосҳои муҳим ба таври худкор эҷод мешаванд. Луғати фармоишӣ, китобхонаи вохӯриҳои ҷустуҷӯшаванда, пайвандҳои танҳо-хондан барои мубодила, хулосаи email бо як клик. Ҳисоббарории EU — Stripe Tax, мутобиқ ба VAT, нархҳои EUR (Solo €19.99 / Pro €39.99 / Business €99.99 дар як моҳ, бе басташавӣ). Бо нобаёнӣ мутобиқ ба GDPR — бе cookie-ҳои пайгирӣ, нигоҳдории рамзгузоришуда.",
+    disclaimer: "Ин таблиғ танҳо дар сайти demo нишон дода мешавад ва дар Docker, Electron ё нашрҳои web app пайдо намешавад.",
+    toastMessage: "Meet Assistant SaaS-ро дар meeting.corifeus.com санҷед — тарҷумаи зинда ба 21 забон, хулосаҳои AI, вазифаҳо. 1 дақиқа ройгон, бе сабти ном, мутобиқ ба GDPR.",
+    visit: "Ба meeting.corifeus.com гузаред",
   }
 };
 module.exports = strings;

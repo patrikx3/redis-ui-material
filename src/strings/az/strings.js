@@ -1076,6 +1076,13 @@ const strings = {
     disclaimer: "Bu tanıtım yalnız demo saytında göstərilir və Docker, Electron və ya veb tətbiq yerləşdirmələrində görünməyəcək.",
     toastMessage: "Pulsuz AI Şəbəkə Köməkçisini network.corifeus.com ünvanında sınayın — domenləri təhlil edin, DNS, SSL və s.!",
     visit: "network.corifeus.com ziyarət edin"
+  },
+  promoMeeting: {
+    title: "Meet Assistant SaaS",
+    description: "meeting.corifeus.com ünvanında Avropa biznesləri üçün qurulmuş tam görüş iş axını — 21 dildə canlı tərcümə, AI xülasələri, tapşırıqlar, qərarlar, iştirakçılar və əsas sitatlar avtomatik yaradılır. Fərdi lüğət, axtarıla bilən görüş kitabxanası, paylaşıla bilən yalnız oxuma bağlantıları, bir kliklə e-poçt xülasəsi. EU hesablaşması — Stripe Tax, VAT-uyğun, EUR qiymətləri (Solo €19.99 / Pro €39.99 / Business €99.99 ayda, bağlılıq yoxdur). Varsayılan olaraq GDPR-uyğun — izləmə kukiləri yoxdur, şifrələnmiş saxlama.",
+    disclaimer: "Bu tanıtım yalnız demo saytında göstərilir və Docker, Electron və ya veb tətbiq yerləşdirmələrində görünməyəcək.",
+    toastMessage: "Meet Assistant SaaS-i meeting.corifeus.com saytında sınayın — 21 dildə canlı tərcümə, AI xülasələri, tapşırıqlar. 1 dəqiqə pulsuz, qeydiyyatsız, GDPR-uyğun.",
+    visit: "meeting.corifeus.com saytına keçin",
   }
 };
 module.exports = strings;

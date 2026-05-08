@@ -1089,6 +1089,13 @@ const strings = {
     disclaimer: "මෙම ප්‍රවර්ධනය පෙන්වන්නේ demo site එකේ පමණක් වන අතර Docker, Electron හෝ web app deployments වල නොපෙන්වයි.",
     toastMessage: "network.corifeus.com හි ඇති අපගේ නොමිලේ AI ජාල සහායකයා උත්සාහ කරන්න — domains, DNS, SSL සහ තවත් බොහෝ දේ විශ්ලේෂණය කරන්න!",
     visit: "network.corifeus.com වෙත යන්න",
+  },
+  promoMeeting: {
+    title: "Meet Assistant SaaS",
+    description: "meeting.corifeus.com හි යුරෝපීය ව්‍යාපාර සඳහා නිර්මාණය කළ සම්පූර්ණ රැස්වීම් වැඩප්‍රවාහය — භාෂා 21ක සජීවී පරිවර්තනය, AI සාරාංශ, ක්‍රියා අයිතම, තීරණ, සහභාගිවන්නන් සහ වැදගත් උපුටා දැක්වීම් ස්වයංක්‍රීයව නිර්මාණය වේ. අභිරුචි වචන මාලාව, සෙවිය හැකි රැස්වීම් පුස්තකාලය, බෙදාගත හැකි කියවීම-පමණක් සබැඳි, එක් ක්ලික් email සාරාංශය. EU බිල්කිරීම — Stripe Tax, VAT-අනුකූල, EUR මිල (Solo €19.99 / Pro €39.99 / Business €99.99 මාසිකව, lock-in නැත). පෙරනිමියෙන් GDPR-අනුකූල — tracking cookie නැත, සංකේතනය කළ ගබඩා කිරීම.",
+    disclaimer: "මෙම ප්‍රවර්ධනය පෙන්වන්නේ demo site එකේ පමණක් වන අතර Docker, Electron හෝ web app deployments වල නොපෙන්වයි.",
+    toastMessage: "meeting.corifeus.com හි Meet Assistant SaaS උත්සාහ කරන්න — භාෂා 21ක සජීවී පරිවර්තනය, AI සාරාංශ, ක්‍රියා අයිතම. මිනිත්තු 1ක් නොමිලේ, signup නැත, GDPR-අනුකූල.",
+    visit: "meeting.corifeus.com වෙත පිවිසෙන්න",
   }
 };
 module.exports = strings;

@@ -1087,6 +1087,13 @@ const strings = {
     disclaimer: "Táto propagácia sa zobrazuje iba na demo webe a neobjaví sa v nasadeniach Docker, Electron ani webovej aplikácie.",
     toastMessage: "Vyskúšajte nášho bezplatného AI sieťového asistenta na network.corifeus.com — analyzujte domény, DNS, SSL a ďalšie!",
     visit: "Navštíviť network.corifeus.com",
+  },
+  promoMeeting: {
+    title: "Meet Assistant SaaS",
+    description: "Kompletný pracovný postup pre stretnutia vytvorený pre európske firmy na meeting.corifeus.com — živý preklad do 21 jazykov, AI súhrny, úlohy, rozhodnutia, účastníci a kľúčové citácie sa generujú automaticky. Vlastný slovník, prehľadávateľná knižnica stretnutí, zdieľateľné odkazy iba na čítanie, e-mailový súhrn jedným kliknutím. Fakturácia EU — Stripe Tax, súlad s VAT, ceny v EUR (Solo €19.99 / Pro €39.99 / Business €99.99 mesačne, bez viazanosti). Predvolene v súlade s GDPR — žiadne sledovacie cookies, šifrované úložisko.",
+    disclaimer: "Táto propagácia sa zobrazuje iba na demo webe a neobjaví sa v nasadeniach Docker, Electron ani webovej aplikácie.",
+    toastMessage: "Vyskúšajte Meet Assistant SaaS na meeting.corifeus.com — živý preklad do 21 jazykov, AI súhrny, úlohy. 1 minúta zadarmo, bez registrácie, v súlade s GDPR.",
+    visit: "Navštíviť meeting.corifeus.com",
   }
 };
 module.exports = strings;

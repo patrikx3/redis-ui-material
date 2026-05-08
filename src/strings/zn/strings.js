@@ -1085,6 +1085,13 @@ const strings = {
     disclaimer: "此推广仅显示在演示站点中，不会出现在 Docker、Electron 或 Web 应用部署中。",
     toastMessage: "试试我们在 network.corifeus.com 提供的免费 AI 网络助手，分析域名、DNS、SSL 等更多内容！",
     visit: "访问 network.corifeus.com",
+  },
+  promoMeeting: {
+    title: "Meet Assistant SaaS",
+    description: "meeting.corifeus.com 为欧洲企业打造完整会议流程 — 21 种语言实时翻译、AI 摘要、行动项、决策、参会者和关键引语自动生成。自定义词汇、可搜索会议库、可分享的只读链接、一键邮件摘要。EU 计费 — Stripe Tax、符合 VAT、EUR 定价（Solo €19.99 / Pro €39.99 / Business €99.99 每月，无锁定）。默认符合 GDPR — 无跟踪 cookie，加密存储。",
+    disclaimer: "此推广仅显示在演示站点中，不会出现在 Docker、Electron 或 Web 应用部署中。",
+    toastMessage: "在 meeting.corifeus.com 试用 Meet Assistant SaaS — 21 种语言实时翻译、AI 摘要、行动项。免费 1 分钟，无需注册，符合 GDPR。",
+    visit: "访问 meeting.corifeus.com",
   }
 };
 module.exports = strings;

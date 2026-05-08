@@ -1076,6 +1076,13 @@ const strings = {
     disclaimer: "Seda reklaami näidatakse ainult demosaidil ja seda ei kuvata Docker, Electron ega veebirakenduste juurutustes.",
     toastMessage: "Proovige meie tasuta AI võrguabi aadressil network.corifeus.com — analüüsige domeene, DNS, SSL ja palju muud!",
     visit: "Külastage network.corifeus.com"
+  },
+  promoMeeting: {
+    title: "Meet Assistant SaaS",
+    description: "Täielik koosolekutöövoog Euroopa ettevõtetele aadressil meeting.corifeus.com — reaalajas tõlge 21 keelde, AI kokkuvõtted, tegevusülesanded, otsused, osalejad ja olulisemad tsitaadid luuakse automaatselt. Kohandatud sõnavara, otsitav koosolekute teek, jagatavad ainult lugemiseks lingid, ühe klõpsuga e-posti kokkuvõte. EU arveldamine — Stripe Tax, VAT-nõuetele vastav, EUR hinnad (Solo €19.99 / Pro €39.99 / Business €99.99 kuus, ilma sidumiseta). Vaikimisi GDPR-nõuetele vastav — jälgimisküpsiseid pole, krüptitud salvestus.",
+    disclaimer: "Seda reklaami näidatakse ainult demosaidil ja seda ei kuvata Docker, Electron ega veebirakenduste juurutustes.",
+    toastMessage: "Proovi Meet Assistant SaaS-i aadressil meeting.corifeus.com — reaalajas tõlge 21 keelde, AI kokkuvõtted, tegevusülesanded. 1 minut tasuta, registreerimiseta, GDPR-nõuetele vastav.",
+    visit: "Külasta meeting.corifeus.com",
   }
 };
 module.exports = strings;
