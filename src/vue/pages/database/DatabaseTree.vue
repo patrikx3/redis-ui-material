@@ -194,10 +194,10 @@ async function deleteKey(e: Event, key: string) {
 async function deleteTree(e: Event, node: FlatTreeNode) {
     e.stopPropagation()
     try {
-        const msg = str(strings.value?.confirm?.deleteTree, { key: node.key })
+        const msg = str(strings.value?.confirm?.deleteAllKeys, { key: node.key })
         await common.confirm({ message: msg })
         await request({ action: 'key/del-tree', payload: { key: node.key, redisTreeDivider: divider.value } })
-        const toast = str(strings.value?.status?.deletedTree, { key: node.key })
+        const toast = str(strings.value?.status?.treeDeleted, { key: node.key })
         common.toast(toast)
         await cmd.refresh({ force: true })
     } catch (err) {
