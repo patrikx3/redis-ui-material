@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
@@ -121,6 +121,7 @@ import { RedisStateService } from '../services/redis-state.service';
             </div>
         </p3xr-ng-accordion>
     `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     styles: [`
         :host { display: block; }
     `],

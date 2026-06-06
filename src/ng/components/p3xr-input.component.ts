@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, forwardRef, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
@@ -66,6 +66,7 @@ import { FormsModule, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/f
 }
 
     `],
+    changeDetection: ChangeDetectionStrategy.Eager,
     providers: [{
         provide: NG_VALUE_ACCESSOR,
         useExisting: forwardRef(() => P3xrInputComponent),
@@ -103,7 +104,7 @@ export class P3xrInputComponent implements ControlValueAccessor {
         this.onTouched = fn;
     }
 
-    onEnterPressed(event: KeyboardEvent): void {
+    onEnterPressed(event: Event): void {
         event.preventDefault();
         // Emit after the current input event turn so parent ngModel handlers have settled.
         setTimeout(() => this.enterPressed.emit());

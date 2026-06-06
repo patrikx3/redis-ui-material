@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -73,6 +73,7 @@ export interface TtlDialogData {
             </mat-dialog-actions>
         </form>
     `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     styles: [`
         .full-width { width: 100%; }
     `],

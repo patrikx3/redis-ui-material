@@ -730,7 +730,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     constructor(
         @Inject(I18nService) private i18n: I18nService,
         @Inject(SettingsService) public settings: SettingsService,
-        @Inject(RedisStateService) private state: RedisStateService,
+        @Inject(RedisStateService) protected state: RedisStateService,
         @Inject(CommonService) private common: CommonService,
         @Inject(SocketService) private socket: SocketService,
         @Inject(MainCommandService) private cmd: MainCommandService,

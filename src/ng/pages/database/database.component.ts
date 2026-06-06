@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, OnDestroy, NgZone, ChangeDetectorRef, CUSTOM_ELEMENTS_SCHEMA, ViewEncapsulation, effect } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy, NgZone, ChangeDetectorRef, CUSTOM_ELEMENTS_SCHEMA, ViewEncapsulation, effect, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { BreakpointObserver } from '@angular/cdk/layout';
@@ -31,6 +31,7 @@ import { debounce } from 'lodash-es';
     styles: [`
         :host { display: block; }
     `],
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None,
 })
 export class DatabaseComponent implements OnInit, OnDestroy {

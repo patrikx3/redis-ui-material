@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, OnDestroy, OnChanges, SimpleChanges, ChangeDetectorRef, ViewChild, CUSTOM_ELEMENTS_SCHEMA, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy, OnChanges, SimpleChanges, ChangeDetectorRef, ViewChild, CUSTOM_ELEMENTS_SCHEMA, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -25,6 +25,7 @@ import { DiffDialogService } from '../../../dialogs/diff-dialog.service';
     imports: [CommonModule, MatButtonModule, MatIconModule, MatTooltipModule, JsonTreeComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     templateUrl: './key-json.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None,
 })
 export class KeyJsonComponent extends KeyTypeBase implements OnInit, OnDestroy, OnChanges {

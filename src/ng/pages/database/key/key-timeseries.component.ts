@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, OnChanges, OnDestroy, SimpleChanges, ChangeDetectorRef, CUSTOM_ELEMENTS_SCHEMA, ViewEncapsulation, ViewChild, ViewChildren, QueryList, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, Inject, OnInit, OnChanges, OnDestroy, SimpleChanges, ChangeDetectorRef, CUSTOM_ELEMENTS_SCHEMA, ViewEncapsulation, ViewChild, ViewChildren, QueryList, ElementRef, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ScrollingModule, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
@@ -35,6 +35,7 @@ import { P3xrButtonComponent } from '../../../components/p3xr-button.component';
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     templateUrl: './key-timeseries.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None,
 })
 export class KeyTimeseriesComponent extends KeyTypeBase implements OnInit, OnChanges, OnDestroy, AfterViewInit {

@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, AfterViewInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnInit, AfterViewInit, ViewChild, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm, AbstractControl } from '@angular/forms';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -206,6 +206,7 @@ import { TreeBuilderService } from '../services/tree-builder.service';
         </form>
     `,
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     styles: [`
         .md-block { width: 100%; }
 

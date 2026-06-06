@@ -22,3 +22,4 @@ node_modules/.yarn-integrity
 .DS_Store
 /test-results
 /tests/screenshots
+/.angular

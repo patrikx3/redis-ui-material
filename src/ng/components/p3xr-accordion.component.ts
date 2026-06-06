@@ -1,4 +1,4 @@
-import { Component, Input, Inject, OnInit } from '@angular/core';
+import { Component, Input, Inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -44,6 +44,7 @@ import { I18nService } from '../services/i18n.service';
             }
         </div>
     `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     styles: [`
         :host { display: block; }
         .p3xr-accordion-wrapper {

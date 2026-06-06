@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { Router, RouterOutlet, NavigationEnd } from '@angular/router';
 import { MatTabsModule } from '@angular/material/tabs';
 import { Subscription } from 'rxjs';
@@ -27,6 +27,7 @@ import { RedisStateService } from '../../services/redis-state.service';
             </div>
         </div>
     `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     encapsulation: ViewEncapsulation.None,
 })
 export class MonitoringShellComponent implements OnInit, OnDestroy {

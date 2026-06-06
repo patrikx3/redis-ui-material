@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, Inject, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Inject, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -19,6 +19,7 @@ import { I18nService } from '../services/i18n.service';
     selector: 'p3xr-dialog-cancel',
     standalone: true,
     imports: [CommonModule, MatButtonModule, MatIconModule, MatTooltipModule],
+    changeDetection: ChangeDetectionStrategy.Eager,
     template: `
         <button mat-raised-button class="btn-warn" type="button" (click)="cancel.emit()"
             [matTooltip]="label" [matTooltipDisabled]="isWide"

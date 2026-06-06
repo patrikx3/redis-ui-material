@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, OnDestroy, AfterViewInit, ElementRef, ViewChild, NgZone, ViewEncapsulation, effect } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy, AfterViewInit, ElementRef, ViewChild, NgZone, ViewEncapsulation, effect, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -15,6 +15,7 @@ import { RedisStateService } from '../../services/redis-state.service';
     imports: [CommonModule, MatButtonModule, MatIconModule, P3xrAccordionComponent, P3xrButtonComponent],
     templateUrl: './profiler.component.html',
     encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.Eager,
     styles: [`
         p3xr-profiler {
             display: block;

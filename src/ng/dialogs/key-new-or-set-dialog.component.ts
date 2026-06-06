@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, Inject, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -356,6 +356,7 @@ export interface KeyNewOrSetDialogData {
             </mat-dialog-actions>
         </form>
     `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     styles: [`
         .full-width { width: 100%; }
         .info-text { opacity: 0.5; font-size: 12px; margin-bottom: 8px; }

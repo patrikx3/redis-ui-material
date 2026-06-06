@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTreeModule, MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { FlatTreeControl } from '@angular/cdk/tree';
@@ -63,6 +63,7 @@ interface FlatJsonNode {
             </mat-tree-node>
         </mat-tree>
     `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     styles: [`
         .p3xr-json-mat-tree {
             font-family: 'Roboto Mono', monospace;

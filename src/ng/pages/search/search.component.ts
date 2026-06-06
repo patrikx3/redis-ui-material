@@ -74,7 +74,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         @Inject(ChangeDetectorRef) private cdr: ChangeDetectorRef,
         @Inject(NgZone) private ngZone: NgZone,
         @Inject(BreakpointObserver) private breakpointObserver: BreakpointObserver,
-        @Inject(RedisStateService) private state: RedisStateService,
+        @Inject(RedisStateService) protected state: RedisStateService,
         @Inject(OverlayService) private overlay: OverlayService,
     ) {
         this.strings = this.i18n.strings;

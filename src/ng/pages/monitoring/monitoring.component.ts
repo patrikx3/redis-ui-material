@@ -91,7 +91,7 @@ export class MonitoringComponent implements OnInit, OnDestroy, AfterViewInit {
         @Inject(ChangeDetectorRef) private cdr: ChangeDetectorRef,
         @Inject(NgZone) private ngZone: NgZone,
         @Inject(ElementRef) private elementRef: ElementRef,
-        @Inject(RedisStateService) private state: RedisStateService,
+        @Inject(RedisStateService) protected state: RedisStateService,
         @Inject(MonitoringDataService) private monitorData: MonitoringDataService,
     ) {
         this.strings = this.i18n.strings;

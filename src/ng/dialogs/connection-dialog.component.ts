@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Inject, NgZone, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, Inject, NgZone, QueryList, ViewChild, ViewChildren, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CdkTextareaAutosize, TextFieldModule } from '@angular/cdk/text-field';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -453,6 +453,7 @@ export interface ConnectionDialogData {
             </mat-dialog-actions>
         </form>
     `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     styles: [`
         .md-block { width: 100%; }
         .p3xr-hide-xs { }

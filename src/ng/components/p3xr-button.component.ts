@@ -1,4 +1,4 @@
-import { Component, Input, Inject, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, Inject, ChangeDetectorRef, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -51,6 +51,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
             }
         }
     `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     styles: [`
         :host { display: inline-block; }
         :host button { margin: 0 !important; }

@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -61,6 +61,7 @@ import { I18nService } from '../services/i18n.service';
             </mat-dialog-actions>
         </form>
     `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     styles: [`
         .full-width { width: 100%; }
         .p3xr-dialog-content { min-width: 300px; }
