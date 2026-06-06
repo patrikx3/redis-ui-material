@@ -41,6 +41,7 @@ const strings = {
     info: "מידע",
     deleteListItem: "האם אתה בטוח שאתה מחק פריט זה ברשימה?",
     deleteHashKey: "האם אתה בטוח שתמחק את פריט מפתח ה-hash הזה?",
+    deleteArrayIndex: "האם אתה בטוח שברצונך למחוק את רכיב המערך הזה?",
     deleteStreamTimestamp: "האם אתה בטוח שאתה מחק את חותמת הזמן של השידור הזה?",
     deleteSetMember: "האם אתה בטוח שתמחק את חבר הסט הזה?",
     deleteZSetMember: "האם אתה בטוח שתמחק את חבר הסט הממוין הזה?",
@@ -308,7 +309,8 @@ const strings = {
             "קבל את 10 הערכים האחרונים מהזרם events",
             "קבל את כל השדות של משתמש hash:1",
             "קבל חברים בסט favourites",
-            "קבל את הטופ 10 לפי ציון מ-leaderboard"
+            "קבל את הטופ 10 לפי ציון מ-leaderboard",
+            "דרג פריטים לפי מספר הסטים שבהם הם מופיעים (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -325,7 +327,8 @@ const strings = {
             "עדכן את הגיל של user:42 ל-31",
             "רשום את כל המפתחות JSON",
             "מחק שדה ממסמך JSON",
-            "קבל שדה מקונן באמצעות JSONPath"
+            "קבל שדה מקונן באמצעות JSONPath",
+            "שמור מערך JSON של floats בדיוק מופחת (FPHA BF16)"
           ]
         },
         search: {
@@ -350,7 +353,8 @@ const strings = {
             "קבל את הטווח של temp:room1 מאתמול לעכשיו",
             "קבל ריבוי טווחים לפי תווית sensor=temp",
             "צור 100 נקודות נתונים בגל סינוס עבור temp:room1",
-            "הצג שמירה ותוויות עבור temp:room1"
+            "הצג שמירה ותוויות עבור temp:room1",
+            "קבל min, max, first ו-last לכל bucket ב-TS.RANGE אחד (candlestick)"
           ]
         },
         bloom: {
@@ -376,6 +380,18 @@ const strings = {
             "חפש לפי שם רכיב עם VSIM"
           ]
         },
+        array: {
+          name: "מערך (Redis 8.8+)",
+          description: "זמין כאשר מזוהה Redis 8.8+ (סוג מקורי ARRAY).",
+          prompts: [
+            "צור מערך עם כמה ערכים",
+            "קבע את הערך באינדקס 5 של המערך שלי",
+            "קבל את הערך באינדקס מסוים",
+            "הצג את כל רכיבי המערך עם ARSCAN",
+            "מחק את הרכיב באינדקס",
+            "כמה רכיבים יש במערך שלי?"
+          ]
+        },
         redis8: {
           name: "Redis 8+ תכונות",
           description: "מוצג כאשר Redis 8+ מזוהה.",
@@ -385,7 +401,9 @@ const strings = {
             "הפעל חיפוש היברידי של טקסט מלא + וקטור (FT.HYBRID)",
             "הגדר מספר מפתחות עם תפוגה משותפת באמצעות MSETEX",
             "מחק ערך זרם עם קבוצת צרכנים (XDELEX)",
-            "הצג סטטיסטיקות של משבצות אשכול עבור 10 המשבצות המובילות"
+            "הצג סטטיסטיקות של משבצות אשכול עבור 10 המשבצות המובילות",
+            "הגבל קצב למפתח עם מונה חלון (INCREX)",
+            "בצע negative-ack להודעת stream ממתינה אל dead-letter (XNACK)"
           ]
         },
         scripting: {
@@ -495,6 +513,7 @@ const strings = {
     welcomeConsole: "ברוכים הבאים לקונסולת Redis",
     welcomeConsoleInfo: "SHIFT + היסטוריית הסמן למעלה או למטה מופעלת",
     redisListIndexInfo: "ריק כדי להוסיף, -1 כדי להוסיף או לשמור אותו במיקום המוצג.",
+    redisArrayIndexInfo: "השאר ריק כדי להוסיף באינדקס הבא, או הזן אינדקס מפורש (מותרים פערים — מערכים יכולים להיות דלילים).",
     console: "קונסולה",
     connectiondAdd: "הוסף חיבור",
     connectiondEdit: "ערוך חיבור",
@@ -621,6 +640,7 @@ const strings = {
     socketDisconnected: "מנותק",
     socketError: "שגיאת חיבור",
     deletedHashKey: "מפתח האש נמחק",
+    deletedArrayIndex: "רכיב המערך נמחק",
     deletedSetMember: "חבר הסט נמחק",
     deletedListElement: "רכיב הרשימה נמחק",
     deletedZSetMember: "חבר הסט הממוין נמחק",
@@ -920,6 +940,12 @@ const strings = {
           value: "ערך"
         }
       },
+      array: {
+        table: {
+          index: "אינדקס",
+          value: "ערך"
+        }
+      },
       hash: {
         table: {
           hashkey: "חשקי",
@@ -1002,13 +1028,21 @@ const strings = {
         info: "מידע",
         elements: "אלמנטים",
         similarity: "חיפוש דמיון",
+        similaritySearch: "חיפוש דמיון",
         searchByElement: "חיפוש לפי אלמנט",
         searchByVector: "חיפוש לפי וקטור",
+        byElement: "חיפוש לפי אלמנט",
+        byVector: "חיפוש לפי וקטור",
         vectorValues: "ערכי וקטור",
+        elementName: "שם אלמנט",
+        searchTerm: "מונח חיפוש",
         element: "אלמנט",
         score: "ציון",
         count: "ספירה",
         addElement: "הוסף אלמנט",
+        addedSuccessfully: "הפריט נוסף בהצלחה",
+        deletedSuccessfully: "הפריט נמחק בהצלחה",
+        removedSuccessfully: "הפריט נמחק בהצלחה",
         attributes: "תכונות",
         noAttributes: "אין תכונות",
         dimensions: "ממדים",
@@ -1069,6 +1103,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "מערך",
   },
   promo: {
     title: "AI עוזר רשת",

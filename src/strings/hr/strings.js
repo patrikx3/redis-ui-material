@@ -41,6 +41,7 @@ const strings = {
     info: "Info",
     deleteListItem: "Jeste li sigurni da želite izbrisati ovu stavku popisa?",
     deleteHashKey: "Jeste li sigurni da želite izbrisati ovu stavku hash ključa?",
+    deleteArrayIndex: "Jeste li sigurni da želite izbrisati ovaj element polja?",
     deleteStreamTimestamp: "Jeste li sigurni da želite izbrisati ovu vremensku oznaku streama?",
     deleteSetMember: "Jeste li sigurni da želite izbrisati ovaj član skupa?",
     deleteZSetMember: "Jeste li sigurni da želite izbrisati ovaj sortirani član skupa?",
@@ -308,7 +309,8 @@ const strings = {
             "dohvati zadnjih 10 unosa iz toka events",
             "dobiti sva polja hash korisnika:1",
             "dohvati članove skupa favourites",
-            "dođite među 10 najboljih po rezultatu iz leaderboard"
+            "dođite među 10 najboljih po rezultatu iz leaderboard",
+            "rangiraj stavke prema broju skupova u kojima se pojavljuju (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -325,7 +327,8 @@ const strings = {
             "ažuriraj dob user:42 na 31",
             "popis svih ključeva JSON",
             "brisanje polja iz dokumenta JSON",
-            "dobiti ugniježđeno polje pomoću JSONPath"
+            "dobiti ugniježđeno polje pomoću JSONPath",
+            "spremi JSON polje decimalnih brojeva smanjene preciznosti (FPHA BF16)"
           ]
         },
         search: {
@@ -350,7 +353,8 @@ const strings = {
             "dobijte raspon temp:room1 od jučer do sada",
             "dobiti više raspona prema oznaci sensor=temp",
             "generiraj 100 podatkovnih točaka sinusnog vala za temp:room1",
-            "prikaži zadržavanje i oznake za temp:room1"
+            "prikaži zadržavanje i oznake za temp:room1",
+            "dohvati min, max, first i last po bucketu jednim TS.RANGE (candlestick)"
           ]
         },
         bloom: {
@@ -376,6 +380,18 @@ const strings = {
             "pretraži po nazivu elementa s VSIM"
           ]
         },
+        array: {
+          name: "Polje (Redis 8.8+)",
+          description: "Dostupno kada se otkrije Redis 8.8+ (izvorni tip ARRAY).",
+          prompts: [
+            "stvori polje s nekoliko vrijednosti",
+            "postavi vrijednost na indeksu 5 mog polja",
+            "dohvati vrijednost na određenom indeksu",
+            "ispiši sve elemente polja pomoću ARSCAN",
+            "izbriši element na indeksu",
+            "koliko elemenata ima moje polje?"
+          ]
+        },
         redis8: {
           name: "Redis 8+ značajki",
           description: "Prikazuje se kada se otkrije Redis 8+.",
@@ -385,7 +401,9 @@ const strings = {
             "pokreni hibridno pretraživanje cijelog teksta + vektora (FT.HYBRID)",
             "postavite više ključeva sa zajedničkim istekom pomoću MSETEX",
             "brisanje unosa toka s grupom potrošača (XDELEX)",
-            "prikaži statistiku utora klastera za prvih 10 utora"
+            "prikaži statistiku utora klastera za prvih 10 utora",
+            "ograniči stopu za ključ pomoću prozorskog brojača (INCREX)",
+            "pošalji negative-ack za pending stream poruku u dead-letter (XNACK)"
           ]
         },
         scripting: {
@@ -495,6 +513,7 @@ const strings = {
     welcomeConsole: "Dobrodošli na Redis konzolu",
     welcomeConsoleInfo: "SHIFT + Povijest kursora GORE ili DOLJE je omogućena",
     redisListIndexInfo: "Prazno za dodavanje, -1 za dodavanje ispred ili spremanje na prikazano mjesto.",
+    redisArrayIndexInfo: "Ostavite prazno za dodavanje na sljedeći indeks ili unesite određeni indeks (praznine su dopuštene — polja mogu biti rijetka).",
     console: "Konzola",
     connectiondAdd: "Dodaj vezu",
     connectiondEdit: "Uredi vezu",
@@ -621,6 +640,7 @@ const strings = {
     socketDisconnected: "Prekinuta veza",
     socketError: "Greška u vezi",
     deletedHashKey: "Hash ključ izbrisan",
+    deletedArrayIndex: "Element polja je izbrisan",
     deletedSetMember: "Član skupa izbrisan",
     deletedListElement: "Element liste izbrisan",
     deletedZSetMember: "Član sortiranog skupa izbrisan",
@@ -920,6 +940,12 @@ const strings = {
           value: "Vrijednost"
         }
       },
+      array: {
+        table: {
+          index: "Indeks",
+          value: "Vrijednost"
+        }
+      },
       hash: {
         table: {
           hashkey: "Hashkey",
@@ -1002,13 +1028,21 @@ const strings = {
         info: "Informacije",
         elements: "Elementi",
         similarity: "Pretraživanje sličnosti",
+        similaritySearch: "Pretraživanje sličnosti",
         searchByElement: "Pretraži po elementu",
         searchByVector: "Pretraži po vektoru",
+        byElement: "Pretraži po elementu",
+        byVector: "Pretraži po vektoru",
         vectorValues: "Vektorske vrijednosti",
+        elementName: "Naziv elementa",
+        searchTerm: "Pojam za pretraživanje",
         element: "Element",
         score: "Rezultat",
         count: "Broj",
         addElement: "Dodaj element",
+        addedSuccessfully: "Stavka uspješno dodana",
+        deletedSuccessfully: "Stavka uspješno obrisana",
+        removedSuccessfully: "Stavka uspješno obrisana",
         attributes: "Atributi",
         noAttributes: "Nema atributa",
         dimensions: "Dimenzije",
@@ -1069,6 +1103,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "Polje",
   },
   promo: {
     title: "AI Mrežni pomoćnik",

@@ -41,6 +41,7 @@ const strings = {
     info: "Info",
     deleteListItem: "Är du säker på att du vill radera detta listobjekt?",
     deleteHashKey: "Är du säker på att du vill radera denna hash-nyckel?",
+    deleteArrayIndex: "Är du säker på att du vill ta bort detta arrayelement?",
     deleteStreamTimestamp: "Är du säker på att du vill radera denna stream-tidsstämpel?",
     deleteSetMember: "Är du säker på att du vill radera denna uppsättningsmedlem?",
     deleteZSetMember: "Är du säker på att du vill radera denna sorterade uppsättningsmedlem?",
@@ -248,15 +249,6 @@ const strings = {
       connectedTo: opts => `Ansluten till ${opts.name} (Redis ${opts.version} ${opts.mode}, ${opts.modules} moduler laddade)`,
       connectedToNoInfo: opts => `Ansluten till ${opts.name}`,
       disconnectedFrom: opts => `Frånkopplad från ${opts.name}`,
-      notConnected: "Inte ansluten.",
-      limitedAiOnly: "Endast begränsad AI — allmänna Redis-frågor fungerar.",
-      connectHint: "För live-diagnostik, skriv: connect <name>",
-      cheatsheetHint: "Skriv ai: help för att se vad du kan fråga om.",
-      needsConnection: "Detta kräver en aktiv anslutning. Skriv \"connect <name>\" först.",
-      aiNeedsConnectionReason: "AI med live-status (verktygsanvändning) är endast tillgänglig när du är ansluten till Redis.",
-      verbNeedsConnection: opts => `"${opts.verb}" kräver en aktiv anslutning — skriv "connect <name>" först.`,
-      aiLimitedMode: "AI är i begränsat läge — endast allmänna frågor om Redis fungerar tills du ansluter.",
-      welcomeDisconnected: "Välkommen. Du är inte ansluten till någon Redis-instans ännu.",
       readyIndicator: "Klar.",
     },
     cheatsheet: {
@@ -317,7 +309,8 @@ const strings = {
             "hämta de 10 senaste posterna från stream events",
             "hämta alla fält från hash user:1",
             "hämta medlemmar i set favourites",
-            "hämta topp 10 efter poäng från leaderboard"
+            "hämta topp 10 efter poäng från leaderboard",
+            "rangordna objekt efter hur många set de förekommer i (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -334,7 +327,8 @@ const strings = {
             "uppdatera age för user:42 till 31",
             "lista alla JSON-nycklar",
             "ta bort ett fält från ett JSON-dokument",
-            "hämta ett nästlat fält med JSONPath"
+            "hämta ett nästlat fält med JSONPath",
+            "lagra en JSON-array med floats med reducerad precision (FPHA BF16)"
           ]
         },
         search: {
@@ -359,7 +353,8 @@ const strings = {
             "hämta intervallet för temp:room1 från igår till nu",
             "hämta multi-range efter etikett sensor=temp",
             "generera 100 sinusvågs-datapunkter för temp:room1",
-            "visa retention och etiketter för temp:room1"
+            "visa retention och etiketter för temp:room1",
+            "hämta min, max, first och last per bucket med en TS.RANGE (candlestick)"
           ]
         },
         bloom: {
@@ -385,6 +380,18 @@ const strings = {
             "sök efter elementnamn med VSIM"
           ]
         },
+        array: {
+          name: "Array (Redis 8.8+)",
+          description: "Tillgängligt när Redis 8.8+ upptäcks (inbyggd ARRAY-typ).",
+          prompts: [
+            "skapa en array med några värden",
+            "sätt värdet vid index 5 i min array",
+            "hämta värdet vid ett specifikt index",
+            "lista alla element i en array med ARSCAN",
+            "ta bort elementet vid ett index",
+            "hur många element har min array?"
+          ]
+        },
         redis8: {
           name: "Redis 8+ funktioner",
           description: "Visas när Redis 8+ upptäcks.",
@@ -394,7 +401,9 @@ const strings = {
             "kör en hybrid fulltext- + vektorsökning (FT.HYBRID)",
             "sätt flera nycklar med gemensam utgång via MSETEX",
             "ta bort en stream-post med consumergroup (XDELEX)",
-            "visa cluster slot-stats för de 10 största slotsen"
+            "visa cluster slot-stats för de 10 största slotsen",
+            "rate-limita en nyckel med en fönsterräknare (INCREX)",
+            "negative-ack ett väntande stream-meddelande till dead-letter (XNACK)"
           ]
         },
         scripting: {
@@ -504,6 +513,7 @@ const strings = {
     welcomeConsole: "Välkommen till Redis-konsolen",
     welcomeConsoleInfo: "SHIFT + Piltangent UPP eller NER för historik är aktiverat",
     redisListIndexInfo: "Tomt för att lägga till sist, -1 för att lägga till först eller spara på den visade positionen.",
+    redisArrayIndexInfo: "Lämna tomt för att lägga till på nästa index, eller ange ett specifikt index (luckor tillåts — arrayer kan vara glesa).",
     console: "Konsol",
     connectiondAdd: "Lägg till anslutning",
     connectiondEdit: "Redigera anslutning",
@@ -630,6 +640,7 @@ const strings = {
     socketDisconnected: "Frånkopplad",
     socketError: "Anslutningsfel",
     deletedHashKey: "Hash-nyckel raderad",
+    deletedArrayIndex: "Arrayelement borttaget",
     deletedSetMember: "Set-medlem raderad",
     deletedListElement: "Listelement raderat",
     deletedZSetMember: "Sorterat set-medlem raderad",
@@ -929,6 +940,12 @@ const strings = {
           value: "Värde"
         }
       },
+      array: {
+        table: {
+          index: "Index",
+          value: "Värde"
+        }
+      },
       hash: {
         table: {
           hashkey: "Hash-nyckel",
@@ -1011,13 +1028,21 @@ const strings = {
         info: "Info",
         elements: "Element",
         similarity: "Likhetssökning",
+        similaritySearch: "Likhetssökning",
         searchByElement: "Sök efter element",
         searchByVector: "Sök efter vektor",
+        byElement: "Sök efter element",
+        byVector: "Sök efter vektor",
         vectorValues: "Vektorvärden",
+        elementName: "Elementnamn",
+        searchTerm: "Sökterm",
         element: "Element",
         score: "Poäng",
         count: "Antal",
         addElement: "Lägg till element",
+        addedSuccessfully: "Objektet lades till framgångsrikt",
+        deletedSuccessfully: "Objektet raderades framgångsrikt",
+        removedSuccessfully: "Objektet raderades framgångsrikt",
         attributes: "Attribut",
         noAttributes: "Inga attribut",
         dimensions: "Dimensioner",
@@ -1078,6 +1103,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "Array",
   },
   promo: {
     title: "AI-nätverksassistent",

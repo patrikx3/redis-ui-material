@@ -41,6 +41,7 @@ const strings = {
     info: "معلومات",
     deleteListItem: "هل أنت متأكد من حذف عنصر القائمة هذا؟",
     deleteHashKey: "هل أنت متأكد من حذف عنصر مفتاح التجزئة هذا؟",
+    deleteArrayIndex: "هل أنت متأكد من حذف عنصر المصفوفة هذا؟",
     deleteStreamTimestamp: "هل أنت متأكد من حذف هذا الطابع الزمني للبث؟",
     deleteSetMember: "هل أنت متأكد من حذف هذا العضو في المجموعة؟",
     deleteZSetMember: "هل أنت متأكد من حذف عضو المجموعة الذي تم فرزه؟",
@@ -308,7 +309,8 @@ const strings = {
             "احصل على آخر 10 إدخالات من الدفق events",
             "الحصول على جميع حقول مستخدم التجزئة:1",
             "احصل على أعضاء المجموعة favourites",
-            "احصل على أعلى 10 نقاط من leaderboard"
+            "احصل على أعلى 10 نقاط من leaderboard",
+            "رتّب العناصر حسب عدد المجموعات التي تظهر فيها (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -325,7 +327,8 @@ const strings = {
             "قم بتحديث عمر user:42 إلى 31",
             "قم بإدراج جميع مفاتيح JSON",
             "حذف حقل من مستند JSON",
-            "الحصول على حقل متداخل باستخدام JSONPath"
+            "الحصول على حقل متداخل باستخدام JSONPath",
+            "خزّن مصفوفة JSON من الأعداد العشرية بدقة مخفّضة (FPHA BF16)"
           ]
         },
         search: {
@@ -350,7 +353,8 @@ const strings = {
             "احصل على نطاق temp:room1 من الأمس إلى الآن",
             "احصل على نطاق متعدد حسب التصنيف sensor=temp",
             "إنشاء 100 نقطة بيانات موجة جيبية لـ temp:room1",
-            "إظهار الاحتفاظ والتسميات لـ temp:room1"
+            "إظهار الاحتفاظ والتسميات لـ temp:room1",
+            "احصل على الحد الأدنى والأقصى والأول والأخير لكل حاوية في TS.RANGE واحد (شموع)"
           ]
         },
         bloom: {
@@ -376,6 +380,18 @@ const strings = {
             "البحث حسب اسم العنصر باستخدام VSIM"
           ]
         },
+        array: {
+          name: "مصفوفة (Redis 8.8+)",
+          description: "متاح عند اكتشاف Redis 8.8+ (النوع ARRAY الأصلي).",
+          prompts: [
+            "أنشئ مصفوفة بعدة قيم",
+            "عيّن القيمة عند الفهرس 5 في مصفوفتي",
+            "احصل على القيمة عند فهرس محدد",
+            "اعرض كل عناصر المصفوفة باستخدام ARSCAN",
+            "احذف العنصر عند فهرس",
+            "كم عدد العناصر في مصفوفتي؟"
+          ]
+        },
         redis8: {
           name: "Redis أكثر من 8 ميزات",
           description: "يظهر عند اكتشاف Redis 8+.",
@@ -385,7 +401,9 @@ const strings = {
             "تشغيل نص كامل مختلط + بحث متجه (FT.HYBRID)",
             "قم بتعيين مفاتيح متعددة مع انتهاء صلاحية مشترك باستخدام MSETEX",
             "حذف إدخال دفق مع مجموعة المستهلكين (XDELEX)",
-            "عرض إحصائيات فتحات المجموعة لأفضل 10 فتحات"
+            "عرض إحصائيات فتحات المجموعة لأفضل 10 فتحات",
+            "طبّق تحديد المعدل على مفتاح باستخدام عدّاد نافذة (INCREX)",
+            "أرسل إقرارًا سلبيًا لرسالة دفق معلّقة إلى dead-letter (XNACK)"
           ]
         },
         scripting: {
@@ -495,6 +513,7 @@ const strings = {
     welcomeConsole: "مرحبًا بك في وحدة التحكم Redis",
     welcomeConsoleInfo: "SHIFT + تم تمكين سجل المؤشر لأعلى أو لأسفل",
     redisListIndexInfo: "فارغ للإلحاق، -1 للإلحاق به أو حفظه في الموضع الموضح.",
+    redisArrayIndexInfo: "اتركه فارغًا للإضافة في الفهرس التالي، أو أدخل فهرسًا محددًا (الفجوات مسموحة — المصفوفات متفرقة).",
     console: "وحدة التحكم",
     connectiondAdd: "إضافة اتصال",
     connectiondEdit: "تحرير الاتصال",
@@ -621,6 +640,7 @@ const strings = {
     socketDisconnected: "تم قطع الاتصال",
     socketError: "خطأ في الاتصال",
     deletedHashKey: "تم حذف مفتاح الهاش",
+    deletedArrayIndex: "تم حذف عنصر المصفوفة",
     deletedSetMember: "تم حذف عضو المجموعة",
     deletedListElement: "تم حذف عنصر القائمة",
     deletedZSetMember: "تم حذف عضو المجموعة المرتبة",
@@ -920,6 +940,12 @@ const strings = {
           value: "القيمة"
         }
       },
+      array: {
+        table: {
+          index: "الفهرس",
+          value: "القيمة"
+        }
+      },
       hash: {
         table: {
           hashkey: "هاشكي",
@@ -1002,13 +1028,21 @@ const strings = {
         info: "معلومات",
         elements: "العناصر",
         similarity: "بحث التشابه",
+        similaritySearch: "بحث التشابه",
         searchByElement: "البحث حسب العنصر",
         searchByVector: "البحث حسب المتجه",
+        byElement: "البحث حسب العنصر",
+        byVector: "البحث حسب المتجه",
         vectorValues: "قيم المتجه",
+        elementName: "اسم العنصر",
+        searchTerm: "مصطلح البحث",
         element: "عنصر",
         score: "النتيجة",
         count: "العدد",
         addElement: "إضافة عنصر",
+        addedSuccessfully: "تمت إضافة العنصر بنجاح",
+        deletedSuccessfully: "تم حذف العنصر بنجاح",
+        removedSuccessfully: "تم حذف العنصر بنجاح",
         attributes: "السمات",
         noAttributes: "لا توجد سمات",
         dimensions: "الأبعاد",
@@ -1069,6 +1103,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "مصفوفة",
   },
   promo: {
     title: "AI مساعد الشبكة",

@@ -41,6 +41,7 @@ const strings = {
     info: "Informações",
     deleteListItem: "Tem certeza de que deseja excluir este item da lista?",
     deleteHashKey: "Tem certeza de que deseja excluir este item de chave hash?",
+    deleteArrayIndex: "Tem certeza de que deseja excluir este elemento do array?",
     deleteStreamTimestamp: "Tem certeza de que deseja excluir o carimbo de data/hora deste stream?",
     deleteSetMember: "Tem certeza de que deseja excluir este membro do conjunto?",
     deleteZSetMember: "Tem certeza de que deseja excluir este membro do conjunto classificado?",
@@ -250,15 +251,6 @@ const strings = {
       connectedTo: opts => `Conectado a ${opts.name} (Redis ${opts.version} ${opts.mode}, ${opts.modules} módulos carregados)`,
       connectedToNoInfo: opts => `Conectado a ${opts.name}`,
       disconnectedFrom: opts => `Desconectado de ${opts.name}`,
-      notConnected: "Não conectado.",
-      limitedAiOnly: "IA limitada apenas — perguntas e respostas gerais sobre Redis funcionam.",
-      connectHint: "Para diagnóstico ao vivo, digite: connect <name>",
-      cheatsheetHint: "Digite ai: help para ver o que você pode perguntar.",
-      needsConnection: "Isso requer uma conexão ativa. Digite \"connect <name>\" primeiro.",
-      aiNeedsConnectionReason: "A IA de estado ao vivo (tool use) só está disponível quando conectado ao Redis.",
-      verbNeedsConnection: opts => `"${opts.verb}" requer uma conexão ativa — digite "connect <name>" primeiro.`,
-      aiLimitedMode: "A IA está em modo limitado — apenas perguntas gerais sobre Redis funcionam até você se conectar.",
-      welcomeDisconnected: "Bem-vindo. Você ainda não está conectado a nenhuma instância Redis.",
       readyIndicator: "Pronto.",
     },
     cheatsheet: {
@@ -319,7 +311,8 @@ const strings = {
             "obtenha as últimas 10 entradas do stream events",
             "obtenha todos os campos do hash user:1",
             "obtenha os membros do conjunto favourites",
-            "obtenha os 10 primeiros por pontuação do leaderboard"
+            "obtenha os 10 primeiros por pontuação do leaderboard",
+            "classifique os itens por quantos conjuntos eles aparecem (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -336,7 +329,8 @@ const strings = {
             "atualize a idade de user:42 para 31",
             "liste todas as chaves JSON",
             "exclua um campo de um documento JSON",
-            "obtenha um campo aninhado usando JSONPath"
+            "obtenha um campo aninhado usando JSONPath",
+            "armazene um array JSON de floats com precisão reduzida (FPHA BF16)"
           ]
         },
         search: {
@@ -361,7 +355,8 @@ const strings = {
             "obtenha o intervalo de temp:room1 de ontem até agora",
             "obtenha multi-range pela etiqueta sensor=temp",
             "gere 100 pontos de dados em onda senoidal para temp:room1",
-            "mostre a retenção e as etiquetas de temp:room1"
+            "mostre a retenção e as etiquetas de temp:room1",
+            "obtenha min, max, first e last por bucket em um único TS.RANGE (candlestick)"
           ]
         },
         bloom: {
@@ -387,6 +382,18 @@ const strings = {
             "pesquise por nome de elemento com VSIM"
           ]
         },
+        array: {
+          name: "Array (Redis 8.8+)",
+          description: "Disponível quando Redis 8.8+ é detectado (tipo ARRAY nativo).",
+          prompts: [
+            "crie um array com alguns valores",
+            "defina o valor no índice 5 do meu array",
+            "obtenha o valor em um índice específico",
+            "liste todos os elementos de um array com ARSCAN",
+            "exclua o elemento em um índice",
+            "quantos elementos meu array tem?"
+          ]
+        },
         redis8: {
           name: "Recursos do Redis 8+",
           description: "Exibido quando Redis 8+ é detectado.",
@@ -396,7 +403,9 @@ const strings = {
             "execute uma busca híbrida full-text + vetor (FT.HYBRID)",
             "defina várias chaves com uma expiração compartilhada usando MSETEX",
             "exclua uma entrada de stream com grupo de consumidores (XDELEX)",
-            "mostre as estatísticas de slots do cluster para os 10 primeiros slots"
+            "mostre as estatísticas de slots do cluster para os 10 primeiros slots",
+            "aplique rate-limit a uma chave com contador de janela (INCREX)",
+            "faça negative-ack de uma mensagem stream pendente para dead-letter (XNACK)"
           ]
         },
         scripting: {
@@ -506,6 +515,7 @@ const strings = {
     welcomeConsole: "Bem-vindo ao console Redis",
     welcomeConsoleInfo: "SHIFT + O histórico do cursor PARA CIMA ou PARA BAIXO está ativado",
     redisListIndexInfo: "Vazio para anexar, -1 para preceder ou salvar na posição mostrada.",
+    redisArrayIndexInfo: "Deixe vazio para adicionar no próximo índice, ou informe um índice explícito (lacunas são permitidas — arrays podem ser esparsos).",
     console: "Consola",
     connectiondAdd: "Adicionar conexão",
     connectiondEdit: "Editar conexão",
@@ -632,6 +642,7 @@ const strings = {
     socketDisconnected: "Desconectado",
     socketError: "Erro de conexão",
     deletedHashKey: "Chave hash excluída",
+    deletedArrayIndex: "Elemento do array excluído",
     deletedSetMember: "Membro do conjunto excluído",
     deletedListElement: "Elemento da lista excluído",
     deletedZSetMember: "Membro do conjunto ordenado excluído",
@@ -931,6 +942,12 @@ const strings = {
           value: "Valor"
         }
       },
+      array: {
+        table: {
+          index: "Índice",
+          value: "Valor"
+        }
+      },
       hash: {
         table: {
           hashkey: "Chave de hash",
@@ -1013,13 +1030,21 @@ const strings = {
         info: "Informações",
         elements: "Elementos",
         similarity: "Busca por Similaridade",
+        similaritySearch: "Busca por Similaridade",
         searchByElement: "Buscar por elemento",
         searchByVector: "Buscar por vetor",
+        byElement: "Buscar por elemento",
+        byVector: "Buscar por vetor",
         vectorValues: "Valores do vetor",
+        elementName: "Nome do elemento",
+        searchTerm: "Termo de pesquisa",
         element: "Elemento",
         score: "Pontuação",
         count: "Contagem",
         addElement: "Adicionar Elemento",
+        addedSuccessfully: "Item adicionado com sucesso",
+        deletedSuccessfully: "Item excluído com sucesso",
+        removedSuccessfully: "Item excluído com sucesso",
         attributes: "Atributos",
         noAttributes: "Sem atributos",
         dimensions: "Dimensões",
@@ -1080,6 +1105,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "Array",
   },
   promo: {
     title: "Assistente de Rede com IA",

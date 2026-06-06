@@ -40,7 +40,7 @@ const typeIcons: Record<string, string> = {
     string: 'fas fa-ellipsis-h', zset: 'fas fa-chart-line', stream: 'fas fa-stream',
     json: 'fas fa-code', timeseries: 'fas fa-chart-area', bloom: 'fas fa-filter',
     cuckoo: 'fas fa-filter', topk: 'fas fa-trophy', cms: 'fas fa-chart-simple',
-    tdigest: 'fas fa-chart-bar', vectorset: 'fas fa-brain',
+    tdigest: 'fas fa-chart-bar', vectorset: 'fas fa-brain', array: 'fas fa-layer-group',
 }
 
 // Theme-specific colors (from React themes/index.ts)

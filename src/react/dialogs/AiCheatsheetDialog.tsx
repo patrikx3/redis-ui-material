@@ -51,6 +51,7 @@ export default function AiCheatsheetDialog({ open, onClose, onPick }: AiCheatshe
         if (version >= 8) {
             push('vectorSet', cs.vectorSet)
             push('redis8', cs.redis8)
+            push('array', cs.array)
         }
         push('scripting', cs.scripting)
         if (isCluster) push('cluster', cs.cluster)

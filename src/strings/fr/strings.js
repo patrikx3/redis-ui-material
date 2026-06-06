@@ -41,6 +41,7 @@ const strings = {
     info: "Info",
     deleteListItem: "Êtes-vous sûr de vouloir supprimer cet élément de la liste ?",
     deleteHashKey: "Êtes-vous sûr de vouloir supprimer cette clé hash ?",
+    deleteArrayIndex: "Voulez-vous vraiment supprimer cet élément de tableau ?",
     deleteStreamTimestamp: "Êtes-vous sûr de vouloir supprimer cet horodatage du flux ?",
     deleteSetMember: "Êtes-vous sûr de vouloir supprimer ce membre de l'ensemble ?",
     deleteZSetMember: "Êtes-vous sûr de vouloir supprimer ce membre de l'ensemble trié ?",
@@ -310,7 +311,8 @@ const strings = {
             "obtenir les 10 dernières entrées du flux events",
             "obtenir tous les champs de l'utilisateur de hachage : 1",
             "obtenir les membres de l'ensemble favourites",
-            "Obtenez le top 10 par score de leaderboard"
+            "Obtenez le top 10 par score de leaderboard",
+            "classe les éléments selon le nombre de sets où ils apparaissent (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -327,7 +329,8 @@ const strings = {
             "mettre à jour l'âge de user:42 à 31 ans",
             "lister toutes les clés JSON",
             "supprimer un champ d'un document JSON",
-            "obtenir un champ imbriqué en utilisant JSONPath"
+            "obtenir un champ imbriqué en utilisant JSONPath",
+            "stocke un tableau JSON de floats avec une précision réduite (FPHA BF16)"
           ]
         },
         search: {
@@ -352,7 +355,8 @@ const strings = {
             "obtenez la gamme de temp:room1 d'hier à maintenant",
             "obtenez plusieurs gammes par étiquette sensor=temp",
             "générer 100 points de données sinusoïdales pour temp:room1",
-            "afficher la rétention et les étiquettes pour temp:room1"
+            "afficher la rétention et les étiquettes pour temp:room1",
+            "récupère min, max, first et last par bucket avec un seul TS.RANGE (candlestick)"
           ]
         },
         bloom: {
@@ -378,6 +382,18 @@ const strings = {
             "recherche par nom d'élément avec VSIM"
           ]
         },
+        array: {
+          name: "Tableau (Redis 8.8+)",
+          description: "Disponible lorsque Redis 8.8+ est détecté (type ARRAY natif).",
+          prompts: [
+            "crée un tableau avec quelques valeurs",
+            "définis la valeur à l'index 5 de mon tableau",
+            "récupère la valeur à un index précis",
+            "liste tous les éléments d'un tableau avec ARSCAN",
+            "supprime l'élément à un index",
+            "combien d'éléments mon tableau contient-il ?"
+          ]
+        },
         redis8: {
           name: "Redis 8+ fonctionnalités",
           description: "Affiché lorsque Redis 8+ est détecté.",
@@ -387,7 +403,9 @@ const strings = {
             "exécuter une recherche hybride texte intégral + vecteur (FT.HYBRID)",
             "définir plusieurs clés avec une expiration partagée en utilisant MSETEX",
             "supprimer une entrée de flux avec un groupe de consommateurs (XDELEX)",
-            "afficher les statistiques des emplacements du cluster pour les 10 premiers emplacements"
+            "afficher les statistiques des emplacements du cluster pour les 10 premiers emplacements",
+            "limite le débit d'une clé avec un compteur de fenêtre (INCREX)",
+            "effectue un negative-ack d'un message stream en attente vers dead-letter (XNACK)"
           ]
         },
         scripting: {
@@ -497,6 +515,7 @@ const strings = {
     welcomeConsole: "Bienvenue dans la console Redis",
     welcomeConsoleInfo: "SHIFT + L'historique avec les flèches HAUT ou BAS est activé",
     redisListIndexInfo: "Vide pour ajouter à la fin, -1 pour ajouter au début ou enregistrer à la position affichée.",
+    redisArrayIndexInfo: "Laissez vide pour ajouter à l’index suivant, ou saisissez un index explicite (les trous sont autorisés — les tableaux peuvent être clairsemés).",
     console: "Console",
     connectiondAdd: "Ajouter une connexion",
     connectiondEdit: "Modifier une connexion",
@@ -623,6 +642,7 @@ const strings = {
     socketDisconnected: "Déconnecté",
     socketError: "Erreur de connexion",
     deletedHashKey: "Clé de hachage supprimée",
+    deletedArrayIndex: "Élément de tableau supprimé",
     deletedSetMember: "Membre de l'ensemble supprimé",
     deletedListElement: "Élément de liste supprimé",
     deletedZSetMember: "Membre de l'ensemble trié supprimé",
@@ -922,6 +942,12 @@ const strings = {
           value: "Valeur"
         }
       },
+      array: {
+        table: {
+          index: "Index",
+          value: "Valeur"
+        }
+      },
       hash: {
         table: {
           hashkey: "Clé hash",
@@ -1004,13 +1030,21 @@ const strings = {
         info: "Info",
         elements: "Éléments",
         similarity: "Recherche de similarité",
+        similaritySearch: "Recherche de similarité",
         searchByElement: "Rechercher par élément",
         searchByVector: "Rechercher par vecteur",
+        byElement: "Rechercher par élément",
+        byVector: "Rechercher par vecteur",
         vectorValues: "Valeurs du vecteur",
+        elementName: "Nom de l'élément",
+        searchTerm: "Terme de recherche",
         element: "Élément",
         score: "Score",
         count: "Nombre",
         addElement: "Ajouter un élément",
+        addedSuccessfully: "Élément ajouté avec succès",
+        deletedSuccessfully: "Élément supprimé avec succès",
+        removedSuccessfully: "Élément supprimé avec succès",
         attributes: "Attributs",
         noAttributes: "Aucun attribut",
         dimensions: "Dimensions",
@@ -1071,6 +1105,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "Tableau",
   },
   promo: {
     title: "AI Assistant réseau",

@@ -17,6 +17,7 @@ import { ThemeService } from '../../services/theme.service';
 import { TtlDialogService } from '../../dialogs/ttl-dialog.service';
 import { KeyStringComponent } from './key/key-string.component';
 import { KeyHashComponent } from './key/key-hash.component';
+import { KeyArrayComponent } from './key/key-array.component';
 import { KeyListComponent } from './key/key-list.component';
 import { KeySetComponent } from './key/key-set.component';
 import { KeyZsetComponent } from './key/key-zset.component';
@@ -45,6 +46,7 @@ import humanizeDuration from 'humanize-duration';
         MatButtonToggleModule,
         KeyStringComponent,
         KeyHashComponent,
+        KeyArrayComponent,
         KeyListComponent,
         KeySetComponent,
         KeyZsetComponent,
@@ -264,6 +266,7 @@ export class DatabaseKeyComponent implements OnInit, OnDestroy {
             case 'set':
                 response.value = valueBuffer.map((buf: any) => td.decode(this.toBytes(buf)));
                 break;
+            case 'array':
             case 'hash':
                 response.value = {};
                 Object.entries(valueBuffer).forEach(([key, buf]: [string, any]) => {

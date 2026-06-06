@@ -41,6 +41,7 @@ const strings = {
     info: "Informace",
     deleteListItem: "Opravdu chcete smazat tuto položku seznamu?",
     deleteHashKey: "Opravdu chcete smazat tuto položku hash klíče?",
+    deleteArrayIndex: "Opravdu chcete odstranit tento prvek pole?",
     deleteStreamTimestamp: "Opravdu chcete smazat tuto časovou značku streamu?",
     deleteSetMember: "Opravdu chcete smazat tohoto člena množiny?",
     deleteZSetMember: "Opravdu chcete smazat tohoto člena seřazené množiny?",
@@ -310,7 +311,8 @@ const strings = {
             "získat posledních 10 záznamů ze streamu events",
             "získat všechna pole hash user:1",
             "získejte členy sady favourites",
-            "získat top 10 podle skóre z leaderboard"
+            "získat top 10 podle skóre z leaderboard",
+            "seřaď položky podle počtu sad, ve kterých se objevují (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -327,7 +329,8 @@ const strings = {
             "aktualizujte věk user:42 na 31",
             "vypište všechny klíče JSON",
             "odstranit pole z dokumentu JSON",
-            "získat vnořené pole pomocí JSONPath"
+            "získat vnořené pole pomocí JSONPath",
+            "ulož JSON pole desetinných čísel se sníženou přesností (FPHA BF16)"
           ]
         },
         search: {
@@ -352,7 +355,8 @@ const strings = {
             "získejte rozsah temp:room1 od včerejška do současnosti",
             "získat více rozsahů podle štítku sensor=temp",
             "vygenerovat 100 sinusových datových bodů pro temp:room1",
-            "zobrazit uchování a štítky pro temp:room1"
+            "zobrazit uchování a štítky pro temp:room1",
+            "získej min, max, first a last pro každý bucket jedním TS.RANGE (candlestick)"
           ]
         },
         bloom: {
@@ -378,6 +382,18 @@ const strings = {
             "hledat podle názvu prvku pomocí VSIM"
           ]
         },
+        array: {
+          name: "Pole (Redis 8.8+)",
+          description: "Dostupné, když je detekován Redis 8.8+ (nativní typ ARRAY).",
+          prompts: [
+            "vytvoř pole s několika hodnotami",
+            "nastav hodnotu na indexu 5 mého pole",
+            "získej hodnotu na konkrétním indexu",
+            "vypiš všechny prvky pole pomocí ARSCAN",
+            "odstraň prvek na indexu",
+            "kolik prvků má moje pole?"
+          ]
+        },
         redis8: {
           name: "Redis 8+ funkcí",
           description: "Zobrazí se, když je detekován Redis 8+.",
@@ -387,7 +403,9 @@ const strings = {
             "spustit hybridní fulltextové + vektorové vyhledávání (FT.HYBRID)",
             "nastavit více klíčů se sdíleným vypršením platnosti pomocí MSETEX",
             "smazat záznam streamu se skupinou spotřebitelů (XDELEX)",
-            "zobrazit statistiky slotů clusteru pro 10 nejlepších slotů"
+            "zobrazit statistiky slotů clusteru pro 10 nejlepších slotů",
+            "omez rychlost klíče pomocí čítače v okně (INCREX)",
+            "proveď negative-ack čekající stream zprávy do dead-letter (XNACK)"
           ]
         },
         scripting: {
@@ -497,6 +515,7 @@ const strings = {
     welcomeConsole: "Vítejte v Redis Konzoli",
     welcomeConsoleInfo: "SHIFT + Historie s kurzorem NAHORU nebo DOLŮ je povolena",
     redisListIndexInfo: "Prázdné pro připojení na konec, -1 pro vložení na začátek nebo uložte na zobrazenou pozici.",
+    redisArrayIndexInfo: "Nechte prázdné pro přidání na další index, nebo zadejte konkrétní index (mezery jsou povolené — pole mohou být řídká).",
     console: "Konzole",
     connectiondAdd: "Přidat připojení",
     connectiondEdit: "Upravit připojení",
@@ -623,6 +642,7 @@ const strings = {
     socketDisconnected: "Odpojeno",
     socketError: "Chyba připojení",
     deletedHashKey: "Hash klíč smazán",
+    deletedArrayIndex: "Prvek pole byl odstraněn",
     deletedSetMember: "Člen množiny smazán",
     deletedListElement: "Prvek seznamu smazán",
     deletedZSetMember: "Člen seřazené množiny smazán",
@@ -922,6 +942,12 @@ const strings = {
           value: "Hodnota"
         }
       },
+      array: {
+        table: {
+          index: "Index",
+          value: "Hodnota"
+        }
+      },
       hash: {
         table: {
           hashkey: "Hash klíč",
@@ -1004,13 +1030,21 @@ const strings = {
         info: "Informace",
         elements: "Elementy",
         similarity: "Hledání podobnosti",
+        similaritySearch: "Hledání podobnosti",
         searchByElement: "Hledat podle elementu",
         searchByVector: "Hledat podle vektoru",
+        byElement: "Hledat podle elementu",
+        byVector: "Hledat podle vektoru",
         vectorValues: "Hodnoty vektoru",
+        elementName: "Název elementu",
+        searchTerm: "Hledaný výraz",
         element: "Element",
         score: "Skóre",
         count: "Počet",
         addElement: "Přidat element",
+        addedSuccessfully: "Položka byla úspěšně přidána",
+        deletedSuccessfully: "Položka byla úspěšně smazána",
+        removedSuccessfully: "Položka byla úspěšně smazána",
         attributes: "Atributy",
         noAttributes: "Žádné atributy",
         dimensions: "Dimenze",
@@ -1071,6 +1105,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "Pole",
   },
   promo: {
     title: "AI Network Assistant",

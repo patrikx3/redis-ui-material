@@ -41,6 +41,7 @@ const strings = {
     info: "जानकारी",
     deleteListItem: "के तपाइँ यो सूची वस्तु मेटाउन निश्चित हुनुहुन्छ?",
     deleteHashKey: "के तपाइँ यो ह्यास कुञ्जी वस्तु मेटाउन निश्चित हुनुहुन्छ?",
+    deleteArrayIndex: "के तपाईं यो एरे तत्व मेटाउन निश्चित हुनुहुन्छ?",
     deleteStreamTimestamp: "के तपाइँ यो स्ट्रिम टाइमस्ट्याम्प मेटाउन निश्चित हुनुहुन्छ?",
     deleteSetMember: "के तपाइँ यो सेट सदस्य मेटाउन निश्चित हुनुहुन्छ?",
     deleteZSetMember: "के तपाइँ यो क्रमबद्ध सेट सदस्य मेटाउन निश्चित हुनुहुन्छ?",
@@ -250,15 +251,6 @@ const strings = {
       connectedTo: opts => `${opts.name} सँग जडान भयो (Redis ${opts.version} ${opts.mode}, ${opts.modules} मोड्युल लोड गरिएका छन्)`,
       connectedToNoInfo: opts => `${opts.name} सँग जडान भयो`,
       disconnectedFrom: opts => `${opts.name} बाट विच्छेद भयो`,
-      notConnected: "जडान गरिएको छैन।",
-      limitedAiOnly: "सीमित AI मात्र — सामान्य Redis प्रश्नोत्तर काम गर्छ।",
-      connectHint: "लाइभ डायग्नोस्टिक्सका लागि टाइप गर्नुहोस्: connect <name>",
-      cheatsheetHint: "के सोध्न सक्नुहुन्छ हेर्न ai: help टाइप गर्नुहोस्।",
-      needsConnection: "यसका लागि सक्रिय जडान चाहिन्छ। पहिले \"connect <name>\" टाइप गर्नुहोस्।",
-      aiNeedsConnectionReason: "लाइभ-स्टेट AI (tool use) Redis सँग जडान हुँदा मात्र उपलब्ध हुन्छ।",
-      verbNeedsConnection: opts => `"${opts.verb}" का लागि सक्रिय जडान चाहिन्छ — पहिले "connect <name>" टाइप गर्नुहोस्।`,
-      aiLimitedMode: "AI सीमित मोडमा छ — तपाईं जडान नहुञ्जेल सामान्य Redis ज्ञानसम्बन्धी प्रश्नहरू मात्र काम गर्छन्।",
-      welcomeDisconnected: "स्वागत छ। तपाईं अझै कुनै पनि Redis इन्स्ट्यान्समा जडान हुनुभएको छैन।",
       readyIndicator: "तयार।",
     },
     cheatsheet: {
@@ -319,7 +311,8 @@ const strings = {
             "stream events बाट अन्तिम १० प्रविष्टिहरू ल्याउनुहोस्",
             "hash user:1 का सबै फिल्डहरू ल्याउनुहोस्",
             "set favourites का सदस्यहरू ल्याउनुहोस्",
-            "leaderboard बाट स्कोरको आधारमा शीर्ष १० ल्याउनुहोस्"
+            "leaderboard बाट स्कोरको आधारमा शीर्ष १० ल्याउनुहोस्",
+            "आइटमहरू कति set मा देखिन्छन् भन्ने आधारमा क्रमबद्ध गर्नुहोस् (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -336,7 +329,8 @@ const strings = {
             "user:42 को age अद्यावधिक गरेर 31 बनाउनुहोस्",
             "सबै JSON कुञ्जीहरू सूचीबद्ध गर्नुहोस्",
             "JSON कागजातबाट एउटा फिल्ड मेटाउनुहोस्",
-            "JSONPath प्रयोग गरेर नेस्टेड फिल्ड ल्याउनुहोस्"
+            "JSONPath प्रयोग गरेर नेस्टेड फिल्ड ल्याउनुहोस्",
+            "कम precision भएका float हरूको JSON एरे भण्डारण गर्नुहोस् (FPHA BF16)"
           ]
         },
         search: {
@@ -361,7 +355,8 @@ const strings = {
             "temp:room1 को हिजोदेखि अहिलेसम्मको दायरा ल्याउनुहोस्",
             "लेबल sensor=temp अनुसार बहु-दायरा ल्याउनुहोस्",
             "temp:room1 का लागि १०० साइन-वेभ डाटा बिन्दुहरू उत्पन्न गर्नुहोस्",
-            "temp:room1 का लागि अवधारण र लेबलहरू देखाउनुहोस्"
+            "temp:room1 का लागि अवधारण र लेबलहरू देखाउनुहोस्",
+            "एउटा TS.RANGE मा प्रत्येक bucket का min, max, first र last लिनुहोस् (candlestick)"
           ]
         },
         bloom: {
@@ -387,6 +382,18 @@ const strings = {
             "VSIM सँग तत्वको नामद्वारा खोज्नुहोस्"
           ]
         },
+        array: {
+          name: "एरे (Redis 8.8+)",
+          description: "Redis 8.8+ पत्ता लाग्दा उपलब्ध (नेटिभ ARRAY प्रकार)।",
+          prompts: [
+            "केही मानहरू भएको एरे सिर्जना गर्नुहोस्",
+            "मेरो एरेको index 5 मा मान सेट गर्नुहोस्",
+            "विशेष index मा रहेको मान लिनुहोस्",
+            "ARSCAN प्रयोग गरेर एरेका सबै element सूचीबद्ध गर्नुहोस्",
+            "index मा रहेको element मेटाउनुहोस्",
+            "मेरो एरेमा कति element छन्?"
+          ]
+        },
         redis8: {
           name: "Redis 8+ सुविधाहरू",
           description: "Redis 8+ पत्ता लाग्दा देखाइन्छ।",
@@ -396,7 +403,9 @@ const strings = {
             "हाइब्रिड पूर्ण-पाठ + भेक्टर खोज चलाउनुहोस् (FT.HYBRID)",
             "MSETEX प्रयोग गरेर साझा म्यादसँग धेरै कुञ्जी सेट गर्नुहोस्",
             "consumer group सँग stream प्रविष्टि मेटाउनुहोस् (XDELEX)",
-            "शीर्ष १० slots का लागि cluster slot-stats देखाउनुहोस्"
+            "शीर्ष १० slots का लागि cluster slot-stats देखाउनुहोस्",
+            "window counter प्रयोग गरेर key मा rate-limit लगाउनुहोस् (INCREX)",
+            "pending stream message लाई dead-letter मा negative-ack गर्नुहोस् (XNACK)"
           ]
         },
         scripting: {
@@ -506,6 +515,7 @@ const strings = {
     welcomeConsole: "Redis कन्सोलमा स्वागत छ",
     welcomeConsoleInfo: "SHIFT + कर्सर माथि वा तल इतिहास सक्षम छ",
     redisListIndexInfo: "जोड्नको लागि खाली, -1 लाई प्रिपेन्ड गर्न वा देखाइएको स्थितिमा बचत गर्न।",
+    redisArrayIndexInfo: "अर्को अनुक्रमणिकामा थप्न खाली छोड्नुहोस्, वा स्पष्ट अनुक्रमणिका प्रविष्ट गर्नुहोस् (खाली ठाउँहरू अनुमति छन् — एरेहरू विरल हुन सक्छन्)।",
     console: "कन्सोल",
     connectiondAdd: "जडान थप्नुहोस्",
     connectiondEdit: "जडान सम्पादन गर्नुहोस्",
@@ -632,6 +642,7 @@ const strings = {
     socketDisconnected: "विच्छेद भयो",
     socketError: "जडान त्रुटि",
     deletedHashKey: "ह्यास कुञ्जी मेटाइयो",
+    deletedArrayIndex: "एरे तत्व मेटियो",
     deletedSetMember: "सेट सदस्य मेटाइयो",
     deletedListElement: "सूची तत्व मेटाइयो",
     deletedZSetMember: "क्रमबद्ध सेट सदस्य मेटाइयो",
@@ -931,6 +942,12 @@ const strings = {
           value: "मूल्य"
         }
       },
+      array: {
+        table: {
+          index: "अनुक्रमणिका",
+          value: "मूल्य"
+        }
+      },
       hash: {
         table: {
           hashkey: "हैसके",
@@ -1013,13 +1030,21 @@ const strings = {
         info: "जानकारी",
         elements: "तत्वहरू",
         similarity: "समानता खोज",
+        similaritySearch: "समानता खोज",
         searchByElement: "तत्वद्वारा खोज्नुहोस्",
         searchByVector: "भेक्टरद्वारा खोज्नुहोस्",
+        byElement: "तत्वद्वारा खोज्नुहोस्",
+        byVector: "भेक्टरद्वारा खोज्नुहोस्",
         vectorValues: "भेक्टर मानहरू",
+        elementName: "तत्वको नाम",
+        searchTerm: "खोज शब्द",
         element: "तत्व",
         score: "स्कोर",
         count: "गणना",
         addElement: "तत्व थप्नुहोस्",
+        addedSuccessfully: "वस्तु सफलतापूर्वक थपियो",
+        deletedSuccessfully: "वस्तु सफलतापूर्वक मेटियो",
+        removedSuccessfully: "वस्तु सफलतापूर्वक मेटियो",
         attributes: "विशेषताहरू",
         noAttributes: "कुनै विशेषता छैन",
         dimensions: "आयामहरू",
@@ -1080,6 +1105,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "एरे",
   },
   promo: {
     title: "AI नेटवर्क सहायक",

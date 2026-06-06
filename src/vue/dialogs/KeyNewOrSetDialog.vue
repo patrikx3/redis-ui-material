@@ -12,6 +12,7 @@ import { useCommonStore } from '../stores/common'
 import { useOverlayStore } from '../stores/overlay'
 import { request } from '../stores/socket.service'
 import { str } from '../pages/database/key/key-type-base'
+import { parseRedisVersion } from '../../core/redis-version'
 import P3xrDialog from '../components/P3xrDialog.vue'
 import JsonViewDialog from './JsonViewDialog.vue'
 import JsonEditorDialog from './JsonEditorDialog.vue'
@@ -67,6 +68,7 @@ const types = computed(() => {
     if (state.hasReJSON) base.push('json')
     if (state.hasBloom) base.push('bloom', 'cuckoo', 'topk', 'cms', 'tdigest')
     base.push('vectorset')
+    if (parseRedisVersion(state.info?.server?.redis_version).isAtLeast(8, 8)) base.push('array')
     return base
 })
 
@@ -211,6 +213,7 @@ async function submit() {
                 type: props.data?.type,
                 originalValue: props.data?.model?.value,
                 originalHashKey: props.data?.model?.hashKey,
+                originalIndex: props.data?.model?.index,
                 model: structuredClone(model.value),
             },
         })
@@ -249,6 +252,10 @@ function cancel() {
         <v-text-field v-if="model.type === 'list'" v-model="model.index" :label="str(strings?.form?.key?.field?.index)"
             type="number" variant="outlined" density="comfortable"
             :hint="str(strings?.label?.redisListIndexInfo)" persistent-hint class="mb-3" />
+
+        <v-text-field v-if="model.type === 'array'" v-model="model.index" :label="str(strings?.form?.key?.field?.index)"
+            type="number" variant="outlined" density="comfortable"
+            :hint="str(strings?.label?.redisArrayIndexInfo)" persistent-hint class="mb-3" />
 
         <v-text-field v-if="model.type === 'hash'" v-model="model.hashKey" :label="str(strings?.form?.key?.field?.hashKey)"
             required variant="outlined" density="comfortable" hide-details class="mb-3" />

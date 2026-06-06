@@ -41,6 +41,7 @@ const strings = {
     info: "Маълумот",
     deleteListItem: "Оё мутмаин ҳастед, ки ин ҷузъи рӯйхатро нест кунед?",
     deleteHashKey: "Оё мутмаин ҳастед, ки ин калиди ҳашро нест кунед?",
+    deleteArrayIndex: "Шумо мутмаинед, ки мехоҳед ин элементи массивро нест кунед?",
     deleteStreamTimestamp: "Оё мутмаин ҳастед, ки ин тамғаи ҷараёнро нест кунед?",
     deleteSetMember: "Оё мутмаин ҳастед, ки ин узви маҷмӯаро нест мекунед?",
     deleteZSetMember: "Оё мутмаин ҳастед, ки ин узви маҷмӯи ҷудошударо нест кунед?",
@@ -250,15 +251,6 @@ const strings = {
       connectedTo: opts => `Ба ${opts.name} пайваст шуд (Redis ${opts.version} ${opts.mode}, ${opts.modules} модул бор шуд)`,
       connectedToNoInfo: opts => `Ба ${opts.name} пайваст шуд`,
       disconnectedFrom: opts => `Аз ${opts.name} ҷудо шуд`,
-      notConnected: "Пайваст нест.",
-      limitedAiOnly: "Танҳо AI-и маҳдуд — саволу ҷавоби умумӣ дар бораи Redis кор мекунад.",
-      connectHint: "Барои ташхиси зинда, нависед: connect <name>",
-      cheatsheetHint: "Барои дидани он ки чӣ пурсидан мумкин аст, ai: help нависед.",
-      needsConnection: "Ин ба пайвасти фаъол ниёз дорад. Аввал \"connect <name>\" нависед.",
-      aiNeedsConnectionReason: "AI бо ҳолати зинда (истифодаи абзорҳо) танҳо ҳангоми пайваст будан ба Redis дастрас аст.",
-      verbNeedsConnection: opts => `"${opts.verb}" ба пайвасти фаъол ниёз дорад — аввал "connect <name>" нависед.`,
-      aiLimitedMode: "AI дар ҳолати маҳдуд аст — то замони пайваст шудан танҳо саволҳои умумӣ дар бораи Redis кор мекунанд.",
-      welcomeDisconnected: "Хуш омадед. Шумо ҳанӯз ба ягон нусхаи Redis пайваст нестед.",
       readyIndicator: "Омода.",
     },
     cheatsheet: {
@@ -319,7 +311,8 @@ const strings = {
             "охирин 10 вуруди stream events-ро бигир",
             "ҳамаи майдонҳои hash user:1-ро бигир",
             "аъзоёни set favourites-ро бигир",
-            "аз leaderboard 10-тои болоиро аз рӯи нишон бигир"
+            "аз leaderboard 10-тои болоиро аз рӯи нишон бигир",
+            "элементҳоро аз рӯи чанд set, ки дар онҳо пайдо мешаванд, раддабандӣ кун (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -336,7 +329,8 @@ const strings = {
             "age-и user:42-ро ба 31 навсозӣ кун",
             "ҳамаи калидҳои JSON-ро рӯйхат кун",
             "як майдонро аз ҳуҷҷати JSON нест кун",
-            "майдони дохилиро бо JSONPath бигир"
+            "майдони дохилиро бо JSONPath бигир",
+            "массиви JSON аз float-ҳоро бо дақиқии камшуда нигоҳ дор (FPHA BF16)"
           ]
         },
         search: {
@@ -361,7 +355,8 @@ const strings = {
             "диапазони temp:room1-ро аз дирӯз то ҳозир бигир",
             "multi-range-ро аз рӯи тамғаи sensor=temp бигир",
             "барои temp:room1 100 нуктаи мавҷи синусоидаро эҷод кун",
-            "retention ва тамғаҳоро барои temp:room1 нишон деҳ"
+            "retention ва тамғаҳоро барои temp:room1 нишон деҳ",
+            "min, max, first ва last-ро барои ҳар bucket бо як TS.RANGE гир (candlestick)"
           ]
         },
         bloom: {
@@ -387,6 +382,18 @@ const strings = {
             "аз рӯи номи элемент бо VSIM ҷустуҷӯ кун"
           ]
         },
+        array: {
+          name: "Массив (Redis 8.8+)",
+          description: "Ҳангоми ошкор шудани Redis 8.8+ дастрас аст (навъи натсионалии ARRAY).",
+          prompts: [
+            "массив бо чанд арзиш эҷод кун",
+            "арзишро дар индекси 5-и массиви ман гузор",
+            "арзишро дар индекси мушаххас гир",
+            "ҳама элементҳои массивро бо ARSCAN рӯйхат кун",
+            "элементро дар индекс нест кун",
+            "массиви ман чанд элемент дорад?"
+          ]
+        },
         redis8: {
           name: "Имкониятҳои Redis 8+",
           description: "Ҳангоми ошкор шудани Redis 8+ нишон дода мешавад.",
@@ -396,7 +403,9 @@ const strings = {
             "ҷустуҷӯи гибридии матни-пурра + вектории иҷро кун (FT.HYBRID)",
             "якчанд калидро бо мӯҳлати умумӣ тавассути MSETEX таъин кун",
             "вуруди stream-ро бо consumer group нест кун (XDELEX)",
-            "cluster slot-stats-ро барои 10 слоти болоӣ нишон деҳ"
+            "cluster slot-stats-ро барои 10 слоти болоӣ нишон деҳ",
+            "барои key бо ҳисобкунаки равзана rate-limit гузор (INCREX)",
+            "ба паёми stream-и pending ба dead-letter negative-ack кун (XNACK)"
           ]
         },
         scripting: {
@@ -506,6 +515,7 @@ const strings = {
     welcomeConsole: "Хуш омадед ба консол Redis",
     welcomeConsoleInfo: "SHIFT + Таърихи курсор ба боло ё поён фаъол аст",
     redisListIndexInfo: "Холӣ барои замима, -1 барои пешнавис ё захира кардани он ба мавқеи нишон додашуда.",
+    redisArrayIndexInfo: "Барои илова ба индекси навбатӣ холӣ гузоред ё индекси мушаххас ворид кунед (фосилаҳо иҷозатанд — массивҳо метавонанд пароканда бошанд).",
     console: "Консол",
     connectiondAdd: "Пайвастшавӣ илова кунед",
     connectiondEdit: "Таҳрири пайвастшавӣ",
@@ -632,6 +642,7 @@ const strings = {
     socketDisconnected: "Ҷудо шуд",
     socketError: "Хатои пайвастшавӣ",
     deletedHashKey: "Калиди хеш нест карда шуд",
+    deletedArrayIndex: "Элементи массив нест карда шуд",
     deletedSetMember: "Аъзои маҷмӯа нест карда шуд",
     deletedListElement: "Унсури рӯйхат нест карда шуд",
     deletedZSetMember: "Аъзои маҷмӯаи мураттабшуда нест карда шуд",
@@ -931,6 +942,12 @@ const strings = {
           value: "Арзиш"
         }
       },
+      array: {
+        table: {
+          index: "Индекс",
+          value: "Арзиш"
+        }
+      },
       hash: {
         table: {
           hashkey: "Хешкей",
@@ -1013,13 +1030,21 @@ const strings = {
         info: "Маълумот",
         elements: "Элементҳо",
         similarity: "Ҷустуҷӯи шабоҳат",
+        similaritySearch: "Ҷустуҷӯи шабоҳат",
         searchByElement: "Ҷустуҷӯ бо элемент",
         searchByVector: "Ҷустуҷӯ бо вектор",
+        byElement: "Ҷустуҷӯ бо элемент",
+        byVector: "Ҷустуҷӯ бо вектор",
         vectorValues: "Арзишҳои вектор",
+        elementName: "Номи элемент",
+        searchTerm: "Истилоҳи ҷустуҷӯ",
         element: "Элемент",
         score: "Хол",
         count: "Шумора",
         addElement: "Элемент илова кунед",
+        addedSuccessfully: "Ашё бо муваффақият илова шуд",
+        deletedSuccessfully: "Ашё бо муваффақият нест шуд",
+        removedSuccessfully: "Ашё бо муваффақият нест шуд",
         attributes: "Хусусиятҳо",
         noAttributes: "Хусусият нест",
         dimensions: "Андозаҳо",
@@ -1080,6 +1105,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "Массив",
   },
   promo: {
     title: "Ёвари шабакаи AI",

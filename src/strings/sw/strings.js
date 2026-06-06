@@ -41,6 +41,7 @@ const strings = {
     info: "Taarifa",
     deleteListItem: "Una uhakika wa kufuta kipengee hiki cha orodha?",
     deleteHashKey: "Una uhakika wa kufuta kipengee hiki cha ufunguo wa hash?",
+    deleteArrayIndex: "Una uhakika unataka kufuta kipengele hiki cha array?",
     deleteStreamTimestamp: "Una uhakika wa kufuta muhuri huu wa wakati wa mkondo?",
     deleteSetMember: "Una uhakika wa kufuta mwanachama huyu wa seti?",
     deleteZSetMember: "Una uhakika wa kufuta mwanachama huyu wa seti iliyopangwa?",
@@ -252,15 +253,6 @@ const strings = {
       connectedTo: opts => `Imeunganishwa na ${opts.name} (Redis ${opts.version} ${opts.mode}, moduli ${opts.modules} zimepakiwa)`,
       connectedToNoInfo: opts => `Imeunganishwa na ${opts.name}`,
       disconnectedFrom: opts => `Imetenganishwa na ${opts.name}`,
-      notConnected: "Haijaunganishwa.",
-      limitedAiOnly: "AI ya kiwango kidogo pekee — maswali ya jumla kuhusu Redis yanafanya kazi.",
-      connectHint: "Kwa uchunguzi wa moja kwa moja, andika: connect <name>",
-      cheatsheetHint: "Andika ai: help kuona unachoweza kuuliza.",
-      needsConnection: "Hili linahitaji muunganisho unaotumika. Andika \"connect <name>\" kwanza.",
-      aiNeedsConnectionReason: "AI ya hali ya moja kwa moja (matumizi ya zana) inapatikana tu ukiwa umeunganishwa na Redis.",
-      verbNeedsConnection: opts => `"${opts.verb}" inahitaji muunganisho unaotumika — andika "connect <name>" kwanza.`,
-      aiLimitedMode: "AI iko katika hali ya kiwango kidogo — ni maswali ya jumla kuhusu Redis pekee yatafanya kazi hadi uunganishe.",
-      welcomeDisconnected: "Karibu. Bado hujaunganishwa na instansi yoyote ya Redis.",
       readyIndicator: "Tayari.",
     },
     cheatsheet: {
@@ -321,7 +313,8 @@ const strings = {
             "pata maingizo 10 ya mwisho kutoka stream events",
             "pata sehemu zote za hash user:1",
             "pata wanachama wa set favourites",
-            "pata 10 bora kwa alama kutoka leaderboard"
+            "pata 10 bora kwa alama kutoka leaderboard",
+            "panga vipengee kulingana na set ngapi vinaonekana ndani yake (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -338,7 +331,8 @@ const strings = {
             "sasisha age ya user:42 hadi 31",
             "orodhesha funguo zote za JSON",
             "futa sehemu moja kutoka hati ya JSON",
-            "pata sehemu iliyofungwa ndani kwa kutumia JSONPath"
+            "pata sehemu iliyofungwa ndani kwa kutumia JSONPath",
+            "hifadhi array ya JSON ya float kwa precision iliyopunguzwa (FPHA BF16)"
           ]
         },
         search: {
@@ -363,7 +357,8 @@ const strings = {
             "pata safu ya temp:room1 kutoka jana hadi sasa",
             "pata multi-range kwa lebo sensor=temp",
             "tengeneza vituo 100 vya data vya mawimbi ya sine kwa temp:room1",
-            "onyesha uhifadhi na lebo za temp:room1"
+            "onyesha uhifadhi na lebo za temp:room1",
+            "pata min, max, first na last kwa kila bucket kwa TS.RANGE moja (candlestick)"
           ]
         },
         bloom: {
@@ -389,6 +384,18 @@ const strings = {
             "tafuta kwa jina la kipengee ukitumia VSIM"
           ]
         },
+        array: {
+          name: "Array (Redis 8.8+)",
+          description: "Inapatikana wakati Redis 8.8+ imegunduliwa (aina asili ya ARRAY).",
+          prompts: [
+            "unda array yenye thamani chache",
+            "weka thamani kwenye index 5 ya array yangu",
+            "pata thamani kwenye index maalum",
+            "orodhesha elements zote za array kwa ARSCAN",
+            "futa element kwenye index",
+            "array yangu ina elements ngapi?"
+          ]
+        },
         redis8: {
           name: "Vipengele vya Redis 8+",
           description: "Huonyeshwa wakati Redis 8+ imegunduliwa.",
@@ -398,7 +405,9 @@ const strings = {
             "endesha utaftaji wa mchanganyiko wa maandishi kamili + vector (FT.HYBRID)",
             "weka funguo nyingi kwa muda wa kumalizika wa pamoja kwa kutumia MSETEX",
             "futa ingizo la stream lenye consumer group (XDELEX)",
-            "onyesha slot-stats ya cluster kwa slot 10 za juu"
+            "onyesha slot-stats ya cluster kwa slot 10 za juu",
+            "weka rate-limit kwa key kwa window counter (INCREX)",
+            "fanya negative-ack kwa ujumbe wa stream unaosubiri kwenda dead-letter (XNACK)"
           ]
         },
         scripting: {
@@ -508,6 +517,7 @@ const strings = {
     welcomeConsole: "Karibu kwenye Konsoli ya Redis",
     welcomeConsoleInfo: "SHIFT + Historia ya Mshale JUU au CHINI imewezeshwa",
     redisListIndexInfo: "Tupu kuongeza, -1 kuongeza mbele au hifadhi kwenye nafasi iliyoonyeshwa.",
+    redisArrayIndexInfo: "Acha tupu ili kuongeza kwenye faharasa inayofuata, au weka faharasa mahususi (mapengo yanaruhusiwa — array zinaweza kuwa na nafasi tupu).",
     console: "Konsoli",
     connectiondAdd: "Ongeza muunganisho",
     connectiondEdit: "Hariri muunganisho",
@@ -634,6 +644,7 @@ const strings = {
     socketDisconnected: "Imekatwa",
     socketError: "Hitilafu ya muunganisho",
     deletedHashKey: "Ufunguo wa hash umefutwa",
+    deletedArrayIndex: "Kipengele cha array kimefutwa",
     deletedSetMember: "Mwanachama wa seti amefutwa",
     deletedListElement: "Kipengele cha orodha kimefutwa",
     deletedZSetMember: "Mwanachama wa seti iliyopangwa amefutwa",
@@ -933,6 +944,12 @@ const strings = {
           value: "Thamani"
         }
       },
+      array: {
+        table: {
+          index: "Faharasa",
+          value: "Thamani"
+        }
+      },
       hash: {
         table: {
           hashkey: "Ufunguo wa Hash",
@@ -1015,13 +1032,21 @@ const strings = {
         info: "Taarifa",
         elements: "Vipengee",
         similarity: "Utafutaji wa Kufanana",
+        similaritySearch: "Utafutaji wa Kufanana",
         searchByElement: "Tafuta kwa kipengee",
         searchByVector: "Tafuta kwa vekta",
+        byElement: "Tafuta kwa kipengee",
+        byVector: "Tafuta kwa vekta",
         vectorValues: "Thamani za vekta",
+        elementName: "Jina la kipengee",
+        searchTerm: "Neno la utafutaji",
         element: "Kipengee",
         score: "Alama",
         count: "Hesabu",
         addElement: "Ongeza Kipengee",
+        addedSuccessfully: "Kipengee kimeongezwa kwa mafanikio",
+        deletedSuccessfully: "Kipengee kimefutwa kwa mafanikio",
+        removedSuccessfully: "Kipengee kimefutwa kwa mafanikio",
         attributes: "Sifa",
         noAttributes: "Hakuna sifa",
         dimensions: "Vipimo",
@@ -1082,6 +1107,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "Array",
   },
   promo: {
     title: "Msaidizi wa Mtandao wa AI",

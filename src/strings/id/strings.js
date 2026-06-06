@@ -41,6 +41,7 @@ const strings = {
     info: "Informasi",
     deleteListItem: "Apakah Anda yakin akan menghapus item daftar ini?",
     deleteHashKey: "Apakah Anda yakin akan menghapus item kunci hash ini?",
+    deleteArrayIndex: "Yakin ingin menghapus elemen array ini?",
     deleteStreamTimestamp: "Apakah Anda yakin akan menghapus stempel waktu streaming ini?",
     deleteSetMember: "Apakah Anda yakin akan menghapus anggota kumpulan ini?",
     deleteZSetMember: "Apakah Anda yakin akan menghapus anggota kumpulan yang diurutkan ini?",
@@ -308,7 +309,8 @@ const strings = {
             "dapatkan 10 entri terakhir dari aliran events",
             "dapatkan semua bidang pengguna hash:1",
             "dapatkan anggota set favourites",
-            "dapatkan 10 besar berdasarkan skor dari leaderboard"
+            "dapatkan 10 besar berdasarkan skor dari leaderboard",
+            "urutkan item berdasarkan berapa banyak set tempat item muncul (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -325,7 +327,8 @@ const strings = {
             "perbarui usia user:42 menjadi 31",
             "daftar semua kunci JSON",
             "hapus bidang dari dokumen JSON",
-            "dapatkan bidang bersarang menggunakan JSONPath"
+            "dapatkan bidang bersarang menggunakan JSONPath",
+            "simpan array JSON berisi float dengan presisi dikurangi (FPHA BF16)"
           ]
         },
         search: {
@@ -350,7 +353,8 @@ const strings = {
             "dapatkan rentang temp:room1 dari kemarin hingga sekarang",
             "dapatkan multi-rentang dengan label sensor=temp",
             "menghasilkan 100 titik data gelombang sinus untuk temp:room1",
-            "tampilkan retensi dan label untuk temp:room1"
+            "tampilkan retensi dan label untuk temp:room1",
+            "ambil min, max, first, dan last per bucket dalam satu TS.RANGE (candlestick)"
           ]
         },
         bloom: {
@@ -376,6 +380,18 @@ const strings = {
             "cari berdasarkan nama elemen dengan VSIM"
           ]
         },
+        array: {
+          name: "Array (Redis 8.8+)",
+          description: "Tersedia ketika Redis 8.8+ terdeteksi (tipe asli ARRAY).",
+          prompts: [
+            "buat array dengan beberapa nilai",
+            "atur nilai pada indeks 5 dari array saya",
+            "ambil nilai pada indeks tertentu",
+            "daftar semua elemen array dengan ARSCAN",
+            "hapus elemen pada indeks",
+            "berapa banyak elemen yang dimiliki array saya?"
+          ]
+        },
         redis8: {
           name: "Redis 8+ fitur",
           description: "Ditampilkan ketika Redis 8+ terdeteksi.",
@@ -385,7 +401,9 @@ const strings = {
             "menjalankan pencarian teks lengkap + vektor hybrid (FT.HYBRID)",
             "atur beberapa kunci dengan masa berlaku bersama menggunakan MSETEX",
             "hapus entri aliran dengan grup konsumen (XDELEX)",
-            "tampilkan statistik slot cluster untuk 10 slot teratas"
+            "tampilkan statistik slot cluster untuk 10 slot teratas",
+            "batasi laju sebuah key dengan penghitung jendela (INCREX)",
+            "negative-ack pesan stream pending ke dead-letter (XNACK)"
           ]
         },
         scripting: {
@@ -495,6 +513,7 @@ const strings = {
     welcomeConsole: "Selamat datang di Konsol Redis",
     welcomeConsoleInfo: "SHIFT + Riwayat kursor ATAS atau BAWAH diaktifkan",
     redisListIndexInfo: "Kosong untuk menambahkan, -1 untuk menambahkan atau menyimpannya ke posisi yang ditunjukkan.",
+    redisArrayIndexInfo: "Kosongkan untuk menambahkan pada indeks berikutnya, atau masukkan indeks tertentu (celah diperbolehkan — array bisa jarang).",
     console: "Konsol",
     connectiondAdd: "Tambahkan koneksi",
     connectiondEdit: "Sunting koneksi",
@@ -621,6 +640,7 @@ const strings = {
     socketDisconnected: "Terputus",
     socketError: "Kesalahan koneksi",
     deletedHashKey: "Kunci hash dihapus",
+    deletedArrayIndex: "Elemen array dihapus",
     deletedSetMember: "Anggota set dihapus",
     deletedListElement: "Elemen daftar dihapus",
     deletedZSetMember: "Anggota sorted set dihapus",
@@ -920,6 +940,12 @@ const strings = {
           value: "Nilai"
         }
       },
+      array: {
+        table: {
+          index: "Indeks",
+          value: "Nilai"
+        }
+      },
       hash: {
         table: {
           hashkey: "kunci hash",
@@ -1002,13 +1028,21 @@ const strings = {
         info: "Info",
         elements: "Elemen",
         similarity: "Pencarian Kemiripan",
+        similaritySearch: "Pencarian Kemiripan",
         searchByElement: "Cari berdasarkan elemen",
         searchByVector: "Cari berdasarkan vektor",
+        byElement: "Cari berdasarkan elemen",
+        byVector: "Cari berdasarkan vektor",
         vectorValues: "Nilai vektor",
+        elementName: "Nama elemen",
+        searchTerm: "Istilah pencarian",
         element: "Elemen",
         score: "Skor",
         count: "Jumlah",
         addElement: "Tambah Elemen",
+        addedSuccessfully: "Item berhasil ditambahkan",
+        deletedSuccessfully: "Item berhasil dihapus",
+        removedSuccessfully: "Item berhasil dihapus",
         attributes: "Atribut",
         noAttributes: "Tidak ada atribut",
         dimensions: "Dimensi",
@@ -1069,6 +1103,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "Array",
   },
   promo: {
     title: "AI Asisten Jaringan",

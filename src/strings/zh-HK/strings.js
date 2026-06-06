@@ -41,6 +41,7 @@ const strings = {
     info: "資訊",
     deleteListItem: "您確定要刪除該清單項目嗎？",
     deleteHashKey: "您確定刪除該雜湊鍵項嗎？",
+    deleteArrayIndex: "確定要刪除此陣列元素嗎？",
     deleteStreamTimestamp: "您確定要刪除該串流時間戳記嗎？",
     deleteSetMember: "您確定要刪除該集合成員嗎？",
     deleteZSetMember: "您確定要刪除這個排序集成員嗎？",
@@ -250,15 +251,6 @@ const strings = {
       connectedTo: opts => `已連接到 ${opts.name}（Redis ${opts.version} ${opts.mode}，已載入 ${opts.modules} 個模組）`,
       connectedToNoInfo: opts => `已連接到 ${opts.name}`,
       disconnectedFrom: opts => `已從 ${opts.name} 斷線`,
-      notConnected: "未連接。",
-      limitedAiOnly: "只限有限 AI 模式，仍可使用一般 Redis 問答。",
-      connectHint: "如需即時診斷，請輸入：connect <name>",
-      cheatsheetHint: "輸入 ai: help 查看你可以問什麼。",
-      needsConnection: "此功能需要有效連接。請先輸入 \"connect <name>\"。",
-      aiNeedsConnectionReason: "即時狀態 AI（tool use）只會在已連接 Redis 時提供。",
-      verbNeedsConnection: opts => `"${opts.verb}" 需要有效連接，請先輸入 "connect <name>"。`,
-      aiLimitedMode: "AI 現在處於有限模式，在連接前只支援一般 Redis 知識問題。",
-      welcomeDisconnected: "歡迎。你目前尚未連接到任何 Redis 實例。",
       readyIndicator: "就緒。",
     },
     cheatsheet: {
@@ -319,7 +311,8 @@ const strings = {
             "取得 stream events 的最後 10 筆紀錄",
             "取得 hash user:1 的所有欄位",
             "取得 set favourites 的成員",
-            "從 leaderboard 取得分數前 10 的成員"
+            "從 leaderboard 取得分數前 10 的成員",
+            "按項目出現於多少個 set 排名 (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -336,7 +329,8 @@ const strings = {
             "將 user:42 的 age 更新為 31",
             "列出所有 JSON 鍵",
             "從 JSON 文件刪除一個欄位",
-            "使用 JSONPath 取得巢狀欄位"
+            "使用 JSONPath 取得巢狀欄位",
+            "以降低精度儲存 float 的 JSON 陣列 (FPHA BF16)"
           ]
         },
         search: {
@@ -361,7 +355,8 @@ const strings = {
             "取得 temp:room1 從昨天到現在的範圍",
             "依標籤 sensor=temp 取得多重範圍",
             "為 temp:room1 產生 100 個正弦波資料點",
-            "顯示 temp:room1 的保留期與標籤"
+            "顯示 temp:room1 的保留期與標籤",
+            "用一次 TS.RANGE 取得每個 bucket 的 min、max、first 同 last (candlestick)"
           ]
         },
         bloom: {
@@ -387,6 +382,18 @@ const strings = {
             "使用 VSIM 依元素名稱搜尋"
           ]
         },
+        array: {
+          name: "陣列 (Redis 8.8+)",
+          description: "當偵測到 Redis 8.8+ 時可用（原生 ARRAY 類型）。",
+          prompts: [
+            "建立一個包含幾個值的陣列",
+            "設定我陣列索引 5 的值",
+            "取得指定索引的值",
+            "用 ARSCAN 列出陣列所有元素",
+            "刪除某個索引的元素",
+            "我的陣列有多少個元素？"
+          ]
+        },
         redis8: {
           name: "Redis 8+ 功能",
           description: "當偵測到 Redis 8+ 時顯示。",
@@ -396,7 +403,9 @@ const strings = {
             "執行混合全文 + 向量搜尋 (FT.HYBRID)",
             "使用 MSETEX 為多個鍵設定共用的過期時間",
             "以消費者群組刪除 stream 項目 (XDELEX)",
-            "顯示前 10 個 slot 的 cluster slot-stats"
+            "顯示前 10 個 slot 的 cluster slot-stats",
+            "用視窗計數器對 key 做 rate-limit (INCREX)",
+            "將 pending stream 訊息 negative-ack 到 dead-letter (XNACK)"
           ]
         },
         scripting: {
@@ -506,6 +515,7 @@ const strings = {
     welcomeConsole: "歡迎來到 Redis 控制台",
     welcomeConsoleInfo: "SHIFT + 啟用遊標向上或向下歷史記錄",
     redisListIndexInfo: "為空表示附加，-1 表示新增或儲存到所示位置。",
+    redisArrayIndexInfo: "留空以附加到下一個索引，或輸入指定索引（允許空位 — 陣列可以是稀疏的）。",
     console: "主機",
     connectiondAdd: "新增連接",
     connectiondEdit: "編輯連接",
@@ -632,6 +642,7 @@ const strings = {
     socketDisconnected: "已斷開連線",
     socketError: "連線錯誤",
     deletedHashKey: "雜湊鍵已刪除",
+    deletedArrayIndex: "已刪除陣列元素",
     deletedSetMember: "集合成員已刪除",
     deletedListElement: "列表元素已刪除",
     deletedZSetMember: "有序集合成員已刪除",
@@ -931,6 +942,12 @@ const strings = {
           value: "價值"
         }
       },
+      array: {
+        table: {
+          index: "索引",
+          value: "價值"
+        }
+      },
       hash: {
         table: {
           hashkey: "哈希鍵",
@@ -1013,13 +1030,21 @@ const strings = {
         info: "資訊",
         elements: "元素",
         similarity: "相似度搜尋",
+        similaritySearch: "相似度搜尋",
         searchByElement: "按元素搜尋",
         searchByVector: "按向量搜尋",
+        byElement: "按元素搜尋",
+        byVector: "按向量搜尋",
         vectorValues: "向量值",
+        elementName: "元素名稱",
+        searchTerm: "搜尋字詞",
         element: "元素",
         score: "分數",
         count: "數量",
         addElement: "新增元素",
+        addedSuccessfully: "項目已成功新增",
+        deletedSuccessfully: "項目已成功刪除",
+        removedSuccessfully: "項目已成功刪除",
         attributes: "屬性",
         noAttributes: "沒有屬性",
         dimensions: "維度",
@@ -1080,6 +1105,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "陣列",
   },
   promo: {
     title: "AI 網絡助手",

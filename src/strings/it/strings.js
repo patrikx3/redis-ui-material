@@ -41,6 +41,7 @@ const strings = {
     info: "Info",
     deleteListItem: "Sei sicuro di voler eliminare questo elemento della lista?",
     deleteHashKey: "Sei sicuro di voler eliminare questo elemento della chiave hash?",
+    deleteArrayIndex: "Sei sicuro di voler eliminare questo elemento dell’array?",
     deleteStreamTimestamp: "Sei sicuro di voler eliminare questo timestamp dello stream?",
     deleteSetMember: "Sei sicuro di voler eliminare questo membro del set?",
     deleteZSetMember: "Sei sicuro di voler eliminare questo membro del set ordinato?",
@@ -306,7 +307,8 @@ const strings = {
             "ottieni le ultime 10 voci dallo stream events",
             "ottieni tutti i campi dell'utente hash:1",
             "ottieni i membri del set favourites",
-            "ottieni i primi 10 per punteggio da leaderboard"
+            "ottieni i primi 10 per punteggio da leaderboard",
+            "classifica gli elementi in base a quanti set li contengono (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -323,7 +325,8 @@ const strings = {
             "aggiorna l'età di user:42 a 31",
             "elenca tutte le chiavi JSON",
             "eliminare un campo da un documento JSON",
-            "ottieni un campo nidificato utilizzando JSONPath"
+            "ottieni un campo nidificato utilizzando JSONPath",
+            "salva un array JSON di float con precisione ridotta (FPHA BF16)"
           ]
         },
         search: {
@@ -348,7 +351,8 @@ const strings = {
             "ottieni l'intervallo di temp:room1 da ieri ad oggi",
             "ottieni multi-intervallo per etichetta sensor=temp",
             "generare 100 punti dati sinusoidali per temp:room1",
-            "mostra conservazione ed etichette per temp:room1"
+            "mostra conservazione ed etichette per temp:room1",
+            "ottieni min, max, first e last per bucket con un solo TS.RANGE (candlestick)"
           ]
         },
         bloom: {
@@ -374,6 +378,18 @@ const strings = {
             "cerca per nome elemento con VSIM"
           ]
         },
+        array: {
+          name: "Array (Redis 8.8+)",
+          description: "Disponibile quando viene rilevato Redis 8.8+ (tipo nativo ARRAY).",
+          prompts: [
+            "crea un array con alcuni valori",
+            "imposta il valore all'indice 5 del mio array",
+            "ottieni il valore a un indice specifico",
+            "elenca tutti gli elementi di un array con ARSCAN",
+            "elimina l'elemento a un indice",
+            "quanti elementi ha il mio array?"
+          ]
+        },
         redis8: {
           name: "Redis 8+ funzionalità",
           description: "Visualizzato quando viene rilevato Redis 8+.",
@@ -383,7 +399,9 @@ const strings = {
             "eseguire una ricerca ibrida full-text + vettoriale (FT.HYBRID)",
             "imposta più chiavi con scadenza condivisa utilizzando MSETEX",
             "elimina una voce del flusso con il gruppo di consumatori (XDELEX)",
-            "mostra le statistiche degli slot del cluster per i primi 10 slot"
+            "mostra le statistiche degli slot del cluster per i primi 10 slot",
+            "applica un rate limit a una chiave con un contatore a finestra (INCREX)",
+            "esegui negative-ack di un messaggio stream pending verso dead-letter (XNACK)"
           ]
         },
         scripting: {
@@ -493,6 +511,7 @@ const strings = {
     welcomeConsole: "Benvenuto nella Console Redis",
     welcomeConsoleInfo: "SHIFT + La cronologia con cursore SU o GIÙ è abilitata",
     redisListIndexInfo: "Vuoto per aggiungere in coda, -1 per aggiungere in testa o salva nella posizione mostrata.",
+    redisArrayIndexInfo: "Lascia vuoto per aggiungere al prossimo indice, oppure inserisci un indice esplicito (sono ammessi spazi vuoti — gli array possono essere sparsi).",
     console: "Console",
     connectiondAdd: "Aggiungi connessione",
     connectiondEdit: "Modifica connessione",
@@ -619,6 +638,7 @@ const strings = {
     socketDisconnected: "Disconnesso",
     socketError: "Errore di connessione",
     deletedHashKey: "Chiave hash eliminata",
+    deletedArrayIndex: "Elemento dell’array eliminato",
     deletedSetMember: "Membro del set eliminato",
     deletedListElement: "Elemento della lista eliminato",
     deletedZSetMember: "Membro del set ordinato eliminato",
@@ -918,6 +938,12 @@ const strings = {
           value: "Valore"
         }
       },
+      array: {
+        table: {
+          index: "Indice",
+          value: "Valore"
+        }
+      },
       hash: {
         table: {
           hashkey: "Chiave hash",
@@ -1000,13 +1026,21 @@ const strings = {
         info: "Info",
         elements: "Elementi",
         similarity: "Ricerca per similarità",
+        similaritySearch: "Ricerca per similarità",
         searchByElement: "Cerca per elemento",
         searchByVector: "Cerca per vettore",
+        byElement: "Cerca per elemento",
+        byVector: "Cerca per vettore",
         vectorValues: "Valori vettoriali",
+        elementName: "Nome elemento",
+        searchTerm: "Termine di ricerca",
         element: "Elemento",
         score: "Punteggio",
         count: "Conteggio",
         addElement: "Aggiungi elemento",
+        addedSuccessfully: "Elemento aggiunto con successo",
+        deletedSuccessfully: "Elemento eliminato con successo",
+        removedSuccessfully: "Elemento eliminato con successo",
         attributes: "Attributi",
         noAttributes: "Nessun attributo",
         dimensions: "Dimensioni",
@@ -1067,6 +1101,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "Array",
   },
   promo: {
     title: "AI Assistente di rete",

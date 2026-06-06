@@ -41,6 +41,7 @@ const strings = {
     info: "Info",
     deleteListItem: "Are you sure to delete this list item?",
     deleteHashKey: "Are you sure to delete this hash key item?",
+    deleteArrayIndex: "Are you sure to delete this array element?",
     deleteStreamTimestamp: "Are you sure to delete this stream timestamp?",
     deleteSetMember: "Are you sure to delete this set member?",
     deleteZSetMember: "Are you sure to delete this sorted set member?",
@@ -315,7 +316,8 @@ const strings = {
             "get the last 10 entries from stream events",
             "get all fields of hash user:1",
             "get members of set favourites",
-            "get top 10 by score from leaderboard"
+            "get top 10 by score from leaderboard",
+            "rank items by how many sets they appear in (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -332,7 +334,8 @@ const strings = {
             "update the age of user:42 to 31",
             "list all JSON keys",
             "delete a field from a JSON document",
-            "get a nested field using JSONPath"
+            "get a nested field using JSONPath",
+            "store a JSON array of floats with reduced precision (FPHA BF16)"
           ]
         },
         search: {
@@ -357,7 +360,8 @@ const strings = {
             "get the range of temp:room1 from yesterday to now",
             "get multi-range by label sensor=temp",
             "generate 100 sine-wave data points for temp:room1",
-            "show retention and labels for temp:room1"
+            "show retention and labels for temp:room1",
+            "get min, max, first and last per bucket in one TS.RANGE (candlestick)"
           ]
         },
         bloom: {
@@ -383,6 +387,18 @@ const strings = {
             "search by element name with VSIM"
           ]
         },
+        array: {
+          name: "Array (Redis 8.8+)",
+          description: "Available when Redis 8.8+ is detected (native ARRAY type).",
+          prompts: [
+            "create an array with a few values",
+            "set the value at index 5 of my array",
+            "get the value at a specific index",
+            "list all elements of an array with ARSCAN",
+            "delete the element at an index",
+            "how many elements does my array have"
+          ]
+        },
         redis8: {
           name: "Redis 8+ features",
           description: "Shown when Redis 8+ is detected.",
@@ -392,7 +408,9 @@ const strings = {
             "run a hybrid full-text + vector search (FT.HYBRID)",
             "set multiple keys with a shared expiry using MSETEX",
             "delete a stream entry with consumer group (XDELEX)",
-            "show cluster slot-stats for the top 10 slots"
+            "show cluster slot-stats for the top 10 slots",
+            "rate-limit a key with a window counter (INCREX)",
+            "negative-ack a pending stream message to a dead-letter (XNACK)"
           ]
         },
         scripting: {
@@ -502,6 +520,7 @@ const strings = {
     welcomeConsole: "Welcome to the Redis Console",
     welcomeConsoleInfo: "SHIFT + Cursor UP or DOWN history is enabled",
     redisListIndexInfo: "Empty to append, -1 to prepend or save it to the position shown.",
+    redisArrayIndexInfo: "Empty to append at the next index, or set an explicit index (gaps are allowed — arrays are sparse).",
     console: "Console",
     connectiondAdd: "Add connection",
     connectiondEdit: "Edit connection",
@@ -625,6 +644,7 @@ const strings = {
     socketDisconnected: "Disconnected",
     socketError: "Connection error",
     deletedHashKey: "Hash key deleted",
+    deletedArrayIndex: "Array element deleted",
     deletedSetMember: "Set member deleted",
     deletedListElement: "List element deleted",
     deletedZSetMember: "Sorted set member deleted",
@@ -924,6 +944,12 @@ const strings = {
           value: "Value"
         }
       },
+      array: {
+        table: {
+          index: "Index",
+          value: "Value"
+        }
+      },
       hash: {
         table: {
           hashkey: "Hashkey",
@@ -1006,13 +1032,21 @@ const strings = {
         info: "Info",
         elements: "Elements",
         similarity: "Similarity Search",
+        similaritySearch: "Similarity Search",
         searchByElement: "Search by element",
         searchByVector: "Search by vector",
+        byElement: "Search by element",
+        byVector: "Search by vector",
         vectorValues: "Vector values",
+        elementName: "Element name",
+        searchTerm: "Search term",
         element: "Element",
         score: "Score",
         count: "Count",
         addElement: "Add Element",
+        addedSuccessfully: "Item added successfully",
+        deletedSuccessfully: "Item deleted successfully",
+        removedSuccessfully: "Item deleted successfully",
         attributes: "Attributes",
         noAttributes: "No attributes",
         dimensions: "Dimensions",
@@ -1073,6 +1107,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "Array",
   },
   promo: {
     title: "AI Network Assistant",

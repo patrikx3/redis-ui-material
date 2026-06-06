@@ -41,6 +41,7 @@ const strings = {
     info: "Impormasyon",
     deleteListItem: "Sigurado ka bang tatanggalin ang item sa listahan na ito?",
     deleteHashKey: "Sigurado ka bang tatanggalin ang hash key item na ito?",
+    deleteArrayIndex: "Sigurado ka bang tanggalin ang elementong ito ng array?",
     deleteStreamTimestamp: "Sigurado ka bang tatanggalin ang timestamp ng stream na ito?",
     deleteSetMember: "Sigurado ka bang tatanggalin ang set member na ito?",
     deleteZSetMember: "Sigurado ka bang tatanggalin ang pinagsunod-sunod na miyembrong ito?",
@@ -308,7 +309,8 @@ const strings = {
             "makuha ang huling 10 entry mula sa stream events",
             "makuha ang lahat ng field ng hash user:1",
             "kumuha ng mga miyembro ng set favourites",
-            "makuha ang nangungunang 10 sa pamamagitan ng iskor mula sa leaderboard"
+            "makuha ang nangungunang 10 sa pamamagitan ng iskor mula sa leaderboard",
+            "i-rank ang mga item ayon sa dami ng set kung saan sila lumilitaw (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -325,7 +327,8 @@ const strings = {
             "i-update ang edad na user:42 hanggang 31",
             "ilista ang lahat ng JSON key",
             "magtanggal ng field mula sa isang JSON na dokumento",
-            "kumuha ng nested field gamit ang JSONPath"
+            "kumuha ng nested field gamit ang JSONPath",
+            "mag-imbak ng JSON array ng floats na may pinababang precision (FPHA BF16)"
           ]
         },
         search: {
@@ -350,7 +353,8 @@ const strings = {
             "makuha ang saklaw ng temp:room1 mula kahapon hanggang ngayon",
             "kumuha ng multi-range ayon sa label sensor=temp",
             "bumuo ng 100 sine-wave data point para sa temp:room1",
-            "ipakita ang pagpapanatili at mga label para sa temp:room1"
+            "ipakita ang pagpapanatili at mga label para sa temp:room1",
+            "kunin ang min, max, first at last bawat bucket sa isang TS.RANGE (candlestick)"
           ]
         },
         bloom: {
@@ -376,6 +380,18 @@ const strings = {
             "maghanap ayon sa pangalan ng elemento gamit ang VSIM"
           ]
         },
+        array: {
+          name: "Array (Redis 8.8+)",
+          description: "Available kapag natukoy ang Redis 8.8+ (native ARRAY type).",
+          prompts: [
+            "gumawa ng array na may ilang value",
+            "itakda ang value sa index 5 ng aking array",
+            "kunin ang value sa isang partikular na index",
+            "ilista ang lahat ng elemento ng array gamit ang ARSCAN",
+            "tanggalin ang elemento sa isang index",
+            "ilang elemento ang mayroon ang aking array?"
+          ]
+        },
         redis8: {
           name: "Redis 8+ na feature",
           description: "Ipinapakita kapag natukoy ang Redis 8+.",
@@ -385,7 +401,9 @@ const strings = {
             "magpatakbo ng hybrid full-text + vector search (FT.HYBRID)",
             "magtakda ng maraming key na may nakabahaging pag-expire gamit ang MSETEX",
             "tanggalin ang isang stream entry sa pangkat ng consumer (XDELEX)",
-            "ipakita ang cluster slot-stats para sa nangungunang 10 slot"
+            "ipakita ang cluster slot-stats para sa nangungunang 10 slot",
+            "mag-rate-limit ng key gamit ang window counter (INCREX)",
+            "mag-negative-ack ng pending stream message papunta sa dead-letter (XNACK)"
           ]
         },
         scripting: {
@@ -495,6 +513,7 @@ const strings = {
     welcomeConsole: "Maligayang pagdating sa Redis Console",
     welcomeConsoleInfo: "SHIFT + Cursor UP o DOWN history ay pinagana",
     redisListIndexInfo: "Walang laman para idagdag, -1 para i-prepend o i-save ito sa ipinapakitang posisyon.",
+    redisArrayIndexInfo: "Iwanang walang laman para idagdag sa susunod na index, o maglagay ng tiyak na index (pinapayagan ang mga pagitan — maaaring kalat-kalat ang mga array).",
     console: "Console",
     connectiondAdd: "Magdagdag ng koneksyon",
     connectiondEdit: "I-edit ang koneksyon",
@@ -621,6 +640,7 @@ const strings = {
     socketDisconnected: "Nadiskonekta",
     socketError: "Error sa koneksyon",
     deletedHashKey: "Natanggal ang hash key",
+    deletedArrayIndex: "Natanggal ang elemento ng array",
     deletedSetMember: "Natanggal ang miyembro ng set",
     deletedListElement: "Natanggal ang elemento ng listahan",
     deletedZSetMember: "Natanggal ang miyembro ng sorted set",
@@ -920,6 +940,12 @@ const strings = {
           value: "Halaga"
         }
       },
+      array: {
+        table: {
+          index: "Index",
+          value: "Halaga"
+        }
+      },
       hash: {
         table: {
           hashkey: "Hashkey",
@@ -1002,13 +1028,21 @@ const strings = {
         info: "Impormasyon",
         elements: "Mga elemento",
         similarity: "Paghahanap ng pagkakapareho",
+        similaritySearch: "Paghahanap ng pagkakapareho",
         searchByElement: "Maghanap ayon sa elemento",
         searchByVector: "Maghanap ayon sa vector",
+        byElement: "Maghanap ayon sa elemento",
+        byVector: "Maghanap ayon sa vector",
         vectorValues: "Mga halaga ng vector",
+        elementName: "Pangalan ng elemento",
+        searchTerm: "Termino sa paghahanap",
         element: "Elemento",
         score: "Iskor",
         count: "Bilang",
         addElement: "Magdagdag ng elemento",
+        addedSuccessfully: "Matagumpay na naidagdag ang aytem",
+        deletedSuccessfully: "Matagumpay na nabura ang aytem",
+        removedSuccessfully: "Matagumpay na nabura ang aytem",
         attributes: "Mga katangian",
         noAttributes: "Walang mga katangian",
         dimensions: "Mga dimensyon",
@@ -1069,6 +1103,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "Array",
   },
   promo: {
     title: "AI Network Assistant",

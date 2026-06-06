@@ -41,6 +41,7 @@ const strings = {
     info: "Маалымат",
     deleteListItem: "Бул тизмени чын эле жок кыласызбы?",
     deleteHashKey: "Бул хэш ачкычты чын эле жок кыласызбы?",
+    deleteArrayIndex: "Бул массив элементин жок кылгыңыз келгенине ишенесизби?",
     deleteStreamTimestamp: "Бул агымдын убакыт белгисин чын эле жок кыласызбы?",
     deleteSetMember: "Бул топтомдун мүчөсүн чын эле жок кыласызбы?",
     deleteZSetMember: "Бул иреттелген топтом мүчөсүн чын эле жок кыласызбы?",
@@ -250,15 +251,6 @@ const strings = {
       connectedTo: opts => `Туташты: ${opts.name} (Redis ${opts.version} ${opts.mode}, ${opts.modules} модуль жүктөлдү)`,
       connectedToNoInfo: opts => `Туташты: ${opts.name}`,
       disconnectedFrom: opts => `Ажыратылды: ${opts.name}`,
-      notConnected: "Туташкан эмес.",
-      limitedAiOnly: "Чектелген AI гана жеткиликтүү. Redis боюнча жалпы суроо-жооп иштейт.",
-      connectHint: "Жандуу диагностика үчүн муну жазыңыз: connect <name>",
-      cheatsheetHint: "Эмнени сураса болорун көрүү үчүн ai: help деп жазыңыз.",
-      needsConnection: "Бул үчүн активдүү туташуу керек. Адегенде \"connect <name>\" деп жазыңыз.",
-      aiNeedsConnectionReason: "Жандуу абал боюнча AI (tool use) Redis'ке туташканда гана жеткиликтүү.",
-      verbNeedsConnection: opts => `"${opts.verb}" үчүн активдүү туташуу керек. Адегенде "connect <name>" деп жазыңыз.`,
-      aiLimitedMode: "AI чектелген режимде турат. Туташмайынча Redis боюнча жалпы билим суроолору гана иштейт.",
-      welcomeDisconnected: "Кош келиңиз. Азырынча эч бир Redis instance'ине туташкан жоксуз.",
       readyIndicator: "Даяр.",
     },
     cheatsheet: {
@@ -319,7 +311,8 @@ const strings = {
             "events агымынан акыркы 10 жазууну ал",
             "user:1 hash'ынын бардык талааларын ал",
             "favourites жыйындысынын мүчөлөрүн ал",
-            "leaderboard'дон упай боюнча топ-10'ду ал"
+            "leaderboard'дон упай боюнча топ-10'ду ал",
+            "элементтерди канча set ичинде бар экенине жараша иретте (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -336,7 +329,8 @@ const strings = {
             "user:42'нин age'ин 31'ге жаңыла",
             "бардык JSON ачкычтарды тизмеле",
             "JSON документтен талааны өчүр",
-            "JSONPath аркылуу ичтеги талааны ал"
+            "JSONPath аркылуу ичтеги талааны ал",
+            "тактыгы азайтылган float маанилеринин JSON массивин сакта (FPHA BF16)"
           ]
         },
         search: {
@@ -361,7 +355,8 @@ const strings = {
             "temp:room1'дин диапазонун кечээтен азыркыга чейин ал",
             "sensor=temp белгиси боюнча multi-range ал",
             "temp:room1 үчүн 100 синусоидалык чекит жасап бер",
-            "temp:room1 үчүн retention жана белгилерди көрсөт"
+            "temp:room1 үчүн retention жана белгилерди көрсөт",
+            "бир TS.RANGE менен ар bucket үчүн min, max, first жана last ал (candlestick)"
           ]
         },
         bloom: {
@@ -387,6 +382,18 @@ const strings = {
             "VSIM аркылуу элементтин аты боюнча издөө"
           ]
         },
+        array: {
+          name: "Массив (Redis 8.8+)",
+          description: "Redis 8.8+ аныкталганда жеткиликтүү (тубаса ARRAY түрү).",
+          prompts: [
+            "бир нече мааниси бар массив түз",
+            "массивимдин 5-индексиндеги маанини кой",
+            "так индекстеги маанини ал",
+            "ARSCAN менен массивдин бардык элементтерин тизмеле",
+            "индекстеги элементти өчүр",
+            "массивимде канча элемент бар?"
+          ]
+        },
         redis8: {
           name: "Redis 8+ мүмкүнчүлүктөрү",
           description: "Redis 8+ аныкталганда көрүнөт.",
@@ -396,7 +403,9 @@ const strings = {
             "гибрид толук-текст + вектордук издөөнү иштет (FT.HYBRID)",
             "MSETEX аркылуу бир нече ачкычты жалпы мөөнөт менен койгула",
             "consumer group менен stream жазуусун өчүр (XDELEX)",
-            "топ-10 слот үчүн cluster slot-stats көрсөт"
+            "топ-10 слот үчүн cluster slot-stats көрсөт",
+            "терезе эсептегичи менен key үчүн rate-limit кой (INCREX)",
+            "pending stream билдирүүсүнө dead-letter үчүн negative-ack кыл (XNACK)"
           ]
         },
         scripting: {
@@ -506,6 +515,7 @@ const strings = {
     welcomeConsole: "Redis консолуна кош келиңиз",
     welcomeConsoleInfo: "SHIFT + Курсор ЖОГОРУ же ТӨМӨН тарых иштетилген",
     redisListIndexInfo: "Коштоо үчүн бош, -1 алдына коюу же көрсөтүлгөн орунга сактоо үчүн.",
+    redisArrayIndexInfo: "Кийинки индекске кошуу үчүн бош калтырыңыз же так индексти киргизиңиз (боштуктарга уруксат берилет — массивдер сейрек болушу мүмкүн).",
     console: "Консол",
     connectiondAdd: "Туташуу кошуу",
     connectiondEdit: "Туташууну түзөтүү",
@@ -632,6 +642,7 @@ const strings = {
     socketDisconnected: "Ажыратылды",
     socketError: "Байланыш катасы",
     deletedHashKey: "Хэш ачкычы жок кылынды",
+    deletedArrayIndex: "Массив элементи жок кылынды",
     deletedSetMember: "Жыйын мүчөсү жок кылынды",
     deletedListElement: "Тизме элементи жок кылынды",
     deletedZSetMember: "Сорттолгон жыйын мүчөсү жок кылынды",
@@ -931,6 +942,12 @@ const strings = {
           value: "Нарк"
         }
       },
+      array: {
+        table: {
+          index: "Индекс",
+          value: "Нарк"
+        }
+      },
       hash: {
         table: {
           hashkey: "Hashkey",
@@ -1013,13 +1030,21 @@ const strings = {
         info: "Маалымат",
         elements: "Элементтер",
         similarity: "Окшоштук издөө",
+        similaritySearch: "Окшоштук издөө",
         searchByElement: "Элемент боюнча издөө",
         searchByVector: "Вектор боюнча издөө",
+        byElement: "Элемент боюнча издөө",
+        byVector: "Вектор боюнча издөө",
         vectorValues: "Вектор маанилери",
+        elementName: "Элемент аталышы",
+        searchTerm: "Издөө термини",
         element: "Элемент",
         score: "Упай",
         count: "Саны",
         addElement: "Элемент кошуу",
+        addedSuccessfully: "Элемент ийгиликтүү кошулду",
+        deletedSuccessfully: "Элемент ийгиликтүү жоюлdu",
+        removedSuccessfully: "Элемент ийгиликтүү жоюлdu",
         attributes: "Атрибуттар",
         noAttributes: "Атрибуттар жок",
         dimensions: "Өлчөмдөр",
@@ -1080,6 +1105,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "Массив",
   },
   promo: {
     title: "AI тармак жардамчысы",

@@ -41,6 +41,7 @@ const strings = {
     info: "情報",
     deleteListItem: "このリスト項目を削除してもよろしいですか？",
     deleteHashKey: "このハッシュキー項目を削除してもよろしいですか？",
+    deleteArrayIndex: "この配列要素を削除してもよろしいですか？",
     deleteStreamTimestamp: "このストリームタイムスタンプを削除してもよろしいですか？",
     deleteSetMember: "このセットメンバーを削除してもよろしいですか？",
     deleteZSetMember: "このソート済みセットメンバーを削除してもよろしいですか？",
@@ -306,7 +307,8 @@ const strings = {
             "stream events から最後の 10 件を取得する",
             "hash user:1 のすべてのフィールドを取得する",
             "set favourites のメンバーを取得する",
-            "leaderboard からスコア上位 10 件を取得する"
+            "leaderboard からスコア上位 10 件を取得する",
+            "各アイテムが出現するセット数でランク付けする (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -323,7 +325,8 @@ const strings = {
             "user:42 の age を 31 に更新する",
             "すべての JSON キーを一覧表示する",
             "JSON ドキュメントからフィールドを削除する",
-            "JSONPath でネストされたフィールドを取得する"
+            "JSONPath でネストされたフィールドを取得する",
+            "精度を下げた float の JSON 配列を保存する (FPHA BF16)"
           ]
         },
         search: {
@@ -348,7 +351,8 @@ const strings = {
             "temp:room1 の昨日から現在までの範囲を取得する",
             "ラベル sensor=temp でマルチレンジを取得する",
             "temp:room1 向けに正弦波のデータポイントを 100 個生成する",
-            "temp:room1 の保持期間とラベルを表示する"
+            "temp:room1 の保持期間とラベルを表示する",
+            "1 回の TS.RANGE で bucket ごとの min、max、first、last を取得する (candlestick)"
           ]
         },
         bloom: {
@@ -374,6 +378,18 @@ const strings = {
             "VSIM で要素名を指定して検索する"
           ]
         },
+        array: {
+          name: "配列 (Redis 8.8+)",
+          description: "Redis 8.8+ が検出されたときに利用できます（ネイティブの ARRAY 型）。",
+          prompts: [
+            "いくつかの値を持つ配列を作成する",
+            "自分の配列のインデックス 5 に値を設定する",
+            "特定のインデックスの値を取得する",
+            "ARSCAN で配列の全要素を一覧表示する",
+            "インデックスの要素を削除する",
+            "自分の配列には要素がいくつある？"
+          ]
+        },
         redis8: {
           name: "Redis 8+ 機能",
           description: "Redis 8+ が検出されたときに表示されます。",
@@ -383,7 +399,9 @@ const strings = {
             "ハイブリッドの全文 + ベクトル検索を実行する (FT.HYBRID)",
             "MSETEX で複数のキーに共通の有効期限を設定する",
             "コンシューマーグループ付きで stream エントリを削除する (XDELEX)",
-            "上位 10 スロットの cluster slot-stats を表示する"
+            "上位 10 スロットの cluster slot-stats を表示する",
+            "ウィンドウカウンターでキーをレート制限する (INCREX)",
+            "保留中の stream メッセージを dead-letter に negative-ack する (XNACK)"
           ]
         },
         scripting: {
@@ -493,6 +511,7 @@ const strings = {
     welcomeConsole: "Redisコンソールへようこそ",
     welcomeConsoleInfo: "SHIFT + カーソル上下キーによる履歴機能が有効です",
     redisListIndexInfo: "空で末尾に追加、-1で先頭に追加、または表示されている位置に保存します。",
+    redisArrayIndexInfo: "次のインデックスに追加する場合は空のままにするか、明示的なインデックスを入力してください（欠番は許可されます — 配列は疎にできます）。",
     console: "コンソール",
     connectiondAdd: "接続を追加",
     connectiondEdit: "接続を編集",
@@ -619,6 +638,7 @@ const strings = {
     socketDisconnected: "切断されました",
     socketError: "接続エラー",
     deletedHashKey: "ハッシュキーが削除されました",
+    deletedArrayIndex: "配列要素を削除しました",
     deletedSetMember: "セットメンバーが削除されました",
     deletedListElement: "リスト要素が削除されました",
     deletedZSetMember: "ソート済みセットメンバーが削除されました",
@@ -918,6 +938,12 @@ const strings = {
           value: "値"
         }
       },
+      array: {
+        table: {
+          index: "インデックス",
+          value: "値"
+        }
+      },
       hash: {
         table: {
           hashkey: "ハッシュキー",
@@ -1000,13 +1026,21 @@ const strings = {
         info: "情報",
         elements: "要素",
         similarity: "類似検索",
+        similaritySearch: "類似検索",
         searchByElement: "要素で検索",
         searchByVector: "ベクトルで検索",
+        byElement: "要素で検索",
+        byVector: "ベクトルで検索",
         vectorValues: "ベクトル値",
+        elementName: "要素名",
+        searchTerm: "検索語",
         element: "要素",
         score: "スコア",
         count: "件数",
         addElement: "要素を追加",
+        addedSuccessfully: "アイテムが正常に追加されました",
+        deletedSuccessfully: "アイテムが正常に削除されました",
+        removedSuccessfully: "アイテムが正常に削除されました",
         attributes: "属性",
         noAttributes: "属性なし",
         dimensions: "次元",
@@ -1067,6 +1101,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "配列",
   },
   promo: {
     title: "AI ネットワークアシスタント",

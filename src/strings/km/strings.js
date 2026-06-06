@@ -41,6 +41,7 @@ const strings = {
     info: "ព័ត៌មាន",
     deleteListItem: "តើអ្នកប្រាកដក្នុងការលុបធាតុក្នុងបញ្ជីនេះទេ?",
     deleteHashKey: "តើ​អ្នក​ប្រាកដ​ក្នុង​ចិត្ត​លុប​ធាតុ​សោ​សញ្ញា​នេះ​ឬ?",
+    deleteArrayIndex: "តើអ្នកប្រាកដថាចង់លុបធាតុអារេនេះឬ?",
     deleteStreamTimestamp: "តើ​អ្នក​ប្រាកដ​ក្នុង​ចិត្ត​លុប​ត្រា​ពេល​វេលា​នៃ​ការ​ផ្សាយ​នេះ?",
     deleteSetMember: "តើអ្នកប្រាកដក្នុងការលុបសមាជិកឈុតនេះទេ?",
     deleteZSetMember: "តើអ្នកប្រាកដក្នុងការលុបសមាជិកដែលបានតម្រៀបនេះទេ?",
@@ -250,15 +251,6 @@ const strings = {
       connectedTo: opts => `បានតភ្ជាប់ទៅ ${opts.name} (Redis ${opts.version} ${opts.mode}, បានផ្ទុក ${opts.modules} ម៉ូឌុល)`,
       connectedToNoInfo: opts => `បានតភ្ជាប់ទៅ ${opts.name}`,
       disconnectedFrom: opts => `បានផ្តាច់ពី ${opts.name}`,
-      notConnected: "មិនបានតភ្ជាប់។",
-      limitedAiOnly: "មានតែ AI កម្រិតកំណត់ប៉ុណ្ណោះ។ សំណួរ-ចម្លើយទូទៅអំពី Redis នៅតែអាចប្រើបាន។",
-      connectHint: "សម្រាប់ការវិនិច្ឆ័យផ្ទាល់ សូមវាយ៖ connect <name>",
-      cheatsheetHint: "វាយ ai: help ដើម្បីមើលអ្វីដែលអ្នកអាចសួរ។",
-      needsConnection: "មុខងារនេះត្រូវការការតភ្ជាប់សកម្ម។ សូមវាយ \"connect <name>\" ជាមុន។",
-      aiNeedsConnectionReason: "AI ស្ថានភាពផ្ទាល់ (tool use) អាចប្រើបានតែពេលតភ្ជាប់ទៅ Redis ប៉ុណ្ណោះ។",
-      verbNeedsConnection: opts => `"${opts.verb}" ត្រូវការការតភ្ជាប់សកម្ម។ សូមវាយ "connect <name>" ជាមុន។`,
-      aiLimitedMode: "AI កំពុងស្ថិតនៅក្នុងរបៀបកំណត់។ រហូតដល់អ្នកតភ្ជាប់ មានតែសំណួរចំណេះដឹងទូទៅអំពី Redis ប៉ុណ្ណោះដែលអាចប្រើបាន។",
-      welcomeDisconnected: "សូមស្វាគមន៍។ អ្នកមិនទាន់បានតភ្ជាប់ទៅ Redis instance ណាមួយនៅឡើយទេ។",
       readyIndicator: "រួចរាល់។",
     },
     cheatsheet: {
@@ -319,7 +311,8 @@ const strings = {
             "យកធាតុ 10 ចុងក្រោយពី stream events",
             "យកវាលទាំងអស់របស់ hash user:1",
             "យកសមាជិករបស់ set favourites",
-            "យក 10 កំពូលតាមពិន្ទុពី leaderboard"
+            "យក 10 កំពូលតាមពិន្ទុពី leaderboard",
+            "រៀបចំធាតុតាមចំនួន set ដែលវាបង្ហាញក្នុងនោះ (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -336,7 +329,8 @@ const strings = {
             "ធ្វើបច្ចុប្បន្នភាព age របស់ user:42 ទៅ 31",
             "រាយកូនសោ JSON ទាំងអស់",
             "លុបវាលពីឯកសារ JSON",
-            "យកវាលត្រួតគ្នាដោយប្រើ JSONPath"
+            "យកវាលត្រួតគ្នាដោយប្រើ JSONPath",
+            "រក្សាទុកអារេ JSON នៃ floats ជាមួយភាពត្រឹមត្រូវកាត់បន្ថយ (FPHA BF16)"
           ]
         },
         search: {
@@ -361,7 +355,8 @@ const strings = {
             "យកជួរ temp:room1 ពីម្សិលមិញដល់ឥឡូវនេះ",
             "យកជួរច្រើនតាមស្លាក sensor=temp",
             "បង្កើត 100 ចំណុចទិន្នន័យរលកស៊ីនសម្រាប់ temp:room1",
-            "បង្ហាញការរក្សា និងស្លាកសម្រាប់ temp:room1"
+            "បង្ហាញការរក្សា និងស្លាកសម្រាប់ temp:room1",
+            "យក min, max, first និង last ក្នុងមួយ bucket ដោយ TS.RANGE មួយ (candlestick)"
           ]
         },
         bloom: {
@@ -387,6 +382,18 @@ const strings = {
             "ស្វែងរកតាមឈ្មោះធាតុជាមួយ VSIM"
           ]
         },
+        array: {
+          name: "អារេ (Redis 8.8+)",
+          description: "មានពេលរកឃើញ Redis 8.8+ (ប្រភេទ ARRAY ដើម)។",
+          prompts: [
+            "បង្កើតអារេដែលមានតម្លៃពីរបី",
+            "កំណត់តម្លៃនៅ index 5 នៃអារេរបស់ខ្ញុំ",
+            "យកតម្លៃនៅ index ជាក់លាក់",
+            "រាយធាតុអារេទាំងអស់ដោយ ARSCAN",
+            "លុបធាតុនៅ index",
+            "អារេរបស់ខ្ញុំមានធាតុប៉ុន្មាន?"
+          ]
+        },
         redis8: {
           name: "មុខងារ Redis 8+",
           description: "បង្ហាញពេលរកឃើញ Redis 8+។",
@@ -396,7 +403,9 @@ const strings = {
             "ដំណើរការការស្វែងរកចម្រុះអត្ថបទពេញ + វ៉ិចទ័រ (FT.HYBRID)",
             "កំណត់កូនសោច្រើនជាមួយពេលផុតកំណត់រួមគ្នាដោយប្រើ MSETEX",
             "លុបធាតុ stream ជាមួយ consumer group (XDELEX)",
-            "បង្ហាញ slot-stats cluster សម្រាប់ 10 slots កំពូល"
+            "បង្ហាញ slot-stats cluster សម្រាប់ 10 slots កំពូល",
+            "កំណត់ rate-limit លើ key ដោយ window counter (INCREX)",
+            "ធ្វើ negative-ack សារ stream កំពុងរង់ចាំទៅ dead-letter (XNACK)"
           ]
         },
         scripting: {
@@ -506,6 +515,7 @@ const strings = {
     welcomeConsole: "សូមស្វាគមន៍មកកាន់កុងសូល Redis",
     welcomeConsoleInfo: "SHIFT + ប្រវត្តិទស្សន៍ទ្រនិចឡើងលើ ឬចុះក្រោមត្រូវបានបើក",
     redisListIndexInfo: "ទទេ​ដើម្បី​បន្ថែម -1 ដើម្បី​បន្ថែម ឬ​រក្សាទុក​វា​ទៅ​ទីតាំង​ដែល​បាន​បង្ហាញ។",
+    redisArrayIndexInfo: "ទុកទទេដើម្បីបន្ថែមនៅលិបិក្រមបន្ទាប់ ឬបញ្ចូលលិបិក្រមជាក់លាក់ (អនុញ្ញាតឲ្យមានចន្លោះ — អារេអាចមានចន្លោះទទេបាន)។",
     console: "កុងសូល។",
     connectiondAdd: "បន្ថែមការតភ្ជាប់",
     connectiondEdit: "កែសម្រួលការតភ្ជាប់",
@@ -632,6 +642,7 @@ const strings = {
     socketDisconnected: "ផ្ដាច់ការតភ្ជាប់",
     socketError: "កំហុសក្នុងការតភ្ជាប់",
     deletedHashKey: "សោហាសត្រូវបានលុប",
+    deletedArrayIndex: "បានលុបធាតុអារេ",
     deletedSetMember: "សមាជិកសំណុំត្រូវបានលុប",
     deletedListElement: "ធាតុបញ្ជីត្រូវបានលុប",
     deletedZSetMember: "សមាជិកសំណុំដែលបានតម្រៀបត្រូវបានលុប",
@@ -931,6 +942,12 @@ const strings = {
           value: "តម្លៃ"
         }
       },
+      array: {
+        table: {
+          index: "សន្ទស្សន៍",
+          value: "តម្លៃ"
+        }
+      },
       hash: {
         table: {
           hashkey: "ហាស់ឃី",
@@ -1013,13 +1030,21 @@ const strings = {
         info: "ព័ត៌មាន",
         elements: "Elements",
         similarity: "Similarity Search",
+        similaritySearch: "Similarity Search",
         searchByElement: "Search by element",
         searchByVector: "Search by vector",
+        byElement: "Search by element",
+        byVector: "Search by vector",
         vectorValues: "Vector values",
+        elementName: "Element name",
+        searchTerm: "ពាក្យស្វែងរក",
         element: "Element",
         score: "Score",
         count: "ចំនួន",
         addElement: "Add Element",
+        addedSuccessfully: "ធាតុត្រូវបានបន្ថែមដោយជោគជ័យ",
+        deletedSuccessfully: "ធាតុត្រូវបានលុបដោយជោគជ័យ",
+        removedSuccessfully: "ធាតុត្រូវបានលុបដោយជោគជ័យ",
         attributes: "Attributes",
         noAttributes: "No attributes",
         dimensions: "Dimensions",
@@ -1080,6 +1105,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "អារេ",
   },
   promo: {
     title: "ជំនួយការ​បណ្ដាញ AI",

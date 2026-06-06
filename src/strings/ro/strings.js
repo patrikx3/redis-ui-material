@@ -41,6 +41,7 @@ const strings = {
     info: "Informatii",
     deleteListItem: "Sunteti sigur ca doriti sa stergeti acest element din lista?",
     deleteHashKey: "Sunteti sigur ca doriti sa stergeti aceasta cheie hash?",
+    deleteArrayIndex: "Sigur doriți să ștergeți acest element de array?",
     deleteStreamTimestamp: "Sunteti sigur ca doriti sa stergeti aceasta marca temporala din stream?",
     deleteSetMember: "Sunteti sigur ca doriti sa stergeti acest membru al setului?",
     deleteZSetMember: "Sunteti sigur ca doriti sa stergeti acest membru al setului sortat?",
@@ -309,7 +310,8 @@ const strings = {
             "ia ultimele 10 intrări din stream-ul events",
             "ia toate câmpurile hash-ului user:1",
             "ia membrii setului favourites",
-            "ia primele 10 după scor din leaderboard"
+            "ia primele 10 după scor din leaderboard",
+            "ordonează elementele după numărul de seturi în care apar (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -326,7 +328,8 @@ const strings = {
             "actualizează age din user:42 la 31",
             "listează toate cheile JSON",
             "șterge un câmp dintr-un document JSON",
-            "ia un câmp imbricat folosind JSONPath"
+            "ia un câmp imbricat folosind JSONPath",
+            "stochează un array JSON de float-uri cu precizie redusă (FPHA BF16)"
           ]
         },
         search: {
@@ -351,7 +354,8 @@ const strings = {
             "ia intervalul pentru temp:room1 de ieri până acum",
             "ia multi-range după eticheta sensor=temp",
             "generează 100 de puncte de tip undă sinusoidală pentru temp:room1",
-            "arată retenția și etichetele pentru temp:room1"
+            "arată retenția și etichetele pentru temp:room1",
+            "obține min, max, first și last pe bucket într-un singur TS.RANGE (candlestick)"
           ]
         },
         bloom: {
@@ -377,6 +381,18 @@ const strings = {
             "caută după numele elementului cu VSIM"
           ]
         },
+        array: {
+          name: "Array (Redis 8.8+)",
+          description: "Disponibil când este detectat Redis 8.8+ (tipul nativ ARRAY).",
+          prompts: [
+            "creează un array cu câteva valori",
+            "setează valoarea la indexul 5 al array-ului meu",
+            "obține valoarea de la un index specific",
+            "listează toate elementele unui array cu ARSCAN",
+            "șterge elementul de la un index",
+            "câte elemente are array-ul meu?"
+          ]
+        },
         redis8: {
           name: "Funcții Redis 8+",
           description: "Afișat când este detectat Redis 8+.",
@@ -386,7 +402,9 @@ const strings = {
             "rulează o căutare hibridă full-text + vector (FT.HYBRID)",
             "setează mai multe chei cu aceeași expirare folosind MSETEX",
             "șterge o intrare de stream cu grup de consumatori (XDELEX)",
-            "arată cluster slot-stats pentru primele 10 sloturi"
+            "arată cluster slot-stats pentru primele 10 sloturi",
+            "limitează rata unei chei cu un contor de fereastră (INCREX)",
+            "trimite negative-ack pentru un mesaj stream pending către dead-letter (XNACK)"
           ]
         },
         scripting: {
@@ -496,6 +514,7 @@ const strings = {
     welcomeConsole: "Bine ati venit in consola Redis",
     welcomeConsoleInfo: "SHIFT + Istoricul cu tastele SUS sau JOS este activat",
     redisListIndexInfo: "Gol pentru a adauga la sfarsit, -1 pentru a adauga la inceput sau salvati la pozitia afisata.",
+    redisArrayIndexInfo: "Lăsați gol pentru a adăuga la următorul index sau introduceți un index explicit (golurile sunt permise — array-urile pot fi rare).",
     console: "Consola",
     connectiondAdd: "Adaugare conexiune",
     connectiondEdit: "Editare conexiune",
@@ -622,6 +641,7 @@ const strings = {
     socketDisconnected: "Deconectat",
     socketError: "Eroare de conexiune",
     deletedHashKey: "Cheie hash ștearsă",
+    deletedArrayIndex: "Elementul de array a fost șters",
     deletedSetMember: "Membru set șters",
     deletedListElement: "Element listă șters",
     deletedZSetMember: "Membru set sortat șters",
@@ -921,6 +941,12 @@ const strings = {
           value: "Valoare"
         }
       },
+      array: {
+        table: {
+          index: "Index",
+          value: "Valoare"
+        }
+      },
       hash: {
         table: {
           hashkey: "Cheie hash",
@@ -1003,13 +1029,21 @@ const strings = {
         info: "Informații",
         elements: "Elemente",
         similarity: "Căutare după similaritate",
+        similaritySearch: "Căutare după similaritate",
         searchByElement: "Căutare după element",
         searchByVector: "Căutare după vector",
+        byElement: "Căutare după element",
+        byVector: "Căutare după vector",
         vectorValues: "Valori vectoriale",
+        elementName: "Numele elementului",
+        searchTerm: "Termen de căutare",
         element: "Element",
         score: "Scor",
         count: "Număr",
         addElement: "Adăugare element",
+        addedSuccessfully: "Elementul a fost adaugat cu succes",
+        deletedSuccessfully: "Elementul a fost sters cu succes",
+        removedSuccessfully: "Elementul a fost sters cu succes",
         attributes: "Atribute",
         noAttributes: "Fără atribute",
         dimensions: "Dimensiuni",
@@ -1070,6 +1104,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "Array",
   },
   promo: {
     title: "Asistent de rețea AI",

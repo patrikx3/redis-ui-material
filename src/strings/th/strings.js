@@ -41,6 +41,7 @@ const strings = {
     info: "ข้อมูล",
     deleteListItem: "คุณแน่ใจที่จะลบรายการนี้หรือไม่?",
     deleteHashKey: "คุณแน่ใจหรือไม่ว่าจะลบรายการคีย์แฮชนี้",
+    deleteArrayIndex: "คุณแน่ใจหรือไม่ว่าต้องการลบองค์ประกอบอาร์เรย์นี้?",
     deleteStreamTimestamp: "คุณแน่ใจหรือว่าจะลบการประทับเวลาสตรีมนี้",
     deleteSetMember: "คุณแน่ใจหรือว่าจะลบสมาชิกชุดนี้",
     deleteZSetMember: "คุณแน่ใจหรือไม่ที่จะลบสมาชิกชุดที่เรียงลำดับนี้",
@@ -250,15 +251,6 @@ const strings = {
       connectedTo: opts => `เชื่อมต่อกับ ${opts.name} แล้ว (Redis ${opts.version} ${opts.mode}, โหลดโมดูลแล้ว ${opts.modules} โมดูล)`,
       connectedToNoInfo: opts => `เชื่อมต่อกับ ${opts.name} แล้ว`,
       disconnectedFrom: opts => `ตัดการเชื่อมต่อจาก ${opts.name} แล้ว`,
-      notConnected: "ยังไม่ได้เชื่อมต่อ.",
-      limitedAiOnly: "ใช้ AI แบบจำกัดได้เท่านั้น — ถามตอบ Redis ทั่วไปยังใช้งานได้.",
-      connectHint: "สำหรับการวินิจฉัยแบบสด ให้พิมพ์: connect <name>",
-      cheatsheetHint: "พิมพ์ ai: help เพื่อดูว่าคุณถามอะไรได้บ้าง",
-      needsConnection: "ฟีเจอร์นี้ต้องใช้การเชื่อมต่อที่ใช้งานอยู่ ให้พิมพ์ \"connect <name>\" ก่อน",
-      aiNeedsConnectionReason: "AI แบบสถานะสด (การใช้เครื่องมือ) ใช้งานได้เฉพาะเมื่อเชื่อมต่อกับ Redis เท่านั้น",
-      verbNeedsConnection: opts => `"${opts.verb}" ต้องใช้การเชื่อมต่อที่ใช้งานอยู่ — ให้พิมพ์ "connect <name>" ก่อน`,
-      aiLimitedMode: "AI อยู่ในโหมดจำกัด — จนกว่าคุณจะเชื่อมต่อ จะถามได้เฉพาะความรู้ทั่วไปเกี่ยวกับ Redis",
-      welcomeDisconnected: "ยินดีต้อนรับ ขณะนี้คุณยังไม่ได้เชื่อมต่อกับอินสแตนซ์ Redis ใดเลย.",
       readyIndicator: "พร้อม.",
     },
     cheatsheet: {
@@ -319,7 +311,8 @@ const strings = {
             "ดึง 10 รายการล่าสุดจาก stream events",
             "ดึงทุกฟิลด์ของ hash user:1",
             "ดึงสมาชิกของ set favourites",
-            "ดึง top 10 ตามคะแนนจาก leaderboard"
+            "ดึง top 10 ตามคะแนนจาก leaderboard",
+            "จัดอันดับรายการตามจำนวน set ที่รายการนั้นปรากฏ (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -336,7 +329,8 @@ const strings = {
             "ปรับปรุง age ของ user:42 เป็น 31",
             "แสดงคีย์ JSON ทั้งหมด",
             "ลบฟิลด์จากเอกสาร JSON",
-            "ดึงฟิลด์ซ้อนโดยใช้ JSONPath"
+            "ดึงฟิลด์ซ้อนโดยใช้ JSONPath",
+            "เก็บ JSON array ของ float ด้วยความแม่นยำที่ลดลง (FPHA BF16)"
           ]
         },
         search: {
@@ -361,7 +355,8 @@ const strings = {
             "ดึงช่วง temp:room1 ตั้งแต่เมื่อวานจนถึงตอนนี้",
             "ดึงหลายช่วงตามเลเบล sensor=temp",
             "สร้างจุดข้อมูล sine-wave 100 จุดสำหรับ temp:room1",
-            "แสดง retention และเลเบลของ temp:room1"
+            "แสดง retention และเลเบลของ temp:room1",
+            "ดึง min, max, first และ last ต่อ bucket ด้วย TS.RANGE ครั้งเดียว (candlestick)"
           ]
         },
         bloom: {
@@ -387,6 +382,18 @@ const strings = {
             "ค้นหาตามชื่อ element ด้วย VSIM"
           ]
         },
+        array: {
+          name: "อาร์เรย์ (Redis 8.8+)",
+          description: "ใช้ได้เมื่อตรวจพบ Redis 8.8+ (ประเภท ARRAY ดั้งเดิม)",
+          prompts: [
+            "สร้าง array พร้อมค่าบางค่า",
+            "ตั้งค่าที่ index 5 ของ array ของฉัน",
+            "ดึงค่าที่ index เฉพาะ",
+            "แสดง element ทั้งหมดของ array ด้วย ARSCAN",
+            "ลบ element ที่ index",
+            "array ของฉันมี element กี่ตัว?"
+          ]
+        },
         redis8: {
           name: "คุณสมบัติ Redis 8+",
           description: "แสดงเมื่อตรวจพบ Redis 8+",
@@ -396,7 +403,9 @@ const strings = {
             "เรียกการค้นหาไฮบริด full-text + เวกเตอร์ (FT.HYBRID)",
             "ตั้งหลายคีย์พร้อมวันหมดอายุร่วมกันด้วย MSETEX",
             "ลบรายการ stream พร้อม consumer group (XDELEX)",
-            "แสดง cluster slot-stats สำหรับ top 10 slots"
+            "แสดง cluster slot-stats สำหรับ top 10 slots",
+            "จำกัด rate ของ key ด้วย window counter (INCREX)",
+            "negative-ack ข้อความ stream ที่ pending ไปยัง dead-letter (XNACK)"
           ]
         },
         scripting: {
@@ -506,6 +515,7 @@ const strings = {
     welcomeConsole: "ยินดีต้อนรับสู่คอนโซล Redis",
     welcomeConsoleInfo: "SHIFT + เปิดใช้งานประวัติเคอร์เซอร์ขึ้นหรือลง",
     redisListIndexInfo: "เว้นว่างไว้เพื่อต่อท้าย -1 เพื่อเติมหรือบันทึกลงในตำแหน่งที่แสดง",
+    redisArrayIndexInfo: "เว้นว่างไว้เพื่อเพิ่มที่ดัชนีถัดไป หรือระบุดัชนีที่ต้องการ (อนุญาตให้มีช่องว่างได้ — อาร์เรย์อาจเป็นแบบเบาบาง)",
     console: "คอนโซล",
     connectiondAdd: "เพิ่มการเชื่อมต่อ",
     connectiondEdit: "แก้ไขการเชื่อมต่อ",
@@ -632,6 +642,7 @@ const strings = {
     socketDisconnected: "ตัดการเชื่อมต่อแล้ว",
     socketError: "ข้อผิดพลาดการเชื่อมต่อ",
     deletedHashKey: "ลบคีย์แฮชแล้ว",
+    deletedArrayIndex: "ลบองค์ประกอบอาร์เรย์แล้ว",
     deletedSetMember: "ลบสมาชิกเซ็ตแล้ว",
     deletedListElement: "ลบองค์ประกอบรายการแล้ว",
     deletedZSetMember: "ลบสมาชิกเซ็ตเรียงลำดับแล้ว",
@@ -931,6 +942,12 @@ const strings = {
           value: "ความคุ้มค่า"
         }
       },
+      array: {
+        table: {
+          index: "ดัชนี",
+          value: "ความคุ้มค่า"
+        }
+      },
       hash: {
         table: {
           hashkey: "แฮชคีย์",
@@ -1013,13 +1030,21 @@ const strings = {
         info: "ข้อมูล",
         elements: "องค์ประกอบ",
         similarity: "ค้นหาความคล้ายคลึง",
+        similaritySearch: "ค้นหาความคล้ายคลึง",
         searchByElement: "ค้นหาตามองค์ประกอบ",
         searchByVector: "ค้นหาตามเวกเตอร์",
+        byElement: "ค้นหาตามองค์ประกอบ",
+        byVector: "ค้นหาตามเวกเตอร์",
         vectorValues: "ค่าเวกเตอร์",
+        elementName: "ชื่อองค์ประกอบ",
+        searchTerm: "คำค้นหา",
         element: "องค์ประกอบ",
         score: "คะแนน",
         count: "จำนวน",
         addElement: "เพิ่มองค์ประกอบ",
+        addedSuccessfully: "เพิ่มรายการสำเร็จ",
+        deletedSuccessfully: "ลบรายการสำเร็จ",
+        removedSuccessfully: "ลบรายการสำเร็จ",
         attributes: "คุณลักษณะ",
         noAttributes: "ไม่มีคุณลักษณะ",
         dimensions: "มิติ",
@@ -1080,6 +1105,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "อาร์เรย์",
   },
   promo: {
     title: "ผู้ช่วยเครือข่าย AI",

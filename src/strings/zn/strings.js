@@ -41,6 +41,7 @@ const strings = {
     info: "信息",
     deleteListItem: "您确定要删除该列表项吗？",
     deleteHashKey: "您确定要删除该哈希键项吗？",
+    deleteArrayIndex: "确定要删除此数组元素吗？",
     deleteStreamTimestamp: "您确定要删除此流时间戳吗？",
     deleteSetMember: "您确定要删除该集合成员？",
     deleteZSetMember: "您确定要删除该有序集合成员？",
@@ -248,15 +249,6 @@ const strings = {
       connectedTo: opts => `已连接到 ${opts.name}（Redis ${opts.version} ${opts.mode}，已加载 ${opts.modules} 个模块）`,
       connectedToNoInfo: opts => `已连接到 ${opts.name}`,
       disconnectedFrom: opts => `已从 ${opts.name} 断开连接`,
-      notConnected: "未连接。",
-      limitedAiOnly: "仅限受限 AI 模式，仍可进行通用 Redis 问答。",
-      connectHint: "如需实时诊断，请输入：connect <name>",
-      cheatsheetHint: "输入 ai: help 查看你可以提问的内容。",
-      needsConnection: "此功能需要有效连接。请先输入 \"connect <name>\"。",
-      aiNeedsConnectionReason: "实时状态 AI（tool use）仅在连接到 Redis 时可用。",
-      verbNeedsConnection: opts => `"${opts.verb}" 需要有效连接，请先输入 "connect <name>"。`,
-      aiLimitedMode: "AI 当前处于受限模式，连接前只能回答通用 Redis 知识问题。",
-      welcomeDisconnected: "欢迎。你目前尚未连接到任何 Redis 实例。",
       readyIndicator: "就绪。",
     },
     cheatsheet: {
@@ -317,7 +309,8 @@ const strings = {
             "获取 stream events 的最后 10 条记录",
             "获取 hash user:1 的所有字段",
             "获取 set favourites 的成员",
-            "从 leaderboard 获取分数前 10 名"
+            "从 leaderboard 获取分数前 10 名",
+            "按元素出现于多少个 set 排名 (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -334,7 +327,8 @@ const strings = {
             "把 user:42 的 age 更新为 31",
             "列出所有 JSON 键",
             "从一个 JSON 文档删除一个字段",
-            "使用 JSONPath 获取嵌套字段"
+            "使用 JSONPath 获取嵌套字段",
+            "以降低精度存储 float 的 JSON 数组 (FPHA BF16)"
           ]
         },
         search: {
@@ -359,7 +353,8 @@ const strings = {
             "获取 temp:room1 从昨天到现在的范围",
             "按标签 sensor=temp 获取多范围",
             "为 temp:room1 生成 100 个正弦波数据点",
-            "显示 temp:room1 的保留期与标签"
+            "显示 temp:room1 的保留期与标签",
+            "用一次 TS.RANGE 获取每个 bucket 的 min、max、first 和 last (candlestick)"
           ]
         },
         bloom: {
@@ -385,6 +380,18 @@ const strings = {
             "使用 VSIM 按元素名称搜索"
           ]
         },
+        array: {
+          name: "数组 (Redis 8.8+)",
+          description: "当检测到 Redis 8.8+ 时可用（原生 ARRAY 类型）。",
+          prompts: [
+            "创建一个包含几个值的数组",
+            "设置我的数组索引 5 的值",
+            "获取指定索引的值",
+            "用 ARSCAN 列出数组的所有元素",
+            "删除某个索引处的元素",
+            "我的数组有多少个元素？"
+          ]
+        },
         redis8: {
           name: "Redis 8+ 功能",
           description: "当检测到 Redis 8+ 时显示。",
@@ -394,7 +401,9 @@ const strings = {
             "执行混合全文 + 向量搜索 (FT.HYBRID)",
             "使用 MSETEX 为多个键设置共享过期时间",
             "带消费者组删除 stream 条目 (XDELEX)",
-            "显示前 10 个 slot 的 cluster slot-stats"
+            "显示前 10 个 slot 的 cluster slot-stats",
+            "用窗口计数器对 key 做 rate-limit (INCREX)",
+            "将 pending stream 消息 negative-ack 到 dead-letter (XNACK)"
           ]
         },
         scripting: {
@@ -504,6 +513,7 @@ const strings = {
     welcomeConsole: "欢迎来到Redis控制台",
     welcomeConsoleInfo: "SHIFT + 上下方向键选择历史记录功能已启用",
     redisListIndexInfo: "空值追加, -1 到前置或保存到光标之处",
+    redisArrayIndexInfo: "留空以追加到下一个索引，或输入明确的索引（允许空隙 — 数组可以是稀疏的）。",
     console: "控制台",
     connectiondAdd: "添加连接",
     connectiondEdit: "编辑连接",
@@ -630,6 +640,7 @@ const strings = {
     socketDisconnected: "已断开连接",
     socketError: "连接错误",
     deletedHashKey: "哈希键已删除",
+    deletedArrayIndex: "数组元素已删除",
     deletedSetMember: "集合成员已删除",
     deletedListElement: "列表元素已删除",
     deletedZSetMember: "有序集合成员已删除",
@@ -929,6 +940,12 @@ const strings = {
           value: "值"
         }
       },
+      array: {
+        table: {
+          index: "索引",
+          value: "值"
+        }
+      },
       hash: {
         table: {
           hashkey: "哈希",
@@ -1011,13 +1028,21 @@ const strings = {
         info: "信息",
         elements: "元素",
         similarity: "相似度搜索",
+        similaritySearch: "相似度搜索",
         searchByElement: "按元素搜索",
         searchByVector: "按向量搜索",
+        byElement: "按元素搜索",
+        byVector: "按向量搜索",
         vectorValues: "向量值",
+        elementName: "元素名称",
+        searchTerm: "搜索词",
         element: "元素",
         score: "分数",
         count: "数量",
         addElement: "添加元素",
+        addedSuccessfully: "项目已成功添加",
+        deletedSuccessfully: "项目已成功删除",
+        removedSuccessfully: "项目已成功删除",
         attributes: "属性",
         noAttributes: "没有属性",
         dimensions: "维度",
@@ -1078,6 +1103,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "数组",
   },
   promo: {
     title: "AI 网络助手",

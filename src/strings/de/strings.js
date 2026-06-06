@@ -41,6 +41,7 @@ const strings = {
     info: "Info",
     deleteListItem: "Sind Sie sicher, dass Sie dieses Listenelement löschen möchten?",
     deleteHashKey: "Sind Sie sicher, dass Sie diesen Hash-Schlüssel löschen möchten?",
+    deleteArrayIndex: "Sind Sie sicher, dass Sie dieses Array-Element löschen möchten?",
     deleteStreamTimestamp: "Sind Sie sicher, dass Sie diesen Stream-Zeitstempel löschen möchten?",
     deleteSetMember: "Sind Sie sicher, dass Sie dieses Set-Mitglied löschen möchten?",
     deleteZSetMember: "Sind Sie sicher, dass Sie dieses Mitglied der sortierten Menge löschen möchten?",
@@ -310,7 +311,8 @@ const strings = {
             "Holen Sie sich die letzten 10 Einträge aus Stream events",
             "Holen Sie sich alle Felder des Hash-Benutzers:1",
             "Holen Sie sich Mitglieder der Menge favourites",
-            "Holen Sie sich die Top 10 nach Punktzahl von leaderboard"
+            "Holen Sie sich die Top 10 nach Punktzahl von leaderboard",
+            "Elemente danach sortieren, in wie vielen Sets sie vorkommen (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -327,7 +329,8 @@ const strings = {
             "Aktualisieren Sie das Alter von user:42 auf 31",
             "Listen Sie alle JSON-Schlüssel auf",
             "Löschen Sie ein Feld aus einem JSON-Dokument",
-            "Holen Sie sich ein verschachteltes Feld mit JSONPath"
+            "Holen Sie sich ein verschachteltes Feld mit JSONPath",
+            "ein JSON-Array mit Floats in reduzierter Genauigkeit speichern (FPHA BF16)"
           ]
         },
         search: {
@@ -352,7 +355,8 @@ const strings = {
             "Erhalten Sie den Bereich von temp:room1 von gestern bis heute",
             "Holen Sie sich Multi-Range nach Label sensor=temp",
             "Generieren Sie 100 Sinuswellen-Datenpunkte für temp:room1",
-            "Aufbewahrung und Beschriftungen für temp:room1 anzeigen"
+            "Aufbewahrung und Beschriftungen für temp:room1 anzeigen",
+            "min, max, first und last pro Bucket mit einem TS.RANGE abrufen (Candlestick)"
           ]
         },
         bloom: {
@@ -378,6 +382,18 @@ const strings = {
             "Suche nach Elementnamen mit VSIM"
           ]
         },
+        array: {
+          name: "Array (Redis 8.8+)",
+          description: "Verfügbar, wenn Redis 8.8+ erkannt wird (nativer Typ ARRAY).",
+          prompts: [
+            "ein Array mit einigen Werten erstellen",
+            "den Wert an Index 5 meines Arrays setzen",
+            "den Wert an einem bestimmten Index abrufen",
+            "alle Elemente eines Arrays mit ARSCAN auflisten",
+            "das Element an einem Index löschen",
+            "wie viele Elemente hat mein Array?"
+          ]
+        },
         redis8: {
           name: "Redis 8+ Funktionen",
           description: "Wird angezeigt, wenn Redis 8+ erkannt wird.",
@@ -387,7 +403,9 @@ const strings = {
             "Führen Sie eine hybride Volltext- und Vektorsuche durch (FT.HYBRID)",
             "Legen Sie mit MSETEX mehrere Schlüssel mit gemeinsamem Ablauf fest.",
             "Löschen Sie einen Stream-Eintrag mit der Verbrauchergruppe (XDELEX)",
-            "Cluster-Slot-Statistiken für die Top-10-Slots anzeigen"
+            "Cluster-Slot-Statistiken für die Top-10-Slots anzeigen",
+            "Rate-Limit für einen Schlüssel mit einem Fensterzähler setzen (INCREX)",
+            "eine ausstehende Stream-Nachricht per Negative-Ack in Dead-Letter verschieben (XNACK)"
           ]
         },
         scripting: {
@@ -497,6 +515,7 @@ const strings = {
     welcomeConsole: "Willkommen in der Redis-Konsole",
     welcomeConsoleInfo: "SHIFT + Verlauf mit Cursor HOCH oder RUNTER ist aktiviert",
     redisListIndexInfo: "Leer zum Anhängen, -1 zum Voranstellen oder an der angezeigten Position speichern.",
+    redisArrayIndexInfo: "Leer lassen, um am nächsten Index anzuhängen, oder einen bestimmten Index eingeben (Lücken sind erlaubt — Arrays können spärlich sein).",
     console: "Konsole",
     connectiondAdd: "Verbindung hinzufügen",
     connectiondEdit: "Verbindung bearbeiten",
@@ -623,6 +642,7 @@ const strings = {
     socketDisconnected: "Getrennt",
     socketError: "Verbindungsfehler",
     deletedHashKey: "Hash-Schlüssel gelöscht",
+    deletedArrayIndex: "Array-Element gelöscht",
     deletedSetMember: "Set-Mitglied gelöscht",
     deletedListElement: "Listenelement gelöscht",
     deletedZSetMember: "Sortiertes-Set-Mitglied gelöscht",
@@ -922,6 +942,12 @@ const strings = {
           value: "Wert"
         }
       },
+      array: {
+        table: {
+          index: "Index",
+          value: "Wert"
+        }
+      },
       hash: {
         table: {
           hashkey: "Hash-Schlüssel",
@@ -1004,13 +1030,21 @@ const strings = {
         info: "Info",
         elements: "Elemente",
         similarity: "Ähnlichkeitssuche",
+        similaritySearch: "Ähnlichkeitssuche",
         searchByElement: "Nach Element suchen",
         searchByVector: "Nach Vektor suchen",
+        byElement: "Nach Element suchen",
+        byVector: "Nach Vektor suchen",
         vectorValues: "Vektorwerte",
+        elementName: "Elementname",
+        searchTerm: "Suchbegriff",
         element: "Element",
         score: "Punktzahl",
         count: "Anzahl",
         addElement: "Element hinzufügen",
+        addedSuccessfully: "Element erfolgreich hinzugefügt",
+        deletedSuccessfully: "Element erfolgreich gelöscht",
+        removedSuccessfully: "Element erfolgreich gelöscht",
         attributes: "Attribute",
         noAttributes: "Keine Attribute",
         dimensions: "Dimensionen",
@@ -1071,6 +1105,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "Array",
   },
   promo: {
     title: "AI Netzwerkassistent",

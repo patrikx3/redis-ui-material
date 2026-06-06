@@ -41,6 +41,7 @@ const strings = {
     info: "තොරතුරු",
     deleteListItem: "ඔබට මෙම ලැයිස්තු අයිතමය මකා දැමීමට අවශ්\u200dය බව විශ්වාසද?",
     deleteHashKey: "ඔබට මෙම hash යතුරු අයිතමය මකා දැමීමට අවශ්\u200dය බව විශ්වාසද?",
+    deleteArrayIndex: "මෙම අරේ අංගය මකා දැමීමට ඔබට විශ්වාසද?",
     deleteStreamTimestamp: "ඔබට මෙම ප්\u200dරවාහ කාල මුද්\u200dරාව මකා දැමීමට අවශ්\u200dය බව විශ්වාසද?",
     deleteSetMember: "ඔබට මෙම කට්ටල සාමාජිකයා මකා දැමීමට අවශ්\u200dය බව විශ්වාසද?",
     deleteZSetMember: "ඔබට මෙම වර්ග කළ කට්ටල සාමාජිකයා මකා දැමීමට අවශ්\u200dය බව විශ්වාසද?",
@@ -252,15 +253,6 @@ const strings = {
       connectedTo: opts => `${opts.name} වෙත සම්බන්ධයි (Redis ${opts.version} ${opts.mode}, මොඩියුල ${opts.modules} පූරණය කර ඇත)`,
       connectedToNoInfo: opts => `${opts.name} වෙත සම්බන්ධයි`,
       disconnectedFrom: opts => `${opts.name} සමඟ සම්බන්ධතාවය කඩවිය`,
-      notConnected: "සම්බන්ධ වී නැත.",
-      limitedAiOnly: "සීමිත AI පමණි — සාමාන්‍ය Redis ප්‍රශ්න සහ පිළිතුරු ක්‍රියා කරයි.",
-      connectHint: "සජීවී රෝගනිර්ණය සඳහා මෙය ටයිප් කරන්න: connect <name>",
-      cheatsheetHint: "ඔබට කුමක් අසන්න පුළුවන්ද බලන්න ai: help ටයිප් කරන්න.",
-      needsConnection: "මෙයට සක්‍රීය සම්බන්ධතාවයක් අවශ්‍යයි. මුලින් \"connect <name>\" ටයිප් කරන්න.",
-      aiNeedsConnectionReason: "සජීවී තත්ත්ව AI (tool use) Redis වෙත සම්බන්ධ වූ විට පමණක් ලබාගත හැක.",
-      verbNeedsConnection: opts => `"${opts.verb}" සඳහා සක්‍රීය සම්බන්ධතාවයක් අවශ්‍යයි — මුලින් "connect <name>" ටයිප් කරන්න.`,
-      aiLimitedMode: "AI සීමිත මාදිලියේ ඇත — ඔබ සම්බන්ධ වන තෙක් සාමාන්‍ය Redis දැනුම පිළිබඳ ප්‍රශ්න පමණක් ක්‍රියා කරයි.",
-      welcomeDisconnected: "සාදරයෙන් පිළිගනිමු. ඔබ තවමත් කිසිදු Redis instance එකකට සම්බන්ධ වී නොමැත.",
       readyIndicator: "සූදානම්.",
     },
     cheatsheet: {
@@ -321,7 +313,8 @@ const strings = {
             "stream events වෙතින් අවසන් ඇතුළත් කිරීම් 10 ලබා ගන්න",
             "hash user:1 හි සියලු ක්ෂේත්‍ර ලබා ගන්න",
             "set favourites හි සාමාජිකයන් ලබා ගන්න",
-            "leaderboard වෙතින් ලකුණු අනුව ඉහළ 10 ලබා ගන්න"
+            "leaderboard වෙතින් ලකුණු අනුව ඉහළ 10 ලබා ගන්න",
+            "අයිතම ඒවා පෙනෙන set ගණන අනුව ශ්‍රේණිගත කරන්න (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -338,7 +331,8 @@ const strings = {
             "user:42 හි age 31 වෙත යාවත්කාලීන කරන්න",
             "සියලු JSON යතුරු ලැයිස්තුගත කරන්න",
             "JSON ලේඛනයකින් ක්ෂේත්‍රයක් මකන්න",
-            "JSONPath භාවිතයෙන් කූඩු කළ ක්ෂේත්‍රයක් ලබා ගන්න"
+            "JSONPath භාවිතයෙන් කූඩු කළ ක්ෂේත්‍රයක් ලබා ගන්න",
+            "අඩු precision සහිත floats JSON අරේ එකක් ගබඩා කරන්න (FPHA BF16)"
           ]
         },
         search: {
@@ -363,7 +357,8 @@ const strings = {
             "ඊයේ සිට දැන් දක්වා temp:room1 පරාසය ලබා ගන්න",
             "sensor=temp ලේබලය අනුව බහු-පරාසය ලබා ගන්න",
             "temp:room1 සඳහා sine-wave දත්ත ලක්ෂ්‍ය 100ක් ජනනය කරන්න",
-            "temp:room1 සඳහා රඳවා තබා ගැනීම සහ ලේබල පෙන්වන්න"
+            "temp:room1 සඳහා රඳවා තබා ගැනීම සහ ලේබල පෙන්වන්න",
+            "එක් TS.RANGE එකකින් bucket එකකට min, max, first සහ last ගන්න (candlestick)"
           ]
         },
         bloom: {
@@ -389,6 +384,18 @@ const strings = {
             "VSIM සමඟ මූලද්‍රව්‍ය නාමයෙන් සොයන්න"
           ]
         },
+        array: {
+          name: "අරේ (Redis 8.8+)",
+          description: "Redis 8.8+ හඳුනාගත් විට ලබා ගත හැක (දේශීය ARRAY වර්ගය).",
+          prompts: [
+            "අගයන් කිහිපයක් සහිත අරේ එකක් සාදන්න",
+            "මගේ අරේ එකේ index 5 හි අගය සකසන්න",
+            "නිශ්චිත index එකක අගය ගන්න",
+            "ARSCAN සමඟ අරේ එකේ සියලු element ලැයිස්තුගත කරන්න",
+            "index එකක element එක මකන්න",
+            "මගේ අරේ එකේ element කීයක් තියෙනවාද?"
+          ]
+        },
         redis8: {
           name: "Redis 8+ විශේෂාංග",
           description: "Redis 8+ හඳුනාගත් විට පෙන්වයි.",
@@ -398,7 +405,9 @@ const strings = {
             "දෙමුහුන් සම්පූර්ණ-පාඨ + වෙක්ටර් සෙවුමක් ධාවනය කරන්න (FT.HYBRID)",
             "MSETEX භාවිතා කර බෙදාගත් කල් ඉකුත්වීමක් සමඟ බහු යතුරු සකසන්න",
             "consumer group සමඟ stream ඇතුළත් කිරීමක් මකන්න (XDELEX)",
-            "ඉහළ slot 10 සඳහා cluster slot-stats පෙන්වන්න"
+            "ඉහළ slot 10 සඳහා cluster slot-stats පෙන්වන්න",
+            "window counter එකක් සමඟ key එකකට rate-limit යොදන්න (INCREX)",
+            "pending stream message එකක් dead-letter වෙත negative-ack කරන්න (XNACK)"
           ]
         },
         scripting: {
@@ -508,6 +517,7 @@ const strings = {
     welcomeConsole: "Redis කොන්සෝලයට සාදරයෙන් පිළිගනිමු",
     welcomeConsoleInfo: "SHIFT + කර්සරය ඉහළ හෝ පහළ ඉතිහාසය සක්\u200dරීය කර ඇත",
     redisListIndexInfo: "එකතු කිරීමට හිස්, -1 ආරම්භයට එක් කිරීමට හෝ පෙන්වා ඇති ස්ථානයට සුරකින්න.",
+    redisArrayIndexInfo: "ඊළඟ දර්ශකයට එක් කිරීමට හිස්ව තබන්න, නැතහොත් නිශ්චිත දර්ශකයක් ඇතුළත් කරන්න (හිඩැස් අවසර ඇත — අරේ විරල විය හැක).",
     console: "කොන්සෝලය",
     connectiondAdd: "සම්බන්ධතාවය එක් කරන්න",
     connectiondEdit: "සම්බන්ධතාවය සංස්කරණය කරන්න",
@@ -634,6 +644,7 @@ const strings = {
     socketDisconnected: "විසන්ධි විය",
     socketError: "සම්බන්ධතා දෝෂය",
     deletedHashKey: "හැෂ් යතුර මකා දමන ලදී",
+    deletedArrayIndex: "අරේ අංගය මකා දැමුණි",
     deletedSetMember: "කට්ටල සාමාජිකයා මකා දමන ලදී",
     deletedListElement: "ලැයිස්තු මූලද්‍රව්‍යය මකා දමන ලදී",
     deletedZSetMember: "පිළිවෙලට සැකසූ කට්ටල සාමාජිකයා මකා දමන ලදී",
@@ -933,6 +944,12 @@ const strings = {
           value: "අගය"
         }
       },
+      array: {
+        table: {
+          index: "දර්ශකය",
+          value: "අගය"
+        }
+      },
       hash: {
         table: {
           hashkey: "Hash යතුර",
@@ -1015,13 +1032,21 @@ const strings = {
         info: "තොරතුරු",
         elements: "මූලද්\u200dරව්\u200dය",
         similarity: "සමානතා සෙවීම",
+        similaritySearch: "සමානතා සෙවීම",
         searchByElement: "මූලද්\u200dරව්\u200dය අනුව සොයන්න",
         searchByVector: "දෛශිකය අනුව සොයන්න",
+        byElement: "මූලද්‍රව්‍ය අනුව සොයන්න",
+        byVector: "දෛශිකය අනුව සොයන්න",
         vectorValues: "දෛශික අගයන්",
+        elementName: "මූලද්‍රව්‍ය නම",
+        searchTerm: "සෙවුම් පදය",
         element: "මූලද්\u200dරව්\u200dය",
         score: "ලකුණු",
         count: "ගණන",
         addElement: "මූලද්\u200dරව්\u200dය එක් කරන්න",
+        addedSuccessfully: "අයිතමය සාර්ථකව එක් කරන ලදි",
+        deletedSuccessfully: "අයිතමය සාර්ථකව මකා දමන ලදි",
+        removedSuccessfully: "අයිතමය සාර්ථකව මකා දමන ලදි",
         attributes: "ගුණාංග",
         noAttributes: "ගුණාංග නැත",
         dimensions: "මාන",
@@ -1082,6 +1107,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "අරේ",
   },
   promo: {
     title: "AI ජාල සහායකයා",

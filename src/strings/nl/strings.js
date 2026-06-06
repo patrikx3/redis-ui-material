@@ -41,6 +41,7 @@ const strings = {
     info: "Info",
     deleteListItem: "Weet u zeker dat u dit lijstitem wilt verwijderen?",
     deleteHashKey: "Weet u zeker dat u deze hash-sleutel wilt verwijderen?",
+    deleteArrayIndex: "Weet u zeker dat u dit array-element wilt verwijderen?",
     deleteStreamTimestamp: "Weet u zeker dat u dit stream-tijdstempel wilt verwijderen?",
     deleteSetMember: "Weet u zeker dat u dit set-lid wilt verwijderen?",
     deleteZSetMember: "Weet u zeker dat u dit gesorteerde set-lid wilt verwijderen?",
@@ -250,15 +251,6 @@ const strings = {
       connectedTo: opts => `Verbonden met ${opts.name} (Redis ${opts.version} ${opts.mode}, ${opts.modules} modules geladen)`,
       connectedToNoInfo: opts => `Verbonden met ${opts.name}`,
       disconnectedFrom: opts => `Verbinding met ${opts.name} verbroken`,
-      notConnected: "Niet verbonden.",
-      limitedAiOnly: "Alleen beperkte AI — algemene Redis-vragen werken.",
-      connectHint: "Typ voor live diagnostiek: connect <name>",
-      cheatsheetHint: "Typ ai: help om te zien wat u kunt vragen.",
-      needsConnection: "Hiervoor is een actieve verbinding nodig. Typ eerst \"connect <name>\".",
-      aiNeedsConnectionReason: "Live-state AI (tool use) is alleen beschikbaar wanneer u met Redis bent verbonden.",
-      verbNeedsConnection: opts => `"${opts.verb}" vereist een actieve verbinding — typ eerst "connect <name>".`,
-      aiLimitedMode: "AI staat in beperkte modus — alleen algemene vragen over Redis-kennis werken totdat u verbinding maakt.",
-      welcomeDisconnected: "Welkom. U bent nog niet verbonden met een Redis-instantie.",
       readyIndicator: "Gereed.",
     },
     cheatsheet: {
@@ -319,7 +311,8 @@ const strings = {
             "haal de laatste 10 items op uit stream events",
             "haal alle velden op van hash user:1",
             "haal leden op van set favourites",
-            "haal de top 10 op score op uit leaderboard"
+            "haal de top 10 op score op uit leaderboard",
+            "rangschik items op basis van in hoeveel sets ze voorkomen (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -336,7 +329,8 @@ const strings = {
             "werk age van user:42 bij naar 31",
             "toon alle JSON-sleutels",
             "verwijder een veld uit een JSON-document",
-            "haal een genest veld op met JSONPath"
+            "haal een genest veld op met JSONPath",
+            "sla een JSON-array met floats op met verminderde precisie (FPHA BF16)"
           ]
         },
         search: {
@@ -361,7 +355,8 @@ const strings = {
             "haal het bereik van temp:room1 op van gisteren tot nu",
             "haal multi-range op per label sensor=temp",
             "genereer 100 sinusgolf-datapunten voor temp:room1",
-            "toon retentie en labels voor temp:room1"
+            "toon retentie en labels voor temp:room1",
+            "haal min, max, first en last per bucket op in één TS.RANGE (candlestick)"
           ]
         },
         bloom: {
@@ -387,6 +382,18 @@ const strings = {
             "zoek op elementnaam met VSIM"
           ]
         },
+        array: {
+          name: "Array (Redis 8.8+)",
+          description: "Beschikbaar wanneer Redis 8.8+ wordt gedetecteerd (native ARRAY-type).",
+          prompts: [
+            "maak een array met enkele waarden",
+            "stel de waarde in op index 5 van mijn array",
+            "haal de waarde op van een specifieke index",
+            "toon alle elementen van een array met ARSCAN",
+            "verwijder het element op een index",
+            "hoeveel elementen heeft mijn array?"
+          ]
+        },
         redis8: {
           name: "Redis 8+ functies",
           description: "Weergegeven wanneer Redis 8+ wordt gedetecteerd.",
@@ -396,7 +403,9 @@ const strings = {
             "voer een hybride full-text + vector zoekopdracht uit (FT.HYBRID)",
             "stel meerdere sleutels in met een gedeelde verlooptijd via MSETEX",
             "verwijder een stream-item met consumergroep (XDELEX)",
-            "toon cluster slot-stats voor de top 10 slots"
+            "toon cluster slot-stats voor de top 10 slots",
+            "pas rate-limit toe op een key met een window counter (INCREX)",
+            "negative-ack een pending stream-bericht naar dead-letter (XNACK)"
           ]
         },
         scripting: {
@@ -506,6 +515,7 @@ const strings = {
     welcomeConsole: "Welkom bij de Redis Console",
     welcomeConsoleInfo: "SHIFT + Cursor OMHOOG of OMLAAG voor geschiedenis is ingeschakeld",
     redisListIndexInfo: "Leeg om toe te voegen, -1 om vooraan te plaatsen of sla het op op de getoonde positie.",
+    redisArrayIndexInfo: "Laat leeg om op de volgende index toe te voegen, of voer een expliciete index in (gaten zijn toegestaan — arrays kunnen schaars gevuld zijn).",
     console: "Console",
     connectiondAdd: "Verbinding toevoegen",
     connectiondEdit: "Verbinding bewerken",
@@ -632,6 +642,7 @@ const strings = {
     socketDisconnected: "Verbinding verbroken",
     socketError: "Verbindingsfout",
     deletedHashKey: "Hash-sleutel verwijderd",
+    deletedArrayIndex: "Array-element verwijderd",
     deletedSetMember: "Set-lid verwijderd",
     deletedListElement: "Lijstelement verwijderd",
     deletedZSetMember: "Gesorteerd set-lid verwijderd",
@@ -931,6 +942,12 @@ const strings = {
           value: "Waarde"
         }
       },
+      array: {
+        table: {
+          index: "Index",
+          value: "Waarde"
+        }
+      },
       hash: {
         table: {
           hashkey: "Hash-sleutel",
@@ -1013,13 +1030,21 @@ const strings = {
         info: "Info",
         elements: "Elementen",
         similarity: "Gelijkeniszoekopdracht",
+        similaritySearch: "Gelijkeniszoekopdracht",
         searchByElement: "Zoeken op element",
         searchByVector: "Zoeken op vector",
+        byElement: "Zoeken op element",
+        byVector: "Zoeken op vector",
         vectorValues: "Vectorwaarden",
+        elementName: "Elementnaam",
+        searchTerm: "Zoekterm",
         element: "Element",
         score: "Score",
         count: "Aantal",
         addElement: "Element toevoegen",
+        addedSuccessfully: "Item succesvol toegevoegd",
+        deletedSuccessfully: "Item succesvol verwijderd",
+        removedSuccessfully: "Item succesvol verwijderd",
         attributes: "Attributen",
         noAttributes: "Geen attributen",
         dimensions: "Dimensies",
@@ -1080,6 +1105,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "Array",
   },
   promo: {
     title: "AI-netwerkassistent",

@@ -41,6 +41,7 @@ const strings = {
     info: "Informacija",
     deleteListItem: "Ar tikrai ištrinsite šį sąrašo elementą?",
     deleteHashKey: "Ar tikrai ištrinsite šį maišos rakto elementą?",
+    deleteArrayIndex: "Ar tikrai norite ištrinti šį masyvo elementą?",
     deleteStreamTimestamp: "Ar tikrai ištrinsite šią srauto laiko žymą?",
     deleteSetMember: "Ar tikrai ištrinsite šį rinkinio narį?",
     deleteZSetMember: "Ar tikrai ištrinsite šį surūšiuoto rinkinio narį?",
@@ -308,7 +309,8 @@ const strings = {
             "gauk paskutinius 10 įrašų iš srauto events",
             "gauk visus hash user:1 laukus",
             "gauk rinkinio favourites narius",
-            "gauk 10 geriausių pagal balą iš leaderboard"
+            "gauk 10 geriausių pagal balą iš leaderboard",
+            "surikiuok elementus pagal tai, keliuose set jie yra (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -325,7 +327,8 @@ const strings = {
             "atnaujink user:42 amžių į 31",
             "išvardyk visus JSON raktus",
             "ištrink lauką iš JSON dokumento",
-            "gauk įdėtą lauką naudodamas JSONPath"
+            "gauk įdėtą lauką naudodamas JSONPath",
+            "išsaugok JSON masyvą iš float reikšmių su sumažintu tikslumu (FPHA BF16)"
           ]
         },
         search: {
@@ -350,7 +353,8 @@ const strings = {
             "gauk temp:room1 intervalą nuo vakar iki dabar",
             "gauk multi-range pagal žymą sensor=temp",
             "sugeneruok 100 sinusoidės duomenų taškų temp:room1",
-            "parodyk temp:room1 retention ir labels"
+            "parodyk temp:room1 retention ir labels",
+            "gauk min, max, first ir last kiekvienam bucket vienu TS.RANGE (candlestick)"
           ]
         },
         bloom: {
@@ -376,6 +380,18 @@ const strings = {
             "ieškok pagal elemento pavadinimą naudodamas VSIM"
           ]
         },
+        array: {
+          name: "Masyvas (Redis 8.8+)",
+          description: "Pasiekiama, kai aptinkamas Redis 8.8+ (vietinis ARRAY tipas).",
+          prompts: [
+            "sukurk masyvą su keliomis reikšmėmis",
+            "nustatyk reikšmę mano masyvo 5 indekse",
+            "gauk reikšmę konkrečiame indekse",
+            "išvardyk visus masyvo elementus su ARSCAN",
+            "ištrink elementą indekse",
+            "kiek elementų turi mano masyvas?"
+          ]
+        },
         redis8: {
           name: "Redis 8+ funkcijos",
           description: "Rodoma, kai aptinkamas Redis 8+.",
@@ -385,7 +401,9 @@ const strings = {
             "vykdyk hibridinę viso teksto + vektorių paiešką (FT.HYBRID)",
             "nustatyk kelis raktus su bendru galiojimu naudodamas MSETEX",
             "ištrink srauto įrašą su consumer group (XDELEX)",
-            "parodyk cluster slot-stats 10 geriausių slotų"
+            "parodyk cluster slot-stats 10 geriausių slotų",
+            "apribok rakto dažnį lango skaitikliu (INCREX)",
+            "atlik negative-ack laukiančiai stream žinutei į dead-letter (XNACK)"
           ]
         },
         scripting: {
@@ -495,6 +513,7 @@ const strings = {
     welcomeConsole: "Sveiki atvykę į Redis konsolę",
     welcomeConsoleInfo: "SHIFT + Žymeklio AUKŠTYN arba ŽEMYN istorija įjungta",
     redisListIndexInfo: "Tuščia, kad pridėtumėte, -1, kad pridėtumėte arba išsaugotumėte rodomoje pozicijoje.",
+    redisArrayIndexInfo: "Palikite tuščią, kad pridėtumėte prie kito indekso, arba įveskite konkretų indeksą (tarpai leidžiami — masyvai gali būti reti).",
     console: "konsolė",
     connectiondAdd: "Pridėti ryšį",
     connectiondEdit: "Redaguoti ryšį",
@@ -621,6 +640,7 @@ const strings = {
     socketDisconnected: "Atjungta",
     socketError: "Ryšio klaida",
     deletedHashKey: "Maišos raktas ištrintas",
+    deletedArrayIndex: "Masyvo elementas ištrintas",
     deletedSetMember: "Aibės narys ištrintas",
     deletedListElement: "Sąrašo elementas ištrintas",
     deletedZSetMember: "Rūšiuotos aibės narys ištrintas",
@@ -920,6 +940,12 @@ const strings = {
           value: "Vertė"
         }
       },
+      array: {
+        table: {
+          index: "Rodyklė",
+          value: "Vertė"
+        }
+      },
       hash: {
         table: {
           hashkey: "Hashkey",
@@ -1002,13 +1028,21 @@ const strings = {
         info: "Informacija",
         elements: "Elementai",
         similarity: "Panašumo paieška",
+        similaritySearch: "Panašumo paieška",
         searchByElement: "Ieškoti pagal elementą",
         searchByVector: "Ieškoti pagal vektorių",
+        byElement: "Ieškoti pagal elementą",
+        byVector: "Ieškoti pagal vektorių",
         vectorValues: "Vektoriaus reikšmės",
+        elementName: "Elemento pavadinimas",
+        searchTerm: "Paieškos terminas",
         element: "Elementas",
         score: "Balas",
         count: "Kiekis",
         addElement: "Pridėti elementą",
+        addedSuccessfully: "Elementas sėkmingai pridėtas",
+        deletedSuccessfully: "Elementas sėkmingai ištrintas",
+        removedSuccessfully: "Elementas sėkmingai ištrintas",
         attributes: "Atributai",
         noAttributes: "Nėra atributų",
         dimensions: "Matmenys",
@@ -1069,6 +1103,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "Masyvas",
   },
   promo: {
     title: "AI tinklo asistentas",

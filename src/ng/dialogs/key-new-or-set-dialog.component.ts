@@ -81,6 +81,13 @@ export interface KeyNewOrSetDialogData {
                         </mat-form-field>
                         <div class="info-text">{{ strings().label?.redisListIndexInfo }}</div>
                     }
+                    @case ('array') {
+                        <mat-form-field class="full-width">
+                            <mat-label>{{ strings().form?.key?.field?.index }}</mat-label>
+                            <input matInput type="number" step="1" name="index" [(ngModel)]="model.index" />
+                        </mat-form-field>
+                        <div class="info-text">{{ strings().label?.redisArrayIndexInfo }}</div>
+                    }
                     @case ('hash') {
                         <mat-form-field class="full-width">
                             <mat-label>{{ strings().form?.key?.field?.hashKey }}</mat-label>
@@ -378,6 +385,9 @@ export class KeyNewOrSetDialogComponent implements OnInit {
         if (this.state.hasBloom()) {
             base.push('bloom', 'cuckoo', 'topk', 'cms', 'tdigest');
         }
+        if (this.state.redisVersion().isAtLeast(8, 8)) {
+            base.push('array');
+        }
         base.push('vectorset');
         return base;
     }
@@ -556,6 +566,7 @@ export class KeyNewOrSetDialogComponent implements OnInit {
                     type: this.options.type,
                     originalValue: this.data.model?.value,
                     originalHashKey: this.data.model?.hashKey,
+                    originalIndex: this.data.model?.index,
                     model: structuredClone(this.model),
                 },
             });

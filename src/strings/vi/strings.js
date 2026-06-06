@@ -41,6 +41,7 @@ const strings = {
     info: "Thông tin",
     deleteListItem: "Bạn có chắc chắn xóa mục danh sách này không?",
     deleteHashKey: "Bạn có chắc chắn xóa mục khóa băm này không?",
+    deleteArrayIndex: "Bạn có chắc muốn xóa phần tử mảng này không?",
     deleteStreamTimestamp: "Bạn có chắc chắn xóa dấu thời gian của luồng này không?",
     deleteSetMember: "Bạn có chắc chắn xóa thành viên đã đặt này không?",
     deleteZSetMember: "Bạn có chắc chắn xóa thành viên tập hợp đã sắp xếp này không?",
@@ -250,15 +251,6 @@ const strings = {
       connectedTo: opts => `Đã kết nối tới ${opts.name} (Redis ${opts.version} ${opts.mode}, đã tải ${opts.modules} mô-đun)`,
       connectedToNoInfo: opts => `Đã kết nối tới ${opts.name}`,
       disconnectedFrom: opts => `Đã ngắt kết nối khỏi ${opts.name}`,
-      notConnected: "Chưa kết nối.",
-      limitedAiOnly: "Chỉ AI ở chế độ giới hạn — vẫn dùng được hỏi đáp Redis chung.",
-      connectHint: "Để chẩn đoán trực tiếp, hãy gõ: connect <name>",
-      cheatsheetHint: "Gõ ai: help để xem bạn có thể hỏi gì.",
-      needsConnection: "Tính năng này cần một kết nối đang hoạt động. Hãy gõ \"connect <name>\" trước.",
-      aiNeedsConnectionReason: "AI theo trạng thái trực tiếp (tool use) chỉ khả dụng khi đã kết nối với Redis.",
-      verbNeedsConnection: opts => `"${opts.verb}" cần một kết nối đang hoạt động — hãy gõ "connect <name>" trước.`,
-      aiLimitedMode: "AI đang ở chế độ giới hạn — chỉ các câu hỏi kiến thức Redis chung hoạt động cho tới khi bạn kết nối.",
-      welcomeDisconnected: "Chào mừng. Bạn chưa kết nối tới bất kỳ phiên Redis nào.",
       readyIndicator: "Sẵn sàng.",
     },
     cheatsheet: {
@@ -319,7 +311,8 @@ const strings = {
             "lấy 10 bản ghi cuối cùng từ stream events",
             "lấy tất cả các trường của hash user:1",
             "lấy các thành viên của set favourites",
-            "lấy top 10 theo điểm từ leaderboard"
+            "lấy top 10 theo điểm từ leaderboard",
+            "xếp hạng các mục theo số set mà chúng xuất hiện (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -336,7 +329,8 @@ const strings = {
             "cập nhật age của user:42 thành 31",
             "liệt kê tất cả các khóa JSON",
             "xóa một trường khỏi tài liệu JSON",
-            "lấy một trường lồng nhau dùng JSONPath"
+            "lấy một trường lồng nhau dùng JSONPath",
+            "lưu một mảng JSON gồm các float với độ chính xác giảm (FPHA BF16)"
           ]
         },
         search: {
@@ -361,7 +355,8 @@ const strings = {
             "lấy dải temp:room1 từ hôm qua đến bây giờ",
             "lấy multi-range theo nhãn sensor=temp",
             "tạo 100 điểm dữ liệu dạng sóng sin cho temp:room1",
-            "hiển thị retention và nhãn cho temp:room1"
+            "hiển thị retention và nhãn cho temp:room1",
+            "lấy min, max, first và last cho mỗi bucket bằng một TS.RANGE (candlestick)"
           ]
         },
         bloom: {
@@ -387,6 +382,18 @@ const strings = {
             "tìm kiếm theo tên phần tử với VSIM"
           ]
         },
+        array: {
+          name: "Mảng (Redis 8.8+)",
+          description: "Có sẵn khi phát hiện Redis 8.8+ (kiểu ARRAY gốc).",
+          prompts: [
+            "tạo một mảng với vài giá trị",
+            "đặt giá trị tại chỉ mục 5 của mảng của tôi",
+            "lấy giá trị tại một chỉ mục cụ thể",
+            "liệt kê tất cả phần tử của mảng bằng ARSCAN",
+            "xóa phần tử tại một chỉ mục",
+            "mảng của tôi có bao nhiêu phần tử?"
+          ]
+        },
         redis8: {
           name: "Tính năng Redis 8+",
           description: "Hiển thị khi phát hiện Redis 8+.",
@@ -396,7 +403,9 @@ const strings = {
             "chạy tìm kiếm lai toàn văn + vector (FT.HYBRID)",
             "đặt nhiều khóa với thời hạn dùng chung bằng MSETEX",
             "xóa một bản ghi stream với consumer group (XDELEX)",
-            "hiển thị slot-stats cluster cho 10 slot hàng đầu"
+            "hiển thị slot-stats cluster cho 10 slot hàng đầu",
+            "giới hạn tốc độ một key bằng bộ đếm cửa sổ (INCREX)",
+            "negative-ack một thông điệp stream đang pending vào dead-letter (XNACK)"
           ]
         },
         scripting: {
@@ -506,6 +515,7 @@ const strings = {
     welcomeConsole: "Chào mừng bạn đến với Bảng điều khiển Redis",
     welcomeConsoleInfo: "SHIFT + Lịch sử con trỏ LÊN hoặc XUỐNG được bật",
     redisListIndexInfo: "Trống để nối thêm, -1 để thêm vào trước hoặc lưu nó vào vị trí hiển thị.",
+    redisArrayIndexInfo: "Để trống để thêm vào chỉ mục tiếp theo, hoặc nhập một chỉ mục cụ thể (cho phép khoảng trống — mảng có thể thưa).",
     console: "Bảng điều khiển",
     connectiondAdd: "Thêm kết nối",
     connectiondEdit: "Chỉnh sửa kết nối",
@@ -632,6 +642,7 @@ const strings = {
     socketDisconnected: "Đã ngắt kết nối",
     socketError: "Lỗi kết nối",
     deletedHashKey: "Khóa hash đã xóa",
+    deletedArrayIndex: "Đã xóa phần tử mảng",
     deletedSetMember: "Thành viên set đã xóa",
     deletedListElement: "Phần tử danh sách đã xóa",
     deletedZSetMember: "Thành viên sorted set đã xóa",
@@ -931,6 +942,12 @@ const strings = {
           value: "Giá trị"
         }
       },
+      array: {
+        table: {
+          index: "chỉ mục",
+          value: "Giá trị"
+        }
+      },
       hash: {
         table: {
           hashkey: "Mã băm",
@@ -1013,13 +1030,21 @@ const strings = {
         info: "Thông tin",
         elements: "Phần tử",
         similarity: "Tìm kiếm tương đồng",
+        similaritySearch: "Tìm kiếm tương đồng",
         searchByElement: "Tìm theo phần tử",
         searchByVector: "Tìm theo vector",
+        byElement: "Tìm theo phần tử",
+        byVector: "Tìm theo vector",
         vectorValues: "Giá trị vector",
+        elementName: "Tên phần tử",
+        searchTerm: "Cụm từ tìm kiếm",
         element: "Phần tử",
         score: "Điểm",
         count: "Số lượng",
         addElement: "Thêm phần tử",
+        addedSuccessfully: "Mục đã được thêm thành công",
+        deletedSuccessfully: "Mục đã được xóa thành công",
+        removedSuccessfully: "Mục đã được xóa thành công",
         attributes: "Thuộc tính",
         noAttributes: "Không có thuộc tính",
         dimensions: "Chiều",
@@ -1080,6 +1105,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "Mảng",
   },
   promo: {
     title: "Trợ lý Mạng AI",

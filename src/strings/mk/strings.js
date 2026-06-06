@@ -41,6 +41,7 @@ const strings = {
     info: "Инфо",
     deleteListItem: "Дали сте сигурни дека ќе ја избришете оваа ставка од списокот?",
     deleteHashKey: "Дали сте сигурни дека ќе ја избришете оваа хаш-клучна ставка?",
+    deleteArrayIndex: "Дали сте сигурни дека сакате да го избришете овој елемент од низата?",
     deleteStreamTimestamp: "Дали сигурно ќе го избришете овој временски печат за пренос?",
     deleteSetMember: "Дали сте сигурни дека ќе го избришете овој член на сет?",
     deleteZSetMember: "Дали сте сигурни дека ќе го избришете овој подреден сет член?",
@@ -308,7 +309,8 @@ const strings = {
             "земи ги последните 10 записи од стримот events",
             "земи ги сите полиња од hash user:1",
             "земи ги членовите на сетот favourites",
-            "земи ги топ 10 по поени од leaderboard"
+            "земи ги топ 10 по поени од leaderboard",
+            "рангирај елементи според бројот на set во кои се појавуваат (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -325,7 +327,8 @@ const strings = {
             "ажурирај ја возраста на user:42 на 31",
             "прикажи ги сите JSON клучеви",
             "избриши поле од JSON документ",
-            "земи вгнездено поле со JSONPath"
+            "земи вгнездено поле со JSONPath",
+            "зачувај JSON низа од floats со намалена прецизност (FPHA BF16)"
           ]
         },
         search: {
@@ -350,7 +353,8 @@ const strings = {
             "земи го опсегот на temp:room1 од вчера до сега",
             "земи multi-range по ознака sensor=temp",
             "генерирај 100 точки со синусен бран за temp:room1",
-            "покажи retention и labels за temp:room1"
+            "покажи retention и labels за temp:room1",
+            "земи min, max, first и last по bucket со едно TS.RANGE (candlestick)"
           ]
         },
         bloom: {
@@ -376,6 +380,18 @@ const strings = {
             "пребарувај по име на елемент со VSIM"
           ]
         },
+        array: {
+          name: "Низа (Redis 8.8+)",
+          description: "Достапно кога е откриен Redis 8.8+ (вграден тип ARRAY).",
+          prompts: [
+            "создај низа со неколку вредности",
+            "постави ја вредноста на индекс 5 од мојата низа",
+            "земи ја вредноста на конкретен индекс",
+            "излистај ги сите елементи на низа со ARSCAN",
+            "избриши го елементот на индекс",
+            "колку елементи има мојата низа?"
+          ]
+        },
         redis8: {
           name: "Функции во Redis 8+",
           description: "Се прикажува кога е откриен Redis 8+.",
@@ -385,7 +401,9 @@ const strings = {
             "изврши хибридно пребарување со full-text + вектор (FT.HYBRID)",
             "постави повеќе клучеви со заедничко истекување користејќи MSETEX",
             "избриши запис од стрим со consumer group (XDELEX)",
-            "покажи cluster slot-stats за топ 10 слотови"
+            "покажи cluster slot-stats за топ 10 слотови",
+            "ограничи стапка за key со прозорски бројач (INCREX)",
+            "направи negative-ack на pending stream порака кон dead-letter (XNACK)"
           ]
         },
         scripting: {
@@ -495,6 +513,7 @@ const strings = {
     welcomeConsole: "Добредојдовте во конзолата Redis",
     welcomeConsoleInfo: "SHIFT + Историјата на курсорот ГОРЕ или ДОЛУ е овозможена",
     redisListIndexInfo: "Празен за додавање, -1 за прикачување или зачувување на прикажаната позиција.",
+    redisArrayIndexInfo: "Оставете празно за додавање на следниот индекс или внесете конкретен индекс (празнините се дозволени — низите може да бидат ретки).",
     console: "Конзола",
     connectiondAdd: "Додадете врска",
     connectiondEdit: "Уреди врска",
@@ -621,6 +640,7 @@ const strings = {
     socketDisconnected: "Исклучено",
     socketError: "Грешка во конекцијата",
     deletedHashKey: "Хеш клучот е избришан",
+    deletedArrayIndex: "Елементот од низата е избришан",
     deletedSetMember: "Членот на множеството е избришан",
     deletedListElement: "Елементот од листата е избришан",
     deletedZSetMember: "Членот на сортираното множество е избришан",
@@ -920,6 +940,12 @@ const strings = {
           value: "Вредност"
         }
       },
+      array: {
+        table: {
+          index: "Индекс",
+          value: "Вредност"
+        }
+      },
       hash: {
         table: {
           hashkey: "Хашки",
@@ -1002,13 +1028,21 @@ const strings = {
         info: "Информации",
         elements: "Елементи",
         similarity: "Пребарување по сличност",
+        similaritySearch: "Пребарување по сличност",
         searchByElement: "Барај по елемент",
         searchByVector: "Барај по вектор",
+        byElement: "Барај по елемент",
+        byVector: "Барај по вектор",
         vectorValues: "Вектор вредности",
+        elementName: "Име на елемент",
+        searchTerm: "Термин за пребарување",
         element: "Елемент",
         score: "Резултат",
         count: "Број",
         addElement: "Додади елемент",
+        addedSuccessfully: "Елементот е успешно додаден",
+        deletedSuccessfully: "Елементот е успешно избришан",
+        removedSuccessfully: "Елементот е успешно избришан",
         attributes: "Атрибути",
         noAttributes: "Нема атрибути",
         dimensions: "Димензии",
@@ -1069,6 +1103,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "Низа",
   },
   promo: {
     title: "AI мрежен асистент",

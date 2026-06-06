@@ -41,6 +41,7 @@ const strings = {
     info: "Інформація",
     deleteListItem: "Ви впевнені, що хочете видалити цей елемент списку?",
     deleteHashKey: "Ви впевнені, що хочете видалити цей хеш-ключ?",
+    deleteArrayIndex: "Ви впевнені, що хочете видалити цей елемент масиву?",
     deleteStreamTimestamp: "Ви впевнені, що хочете видалити цю мітку часу потоку?",
     deleteSetMember: "Ви впевнені, що хочете видалити цього члена множини?",
     deleteZSetMember: "Ви впевнені, що хочете видалити цього члена впорядкованої множини?",
@@ -248,15 +249,6 @@ const strings = {
       connectedTo: opts => `Підключено до ${opts.name} (Redis ${opts.version} ${opts.mode}, ${opts.modules} модулів завантажено)`,
       connectedToNoInfo: opts => `Підключено до ${opts.name}`,
       disconnectedFrom: opts => `Відключено від ${opts.name}`,
-      notConnected: "Не підключено.",
-      limitedAiOnly: "Лише обмежений AI — загальні запитання й відповіді про Redis працюють.",
-      connectHint: "Для живої діагностики введіть: connect <name>",
-      cheatsheetHint: "Введіть ai: help, щоб побачити, що можна запитати.",
-      needsConnection: "Для цього потрібне активне підключення. Спочатку введіть \"connect <name>\".",
-      aiNeedsConnectionReason: "AI у режимі живого стану (використання інструментів) доступний лише під час підключення до Redis.",
-      verbNeedsConnection: opts => `"${opts.verb}" потребує активного підключення — спочатку введіть "connect <name>".`,
-      aiLimitedMode: "AI працює в обмеженому режимі — доки ви не підключитесь, доступні лише загальні запитання про Redis.",
-      welcomeDisconnected: "Вітаємо. Ви ще не підключені до жодного екземпляра Redis.",
       readyIndicator: "Готово.",
     },
     cheatsheet: {
@@ -317,7 +309,8 @@ const strings = {
             "отримай останні 10 записів зі stream events",
             "отримай усі поля hash user:1",
             "отримай членів set favourites",
-            "отримай топ-10 за балами з leaderboard"
+            "отримай топ-10 за балами з leaderboard",
+            "ранжуй елементи за кількістю множин, у яких вони трапляються (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -334,7 +327,8 @@ const strings = {
             "онови age у user:42 до 31",
             "перелічи всі ключі JSON",
             "видали поле з JSON-документа",
-            "отримай вкладене поле за JSONPath"
+            "отримай вкладене поле за JSONPath",
+            "збережи JSON-масив чисел float зі зниженою точністю (FPHA BF16)"
           ]
         },
         search: {
@@ -359,7 +353,8 @@ const strings = {
             "отримай діапазон temp:room1 від вчора до зараз",
             "отримай multi-range за міткою sensor=temp",
             "згенеруй 100 точок синусоїди для temp:room1",
-            "покажи retention і мітки для temp:room1"
+            "покажи retention і мітки для temp:room1",
+            "отримай min, max, first і last для кожного bucket одним TS.RANGE (candlestick)"
           ]
         },
         bloom: {
@@ -385,6 +380,18 @@ const strings = {
             "шукай за ім'ям елемента через VSIM"
           ]
         },
+        array: {
+          name: "Масив (Redis 8.8+)",
+          description: "Доступно, коли виявлено Redis 8.8+ (нативний тип ARRAY).",
+          prompts: [
+            "створи масив із кількома значеннями",
+            "встанови значення за індексом 5 у моєму масиві",
+            "отримай значення за конкретним індексом",
+            "перелічи всі елементи масиву з ARSCAN",
+            "видали елемент за індексом",
+            "скільки елементів має мій масив?"
+          ]
+        },
         redis8: {
           name: "Можливості Redis 8+",
           description: "Показується, коли виявлено Redis 8+.",
@@ -394,7 +401,9 @@ const strings = {
             "виконай гібридний повнотекстовий + векторний пошук (FT.HYBRID)",
             "встанови кілька ключів зі спільним терміном дії через MSETEX",
             "видали запис потоку з consumer group (XDELEX)",
-            "покажи cluster slot-stats для топ-10 слотів"
+            "покажи cluster slot-stats для топ-10 слотів",
+            "обмеж частоту ключа віконним лічильником (INCREX)",
+            "зроби negative-ack очікуваному stream-повідомленню в dead-letter (XNACK)"
           ]
         },
         scripting: {
@@ -504,6 +513,7 @@ const strings = {
     welcomeConsole: "Ласкаво просимо до консолі Redis",
     welcomeConsoleInfo: "SHIFT + Історія курсором ВГОРУ або ВНИЗ увімкнена",
     redisListIndexInfo: "Порожнє для додавання в кінець, -1 для додавання на початок або збережіть на показану позицію.",
+    redisArrayIndexInfo: "Залиште порожнім, щоб додати за наступним індексом, або вкажіть явний індекс (пропуски дозволені — масиви можуть бути розрідженими).",
     console: "Консоль",
     connectiondAdd: "Додати з'єднання",
     connectiondEdit: "Редагувати з'єднання",
@@ -630,6 +640,7 @@ const strings = {
     socketDisconnected: "Від'єднано",
     socketError: "Помилка з'єднання",
     deletedHashKey: "Хеш-ключ видалено",
+    deletedArrayIndex: "Елемент масиву видалено",
     deletedSetMember: "Член множини видалено",
     deletedListElement: "Елемент списку видалено",
     deletedZSetMember: "Член відсортованої множини видалено",
@@ -929,6 +940,12 @@ const strings = {
           value: "Значення"
         }
       },
+      array: {
+        table: {
+          index: "Індекс",
+          value: "Значення"
+        }
+      },
       hash: {
         table: {
           hashkey: "Хеш-ключ",
@@ -1011,13 +1028,21 @@ const strings = {
         info: "Інформація",
         elements: "Елементи",
         similarity: "Пошук за подібністю",
+        similaritySearch: "Пошук за подібністю",
         searchByElement: "Пошук за елементом",
         searchByVector: "Пошук за вектором",
+        byElement: "Пошук за елементом",
+        byVector: "Пошук за вектором",
         vectorValues: "Значення вектора",
+        elementName: "Назва елемента",
+        searchTerm: "Пошуковий термін",
         element: "Елемент",
         score: "Оцінка",
         count: "Кількість",
         addElement: "Додати елемент",
+        addedSuccessfully: "Елемент успішно додано",
+        deletedSuccessfully: "Елемент успішно видалено",
+        removedSuccessfully: "Елемент успішно видалено",
         attributes: "Атрибути",
         noAttributes: "Немає атрибутів",
         dimensions: "Розмірності",
@@ -1078,6 +1103,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "Масив",
   },
   promo: {
     title: "AI-помічник для мережі",

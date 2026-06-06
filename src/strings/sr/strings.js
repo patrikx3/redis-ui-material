@@ -41,6 +41,7 @@ const strings = {
     info: "\u0418\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u0458\u0430",
     deleteListItem: "\u0414\u0430 \u043B\u0438 \u0441\u0442\u0435 \u0441\u0438\u0433\u0443\u0440\u043D\u0438 \u0434\u0430 \u0436\u0435\u043B\u0438\u0442\u0435 \u0434\u0430 \u043E\u0431\u0440\u0438\u0448\u0435\u0442\u0435 \u043E\u0432\u0443 \u0441\u0442\u0430\u0432\u043A\u0443 \u043B\u0438\u0441\u0442\u0435?",
     deleteHashKey: "\u0414\u0430 \u043B\u0438 \u0441\u0442\u0435 \u0441\u0438\u0433\u0443\u0440\u043D\u0438 \u0434\u0430 \u0436\u0435\u043B\u0438\u0442\u0435 \u0434\u0430 \u043E\u0431\u0440\u0438\u0448\u0435\u0442\u0435 \u043E\u0432\u0430\u0458 \u0445\u0435\u0448 \u043A\u0459\u0443\u0447?",
+    deleteArrayIndex: "Да ли сте сигурни да желите да избришете овај елемент низа?",
     deleteStreamTimestamp: "\u0414\u0430 \u043B\u0438 \u0441\u0442\u0435 \u0441\u0438\u0433\u0443\u0440\u043D\u0438 \u0434\u0430 \u0436\u0435\u043B\u0438\u0442\u0435 \u0434\u0430 \u043E\u0431\u0440\u0438\u0448\u0435\u0442\u0435 \u043E\u0432\u0443 \u0432\u0440\u0435\u043C\u0435\u043D\u0441\u043A\u0443 \u043E\u0437\u043D\u0430\u043A\u0443 \u0441\u0442\u0440\u0438\u043C\u0430?",
     deleteSetMember: "\u0414\u0430 \u043B\u0438 \u0441\u0442\u0435 \u0441\u0438\u0433\u0443\u0440\u043D\u0438 \u0434\u0430 \u0436\u0435\u043B\u0438\u0442\u0435 \u0434\u0430 \u043E\u0431\u0440\u0438\u0448\u0435\u0442\u0435 \u043E\u0432\u043E\u0433 \u0447\u043B\u0430\u043D\u0430 \u0441\u043A\u0443\u043F\u0430?",
     deleteZSetMember: "\u0414\u0430 \u043B\u0438 \u0441\u0442\u0435 \u0441\u0438\u0433\u0443\u0440\u043D\u0438 \u0434\u0430 \u0436\u0435\u043B\u0438\u0442\u0435 \u0434\u0430 \u043E\u0431\u0440\u0438\u0448\u0435\u0442\u0435 \u043E\u0432\u043E\u0433 \u0447\u043B\u0430\u043D\u0430 \u0441\u043E\u0440\u0442\u0438\u0440\u0430\u043D\u043E\u0433 \u0441\u043A\u0443\u043F\u0430?",
@@ -250,15 +251,6 @@ const strings = {
       connectedTo: opts => `Повезано са ${opts.name} (Redis ${opts.version} ${opts.mode}, учитано ${opts.modules} модула)`,
       connectedToNoInfo: opts => `Повезано са ${opts.name}`,
       disconnectedFrom: opts => `Веза са ${opts.name} је прекинута`,
-      notConnected: "Није повезано.",
-      limitedAiOnly: "Доступан је само ограничени AI — раде општа питања и одговори о Redis-у.",
-      connectHint: "За дијагностику уживо укуцајте: connect <name>",
-      cheatsheetHint: "Укуцајте ai: help да видите шта можете да питате.",
-      needsConnection: "Ово захтева активну везу. Прво укуцајте \"connect <name>\".",
-      aiNeedsConnectionReason: "AI за живо стање (коришћење алата) доступан је само када сте повезани на Redis.",
-      verbNeedsConnection: opts => `"${opts.verb}" захтева активну везу — прво укуцајте "connect <name>".`,
-      aiLimitedMode: "AI је у ограниченом режиму — док се не повежете, раде само општа питања о Redis-у.",
-      welcomeDisconnected: "Добро дошли. Још нисте повезани ни на једну Redis инстанцу.",
       readyIndicator: "Спремно.",
     },
     cheatsheet: {
@@ -319,7 +311,8 @@ const strings = {
             "преузми последњих 10 уноса из stream-а events",
             "преузми сва поља hash-а user:1",
             "преузми чланове скупа favourites",
-            "преузми топ 10 по резултату из leaderboard"
+            "преузми топ 10 по резултату из leaderboard",
+            "рангирај елементе по броју set-ова у којима се појављују (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -336,7 +329,8 @@ const strings = {
             "ажурирај године за user:42 на 31",
             "излистај све JSON кључеве",
             "обриши поље из JSON документа",
-            "преузми угнежђено поље помоћу JSONPath"
+            "преузми угнежђено поље помоћу JSONPath",
+            "сачувај JSON низ float вредности са смањеном прецизношћу (FPHA BF16)"
           ]
         },
         search: {
@@ -361,7 +355,8 @@ const strings = {
             "преузми опсег temp:room1 од јуче до сада",
             "преузми multi-range по ознаци sensor=temp",
             "генериши 100 тачака података синусног таласа за temp:room1",
-            "прикажи ретенцију и ознаке за temp:room1"
+            "прикажи ретенцију и ознаке за temp:room1",
+            "узми min, max, first и last по bucket-у једним TS.RANGE (candlestick)"
           ]
         },
         bloom: {
@@ -387,6 +382,18 @@ const strings = {
             "тражи по имену елемента са VSIM"
           ]
         },
+        array: {
+          name: "Низ (Redis 8.8+)",
+          description: "Доступно када је детектован Redis 8.8+ (нативни тип ARRAY).",
+          prompts: [
+            "направи низ са неколико вредности",
+            "постави вредност на индекс 5 мог низа",
+            "узми вредност на одређеном индексу",
+            "излистај све елементе низа помоћу ARSCAN",
+            "обриши елемент на индексу",
+            "колико елемената има мој низ?"
+          ]
+        },
         redis8: {
           name: "Redis 8+ функције",
           description: "Приказано када је детектован Redis 8+.",
@@ -396,7 +403,9 @@ const strings = {
             "покрени хибридну full-text + вектор претрагу (FT.HYBRID)",
             "постави више кључева са заједничким истицањем помоћу MSETEX",
             "обриши унос stream-а са групом потрошача (XDELEX)",
-            "прикажи cluster slot-stats за топ 10 слотова"
+            "прикажи cluster slot-stats за топ 10 слотова",
+            "ограничи стопу за кључ помоћу прозорског бројача (INCREX)",
+            "уради negative-ack pending stream поруке у dead-letter (XNACK)"
           ]
         },
         scripting: {
@@ -506,6 +515,7 @@ const strings = {
     welcomeConsole: "\u0414\u043E\u0431\u0440\u043E\u0434\u043E\u0448\u043B\u0438 \u0443 Redis \u043A\u043E\u043D\u0437\u043E\u043B\u0443",
     welcomeConsoleInfo: "SHIFT + \u0418\u0441\u0442\u043E\u0440\u0438\u0458\u0430\u0442 \u043A\u0443\u0440\u0441\u043E\u0440\u043E\u043C \u0413\u041E\u0420\u0415 \u0438\u043B\u0438 \u0414\u041E\u041B\u0415 \u0458\u0435 \u043E\u043C\u043E\u0433\u0443\u045B\u0435\u043D\u0430",
     redisListIndexInfo: "\u041F\u0440\u0430\u0437\u043D\u043E \u0437\u0430 \u0434\u043E\u0434\u0430\u0432\u0430\u045A\u0435 \u043D\u0430 \u043A\u0440\u0430\u0458, -1 \u0437\u0430 \u0434\u043E\u0434\u0430\u0432\u0430\u045A\u0435 \u043D\u0430 \u043F\u043E\u0447\u0435\u0442\u0430\u043A \u0438\u043B\u0438 \u0441\u0430\u0447\u0443\u0432\u0430\u0458\u0442\u0435 \u043D\u0430 \u043F\u0440\u0438\u043A\u0430\u0437\u0430\u043D\u0443 \u043F\u043E\u0437\u0438\u0446\u0438\u0458\u0443.",
+    redisArrayIndexInfo: "Оставите празно за додавање на следећи индекс или унесите одређени индекс (празнине су дозвољене — низови могу бити ретки).",
     console: "\u041A\u043E\u043D\u0437\u043E\u043B\u0430",
     connectiondAdd: "\u0414\u043E\u0434\u0430\u0458 \u043A\u043E\u043D\u0435\u043A\u0446\u0438\u0458\u0443",
     connectiondEdit: "\u0423\u0440\u0435\u0434\u0438 \u043A\u043E\u043D\u0435\u043A\u0446\u0438\u0458\u0443",
@@ -632,6 +642,7 @@ const strings = {
     socketDisconnected: "Веза прекинута",
     socketError: "Грешка повезивања",
     deletedHashKey: "Хеш кључ обрисан",
+    deletedArrayIndex: "Елемент низа је избрисан",
     deletedSetMember: "Члан скупа обрисан",
     deletedListElement: "Елемент листе обрисан",
     deletedZSetMember: "Члан сортираног скупа обрисан",
@@ -931,6 +942,12 @@ const strings = {
           value: "\u0412\u0440\u0435\u0434\u043D\u043E\u0441\u0442"
         }
       },
+      array: {
+        table: {
+          index: "Индекс",
+          value: "Вредност"
+        }
+      },
       hash: {
         table: {
           hashkey: "\u0425\u0435\u0448 \u043A\u0459\u0443\u0447",
@@ -1013,13 +1030,21 @@ const strings = {
         info: "Информације",
         elements: "Елементи",
         similarity: "Претрага по сличности",
+        similaritySearch: "Претрага по сличности",
         searchByElement: "Претрага по елементу",
         searchByVector: "Претрага по вектору",
+        byElement: "Претрага по елементу",
+        byVector: "Претрага по вектору",
         vectorValues: "Векторске вредности",
+        elementName: "Назив елемента",
+        searchTerm: "Термин за претрагу",
         element: "Елемент",
         score: "Резултат",
         count: "Број",
         addElement: "Додај елемент",
+        addedSuccessfully: "Ставка успешно додата",
+        deletedSuccessfully: "Ставка успешно обрисана",
+        removedSuccessfully: "Ставка успешно обрисана",
         attributes: "Атрибути",
         noAttributes: "Нема атрибута",
         dimensions: "Димензије",
@@ -1080,6 +1105,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "Низ",
   },
   promo: {
     title: "AI мрежни асистент",

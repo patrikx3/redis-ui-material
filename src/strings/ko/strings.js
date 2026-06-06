@@ -41,6 +41,7 @@ const strings = {
     info: "정보",
     deleteListItem: "이 목록 항목을 삭제하시겠습니까?",
     deleteHashKey: "이 해시 키 항목을 삭제하시겠습니까?",
+    deleteArrayIndex: "이 배열 요소를 삭제하시겠습니까?",
     deleteStreamTimestamp: "이 스트림 타임스탬프를 삭제하시겠습니까?",
     deleteSetMember: "이 세트 구성원을 삭제하시겠습니까?",
     deleteZSetMember: "이 정렬된 집합 구성원을 삭제하시겠습니까?",
@@ -250,15 +251,6 @@ const strings = {
       connectedTo: opts => `${opts.name}에 연결됨 (Redis ${opts.version} ${opts.mode}, 모듈 ${opts.modules}개 로드됨)`,
       connectedToNoInfo: opts => `${opts.name}에 연결됨`,
       disconnectedFrom: opts => `${opts.name}에서 연결 끊김`,
-      notConnected: "연결되지 않았습니다.",
-      limitedAiOnly: "제한된 AI만 사용할 수 있습니다. 일반적인 Redis 질의응답은 가능합니다.",
-      connectHint: "실시간 진단을 하려면 다음을 입력하세요: connect <name>",
-      cheatsheetHint: "무엇을 물어볼 수 있는지 보려면 ai: help 를 입력하세요.",
-      needsConnection: "이 기능에는 활성 연결이 필요합니다. 먼저 \"connect <name>\"를 입력하세요.",
-      aiNeedsConnectionReason: "실시간 상태 AI(tool use)는 Redis에 연결되어 있을 때만 사용할 수 있습니다.",
-      verbNeedsConnection: opts => `"${opts.verb}" 명령에는 활성 연결이 필요합니다. 먼저 "connect <name>"를 입력하세요.`,
-      aiLimitedMode: "AI가 제한 모드입니다. 연결하기 전까지는 Redis 일반 지식 질문만 동작합니다.",
-      welcomeDisconnected: "환영합니다. 아직 어떤 Redis 인스턴스에도 연결되지 않았습니다.",
       readyIndicator: "준비됨.",
     },
     cheatsheet: {
@@ -319,7 +311,8 @@ const strings = {
             "stream events에서 마지막 10개 항목을 가져와줘",
             "hash user:1의 모든 필드를 가져와줘",
             "set favourites의 멤버를 가져와줘",
-            "leaderboard에서 점수 상위 10개를 가져와줘"
+            "leaderboard에서 점수 상위 10개를 가져와줘",
+            "항목이 나타나는 set 수로 순위 매기기 (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -336,7 +329,8 @@ const strings = {
             "user:42의 age를 31로 업데이트해줘",
             "모든 JSON 키를 나열해줘",
             "JSON 문서에서 필드 하나를 삭제해줘",
-            "JSONPath를 사용해 중첩 필드를 가져와줘"
+            "JSONPath를 사용해 중첩 필드를 가져와줘",
+            "정밀도를 낮춘 float의 JSON 배열 저장 (FPHA BF16)"
           ]
         },
         search: {
@@ -361,7 +355,8 @@ const strings = {
             "temp:room1의 어제부터 지금까지 범위를 가져와줘",
             "sensor=temp 라벨로 multi-range를 가져와줘",
             "temp:room1에 사인파 데이터 포인트 100개를 생성해줘",
-            "temp:room1의 retention과 라벨을 보여줘"
+            "temp:room1의 retention과 라벨을 보여줘",
+            "하나의 TS.RANGE로 bucket별 min, max, first, last 가져오기 (candlestick)"
           ]
         },
         bloom: {
@@ -387,6 +382,18 @@ const strings = {
             "VSIM으로 요소 이름으로 검색해줘"
           ]
         },
+        array: {
+          name: "배열 (Redis 8.8+)",
+          description: "Redis 8.8+가 감지된 경우 사용할 수 있습니다 (네이티브 ARRAY 타입).",
+          prompts: [
+            "몇 개의 값으로 배열 만들기",
+            "내 배열의 인덱스 5에 값 설정",
+            "특정 인덱스의 값 가져오기",
+            "ARSCAN으로 배열의 모든 요소 나열",
+            "인덱스의 요소 삭제",
+            "내 배열에는 요소가 몇 개 있나요?"
+          ]
+        },
         redis8: {
           name: "Redis 8+ 기능",
           description: "Redis 8+가 감지되면 표시됩니다.",
@@ -396,7 +403,9 @@ const strings = {
             "하이브리드 전문 + 벡터 검색을 실행해줘 (FT.HYBRID)",
             "MSETEX로 여러 키를 공통 만료 시간으로 설정해줘",
             "consumer group으로 stream 항목을 삭제해줘 (XDELEX)",
-            "상위 10개 슬롯에 대한 cluster slot-stats를 보여줘"
+            "상위 10개 슬롯에 대한 cluster slot-stats를 보여줘",
+            "window counter로 key에 rate-limit 적용 (INCREX)",
+            "대기 중인 stream 메시지를 dead-letter로 negative-ack 처리 (XNACK)"
           ]
         },
         scripting: {
@@ -506,6 +515,7 @@ const strings = {
     welcomeConsole: "Redis 콘솔에 오신 것을 환영합니다.",
     welcomeConsoleInfo: "SHIFT + 커서 UP 또는 DOWN 기록이 활성화되었습니다.",
     redisListIndexInfo: "추가하려면 비우고, 표시된 위치에 앞에 추가하거나 저장하려면 -1입니다.",
+    redisArrayIndexInfo: "다음 인덱스에 추가하려면 비워 두거나, 명시적 인덱스를 입력하세요(간격은 허용됩니다 — 배열은 희소할 수 있습니다).",
     console: "콘솔",
     connectiondAdd: "연결 추가",
     connectiondEdit: "연결 수정",
@@ -632,6 +642,7 @@ const strings = {
     socketDisconnected: "연결 끊김",
     socketError: "연결 오류",
     deletedHashKey: "해시 키가 삭제되었습니다",
+    deletedArrayIndex: "배열 요소가 삭제되었습니다",
     deletedSetMember: "세트 멤버가 삭제되었습니다",
     deletedListElement: "리스트 요소가 삭제되었습니다",
     deletedZSetMember: "정렬된 세트 멤버가 삭제되었습니다",
@@ -931,6 +942,12 @@ const strings = {
           value: "가치"
         }
       },
+      array: {
+        table: {
+          index: "색인",
+          value: "가치"
+        }
+      },
       hash: {
         table: {
           hashkey: "해시키",
@@ -1013,13 +1030,21 @@ const strings = {
         info: "정보",
         elements: "요소",
         similarity: "유사도 검색",
+        similaritySearch: "유사도 검색",
         searchByElement: "요소로 검색",
         searchByVector: "벡터로 검색",
+        byElement: "요소로 검색",
+        byVector: "벡터로 검색",
         vectorValues: "벡터 값",
+        elementName: "요소 이름",
+        searchTerm: "검색어",
         element: "요소",
         score: "점수",
         count: "개수",
         addElement: "요소 추가",
+        addedSuccessfully: "항목이 성공적으로 추가되었습니다",
+        deletedSuccessfully: "항목이 성공적으로 삭제되었습니다",
+        removedSuccessfully: "항목이 성공적으로 삭제되었습니다",
         attributes: "속성",
         noAttributes: "속성 없음",
         dimensions: "차원",
@@ -1080,6 +1105,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "배열",
   },
   promo: {
     title: "AI 네트워크 어시스턴트",

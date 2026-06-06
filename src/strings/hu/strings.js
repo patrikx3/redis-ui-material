@@ -41,6 +41,7 @@ const strings = {
     info: "Információ",
     deleteListItem: "Biztosan törli ezt a listaelemet?",
     deleteHashKey: "Biztosan törli ezt a hash kulcs elemet?",
+    deleteArrayIndex: "Biztosan törli ezt a tömbelemet?",
     deleteStreamTimestamp: "Biztosan törli ezt a stream időbélyeget?",
     deleteSetMember: "Biztosan törli ezt a halmaz tagot?",
     deleteZSetMember: "Biztosan törli ezt a rendezett halmaz tagot?",
@@ -306,7 +307,8 @@ const strings = {
             "az utolsó 10 bejegyzés lekérése a events adatfolyamból",
             "lekérni a hash user összes mezőjét:1",
             "a favourites készlet tagjainak lekérése",
-            "kerülj a legjobb 10-be a következő pontszám alapján: leaderboard"
+            "kerülj a legjobb 10-be a következő pontszám alapján: leaderboard",
+            "rangsorold az elemeket az alapján, hány halmazban szerepelnek (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -323,7 +325,8 @@ const strings = {
             "frissítse a user:42 korát 31-re",
             "felsorolja az összes JSON kulcsot",
             "töröljön egy mezőt egy JSON dokumentumból",
-            "beágyazott mező beszerzése a JSONPath használatával"
+            "beágyazott mező beszerzése a JSONPath használatával",
+            "tárolj csökkentett pontosságú floatokból álló JSON tömböt (FPHA BF16)"
           ]
         },
         search: {
@@ -348,7 +351,8 @@ const strings = {
             "szerezze be a temp:room1 tartományt tegnaptól máig",
             "több tartomány beszerzése a sensor=temp címkével",
             "100 szinuszos adatpont generálása a temp:room1 számára",
-            "megőrzés és címkék megjelenítése a következőhöz: temp:room1"
+            "megőrzés és címkék megjelenítése a következőhöz: temp:room1",
+            "kérd le a min, max, first és last értékeket bucketenként egy TS.RANGE hívással (gyertya)"
           ]
         },
         bloom: {
@@ -374,6 +378,18 @@ const strings = {
             "keresés elemnév alapján a következővel: VSIM"
           ]
         },
+        array: {
+          name: "Tömb (Redis 8.8+)",
+          description: "Redis 8.8+ észlelésekor érhető el (natív ARRAY típus).",
+          prompts: [
+            "hozz létre egy tömböt néhány értékkel",
+            "állítsd be az értéket a tömböm 5. indexén",
+            "kérd le az értéket egy adott indexen",
+            "listázd a tömb összes elemét ARSCAN segítségével",
+            "töröld az elemet egy indexen",
+            "hány elem van a tömbömben?"
+          ]
+        },
         redis8: {
           name: "Redis 8+ funkciók",
           description: "Redis 8+ észlelésekor jelenik meg.",
@@ -383,7 +399,9 @@ const strings = {
             "futtasson hibrid teljes szöveg + vektor keresést (FT.HYBRID)",
             "állítson be több kulcsot megosztott lejárattal a MSETEX használatával",
             "streambejegyzés törlése fogyasztói csoporttal (XDELEX)",
-            "mutasd meg a fürthely-statisztikát a legjobb 10 helyhez"
+            "mutasd meg a fürthely-statisztikát a legjobb 10 helyhez",
+            "állíts be rate-limitet egy kulcsra ablakos számlálóval (INCREX)",
+            "küldj negative-ack-et egy függő stream üzenetre dead-letter célba (XNACK)"
           ]
         },
         scripting: {
@@ -493,6 +511,7 @@ const strings = {
     welcomeConsole: "Üdvözöljük a Redis Konzolban",
     welcomeConsoleInfo: "SHIFT + Kurzor FEL vagy LE előzménynavigáció engedélyezve",
     redisListIndexInfo: "Üres a hozzáfűzéshez, -1 az elejére beszúráshoz, vagy mentse a mutatott pozícióba.",
+    redisArrayIndexInfo: "Üresen hagyva a következő indexhez fűzi hozzá, vagy adjon meg egy konkrét indexet (a hézagok engedélyezettek — a tömbök ritkák lehetnek).",
     console: "Konzol",
     connectiondAdd: "Kapcsolat hozzáadása",
     connectiondEdit: "Kapcsolat szerkesztése",
@@ -619,6 +638,7 @@ const strings = {
     socketDisconnected: "Leválasztva",
     socketError: "Kapcsolati hiba",
     deletedHashKey: "Hash kulcs törölve",
+    deletedArrayIndex: "Tömbelem törölve",
     deletedSetMember: "Halmaz tag törölve",
     deletedListElement: "Listaelem törölve",
     deletedZSetMember: "Rendezett halmaz tag törölve",
@@ -918,6 +938,12 @@ const strings = {
           value: "Érték"
         }
       },
+      array: {
+        table: {
+          index: "Index",
+          value: "Érték"
+        }
+      },
       hash: {
         table: {
           hashkey: "Hash kulcs",
@@ -1000,13 +1026,21 @@ const strings = {
         info: "Információ",
         elements: "Elemek",
         similarity: "Hasonlósági keresés",
+        similaritySearch: "Hasonlósági keresés",
         searchByElement: "Keresés elem szerint",
         searchByVector: "Keresés vektor szerint",
+        byElement: "Keresés elem szerint",
+        byVector: "Keresés vektor szerint",
         vectorValues: "Vektor értékek",
+        elementName: "Elem neve",
+        searchTerm: "Keresési kifejezés",
         element: "Elem",
         score: "Pontszám",
         count: "Darabszám",
         addElement: "Elem hozzáadása",
+        addedSuccessfully: "Elem sikeresen hozzáadva",
+        deletedSuccessfully: "Elem sikeresen törölve",
+        removedSuccessfully: "Elem sikeresen törölve",
         attributes: "Attribútumok",
         noAttributes: "Nincsenek attribútumok",
         dimensions: "Dimenziók",
@@ -1067,6 +1101,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "Tömb",
   },
   promo: {
     title: "AI Hálózati asszisztens",

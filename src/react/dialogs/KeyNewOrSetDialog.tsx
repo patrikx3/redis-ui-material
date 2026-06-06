@@ -11,6 +11,7 @@ import {
 import { Cancel } from '@mui/icons-material'
 import { useI18nStore } from '../stores/i18n.store'
 import { useRedisStateStore } from '../stores/redis-state.store'
+import { parseRedisVersion } from '../../core/redis-version'
 import { useSettingsStore } from '../stores/settings.store'
 import { useCommonStore } from '../stores/common.store'
 import { trackPage } from '../stores/analytics'
@@ -102,6 +103,7 @@ export default function KeyNewOrSetDialog({ open, data, onClose }: Props) {
         if (hasReJSON) base.push('json')
         if (hasBloom) base.push('bloom', 'cuckoo', 'topk', 'cms', 'tdigest')
         base.push('vectorset')
+        if (parseRedisVersion(useRedisStateStore.getState().info?.server?.redis_version).isAtLeast(8, 8)) base.push('array')
         return base
     })()
 
@@ -202,6 +204,7 @@ export default function KeyNewOrSetDialog({ open, data, onClose }: Props) {
                     type: data?.type,
                     originalValue: data?.model?.value,
                     originalHashKey: data?.model?.hashKey,
+                    originalIndex: data?.model?.index,
                     model: structuredClone(model),
                 },
             })
@@ -251,6 +254,13 @@ export default function KeyNewOrSetDialog({ open, data, onClose }: Props) {
                     <TextField fullWidth margin="dense" type="number" label={strings?.form?.key?.field?.index}
                         value={model.index} onChange={e => set('index', e.target.value)} />
                     <Box sx={{ opacity: 0.5, fontSize: 12, mb: 1 }}>{strings?.label?.redisListIndexInfo}</Box>
+                </>
+            )}
+            {model.type === 'array' && (
+                <>
+                    <TextField fullWidth margin="dense" type="number" label={strings?.form?.key?.field?.index}
+                        value={model.index} onChange={e => set('index', e.target.value)} />
+                    <Box sx={{ opacity: 0.5, fontSize: 12, mb: 1 }}>{strings?.label?.redisArrayIndexInfo}</Box>
                 </>
             )}
             {model.type === 'hash' && (

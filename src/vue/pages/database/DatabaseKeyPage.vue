@@ -26,6 +26,7 @@ const KeyStream = defineAsyncComponent(() => import('./key/KeyStream.vue'))
 const KeyTimeseries = defineAsyncComponent(() => import('./key/KeyTimeseries.vue'))
 const KeyProbabilistic = defineAsyncComponent(() => import('./key/KeyProbabilistic.vue'))
 const KeyVectorset = defineAsyncComponent(() => import('./key/KeyVectorset.vue'))
+const KeyArray = defineAsyncComponent(() => import('./key/KeyArray.vue'))
 
 const route = useRoute()
 const { width: displayWidth } = useDisplay()
@@ -221,7 +222,7 @@ const typeComponentMap: Record<string, any> = {
     zset: KeyZset, 'ReJSON-RL': KeyJson, json: KeyJson, stream: KeyStream,
     'TSDB-TYPE': KeyTimeseries, timeseries: KeyTimeseries,
     bloom: KeyProbabilistic, cuckoo: KeyProbabilistic, topk: KeyProbabilistic, cms: KeyProbabilistic, tdigest: KeyProbabilistic,
-    vectorset: KeyVectorset,
+    vectorset: KeyVectorset, array: KeyArray,
 }
 const keyComponent = computed(() => typeComponentMap[keyType.value] || null)
 

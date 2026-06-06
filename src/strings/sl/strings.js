@@ -41,6 +41,7 @@ const strings = {
     info: "Informacije",
     deleteListItem: "Ali ste prepričani, da želite izbrisati ta element seznama?",
     deleteHashKey: "Ali ste prepričani, da želite izbrisati ta element zgoščenega ključa?",
+    deleteArrayIndex: "Ali ste prepričani, da želite izbrisati ta element polja?",
     deleteStreamTimestamp: "Ali ste prepričani, da želite izbrisati ta časovni žig toka?",
     deleteSetMember: "Ali ste prepričani, da želite izbrisati tega člana niza?",
     deleteZSetMember: "Ali ste prepričani, da želite izbrisati ta razvrščeni član niza?",
@@ -250,15 +251,6 @@ const strings = {
       connectedTo: opts => `Povezano z ${opts.name} (Redis ${opts.version} ${opts.mode}, naloženih modulov: ${opts.modules})`,
       connectedToNoInfo: opts => `Povezano z ${opts.name}`,
       disconnectedFrom: opts => `Povezava z ${opts.name} je prekinjena`,
-      notConnected: "Ni povezave.",
-      limitedAiOnly: "Na voljo je le omejen AI — delujejo splošna vprašanja in odgovori o Redis.",
-      connectHint: "Za diagnostiko v živo vnesite: connect <name>",
-      cheatsheetHint: "Vnesite ai: help, da vidite, kaj lahko vprašate.",
-      needsConnection: "To zahteva aktivno povezavo. Najprej vnesite \"connect <name>\".",
-      aiNeedsConnectionReason: "AI za živo stanje (uporaba orodij) je na voljo samo, ko ste povezani z Redis.",
-      verbNeedsConnection: opts => `"${opts.verb}" zahteva aktivno povezavo — najprej vnesite "connect <name>".`,
-      aiLimitedMode: "AI je v omejenem načinu — dokler se ne povežete, delujejo samo splošna vprašanja o Redis.",
-      welcomeDisconnected: "Dobrodošli. Trenutno še niste povezani z nobeno instanco Redis.",
       readyIndicator: "Pripravljeno.",
     },
     cheatsheet: {
@@ -319,7 +311,8 @@ const strings = {
             "dobi zadnjih 10 vnosov iz toka events",
             "dobi vsa polja hasha user:1",
             "dobi člane množice favourites",
-            "dobi top 10 po oceni iz leaderboard"
+            "dobi top 10 po oceni iz leaderboard",
+            "razvrsti elemente po številu setov, v katerih se pojavijo (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -336,7 +329,8 @@ const strings = {
             "posodobi starost user:42 na 31",
             "izpiši vse ključe JSON",
             "izbriši polje iz dokumenta JSON",
-            "dobi vgnezdeno polje s pomočjo JSONPath"
+            "dobi vgnezdeno polje s pomočjo JSONPath",
+            "shrani JSON polje floatov z zmanjšano natančnostjo (FPHA BF16)"
           ]
         },
         search: {
@@ -361,7 +355,8 @@ const strings = {
             "dobi obseg temp:room1 od včeraj do zdaj",
             "dobi multi-range po oznaki sensor=temp",
             "ustvari 100 sinusnih podatkovnih točk za temp:room1",
-            "pokaži retencijo in oznake za temp:room1"
+            "pokaži retencijo in oznake za temp:room1",
+            "pridobi min, max, first in last za vsak bucket z enim TS.RANGE (candlestick)"
           ]
         },
         bloom: {
@@ -387,6 +382,18 @@ const strings = {
             "išči po imenu elementa z VSIM"
           ]
         },
+        array: {
+          name: "Polje (Redis 8.8+)",
+          description: "Na voljo, ko je zaznan Redis 8.8+ (izvorni tip ARRAY).",
+          prompts: [
+            "ustvari polje z nekaj vrednostmi",
+            "nastavi vrednost na indeksu 5 mojega polja",
+            "pridobi vrednost na določenem indeksu",
+            "izpiši vse elemente polja z ARSCAN",
+            "izbriši element na indeksu",
+            "koliko elementov ima moje polje?"
+          ]
+        },
         redis8: {
           name: "Funkcije Redis 8+",
           description: "Prikazano, ko je zaznan Redis 8+.",
@@ -396,7 +403,9 @@ const strings = {
             "izvedi hibridno iskanje po celotnem besedilu + vektor (FT.HYBRID)",
             "nastavi več ključev s skupnim potekom z MSETEX",
             "izbriši vnos toka s skupino potrošnikov (XDELEX)",
-            "pokaži cluster slot-stats za top 10 slotov"
+            "pokaži cluster slot-stats za top 10 slotov",
+            "omeji hitrost ključa z okenskim števcem (INCREX)",
+            "naredi negative-ack čakajočemu stream sporočilu v dead-letter (XNACK)"
           ]
         },
         scripting: {
@@ -506,6 +515,7 @@ const strings = {
     welcomeConsole: "Dobrodošli v konzoli Redis",
     welcomeConsoleInfo: "SHIFT + Zgodovina kazalca GOR ali DOL je omogočena",
     redisListIndexInfo: "Prazno za dodajanje, -1 za dodajanje pred ali shranjevanje na prikazano mesto.",
+    redisArrayIndexInfo: "Pustite prazno za dodajanje na naslednji indeks ali vnesite določen indeks (vrzeli so dovoljene — polja so lahko redka).",
     console: "Konzola",
     connectiondAdd: "Dodajte povezavo",
     connectiondEdit: "Uredi povezavo",
@@ -632,6 +642,7 @@ const strings = {
     socketDisconnected: "Odklopljeno",
     socketError: "Napaka povezave",
     deletedHashKey: "Hash ključ izbrisan",
+    deletedArrayIndex: "Element polja je izbrisan",
     deletedSetMember: "Član množice izbrisan",
     deletedListElement: "Element seznama izbrisan",
     deletedZSetMember: "Član urejene množice izbrisan",
@@ -931,6 +942,12 @@ const strings = {
           value: "Vrednost"
         }
       },
+      array: {
+        table: {
+          index: "Kazalo",
+          value: "Vrednost"
+        }
+      },
       hash: {
         table: {
           hashkey: "Hashkey",
@@ -1013,13 +1030,21 @@ const strings = {
         info: "Informacije",
         elements: "Elementi",
         similarity: "Iskanje po podobnosti",
+        similaritySearch: "Iskanje po podobnosti",
         searchByElement: "Iskanje po elementu",
         searchByVector: "Iskanje po vektorju",
+        byElement: "Iskanje po elementu",
+        byVector: "Iskanje po vektorju",
         vectorValues: "Vektorske vrednosti",
+        elementName: "Ime elementa",
+        searchTerm: "Iskalni izraz",
         element: "Element",
         score: "Rezultat",
         count: "Število",
         addElement: "Dodaj element",
+        addedSuccessfully: "Element uspešno dodan",
+        deletedSuccessfully: "Element uspešno izbrisan",
+        removedSuccessfully: "Element uspešno izbrisan",
         attributes: "Atributi",
         noAttributes: "Brez atributov",
         dimensions: "Dimenzije",
@@ -1080,6 +1105,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "Polje",
   },
   promo: {
     title: "AI omrežni pomočnik",

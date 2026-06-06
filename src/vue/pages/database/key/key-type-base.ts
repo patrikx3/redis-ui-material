@@ -93,7 +93,8 @@ export function decodeValue(value: any, valueBuffer: any, type: string): { value
             : value
         return { value: decoded, valueBuffer }
     }
-    if (type === 'hash') {
+    if (type === 'hash' || type === 'array') {
+        // array (Redis 8.8) is shaped exactly like hash: { [index]: bufferValue }
         if (valueBuffer && typeof valueBuffer === 'object' && !Array.isArray(valueBuffer)) {
             const decoded: Record<string, string> = {}
             for (const [k, v] of Object.entries(valueBuffer)) {

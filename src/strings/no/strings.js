@@ -41,6 +41,7 @@ const strings = {
     info: "Info",
     deleteListItem: "Er du sikker på at du vil slette dette listeelementet?",
     deleteHashKey: "Er du sikker på at du vil slette dette hash-nøkkelelementet?",
+    deleteArrayIndex: "Er du sikker på at du vil slette dette array-elementet?",
     deleteStreamTimestamp: "Er du sikker på at du vil slette dette tidsstempelet for strømmen?",
     deleteSetMember: "Er du sikker på at du vil slette dette settemedlemmet?",
     deleteZSetMember: "Er du sikker på at du vil slette dette sorterte settmedlemmet?",
@@ -250,15 +251,6 @@ const strings = {
       connectedTo: opts => `Tilkoblet ${opts.name} (Redis ${opts.version} ${opts.mode}, ${opts.modules} moduler lastet inn)`,
       connectedToNoInfo: opts => `Tilkoblet ${opts.name}`,
       disconnectedFrom: opts => `Koblet fra ${opts.name}`,
-      notConnected: "Ikke tilkoblet.",
-      limitedAiOnly: "Kun begrenset AI — generell Redis-spørsmål og -svar fungerer.",
-      connectHint: "For live-diagnostikk, skriv: connect <name>",
-      cheatsheetHint: "Skriv ai: help for å se hva du kan spørre om.",
-      needsConnection: "Dette krever en aktiv tilkobling. Skriv \"connect <name>\" først.",
-      aiNeedsConnectionReason: "Live-state AI (tool use) er bare tilgjengelig når du er koblet til Redis.",
-      verbNeedsConnection: opts => `"${opts.verb}" krever en aktiv tilkobling — skriv "connect <name>" først.`,
-      aiLimitedMode: "AI er i begrenset modus — bare spørsmål om generell Redis-kunnskap fungerer til du kobler til.",
-      welcomeDisconnected: "Velkommen. Du er ikke koblet til noen Redis-instans ennå.",
       readyIndicator: "Klar.",
     },
     cheatsheet: {
@@ -319,7 +311,8 @@ const strings = {
             "hent de siste 10 oppføringene fra strømmen events",
             "hent alle feltene til hashen user:1",
             "hent medlemmer av settet favourites",
-            "hent topp 10 etter score fra leaderboard"
+            "hent topp 10 etter score fra leaderboard",
+            "ranger elementer etter hvor mange sett de vises i (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -336,7 +329,8 @@ const strings = {
             "oppdater alderen til user:42 til 31",
             "list alle JSON-nøkler",
             "slett et felt fra et JSON-dokument",
-            "hent et nestet felt med JSONPath"
+            "hent et nestet felt med JSONPath",
+            "lagre et JSON-array med floats med redusert presisjon (FPHA BF16)"
           ]
         },
         search: {
@@ -361,7 +355,8 @@ const strings = {
             "hent spennet for temp:room1 fra i går til nå",
             "hent flerspenn etter etiketten sensor=temp",
             "generer 100 sinusbølge-datapunkter for temp:room1",
-            "vis retensjon og etiketter for temp:room1"
+            "vis retensjon og etiketter for temp:room1",
+            "hent min, max, first og last per bucket i én TS.RANGE (candlestick)"
           ]
         },
         bloom: {
@@ -387,6 +382,18 @@ const strings = {
             "søk etter elementnavn med VSIM"
           ]
         },
+        array: {
+          name: "Array (Redis 8.8+)",
+          description: "Tilgjengelig når Redis 8.8+ oppdages (innebygd ARRAY-type).",
+          prompts: [
+            "opprett et array med noen få verdier",
+            "sett verdien ved indeks 5 i arrayet mitt",
+            "hent verdien ved en bestemt indeks",
+            "list alle elementene i et array med ARSCAN",
+            "slett elementet ved en indeks",
+            "hvor mange elementer har arrayet mitt?"
+          ]
+        },
         redis8: {
           name: "Redis 8+-funksjoner",
           description: "Vises når Redis 8+ oppdages.",
@@ -396,7 +403,9 @@ const strings = {
             "kjør et hybrid fulltekst + vektor-søk (FT.HYBRID)",
             "sett flere nøkler med felles utløp via MSETEX",
             "slett en strømoppføring med konsumentgruppe (XDELEX)",
-            "vis cluster slot-stats for topp 10 slots"
+            "vis cluster slot-stats for topp 10 slots",
+            "rate-limit en nøkkel med en vindusteller (INCREX)",
+            "negative-ack en ventende stream-melding til dead-letter (XNACK)"
           ]
         },
         scripting: {
@@ -506,6 +515,7 @@ const strings = {
     welcomeConsole: "Velkommen til Redis-konsollen",
     welcomeConsoleInfo: "SHIFT + Markør OPP- eller NED-historikk er aktivert",
     redisListIndexInfo: "Tom for å legge til, -1 for å legge til eller lagre den til posisjonen som vises.",
+    redisArrayIndexInfo: "La stå tomt for å legge til på neste indeks, eller angi en bestemt indeks (hull er tillatt — arrayer kan være glisne).",
     console: "Konsoll",
     connectiondAdd: "Legg til tilkobling",
     connectiondEdit: "Rediger tilkobling",
@@ -632,6 +642,7 @@ const strings = {
     socketDisconnected: "Frakoblet",
     socketError: "Tilkoblingsfeil",
     deletedHashKey: "Hash-nøkkel slettet",
+    deletedArrayIndex: "Array-element slettet",
     deletedSetMember: "Sett-medlem slettet",
     deletedListElement: "Listeelement slettet",
     deletedZSetMember: "Sortert sett-medlem slettet",
@@ -931,6 +942,12 @@ const strings = {
           value: "Verdi"
         }
       },
+      array: {
+        table: {
+          index: "Indeks",
+          value: "Verdi"
+        }
+      },
       hash: {
         table: {
           hashkey: "Hashkey",
@@ -1013,13 +1030,21 @@ const strings = {
         info: "Info",
         elements: "Elementer",
         similarity: "Likhetssøk",
+        similaritySearch: "Likhetssøk",
         searchByElement: "Søk etter element",
         searchByVector: "Søk etter vektor",
+        byElement: "Søk etter element",
+        byVector: "Søk etter vektor",
         vectorValues: "Vektorverdier",
+        elementName: "Elementnavn",
+        searchTerm: "Søkeord",
         element: "Element",
         score: "Poeng",
         count: "Antall",
         addElement: "Legg til element",
+        addedSuccessfully: "Element lagt til",
+        deletedSuccessfully: "Element slettet",
+        removedSuccessfully: "Element slettet",
         attributes: "Attributter",
         noAttributes: "Ingen attributter",
         dimensions: "Dimensjoner",
@@ -1080,6 +1105,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "Array",
   },
   promo: {
     title: "AI-nettverksassistent",

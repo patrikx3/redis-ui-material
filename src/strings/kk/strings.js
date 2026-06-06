@@ -41,6 +41,7 @@ const strings = {
     info: "Ақпарат",
     deleteListItem: "Бұл тізім элементін жоюға сенімдісіз бе?",
     deleteHashKey: "Осы хэш кілтін жоюға сенімдісіз бе?",
+    deleteArrayIndex: "Осы массив элементін жоюға сенімдісіз бе?",
     deleteStreamTimestamp: "Бұл трансляция уақыт белгісін шынымен жою керек пе?",
     deleteSetMember: "Осы жиын мүшесін шынымен жою керек пе?",
     deleteZSetMember: "Осы сұрыпталған жиын мүшесін шынымен жою керек пе?",
@@ -250,15 +251,6 @@ const strings = {
       connectedTo: opts => `${opts.name} жүйесіне қосылды (Redis ${opts.version} ${opts.mode}, ${opts.modules} модуль жүктелді)`,
       connectedToNoInfo: opts => `${opts.name} жүйесіне қосылды`,
       disconnectedFrom: opts => `${opts.name} жүйесінен ажыратылды`,
-      notConnected: "Қосылмаған.",
-      limitedAiOnly: "Тек шектеулі AI қолжетімді. Redis бойынша жалпы сұрақ-жауап жұмыс істейді.",
-      connectHint: "Нақты уақыттағы диагностика үшін мынаны теріңіз: connect <name>",
-      cheatsheetHint: "Не сұрауға болатынын көру үшін ai: help деп теріңіз.",
-      needsConnection: "Бұл үшін белсенді қосылым қажет. Алдымен \"connect <name>\" деп теріңіз.",
-      aiNeedsConnectionReason: "Нақты күйдегі AI (tool use) тек Redis-ке қосылғанда қолжетімді.",
-      verbNeedsConnection: opts => `"${opts.verb}" үшін белсенді қосылым қажет. Алдымен "connect <name>" деп теріңіз.`,
-      aiLimitedMode: "AI шектеулі режимде тұр. Қосылғанға дейін Redis туралы жалпы білім сұрақтары ғана жұмыс істейді.",
-      welcomeDisconnected: "Қош келдіңіз. Сіз әлі ешбір Redis данасына қосылған жоқсыз.",
       readyIndicator: "Дайын.",
     },
     cheatsheet: {
@@ -319,7 +311,8 @@ const strings = {
             "events ағынынан соңғы 10 жазбаны ал",
             "user:1 hash-ының барлық өрістерін ал",
             "favourites жиынының мүшелерін ал",
-            "leaderboard бойынша топ-10-ды балмен ал"
+            "leaderboard бойынша топ-10-ды балмен ал",
+            "элементтерді қанша set ішінде кездесетіні бойынша ретте (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -336,7 +329,8 @@ const strings = {
             "user:42-нің age-ін 31-ге жаңарт",
             "барлық JSON кілттерін тізімде",
             "JSON құжатынан бір өрісті жой",
-            "JSONPath арқылы ішкі өрісті ал"
+            "JSONPath арқылы ішкі өрісті ал",
+            "дәлдігі төмендетілген float мәндерінің JSON массивін сақта (FPHA BF16)"
           ]
         },
         search: {
@@ -361,7 +355,8 @@ const strings = {
             "temp:room1 диапазонын кешеден бүгінге дейін ал",
             "sensor=temp белгісі бойынша multi-range ал",
             "temp:room1 үшін 100 синусоидалық нүкте жасап шығар",
-            "temp:room1 үшін retention мен белгілерді көрсет"
+            "temp:room1 үшін retention мен белгілерді көрсет",
+            "бір TS.RANGE арқылы әр bucket үшін min, max, first және last ал (candlestick)"
           ]
         },
         bloom: {
@@ -387,6 +382,18 @@ const strings = {
             "VSIM көмегімен элемент атауы бойынша іздеу"
           ]
         },
+        array: {
+          name: "Массив (Redis 8.8+)",
+          description: "Redis 8.8+ анықталған кезде қолжетімді (нативті ARRAY типі).",
+          prompts: [
+            "бірнеше мәні бар массив жаса",
+            "массивімнің 5-индексіндегі мәнді орнат",
+            "нақты индекстегі мәнді ал",
+            "ARSCAN арқылы массивтің барлық элементтерін тізімде",
+            "индекстегі элементті жой",
+            "массивімде қанша элемент бар?"
+          ]
+        },
         redis8: {
           name: "Redis 8+ мүмкіндіктері",
           description: "Redis 8+ анықталған кезде көрсетіледі.",
@@ -396,7 +403,9 @@ const strings = {
             "гибрид толық мәтінді + векторлық іздеуді орындат (FT.HYBRID)",
             "MSETEX арқылы бірнеше кілтті ортақ мерзіммен орнат",
             "consumer group-пен stream жазбасын жой (XDELEX)",
-            "топ-10 слот үшін cluster slot-stats-ты көрсет"
+            "топ-10 слот үшін cluster slot-stats-ты көрсет",
+            "терезелік санауышпен key үшін rate-limit орнат (INCREX)",
+            "pending stream хабарын dead-letter-ге negative-ack жаса (XNACK)"
           ]
         },
         scripting: {
@@ -506,6 +515,7 @@ const strings = {
     welcomeConsole: "Redis консоліне қош келдіңіз",
     welcomeConsoleInfo: "SHIFT + Жүгіргіні ЖОҒАРЫ немесе ТӨМЕН журналы қосулы",
     redisListIndexInfo: "Қосу үшін бос, алдына қосу немесе оны көрсетілген орынға сақтау үшін -1.",
+    redisArrayIndexInfo: "Келесі индекске қосу үшін бос қалдырыңыз немесе нақты индексті енгізіңіз (аралықтарға рұқсат етіледі — массивтер сирек болуы мүмкін).",
     console: "Консоль",
     connectiondAdd: "Қосылым қосыңыз",
     connectiondEdit: "Қосылымды өңдеу",
@@ -632,6 +642,7 @@ const strings = {
     socketDisconnected: "Ажыратылды",
     socketError: "Қосылым қатесі",
     deletedHashKey: "Хэш кілті жойылды",
+    deletedArrayIndex: "Массив элементі жойылды",
     deletedSetMember: "Жиын мүшесі жойылды",
     deletedListElement: "Тізім элементі жойылды",
     deletedZSetMember: "Сұрыпталған жиын мүшесі жойылды",
@@ -931,6 +942,12 @@ const strings = {
           value: "Мән"
         }
       },
+      array: {
+        table: {
+          index: "Индекс",
+          value: "Мән"
+        }
+      },
       hash: {
         table: {
           hashkey: "Хэшкей",
@@ -1013,13 +1030,21 @@ const strings = {
         info: "Ақпарат",
         elements: "Элементтер",
         similarity: "Ұқсастық іздеу",
+        similaritySearch: "Ұқсастық іздеу",
         searchByElement: "Элемент бойынша іздеу",
         searchByVector: "Вектор бойынша іздеу",
+        byElement: "Элемент бойынша іздеу",
+        byVector: "Вектор бойынша іздеу",
         vectorValues: "Вектор мәндері",
+        elementName: "Элемент атауы",
+        searchTerm: "Іздеу термині",
         element: "Элемент",
         score: "Ұпай",
         count: "Саны",
         addElement: "Элемент қосу",
+        addedSuccessfully: "Элемент сәтті қосылды",
+        deletedSuccessfully: "Элемент сәтті жойылды",
+        removedSuccessfully: "Элемент сәтті жойылды",
         attributes: "Атрибуттар",
         noAttributes: "Атрибуттар жоқ",
         dimensions: "Өлшемдер",
@@ -1080,6 +1105,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "Массив",
   },
   promo: {
     title: "AI желілік көмекшісі",

@@ -41,6 +41,7 @@ const strings = {
     info: "தகவல்",
     deleteListItem: "இந்த பட்டியல் உருப்படியை நிச்சயமாக நீக்க விரும்புகிறீர்களா?",
     deleteHashKey: "இந்த ஹாஷ் விசை உருப்படியை நிச்சயமாக நீக்க விரும்புகிறீர்களா?",
+    deleteArrayIndex: "இந்த வரிசை உறுப்பை நீக்க விரும்புகிறீர்களா?",
     deleteStreamTimestamp: "இந்த ஸ்ட்ரீம் நேர முத்திரையை நிச்சயமாக நீக்க விரும்புகிறீர்களா?",
     deleteSetMember: "இந்த தொகுப்பு உறுப்பினரை நிச்சயமாக நீக்க விரும்புகிறீர்களா?",
     deleteZSetMember: "இந்த வரிசைப்படுத்தப்பட்ட தொகுப்பு உறுப்பினரை நிச்சயமாக நீக்க விரும்புகிறீர்களா?",
@@ -252,15 +253,6 @@ const strings = {
       connectedTo: opts => `${opts.name} உடன் இணைக்கப்பட்டது (Redis ${opts.version} ${opts.mode}, ${opts.modules} தொகுதிகள் ஏற்றப்பட்டுள்ளன)`,
       connectedToNoInfo: opts => `${opts.name} உடன் இணைக்கப்பட்டது`,
       disconnectedFrom: opts => `${opts.name} இலிருந்து துண்டிக்கப்பட்டது`,
-      notConnected: "இணைக்கப்படவில்லை.",
-      limitedAiOnly: "வரையறுக்கப்பட்ட AI மட்டும் — பொதுவான Redis கேள்வி-பதில்கள் வேலை செய்யும்.",
-      connectHint: "நேரடி ஆய்விற்காக, இதை தட்டச்சு செய்யவும்: connect <name>",
-      cheatsheetHint: "நீங்கள் என்ன கேட்கலாம் என்பதைப் பார்க்க ai: help என தட்டச்சு செய்யவும்.",
-      needsConnection: "இதற்கு செயலில் உள்ள இணைப்பு தேவை. முதலில் \"connect <name>\" என தட்டச்சு செய்யவும்.",
-      aiNeedsConnectionReason: "நேரடி நிலை AI (கருவி பயன்பாடு) Redis-க்கு இணைக்கப்பட்டிருக்கும்போதே கிடைக்கும்.",
-      verbNeedsConnection: opts => `"${opts.verb}" க்கு செயலில் உள்ள இணைப்பு தேவை — முதலில் "connect <name>" என தட்டச்சு செய்யவும்.`,
-      aiLimitedMode: "AI வரையறுக்கப்பட்ட முறையில் உள்ளது — நீங்கள் இணைக்கும் வரை Redis பற்றிய பொதுவான அறிவுக் கேள்விகள் மட்டுமே செயல்படும்.",
-      welcomeDisconnected: "வரவேற்கிறோம். நீங்கள் இன்னும் எந்த Redis instance உடனும் இணைக்கப்படவில்லை.",
       readyIndicator: "தயார்.",
     },
     cheatsheet: {
@@ -321,7 +313,8 @@ const strings = {
             "stream events-லிருந்து கடைசி 10 உள்ளீடுகளைப் பெறு",
             "hash user:1-ன் அனைத்து புலங்களையும் பெறு",
             "set favourites-ன் உறுப்பினர்களைப் பெறு",
-            "leaderboard-லிருந்து மதிப்பெண் அடிப்படையில் முதல் 10-ஐப் பெறு"
+            "leaderboard-லிருந்து மதிப்பெண் அடிப்படையில் முதல் 10-ஐப் பெறு",
+            "உருப்படிகள் எத்தனை set-களில் தோன்றுகின்றன என்பதைப் பொறுத்து தரவரிசைப்படுத்து (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -338,7 +331,8 @@ const strings = {
             "user:42-ன் age-ஐ 31 ஆகப் புதுப்பி",
             "அனைத்து JSON கீகளையும் பட்டியலிடு",
             "JSON ஆவணத்திலிருந்து ஒரு புலத்தை நீக்கு",
-            "JSONPath பயன்படுத்தி உட்புலத்தைப் பெறு"
+            "JSONPath பயன்படுத்தி உட்புலத்தைப் பெறு",
+            "குறைந்த precision உடன் float-களின் JSON வரிசையை சேமி (FPHA BF16)"
           ]
         },
         search: {
@@ -363,7 +357,8 @@ const strings = {
             "நேற்று முதல் இப்போது வரையிலான temp:room1-ன் வரம்பைப் பெறு",
             "sensor=temp லேபிள் அடிப்படையில் பல-வரம்பைப் பெறு",
             "temp:room1-க்கு 100 sine-wave தரவுப் புள்ளிகளை உருவாக்கு",
-            "temp:room1-க்கான retention மற்றும் லேபிள்களைக் காட்டு"
+            "temp:room1-க்கான retention மற்றும் லேபிள்களைக் காட்டு",
+            "ஒரே TS.RANGE-ல் ஒவ்வொரு bucket-க்கும் min, max, first மற்றும் last எடு (candlestick)"
           ]
         },
         bloom: {
@@ -389,6 +384,18 @@ const strings = {
             "VSIM மூலம் உறுப்பு பெயரால் தேடு"
           ]
         },
+        array: {
+          name: "வரிசை (Redis 8.8+)",
+          description: "Redis 8.8+ கண்டறியப்படும் போது கிடைக்கும் (உள்ளிருந்த ARRAY வகை).",
+          prompts: [
+            "சில மதிப்புகளுடன் ஒரு வரிசையை உருவாக்கு",
+            "என் வரிசையின் index 5-ல் மதிப்பை அமை",
+            "குறிப்பிட்ட index-இல் உள்ள மதிப்பை எடு",
+            "ARSCAN கொண்டு வரிசையின் அனைத்து உறுப்புகளையும் பட்டியலிடு",
+            "ஒரு index-இல் உள்ள உறுப்பை நீக்கு",
+            "என் வரிசையில் எத்தனை உறுப்புகள் உள்ளன?"
+          ]
+        },
         redis8: {
           name: "Redis 8+ அம்சங்கள்",
           description: "Redis 8+ கண்டறியப்படும் போது காட்டப்படும்.",
@@ -398,7 +405,9 @@ const strings = {
             "கலப்பு முழு-உரை + வெக்டர் தேடலை இயக்கு (FT.HYBRID)",
             "MSETEX பயன்படுத்தி பகிரப்பட்ட காலாவதியுடன் பல கீகளை அமை",
             "consumer group உடன் ஒரு stream உள்ளீட்டை நீக்கு (XDELEX)",
-            "முதல் 10 slots-க்கான cluster slot-stats-ஐக் காட்டு"
+            "முதல் 10 slots-க்கான cluster slot-stats-ஐக் காட்டு",
+            "window counter உடன் key-க்கு rate-limit செய் (INCREX)",
+            "pending stream message-ஐ dead-letter-க்கு negative-ack செய் (XNACK)"
           ]
         },
         scripting: {
@@ -508,6 +517,7 @@ const strings = {
     welcomeConsole: "Redis கன்சோலுக்கு வரவேற்கிறோம்",
     welcomeConsoleInfo: "SHIFT + கர்சர் மேல் அல்லது கீழ் வரலாறு இயக்கப்பட்டுள்ளது",
     redisListIndexInfo: "சேர்க்க காலி, -1 முன்னிணைக்க அல்லது காட்டப்பட்ட நிலையில் சேமிக்கவும்.",
+    redisArrayIndexInfo: "அடுத்த குறியீட்டில் சேர்க்க காலியாக விடவும், அல்லது குறிப்பிட்ட குறியீட்டை உள்ளிடவும் (இடைவெளிகள் அனுமதிக்கப்படுகின்றன — வரிசைகள் இடைவெளிகளுடன் இருக்கலாம்).",
     console: "கன்சோல்",
     connectiondAdd: "இணைப்பைச் சேர்",
     connectiondEdit: "இணைப்பைத் திருத்து",
@@ -634,6 +644,7 @@ const strings = {
     socketDisconnected: "துண்டிக்கப்பட்டது",
     socketError: "இணைப்பு பிழை",
     deletedHashKey: "ஹாஷ் விசை நீக்கப்பட்டது",
+    deletedArrayIndex: "வரிசை உறுப்பு நீக்கப்பட்டது",
     deletedSetMember: "செட் உறுப்பினர் நீக்கப்பட்டது",
     deletedListElement: "பட்டியல் உறுப்பு நீக்கப்பட்டது",
     deletedZSetMember: "வரிசைப்படுத்தப்பட்ட செட் உறுப்பினர் நீக்கப்பட்டது",
@@ -933,6 +944,12 @@ const strings = {
           value: "மதிப்பு"
         }
       },
+      array: {
+        table: {
+          index: "குறியீடு",
+          value: "மதிப்பு"
+        }
+      },
       hash: {
         table: {
           hashkey: "Hash விசை",
@@ -1015,13 +1032,21 @@ const strings = {
         info: "தகவல்",
         elements: "உறுப்புகள்",
         similarity: "ஒற்றுமை தேடல்",
+        similaritySearch: "ஒற்றுமை தேடல்",
         searchByElement: "உறுப்பு மூலம் தேடு",
         searchByVector: "வெக்டார் மூலம் தேடு",
+        byElement: "உறுப்பு மூலம் தேடு",
+        byVector: "வெக்டார் மூலம் தேடு",
         vectorValues: "வெக்டார் மதிப்புகள்",
+        elementName: "உறுப்பு பெயர்",
+        searchTerm: "தேடல் சொல்",
         element: "உறுப்பு",
         score: "மதிப்பெண்",
         count: "எண்ணிக்கை",
         addElement: "உறுப்பு சேர்",
+        addedSuccessfully: "உருப்படி வெற்றிகரமாகச் சேர்க்கப்பட்டது",
+        deletedSuccessfully: "உருப்படி வெற்றிகரமாக நீக்கப்பட்டது",
+        removedSuccessfully: "உருப்படி வெற்றிகரமாக நீக்கப்பட்டது",
         attributes: "பண்புகள்",
         noAttributes: "பண்புகள் இல்லை",
         dimensions: "பரிமாணங்கள்",
@@ -1082,6 +1107,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "வரிசை",
   },
   promo: {
     title: "AI நெட்வொர்க் உதவியாளர்",

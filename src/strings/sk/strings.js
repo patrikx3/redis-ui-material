@@ -41,6 +41,7 @@ const strings = {
     info: "Informacia",
     deleteListItem: "Ste si isty, ze chcete vymazat tuto polozku zoznamu?",
     deleteHashKey: "Ste si isty, ze chcete vymazat tento hash kluc?",
+    deleteArrayIndex: "Naozaj chcete odstrániť tento prvok poľa?",
     deleteStreamTimestamp: "Ste si isty, ze chcete vymazat tuto casovu znacku streamu?",
     deleteSetMember: "Ste si isty, ze chcete vymazat tohto clena mnoziny?",
     deleteZSetMember: "Ste si isty, ze chcete vymazat tohto clena zoradenej mnoziny?",
@@ -250,15 +251,6 @@ const strings = {
       connectedTo: opts => `Pripojené k ${opts.name} (Redis ${opts.version} ${opts.mode}, načítaných modulov: ${opts.modules})`,
       connectedToNoInfo: opts => `Pripojené k ${opts.name}`,
       disconnectedFrom: opts => `Odpojené od ${opts.name}`,
-      notConnected: "Nepripojené.",
-      limitedAiOnly: "Len obmedzené AI — fungujú všeobecné otázky a odpovede o Redis.",
-      connectHint: "Pre živú diagnostiku napíšte: connect <name>",
-      cheatsheetHint: "Napíšte ai: help a uvidíte, na čo sa môžete opýtať.",
-      needsConnection: "Toto vyžaduje aktívne pripojenie. Najprv napíšte \"connect <name>\".",
-      aiNeedsConnectionReason: "AI pre živý stav (používanie nástrojov) je dostupné len pri pripojení k Redis.",
-      verbNeedsConnection: opts => `"${opts.verb}" vyžaduje aktívne pripojenie — najprv napíšte "connect <name>".`,
-      aiLimitedMode: "AI je v obmedzenom režime — kým sa nepripojíte, fungujú len všeobecné otázky o Redis.",
-      welcomeDisconnected: "Vitajte. Zatiaľ nie ste pripojení k žiadnej inštancii Redis.",
       readyIndicator: "Pripravené.",
     },
     cheatsheet: {
@@ -319,7 +311,8 @@ const strings = {
             "získaj posledných 10 záznamov zo streamu events",
             "získaj všetky polia hasha user:1",
             "získaj členov sady favourites",
-            "získaj top 10 podľa skóre z leaderboard"
+            "získaj top 10 podľa skóre z leaderboard",
+            "zoradiť položky podľa počtu setov, v ktorých sa vyskytujú (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -336,7 +329,8 @@ const strings = {
             "aktualizuj age v user:42 na 31",
             "zobraz všetky JSON kľúče",
             "odstráň pole z JSON dokumentu",
-            "získaj vnorené pole pomocou JSONPath"
+            "získaj vnorené pole pomocou JSONPath",
+            "ulož JSON pole floatov so zníženou presnosťou (FPHA BF16)"
           ]
         },
         search: {
@@ -361,7 +355,8 @@ const strings = {
             "získaj rozsah temp:room1 od včera do teraz",
             "získaj multi-range podľa štítku sensor=temp",
             "vygeneruj 100 dátových bodov sínusovej vlny pre temp:room1",
-            "zobraz retenciu a štítky pre temp:room1"
+            "zobraz retenciu a štítky pre temp:room1",
+            "získaj min, max, first a last pre každý bucket jedným TS.RANGE (candlestick)"
           ]
         },
         bloom: {
@@ -387,6 +382,18 @@ const strings = {
             "hľadaj podľa názvu prvku pomocou VSIM"
           ]
         },
+        array: {
+          name: "Pole (Redis 8.8+)",
+          description: "Dostupné, keď je detegovaný Redis 8.8+ (natívny typ ARRAY).",
+          prompts: [
+            "vytvor pole s niekoľkými hodnotami",
+            "nastav hodnotu na indexe 5 môjho poľa",
+            "získaj hodnotu na konkrétnom indexe",
+            "vypíš všetky prvky poľa pomocou ARSCAN",
+            "odstráň prvok na indexe",
+            "koľko prvkov má moje pole?"
+          ]
+        },
         redis8: {
           name: "Funkcie Redis 8+",
           description: "Zobrazené, keď je detegovaný Redis 8+.",
@@ -396,7 +403,9 @@ const strings = {
             "spusti hybridné fulltextové + vektorové vyhľadávanie (FT.HYBRID)",
             "nastav viacero kľúčov so spoločnou platnosťou pomocou MSETEX",
             "odstráň záznam streamu s consumer group (XDELEX)",
-            "zobraz cluster slot-stats pre top 10 slotov"
+            "zobraz cluster slot-stats pre top 10 slotov",
+            "obmedz rýchlosť kľúča pomocou oknového počítadla (INCREX)",
+            "urob negative-ack čakajúcej stream správe do dead-letter (XNACK)"
           ]
         },
         scripting: {
@@ -506,6 +515,7 @@ const strings = {
     welcomeConsole: "Vitajte v Redis konzole",
     welcomeConsoleInfo: "SHIFT + Historia kurzoru HORE alebo DOLE je povolena",
     redisListIndexInfo: "Prazdne pre pridanie na koniec, -1 pre pridanie na zaciatok alebo ulozit na zobrazenej pozicii.",
+    redisArrayIndexInfo: "Nechajte prázdne pre pridanie na ďalší index, alebo zadajte konkrétny index (medzery sú povolené — polia môžu byť riedke).",
     console: "Konzola",
     connectiondAdd: "Pridat pripojenie",
     connectiondEdit: "Upravit pripojenie",
@@ -632,6 +642,7 @@ const strings = {
     socketDisconnected: "Odpojené",
     socketError: "Chyba pripojenia",
     deletedHashKey: "Hash kľúč vymazaný",
+    deletedArrayIndex: "Prvok poľa bol odstránený",
     deletedSetMember: "Člen množiny vymazaný",
     deletedListElement: "Prvok zoznamu vymazaný",
     deletedZSetMember: "Člen zoradenej množiny vymazaný",
@@ -931,6 +942,12 @@ const strings = {
           value: "Hodnota"
         }
       },
+      array: {
+        table: {
+          index: "Index",
+          value: "Hodnota"
+        }
+      },
       hash: {
         table: {
           hashkey: "Hash kluc",
@@ -1013,13 +1030,21 @@ const strings = {
         info: "Informácie",
         elements: "Prvky",
         similarity: "Vyhľadávanie podľa podobnosti",
+        similaritySearch: "Vyhľadávanie podľa podobnosti",
         searchByElement: "Vyhľadávanie podľa prvku",
         searchByVector: "Vyhľadávanie podľa vektora",
+        byElement: "Vyhľadávanie podľa prvku",
+        byVector: "Vyhľadávanie podľa vektora",
         vectorValues: "Vektorové hodnoty",
+        elementName: "Názov prvku",
+        searchTerm: "Hľadaný výraz",
         element: "Prvok",
         score: "Skóre",
         count: "Počet",
         addElement: "Pridať prvok",
+        addedSuccessfully: "Polozka bola uspesne pridana",
+        deletedSuccessfully: "Polozka bola uspesne vymazana",
+        removedSuccessfully: "Polozka bola uspesne vymazana",
         attributes: "Atribúty",
         noAttributes: "Žiadne atribúty",
         dimensions: "Dimenzie",
@@ -1080,6 +1105,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "Pole",
   },
   promo: {
     title: "AI sieťový asistent",

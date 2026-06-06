@@ -41,6 +41,7 @@ const strings = {
     info: "Info",
     deleteListItem: "Er du sikker på at slette dette listeelement?",
     deleteHashKey: "Er du sikker på at slette dette hash-nøgleelement?",
+    deleteArrayIndex: "Er du sikker på, at du vil slette dette arrayelement?",
     deleteStreamTimestamp: "Er du sikker på at slette dette streamtidsstempel?",
     deleteSetMember: "Er du sikker på at slette dette sætmedlem?",
     deleteZSetMember: "Er du sikker på at slette dette sorterede sætmedlem?",
@@ -308,7 +309,8 @@ const strings = {
             "få de sidste 10 poster fra stream events",
             "få alle felter af hash-bruger:1",
             "få medlemmer af sæt favourites",
-            "få top 10 efter score fra leaderboard"
+            "få top 10 efter score fra leaderboard",
+            "rangér elementer efter hvor mange sets de vises i (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -325,7 +327,8 @@ const strings = {
             "opdater alderen på user:42 til 31",
             "liste alle JSON nøgler",
             "slet et felt fra et JSON dokument",
-            "få et indlejret felt ved hjælp af JSONPath"
+            "få et indlejret felt ved hjælp af JSONPath",
+            "gem et JSON-array af floats med reduceret præcision (FPHA BF16)"
           ]
         },
         search: {
@@ -350,7 +353,8 @@ const strings = {
             "få rækkevidden af temp:room1 fra i går til nu",
             "få multi-range efter label sensor=temp",
             "generere 100 sinusbølgedatapunkter for temp:room1",
-            "vis opbevaring og etiketter for temp:room1"
+            "vis opbevaring og etiketter for temp:room1",
+            "hent min, max, first og last pr. bucket i én TS.RANGE (candlestick)"
           ]
         },
         bloom: {
@@ -376,6 +380,18 @@ const strings = {
             "søg efter elementnavn med VSIM"
           ]
         },
+        array: {
+          name: "Array (Redis 8.8+)",
+          description: "Tilgængelig, når Redis 8.8+ er detekteret (native ARRAY type).",
+          prompts: [
+            "opret et array med nogle få værdier",
+            "sæt værdien ved indeks 5 i mit array",
+            "hent værdien ved et bestemt indeks",
+            "list alle elementer i et array med ARSCAN",
+            "slet elementet ved et indeks",
+            "hvor mange elementer har mit array?"
+          ]
+        },
         redis8: {
           name: "Redis 8+ funktioner",
           description: "Vises, når Redis 8+ er detekteret.",
@@ -385,7 +401,9 @@ const strings = {
             "kør en hybrid fuldtekst + vektorsøgning (FT.HYBRID)",
             "sæt flere nøgler med et delt udløb ved hjælp af MSETEX",
             "slet en stream-indgang med forbrugergruppe (XDELEX)",
-            "vis klynge slot-statistik for de 10 bedste slots"
+            "vis klynge slot-statistik for de 10 bedste slots",
+            "rate-limit en nøgle med en vinduestæller (INCREX)",
+            "negative-ack en afventende stream-besked til dead-letter (XNACK)"
           ]
         },
         scripting: {
@@ -495,6 +513,7 @@ const strings = {
     welcomeConsole: "Velkommen til Redis-konsollen",
     welcomeConsoleInfo: "SHIFT + Markør OP- eller NED-historik er aktiveret",
     redisListIndexInfo: "Tom for at tilføje, -1 for at lægge foran eller gemme den til den viste position.",
+    redisArrayIndexInfo: "Lad feltet være tomt for at tilføje på næste indeks, eller angiv et bestemt indeks (huller er tilladt — arrays kan være tyndt besatte).",
     console: "Konsol",
     connectiondAdd: "Tilføj forbindelse",
     connectiondEdit: "Rediger forbindelse",
@@ -621,6 +640,7 @@ const strings = {
     socketDisconnected: "Afbrudt",
     socketError: "Forbindelsesfejl",
     deletedHashKey: "Hash-nøgle slettet",
+    deletedArrayIndex: "Arrayelement slettet",
     deletedSetMember: "Sæt-medlem slettet",
     deletedListElement: "Listeelement slettet",
     deletedZSetMember: "Sorteret sæt-medlem slettet",
@@ -920,6 +940,12 @@ const strings = {
           value: "Værdi"
         }
       },
+      array: {
+        table: {
+          index: "Indeks",
+          value: "Værdi"
+        }
+      },
       hash: {
         table: {
           hashkey: "Hashkey",
@@ -1002,13 +1028,21 @@ const strings = {
         info: "Info",
         elements: "Elementer",
         similarity: "Lighedssøgning",
+        similaritySearch: "Lighedssøgning",
         searchByElement: "Søg efter element",
         searchByVector: "Søg efter vektor",
+        byElement: "Søg efter element",
+        byVector: "Søg efter vektor",
         vectorValues: "Vektorværdier",
+        elementName: "Elementnavn",
+        searchTerm: "Søgeterm",
         element: "Element",
         score: "Score",
         count: "Antal",
         addElement: "Tilføj element",
+        addedSuccessfully: "Element tilføjet med succes",
+        deletedSuccessfully: "Element slettet med succes",
+        removedSuccessfully: "Element slettet med succes",
         attributes: "Attributter",
         noAttributes: "Ingen attributter",
         dimensions: "Dimensioner",
@@ -1069,6 +1103,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "Array",
   },
   promo: {
     title: "AI Netværksassistent",

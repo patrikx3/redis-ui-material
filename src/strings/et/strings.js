@@ -41,6 +41,7 @@ const strings = {
     info: "Info",
     deleteListItem: "Kas olete kindel, et kustutate selle loendiüksuse?",
     deleteHashKey: "Kas olete kindel, et kustutate selle räsivõtme üksuse?",
+    deleteArrayIndex: "Kas olete kindel, et soovite selle massiivi elemendi kustutada?",
     deleteStreamTimestamp: "Kas olete kindel, et kustutate selle voo ajatempli?",
     deleteSetMember: "Kas olete kindel, et kustutate selle komplekti liikme?",
     deleteZSetMember: "Kas olete kindel, et kustutate selle sorteeritud komplekti liikme?",
@@ -308,7 +309,8 @@ const strings = {
             "hankige voost events viimased 10 kirjet",
             "hankige kõik räsi kasutaja väljad:1",
             "hankige komplekti favourites liikmed",
-            "saavuta leaderboard punktide järgi top 10"
+            "saavuta leaderboard punktide järgi top 10",
+            "järjesta üksused selle järgi, mitmes setis need esinevad (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -325,7 +327,8 @@ const strings = {
             "värskendage user:42 vanust 31-le",
             "loetlege kõik JSON võtmed",
             "kustutage väli dokumendist JSON",
-            "hankige pesastatud väli, kasutades JSONPath"
+            "hankige pesastatud väli, kasutades JSONPath",
+            "salvesta vähendatud täpsusega floatide JSON-massiiv (FPHA BF16)"
           ]
         },
         search: {
@@ -350,7 +353,8 @@ const strings = {
             "hankige vahemik temp:room1 eilsest praeguseni",
             "hankige mitu vahemikku sildi järgi sensor=temp",
             "genereerida 100 siinuslaine andmepunkti temp:room1 jaoks",
-            "kuva temp:room1 säilitamine ja sildid"
+            "kuva temp:room1 säilitamine ja sildid",
+            "hangi min, max, first ja last iga bucketi kohta ühe TS.RANGE käsuga (candlestick)"
           ]
         },
         bloom: {
@@ -376,6 +380,18 @@ const strings = {
             "otsi elemendi nime järgi VSIM"
           ]
         },
+        array: {
+          name: "Massiiv (Redis 8.8+)",
+          description: "Saadaval, kui tuvastatakse Redis 8.8+ (omatüüp ARRAY).",
+          prompts: [
+            "loo mõne väärtusega massiiv",
+            "määra minu massiivi indeksil 5 olev väärtus",
+            "hangi väärtus konkreetselt indeksilt",
+            "loetle kõik massiivi elemendid ARSCAN abil",
+            "kustuta element indeksilt",
+            "mitu elementi minu massiivis on?"
+          ]
+        },
         redis8: {
           name: "Redis 8+ funktsiooni",
           description: "Kuvatakse, kui tuvastatakse Redis 8+.",
@@ -385,7 +401,9 @@ const strings = {
             "käivitage hübriidne täistekst + vektorotsing (FT.HYBRID)",
             "määrake mitu jagatud aegumisega võtit, kasutades MSETEX",
             "voo kirje kustutamine tarbijarühmaga (XDELEX)",
-            "kuva klastri pesa statistika 10 parima pesa kohta"
+            "kuva klastri pesa statistika 10 parima pesa kohta",
+            "rakenda võtmele aknaloenduriga rate-limit (INCREX)",
+            "tee ootel stream-sõnumile negative-ack dead-letterisse (XNACK)"
           ]
         },
         scripting: {
@@ -495,6 +513,7 @@ const strings = {
     welcomeConsole: "Tere tulemast Redis konsooli",
     welcomeConsoleInfo: "SHIFT + Kursori UP või DOWN ajalugu on lubatud",
     redisListIndexInfo: "Tühjendage lisamiseks, -1 lisamiseks või salvestamiseks näidatud kohta.",
+    redisArrayIndexInfo: "Jätke tühjaks, et lisada järgmisele indeksile, või sisestage kindel indeks (lüngad on lubatud — massiivid võivad olla hõredad).",
     console: "konsool",
     connectiondAdd: "Lisage ühendus",
     connectiondEdit: "Redigeeri ühendust",
@@ -621,6 +640,7 @@ const strings = {
     socketDisconnected: "Ühendus katkestatud",
     socketError: "Ühenduse viga",
     deletedHashKey: "Räsivõti kustutatud",
+    deletedArrayIndex: "Massiivi element kustutatud",
     deletedSetMember: "Hulga liige kustutatud",
     deletedListElement: "Loendi element kustutatud",
     deletedZSetMember: "Sorteeritud hulga liige kustutatud",
@@ -920,6 +940,12 @@ const strings = {
           value: "Väärtus"
         }
       },
+      array: {
+        table: {
+          index: "Indeks",
+          value: "Väärtus"
+        }
+      },
       hash: {
         table: {
           hashkey: "Hashkey",
@@ -1002,13 +1028,21 @@ const strings = {
         info: "Teave",
         elements: "Elemendid",
         similarity: "Sarnasuse otsing",
+        similaritySearch: "Sarnasuse otsing",
         searchByElement: "Otsi elemendi järgi",
         searchByVector: "Otsi vektori järgi",
+        byElement: "Otsi elemendi järgi",
+        byVector: "Otsi vektori järgi",
         vectorValues: "Vektori väärtused",
+        elementName: "Elemendi nimi",
+        searchTerm: "Otsingutermin",
         element: "Element",
         score: "Skoor",
         count: "Arv",
         addElement: "Lisa element",
+        addedSuccessfully: "Element lisati edukalt",
+        deletedSuccessfully: "Element kustutati edukalt",
+        removedSuccessfully: "Element kustutati edukalt",
         attributes: "Atribuudid",
         noAttributes: "Atribuute pole",
         dimensions: "Mõõtmed",
@@ -1069,6 +1103,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "Massiiv",
   },
   promo: {
     title: "AI Võrguabi",

@@ -41,6 +41,7 @@ const strings = {
     info: "Tietoja",
     deleteListItem: "Haluatko varmasti poistaa tämän luettelokohteen?",
     deleteHashKey: "Haluatko varmasti poistaa tämän hash-avainkohteen?",
+    deleteArrayIndex: "Haluatko varmasti poistaa tämän taulukon alkion?",
     deleteStreamTimestamp: "Haluatko varmasti poistaa tämän striimin aikaleiman?",
     deleteSetMember: "Haluatko varmasti poistaa tämän sarjan jäsenen?",
     deleteZSetMember: "Haluatko varmasti poistaa tämän lajitellun joukon jäsenen?",
@@ -308,7 +309,8 @@ const strings = {
             "hanki viimeiset 10 merkintää streamista events",
             "hanki kaikki hash-käyttäjän kentät:1",
             "hanki joukon favourites jäseniä",
-            "hanki top 10 pisteillä leaderboard"
+            "hanki top 10 pisteillä leaderboard",
+            "järjestä alkiot sen mukaan, monessako setissä ne esiintyvät (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -325,7 +327,8 @@ const strings = {
             "päivitä user:42 ikä 31:ksi",
             "luettele kaikki JSON avaimet",
             "poista kenttä asiakirjasta JSON",
-            "hanki sisäkkäinen kenttä käyttämällä JSONPath"
+            "hanki sisäkkäinen kenttä käyttämällä JSONPath",
+            "tallenna JSON-taulukko floateista pienennetyllä tarkkuudella (FPHA BF16)"
           ]
         },
         search: {
@@ -350,7 +353,8 @@ const strings = {
             "hanki alue temp:room1 eilisestä tähän päivään",
             "hanki monialue etiketillä sensor=temp",
             "luo 100 siniaaltodatapistettä kohteelle temp:room1",
-            "näytä säilytys ja tunnisteet kohteelle temp:room1"
+            "näytä säilytys ja tunnisteet kohteelle temp:room1",
+            "hae min, max, first ja last jokaiselle bucketille yhdellä TS.RANGE-komennolla (candlestick)"
           ]
         },
         bloom: {
@@ -376,6 +380,18 @@ const strings = {
             "hae elementin nimellä VSIM"
           ]
         },
+        array: {
+          name: "Taulukko (Redis 8.8+)",
+          description: "Saatavilla, kun Redis 8.8+ havaitaan (natiivi ARRAY-tyyppi).",
+          prompts: [
+            "luo taulukko muutamalla arvolla",
+            "aseta arvo taulukkoni indeksiin 5",
+            "hae arvo tietystä indeksistä",
+            "listaa kaikki taulukon alkiot ARSCAN-komennolla",
+            "poista alkio indeksistä",
+            "kuinka monta alkiota taulukossani on?"
+          ]
+        },
         redis8: {
           name: "Redis 8+ ominaisuuksia",
           description: "Näytetään, kun Redis 8+ havaitaan.",
@@ -385,7 +401,9 @@ const strings = {
             "suorita hybridi kokoteksti + vektorihaku (FT.HYBRID)",
             "aseta useita avaimia, joilla on jaettu voimassaoloaika käyttämällä MSETEX",
             "poista stream-merkintä kuluttajaryhmän kanssa (XDELEX)",
-            "näytä 10 parhaan paikan klusterin paikkatilastot"
+            "näytä 10 parhaan paikan klusterin paikkatilastot",
+            "rajoita avaimen nopeutta ikkunalaskurilla (INCREX)",
+            "tee negative-ack odottavalle stream-viestille dead-letteriin (XNACK)"
           ]
         },
         scripting: {
@@ -495,6 +513,7 @@ const strings = {
     welcomeConsole: "Tervetuloa Redis-konsoliin",
     welcomeConsoleInfo: "SHIFT + Kohdistimen YLÖS- tai ALAS-historia on käytössä",
     redisListIndexInfo: "Tyhjä lisätäksesi, -1 lisätäksesi tai tallentaaksesi sen näkyvään kohtaan.",
+    redisArrayIndexInfo: "Jätä tyhjäksi lisätäksesi seuraavaan indeksiin, tai anna tarkka indeksi (aukot ovat sallittuja — taulukot voivat olla harvoja).",
     console: "konsoli",
     connectiondAdd: "Lisää yhteys",
     connectiondEdit: "Muokkaa yhteyttä",
@@ -621,6 +640,7 @@ const strings = {
     socketDisconnected: "Yhteys katkaistu",
     socketError: "Yhteysvirhe",
     deletedHashKey: "Hash-avain poistettu",
+    deletedArrayIndex: "Taulukon alkio poistettu",
     deletedSetMember: "Joukon jäsen poistettu",
     deletedListElement: "Listan elementti poistettu",
     deletedZSetMember: "Lajitellun joukon jäsen poistettu",
@@ -920,6 +940,12 @@ const strings = {
           value: "Arvo"
         }
       },
+      array: {
+        table: {
+          index: "Hakemisto",
+          value: "Arvo"
+        }
+      },
       hash: {
         table: {
           hashkey: "Hashkey",
@@ -1002,13 +1028,21 @@ const strings = {
         info: "Tiedot",
         elements: "Elementit",
         similarity: "Samankaltaisuushaku",
+        similaritySearch: "Samankaltaisuushaku",
         searchByElement: "Hae elementin mukaan",
         searchByVector: "Hae vektorin mukaan",
+        byElement: "Hae elementin mukaan",
+        byVector: "Hae vektorin mukaan",
         vectorValues: "Vektoriarvot",
+        elementName: "Elementin nimi",
+        searchTerm: "Hakutermi",
         element: "Elementti",
         score: "Pistemäärä",
         count: "Lukumäärä",
         addElement: "Lisää elementti",
+        addedSuccessfully: "Kohde lisätty onnistuneesti",
+        deletedSuccessfully: "Kohde poistettu onnistuneesti",
+        removedSuccessfully: "Kohde poistettu onnistuneesti",
         attributes: "Attribuutit",
         noAttributes: "Ei attribuutteja",
         dimensions: "Ulottuvuudet",
@@ -1069,6 +1103,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "Taulukko",
   },
   promo: {
     title: "AI Verkkoapuri",

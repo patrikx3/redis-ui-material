@@ -41,6 +41,7 @@ const strings = {
     info: "Bilgi",
     deleteListItem: "Bu liste öğesini silmek istediğinizden emin misiniz?",
     deleteHashKey: "Bu hash anahtarını silmek istediğinizden emin misiniz?",
+    deleteArrayIndex: "Bu dizi öğesini silmek istediğinizden emin misiniz?",
     deleteStreamTimestamp: "Bu stream zaman damgasını silmek istediğinizden emin misiniz?",
     deleteSetMember: "Bu küme üyesini silmek istediğinizden emin misiniz?",
     deleteZSetMember: "Bu sıralı küme üyesini silmek istediğinizden emin misiniz?",
@@ -248,15 +249,6 @@ const strings = {
       connectedTo: opts => `${opts.name} bağlantısı kuruldu (Redis ${opts.version} ${opts.mode}, ${opts.modules} modül yüklü)`,
       connectedToNoInfo: opts => `${opts.name} bağlantısı kuruldu`,
       disconnectedFrom: opts => `${opts.name} bağlantısı kesildi`,
-      notConnected: "Bağlı değil.",
-      limitedAiOnly: "Yalnızca sınırlı AI — genel Redis soru-cevapları çalışır.",
-      connectHint: "Canlı tanılama için şunu yazın: connect <name>",
-      cheatsheetHint: "Neler sorabileceğinizi görmek için ai: help yazın.",
-      needsConnection: "Bu işlem etkin bir bağlantı gerektirir. Önce \"connect <name>\" yazın.",
-      aiNeedsConnectionReason: "Canlı durum AI'ı (araç kullanımı) yalnızca Redis'e bağlıyken kullanılabilir.",
-      verbNeedsConnection: opts => `"${opts.verb}" etkin bir bağlantı gerektirir — önce "connect <name>" yazın.`,
-      aiLimitedMode: "AI sınırlı modda — bağlanana kadar yalnızca Redis hakkında genel bilgi soruları çalışır.",
-      welcomeDisconnected: "Hoş geldiniz. Henüz herhangi bir Redis örneğine bağlı değilsiniz.",
       readyIndicator: "Hazır.",
     },
     cheatsheet: {
@@ -317,7 +309,8 @@ const strings = {
             "events akışından son 10 girişi al",
             "user:1 hash'inin tüm alanlarını al",
             "favourites kümesinin üyelerini al",
-            "leaderboard'dan puana göre ilk 10'u al"
+            "leaderboard'dan puana göre ilk 10'u al",
+            "öğeleri kaç sette göründüklerine göre sırala (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -334,7 +327,8 @@ const strings = {
             "user:42'nin age değerini 31 olarak güncelle",
             "tüm JSON anahtarlarını listele",
             "bir JSON belgesinden bir alan sil",
-            "JSONPath kullanarak iç içe bir alanı al"
+            "JSONPath kullanarak iç içe bir alanı al",
+            "azaltılmış hassasiyetle float'lardan oluşan bir JSON dizisi sakla (FPHA BF16)"
           ]
         },
         search: {
@@ -359,7 +353,8 @@ const strings = {
             "temp:room1'in dünden şimdiye kadar olan aralığını al",
             "sensor=temp etiketine göre multi-range al",
             "temp:room1 için 100 sinüs dalgası veri noktası oluştur",
-            "temp:room1 için retention ve etiketleri göster"
+            "temp:room1 için retention ve etiketleri göster",
+            "tek bir TS.RANGE ile bucket başına min, max, first ve last al (candlestick)"
           ]
         },
         bloom: {
@@ -385,6 +380,18 @@ const strings = {
             "VSIM ile öğe adına göre ara"
           ]
         },
+        array: {
+          name: "Dizi (Redis 8.8+)",
+          description: "Redis 8.8+ algılandığında kullanılabilir (yerel ARRAY türü).",
+          prompts: [
+            "birkaç değer içeren bir dizi oluştur",
+            "dizimin 5. indeksindeki değeri ayarla",
+            "belirli bir indeksteki değeri al",
+            "ARSCAN ile bir dizinin tüm öğelerini listele",
+            "bir indeksteki öğeyi sil",
+            "dizimde kaç öğe var?"
+          ]
+        },
         redis8: {
           name: "Redis 8+ özellikleri",
           description: "Redis 8+ algılandığında gösterilir.",
@@ -394,7 +401,9 @@ const strings = {
             "hibrit tam metin + vektör araması çalıştır (FT.HYBRID)",
             "MSETEX kullanarak paylaşılan bir süre sonu ile birden çok anahtar ayarla",
             "tüketici grubu ile bir akış girişini sil (XDELEX)",
-            "en iyi 10 slot için cluster slot-stats göster"
+            "en iyi 10 slot için cluster slot-stats göster",
+            "pencere sayacıyla bir anahtara rate-limit uygula (INCREX)",
+            "bekleyen stream mesajına dead-letter için negative-ack yap (XNACK)"
           ]
         },
         scripting: {
@@ -504,6 +513,7 @@ const strings = {
     welcomeConsole: "Redis Konsoluna Hoş Geldiniz",
     welcomeConsoleInfo: "SHIFT + İmleç YUKARI veya AŞAĞI geçmişi etkindir",
     redisListIndexInfo: "Sona eklemek için boş bırakın, başa eklemek için -1 veya gösterilen konuma kaydedin.",
+    redisArrayIndexInfo: "Sonraki indekse eklemek için boş bırakın veya açık bir indeks girin (boşluklara izin verilir — diziler seyrek olabilir).",
     console: "Konsol",
     connectiondAdd: "Bağlantı ekle",
     connectiondEdit: "Bağlantı düzenle",
@@ -630,6 +640,7 @@ const strings = {
     socketDisconnected: "Bağlantı kesildi",
     socketError: "Bağlantı hatası",
     deletedHashKey: "Hash anahtarı silindi",
+    deletedArrayIndex: "Dizi öğesi silindi",
     deletedSetMember: "Set üyesi silindi",
     deletedListElement: "Liste öğesi silindi",
     deletedZSetMember: "Sıralı set üyesi silindi",
@@ -929,6 +940,12 @@ const strings = {
           value: "Değer"
         }
       },
+      array: {
+        table: {
+          index: "İndeks",
+          value: "Değer"
+        }
+      },
       hash: {
         table: {
           hashkey: "Hash anahtarı",
@@ -1011,13 +1028,21 @@ const strings = {
         info: "Bilgi",
         elements: "Elemanlar",
         similarity: "Benzerlik Araması",
+        similaritySearch: "Benzerlik Araması",
         searchByElement: "Elemana göre ara",
         searchByVector: "Vektöre göre ara",
+        byElement: "Elemana göre ara",
+        byVector: "Vektöre göre ara",
         vectorValues: "Vektör değerleri",
+        elementName: "Eleman adı",
+        searchTerm: "Arama terimi",
         element: "Eleman",
         score: "Puan",
         count: "Sayı",
         addElement: "Eleman Ekle",
+        addedSuccessfully: "Öğe başarıyla eklendi",
+        deletedSuccessfully: "Öğe başarıyla silindi",
+        removedSuccessfully: "Öğe başarıyla silindi",
         attributes: "Öznitelikler",
         noAttributes: "Öznitelik yok",
         dimensions: "Boyutlar",
@@ -1078,6 +1103,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "Dizi",
   },
   promo: {
     title: "AI Ağ Asistanı",

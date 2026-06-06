@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useCallback, useRef, lazy, Suspense } from 'react'
 import { useParams } from 'react-router-dom'
 import {
     Box, Button, Tooltip, CircularProgress,
@@ -29,6 +29,9 @@ import KeyProbabilistic from './key/KeyProbabilistic'
 import KeyVectorset from './key/KeyVectorset'
 import TtlDialog from '../../dialogs/TtlDialog'
 
+// Lazy-loaded renderer (MANDATORY per AGENTS.md for new key types)
+const KeyArray = lazy(() => import('./key/KeyArray'))
+
 const TextDecoder_ = typeof TextDecoder !== 'undefined' ? TextDecoder : class { decode(b: any) { return String(b) } }
 
 function toBytes(buf: any): any {
@@ -49,6 +52,7 @@ function decodeValueBuffer(response: any, jsonFormat: number): void {
         case 'set':
             response.value = valueBuffer.map((buf: any) => td.decode(toBytes(buf)))
             break
+        case 'array':
         case 'hash':
             response.value = {}
             Object.entries(valueBuffer).forEach(([key, buf]: [string, any]) => {
@@ -505,8 +509,14 @@ export default function DatabaseKeyPage() {
                     <KeyVectorset response={response} value={response.value} valueBuffer={response.valueBuffer}
                         keyName={key} valueFormat={valueFormat} onRefresh={refreshKey} />
                 )}
+                {response.type === 'array' && (
+                    <Suspense fallback={<Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}><CircularProgress size={40} /></Box>}>
+                        <KeyArray response={response} value={response.value} valueBuffer={response.valueBuffer}
+                            keyName={key} valueFormat={valueFormat} onRefresh={refreshKey} />
+                    </Suspense>
+                )}
 
-            {response.type !== 'string' && response.type !== 'hash' && response.type !== 'set' && response.type !== 'zset' && response.type !== 'list' && response.type !== 'stream' && response.type !== 'json' && response.type !== 'timeseries' && !['bloom', 'cuckoo', 'topk', 'cms', 'tdigest'].includes(response.type) && response.type !== 'vectorset' && (
+            {response.type !== 'string' && response.type !== 'hash' && response.type !== 'set' && response.type !== 'zset' && response.type !== 'list' && response.type !== 'stream' && response.type !== 'json' && response.type !== 'timeseries' && !['bloom', 'cuckoo', 'topk', 'cms', 'tdigest'].includes(response.type) && response.type !== 'vectorset' && response.type !== 'array' && (
                     <Box sx={{ mt: 2, p: 2, opacity: 0.7 }}>
                         {strings?.page?.key?.probabilistic?.noItems}
                     </Box>

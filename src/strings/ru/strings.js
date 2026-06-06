@@ -41,6 +41,7 @@ const strings = {
     info: "Информация",
     deleteListItem: "Вы точно хотите удалить этот список?",
     deleteHashKey: "Вы точно хотите удалить этот хэш?",
+    deleteArrayIndex: "Вы уверены, что хотите удалить этот элемент массива?",
     deleteStreamTimestamp: "Вы точно хотите удалить эту временную отметку потока?",
     deleteSetMember: "Вы точно хотите удалить этого члена набора?",
     deleteZSetMember: "Вы точно хотите удалить этого члена сортированного набора?",
@@ -311,7 +312,8 @@ const strings = {
             "получи последние 10 записей из stream events",
             "получи все поля hash user:1",
             "получи участников set favourites",
-            "покажи топ-10 по score из leaderboard"
+            "покажи топ-10 по score из leaderboard",
+            "ранжируй элементы по числу множеств, в которых они встречаются (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -328,7 +330,8 @@ const strings = {
             "обнови age у user:42 до 31",
             "покажи все JSON-ключи",
             "удали поле из JSON-документа",
-            "получи вложенное поле через JSONPath"
+            "получи вложенное поле через JSONPath",
+            "сохрани JSON-массив чисел float с пониженной точностью (FPHA BF16)"
           ]
         },
         search: {
@@ -353,7 +356,8 @@ const strings = {
             "получи диапазон для temp:room1 со вчерашнего дня до текущего момента",
             "получи multi-range по метке sensor=temp",
             "сгенерируй 100 точек синусоиды для temp:room1",
-            "покажи retention и labels для temp:room1"
+            "покажи retention и labels для temp:room1",
+            "получи min, max, first и last для каждого bucket одним TS.RANGE (candlestick)"
           ]
         },
         bloom: {
@@ -379,6 +383,18 @@ const strings = {
             "выполни поиск по имени элемента с VSIM"
           ]
         },
+        array: {
+          name: "Массив (Redis 8.8+)",
+          description: "Доступно при обнаружении Redis 8.8+ (нативный тип ARRAY).",
+          prompts: [
+            "создай массив с несколькими значениями",
+            "установи значение по индексу 5 в моём массиве",
+            "получи значение по конкретному индексу",
+            "перечисли все элементы массива с ARSCAN",
+            "удали элемент по индексу",
+            "сколько элементов в моём массиве?"
+          ]
+        },
         redis8: {
           name: "Возможности Redis 8+",
           description: "Показывается при обнаружении Redis 8+.",
@@ -388,7 +404,9 @@ const strings = {
             "выполни гибридный full-text + vector поиск (FT.HYBRID)",
             "установи несколько ключей с общим сроком истечения через MSETEX",
             "удали запись stream с consumer group (XDELEX)",
-            "покажи cluster slot-stats для 10 лучших слотов"
+            "покажи cluster slot-stats для 10 лучших слотов",
+            "ограничь частоту ключа оконным счётчиком (INCREX)",
+            "сделай negative-ack ожидающему stream-сообщению в dead-letter (XNACK)"
           ]
         },
         scripting: {
@@ -498,6 +516,7 @@ const strings = {
     welcomeConsole: "Добро пожаловать в консоль Redis",
     welcomeConsoleInfo: "SHIFT + История по нажатию ВВЕРХ или ВНИЗ кллючена",
     redisListIndexInfo: "Пустое для добавления, -1 что бы сделать вид или сохранить в указанную позицию.",
+    redisArrayIndexInfo: "Оставьте пустым, чтобы добавить по следующему индексу, или укажите явный индекс (пропуски разрешены — массивы могут быть разреженными).",
     console: "Консоль",
     connectiondAdd: "Добавить соединение",
     connectiondEdit: "Изменить соединение",
@@ -624,6 +643,7 @@ const strings = {
     socketDisconnected: "Отключено",
     socketError: "Ошибка соединения",
     deletedHashKey: "Ключ хеша удалён",
+    deletedArrayIndex: "Элемент массива удалён",
     deletedSetMember: "Член множества удалён",
     deletedListElement: "Элемент списка удалён",
     deletedZSetMember: "Член отсортированного множества удалён",
@@ -923,6 +943,12 @@ const strings = {
           value: "Значение"
         }
       },
+      array: {
+        table: {
+          index: "Индекс",
+          value: "Значение"
+        }
+      },
       hash: {
         table: {
           hashkey: "Хэш",
@@ -1005,13 +1031,21 @@ const strings = {
         info: "Информация",
         elements: "Элементы",
         similarity: "Поиск по сходству",
+        similaritySearch: "Поиск по сходству",
         searchByElement: "Поиск по элементу",
         searchByVector: "Поиск по вектору",
+        byElement: "Поиск по элементу",
+        byVector: "Поиск по вектору",
         vectorValues: "Значения вектора",
+        elementName: "Имя элемента",
+        searchTerm: "Поисковый термин",
         element: "Элемент",
         score: "Оценка",
         count: "Количество",
         addElement: "Добавить элемент",
+        addedSuccessfully: "Элемент успешно добавлен",
+        deletedSuccessfully: "Элемент успешно удалён",
+        removedSuccessfully: "Элемент успешно удалён",
         attributes: "Атрибуты",
         noAttributes: "Нет атрибутов",
         dimensions: "Размерности",
@@ -1072,6 +1106,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "Массив",
   },
   promo: {
     title: "Сетевой AI-ассистент",

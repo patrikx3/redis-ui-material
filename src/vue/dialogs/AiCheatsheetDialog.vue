@@ -52,6 +52,7 @@ const visibleGroups = computed<CheatGroup[]>(() => {
     if (version.value >= 8) {
         push('vectorSet', cs.vectorSet)
         push('redis8', cs.redis8)
+        push('array', cs.array)
     }
     push('scripting', cs.scripting)
     if (isCluster.value) push('cluster', cs.cluster)

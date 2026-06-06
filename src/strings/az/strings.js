@@ -41,6 +41,7 @@ const strings = {
     info: "Məlumat",
     deleteListItem: "Bu siyahı elementini siləcəyinizə əminsiniz?",
     deleteHashKey: "Bu heş açar elementini siləcəyinizə əminsiniz?",
+    deleteArrayIndex: "Bu massiv elementini silmək istədiyinizə əminsiniz?",
     deleteStreamTimestamp: "Bu yayımın vaxt damğasını siləcəyinizə əminsiniz?",
     deleteSetMember: "Bu qrup üzvünü siləcəyinizə əminsiniz?",
     deleteZSetMember: "Bu çeşidlənmiş qrup üzvünü siləcəyinizə əminsiniz?",
@@ -308,7 +309,8 @@ const strings = {
             "events axınından son 10 girişi əldə edin",
             "hash istifadəçisinin bütün sahələrini əldə edin: 1",
             "favourites dəstinin üzvlərini əldə edin",
-            "leaderboard xalına görə ilk 10-u əldə edin"
+            "leaderboard xalına görə ilk 10-u əldə edin",
+            "elementləri göründükləri set sayına görə sırala (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -325,7 +327,8 @@ const strings = {
             "user:42 yaşını 31-ə yeniləyin",
             "bütün JSON düymələrini sadalayın",
             "JSON sənədindən sahəni silin",
-            "JSONPath istifadə edərək daxili sahə əldə edin"
+            "JSONPath istifadə edərək daxili sahə əldə edin",
+            "azaldılmış dəqiqliklə float-lardan ibarət JSON massivi saxla (FPHA BF16)"
           ]
         },
         search: {
@@ -350,7 +353,8 @@ const strings = {
             "dünəndən indiyə qədər temp:room1 diapazonunu əldə edin",
             "sensor=temp etiketi ilə çox diapazon əldə edin",
             "temp:room1 üçün 100 sinus dalğa məlumat nöqtəsi yaradın",
-            "temp:room1 üçün saxlama və etiketləri göstərin"
+            "temp:room1 üçün saxlama və etiketləri göstərin",
+            "bir TS.RANGE ilə hər bucket üçün min, max, first və last al (candlestick)"
           ]
         },
         bloom: {
@@ -376,6 +380,18 @@ const strings = {
             "VSIM ilə element adına görə axtarın"
           ]
         },
+        array: {
+          name: "Massiv (Redis 8.8+)",
+          description: "Redis 8.8+ aşkar edildikdə əlçatandır (doğma ARRAY növü).",
+          prompts: [
+            "bir neçə dəyərli massiv yarat",
+            "massivimin 5-ci indeksində dəyəri təyin et",
+            "konkret indeksdəki dəyəri al",
+            "ARSCAN ilə massivin bütün elementlərini siyahıla",
+            "indeksdəki elementi sil",
+            "massivimdə neçə element var?"
+          ]
+        },
         redis8: {
           name: "Redis 8+ funksiyalar",
           description: "Redis 8+ aşkar edildikdə göstərilir.",
@@ -385,7 +401,9 @@ const strings = {
             "hibrid tam mətn + vektor axtarışını işlədin (FT.HYBRID)",
             "MSETEX istifadə edərək ortaq istifadə müddəti olan birdən çox açar təyin edin",
             "istehlakçı qrupu ilə axın girişini silin (XDELEX)",
-            "ilk 10 slot üçün klaster slot statistikasını göstərin"
+            "ilk 10 slot üçün klaster slot statistikasını göstərin",
+            "window counter ilə açar üçün rate-limit tətbiq et (INCREX)",
+            "pending stream mesajını dead-letter-ə negative-ack et (XNACK)"
           ]
         },
         scripting: {
@@ -495,6 +513,7 @@ const strings = {
     welcomeConsole: "Redis Konsoluna xoş gəlmisiniz",
     welcomeConsoleInfo: "SHIFT + Kursor YUKARI və ya AŞAĞI tarix aktivləşdirilib",
     redisListIndexInfo: "Əlavə etmək üçün boş, yuxarıya əlavə etmək və ya göstərilən mövqeyə saxlamaq üçün -1.",
+    redisArrayIndexInfo: "Sonrakı indeksə əlavə etmək üçün boş saxlayın və ya açıq indeks daxil edin (boşluqlara icazə verilir — massivlər seyrək ola bilər).",
     console: "Konsol",
     connectiondAdd: "Bağlantı əlavə edin",
     connectiondEdit: "Bağlantını redaktə edin",
@@ -621,6 +640,7 @@ const strings = {
     socketDisconnected: "Bağlantı kəsildi",
     socketError: "Bağlantı xətası",
     deletedHashKey: "Hash açarı silindi",
+    deletedArrayIndex: "Massiv elementi silindi",
     deletedSetMember: "Çoxluq üzvü silindi",
     deletedListElement: "Siyahı elementi silindi",
     deletedZSetMember: "Sıralanmış çoxluq üzvü silindi",
@@ -920,6 +940,12 @@ const strings = {
           value: "Dəyər"
         }
       },
+      array: {
+        table: {
+          index: "indeks",
+          value: "Dəyər"
+        }
+      },
       hash: {
         table: {
           hashkey: "Hashkey",
@@ -1002,13 +1028,21 @@ const strings = {
         info: "Məlumat",
         elements: "Elementlər",
         similarity: "Oxşarlıq axtarışı",
+        similaritySearch: "Oxşarlıq axtarışı",
         searchByElement: "Elementə görə axtar",
         searchByVector: "Vektora görə axtar",
+        byElement: "Elementə görə axtar",
+        byVector: "Vektora görə axtar",
         vectorValues: "Vektor dəyərləri",
+        elementName: "Element adı",
+        searchTerm: "Axtarış termini",
         element: "Element",
         score: "Xal",
         count: "Say",
         addElement: "Element əlavə et",
+        addedSuccessfully: "Element uğurla əlavə edildi",
+        deletedSuccessfully: "Element uğurla silindi",
+        removedSuccessfully: "Element uğurla silindi",
         attributes: "Atributlar",
         noAttributes: "Atribut yoxdur",
         dimensions: "Ölçülər",
@@ -1069,6 +1103,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "Massiv",
   },
   promo: {
     title: "AI Şəbəkə Köməkçisi",

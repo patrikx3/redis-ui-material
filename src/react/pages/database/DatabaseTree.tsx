@@ -44,6 +44,7 @@ const typeIcons: Record<string, string> = {
     cms: 'fas fa-chart-simple',
     tdigest: 'fas fa-chart-bar',
     vectorset: 'fas fa-brain',
+    array: 'fas fa-layer-group',
 }
 
 export default function DatabaseTree({ resizeSignal }: { resizeSignal?: any }) {

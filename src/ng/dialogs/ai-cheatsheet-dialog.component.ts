@@ -256,6 +256,8 @@ export class AiCheatsheetDialogComponent {
         if (hasRedisVersion(8)) {
             push('vectorSet', cs.vectorSet);
             push('redis8', cs.redis8);
+            const arrayVer = this.state.redisVersion?.();
+            if (arrayVer?.isAtLeast ? arrayVer.isAtLeast(8, 8) : false) push('array', cs.array);
         }
         push('scripting', cs.scripting);
         if (isCluster) push('cluster', cs.cluster);

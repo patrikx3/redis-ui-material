@@ -41,6 +41,7 @@ const strings = {
     info: "তথ্য",
     deleteListItem: "আপনি এই তালিকা আইটেম মুছে ফেলার বিষয়ে নিশ্চিত?",
     deleteHashKey: "আপনি এই হ্যাশ কী আইটেম মুছে ফেলার বিষয়ে নিশ্চিত?",
+    deleteArrayIndex: "আপনি কি নিশ্চিত যে এই অ্যারে উপাদানটি মুছতে চান?",
     deleteStreamTimestamp: "আপনি কি এই স্ট্রিম টাইমস্ট্যাম্প মুছে ফেলার বিষয়ে নিশ্চিত?",
     deleteSetMember: "আপনি এই সেট সদস্য মুছে ফেলার বিষয়ে নিশ্চিত?",
     deleteZSetMember: "আপনি এই সাজানো সেট সদস্য মুছে ফেলার বিষয়ে নিশ্চিত?",
@@ -308,7 +309,8 @@ const strings = {
             "স্ট্রীম events থেকে শেষ 10টি এন্ট্রি পান",
             "হ্যাশ ব্যবহারকারীর সমস্ত ক্ষেত্র পান: 1",
             "সেটের সদস্য পান favourites",
-            "leaderboard থেকে স্কোর দ্বারা শীর্ষ 10 পান"
+            "leaderboard থেকে স্কোর দ্বারা শীর্ষ 10 পান",
+            "আইটেমগুলি কত সেটে আছে সেই সংখ্যা অনুযায়ী র‍্যাঙ্ক করুন (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -325,7 +327,8 @@ const strings = {
             "user:42 এর বয়স 31-এ আপডেট করুন",
             "সমস্ত JSON কী তালিকাভুক্ত করুন",
             "একটি JSON নথি থেকে একটি ক্ষেত্র মুছুন",
-            "JSONPath ব্যবহার করে একটি নেস্টেড ক্ষেত্র পান"
+            "JSONPath ব্যবহার করে একটি নেস্টেড ক্ষেত্র পান",
+            "কম নির্ভুলতায় float-এর একটি JSON অ্যারে সংরক্ষণ করুন (FPHA BF16)"
           ]
         },
         search: {
@@ -350,7 +353,8 @@ const strings = {
             "গতকাল থেকে এখন পর্যন্ত temp:room1 এর পরিসর পান",
             "লেবেল দ্বারা মাল্টি-রেঞ্জ পান sensor=temp",
             "temp:room1 এর জন্য 100 সাইন-ওয়েভ ডেটা পয়েন্ট তৈরি করুন",
-            "temp:room1 এর জন্য ধরে রাখা এবং লেবেল দেখান"
+            "temp:room1 এর জন্য ধরে রাখা এবং লেবেল দেখান",
+            "একটি TS.RANGE-এ প্রতি bucket-এর min, max, first এবং last নিন (candlestick)"
           ]
         },
         bloom: {
@@ -376,6 +380,18 @@ const strings = {
             "VSIM দিয়ে উপাদানের নাম দ্বারা অনুসন্ধান করুন"
           ]
         },
+        array: {
+          name: "অ্যারে (Redis 8.8+)",
+          description: "Redis 8.8+ সনাক্ত করা হলে উপলব্ধ (নেটিভ ARRAY প্রকার)।",
+          prompts: [
+            "কয়েকটি মানসহ একটি অ্যারে তৈরি করুন",
+            "আমার অ্যারের index 5-এ মান সেট করুন",
+            "নির্দিষ্ট index-এর মান নিন",
+            "ARSCAN দিয়ে অ্যারের সব element তালিকাভুক্ত করুন",
+            "একটি index-এর element মুছুন",
+            "আমার অ্যারেতে কত element আছে?"
+          ]
+        },
         redis8: {
           name: "Redis 8+ বৈশিষ্ট্য",
           description: "Redis 8+ শনাক্ত হলে দেখানো হয়।",
@@ -385,7 +401,9 @@ const strings = {
             "একটি হাইব্রিড ফুল-টেক্সট + ভেক্টর অনুসন্ধান চালান (FT.HYBRID)",
             "MSETEX ব্যবহার করে শেয়ার করা মেয়াদ শেষ হওয়ার সাথে একাধিক কী সেট করুন",
             "ভোক্তা গোষ্ঠীর সাথে একটি স্ট্রিম এন্ট্রি মুছুন (XDELEX)",
-            "শীর্ষ 10 স্লটের জন্য ক্লাস্টার স্লট-পরিসংখ্যান দেখান"
+            "শীর্ষ 10 স্লটের জন্য ক্লাস্টার স্লট-পরিসংখ্যান দেখান",
+            "window counter দিয়ে একটি key rate-limit করুন (INCREX)",
+            "pending stream message-কে dead-letter-এ negative-ack করুন (XNACK)"
           ]
         },
         scripting: {
@@ -495,6 +513,7 @@ const strings = {
     welcomeConsole: "Redis কনসোলে স্বাগতম",
     welcomeConsoleInfo: "SHIFT + কার্সার UP বা ডাউন ইতিহাস সক্ষম করা হয়েছে",
     redisListIndexInfo: "যোগ করার জন্য খালি, -1 প্রিপেন্ড করতে বা দেখানো অবস্থানে সংরক্ষণ করতে।",
+    redisArrayIndexInfo: "পরবর্তী সূচকে যোগ করতে খালি রাখুন, অথবা নির্দিষ্ট সূচক দিন (ফাঁক অনুমোদিত — অ্যারেগুলি স্পার্স হতে পারে)।",
     console: "কনসোল",
     connectiondAdd: "সংযোগ যোগ করুন",
     connectiondEdit: "সংযোগ সম্পাদনা করুন",
@@ -621,6 +640,7 @@ const strings = {
     socketDisconnected: "সংযোগ বিচ্ছিন্ন",
     socketError: "সংযোগ ত্রুটি",
     deletedHashKey: "হ্যাশ কী মুছে ফেলা হয়েছে",
+    deletedArrayIndex: "অ্যারে উপাদান মুছে ফেলা হয়েছে",
     deletedSetMember: "সেট সদস্য মুছে ফেলা হয়েছে",
     deletedListElement: "তালিকা উপাদান মুছে ফেলা হয়েছে",
     deletedZSetMember: "সাজানো সেট সদস্য মুছে ফেলা হয়েছে",
@@ -920,6 +940,12 @@ const strings = {
           value: "মান"
         }
       },
+      array: {
+        table: {
+          index: "সূচক",
+          value: "মান"
+        }
+      },
       hash: {
         table: {
           hashkey: "হ্যাশকি",
@@ -1002,13 +1028,21 @@ const strings = {
         info: "তথ্য",
         elements: "উপাদানসমূহ",
         similarity: "সাদৃশ্য অনুসন্ধান",
+        similaritySearch: "সাদৃশ্য অনুসন্ধান",
         searchByElement: "উপাদান দ্বারা অনুসন্ধান",
         searchByVector: "ভেক্টর দ্বারা অনুসন্ধান",
+        byElement: "উপাদান দ্বারা অনুসন্ধান",
+        byVector: "ভেক্টর দ্বারা অনুসন্ধান",
         vectorValues: "ভেক্টর মান",
+        elementName: "উপাদানের নাম",
+        searchTerm: "অনুসন্ধান শব্দ",
         element: "উপাদান",
         score: "স্কোর",
         count: "গণনা",
         addElement: "উপাদান যোগ করুন",
+        addedSuccessfully: "আইটেম সফলভাবে যোগ করা হয়েছে",
+        deletedSuccessfully: "আইটেম সফলভাবে মুছে ফেলা হয়েছে",
+        removedSuccessfully: "আইটেম সফলভাবে মুছে ফেলা হয়েছে",
         attributes: "বৈশিষ্ট্য",
         noAttributes: "কোনো বৈশিষ্ট্য নেই",
         dimensions: "মাত্রা",
@@ -1069,6 +1103,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "অ্যারে",
   },
   promo: {
     title: "AI নেটওয়ার্ক সহকারী",

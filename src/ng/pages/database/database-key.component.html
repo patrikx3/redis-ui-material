@@ -151,6 +151,10 @@
             <p3xr-key-hash [p3xrResponse]="response" [p3xrValue]="response.value"
                 [p3xrValueBuffer]="response.valueBuffer" [p3xrKey]="key" [valueFormat]="valueFormat"></p3xr-key-hash>
         }
+        @case ('array') {
+            <p3xr-key-array [p3xrResponse]="response" [p3xrValue]="response.value"
+                [p3xrValueBuffer]="response.valueBuffer" [p3xrKey]="key" [valueFormat]="valueFormat"></p3xr-key-array>
+        }
         @case ('set') {
             <p3xr-key-set [p3xrResponse]="response" [p3xrValue]="response.value"
                 [p3xrValueBuffer]="response.valueBuffer" [p3xrKey]="key" [valueFormat]="valueFormat"></p3xr-key-set>

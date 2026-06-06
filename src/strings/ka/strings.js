@@ -41,6 +41,7 @@ const strings = {
     info: "ინფორმაცია",
     deleteListItem: "დარწმუნებული ხართ, რომ წაშლით ამ სიის ერთეულს?",
     deleteHashKey: "დარწმუნებული ხართ, რომ წაშლით ამ ჰეშის გასაღების ერთეულს?",
+    deleteArrayIndex: "დარწმუნებული ხართ, რომ გსურთ მასივის ამ ელემენტის წაშლა?",
     deleteStreamTimestamp: "დარწმუნებული ხართ, რომ წაშლით ამ ნაკადის დროის ნიშანს?",
     deleteSetMember: "დარწმუნებული ხართ, რომ წაშლით ამ ნაკრების წევრს?",
     deleteZSetMember: "დარწმუნებული ხართ, რომ წაშლით ამ დალაგებული ნაკრების წევრს?",
@@ -308,7 +309,8 @@ const strings = {
             "მიიღე ბოლო 10 ჩანაწერი stream events-იდან",
             "მიიღე hash user:1 -ის ყველა ველი",
             "მიიღე set favourites-ის წევრები",
-            "მიიღე საუკეთესო 10 ქულის მიხედვით leaderboard-იდან"
+            "მიიღე საუკეთესო 10 ქულის მიხედვით leaderboard-იდან",
+            "დაალაგე ელემენტები იმის მიხედვით, რამდენ set-ში გვხვდება (ZUNION AGGREGATE COUNT)"
           ]
         },
         modules: {
@@ -325,7 +327,8 @@ const strings = {
             "განაახლე user:42 -ის age 31-ზე",
             "ჩამოთვალე ყველა JSON გასაღები",
             "წაშალე ველი JSON დოკუმენტიდან",
-            "მიიღე ჩადგმული ველი JSONPath-ით"
+            "მიიღე ჩადგმული ველი JSONPath-ით",
+            "შეინახე float-ების JSON მასივი შემცირებული სიზუსტით (FPHA BF16)"
           ]
         },
         search: {
@@ -350,7 +353,8 @@ const strings = {
             "მიიღე temp:room1 -ის დიაპაზონი გუშინდლიდან დღემდე",
             "მიიღე მრავალდიაპაზონიანი label sensor=temp -ით",
             "წარმოქმენი 100 სინუსოიდური მონაცემის წერტილი temp:room1 -ისთვის",
-            "მაჩვენე temp:room1 -ის retention და ლეიბლები"
+            "მაჩვენე temp:room1 -ის retention და ლეიბლები",
+            "მიიღე min, max, first და last თითო bucket-ზე ერთი TS.RANGE-ით (candlestick)"
           ]
         },
         bloom: {
@@ -376,6 +380,18 @@ const strings = {
             "მოძებნე ელემენტის სახელით VSIM-ით"
           ]
         },
+        array: {
+          name: "მასივი (Redis 8.8+)",
+          description: "ხელმისაწვდომია, როცა აღმოჩენილია Redis 8.8+ (მშობლიური ARRAY ტიპი).",
+          prompts: [
+            "შექმენი მასივი რამდენიმე მნიშვნელობით",
+            "დააყენე მნიშვნელობა ჩემი მასივის 5-ე ინდექსზე",
+            "მიიღე მნიშვნელობა კონკრეტულ ინდექსზე",
+            "ჩამოთვალე მასივის ყველა ელემენტი ARSCAN-ით",
+            "წაშალე ელემენტი ინდექსზე",
+            "რამდენი ელემენტი აქვს ჩემს მასივს?"
+          ]
+        },
         redis8: {
           name: "Redis 8+ ფუნქციები",
           description: "ნაჩვენებია, როცა აღმოჩენილია Redis 8+.",
@@ -385,7 +401,9 @@ const strings = {
             "გაუშვი ჰიბრიდული სრული ტექსტის + ვექტორული ძიება (FT.HYBRID)",
             "დააყენე რამდენიმე გასაღები საერთო ვადის გასვლით MSETEX-ით",
             "წაშალე stream ჩანაწერი consumer group-ით (XDELEX)",
-            "მაჩვენე cluster slot-stats საუკეთესო 10 slot-ისთვის"
+            "მაჩვენე cluster slot-stats საუკეთესო 10 slot-ისთვის",
+            "დაადე rate-limit გასაღებს window counter-ით (INCREX)",
+            "გაუკეთე negative-ack pending stream შეტყობინებას dead-letter-ში (XNACK)"
           ]
         },
         scripting: {
@@ -495,6 +513,7 @@ const strings = {
     welcomeConsole: "კეთილი იყოს თქვენი მობრძანება Redis კონსოლში",
     welcomeConsoleInfo: "SHIFT + კურსორის UP ან DOWN ისტორია ჩართულია",
     redisListIndexInfo: "ცარიელი დასამატებლად, -1 დასამაგრებლად ან შესანახად ნაჩვენები პოზიციაზე.",
+    redisArrayIndexInfo: "დატოვეთ ცარიელი შემდეგ ინდექსზე დასამატებლად, ან მიუთითეთ კონკრეტული ინდექსი (გამოტოვებები დაშვებულია — მასივები შეიძლება იყოს მეჩხერი).",
     console: "კონსოლი",
     connectiondAdd: "კავშირის დამატება",
     connectiondEdit: "კავშირის რედაქტირება",
@@ -621,6 +640,7 @@ const strings = {
     socketDisconnected: "გათიშულია",
     socketError: "კავშირის შეცდომა",
     deletedHashKey: "ჰეშის გასაღები წაიშალა",
+    deletedArrayIndex: "მასივის ელემენტი წაიშალა",
     deletedSetMember: "სეტის წევრი წაიშალა",
     deletedListElement: "სიის ელემენტი წაიშალა",
     deletedZSetMember: "დახარისხებული სეტის წევრი წაიშალა",
@@ -920,6 +940,12 @@ const strings = {
           value: "მნიშვნელობა"
         }
       },
+      array: {
+        table: {
+          index: "ინდექსი",
+          value: "მნიშვნელობა"
+        }
+      },
       hash: {
         table: {
           hashkey: "ჰეშკი",
@@ -1002,13 +1028,21 @@ const strings = {
         info: "ინფორმაცია",
         elements: "ელემენტები",
         similarity: "მსგავსების ძიება",
+        similaritySearch: "მსგავსების ძიება",
         searchByElement: "ელემენტით ძიება",
         searchByVector: "ვექტორით ძიება",
+        byElement: "ელემენტით ძიება",
+        byVector: "ვექტორით ძიება",
         vectorValues: "ვექტორის მნიშვნელობები",
+        elementName: "Element name",
+        searchTerm: "საძიებო ტერმინი",
         element: "ელემენტი",
         score: "ქულა",
         count: "რაოდენობა",
         addElement: "ელემენტის დამატება",
+        addedSuccessfully: "ელემენტი წარმატებით დაემატა",
+        deletedSuccessfully: "ელემენტი წარმატებით წაიშალა",
+        removedSuccessfully: "ელემენტი წარმატებით წაიშალა",
         attributes: "ატრიბუტები",
         noAttributes: "ატრიბუტები არ არის",
         dimensions: "განზომილებები",
@@ -1069,6 +1103,7 @@ const strings = {
     cms: "Count-Min Sketch",
     tdigest: "T-Digest",
     vectorset: "VectorSet",
+    array: "მასივი",
   },
   promo: {
     title: "AI ქსელის ასისტენტი",
