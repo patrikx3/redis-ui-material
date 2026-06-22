@@ -345,7 +345,7 @@ const treeSettingsItems = computed(() => [
                                             <div style="font-size: 13px; opacity: 0.7;">{{ getConnectionClients(conn) }}</div>
                                         </div>
                                         <v-btn v-if="currentConnectionId !== conn.id" variant="flat" color="secondary" size="small" @click="handleConnect(conn)" :style="isXs ? 'min-width:40px;width:40px;height:40px;padding:0;' : 'min-width:auto;padding:0 8px;'">
-                                            <v-icon>mdi-power</v-icon><span v-if="!isXs" style="margin-left:3px;">{{ strings?.intention?.connect }}</span>
+                                            <v-icon>mdi-power-plug</v-icon><span v-if="!isXs" style="margin-left:3px;">{{ strings?.intention?.connect }}</span>
                                             <v-tooltip v-if="isXs" activator="parent" location="top">{{ strings?.intention?.connect }}</v-tooltip>
                                         </v-btn>
                                         <v-btn v-else variant="flat" color="secondary" size="small" @click="mainCommand.disconnect()" :style="isXs ? 'min-width:40px;width:40px;height:40px;padding:0;' : 'min-width:auto;padding:0 8px;'">
@@ -390,7 +390,7 @@ const treeSettingsItems = computed(() => [
                             <div style="font-size: 13px; opacity: 0.7;">{{ getConnectionClients(conn) }}</div>
                         </div>
                         <v-btn v-if="currentConnectionId !== conn.id" variant="flat" color="secondary" size="small" @click="handleConnect(conn)" :style="isXs ? 'min-width:40px;width:40px;height:40px;padding:0;' : 'min-width:auto;padding:0 8px;'">
-                            <v-icon>mdi-power</v-icon><span v-if="!isXs" style="margin-left:3px;">{{ strings?.intention?.connect }}</span>
+                            <v-icon>mdi-power-plug</v-icon><span v-if="!isXs" style="margin-left:3px;">{{ strings?.intention?.connect }}</span>
                             <v-tooltip v-if="isXs" activator="parent" location="top">{{ strings?.intention?.connect }}</v-tooltip>
                         </v-btn>
                         <v-btn v-else variant="flat" color="secondary" size="small" @click="mainCommand.disconnect()" :style="isXs ? 'min-width:40px;width:40px;height:40px;padding:0;' : 'min-width:auto;padding:0 8px;'">
