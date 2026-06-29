@@ -63,13 +63,17 @@ const isProbabilistic = computed(() => ['bloom', 'cuckoo', 'topk', 'cms', 'tdige
 const isVectorset = computed(() => model.value.type === 'vectorset')
 
 const types = computed(() => {
+    const s = strings.value
     const base = ['string', 'list', 'hash', 'set', 'zset', 'stream']
     if (state.hasTimeSeries) base.push('timeseries')
     if (state.hasReJSON) base.push('json')
     if (state.hasBloom) base.push('bloom', 'cuckoo', 'topk', 'cms', 'tdigest')
     base.push('vectorset')
     if (parseRedisVersion(state.info?.server?.redis_version).isAtLeast(8, 8)) base.push('array')
-    return base
+    // Object items with localized title baked in (mirrors React's `strings.redisTypes[t] ?? t`).
+    // Vuetify 4's default item-title="title"/item-value="value" renders these natively — a
+    // custom #item/#selection slot relying on `item.value` renders blank in Vuetify 4.
+    return base.map(t => ({ value: t, title: s?.redisTypes?.[t] ?? t }))
 })
 
 watch(() => props.open, (v) => {
@@ -237,16 +241,9 @@ function cancel() {
         <v-text-field v-model="model.key" :label="str(strings?.form?.key?.field?.key)" required :disabled="!isAdd"
             variant="outlined" density="comfortable" hide-details class="mb-3" />
 
-        <!-- Type -->
+        <!-- Type — object items {value,title} render natively (Vuetify 4 blanks custom #item slots that use item.value) -->
         <v-select v-model="model.type" :label="str(strings?.form?.key?.field?.type)" :items="types" :disabled="!isAdd"
-            variant="outlined" density="comfortable" hide-details class="mb-3">
-            <template #item="{ item, props: itemProps }">
-                <v-list-item v-bind="itemProps" :title="strings?.redisTypes?.[item.value] || item.value" />
-            </template>
-            <template #selection="{ item }">
-                {{ strings?.redisTypes?.[item.value] || item.value }}
-            </template>
-        </v-select>
+            variant="outlined" density="comfortable" hide-details class="mb-3" />
 
         <!-- Type-specific fields -->
         <v-text-field v-if="model.type === 'list'" v-model="model.index" :label="str(strings?.form?.key?.field?.index)"

@@ -35,8 +35,10 @@ const keyDialogData = ref<KeyNewOrSetData | null>(null)
 const keyDialogUnsubs: Array<() => void> = []
 
 function openKeyDialog(options: any) {
+    // `key-new` is always a create — matches React DatabaseTree's onCommandEvent('key-new')
+    // which hardcodes type: 'add'. Without this, isAdd is false and the key/type fields render disabled.
     keyDialogData.value = {
-        type: options.type,
+        type: options.type ?? 'add',
         node: options.node,
         model: options.model,
     }
