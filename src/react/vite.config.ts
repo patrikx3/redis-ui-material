@@ -19,6 +19,7 @@ function cjsStringsPlugin(): Plugin {
 export default defineConfig(({ mode }) => ({
     root: __dirname,
     publicDir: path.resolve(__dirname, '../public'),
+    cacheDir: path.resolve(__dirname, '../../node_modules/.vite-react'),
     resolve: {
         alias: {
             'lodash-es': path.resolve(__dirname, '../../node_modules/lodash-es'),
